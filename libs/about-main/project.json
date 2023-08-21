@@ -1,0 +1,24 @@
+{
+  "name": "about-main",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/about-main/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/about-main/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/about-main"],
+      "options": {
+        "jestConfig": "libs/about-main/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

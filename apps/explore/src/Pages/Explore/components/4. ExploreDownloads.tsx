@@ -1,9 +1,9 @@
-import { Box, Heading, Image } from '@chakra-ui/react';
-import React, { useState, useEffect } from 'react';
-import forwardIcon from '../../../assets/icons/forward-icon.svg';
-import Card from '../../../components/Card';
-import axios, { AxiosResponse } from 'axios';
-import Container from '../../../components/Container';
+import { Box, Flex, Grid, Heading, Image } from "@chakra-ui/react";
+import React, { useState, useEffect } from "react";
+import forwardIcon from "../../../assets/icons/forward-icon.svg";
+import Card from "../../../components/Card";
+import axios, { AxiosResponse } from "axios";
+import Container from "../../../components/Container";
 
 // Define the type for a product
 interface Product {
@@ -17,7 +17,7 @@ interface Product {
   price: number;
 }
 
-const ExploreSec4: React.FC = () => {
+const ExploreDownloads: React.FC = () => {
   // State to hold the products and error message
   const [products, setProducts] = useState<Product[]>([]); // Change type to Product[]
   const [error, setError] = useState<string | null>(null);
@@ -30,12 +30,12 @@ const ExploreSec4: React.FC = () => {
     try {
       // Fetch data from the API
       const response: AxiosResponse<Product[]> = await axios.get(
-        'https://fakestoreapi.com/products?limit=4'
+        "https://fakestoreapi.com/products?limit=4"
       );
 
       // Check for successful response status
       if (response.status !== 200) {
-        throw new Error('Network response was not okay');
+        throw new Error("Network response was not okay");
       }
       console.log(response.data);
 
@@ -45,7 +45,7 @@ const ExploreSec4: React.FC = () => {
     } catch (error) {
       // Handle API request error
       console.error(error);
-      setError('Failed to fetch data from the API');
+      setError("Failed to fetch data from the API");
     }
   };
 
@@ -64,44 +64,48 @@ const ExploreSec4: React.FC = () => {
   };
 
   return (
-    <Box
-      as={`section`}
-      // pl={`14.375rem`}
-      // pr={'14.3125rem'}
-    >
+    <Box as={`section`}>
       <Container>
-        <Box
-          display={`flex`}
-          justifyContent={`space-between`}
-          alignItems={`center`}
-          mt={`3rem`}
-          mb={`1rem`}
+        <Flex
+          justify={{ lg: `space-between` }}
+          align={{ lg: `center` }}
+          mt={{ lg: `3rem` }}
+          mb={{ lg: `1rem` }}
         >
-          <Heading fontSize={'2xl'} fontWeight={'bold'} lineHeight={8}>
+          <Heading
+            fontSize={{ lg: "2xl" }}
+            fontWeight={"bold"}
+            lineHeight={{ lg: 8 }}
+          >
             Most downloaded
           </Heading>
-          <Box display={'flex'}>
-            <Image src={forwardIcon} alt="forward-icon" w={'2rem'} h={'2rem'} />
-          </Box>
-        </Box>
+          <Flex>
+            <Image
+              src={forwardIcon}
+              alt="forward-icon"
+              w={"2rem"}
+              h={"2rem"}
+              mr={{ lg: ".5rem" }}
+            />
+          </Flex>
+        </Flex>
 
         {/* Conditional rendering based on error state */}
         {error ? (
           <Box>Error: {error}</Box>
         ) : (
-          <Box
-            display={`grid`}
-            gridTemplateColumns={`repeat(4, 1fr)`}
-            justifyContent={`center`}
-            alignItems={'center'}
-            gap={`4rem`}
+          <Grid
+            templateColumns={{ lg: `repeat(4, 1fr)` }}
+            justifyContent={{ lg: `center` }}
+            alignItems={{ lg: "center" }}
+            gap={{ lg: `1.64rem` }}
           >
             {renderCards()}
-          </Box>
+          </Grid>
         )}
       </Container>
     </Box>
   );
 };
 
-export default ExploreSec4;
+export default ExploreDownloads;

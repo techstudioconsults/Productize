@@ -1,4 +1,4 @@
-import { Box, Heading, Image } from '@chakra-ui/react';
+import { Box, Flex, Grid, Heading, Image } from '@chakra-ui/react';
 import React, { useState, useEffect } from 'react';
 import forwardIcon from '../../../assets/icons/forward-icon.svg';
 import Card from '../../../components/Card';
@@ -17,7 +17,7 @@ interface Product {
   price: number;
 }
 
-const ExploreSec3: React.FC = () => {
+const ExploreSearch: React.FC = () => {
   // State to hold the products and error message
   const [products, setProducts] = useState<Product[]>([]); // Change type to Product[]
   const [error, setError] = useState<string | null>(null);
@@ -65,46 +65,48 @@ const ExploreSec3: React.FC = () => {
   return (
     <Box 
     as={`section`} 
-    // pl={`14.375rem`} 
-    // pr={'14.3125rem'}
     >
       <Container>
-        <Box
-          display={`flex`}
-          justifyContent={`space-between`}
-          alignItems={`center`}
-          mt={`3rem`}
-          mb={`1rem`}
+        <Flex
+          justify={{lg:`space-between`}}
+          align={{lg:`center`}}
+          mt={{lg:`3rem`}}
+          mb={{lg:`1rem`}}
         >
           <Heading
-            fontSize={'2xl'}
-            fontWeight={'bold'}
-            lineHeight={8}
+            fontSize={{lg:'2xl'}}
+            fontWeight={{lg:'bold'}}
+            lineHeight={{lg:8}}
            
           >
             Based on your recent search
           </Heading>
-          <Box display={'inline-flex'}>
-            <Image src={forwardIcon} alt='forward-icon' w={'2rem'} h={'2rem'} />
-          </Box>
-        </Box>
+          <Flex>
+            <Image 
+            src={forwardIcon} 
+            alt='forward-icon' 
+            w={'2rem'} 
+            h={'2rem'}
+            mr={{lg: '.5rem'}} 
+            />
+          </Flex>
+        </Flex>
 
         {/* Conditional rendering based on error state */}
         {error ? (
           <Box>Error: {error}</Box>
         ) : (
-          <Box
-            display={`grid`}
-            gridTemplateColumns={`repeat(4, 1fr)`}
+          <Grid
+            templateColumns={`repeat(4, 1fr)`}
             justifyContent={`center`}
-            gap={`4rem`}
+            gap={`1.64rem`}
           >
             {renderCards()}
-          </Box>
+          </Grid>
         )}
       </Container>
     </Box>
   );
 };
 
-export default ExploreSec3;
+export default ExploreSearch;

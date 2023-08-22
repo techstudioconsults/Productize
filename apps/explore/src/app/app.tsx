@@ -3,10 +3,11 @@
 import '../styles.scss';
 
 import { Route, Routes, useLocation } from 'react-router-dom';
-import ExploreIndex from '../Pages/Explore/ExploreIndex/ExploreIndex';
+import ExploreIndex from '../Pages/Explore';
 import Cart from '../Pages/Cart';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from '../style/theme';
+import ExploreDesign from '../Pages/Explore/categories/design';
 
 export function App() {
   const location = useLocation();
@@ -16,6 +17,7 @@ export function App() {
     <ChakraProvider theme={theme}>
       <Routes>
         <Route index element={<ExploreIndex />} />
+        <Route path='/design' element={<ExploreDesign />} />
         <Route path="/cart" element={<Cart />} />
       </Routes>
     </ChakraProvider>

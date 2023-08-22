@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start": "nx serve --open",
+    "start-explore": "nx serve explore --open",
     "build": "nx build",
     "deploy": "nx deploy",
     "refresh": "rm -rf node_modules && yarn install",

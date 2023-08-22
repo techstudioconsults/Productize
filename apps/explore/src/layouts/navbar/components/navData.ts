@@ -1,47 +1,58 @@
  const navData = [
     {
         id: 1,
-        li: 'All'
+        li: 'All',
+        path: '/all'
     },
     {
         id: 2,
-        li: '3D'
+        li: '3D',
+        path: '/3d'
     },
     {
         id: 3,
-        li: 'Audio'
+        li: 'Audio',
+        path: '/audio'
     },
     {
         id: 4,
-        li: 'Business/Finance'
+        li: 'Business/Finance',
+        path: '/business'
     },
     {
         id: 5,
-        li: 'Comics'
+        li: 'Comics',
+        path: '/comics'
     },
     {
         id: 6,
-        li: 'Design'
+        li: 'Design',
+        path: '/design'
     },
     {
         id: 7,
-        li: 'Design/painting'
+        li: 'Design/painting',
+        path: '/painting'
     },
     {
         id: 8,
-        li: 'Education'
+        li: 'Education',
+        path: '/education'
     },
     {
         id: 9,
-        li: 'Fiction books'
+        li: 'Fiction books',
+        path: '/fiction'
     },
     {
         id: 10,
-        li: 'Motion assets'
+        li: 'Motion assets',
+        path: '/motionAssets'
     },
     {
         id: 11,
-        li: 'Printing'
+        li: 'Printing',
+        path: '/printing'
     },
     
  ];

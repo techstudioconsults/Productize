@@ -12,7 +12,7 @@ const Container = (props: ContainerProps) => {
     maxW={'1440px'}
     m={'0 auto'}
     textAlign={'center'}
-    padding={'1rem 8rem'}
+    padding={'1rem 10rem'}
     >
         {props.children}
     </Box>

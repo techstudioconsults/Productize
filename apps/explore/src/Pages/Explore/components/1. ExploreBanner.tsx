@@ -1,10 +1,9 @@
 import React from 'react';
 import { Box, Image, Text } from '@chakra-ui/react';
-import backgroundImage from '../../../assets/image/backgroundImage.png';
 import Container from '../../../components/Container';
 import plant from '../../../assets/icons/Group 1.png';
 
-const ExploreSec1: React.FC = () => {
+const ExploreBanner: React.FC = () => {
   return (
     <Box as={`section`} pos={'relative'}>
       <Container>
@@ -14,7 +13,7 @@ const ExploreSec1: React.FC = () => {
           alignItems={`center`}
           mt={`5.7rem`}
         >
-          {/* <img src={backgroundImage} alt='background-image' /> */}
+         
         </Box>
         <Box
           bgColor={'#FBE69A'}
@@ -31,8 +30,10 @@ const ExploreSec1: React.FC = () => {
           <Image src={plant} pos={'absolute'} right={'1rem'} top={'-.1rem'} />
         </Box>
       </Container>
+    <Box as={`section`}>
     </Box>
-  );
+    </Box>
+  )
 };
 
-export default ExploreSec1;
+export default ExploreBanner;

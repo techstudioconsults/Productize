@@ -1,5 +1,4 @@
 import { Flex, Text } from '@chakra-ui/react';
-import { Greeting } from '@react-module-federation/shared-components';
 import React from 'react';
 
 const Home = () => {
@@ -14,7 +13,6 @@ const Home = () => {
       <Text fontSize={`larger`} color={`green`}>
         Productize Landing Page
       </Text>
-      <Greeting title={'Greeting'} />
     </Flex>
   );
 };

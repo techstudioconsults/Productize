@@ -21,9 +21,6 @@
       "@react-module-federation/shared-components": [
         "libs/shared-components/src/index.ts"
       ],
-      "@react-module-federation/shop-main": [
-        "libs/shop-main/src/index.ts"
-      ]
     }
   },
   "exclude": [

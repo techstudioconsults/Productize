@@ -18,9 +18,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@react-module-federation/shared-components": [
-        "libs/shared-components/src/index.ts"
-      ],
+      "@productize/shared": [
+        "libs/shared/src/index.ts"
+      ]
     }
   },
   "exclude": [

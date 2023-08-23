@@ -21,7 +21,7 @@ module.exports = withModuleFederation({
    * ]
    */
   remotes: [
-    ['landing-page', '//localhost:4201/'],
+    ['external-pages', '//localhost:4201/'],
     ['explore', '//localhost:4202/'],
   ],
 });

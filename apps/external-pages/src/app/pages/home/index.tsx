@@ -1,22 +1,17 @@
 import { Flex, Text } from '@chakra-ui/react';
-import { Shared } from '@productize/shared';
-// import { LandingPageLibUi } from '@productize/landing-page-lib/ui';
-import React from 'react';
+import { Navbar } from '@productize/external-pages-lib/ui';
 
 const Home = () => {
   return (
     <Flex
-      w={`100%`}
-      h={`100vh`}
       flexDir={`column`}
       justifyContent={`center`}
       alignItems={`center`}
     >
-      <Text fontSize={`larger`} color={`green`}>
+      <Text fontSize={`6xl`} color={`green`}>
         Productize External Pages
       </Text>
-      {/* <LandingPageLibUi /> */}
-      <Shared />
+      <Navbar />
     </Flex>
   );
 };

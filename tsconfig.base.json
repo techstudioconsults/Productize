@@ -18,9 +18,12 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@productize/shared": [
-        "libs/shared/src/index.ts"
-      ]
+      "@productize/external-pages-lib/feature": [
+        "libs/external-pages-lib/feature/src/index.ts"
+      ],
+      "@productize/external-pages-lib/ui": [
+        "libs/external-pages-lib/ui/src/index.ts"
+      ],
     }
   },
   "exclude": [

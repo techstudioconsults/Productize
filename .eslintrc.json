@@ -23,7 +23,9 @@
             "depConstraints": [
               {
                 "sourceTag": "*",
-                "onlyDependOnLibsWithTags": ["*"]
+                "onlyDependOnLibsWithTags": [
+                  "*"
+                ]
               }
               // {
               //   "sourceTag": "scope:shared",
@@ -32,10 +34,10 @@
               //   ]
               // },
               // {
-              //   "sourceTag": "scope:landing-page",
+              //   "sourceTag": "scope:external-pages",
               //   "onlyDependOnLibsWithTags": [
               //     "scope:shared",
-              //     "scope:landing-page"
+              //     "scope:external-pages-lib"
               //   ]
               // }
             ]

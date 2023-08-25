@@ -1,0 +1,78 @@
+@use '../utils' as utils;
+@use './colors' as colors;
+@use '../utils/functions' as fn;
+
+html {
+  box-sizing: border-box;
+  // font-size: 100%;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -webkit-text-stroke-width: 0.1px;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+  // display: none;
+
+  @media screen and (min-width: 1024px) {
+    // display: initial;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: utils.$base-font;
+  background-color: colors.$base-bg;
+  color: colors.$text-dark;
+}
+
+a,
+button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+a,
+a:visited,
+a:active {
+  cursor: pointer;
+  letter-spacing: fn.rem(0.2);
+  text-decoration: none;
+}
+
+button {
+  height: fn.rem(40);
+  outline: none;
+  border: none;
+}
+
+ul {
+  list-style: none;
+  color: inherit;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  letter-spacing: 0.5;
+}
+
+label {
+  font-size: fn.rem(14);
+}
+
+input,
+textarea,
+select {
+  height: fn.rem(40);
+  &::placeholder {
+    font-size: fn.rem(14);
+  }
+}

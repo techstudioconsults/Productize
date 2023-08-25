@@ -54,7 +54,7 @@
         li: 'Printing',
         path: '/printing'
     },
-    
+
  ];
 
  export default navData;

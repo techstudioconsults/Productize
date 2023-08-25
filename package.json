@@ -3,11 +3,11 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "nx serve --open",
+    "start": "nx serve --devRemote=external-pages,explore --open",
     "start-explore": "nx serve explore --open",
     "start-externalPages": "nx serve external-pages --open",
-    "build": "nx build",
-    "deploy": "nx deploy",
+    "build": "nx build host",
+    "deploy": "nx deploy host",
     "refresh": "rm -rf node_modules && yarn install",
     "test": "nx test"
   },

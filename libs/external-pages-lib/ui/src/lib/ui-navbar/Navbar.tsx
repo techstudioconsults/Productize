@@ -3,6 +3,7 @@ import { Link as RouterLink } from 'react-router-dom';
 
 import Links from './NavigationLinks';
 import Sidenav from './SideNavigationbar';
+import { SharedButton } from '@productize/shared/ui';
 
 export const Navbar = () => {
   return (
@@ -10,7 +11,8 @@ export const Navbar = () => {
       className="cc-container"
       justifyContent={`space-between`}
       alignItems={`center`}
-      height={`3rem`}
+      height={`5rem`}
+      paddingInline={{ base: 4, xl: 0 }}
     >
       <Center>
         <Link as={RouterLink} to={`/`}>
@@ -21,6 +23,30 @@ export const Navbar = () => {
         </Link>
       </Center>
       <Links isMobile={false} />
+      <Flex display={{ base: `none`, xl: `flex` }} gap={2}>
+        <Link>
+          <SharedButton
+            fontSize={{ base: `sm`, md: `md` }}
+            text={'Login'}
+            width={'160px'}
+            height={'48px'}
+            bgColor={'transparent'}
+            textColor={'grey'}
+            borderRadius={'4px'}
+          />
+        </Link>
+        <Link>
+          <SharedButton
+            fontSize={{ base: `sm`, md: `md` }}
+            text={'Get Started'}
+            width={'160px'}
+            height={'48px'}
+            bgColor={'yellow.200'}
+            textColor={'white'}
+            borderRadius={'4px'}
+          />
+        </Link>
+      </Flex>
       <Sidenav />
     </Flex>
   );

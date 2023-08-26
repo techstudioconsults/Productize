@@ -10,10 +10,13 @@ import {
   Link,
   Center,
   DrawerCloseButton,
+  DrawerFooter,
+  Stack,
 } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 import Links from './NavigationLinks';
 import { Icon } from '@iconify/react';
+import { SharedButton } from '@productize/shared/ui';
 
 const Sidenav = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -31,8 +34,8 @@ const Sidenav = () => {
         onClose={onClose}
       >
         <DrawerOverlay />
-        <DrawerContent bg={`black`} px={10}>
-          <DrawerCloseButton color={`white`} my={2} />
+        <DrawerContent px={10}>
+          <DrawerCloseButton my={2} />
           <DrawerHeader py={5}>
             <Link as={RouterLink} to={`/`}>
               <Image
@@ -46,6 +49,32 @@ const Sidenav = () => {
           <DrawerBody py={10}>
             <Links isMobile={true} />
           </DrawerBody>
+          <DrawerFooter>
+            <Stack w={`100%`} gap={4}>
+              <Link>
+                <SharedButton
+                  fontSize={{ base: `sm`, md: `md` }}
+                  text={'Login'}
+                  width={'100%'}
+                  height={'48px'}
+                  bgColor={'transparent'}
+                  textColor={'grey'}
+                  borderRadius={'4px'}
+                />
+              </Link>
+              <Link>
+                <SharedButton
+                  fontSize={{ base: `sm`, md: `md` }}
+                  text={'Get Started'}
+                  width={'100%'}
+                  height={'48px'}
+                  bgColor={'yellow.200'}
+                  textColor={'white'}
+                  borderRadius={'4px'}
+                />
+              </Link>
+            </Stack>
+          </DrawerFooter>
         </DrawerContent>
       </Drawer>
     </>

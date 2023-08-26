@@ -6,6 +6,7 @@ import {
   Button,
   MenuList,
   MenuItem,
+  Text,
 } from '@chakra-ui/react';
 import { NavLink } from 'react-router-dom';
 import style from './navbar.module.scss';
@@ -33,9 +34,11 @@ type DropdownLinkProps = {
 const DropdownLink = ({ link }: DropdownLinkProps) => {
   const navLinks = link.subLinks?.map((l) => {
     return (
-      <MenuItem justifyContent={`start`} fontSize={`sm`} fontWeight={500} key={l.id}>
-        {l.name}
-      </MenuItem>
+      <NavLink to={l.path} key={l.id}>
+        <MenuItem justifyContent={`start`} fontSize={`sm`} fontWeight={500}>
+          {l.name}
+        </MenuItem>
+      </NavLink>
     );
   });
 
@@ -48,7 +51,7 @@ const DropdownLink = ({ link }: DropdownLinkProps) => {
         as={Button}
         rightIcon={<Icon icon={`mdi:chevron-down`} />}
       >
-        {link.name}
+        <Text fontSize={`16px`}>{link.name}</Text>
       </MenuButton>
       <MenuList>{navLinks}</MenuList>
     </Menu>
@@ -79,11 +82,12 @@ const Links = ({ isMobile }: NavbarProps) => {
   });
   return (
     <OrderedList
+      width={`fit-content`}
       display={{ base: isMobile ? `flex` : `none`, xl: `flex` }}
       flexDir={isMobile ? `column` : `row`}
-      color={isMobile ? `white` : `blackText`}
+      // color={isMobile ? `white` : `blackText`}
       alignItems={{ xl: `center` }}
-      m={0}
+      m={`auto`}
       gap={{ base: 10, xl: 10 }}
     >
       {navLinks}

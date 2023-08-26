@@ -31,7 +31,7 @@ export const Navbar = () => {
             width={'160px'}
             height={'48px'}
             bgColor={'transparent'}
-            textColor={'grey'}
+            textColor={'white'}
             borderRadius={'4px'}
           />
         </Link>

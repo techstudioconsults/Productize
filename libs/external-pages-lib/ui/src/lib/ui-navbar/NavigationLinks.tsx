@@ -46,6 +46,7 @@ const DropdownLink = ({ link }: DropdownLinkProps) => {
     <Menu>
       <MenuButton
         _hover={{ color: `red.100`, bg: `transparent` }} //change the hover color to that of the theme...DONT FORGET!!!
+        color={{ base: `black`, xl: `white` }}
         fontWeight={`thin`}
         bg={`transparent`}
         as={Button}
@@ -53,7 +54,7 @@ const DropdownLink = ({ link }: DropdownLinkProps) => {
       >
         <Text fontSize={`16px`}>{link.name}</Text>
       </MenuButton>
-      <MenuList>{navLinks}</MenuList>
+      <MenuList color={`black`}>{navLinks}</MenuList>
     </Menu>
   );
 };
@@ -85,7 +86,7 @@ const Links = ({ isMobile }: NavbarProps) => {
       width={`fit-content`}
       display={{ base: isMobile ? `flex` : `none`, xl: `flex` }}
       flexDir={isMobile ? `column` : `row`}
-      // color={isMobile ? `white` : `blackText`}
+      color={isMobile ? `black` : `white`}
       alignItems={{ xl: `center` }}
       m={`auto`}
       gap={{ base: 10, xl: 10 }}

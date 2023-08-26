@@ -9,7 +9,13 @@ interface LayoutProps {
 const DefaultLayout = ({ children }: LayoutProps) => {
   return (
     <>
-      <Box pos={`sticky`} top={0} zIndex={999} backdropFilter={`blur(5px)`}>
+      <Box
+        pos={`fixed`}
+        top={0}
+        w={`100%`}
+        zIndex={999}
+        backdropFilter={`blur(5px)`}
+      >
         <Navbar />
       </Box>
       {children}

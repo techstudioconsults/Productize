@@ -58,7 +58,7 @@ h6 {
 }
 
 h1 {
-  @include fluid-type($min_width, $max_width, 24px, 64px);
+  @include fluid-type($min_width, $max_width, 38px, 64px);
 }
 
 h2 {

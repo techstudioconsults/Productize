@@ -21,6 +21,9 @@
       "@productize/external-pages-lib/ui": [
         "libs/external-pages-lib/ui/src/index.ts"
       ],
+      "@productize/external-pages-lib/ui/hero": [
+        "libs/external-pages-lib/ui/hero/src/index.ts"
+      ],
       "@productize/shared/ui": ["libs/shared/ui/src/index.ts"]
     }
   },

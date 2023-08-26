@@ -1,0 +1,11 @@
+a.active {
+  color: #a02279 !important;
+}
+a {
+  &:hover {
+    color: #a02279 !important;
+  }
+}
+// a.inactive {
+//   font-style: italic !important;
+// }

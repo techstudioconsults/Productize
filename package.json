@@ -16,6 +16,7 @@
     "@chakra-ui/react": "^2.8.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@iconify/react": "^4.1.1",
     "@swc/helpers": "~0.5.0",
     "axios": "^1.4.0",
     "core-js": "^3.6.5",

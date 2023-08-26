@@ -4,7 +4,8 @@ import * as ReactDOM from 'react-dom/client';
 import App from './app/app';
 import { BrowserRouter as ExternalPagesRouter } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
-import theme from './theme';
+// import theme from './theme';
+import globalTheme from '../../../scss/globalTheme';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -13,7 +14,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <StrictMode>
     <ExternalPagesRouter>
-      <ChakraProvider theme={theme}>
+      <ChakraProvider theme={globalTheme}>
         <App />
       </ChakraProvider>
     </ExternalPagesRouter>

@@ -1,6 +1,46 @@
 import { extendTheme } from '@chakra-ui/react';
 
 const theme = extendTheme({
+  colors: {
+    transparent: 'transparent',
+    black: '#000',
+    white: '#fff',
+    purple: {
+      100: '#F7F2FB',
+      200: '#6D5DD3',
+      300: '#0E0A2D',
+    },
+    yellow: {
+      100: '#FBE69A',
+      200: '#F6C21C',
+      300: '#39341F',
+    },
+    coral: {
+      100: '#AEDEE0',
+      200: '#17B6BA',
+      300: '#1E2323',
+    },
+    green: {
+      100: '#C9E7D3',
+      200: '#11923D',
+      300: '#161D18',
+    },
+    grey: {
+      100: '#FAFAFA',
+      200: '#F3F3F3',
+      300: '#CFCFD0',
+      400: '#878789',
+      500: '#4C4C4F',
+      600: '#28282B',
+      700: '#1D1C20',
+      800: '#111014',
+    },
+    red: {
+      100: '#FDBDBD',
+      200: '#DB3E3E',
+      300: '#660909',
+    },
+  },
   breakpoints: {
     sm: '576px', //756px
     md: '768px', //768px
@@ -13,6 +53,15 @@ const theme = extendTheme({
     heading: 'Neurial Grotesk, sans-serif',
     body: 'Neurial Grotesk, sans-serif',
   },
+  // textStyles: {
+  //   h1: {
+  //     // you can also use responsive styles
+  //     // fontSize: ['48px', '72px'],
+  //     fontSize: '64px',
+  //     lineHeight: '72px',
+  //     fontWeight: 'bold',
+  //   },
+  // },
   fontSizes: {
     xs: '0.75rem',
     sm: '0.875rem',

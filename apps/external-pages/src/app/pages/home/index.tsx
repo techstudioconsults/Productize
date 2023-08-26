@@ -3,12 +3,8 @@ import { Navbar } from '@productize/external-pages-lib/ui';
 
 const Home = () => {
   return (
-    <Flex
-      flexDir={`column`}
-      justifyContent={`center`}
-      alignItems={`center`}
-    >
-      <Text fontSize={`6xl`} color={`green`}>
+    <Flex flexDir={`column`} justifyContent={`center`} alignItems={`center`}>
+      <Text as={`h1`} color={`green.200`}>
         Productize External Pages
       </Text>
       <Navbar />

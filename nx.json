@@ -13,16 +13,16 @@
   "generators": {
     "@nx/react": {
       "application": {
-        "style": "css",
+        "style": "scss",
         "linter": "eslint",
         "bundler": "webpack",
         "babel": true
       },
       "component": {
-        "style": "css"
+        "style": "scss"
       },
       "library": {
-        "style": "css",
+        "style": "scss",
         "linter": "eslint",
         "unitTestRunner": "jest"
       }

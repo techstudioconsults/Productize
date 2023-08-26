@@ -1,1 +1,0 @@
-(self.webpackChunkexternal_pages=self.webpackChunkexternal_pages||[]).push([[205],{205:(e,a,n)=>{n.r(a),n.d(a,{Navbar:()=>c});const r={};var s=n(322);function c(e){return(0,s.jsx)("div",{className:r.container,children:(0,s.jsx)("h1",{children:"The Navbar!"})})}}}]);

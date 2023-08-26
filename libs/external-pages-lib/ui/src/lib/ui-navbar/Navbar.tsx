@@ -1,13 +1,13 @@
-import styles from './navbar.module.css';
+import { Text, Box } from '@chakra-ui/react';
 
 /* eslint-disable-next-line */
 export interface NavbarProps {}
 
 export function Navbar(props: NavbarProps) {
   return (
-    <div className={styles['container']}>
-      <h1>The Navbar!</h1>
-    </div>
+    <Box bg={`yellow.100`}>
+      <Text color={`purple.300`}>The Navbar!</Text>
+    </Box>
   );
 }
 

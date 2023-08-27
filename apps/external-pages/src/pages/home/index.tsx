@@ -11,6 +11,7 @@ import {
 import DefaultLayout from '../../layouts/Layout';
 import {
   CardLayout,
+  DualSectionLayout,
   Hero,
   SectionLayout,
 } from '@productize/external-pages-lib/ui';
@@ -65,7 +66,12 @@ const Home = () => {
         </Stack>
       </Hero>
       <SectionLayout height={'fit-content'} bgColor={'yellow.100'} bgImg={''}>
-        <Container maxW={`70rem`} pt={{base: `5rem`, xl: `25rem` }} px={{ base: 4, xl: 0 }}>
+        <Container
+          maxW={`70rem`}
+          pt={{ base: `5rem`, xl: `25rem` }}
+          pb={{ base: `5rem`, xl: `15rem` }}
+          px={{ base: 4, xl: 0 }}
+        >
           <Flex gap={20} flexDir={{ base: `column`, xl: `row` }}>
             <Box flex={1} color={`yellow.300`}>
               <Text as={`h1`} lineHeight={`shorter`}>
@@ -181,6 +187,32 @@ const Home = () => {
           </Flex>
         </Container>
       </SectionLayout>
+      <DualSectionLayout
+        height={`40rem`}
+        img={`https://res.cloudinary.com/dkszgtapy/image/upload/v1693134664/productize/Layer_1_3_hn7gd9.png`}
+        flexDirection={{ base: `column`, xl: `row` }}
+        textSectionBgColor={'purple.300'}
+        imgSectionBgColor={'purple.200'}
+        justifyContent={`flex-end`}
+        imgPosition={{ base: `-3rem bottom`, xl: '-10rem bottom' }}
+        imgFit={{ base: `contain` }}
+      >
+        <Flex alignItems={`center`} color={`purple.100`} height={`100%`}>
+          <Container
+            textAlign={{ base: `center`, xl: `initial` }}
+            maxW={`35rem`}
+            px={{ base: 4, xl: 0 }}
+          >
+            <Text as={`h1`} lineHeight={`shorter`}>
+              Everyone can Buy & Sell on Productize
+            </Text>
+            <Text as={`h5`} fontWeight={400} pr={4} mt={5}>
+              The opportunity to share knowledge with individuals and businesses
+              of same passion.
+            </Text>
+          </Container>
+        </Flex>
+      </DualSectionLayout>
     </DefaultLayout>
   );
 };

@@ -14,6 +14,7 @@ import {
   DualSectionLayout,
   Hero,
   SectionLayout,
+  SharedSection,
 } from '@productize/external-pages-lib/ui';
 import { Link } from 'react-router-dom';
 import { SharedButton } from '@productize/shared/ui';
@@ -359,6 +360,7 @@ const Home = () => {
           </SimpleGrid>
         </Container>
       </SectionLayout>
+      <SharedSection />
     </DefaultLayout>
   );
 };

@@ -3,7 +3,7 @@ import { Button } from '@chakra-ui/react';
 /* eslint-disable-next-line */
 export interface ButtonProps {
   text: string;
-  width: string;
+  width: string | object;
   height: string;
   bgColor: string;
   textColor: string;

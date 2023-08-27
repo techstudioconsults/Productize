@@ -62,11 +62,11 @@ h1 {
 }
 
 h2 {
-  @include fluid-type($min_width, $max_width, 20px, 48px);
+  @include fluid-type($min_width, $max_width, 28px, 48px);
 }
 
 h3 {
-  @include fluid-type($min_width, $max_width, 18px, 40px);
+  @include fluid-type($min_width, $max_width, 20px, 40px);
 }
 
 h4 {
@@ -78,7 +78,7 @@ h5 {
 }
 
 h6 {
-  @include fluid-type($min_width, $max_width, 18px, 16px);
+  @include fluid-type($min_width, $max_width, 16px, 18px);
 }
 
 p,

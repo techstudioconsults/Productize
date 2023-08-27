@@ -3,7 +3,7 @@ import React from 'react';
 
 export interface HeroProps {
   children: React.ReactNode;
-  height: string;
+  height: string | object;
   bgImg: string;
   bgColor: string;
 }

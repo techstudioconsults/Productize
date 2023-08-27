@@ -1,5 +1,5 @@
 import { SectionLayout } from './SectionLayout';
-import { Box, Container, Text } from '@chakra-ui/react';
+import { Container, Text } from '@chakra-ui/react';
 import { SharedButton } from '@productize/shared/ui';
 
 export const SharedSection = () => {

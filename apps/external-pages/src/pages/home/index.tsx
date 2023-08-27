@@ -19,7 +19,7 @@ import {
 import { Link } from 'react-router-dom';
 import { SharedButton } from '@productize/shared/ui';
 
-const Home = () => {
+const Home: React.FC = () => {
   return (
     <DefaultLayout>
       <Hero

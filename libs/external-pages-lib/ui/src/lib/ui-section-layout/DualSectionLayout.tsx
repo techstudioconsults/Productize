@@ -1,5 +1,7 @@
-import { Flex, Image } from '@chakra-ui/react';
+import { Box, Flex, Image, List, ListItem, Text } from '@chakra-ui/react';
 import React from 'react';
+import { Icon } from '@iconify/react';
+import { SharedButton } from '@productize/shared/ui';
 
 export interface DualSectionLayoutProps {
   children: React.ReactNode;
@@ -47,5 +49,58 @@ export const DualSectionLayout = ({
         />
       </Flex>
     </Flex>
+  );
+};
+
+export interface DualSectionLayoutListProps {
+  title: string;
+  subTitle: string;
+  listItems: Array<string>;
+  iconColor: string;
+  shouldShowButton: boolean;
+}
+
+export const DualSectionLayoutList = ({
+  title,
+  subTitle,
+  listItems,
+  iconColor,
+  shouldShowButton,
+}: DualSectionLayoutListProps) => {
+  const lists = listItems.map((list, index) => {
+    return (
+      <ListItem key={index} display={`flex`} alignItems={`flex-start`} gap={2}>
+        <Icon
+          fontSize={`1.5rem`}
+          color={iconColor}
+          icon={`mdi:star-four-points`}
+        />
+        <Text as={`h5`} fontWeight={400}>
+          {list}
+        </Text>
+      </ListItem>
+    );
+  });
+  return (
+    <Box>
+      <Text as={`h1`} fontWeight={700} lineHeight={`shorter`}>
+        {title}
+      </Text>
+      <Text as={`h5`} fontWeight={400} my={10}>
+        {subTitle}
+      </Text>
+      <List spacing={3}>{lists}</List>
+      <Box mt={10} display={shouldShowButton ? `block` : `none`}>
+        <SharedButton
+          text={'Get Started'}
+          width={{ base: `100%`, xl: '22.5rem' }}
+          height={'48px'}
+          bgColor={'yellow.200'}
+          textColor={'white'}
+          borderRadius={'4px'}
+          fontSize={{ base: `sm`, md: `md` }}
+        />
+      </Box>
+    </Box>
   );
 };

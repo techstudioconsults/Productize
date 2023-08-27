@@ -213,6 +213,152 @@ const Home = () => {
           </Container>
         </Flex>
       </DualSectionLayout>
+      <SectionLayout height={''} bgColor={'coral.200'} bgImg={''}>
+        <Container
+          textAlign={`center`}
+          maxW={`52rem`}
+          color={`coral.300`}
+          pt={`5rem`}
+        >
+          <Text as={`h1`}>Start monetizing in 4 simple steps</Text>
+          <Text as={`h5`} fontWeight={400}>
+            You can easily reach a broader audience, increase your sales, and
+            build your brand. Monetize everything with Productize and unleash
+            your full potential!
+          </Text>
+        </Container>
+        <Container maxW={`70rem`} px={{ base: 4, xl: 0 }} py={`5rem`}>
+          <SimpleGrid columns={{ base: 1, xl: 2 }} spacing={10}>
+            {/* card 1 */}
+            <Box>
+              <CardLayout
+                bgColor={'white'}
+                width={'100%'}
+                borderRadius={'16px'}
+                height={`100%`}
+              >
+                <CardBody
+                  p={`24px`}
+                  display={`flex`}
+                  flexDir={`column`}
+                  justifyContent={`space-between`}
+                >
+                  <Box>
+                    <Text as={`h5`} my={2}>
+                      Customize your profile
+                    </Text>
+                    <Text fontWeight={400} color={`grey.500`} as={`h6`}>
+                      Complete your profile to start getting your products
+                      published.
+                    </Text>
+                  </Box>
+                  <Flex justifyContent={`flex-end`}>
+                    <Image
+                      src={`https://res.cloudinary.com/dkszgtapy/image/upload/v1693141295/productize/Illustration_jzxpjd.png`}
+                      alt=""
+                    />
+                  </Flex>
+                </CardBody>
+              </CardLayout>
+            </Box>
+            {/* card 2 */}
+            <Box>
+              <CardLayout
+                bgColor={'white'}
+                width={'100%'}
+                borderRadius={'16px'}
+                height={`100%`}
+              >
+                <CardBody
+                  p={`24px`}
+                  display={`flex`}
+                  flexDir={`column`}
+                  justifyContent={`space-between`}
+                >
+                  <Box>
+                    <Text as={`h5`} my={2}>
+                      Set up your payout
+                    </Text>
+                    <Text fontWeight={400} color={`grey.500`} as={`h6`}>
+                      Set up your payout, and start receiving payments for your
+                      products or services!
+                    </Text>
+                  </Box>
+                  <Flex justifyContent={`flex-end`}>
+                    <Image
+                      src={`https://res.cloudinary.com/dkszgtapy/image/upload/v1693141295/productize/Illustration_1_wdmvgf.png`}
+                      alt=""
+                    />
+                  </Flex>
+                </CardBody>
+              </CardLayout>
+            </Box>
+            {/* card 3 */}
+            <Box>
+              <CardLayout
+                bgColor={'white'}
+                width={'100%'}
+                borderRadius={'16px'}
+                height={`100%`}
+              >
+                <CardBody
+                  p={`24px`}
+                  display={`flex`}
+                  flexDir={`column`}
+                  justifyContent={`space-between`}
+                >
+                  <Box>
+                    <Text as={`h5`} my={2}>
+                      Create your first product
+                    </Text>
+                    <Text fontWeight={400} color={`grey.500`} as={`h6`}>
+                      Create your first product , and start building your brand.
+                    </Text>
+                  </Box>
+                  <Flex justifyContent={`flex-end`}>
+                    <Image
+                      src={`https://res.cloudinary.com/dkszgtapy/image/upload/v1693141295/productize/Illustration_2_zibmgb.png`}
+                      alt=""
+                    />
+                  </Flex>
+                </CardBody>
+              </CardLayout>
+            </Box>
+            {/* card 4 */}
+            <Box>
+              <CardLayout
+                bgColor={'white'}
+                width={'100%'}
+                borderRadius={'16px'}
+                height={`100%`}
+              >
+                <CardBody
+                  p={`24px`}
+                  display={`flex`}
+                  flexDir={`column`}
+                  justifyContent={`space-between`}
+                >
+                  <Box>
+                    <Text as={`h5`} my={2}>
+                      Make your first sale
+                    </Text>
+                    <Text fontWeight={400} color={`grey.500`} as={`h6`}>
+                      Make your first sale and receive payments for your work
+                      through your connected bank account.
+                    </Text>
+                  </Box>
+                  <Flex justifyContent={`flex-end`}>
+                    <Image
+                      src={`https://res.cloudinary.com/dkszgtapy/image/upload/v1693141295/productize/Frame_40446_y425kr.png`}
+                      alt=""
+                    />
+                  </Flex>
+                </CardBody>
+              </CardLayout>
+            </Box>
+          </SimpleGrid>
+        </Container>
+      </SectionLayout>
     </DefaultLayout>
   );
 };

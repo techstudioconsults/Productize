@@ -36,7 +36,7 @@ export const DualSectionLayout = ({
         {children}
       </Flex>
       <Flex
-        justifyContent={`flex-start`}
+        justifyContent={`flex-end`}
         overflow={`hidden`}
         bgColor={imgSectionBgColor}
         flex={1}

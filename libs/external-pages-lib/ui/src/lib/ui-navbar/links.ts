@@ -5,7 +5,7 @@ export const links = [
     path: ``,
     type: `dropdown`,
     subLinks: [
-      { id: 1, name: `All`, path: `/explore/all` },
+      { id: 1, name: `All`, path: `/explore` },
       { id: 2, name: `3D`, path: `/explore/3d` },
       { id: 3, name: `Audio`, path: `/explore/audio` },
       { id: 4, name: `Business/Finance`, path: `/explore/finance` },

@@ -1,0 +1,1 @@
+(self.webpackChunkexternal_pages=self.webpackChunkexternal_pages||[]).push([[244],{516:(e,t,o)=>{o.r(t),o.d(t,{SharedButton:()=>a});var r=o(529),n=o(322);function a({text:e,width:t,height:o,bgColor:a,textColor:h,borderRadius:i,fontSize:l}){return(0,n.jsx)(r.Button,{fontWeight:500,fontSize:l,w:t,h:o,bgColor:a,color:h,borderRadius:i,children:e})}}}]);

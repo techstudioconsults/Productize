@@ -5,6 +5,7 @@ import {
   DualSectionLayoutList,
   Hero,
   SectionLayout,
+  SharedSection,
 } from '@productize/external-pages-lib/ui';
 import {
   Box,
@@ -90,7 +91,7 @@ const Features: React.FC = () => {
         </Container>
       </SectionLayout>
       <DualSectionLayout
-        height={``}
+        height={{ base: ``, xl: `40rem` }}
         img={`https://res.cloudinary.com/dkszgtapy/image/upload/v1693165324/productize/Group_7_osmkqe.png`}
         flexDirection={{ base: `column`, xl: `row` }}
         textSectionBgColor={'purple.100'}
@@ -126,6 +127,99 @@ const Features: React.FC = () => {
           </Container>
         </Flex>
       </DualSectionLayout>
+      <SectionLayout height={''} bgColor={''} bgImg={''}>
+        <Container
+          maxW={`60rem`}
+          textAlign={`center`}
+          py={20}
+          color={`yellow.300`}
+        >
+          <Text as={`h1`} lineHeight={`shorter`}>
+            Share your products.
+          </Text>
+          <Text as={`h6`} fontWeight={400} maxW={`34rem`} m={`auto`} my={5}>
+            Explore our massive suite of design features and rich libraries of
+            free visual content. They’re all customizable to make your site look
+            just right.
+          </Text>
+        </Container>
+      </SectionLayout>
+      <DualSectionLayout
+        height={{ base: ``, xl: `40rem` }}
+        img={`https://res.cloudinary.com/dkszgtapy/image/upload/v1693165324/productize/Group_7_osmkqe.png`}
+        flexDirection={{ base: `column`, xl: `row` }}
+        textSectionBgColor={'yellow.200'}
+        imgSectionBgColor={'purple.100'}
+        justifyContent={`flex-end`}
+        imgPosition={`center`}
+        imgFit={{ base: `contain` }}
+      >
+        <Flex
+          alignItems={`center`}
+          color={`purple.300`}
+          height={`100%`}
+          py={10}
+        >
+          <Container
+            // textAlign={{ base: `center`, xl: `initial` }}
+            maxW={`35rem`}
+            px={{ base: 4, xl: 0 }}
+            pr={{ base: 4, xl: 16 }}
+          >
+            <DualSectionLayoutList
+              shouldShowButton={false}
+              iconColor={`white`}
+              title={'Raise an army of community.'}
+              subTitle={
+                'Receive money from anywhere, blah blah blah blah blah.'
+              }
+              listItems={[
+                `Receive money from anywhere, blah blah blah blah blah.`,
+                `Receive money from anywhere, blah blah blah blah blah.`,
+              ]}
+            />
+          </Container>
+        </Flex>
+      </DualSectionLayout>
+      <DualSectionLayout
+        height={{ base: ``, xl: `40rem` }}
+        img={`https://res.cloudinary.com/dkszgtapy/image/upload/v1693170251/productize/Frame_40549_ca4y8f.png`}
+        flexDirection={{ base: `column`, xl: `row-reverse` }}
+        textSectionBgColor={'purple.300'}
+        imgSectionBgColor={'purple.100'}
+        justifyContent={`flex-start`}
+        imgPosition={`center`}
+        imgFit={{ base: `contain` }}
+      >
+        <Flex
+          alignItems={`center`}
+          color={`purple.100`}
+          height={`100%`}
+          py={10}
+        >
+          <Container
+            // textAlign={{ base: `center`, xl: `initial` }}
+            maxW={`35rem`}
+            px={{ base: 4, xl: 0 }}
+            pl={{ base: 4, xl: 16 }}
+          >
+            <DualSectionLayoutList
+              shouldShowButton={false}
+              iconColor={`#F6C21C`}
+              title={'Making Money'}
+              subTitle={
+                'Receive money from anywhere, blah blah blah blah blah.'
+              }
+              listItems={[
+                `Receive money from anywhere, blah blah blah blah blah.`,
+                `Receive money from anywhere, blah blah blah blah blah.`,
+                `Receive money from anywhere, blah blah blah blah blah.`,
+              ]}
+            />
+          </Container>
+        </Flex>
+      </DualSectionLayout>
+      <SharedSection />
     </DefaultLayout>
   );
 };

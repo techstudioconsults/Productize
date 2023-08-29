@@ -71,13 +71,11 @@ export const DualSectionLayoutList = ({
     return (
       <ListItem key={index} display={`flex`} alignItems={`flex-start`} gap={2}>
         <Icon
-          fontSize={`1.5rem`}
+          fontSize={`1.3rem`}
           color={iconColor}
           icon={`mdi:star-four-points`}
         />
-        <Text as={`h5`} fontWeight={400}>
-          {list}
-        </Text>
+        <Text>{list}</Text>
       </ListItem>
     );
   });
@@ -86,9 +84,7 @@ export const DualSectionLayoutList = ({
       <Text as={`h1`} fontWeight={700} lineHeight={`shorter`}>
         {title}
       </Text>
-      <Text as={`h5`} fontWeight={400} my={10}>
-        {subTitle}
-      </Text>
+      <Text my={10}>{subTitle}</Text>
       <List spacing={3}>{lists}</List>
       <Box mt={10} display={shouldShowButton ? `block` : `none`}>
         <SharedButton

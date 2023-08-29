@@ -39,7 +39,7 @@ const Home: React.FC = () => {
             <Text lineHeight={`shorter`} as={`h1`}>
               Monetize your skills with ease
             </Text>
-            <Text color={`purple.100`} mt={3} fontWeight={400} as={`h5`}>
+            <Text color={`purple.100`} mt={3}>
               With Productize, selling your products online is hassle-free. You
               can showcase your work and let us handle the backend tasks,
               allowing you to concentrate on what you do best.
@@ -78,7 +78,7 @@ const Home: React.FC = () => {
               <Text as={`h1`} lineHeight={`shorter`}>
                 You can monetize everything
               </Text>
-              <Text as={`h5`} my={`2rem`}>
+              <Text my={`2rem`}>
                 Productize offers you an opportunity to monetize your passion by
                 providing a platform that allows you to showcase and sell your
                 work online.
@@ -112,7 +112,7 @@ const Home: React.FC = () => {
                     <Text as={`h5`} my={2}>
                       Digital Product
                     </Text>
-                    <Text fontWeight={400} color={`grey.500`} as={`h6`}>
+                    <Text color={`grey.500`}>
                       Any set of files to download or stream.
                     </Text>
                   </CardBody>
@@ -207,7 +207,7 @@ const Home: React.FC = () => {
             <Text as={`h1`} lineHeight={`shorter`}>
               Everyone can Buy & Sell on Productize
             </Text>
-            <Text as={`h5`} fontWeight={400} pr={4} mt={5}>
+            <Text pr={{ xl: 20 }} mt={5}>
               The opportunity to share knowledge with individuals and businesses
               of same passion.
             </Text>
@@ -221,8 +221,10 @@ const Home: React.FC = () => {
           color={`coral.300`}
           pt={`5rem`}
         >
-          <Text as={`h1`}>Start monetizing in 4 simple steps</Text>
-          <Text as={`h5`} fontWeight={400}>
+          <Text lineHeight={`shorter`} mb={4} as={`h1`}>
+            Start monetizing in 4 simple steps
+          </Text>
+          <Text>
             You can easily reach a broader audience, increase your sales, and
             build your brand. Monetize everything with Productize and unleash
             your full potential!
@@ -248,7 +250,7 @@ const Home: React.FC = () => {
                     <Text as={`h5`} my={2}>
                       Customize your profile
                     </Text>
-                    <Text fontWeight={400} color={`grey.500`} as={`h6`}>
+                    <Text color={`grey.500`}>
                       Complete your profile to start getting your products
                       published.
                     </Text>
@@ -280,7 +282,7 @@ const Home: React.FC = () => {
                     <Text as={`h5`} my={2}>
                       Set up your payout
                     </Text>
-                    <Text fontWeight={400} color={`grey.500`} as={`h6`}>
+                    <Text color={`grey.500`}>
                       Set up your payout, and start receiving payments for your
                       products or services!
                     </Text>
@@ -312,7 +314,7 @@ const Home: React.FC = () => {
                     <Text as={`h5`} my={2}>
                       Create your first product
                     </Text>
-                    <Text fontWeight={400} color={`grey.500`} as={`h6`}>
+                    <Text color={`grey.500`}>
                       Create your first product , and start building your brand.
                     </Text>
                   </Box>
@@ -343,7 +345,7 @@ const Home: React.FC = () => {
                     <Text as={`h5`} my={2}>
                       Make your first sale
                     </Text>
-                    <Text fontWeight={400} color={`grey.500`} as={`h6`}>
+                    <Text color={`grey.500`}>
                       Make your first sale and receive payments for your work
                       through your connected bank account.
                     </Text>

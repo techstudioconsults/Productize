@@ -12,7 +12,7 @@ export const SharedSection = () => {
         color={`purple.100`}
       >
         <Text as={`h3`}>Starting monetize on Productize</Text>
-        <Text as={`h6`} fontWeight={400} maxW={`35rem`} m={`auto`} my={5}>
+        <Text maxW={`35rem`} m={`auto`} my={5}>
           With Productize, turn your creativity into a lucrative business
           venture by showcasing and selling your work online.
         </Text>

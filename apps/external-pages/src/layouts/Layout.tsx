@@ -1,5 +1,6 @@
 import { Box } from '@chakra-ui/react';
 import { Navbar } from '@productize/external-pages-lib/ui';
+import { Footer } from '@productize/shared/ui';
 import React from 'react';
 
 interface LayoutProps {
@@ -19,7 +20,9 @@ const DefaultLayout = ({ children }: LayoutProps) => {
         <Navbar />
       </Box>
       {children}
-      <Box borderTop={`3px solid white`} color={`white`}></Box>
+      <Box borderTop={`3px solid white`}>
+        <Footer />
+      </Box>
     </>
   );
 };

@@ -1,10 +1,5 @@
-import { Box, Container, Flex, Heading, Text } from '@chakra-ui/react';
+import { Box, Container, Flex, SimpleGrid, Text } from '@chakra-ui/react';
 import React from 'react';
-// import Logo from '../../../assets/icons/logo.svg';
-// import facebook from '../../../assets/icons/facebook.svg';
-// import pinterest from '../../../assets/icons/pinterest.svg';
-// import twitter from '../../../assets/icons/twitter.svg';
-// import dribble from '../../../assets/icons/dribble.svg';
 import { Icon } from '@iconify/react';
 
 export const Footer: React.FC = () => {
@@ -56,26 +51,37 @@ export const Footer: React.FC = () => {
       <Box border={'1px solid #cfcfd0'}></Box> */}
 
       <Container maxW={`70rem`}>
-        <Flex gap="4.125rem" marginTop="1rem">
-          <Box>
+        <SimpleGrid
+          fontWeight={`bold`}
+          spacing={10}
+          columns={{ base: 1, lg: 4 }}
+          marginTop="1rem"
+        >
+          <Flex
+            alignItems={`start`}
+            justifyContent={{ base: `center`, lg: `initial` }}
+          >
             <img
               src={`https://res.cloudinary.com/dkszgtapy/image/upload/v1693034778/productize/Frame_14220_ogchl8.png`}
               alt="Logo"
             />
-          </Box>
+          </Flex>
 
-          <Box
+          <Flex
+            flexDir={`column`}
             fontSize="md"
             fontWeight="medium"
             lineHeight="base"
             cursor={'pointer'}
-            textAlign={'start'}
+            gap={2}
+            my={{ base: 8, lg: 0 }}
+            textAlign={{ base: `center`, lg: `initial` }}
           >
-            <p>Privacy Policy</p>
-            <p>Cookie settings</p>
-            <p>Sitemap</p>
-            <p>Become a creator</p>
-          </Box>
+            <Text>Privacy Policy</Text>
+            <Text>Cookie settings</Text>
+            <Text>Sitemap</Text>
+            <Text>Become a creator</Text>
+          </Flex>
 
           <Box
             fontSize="md"
@@ -83,6 +89,7 @@ export const Footer: React.FC = () => {
             lineHeight="base"
             cursor={'pointer'}
             textAlign={'start'}
+            display={{ base: `none`, lg: `block` }}
           >
             <p>Blog</p>
             <p>Help and support</p>
@@ -95,17 +102,20 @@ export const Footer: React.FC = () => {
             lineHeight="base"
             cursor={'pointer'}
             textAlign={'start'}
+            display={{ base: `none`, lg: `block` }}
           >
             <p>About us</p>
             <p>Contact us</p>
           </Box>
-        </Flex>
+        </SimpleGrid>
 
         <Flex
-          justify="space-between"
+          flexDir={{ base: `column-reverse`, lg: `row` }}
+          justify={{ base: `center`, lg: `space-between` }}
           align="center"
           paddingBottom="2.5rem"
           paddingTop=".6rem"
+          gap={5}
         >
           <Box>
             <span>2023</span>

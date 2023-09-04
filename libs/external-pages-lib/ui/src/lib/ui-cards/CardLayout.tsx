@@ -2,9 +2,9 @@ import { Card } from '@chakra-ui/react';
 import React from 'react';
 
 export interface cardProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   bgColor: string;
-  width: string;
+  width: string | object;
   height: string | object;
   borderRadius: string;
 }

@@ -39,7 +39,7 @@ const Home: React.FC = () => {
             <Text lineHeight={`shorter`} as={`h1`}>
               Monetize your skills with ease
             </Text>
-            <Text color={`purple.100`} mt={3}>
+            <Text as={`h5`} color={`purple.100`} mt={3}>
               With Productize, selling your products online is hassle-free. You
               can showcase your work and let us handle the backend tasks,
               allowing you to concentrate on what you do best.

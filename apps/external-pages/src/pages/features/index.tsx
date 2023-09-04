@@ -41,7 +41,7 @@ const Features: React.FC = () => {
               </Highlight>
             </Text>
 
-            <Text maxW={`35rem`} margin={`auto`} mt={3}>
+            <Text as={`h5`} maxW={`35rem`} margin={`auto`} mt={3}>
               The opportunity to share knowledge with individuals and businesses
               of same passion.
             </Text>

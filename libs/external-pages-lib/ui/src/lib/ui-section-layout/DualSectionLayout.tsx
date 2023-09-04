@@ -67,7 +67,7 @@ export const DualSectionLayoutList = ({
   iconColor,
   shouldShowButton,
 }: DualSectionLayoutListProps) => {
-  const lists = listItems.map((list, index) => {
+  const lists = listItems?.map((list, index) => {
     return (
       <ListItem key={index} display={`flex`} alignItems={`flex-start`} gap={2}>
         <Icon

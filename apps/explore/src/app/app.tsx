@@ -9,6 +9,7 @@ import Cart from './pages/cart/index';
 // import theme from '../style/theme';
 import ExploreDesign from './pages/explore/categories/design/index';
 import ProuctDetails from './pages/productDetails/ProuctDetails';
+import ProductBuy from './pages/productDetails/ProductBuy';
 
 export function App() {
   const location = useLocation();
@@ -20,6 +21,7 @@ export function App() {
       <Route path="/design" element={<ExploreDesign />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/product/details" element={<ProuctDetails />} />
+      <Route path="/product/buy" element={<ProductBuy />} />
     </Routes>
   );
 }

@@ -5,7 +5,6 @@ import Card from '../shared-ui/Card';
 import axios, { AxiosResponse } from 'axios';
 import Container from '../shared-ui/Container';
 
-
 // Define the type for a product
 interface Product {
   id: number;
@@ -64,32 +63,29 @@ const ExploreFeatures: React.FC = () => {
   };
 
   return (
-    <Box 
-    as={`section`}
-    
-     >
+    <Box as={`section`}>
       <Container>
         <Flex
-         
-          justify={{lg:`space-between`}}
-          align={{lg:`center`}}
-          mt={{lg:`3rem`}}
-          mb={{lg:`1rem`}}
+          flexDir={{ base: `column`, xl: `row` }}
+          justify={{ lg: `space-between` }}
+          align={{ lg: `center` }}
+          mt={{ lg: `3rem` }}
+          mb={{ lg: `1rem` }}
         >
-          <Heading 
-          fontSize={{lg:'2xl'}} 
-          fontWeight={{lg:'bold'}} 
-          lineHeight={{lg: 8}}
+          <Heading
+            fontSize={{ lg: '2xl' }}
+            fontWeight={{ lg: 'bold' }}
+            lineHeight={{ lg: 8 }}
           >
             Featured
           </Heading>
           <Flex>
-            <Image 
-            src={forwardIcon} 
-            alt='forward-icon' 
-            w={'2rem'} 
-            h={'2rem'} 
-            mr={{lg: '.5rem'}}
+            <Image
+              src={forwardIcon}
+              alt="forward-icon"
+              w={'2rem'}
+              h={'2rem'}
+              mr={{ lg: '.5rem' }}
             />
           </Flex>
         </Flex>

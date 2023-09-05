@@ -64,31 +64,29 @@ const ExploreSearch: React.FC = () => {
   };
 
   return (
-    <Box 
-    as={`section`} 
-    >
+    <Box as={`section`}>
       <Container>
         <Flex
-          justify={{lg:`space-between`}}
-          align={{lg:`center`}}
-          mt={{lg:`3rem`}}
-          mb={{lg:`1rem`}}
+          flexDir={{ base: `column`, xl: `row` }}
+          justify={{ lg: `space-between` }}
+          align={{ lg: `center` }}
+          mt={{ lg: `3rem` }}
+          mb={{ lg: `1rem` }}
         >
           <Heading
-            fontSize={{lg:'2xl'}}
-            fontWeight={{lg:'bold'}}
-            lineHeight={{lg:8}}
-           
+            fontSize={{ lg: '2xl' }}
+            fontWeight={{ lg: 'bold' }}
+            lineHeight={{ lg: 8 }}
           >
             Based on your recent search
           </Heading>
           <Flex>
-            <Image 
-            src={forwardIcon} 
-            alt='forward-icon' 
-            w={'2rem'} 
-            h={'2rem'}
-            mr={{lg: '.5rem'}} 
+            <Image
+              src={forwardIcon}
+              alt="forward-icon"
+              w={'2rem'}
+              h={'2rem'}
+              mr={{ lg: '.5rem' }}
             />
           </Flex>
         </Flex>

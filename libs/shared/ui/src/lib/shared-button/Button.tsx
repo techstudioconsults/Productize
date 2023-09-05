@@ -9,6 +9,7 @@ export interface ButtonProps {
   textColor: string;
   borderRadius: string;
   fontSize: object;
+  border?: string;
 }
 
 export function SharedButton({
@@ -19,6 +20,7 @@ export function SharedButton({
   textColor,
   borderRadius,
   fontSize,
+  border,
 }: ButtonProps) {
   return (
     <Button
@@ -29,6 +31,7 @@ export function SharedButton({
       bgColor={bgColor}
       color={textColor}
       borderRadius={borderRadius}
+      border={border}
     >
       {text}
     </Button>

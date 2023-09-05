@@ -1,12 +1,12 @@
-import React from "react";
-import { Box, Flex, Image, Input } from "@chakra-ui/react";
-import Logo from "../../../assets/icons/logo.svg";
-import lockIcon from "../../../assets/icons/lock-icon.svg";
-import search from "../../../assets/icons/search.svg";
-import Wrapper from "./components/Wrapper";
-import Container from "../../shared-ui/Container";
-import { Link } from "react-router-dom";
-
+import React from 'react';
+import { Box, Flex, Image, Input } from '@chakra-ui/react';
+import Logo from '../../../assets/icons/logo.svg';
+import lockIcon from '../../../assets/icons/lock-icon.svg';
+import search from '../../../assets/icons/search.svg';
+import Wrapper from './components/Wrapper';
+import Container from '../../shared-ui/Container';
+import { Link } from 'react-router-dom';
+import { Icon } from '@iconify/react';
 
 const Navbar: React.FC = () => {
   return (
@@ -52,12 +52,7 @@ const Navbar: React.FC = () => {
               bgColor={'#aedee0'}
             />
             <Link to={`cart`}>
-              <Image
-                // src={CartIcon}
-                alt="cart icon"
-                height="32px"
-                width="32px"
-              />
+              <Icon fontSize={`1.5rem`} icon={`ion:cart-sharp`} />
             </Link>
             <Flex
               as="button"

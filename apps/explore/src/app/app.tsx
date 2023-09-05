@@ -8,6 +8,7 @@ import Cart from './pages/cart/index';
 // import { ChakraProvider } from '@chakra-ui/react';
 // import theme from '../style/theme';
 import ExploreDesign from './pages/explore/categories/design/index';
+import ProuctDetails from './pages/productDetails/ProuctDetails';
 
 export function App() {
   const location = useLocation();
@@ -18,6 +19,7 @@ export function App() {
       <Route index element={<ExploreIndex />} />
       <Route path="/design" element={<ExploreDesign />} />
       <Route path="/cart" element={<Cart />} />
+      <Route path="/product/details" element={<ProuctDetails />} />
     </Routes>
   );
 }

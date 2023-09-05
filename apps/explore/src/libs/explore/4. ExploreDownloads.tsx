@@ -68,14 +68,15 @@ const ExploreDownloads: React.FC = () => {
     <Box as={`section`}>
       <Container>
         <Flex
+          flexDir={{ base: `column`, xl: `row` }}
           justify={{ lg: `space-between` }}
           align={{ lg: `center` }}
           mt={{ lg: `3rem` }}
           mb={{ lg: `1rem` }}
         >
           <Heading
-            fontSize={{ lg: "2xl" }}
-            fontWeight={"bold"}
+            fontSize={{ lg: '2xl' }}
+            fontWeight={'bold'}
             lineHeight={{ lg: 8 }}
           >
             Most downloaded
@@ -84,9 +85,9 @@ const ExploreDownloads: React.FC = () => {
             <Image
               src={forwardIcon}
               alt="forward-icon"
-              w={"2rem"}
-              h={"2rem"}
-              mr={{ lg: ".5rem" }}
+              w={'2rem'}
+              h={'2rem'}
+              mr={{ lg: '.5rem' }}
             />
           </Flex>
         </Flex>
@@ -98,7 +99,7 @@ const ExploreDownloads: React.FC = () => {
           <Grid
             templateColumns={{ lg: `repeat(4, 1fr)` }}
             justifyContent={{ lg: `center` }}
-            alignItems={{ lg: "center" }}
+            alignItems={{ lg: 'center' }}
             gap={{ lg: `1.64rem` }}
           >
             {renderCards()}

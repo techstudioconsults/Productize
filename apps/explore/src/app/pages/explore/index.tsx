@@ -8,14 +8,14 @@ import React from "react";
 
 const ExploreIndex: React.FC = () => {
   return (
-    
+
     <ExploreLayout>
       <ExploreBanner />
       <ExploreFeatures />
       <ExploreSearch />
       <ExploreDownloads />
     </ExploreLayout>
-    
+
   );
 };
 

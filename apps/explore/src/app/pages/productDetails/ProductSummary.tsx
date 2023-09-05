@@ -54,10 +54,14 @@ const ProductSummary = () => {
       </Swiper>
       {/* =================================================== */}
       <Box borderRadius={`8px`} border={`1px solid #CFCFD0`} p={5} my={4}>
-        <Text fontSize={`30px`} fontWeight={600} color={`grey.800`}>
+        <Text as={`h4`} fontWeight={600} color={`grey.800`}>
           UI Design Systems Mastery
         </Text>
-        <Flex alignItems={`center`} gap={10}>
+        <Flex
+          alignItems={{ base: `flex-start`, xl: `center` }}
+          flexDir={{ base: `column`, xl: `row` }}
+          gap={{ base: 5, xl: 10 }}
+        >
           <Flex gap={2} alignItems={`center`}>
             <Avatar
               size={`sm`}

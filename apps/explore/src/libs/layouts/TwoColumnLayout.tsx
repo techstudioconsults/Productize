@@ -14,8 +14,8 @@ export const TwoColumnLayout = ({ C1, C2 }: TwoColumnLayoutProps) => {
       templateColumns="repeat(12, 1fr)"
       gap={4}
     >
-      <GridItem colSpan={8}>{C1}</GridItem>
-      <GridItem colSpan={4}>{C2}</GridItem>
+      <GridItem colSpan={{ base: 12, xl: 8 }}>{C1}</GridItem>
+      <GridItem colSpan={{ base: 12, xl: 4 }}>{C2}</GridItem>
     </Grid>
   );
 };

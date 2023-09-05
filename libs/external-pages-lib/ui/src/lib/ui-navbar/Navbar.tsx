@@ -2,7 +2,7 @@ import { Flex, Image, Center, Link } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 
 import Links from './NavigationLinks';
-import Sidenav from './SideNavigationbar';
+import { Sidenav } from './SideNavigationbar';
 import { SharedButton } from '@productize/shared/ui';
 
 export const Navbar = () => {

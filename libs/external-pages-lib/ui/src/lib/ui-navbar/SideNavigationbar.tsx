@@ -18,7 +18,7 @@ import Links from './NavigationLinks';
 import { Icon } from '@iconify/react';
 import { SharedButton } from '@productize/shared/ui';
 
-const Sidenav = () => {
+export const Sidenav = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -81,4 +81,4 @@ const Sidenav = () => {
   );
 };
 
-export default Sidenav;
+// export default Sidenav;

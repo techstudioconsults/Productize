@@ -55,9 +55,11 @@ const ProductNavbar = () => {
                 borderRadius={'4px'}
               />
             </Flex>
-            <Link to={`cart`}>
-              <Icon fontSize={`1.5rem`} icon={`ion:cart-sharp`} />
-            </Link>
+            <Box display={{ base: `none`, xl: `initial` }}>
+              <Link to={`cart`}>
+                <Icon fontSize={`1.5rem`} icon={`ion:cart-sharp`} />
+              </Link>
+            </Box>
             <Box display={{ base: `none`, xl: `initial` }}>
               <SharedButton
                 text={'Create Account'}

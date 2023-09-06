@@ -14,6 +14,7 @@ import {
 } from '@chakra-ui/react';
 import { SharedButton } from '@productize/shared/ui';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const ProductSideNav = () => {
   return (
@@ -44,16 +45,18 @@ const ProductSideNav = () => {
               borderRadius={'4px'}
               fontSize={{ base: `sm`, xl: `md` }}
             />
-            <SharedButton
-              border="1px solid #6D5DD3"
-              text={'Buy Now'}
-              width={`100%`}
-              height={'38px'}
-              bgColor={'white'}
-              textColor={'purple.200'}
-              borderRadius={'4px'}
-              fontSize={{ base: `sm`, xl: `md` }}
-            />
+            <Link to={`/explore/product/buy`}>
+              <SharedButton
+                border="1px solid #6D5DD3"
+                text={'Buy Now'}
+                width={`100%`}
+                height={'38px'}
+                bgColor={'white'}
+                textColor={'purple.200'}
+                borderRadius={'4px'}
+                fontSize={{ base: `sm`, xl: `md` }}
+              />
+            </Link>
           </Flex>
         </Box>
         <Box my={10}>

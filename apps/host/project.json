@@ -103,5 +103,5 @@
     }
   },
   "tags": [],
-  "implicitDependencies": ["external-pages", "explore"]
+  "implicitDependencies": ["external-pages", "explore", "authentication"]
 }

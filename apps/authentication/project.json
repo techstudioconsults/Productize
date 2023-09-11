@@ -1,0 +1,108 @@
+{
+  "name": "authentication",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/authentication/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/authentication",
+        "index": "apps/authentication/src/index.html",
+        "baseHref": "/",
+        "main": "apps/authentication/src/main.ts",
+        "tsConfig": "apps/authentication/tsconfig.app.json",
+        "assets": [
+          "apps/authentication/src/favicon.ico",
+          "apps/authentication/src/assets"
+        ],
+        "styles": ["apps/authentication/src/styles.scss"],
+        "scripts": [],
+        "isolatedConfig": true,
+        "webpackConfig": "apps/authentication/webpack.config.js"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/authentication/src/environments/environment.ts",
+              "with": "apps/authentication/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "webpackConfig": "apps/authentication/webpack.config.prod.js"
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/react:module-federation-dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "authentication:build",
+        "hmr": true,
+        "port": 4203
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "authentication:build:development"
+        },
+        "production": {
+          "buildTarget": "authentication:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/authentication/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "authentication:build",
+        "port": 4203
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "authentication:build:development"
+        },
+        "production": {
+          "buildTarget": "authentication:build:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/authentication/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": []
+}

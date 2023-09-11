@@ -1,4 +1,5 @@
 import { Button } from '@chakra-ui/react';
+import { Icon } from '@iconify/react';
 
 /* eslint-disable-next-line */
 export interface ButtonProps {
@@ -10,6 +11,8 @@ export interface ButtonProps {
   borderRadius: string;
   fontSize: object;
   border?: string;
+  leftIcon?: string | any;
+  rightIcon?: string | any;
 }
 
 export function SharedButton({
@@ -21,9 +24,13 @@ export function SharedButton({
   borderRadius,
   fontSize,
   border,
+  leftIcon,
+  rightIcon,
 }: ButtonProps) {
   return (
     <Button
+      leftIcon={<Icon fontSize={`1.5rem`} icon={leftIcon} />}
+      rightIcon={<Icon fontSize={`1.5rem`} icon={rightIcon} />}
       fontWeight={500}
       fontSize={fontSize}
       w={width}
@@ -38,4 +45,4 @@ export function SharedButton({
   );
 }
 
-export default SharedButton;
+// export default SharedButton;

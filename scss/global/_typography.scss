@@ -82,7 +82,8 @@ h6 {
 }
 
 p,
-span {
+span,
+label {
   margin-block: 0;
   @include fluid-type($min_width, $max_width, 12.5px, 16px);
 }

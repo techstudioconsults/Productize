@@ -23,5 +23,6 @@ module.exports = withModuleFederation({
   remotes: [
     ['external-pages', '/external-pages'],
     ['explore', '/explore'],
+    ['authentication', '/auth'],
   ],
 });

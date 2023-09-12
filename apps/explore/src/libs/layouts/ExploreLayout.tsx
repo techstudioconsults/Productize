@@ -1,6 +1,5 @@
 import React from 'react';
-import Navbar from './navbar/Navbar';
-import Footer from './footer/Footer';
+import { Navbar } from '@productize/explore-lib/ui';
 
 type ExploreProps = {
   children: React.ReactNode; // type children
@@ -11,7 +10,7 @@ const ExploreLayout = (props: ExploreProps) => {
     <div>
       <Navbar />
       {props.children}
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

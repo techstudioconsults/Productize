@@ -45,7 +45,7 @@ const ProductSideNav = () => {
               borderRadius={'4px'}
               fontSize={{ base: `sm`, xl: `md` }}
             />
-            <Link to={`/explore/product/buy`}>
+            <Link to={`/product/buy`}>
               <SharedButton
                 border="1px solid #6D5DD3"
                 text={'Buy Now'}

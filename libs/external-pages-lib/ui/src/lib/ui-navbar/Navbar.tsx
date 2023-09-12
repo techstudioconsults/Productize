@@ -24,7 +24,7 @@ export const Navbar = () => {
       </Center>
       <Links isMobile={false} />
       <Flex display={{ base: `none`, xl: `flex` }} gap={2}>
-        <Link>
+        <Link as={RouterLink} to={`/auth/login`}>
           <SharedButton
             fontSize={{ base: `sm`, md: `md` }}
             text={'Login'}
@@ -35,7 +35,7 @@ export const Navbar = () => {
             borderRadius={'4px'}
           />
         </Link>
-        <Link>
+        <Link as={RouterLink} to={`/auth/signup`}>
           <SharedButton
             fontSize={{ base: `sm`, md: `md` }}
             text={'Get Started'}

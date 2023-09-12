@@ -11,7 +11,7 @@ export function App() {
     <React.Suspense fallback={<p>Loading...</p>}>
       <Routes>
         <Route index path="/*" element={<ExternalPages />} />
-        <Route path="/auth" element={<Authentication />} />
+        <Route path="/auth/*" element={<Authentication />} />
         <Route path="/explore/*" element={<Explore />} />
       </Routes>
     </React.Suspense>

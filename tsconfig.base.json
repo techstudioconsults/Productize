@@ -10,20 +10,17 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": [
-      "es2017",
-      "dom"
-    ],
+    "lib": ["es2017", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@productize/auth-lib/feature": [
-        "libs/auth-lib/feature/src/index.ts"
+      "@productize/auth-lib/feature": ["libs/auth-lib/feature/src/index.ts"],
+      "@productize/auth-lib/ui": ["libs/auth-lib/ui/src/index.ts"],
+      "@productize/explore-lib/feature": [
+        "libs/explore-lib/feature/src/index.ts"
       ],
-      "@productize/auth-lib/ui": [
-        "libs/auth-lib/ui/src/index.ts"
-      ],
+      "@productize/explore-lib/ui": ["libs/explore-lib/ui/src/index.ts"],
       "@productize/external-pages-lib/feature": [
         "libs/external-pages-lib/feature/src/index.ts"
       ],
@@ -33,13 +30,8 @@
       "@productize/external-pages-lib/ui/hero": [
         "libs/external-pages-lib/ui/hero/src/index.ts"
       ],
-      "@productize/shared/ui": [
-        "libs/shared/ui/src/index.ts"
-      ]
+      "@productize/shared/ui": ["libs/shared/ui/src/index.ts"]
     }
   },
-  "exclude": [
-    "node_modules",
-    "tmp"
-  ]
+  "exclude": ["node_modules", "tmp"]
 }

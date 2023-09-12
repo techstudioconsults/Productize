@@ -1,26 +1,39 @@
-import { Box } from '@chakra-ui/react';
-import ExploreBanner from 'apps/explore/src/libs/explore/1. ExploreBanner';
-import ExploreFeatures from 'apps/explore/src/libs/explore/2. ExploreFeatures';
-import ExploreSearch from 'apps/explore/src/libs/explore/3. ExploreSearch';
-import ExploreDownloads from 'apps/explore/src/libs/explore/4. ExploreDownloads';
+import { Box, Container } from '@chakra-ui/react';
+import { ExploreBanner, ExploreFeatures } from '@productize/explore-lib/ui';
 import ExploreLayout from 'apps/explore/src/libs/layouts/ExploreLayout';
 import React from 'react';
 
 const ExploreIndex: React.FC = () => {
   return (
     <ExploreLayout>
-      <Box my={5}>
+      <Container
+        p={{ base: 4, lg: 0 }}
+        maxW={`70rem`}
+        my={{ base: `3rem`, lg: `7rem` }}
+      >
         <ExploreBanner />
-      </Box>
-      <Box my={5}>
-        <ExploreFeatures />
-      </Box>
-      <Box my={5}>
-        <ExploreSearch />
-      </Box>
-      <Box my={5}>
-        <ExploreDownloads />
-      </Box>
+      </Container>
+      <Container
+        my={{ base: `3rem`, lg: `7rem` }}
+        p={{ base: 4, lg: 0 }}
+        maxW={`70rem`}
+      >
+        <ExploreFeatures title={`Featured`} />
+      </Container>
+      <Container
+        my={{ base: `3rem`, lg: `7rem` }}
+        p={{ base: 4, lg: 0 }}
+        maxW={`70rem`}
+      >
+        <ExploreFeatures title={`Based on your recent search`} />
+      </Container>
+      <Container
+        my={{ base: `3rem`, lg: `7rem` }}
+        p={{ base: 4, lg: 0 }}
+        maxW={`70rem`}
+      >
+        <ExploreFeatures title={`Most Downloaded`} />
+      </Container>
     </ExploreLayout>
   );
 };

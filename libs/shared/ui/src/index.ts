@@ -1,2 +1,2 @@
-export * from './lib/shared-button/Button';
-export * from './lib/shared-button/Footer';
+export * from './lib/SharedButton';
+export * from './lib/Footer';

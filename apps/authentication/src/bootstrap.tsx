@@ -1,17 +1,3 @@
-// import { StrictMode } from 'react';
-// import * as ReactDOM from 'react-dom/client';
-
-// import App from './app/app';
-
-// const root = ReactDOM.createRoot(
-//   document.getElementById('root') as HTMLElement
-// );
-// root.render(
-//   <StrictMode>
-//     <App />
-//   </StrictMode>
-// );
-
 import { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import App from './app/app';
@@ -22,7 +8,7 @@ import globalTheme from '../../../scss/globalTheme';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
-console.log(root);
+
 root.render(
   <StrictMode>
     <AuthRouter>

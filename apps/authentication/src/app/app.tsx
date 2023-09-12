@@ -3,17 +3,14 @@ import Login from '../pages/login';
 import Signup from '../pages/signup';
 import '../styles.scss';
 
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 export function App() {
-  const location = useLocation();
-  console.log(location);
-
   return (
     <Routes>
       <Route index element={<Signup />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/auth/login" element={<Login />} />
+      <Route path="/auth/forgot-password" element={<ForgotPassword />} />
     </Routes>
   );
 }

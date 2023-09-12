@@ -4,8 +4,9 @@
   "license": "MIT",
   "scripts": {
     "start": "nx serve --devRemote=external-pages,explore --open",
-    "start-explore": "nx serve explore --open",
+    "start-auth": "nx serve authentication --open",
     "start-externalPages": "nx serve external-pages --open",
+    "start-explore": "nx serve explore --open",
     "build": "nx build host",
     "deploy": "nx deploy host",
     "refresh": "rm -rf node_modules && yarn install",

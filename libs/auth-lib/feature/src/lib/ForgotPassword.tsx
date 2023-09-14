@@ -41,7 +41,7 @@ export function ForgotPassowrdForm(props: ForgotPassowrdProps) {
         </Box>
 
         <Center my={5}>
-          <Link as={RouterLink} w={`100%`} to={`/login`}>
+          <Link as={RouterLink} w={`100%`} to={`/auth/login`}>
             <SharedButton
               leftIcon={`solar:arrow-left-line-duotone`}
               text={'Back to Sign In'}

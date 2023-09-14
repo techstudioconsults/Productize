@@ -14,7 +14,7 @@ export function App() {
     <Routes>
       <Route index element={<ExploreIndex />} />
       <Route path="/design" element={<ExploreDesign />} />
-      <Route path="/cart" element={<Cart />} />
+      {/* <Route path="/cart" element={<Cart />} /> */}
       <Route path="/product/details" element={<ProuctDetails />} />
       <Route path="/product/buy" element={<ProductBuy />} />
     </Routes>

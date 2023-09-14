@@ -25,12 +25,12 @@ export const Navbar: React.FC = () => {
           gap={4}
         >
           <Flex justifyContent={`space-between`} alignItems={`center`}>
-            <Box>
+            <Link as={RouterLink} to={`/`}>
               <img
                 src={`https://res.cloudinary.com/dkszgtapy/image/upload/v1693034778/productize/Frame_14220_ogchl8.png`}
                 alt="Website logo"
               />
-            </Box>
+            </Link>
             <Box display={{ base: `block`, lg: `none` }} fontSize={`1.5rem`}>
               <Icon icon={`mdi:cart`} />
             </Box>

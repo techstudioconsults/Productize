@@ -30,7 +30,7 @@ const ProductSideNav = () => {
           <Text>20</Text>
         </Flex>
         <Box my={4}>
-          <Text color={`grrey.800`} fontSize={`22px`} fontWeight={600}>
+          <Text color={`grey.800`} fontSize={`22px`} fontWeight={600}>
             ₦3,000
           </Text>
         </Box>
@@ -45,7 +45,7 @@ const ProductSideNav = () => {
               borderRadius={'4px'}
               fontSize={{ base: `sm`, xl: `md` }}
             />
-            <Link to={`/product/buy`}>
+            <Link to={`/explore/product/buy`}>
               <SharedButton
                 border="1px solid #6D5DD3"
                 text={'Buy Now'}

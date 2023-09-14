@@ -134,7 +134,7 @@ export function SignupForm(props: SignupFormProps) {
           Have an account already ?{' '}
           <Link
             display={`inline`}
-            to={`/login`}
+            to={`/auth/login`}
             color={`purple.200`}
             as={RouterLink}
           >

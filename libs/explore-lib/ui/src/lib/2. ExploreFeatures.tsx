@@ -3,8 +3,6 @@ import {
   Container,
   Flex,
   Grid,
-  Heading,
-  Image,
   Text,
 } from '@chakra-ui/react';
 import React, { useState, useEffect } from 'react';

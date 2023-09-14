@@ -27,7 +27,7 @@
     {
         id: 6,
         li: 'Design',
-        path: '/design'
+        path: '/explore/design'
     },
     {
         id: 7,

@@ -13,7 +13,7 @@ interface CardProps {
 const Card: React.FC<CardProps> = ({ image, heading, rate, count, price }) => {
   return (
     <Box
-      to={`/product/details`}
+      to={`/explore/product/details`}
       as={Link}
       display={'flex'}
       flexDir={'column'}

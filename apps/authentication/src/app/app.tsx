@@ -8,9 +8,9 @@ import { Route, Routes } from 'react-router-dom';
 export function App() {
   return (
     <Routes>
-      <Route index element={<Signup />} />
-      <Route path="/auth/login" element={<Login />} />
-      <Route path="/auth/forgot-password" element={<ForgotPassword />} />
+      <Route index path="/signup" element={<Signup />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
     </Routes>
   );
 }

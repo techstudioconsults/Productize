@@ -4,9 +4,11 @@ import {
   CardBody,
   CardHeader,
   Center,
+  Link,
   Text,
 } from '@chakra-ui/react';
 import React, { ReactNode } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 
 interface AuthFormTamplateProps {
   children: ReactNode;
@@ -19,10 +21,12 @@ export const AuthFormTemplateSignup = ({ children }: AuthFormTamplateProps) => {
     <Card mt={40} py={8} maxW={`547px`} w={`100%`}>
       <CardHeader px={{ lg: 12 }}>
         <Center>
-          <img
-            src={`https://res.cloudinary.com/dkszgtapy/image/upload/v1693034778/productize/Frame_14220_ogchl8.png`}
-            alt="logo"
-          />
+          <Link as={RouterLink} to={`/`}>
+            <img
+              src={`https://res.cloudinary.com/dkszgtapy/image/upload/v1693034778/productize/Frame_14220_ogchl8.png`}
+              alt="logo"
+            />
+          </Link>
         </Center>
         <Text as={`h5`} textAlign={`left`} my={5}>
           Join creators today to sell your product and upskill your community.
@@ -42,10 +46,12 @@ export const AuthFormTemplateLogin = ({
     <Card bgColor={`transparent`} py={8} maxW={`444px`} w={`100%`}>
       <CardHeader p={12}>
         <Center>
-          <img
-            src={`https://res.cloudinary.com/dkszgtapy/image/upload/v1693034778/productize/Frame_14220_ogchl8.png`}
-            alt="logo"
-          />
+          <Link as={RouterLink} to={`/`}>
+            <img
+              src={`https://res.cloudinary.com/dkszgtapy/image/upload/v1693034778/productize/Frame_14220_ogchl8.png`}
+              alt="logo"
+            />
+          </Link>
         </Center>
       </CardHeader>
       <CardBody borderRadius={`8px`} bgColor={`white`} px={{ lg: 12 }}>

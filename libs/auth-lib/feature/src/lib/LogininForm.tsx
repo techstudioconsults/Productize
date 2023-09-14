@@ -42,7 +42,7 @@ export function LoginForm(props: LoginFormProps) {
             Password
           </FormLabel>
           <Link
-            to={`/forgot-password`}
+            to={`/auth/forgot-password`}
             as={RouterLink}
             color={`purple.200`}
             fontSize={`12px`}
@@ -104,7 +104,7 @@ export function LoginForm(props: LoginFormProps) {
           Don’t have an account ?{' '}
           <Link
             display={`inline`}
-            to={`/`}
+            to={`/auth/signup`}
             as={RouterLink}
             color={`purple.200`}
           >

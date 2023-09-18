@@ -11,6 +11,7 @@ export function App() {
       <Route index path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="*" element={<h1>PAGE NOT FOUND</h1>} />
     </Routes>
   );
 }

@@ -28,33 +28,43 @@ const validation = {
 };
 
 export function SignupForm(props: SignupFormProps) {
-  const [show, setShow] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordConfirmation, setShowPasswordConfirmation] =
+    useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [authResponse, setAuthResponse] = useState<unknown>();
-  const handleClick = () => setShow(!show);
+  const handlePasswordClick = () => setShowPassword(!showPassword);
+  const handlePasswordConfirmationClick = () =>
+    setShowPasswordConfirmation(!showPasswordConfirmation);
   const navigate = useNavigate();
 
   const {
     register,
-    reset,
     handleSubmit,
-    formState: { errors, isSubmitSuccessful },
+    // formState: { errors, isSubmitSuccessful },
   } = useForm({
     criteriaMode: 'all',
   });
 
   const onSubmit = async (data: unknown) => {
-    console.log(data);
-    // Make first two requests
-    const [response] = await Promise.all([
-      axios.post(
-        `https://productize-api.techstudio.academy/api/auth/register`,
-        data
-      ),
-    ]);
-    if (response.status === 200) {
-      console.log(response.data);
-      // navigate(`/explore`);
-      // setAuthResponse(response.data);
+    try {
+      setIsLoading(true);
+      // Make multiple requests
+      const [response] = await Promise.all([
+        axios.post(
+          `https://productize-api.techstudio.academy/api/auth/register`,
+          data
+        ),
+      ]);
+      if (response.status === 200) {
+        setIsLoading(false);
+        console.log(response.data);
+        navigate(`/explore`);
+        setAuthResponse(response.data);
+      }
+    } catch (err) {
+      setIsLoading(false);
+      console.log(err);
     }
   };
 
@@ -99,13 +109,13 @@ export function SignupForm(props: SignupFormProps) {
             bgColor={`grey.200`}
             variant={`filled`}
             pr="4.5rem"
-            type={show ? 'text' : 'password'}
+            type={showPassword ? 'text' : 'password'}
             placeholder="Enter password"
             _placeholder={{ fontSize: { base: `xs`, lg: `sm` } }}
             {...register('password', validation)}
           />
-          <InputRightElement onClick={handleClick} width="2.5rem">
-            {!show ? (
+          <InputRightElement onClick={handlePasswordClick} width="2.5rem">
+            {!showPassword ? (
               <Icon icon={`ant-design:eye-twotone`} />
             ) : (
               <Icon icon={`ant-design:eye-invisible-twotone`} />
@@ -123,13 +133,16 @@ export function SignupForm(props: SignupFormProps) {
             bgColor={`grey.200`}
             variant={`filled`}
             pr="4.5rem"
-            type={show ? 'text' : 'password'}
-            placeholder="Enter password"
+            type={showPasswordConfirmation ? 'text' : 'password'}
+            placeholder="Enter password confirmation"
             _placeholder={{ fontSize: { base: `xs`, lg: `sm` } }}
             {...register('password_confirmation', validation)}
           />
-          <InputRightElement onClick={handleClick} width="2.5rem">
-            {!show ? (
+          <InputRightElement
+            onClick={handlePasswordConfirmationClick}
+            width="2.5rem"
+          >
+            {!showPasswordConfirmation ? (
               <Icon icon={`ant-design:eye-twotone`} />
             ) : (
               <Icon icon={`ant-design:eye-invisible-twotone`} />
@@ -149,8 +162,11 @@ export function SignupForm(props: SignupFormProps) {
           </Link>
           .
         </Text>
-        <Box as={`button`} type="submit" w={`100%`} my={5}>
+        <Box my={5}>
           <SharedButton
+            loadingText="Creating account..."
+            isLoading={isLoading}
+            type={`submit`}
             text={'Create Account'}
             width={`100%`}
             height={'46px'}

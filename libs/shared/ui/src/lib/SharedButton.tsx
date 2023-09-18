@@ -13,12 +13,15 @@ export interface ButtonProps {
   border?: string;
   leftIcon?: string | any;
   rightIcon?: string | any;
+  type?: string | any;
+  loadingText?: string;
+  isLoading?: boolean;
 }
 
 export function SharedButton({
   text,
   width,
-  height,
+  height, 
   bgColor,
   textColor,
   borderRadius,
@@ -26,9 +29,14 @@ export function SharedButton({
   border,
   leftIcon,
   rightIcon,
+  type,
+  loadingText,
+  isLoading,
 }: ButtonProps) {
   return (
     <Button
+      loadingText={loadingText}
+      isLoading={isLoading}
       leftIcon={<Icon fontSize={`1.5rem`} icon={leftIcon} />}
       rightIcon={<Icon fontSize={`1.5rem`} icon={rightIcon} />}
       fontWeight={500}
@@ -39,6 +47,7 @@ export function SharedButton({
       color={textColor}
       borderRadius={borderRadius}
       border={border}
+      type={type}
     >
       {text}
     </Button>

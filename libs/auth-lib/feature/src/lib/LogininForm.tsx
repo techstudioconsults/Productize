@@ -31,53 +31,44 @@ const validation = {
 
 export function LoginForm() {
   const [show, setShow] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [authResponse, setAuthResponse] = useState<unknown>();
   const handleClick = () => setShow(!show);
   const navigate = useNavigate();
 
   const {
     register,
-    reset,
+    // reset,
     handleSubmit,
-    formState: { errors, isSubmitSuccessful },
+    // formState: { errors, isSubmitSuccessful },
   } = useForm({
     criteriaMode: 'all',
   });
 
   const onSubmit = async (data: unknown) => {
-    console.log(data);
-    // Make first two requests
-    const [response] = await Promise.all([
-      // axios.get(
-      //   `https://productize-api.techstudio.academy/api/sanctum/csrf-cookie`
-      // ),
-      axios.post(
-        `https://productize-api.techstudio.academy/api/auth/login`,
-        data
-      ),
-    ]);
-    if (response.status === 200) {
-      console.log(response.data);
-      navigate(`/explore`);
-      setAuthResponse(response.data);
+    try {
+      setIsLoading(true);
+      // Make multiple requests
+      const [response] = await Promise.all([
+        // axios.get(
+        //   `https://productize-api.techstudio.academy/api/sanctum/csrf-cookie`
+        // ),
+        axios.post(
+          `https://productize-api.techstudio.academy/api/auth/login`,
+          data
+        ),
+      ]);
+      if (response.status === 200) {
+        setIsLoading(false);
+        console.log(response.data);
+        navigate(`/explore`);
+        setAuthResponse(response.data);
+      }
+    } catch (err) {
+      setIsLoading(false);
+      console.log(err);
     }
   };
-  // const onSubmit = async (data) => {
-
-  //   try {
-  //     const res = await axios.get(
-  //       `https://productize-api.techstudio.academy/api/sanctum/csrf-cookie`
-  //     );
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (isSubmitSuccessful) {
-  //     reset();
-  //   }
-  // }, [isSubmitSuccessful, reset]);
 
   return (
     <FormControl as={`form`} onSubmit={handleSubmit(onSubmit)}>
@@ -131,8 +122,11 @@ export function LoginForm() {
         </InputGroup>
       </FormControl>
       <Box>
-        <Box as={`button`} type="submit" w={`100%`} my={5}>
+        <Box my={5}>
           <SharedButton
+            loadingText="Logging in..."
+            isLoading={isLoading}
+            type={`submit`}
             text={'Sign In'}
             width={`100%`}
             height={'48px'}

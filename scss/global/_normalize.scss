@@ -75,6 +75,8 @@ input,
 textarea,
 select {
   height: fn.rem(40);
+  font-size: fn.rem(14) !important;
+
   &::placeholder {
     font-size: fn.rem(14);
   }

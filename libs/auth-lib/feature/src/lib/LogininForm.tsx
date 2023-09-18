@@ -10,30 +10,90 @@ import {
   Link,
   Text,
 } from '@chakra-ui/react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import { SharedButton } from '@productize/shared/ui';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+// import { ErrorMessage } from '@hookform/error-message';
+import { useForm } from 'react-hook-form';
+import axios from 'axios';
 
 /* eslint-disable-next-line */
-export interface LoginFormProps {}
+// export interface LoginFormProps {}
 
-export function LoginForm(props: LoginFormProps) {
+const validation = {
+  required: 'This input is required.',
+  minLength: {
+    value: 4,
+    message: 'This input must exceed 3 characters',
+  },
+};
+
+export function LoginForm() {
   const [show, setShow] = useState(false);
+  const [authResponse, setAuthResponse] = useState<unknown>();
   const handleClick = () => setShow(!show);
+  const navigate = useNavigate();
+
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors, isSubmitSuccessful },
+  } = useForm({
+    criteriaMode: 'all',
+  });
+
+  const onSubmit = async (data: unknown) => {
+    console.log(data);
+    // Make first two requests
+    const [response] = await Promise.all([
+      // axios.get(
+      //   `https://productize-api.techstudio.academy/api/sanctum/csrf-cookie`
+      // ),
+      axios.post(
+        `https://productize-api.techstudio.academy/api/auth/login`,
+        data
+      ),
+    ]);
+    if (response.status === 200) {
+      console.log(response.data);
+      navigate(`/explore`);
+      setAuthResponse(response.data);
+    }
+  };
+  // const onSubmit = async (data) => {
+
+  //   try {
+  //     const res = await axios.get(
+  //       `https://productize-api.techstudio.academy/api/sanctum/csrf-cookie`
+  //     );
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (isSubmitSuccessful) {
+  //     reset();
+  //   }
+  // }, [isSubmitSuccessful, reset]);
 
   return (
-    <FormControl>
+    <FormControl as={`form`} onSubmit={handleSubmit(onSubmit)}>
       <FormControl mb={6}>
         <FormLabel fontWeight={600} className="btn-text">
           Email
         </FormLabel>
         <Input
+          type="email"
+          id="email"
           size={`lg`}
           bgColor={`grey.200`}
           variant={`filled`}
           placeholder="Enter email"
           _placeholder={{ fontSize: { base: `xs`, lg: `sm` } }}
+          {...register('email', validation)}
         />
       </FormControl>
       <FormControl my={6}>
@@ -52,12 +112,14 @@ export function LoginForm(props: LoginFormProps) {
         </Flex>
         <InputGroup size="lg">
           <Input
+            id="password"
             bgColor={`grey.200`}
             variant={`filled`}
             pr="4.5rem"
             type={show ? 'text' : 'password'}
             placeholder="Enter password"
             _placeholder={{ fontSize: { base: `xs`, lg: `sm` } }}
+            {...register('password', validation)}
           />
           <InputRightElement onClick={handleClick} width="2.5rem">
             {!show ? (
@@ -69,7 +131,7 @@ export function LoginForm(props: LoginFormProps) {
         </InputGroup>
       </FormControl>
       <Box>
-        <Box my={5}>
+        <Box as={`button`} type="submit" w={`100%`} my={5}>
           <SharedButton
             text={'Sign In'}
             width={`100%`}

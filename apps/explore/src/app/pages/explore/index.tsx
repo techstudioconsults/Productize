@@ -1,4 +1,4 @@
-import { Box, Container } from '@chakra-ui/react';
+import { Container } from '@chakra-ui/react';
 import { ExploreBanner, ExploreFeatures, ExploreLayout } from '@productize/explore-lib/ui';
 import React from 'react';
 

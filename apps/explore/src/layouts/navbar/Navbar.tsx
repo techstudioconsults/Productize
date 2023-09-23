@@ -1,9 +1,9 @@
 import React from 'react';
 import { Box, Flex, Image, Input, Link } from '@chakra-ui/react';
 import search from '../../../assets/icons/search.svg';
-// import Wrapper from './components/Wrapper';
 import { Link as RouterLink } from 'react-router-dom';
 import { Icon } from '@iconify/react';
+import Wrapper from './components/Wrapper';
 
 const Navbar: React.FC = () => {
   return (
@@ -67,7 +67,7 @@ const Navbar: React.FC = () => {
           </Flex>
         </Flex>
       </Box>
-      {/* <Wrapper /> */}
+      <Wrapper />
     </Box>
   );
 };

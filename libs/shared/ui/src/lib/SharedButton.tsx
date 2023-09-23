@@ -3,6 +3,7 @@ import { Icon } from '@iconify/react';
 
 /* eslint-disable-next-line */
 export interface ButtonProps {
+  onClick?: () => void;
   text: string;
   width: string | object;
   height: string;
@@ -21,7 +22,7 @@ export interface ButtonProps {
 export function SharedButton({
   text,
   width,
-  height, 
+  height,
   bgColor,
   textColor,
   borderRadius,
@@ -32,9 +33,11 @@ export function SharedButton({
   type,
   loadingText,
   isLoading,
+  onClick,
 }: ButtonProps) {
   return (
     <Button
+      onClick={onClick}
       loadingText={loadingText}
       isLoading={isLoading}
       leftIcon={<Icon fontSize={`1.5rem`} icon={leftIcon} />}

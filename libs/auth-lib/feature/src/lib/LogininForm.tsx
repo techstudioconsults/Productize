@@ -9,11 +9,12 @@ import {
   InputRightElement,
   Link,
   Text,
+  useToast,
 } from '@chakra-ui/react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import { SharedButton } from '@productize/shared/ui';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 // import { ErrorMessage } from '@hookform/error-message';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
@@ -35,6 +36,7 @@ export function LoginForm() {
   const [authResponse, setAuthResponse] = useState<unknown>();
   const handleClick = () => setShow(!show);
   const navigate = useNavigate();
+  const toast = useToast();
 
   const {
     register,
@@ -58,15 +60,62 @@ export function LoginForm() {
           data
         ),
       ]);
+
       if (response.status === 200) {
         setIsLoading(false);
+        localStorage.setItem('token', response.data.token);
         console.log(response.data);
         navigate(`/explore`);
         setAuthResponse(response.data);
       }
-    } catch (err) {
+    } catch (err: any) {
+      setIsLoading(false);
+      console.log(err.response.data.message);
+      toast({
+        title: 'Something went wrong',
+        description: err.response.data.message,
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+        position: 'top',
+        variant: 'top-accent',
+      });
+    }
+  };
+
+  const onGoogleButtonClick = async () => {
+    try {
+      setIsLoading(true);
+      // Make multiple requests
+      const [response] = await Promise.all([
+        axios.get(
+          `https://productize-api.techstudio.academy/api/auth/oauth/redirect?provider=google`
+        ),
+      ]);
+      if (response.status === 200) {
+        setIsLoading(false);
+        console.log(response.data);
+        setAuthResponse(response.data);
+        if (response.data.redirect_url) {
+          // Redirect the user to the obtained OAuth provider URL
+          window.location.href = response.data.redirect_url;
+        } else {
+          // Handle error or unsupported provider
+          console.error(`Failed to obtain redirect URL for google`);
+        }
+      }
+    } catch (err: any) {
       setIsLoading(false);
       console.log(err);
+      toast({
+        title: 'Something went wrong',
+        description: err.response.data.message,
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+        position: 'top',
+        variant: 'top-accent',
+      });
     }
   };
 
@@ -141,6 +190,8 @@ export function LoginForm() {
         </Center>
         <Box my={5}>
           <SharedButton
+            onClick={onGoogleButtonClick}
+            rightIcon={`flat-color-icons:google`}
             border={`1px solid #6D5DD3`}
             text={'Continue with Google'}
             width={`100%`}

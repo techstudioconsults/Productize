@@ -1,8 +1,7 @@
 import React from 'react';
 import { Box, Flex, Image, Input, Link } from '@chakra-ui/react';
 import search from '../../../assets/icons/search.svg';
-import Wrapper from './components/Wrapper';
-import Container from '../../shared-ui/Container';
+// import Wrapper from './components/Wrapper';
 import { Link as RouterLink } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 

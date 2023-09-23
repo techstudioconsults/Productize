@@ -1,4 +1,4 @@
-import { Center } from '@chakra-ui/react';
+import { Box, Center } from '@chakra-ui/react';
 import { ReactNode } from 'react';
 
 /* eslint-disable-next-line */
@@ -10,6 +10,8 @@ export interface AuthBackgroundProps {
 export function AuthBackground({ children, isLogin }: AuthBackgroundProps) {
   return (
     <Center
+      pos={`relative`}
+      // zIndex={-1}
       padding={`1rem`}
       width={`100%`}
       height={`100vh`}
@@ -18,8 +20,21 @@ export function AuthBackground({ children, isLogin }: AuthBackgroundProps) {
       bgRepeat={`repeat`}
       bgPosition={`center`}
       bgColor={isLogin ? `purple.300` : `white`}
+      _after={{
+        pos: `fixed`,
+        content: "''",
+        top: 0,
+        left: 0,
+        w: `100%`,
+        h: `100vh`,
+        bgColor: `purple.300`,
+        filter: `opacity(0.5)`,
+        // zIndex: 0,
+      }}
     >
+      <Box pos={`relative`} zIndex={1}>
       {children}
+      </Box>
     </Center>
   );
 }

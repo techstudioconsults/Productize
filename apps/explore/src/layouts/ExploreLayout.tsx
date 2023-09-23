@@ -1,5 +1,6 @@
 import React from 'react';
 import { Navbar } from '@productize/explore-lib/ui';
+import { useTokenExists } from '@productize/shared/ui';
 
 type ExploreProps = {
   children: React.ReactNode; // type children
@@ -8,7 +9,7 @@ type ExploreProps = {
 const ExploreLayout = (props: ExploreProps) => {
   return (
     <div>
-      <Navbar />
+      <Navbar isAuth={useTokenExists()} />
       {props.children}
       {/* <Footer /> */}
     </div>

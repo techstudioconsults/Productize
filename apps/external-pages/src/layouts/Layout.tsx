@@ -1,6 +1,7 @@
 import { Box } from '@chakra-ui/react';
 import { Navbar } from '@productize/external-pages-lib/ui';
-import { Footer } from '@productize/shared/ui';
+import { Footer, useTokenExists } from '@productize/shared/ui';
+
 import React from 'react';
 
 interface LayoutProps {
@@ -17,7 +18,7 @@ const DefaultLayout = ({ children }: LayoutProps) => {
         zIndex={999}
         backdropFilter={`blur(5px)`}
       >
-        <Navbar />
+        <Navbar isAuth={useTokenExists()} />
       </Box>
       {children}
       <Box borderTop={`3px solid white`}>

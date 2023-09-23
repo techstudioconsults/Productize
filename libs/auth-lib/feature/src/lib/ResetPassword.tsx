@@ -1,6 +1,7 @@
 import {
   Box,
   Center,
+  Flex,
   FormControl,
   FormLabel,
   Input,
@@ -13,12 +14,13 @@ import {
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import { SharedButton } from '@productize/shared/ui';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+// import { ErrorMessage } from '@hookform/error-message';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 
 /* eslint-disable-next-line */
-export interface SignupFormProps {}
+// export interface LoginFormProps {}
 
 const validation = {
   required: 'This input is required.',
@@ -28,7 +30,7 @@ const validation = {
   },
 };
 
-export function SignupForm(props: SignupFormProps) {
+export function ResetPassword() {
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConfirmation, setShowPasswordConfirmation] =
     useState(false);
@@ -42,6 +44,7 @@ export function SignupForm(props: SignupFormProps) {
 
   const {
     register,
+    // reset,
     handleSubmit,
     // formState: { errors, isSubmitSuccessful },
   } = useForm({
@@ -53,56 +56,24 @@ export function SignupForm(props: SignupFormProps) {
       setIsLoading(true);
       // Make multiple requests
       const [response] = await Promise.all([
+        // axios.get(
+        //   `https://productize-api.techstudio.academy/api/sanctum/csrf-cookie`
+        // ),
         axios.post(
-          `https://productize-api.techstudio.academy/api/auth/register`,
+          `https://productize-api.techstudio.academy/api/auth/login`,
           data
         ),
       ]);
       if (response.status === 200) {
         setIsLoading(false);
+        localStorage.setItem('token', response.data.token);
         console.log(response.data);
         navigate(`/explore`);
         setAuthResponse(response.data);
       }
     } catch (err: any) {
       setIsLoading(false);
-      console.log(err);
-      toast({
-        title: 'Something went wrong',
-        description: err.response.data.message,
-        status: 'error',
-        duration: 9000,
-        isClosable: true,
-        position: 'top',
-        variant: 'subtle',
-      });
-    }
-  };
-
-  const onGoogleButtonClick = async () => {
-    try {
-      setIsLoading(true);
-      // Make multiple requests
-      const [response] = await Promise.all([
-        axios.get(
-          `https://productize-api.techstudio.academy/api/auth/oauth/redirect?provider=google`
-        ),
-      ]);
-      if (response.status === 200) {
-        setIsLoading(false);
-        console.log(response.data);
-        setAuthResponse(response.data);
-        if (response.data.redirect_url) {
-          // Redirect the user to the obtained OAuth provider URL
-          window.location.href = response.data.redirect_url;
-        } else {
-          // Handle error or unsupported provider
-          console.error(`Failed to obtain redirect URL for google`);
-        }
-      }
-    } catch (err: any) {
-      setIsLoading(false);
-      console.log(err);
+      console.log(err.response.data.message);
       toast({
         title: 'Something went wrong',
         description: err.response.data.message,
@@ -117,52 +88,9 @@ export function SignupForm(props: SignupFormProps) {
 
   return (
     <FormControl as={`form`} onSubmit={handleSubmit(onSubmit)}>
-      <FormControl mb={6}>
-        <FormLabel fontWeight={600} className="btn-text">
-          First Name
-        </FormLabel>
-        <Input
-          size={`lg`}
-          bgColor={`grey.200`}
-          variant={`filled`}
-          id="fullName"
-          placeholder="Enter full name"
-          _placeholder={{ fontSize: { base: `xs`, lg: `sm` } }}
-          {...register('full_name', validation)}
-        />
-      </FormControl>
-      {/* <FormControl mb={6}>
-        <FormLabel fontWeight={600} className="btn-text">
-          Last Name
-        </FormLabel>
-        <Input
-          size={`lg`}
-          bgColor={`grey.200`}
-          variant={`filled`}
-          id="fullName"
-          placeholder="Enter full name"
-          _placeholder={{ fontSize: { base: `xs`, lg: `sm` } }}
-          {...register('full_name', validation)}
-        />
-      </FormControl> */}
       <FormControl my={6}>
         <FormLabel fontWeight={600} className="btn-text">
-          Email
-        </FormLabel>
-        <Input
-          type="email"
-          id="email"
-          size={`lg`}
-          bgColor={`grey.200`}
-          variant={`filled`}
-          placeholder="Enter email"
-          _placeholder={{ fontSize: { base: `xs`, lg: `sm` } }}
-          {...register('email', validation)}
-        />
-      </FormControl>
-      <FormControl my={6}>
-        <FormLabel fontWeight={600} className="btn-text">
-          Password
+          New Password
         </FormLabel>
         <InputGroup size="lg">
           <Input
@@ -186,7 +114,7 @@ export function SignupForm(props: SignupFormProps) {
       </FormControl>
       <FormControl my={6}>
         <FormLabel fontWeight={600} className="btn-text">
-          Confirm Password
+          Confirm New Password
         </FormLabel>
         <InputGroup size="lg">
           <Input
@@ -212,59 +140,20 @@ export function SignupForm(props: SignupFormProps) {
         </InputGroup>
       </FormControl>
       <Box>
-        <Text className="small-text" textAlign={`center`}>
-          You agree to our{' '}
-          <Link color={`purple.200`} as={`span`}>
-            Terms Of Use
-          </Link>{' '}
-          and{' '}
-          <Link color={`purple.200`} as={`span`}>
-            Privacy Policy
-          </Link>
-          .
-        </Text>
         <Box my={5}>
           <SharedButton
-            loadingText="Creating account..."
+            loadingText="Changing Password"
             isLoading={isLoading}
             type={`submit`}
-            text={'Create Account'}
+            text={'Reset password'}
             width={`100%`}
-            height={'46px'}
+            height={'48px'}
             bgColor={'purple.200'}
             textColor={'white'}
             borderRadius={'4px'}
             fontSize={{ base: `sm`, lg: `md` }}
           />
         </Box>
-        <Center>
-          <Text color={`grey.300`}>--------- Or ---------</Text>
-        </Center>
-        <Box my={5}>
-          <SharedButton
-            rightIcon={`flat-color-icons:google`}
-            onClick={onGoogleButtonClick}
-            border={`1px solid #6D5DD3`}
-            text={'Continue with Google'}
-            width={`100%`}
-            height={'46px'}
-            bgColor={'white'}
-            textColor={'purple.200'}
-            borderRadius={'4px'}
-            fontSize={{ base: `sm`, lg: `md` }}
-          />
-        </Box>
-        <Text className="small-text" textAlign={`center`}>
-          Have an account already ?{' '}
-          <Link
-            display={`inline`}
-            to={`/auth/login`}
-            color={`purple.200`}
-            as={RouterLink}
-          >
-            Sign in
-          </Link>
-        </Text>
       </Box>
     </FormControl>
   );

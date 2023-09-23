@@ -21,25 +21,39 @@
             "enforceBuildableLibDependency": true,
             "allow": [],
             "depConstraints": [
-              {
-                "sourceTag": "*",
-                "onlyDependOnLibsWithTags": [
-                  "*"
-                ]
-              }
               // {
-              //   "sourceTag": "scope:shared",
+              //   "sourceTag": "*",
               //   "onlyDependOnLibsWithTags": [
-              //     "scope:shared"
-              //   ]
-              // },
-              // {
-              //   "sourceTag": "scope:external-pages",
-              //   "onlyDependOnLibsWithTags": [
-              //     "scope:shared",
-              //     "scope:external-pages-lib"
+              //     "*"
               //   ]
               // }
+              {
+                "sourceTag": "scope:shared",
+                "onlyDependOnLibsWithTags": [
+                  "scope:shared"
+                ]
+              },
+              {
+                "sourceTag": "scope:authentication",
+                "onlyDependOnLibsWithTags": [
+                  "scope:shared",
+                  "scope:authentication"
+                ]
+              },
+              {
+                "sourceTag": "scope:external-pages",
+                "onlyDependOnLibsWithTags": [
+                  "scope:shared",
+                  "scope:external-pages"
+                ]
+              },
+              {
+                "sourceTag": "scope:explore",
+                "onlyDependOnLibsWithTags": [
+                  "scope:shared",
+                  "scope:explore"
+                ]
+              }
             ]
           }
         ]

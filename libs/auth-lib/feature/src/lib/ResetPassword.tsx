@@ -1,23 +1,18 @@
 import {
   Box,
-  Center,
-  Flex,
   FormControl,
   FormLabel,
   Input,
   InputGroup,
   InputRightElement,
-  Link,
-  Text,
   useToast,
 } from '@chakra-ui/react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
-import { SharedButton } from '@productize/shared/ui';
-import { useEffect, useState } from 'react';
-// import { ErrorMessage } from '@hookform/error-message';
+import { ErrorText, SharedButton } from '@productize/shared/ui';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
+import { useResetPasswordMutation } from '@productize/shared/redux';
 
 /* eslint-disable-next-line */
 // export interface LoginFormProps {}
@@ -30,64 +25,59 @@ const validation = {
   },
 };
 
-export function ResetPassword() {
+interface RPProps {
+  email: string;
+  token: string;
+}
+
+export function ResetPassword({ email, token }: RPProps) {
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState('');
   const [showPasswordConfirmation, setShowPasswordConfirmation] =
     useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [authResponse, setAuthResponse] = useState<unknown>();
   const handlePasswordClick = () => setShowPassword(!showPassword);
   const handlePasswordConfirmationClick = () =>
     setShowPasswordConfirmation(!showPasswordConfirmation);
   const navigate = useNavigate();
   const toast = useToast();
 
-  const {
-    register,
-    // reset,
-    handleSubmit,
-    // formState: { errors, isSubmitSuccessful },
-  } = useForm({
+  // mutation
+  const [resetPassword, resetPasswordStatus] = useResetPasswordMutation();
+
+  const { register, handleSubmit } = useForm({
     criteriaMode: 'all',
   });
 
-  const onSubmit = async (data: unknown) => {
+  const onSubmit = async (data: object) => {
+    console.log(data);
+    const formData = {
+      token,
+      email,
+      ...data,
+    };
     try {
-      setIsLoading(true);
-      // Make multiple requests
-      const [response] = await Promise.all([
-        // axios.get(
-        //   `https://productize-api.techstudio.academy/api/sanctum/csrf-cookie`
-        // ),
-        axios.post(
-          `https://productize-api.techstudio.academy/api/auth/login`,
-          data
-        ),
-      ]);
-      if (response.status === 200) {
-        setIsLoading(false);
-        localStorage.setItem('token', response.data.token);
-        console.log(response.data);
-        navigate(`/explore`);
-        setAuthResponse(response.data);
+      const res = await resetPassword(formData).unwrap();
+      console.log(res);
+      if (res.message) {
+        toast({
+          title: 'Successful',
+          description: res.message,
+          status: 'success',
+          duration: 9000,
+          isClosable: true,
+          position: 'top',
+          variant: 'top-accent',
+        });
+        navigate(`/auth/login`);
       }
-    } catch (err: any) {
-      setIsLoading(false);
-      console.log(err.response.data.message);
-      toast({
-        title: 'Something went wrong',
-        description: err.response.data.message,
-        status: 'error',
-        duration: 9000,
-        isClosable: true,
-        position: 'top',
-        variant: 'top-accent',
-      });
+    } catch (error: any) {
+      setError(error.data.message);
     }
   };
 
   return (
     <FormControl as={`form`} onSubmit={handleSubmit(onSubmit)}>
+      {resetPasswordStatus.isError && <ErrorText error={error} />}
       <FormControl my={6}>
         <FormLabel fontWeight={600} className="btn-text">
           New Password
@@ -143,7 +133,7 @@ export function ResetPassword() {
         <Box my={5}>
           <SharedButton
             loadingText="Changing Password"
-            isLoading={isLoading}
+            isLoading={resetPasswordStatus.isLoading}
             type={`submit`}
             text={'Reset password'}
             width={`100%`}

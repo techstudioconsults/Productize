@@ -1,12 +1,15 @@
+import { selectCurrentToken } from '@productize/shared/redux';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 export function useTokenExists() {
   // Initialize state with false since we assume the token doesn't exist initially
   const [tokenExists, setTokenExists] = useState(false);
+  const token = useSelector(selectCurrentToken);
 
   useEffect(() => {
     // Check if a token exists in localStorage when the component mounts
-    const token = localStorage.getItem('token');
+    // const token = token;
 
     // Update the state based on whether the token exists
     setTokenExists(!!token);
@@ -20,8 +23,7 @@ export function useTokenExists() {
     return () => {
       // Add any cleanup logic here if needed
     };
-  }, []); // Empty dependency array to run this effect only once
+  }, [token]); // Empty dependency array to run this effect only once
 
   return tokenExists;
 }
-

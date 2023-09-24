@@ -1,11 +1,14 @@
 import { Center, Image, Text } from '@chakra-ui/react';
+import { useGoogleAuthCallbackMutation } from '@productize/shared/redux';
 import axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export const PreLoader = () => {
-  // const [codeParams, setCodeParams] = useState<string>();
+  const [error, setError] = useState<string>('');
   const navigate = useNavigate();
+  // mutation
+  const [googleAuthCallback] = useGoogleAuthCallbackMutation();
 
   const googleRedirect = useCallback(
     async (code: string) => {
@@ -15,23 +18,15 @@ export const PreLoader = () => {
       };
 
       try {
-        // setIsLoading(true);
-        // Make multiple requests
-        const [response] = await Promise.all([
-          axios.post(
-            `https://productize-api.techstudio.academy/api/auth/oauth/callback`,
-            data
-          ),
-        ]);
-        if (response.status === 200) {
-          console.log(response);
+        const res = await googleAuthCallback(data).unwrap();
+        if (res.token) {
           navigate(`/explore`);
         }
-      } catch (err: any) {
-        console.log(err);
+      } catch (error: any) {
+        setError(error.data.message);
       }
     },
-    [navigate]
+    [googleAuthCallback, navigate]
   );
 
   useEffect(() => {

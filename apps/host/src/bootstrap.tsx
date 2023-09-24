@@ -3,6 +3,8 @@ import { App } from './app/app';
 import { ChakraProvider } from '@chakra-ui/react';
 import { BrowserRouter } from 'react-router-dom';
 import globalTheme from '../../../scss/globalTheme';
+import { Provider } from 'react-redux/es/exports';
+import { store } from '@productize/shared/redux';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -11,7 +13,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <BrowserRouter>
     <ChakraProvider theme={globalTheme}>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </ChakraProvider>
   </BrowserRouter>
 );

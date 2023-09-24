@@ -13,11 +13,15 @@ import {
 } from '@chakra-ui/react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
-import { SharedButton } from '@productize/shared/ui';
+import { ErrorText, SharedButton } from '@productize/shared/ui';
 import { useState } from 'react';
 // import { ErrorMessage } from '@hookform/error-message';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
+import {
+  useGoogleAuthMutation,
+  useLoginMutation,
+} from '@productize/shared/redux';
 
 /* eslint-disable-next-line */
 // export interface LoginFormProps {}
@@ -32,95 +36,43 @@ const validation = {
 
 export function LoginForm() {
   const [show, setShow] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [authResponse, setAuthResponse] = useState<unknown>();
+  const [error, setError] = useState('');
   const handleClick = () => setShow(!show);
   const navigate = useNavigate();
-  const toast = useToast();
 
-  const {
-    register,
-    // reset,
-    handleSubmit,
-    // formState: { errors, isSubmitSuccessful },
-  } = useForm({
+  // mutations
+  const [login, loginStatus] = useLoginMutation();
+  const [googleAuth, googleLoginStatus] = useGoogleAuthMutation();
+
+  const { register, handleSubmit } = useForm({
     criteriaMode: 'all',
   });
 
   const onSubmit = async (data: unknown) => {
     try {
-      setIsLoading(true);
-      // Make multiple requests
-      const [response] = await Promise.all([
-        // axios.get(
-        //   `https://productize-api.techstudio.academy/api/sanctum/csrf-cookie`
-        // ),
-        axios.post(
-          `https://productize-api.techstudio.academy/api/auth/login`,
-          data
-        ),
-      ]);
-
-      if (response.status === 200) {
-        setIsLoading(false);
-        localStorage.setItem('token', response.data.token);
-        console.log(response.data);
+      const res = await login(data).unwrap();
+      if (res.token) {
         navigate(`/explore`);
-        setAuthResponse(response.data);
       }
-    } catch (err: any) {
-      setIsLoading(false);
-      console.log(err.response.data.message);
-      toast({
-        title: 'Something went wrong',
-        description: err.response.data.message,
-        status: 'error',
-        duration: 9000,
-        isClosable: true,
-        position: 'top',
-        variant: 'top-accent',
-      });
+    } catch (error: any) {
+      setError(error.data.message);
     }
   };
 
   const onGoogleButtonClick = async () => {
     try {
-      setIsLoading(true);
-      // Make multiple requests
-      const [response] = await Promise.all([
-        axios.get(
-          `https://productize-api.techstudio.academy/api/auth/oauth/redirect?provider=google`
-        ),
-      ]);
-      if (response.status === 200) {
-        setIsLoading(false);
-        console.log(response.data);
-        setAuthResponse(response.data);
-        if (response.data.redirect_url) {
-          // Redirect the user to the obtained OAuth provider URL
-          window.location.href = response.data.redirect_url;
-        } else {
-          // Handle error or unsupported provider
-          console.error(`Failed to obtain redirect URL for google`);
-        }
-      }
-    } catch (err: any) {
-      setIsLoading(false);
-      console.log(err);
-      toast({
-        title: 'Something went wrong',
-        description: err.response.data.message,
-        status: 'error',
-        duration: 9000,
-        isClosable: true,
-        position: 'top',
-        variant: 'top-accent',
-      });
+      const res = await googleAuth(null).unwrap();
+      console.log(res);
+    } catch (error: any) {
+      setError(error.data.message);
     }
   };
 
   return (
     <FormControl as={`form`} onSubmit={handleSubmit(onSubmit)}>
+      {(loginStatus.isError || googleLoginStatus.isError) && (
+        <ErrorText error={error} />
+      )}
       <FormControl mb={6}>
         <FormLabel fontWeight={600} className="btn-text">
           Email
@@ -174,7 +126,7 @@ export function LoginForm() {
         <Box my={5}>
           <SharedButton
             loadingText="Logging in..."
-            isLoading={isLoading}
+            isLoading={loginStatus.isLoading}
             type={`submit`}
             text={'Sign In'}
             width={`100%`}
@@ -190,6 +142,8 @@ export function LoginForm() {
         </Center>
         <Box my={5}>
           <SharedButton
+            loadingText="Logging in..."
+            isLoading={googleLoginStatus.isLoading}
             onClick={onGoogleButtonClick}
             rightIcon={`flat-color-icons:google`}
             border={`1px solid #6D5DD3`}

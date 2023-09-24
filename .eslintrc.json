@@ -53,6 +53,12 @@
                   "scope:shared",
                   "scope:explore"
                 ]
+              },
+              {
+                "sourceTag": "scope:host",
+                "onlyDependOnLibsWithTags": [
+                  "scope:shared"
+                ]
               }
             ]
           }

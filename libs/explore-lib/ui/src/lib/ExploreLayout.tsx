@@ -1,6 +1,6 @@
 import React from 'react';
-import { useTokenExists } from '@productize/shared/ui';
 import { ExploreNavBar } from './ui-navbar/ExploreNavBar';
+import { useTokenExists } from '@productize/shared/hooks';
 
 type ExploreProps = {
   children: React.ReactNode; // type children

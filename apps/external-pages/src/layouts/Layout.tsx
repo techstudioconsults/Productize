@@ -1,6 +1,7 @@
 import { Box } from '@chakra-ui/react';
 import { Navbar } from '@productize/external-pages-lib/ui';
-import { Footer, useTokenExists } from '@productize/shared/ui';
+import { useTokenExists } from '@productize/shared/hooks';
+import { Footer } from '@productize/shared/ui';
 
 import React from 'react';
 

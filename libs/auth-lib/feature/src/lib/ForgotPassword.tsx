@@ -8,10 +8,11 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { SharedButton } from '@productize/shared/ui';
+import { ErrorText, SharedButton } from '@productize/shared/ui';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
+import { useForgotPasswordMutation } from '@productize/shared/redux';
 
 const validation = {
   required: 'This input is required.',
@@ -25,63 +26,26 @@ const validation = {
 export interface ForgotPassowrdProps {}
 
 export function ForgotPassowrdForm(props: ForgotPassowrdProps) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [authResponse, setAuthResponse] = useState<unknown>();
-  const navigate = useNavigate();
-  const toast = useToast();
+  const [error, setError] = useState<string>('');
+  const [forgotPassword, forgotPasswordStatus] = useForgotPasswordMutation();
 
-  const {
-    register,
-    // reset,
-    handleSubmit,
-    // formState: { errors, isSubmitSuccessful },
-  } = useForm({
+  const { register, handleSubmit } = useForm({
     criteriaMode: 'all',
   });
 
   const onSubmit = async (data: unknown) => {
-  
     try {
-      setIsLoading(true);
-      // Make multiple requests
-      const [response] = await Promise.all([
-        axios.post(
-          `https://productize-api.techstudio.academy/api/auth/forgot-password`,
-          data
-        ),
-      ]);
-      if (response.status === 200) {
-        setIsLoading(false);
-        console.log(response.data);
-        toast({
-          // title: '',
-          description: response.data.message,
-          status: 'success',
-          duration: 9000,
-          isClosable: true,
-          position: 'top',
-          variant: 'top-accent',
-        });
-        // navigate(`/auth/change-password`);
-        setAuthResponse(response.data);
-      }
-    } catch (err: any) {
-      setIsLoading(false);
-      console.log(err.response.data.message);
-      toast({
-        title: 'Something went wrong',
-        description: err.response.data.message,
-        status: 'error',
-        duration: 9000,
-        isClosable: true,
-        position: 'top',
-        variant: 'top-accent',
-      });
+      const res = await forgotPassword(data).unwrap();
+      console.log(res);
+    } catch (error: any) {
+      console.log(error);
+      setError(error.data.message);
     }
   };
 
   return (
     <FormControl as={`form`} onSubmit={handleSubmit(onSubmit)}>
+      {forgotPasswordStatus.isError && <ErrorText error={error} />}
       <FormControl mb={5}>
         <FormLabel fontWeight={600} className="btn-text">
           Email
@@ -108,7 +72,7 @@ export function ForgotPassowrdForm(props: ForgotPassowrdProps) {
             borderRadius={'4px'}
             fontSize={{ base: `sm`, lg: `md` }}
             loadingText="Loading..."
-            isLoading={isLoading}
+            isLoading={forgotPasswordStatus.isLoading}
           />
         </Box>
 

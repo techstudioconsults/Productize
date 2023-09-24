@@ -3,8 +3,8 @@ import { ProductCards } from './ProductCard';
 import ProductCardDetailsInput from './ProductCardDetailsInput';
 import ProductNavbar from './ProductNavbar';
 import { Container } from '@chakra-ui/react';
-import { useTokenExists } from '@productize/shared/ui';
 import { TwoColumnLayout } from '../../../layouts/TwoColumnLayout';
+import { useTokenExists } from '@productize/shared/hooks';
 
 const ProductBuy = () => {
   return (

@@ -1,8 +1,32 @@
-import { Avatar, Center, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
+import {
+  Avatar,
+  Center,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Text,
+} from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
+import { useLogoutMutation } from '@productize/shared/redux';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const AvatarComp = () => {
+  const [logout] = useLogoutMutation();
+  const navigate = useNavigate();
+
+  const logOut = async () => {
+    try {
+      const res = await logout(null).unwrap();
+      if (res.message) {
+        navigate(`/auth/login`);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Menu>
       <MenuButton
@@ -23,9 +47,11 @@ export const AvatarComp = () => {
         </Center>
       </MenuButton>
       <MenuList>
-        <MenuItem>Log out</MenuItem>
+        <MenuItem color={`red.200`} onClick={logOut}>
+          <Icon fontSize={`1.3rem`} icon={`basil:logout-solid`} />
+          <Text ml={3}>Log out</Text>
+        </MenuItem>
       </MenuList>
     </Menu>
   );
 };
-

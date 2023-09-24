@@ -1,32 +1,20 @@
-import {
-  Box,
-  Center,
-  Flex,
-  FormControl,
-  FormLabel,
-  Input,
-  Link,
-  LinkBox,
-  useToast,
-} from '@chakra-ui/react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Box, Flex, Link } from '@chakra-ui/react';
+import { Link as RouterLink } from 'react-router-dom';
 import { SharedButton } from '@productize/shared/ui';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import axios from 'axios';
-
-const validation = {
-  required: 'This input is required.',
-  minLength: {
-    value: 4,
-    message: 'This input must exceed 3 characters',
-  },
-};
+import { useSelector } from 'react-redux';
+import { selectEmailConfirmation } from '@productize/shared/redux';
 
 export function VerifyEmailTemplate() {
+  const emailConfirmation = useSelector(selectEmailConfirmation);
+
+  const checkMail = () => {
+    window.location.href = emailConfirmation.email;
+  };
+
   return (
     <Box>
       <SharedButton
+        onClick={checkMail}
         text={'Open email'}
         width={'100%'}
         height={'48px'}

@@ -1,6 +1,5 @@
-import { Box, Container } from '@chakra-ui/react';
-import { ExploreBanner, ExploreFeatures } from '@productize/explore-lib/ui';
-import ExploreLayout from 'apps/explore/src/libs/layouts/ExploreLayout';
+import { Container } from '@chakra-ui/react';
+import { ExploreBanner, ExploreFeatures, ExploreLayout } from '@productize/explore-lib/ui';
 import React from 'react';
 
 const ExploreIndex: React.FC = () => {

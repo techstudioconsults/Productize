@@ -2,9 +2,8 @@
 // import styles from './app.module.scss';
 import '../styles.scss';
 
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import ExploreIndex from './pages/explore/index';
-import Cart from './pages/cart/index';
 import ExploreDesign from './pages/explore/categories/design/index';
 import ProuctDetails from './pages/productDetails/ProuctDetails';
 import ProductBuy from './pages/productDetails/ProductBuy';
@@ -17,6 +16,7 @@ export function App() {
       {/* <Route path="/cart" element={<Cart />} /> */}
       <Route path="/product/details" element={<ProuctDetails />} />
       <Route path="/product/buy" element={<ProductBuy />} />
+      <Route path="*" element={<h1>PAGE NOT FOUND</h1>} />
     </Routes>
   );
 }

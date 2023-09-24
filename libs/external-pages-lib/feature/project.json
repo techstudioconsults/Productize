@@ -3,7 +3,7 @@
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/external-pages-lib/feature/src",
   "projectType": "library",
-  "tags": [],
+  "tags": ["scope:external-pages"],
   "targets": {
     "lint": {
       "executor": "@nx/linter:eslint",

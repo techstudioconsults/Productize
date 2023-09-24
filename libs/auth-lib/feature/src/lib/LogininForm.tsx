@@ -9,31 +9,83 @@ import {
   InputRightElement,
   Link,
   Text,
+  useToast,
 } from '@chakra-ui/react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
-import { SharedButton } from '@productize/shared/ui';
+import { ErrorText, SharedButton } from '@productize/shared/ui';
 import { useState } from 'react';
+// import { ErrorMessage } from '@hookform/error-message';
+import { useForm } from 'react-hook-form';
+import axios from 'axios';
+import {
+  useGoogleAuthMutation,
+  useLoginMutation,
+} from '@productize/shared/redux';
 
 /* eslint-disable-next-line */
-export interface LoginFormProps {}
+// export interface LoginFormProps {}
 
-export function LoginForm(props: LoginFormProps) {
+const validation = {
+  required: 'This input is required.',
+  minLength: {
+    value: 4,
+    message: 'This input must exceed 3 characters',
+  },
+};
+
+export function LoginForm() {
   const [show, setShow] = useState(false);
+  const [error, setError] = useState('');
   const handleClick = () => setShow(!show);
+  const navigate = useNavigate();
+
+  // mutations
+  const [login, loginStatus] = useLoginMutation();
+  const [googleAuth, googleLoginStatus] = useGoogleAuthMutation();
+
+  const { register, handleSubmit } = useForm({
+    criteriaMode: 'all',
+  });
+
+  const onSubmit = async (data: unknown) => {
+    try {
+      const res = await login(data).unwrap();
+      if (res.token) {
+        navigate(`/explore`);
+      }
+    } catch (error: any) {
+      setError(error.data.message);
+    }
+  };
+
+  const onGoogleButtonClick = async () => {
+    try {
+      const res = await googleAuth(null).unwrap();
+      console.log(res);
+    } catch (error: any) {
+      setError(error.data.message);
+    }
+  };
 
   return (
-    <FormControl>
+    <FormControl as={`form`} onSubmit={handleSubmit(onSubmit)}>
+      {(loginStatus.isError || googleLoginStatus.isError) && (
+        <ErrorText error={error} />
+      )}
       <FormControl mb={6}>
         <FormLabel fontWeight={600} className="btn-text">
           Email
         </FormLabel>
         <Input
+          type="email"
+          id="email"
           size={`lg`}
           bgColor={`grey.200`}
           variant={`filled`}
           placeholder="Enter email"
           _placeholder={{ fontSize: { base: `xs`, lg: `sm` } }}
+          {...register('email', validation)}
         />
       </FormControl>
       <FormControl my={6}>
@@ -52,12 +104,14 @@ export function LoginForm(props: LoginFormProps) {
         </Flex>
         <InputGroup size="lg">
           <Input
+            id="password"
             bgColor={`grey.200`}
             variant={`filled`}
             pr="4.5rem"
             type={show ? 'text' : 'password'}
             placeholder="Enter password"
             _placeholder={{ fontSize: { base: `xs`, lg: `sm` } }}
+            {...register('password', validation)}
           />
           <InputRightElement onClick={handleClick} width="2.5rem">
             {!show ? (
@@ -71,6 +125,9 @@ export function LoginForm(props: LoginFormProps) {
       <Box>
         <Box my={5}>
           <SharedButton
+            loadingText="Logging in..."
+            isLoading={loginStatus.isLoading}
+            type={`submit`}
             text={'Sign In'}
             width={`100%`}
             height={'48px'}
@@ -85,6 +142,10 @@ export function LoginForm(props: LoginFormProps) {
         </Center>
         <Box my={5}>
           <SharedButton
+            loadingText="Logging in..."
+            isLoading={googleLoginStatus.isLoading}
+            onClick={onGoogleButtonClick}
+            rightIcon={`flat-color-icons:google`}
             border={`1px solid #6D5DD3`}
             text={'Continue with Google'}
             width={`100%`}

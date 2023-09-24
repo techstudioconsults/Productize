@@ -1,11 +1,11 @@
 import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 import React from "react";
-import Logo from "../../../assets/icons/logo.svg";
-import facebook from "../../../assets/icons/facebook.svg";
-import pinterest from "../../../assets/icons/pinterest.svg";
-import twitter from "../../../assets/icons/twitter.svg";
-import dribble from "../../../assets/icons/dribble.svg";
-import Container from "../../shared-ui/Container";
+import Logo from "../../assets/icons/logo.svg";
+import facebook from "../../assets/icons/facebook.svg";
+import pinterest from "../../assets/icons/pinterest.svg";
+import twitter from "../../assets/icons/twitter.svg";
+import dribble from "../../assets/icons/dribble.svg";
+import Container from "../../libs/shared-ui/Container";
 
 const Footer: React.FC = () => {
   return (

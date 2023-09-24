@@ -11,6 +11,7 @@ export function App() {
       <Route index element={<Home />} />
       <Route path="/features" element={<Features />} />
       <Route path="/pricing" element={<Pricing />} />
+      <Route path="*" element={<h1>PAGE NOT FOUND</h1>} />
     </Routes>
   );
 }

@@ -9,20 +9,71 @@ import {
   Link,
   Text,
 } from '@chakra-ui/react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
-import { SharedButton } from '@productize/shared/ui';
+import { ErrorText, SharedButton } from '@productize/shared/ui';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import {
+  useGoogleAuthMutation,
+  useSignupMutation,
+} from '@productize/shared/redux';
 
 /* eslint-disable-next-line */
 export interface SignupFormProps {}
 
+const validation = {
+  required: 'This input is required.',
+  minLength: {
+    value: 4,
+    message: 'This input must exceed 3 characters',
+  },
+};
+
 export function SignupForm(props: SignupFormProps) {
-  const [show, setShow] = useState(false);
-  const handleClick = () => setShow(!show);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordConfirmation, setShowPasswordConfirmation] =
+    useState(false);
+  const [error, setError] = useState<string>('');
+  const handlePasswordClick = () => setShowPassword(!showPassword);
+  const handlePasswordConfirmationClick = () =>
+    setShowPasswordConfirmation(!showPasswordConfirmation);
+  const navigate = useNavigate();
+
+  // mutations
+  const [signup, signupStatus] = useSignupMutation();
+  const [googleAuth, googleSiginStatus] = useGoogleAuthMutation();
+
+  const { register, handleSubmit } = useForm({
+    criteriaMode: 'all',
+  });
+
+  const onSubmit = async (data: unknown) => {
+    try {
+      const res = await signup(data).unwrap();
+      if (res.token) {
+        navigate(`/explore`);
+      }
+    } catch (error: any) {
+      setError(error.data.message);
+      console.log(error);
+    }
+  };
+
+  const onGoogleButtonClick = async () => {
+    try {
+      const res = await googleAuth(null).unwrap();
+      console.log(res);
+    } catch (error: any) {
+      setError(error.data.message);
+    }
+  };
 
   return (
-    <FormControl>
+    <FormControl as={`form`} onSubmit={handleSubmit(onSubmit)}>
+      {(signupStatus.isError || googleSiginStatus.isError) && (
+        <ErrorText error={error} />
+      )}
       <FormControl mb={6}>
         <FormLabel fontWeight={600} className="btn-text">
           First Name
@@ -31,21 +82,39 @@ export function SignupForm(props: SignupFormProps) {
           size={`lg`}
           bgColor={`grey.200`}
           variant={`filled`}
+          id="fullName"
           placeholder="Enter full name"
           _placeholder={{ fontSize: { base: `xs`, lg: `sm` } }}
+          {...register('full_name', validation)}
         />
       </FormControl>
+      {/* <FormControl mb={6}>
+        <FormLabel fontWeight={600} className="btn-text">
+          Last Name
+        </FormLabel>
+        <Input
+          size={`lg`}
+          bgColor={`grey.200`}
+          variant={`filled`}
+          id="fullName"
+          placeholder="Enter full name"
+          _placeholder={{ fontSize: { base: `xs`, lg: `sm` } }}
+          {...register('full_name', validation)}
+        />
+      </FormControl> */}
       <FormControl my={6}>
         <FormLabel fontWeight={600} className="btn-text">
           Email
         </FormLabel>
         <Input
           type="email"
+          id="email"
           size={`lg`}
           bgColor={`grey.200`}
           variant={`filled`}
           placeholder="Enter email"
           _placeholder={{ fontSize: { base: `xs`, lg: `sm` } }}
+          {...register('email', validation)}
         />
       </FormControl>
       <FormControl my={6}>
@@ -54,15 +123,17 @@ export function SignupForm(props: SignupFormProps) {
         </FormLabel>
         <InputGroup size="lg">
           <Input
+            id="password"
             bgColor={`grey.200`}
             variant={`filled`}
             pr="4.5rem"
-            type={show ? 'text' : 'password'}
+            type={showPassword ? 'text' : 'password'}
             placeholder="Enter password"
             _placeholder={{ fontSize: { base: `xs`, lg: `sm` } }}
+            {...register('password', validation)}
           />
-          <InputRightElement onClick={handleClick} width="2.5rem">
-            {!show ? (
+          <InputRightElement onClick={handlePasswordClick} width="2.5rem">
+            {!showPassword ? (
               <Icon icon={`ant-design:eye-twotone`} />
             ) : (
               <Icon icon={`ant-design:eye-invisible-twotone`} />
@@ -76,15 +147,20 @@ export function SignupForm(props: SignupFormProps) {
         </FormLabel>
         <InputGroup size="lg">
           <Input
+            id="password_confirmation"
             bgColor={`grey.200`}
             variant={`filled`}
             pr="4.5rem"
-            type={show ? 'text' : 'password'}
-            placeholder="Enter password"
+            type={showPasswordConfirmation ? 'text' : 'password'}
+            placeholder="Enter password confirmation"
             _placeholder={{ fontSize: { base: `xs`, lg: `sm` } }}
+            {...register('password_confirmation', validation)}
           />
-          <InputRightElement onClick={handleClick} width="2.5rem">
-            {!show ? (
+          <InputRightElement
+            onClick={handlePasswordConfirmationClick}
+            width="2.5rem"
+          >
+            {!showPasswordConfirmation ? (
               <Icon icon={`ant-design:eye-twotone`} />
             ) : (
               <Icon icon={`ant-design:eye-invisible-twotone`} />
@@ -106,6 +182,9 @@ export function SignupForm(props: SignupFormProps) {
         </Text>
         <Box my={5}>
           <SharedButton
+            loadingText="Creating account..."
+            isLoading={signupStatus.isLoading}
+            type={`submit`}
             text={'Create Account'}
             width={`100%`}
             height={'46px'}
@@ -120,6 +199,10 @@ export function SignupForm(props: SignupFormProps) {
         </Center>
         <Box my={5}>
           <SharedButton
+            rightIcon={`flat-color-icons:google`}
+            loadingText="Creating account..."
+            isLoading={googleSiginStatus.isLoading}
+            onClick={onGoogleButtonClick}
             border={`1px solid #6D5DD3`}
             text={'Continue with Google'}
             width={`100%`}

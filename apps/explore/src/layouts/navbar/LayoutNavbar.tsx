@@ -2,7 +2,7 @@ import { Box, Flex, Image, Input } from "@chakra-ui/react";
 import Logo from "../../../assets/icons/logo.svg";
 import lockIcon from "../../../assets/icons/lock-icon.svg";
 import search from "../../../assets/icons/search.svg";
-import Container from "../../shared-ui/Container";
+import Container from "../../libs/shared-ui/Container";
 
 
 const LayoutNavbar = () => {

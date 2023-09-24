@@ -102,6 +102,6 @@
       }
     }
   },
-  "tags": [],
+  "tags": ["scope:host"],
   "implicitDependencies": ["external-pages", "explore", "authentication"]
 }

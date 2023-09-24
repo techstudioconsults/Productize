@@ -1,11 +1,11 @@
 import { Box, Center, Container, Flex, Image, Input } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
 import { Sidenav } from '@productize/external-pages-lib/ui';
-import { SharedButton } from '@productize/shared/ui';
+import { AvatarComp, SharedButton } from '@productize/shared/ui';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const ProductNavbar = () => {
+const ProductNavbar = ({ isAuth }: any) => {
   return (
     <Box bg={`grey.100`} py={5} borderBottom={`1px solid grey.300`}>
       <Container maxW={`70rem`}>
@@ -61,15 +61,19 @@ const ProductNavbar = () => {
               </Link>
             </Box>
             <Box display={{ base: `none`, xl: `initial` }}>
-              <SharedButton
-                text={'Create Account'}
-                width={'190px'}
-                height={'48px'}
-                bgColor={'yellow.200'}
-                textColor={'white'}
-                borderRadius={'4px'}
-                fontSize={{ base: `sm`, xl: `md` }}
-              />
+              {isAuth ? (
+                <AvatarComp />
+              ) : (
+                <SharedButton
+                  text={'Create Account'}
+                  width={'190px'}
+                  height={'48px'}
+                  bgColor={'yellow.200'}
+                  textColor={'white'}
+                  borderRadius={'4px'}
+                  fontSize={{ base: `sm`, xl: `md` }}
+                />
+              )}
             </Box>
           </Flex>
           <Sidenav />

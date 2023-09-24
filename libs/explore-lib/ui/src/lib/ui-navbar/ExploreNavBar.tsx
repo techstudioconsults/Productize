@@ -10,11 +10,15 @@ import {
 } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 import { Icon } from '@iconify/react';
-import { Sidenav } from '@productize/external-pages-lib/ui';
-import { SharedButton } from '@productize/shared/ui';
-import Wrapper from './Wrapper';
+import { AvatarComp, SharedButton } from '@productize/shared/ui';
+import { Sidenav } from './SideNavigationbar';
+import Wrapper from '../Wrapper';
 
-export const Navbar: React.FC = () => {
+interface navProps {
+  isAuth: boolean;
+}
+
+export const ExploreNavBar = ({ isAuth }: navProps) => {
   return (
     <Box background={`coral.200`} py={4}>
       <Container px={{ base: 4, lg: 0 }} maxW={`70rem`}>
@@ -56,21 +60,25 @@ export const Navbar: React.FC = () => {
             >
               <Icon fontSize={`1.5rem`} icon={`ion:cart-sharp`} />
             </Link>
-            <Link
-              display={{ base: `none`, lg: `initial` }}
-              as={RouterLink}
-              to={`/auth/signup`}
-            >
-              <SharedButton
-                fontSize={{ base: `sm`, md: `md` }}
-                text={'Create Account'}
-                width={'160px'}
-                height={'48px'}
-                bgColor={'yellow.200'}
-                textColor={'white'}
-                borderRadius={'4px'}
-              />
-            </Link>
+            {isAuth ? (
+              <AvatarComp />
+            ) : (
+              <Link
+                display={{ base: `none`, lg: `initial` }}
+                as={RouterLink}
+                to={`/auth/signup`}
+              >
+                <SharedButton
+                  fontSize={{ base: `sm`, md: `md` }}
+                  text={'Create Account'}
+                  width={'160px'}
+                  height={'48px'}
+                  bgColor={'yellow.200'}
+                  textColor={'white'}
+                  borderRadius={'4px'}
+                />
+              </Link>
+            )}
             <Sidenav />
           </Flex>
         </Flex>

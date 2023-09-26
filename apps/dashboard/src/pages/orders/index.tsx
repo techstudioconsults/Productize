@@ -2,16 +2,11 @@ import { Box, Container, Flex, Text } from '@chakra-ui/react';
 import { DashboardBanner, ProgressBar } from '@productize/dashboard-lib/ui';
 import React from 'react';
 
-const index = () => {
+const Orders = () => {
   return (
     <Container p={0} my={8} maxW={`47rem`}>
       <DashboardBanner />
-      <Flex
-        flexDir={{ base: `column`, md: `row` }}
-        my={8}
-        justifyContent={`space-between`}
-        alignItems={{ base: `flex-start`, md: `center` }}
-      >
+      <Flex my={8} justifyContent={`space-between`} alignItems={`center`}>
         <Box>
           <Text as={`h6`} fontWeight={`bold`}>
             Get Started Guide
@@ -28,4 +23,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Orders;

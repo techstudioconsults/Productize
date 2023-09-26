@@ -12,7 +12,7 @@ import { Icon } from '@iconify/react';
 import { selectCurrentuser, useLogoutMutation } from '@productize/shared/redux';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export const AvatarComp = () => {
   const [logout] = useLogoutMutation();
@@ -52,6 +52,12 @@ export const AvatarComp = () => {
         </Center>
       </MenuButton>
       <MenuList>
+        <MenuItem color={`grey.400`}>
+          <Link to={`/dashboard`}>
+            <Icon fontSize={`1.3rem`} icon={`ep:menu`} />
+            <Text ml={3}>Dashboard</Text>
+          </Link>
+        </MenuItem>
         <MenuItem color={`red.200`} onClick={logOut}>
           <Icon fontSize={`1.3rem`} icon={`basil:logout-solid`} />
           <Text ml={3}>Log out</Text>

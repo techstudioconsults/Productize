@@ -18,7 +18,7 @@ export const SearchComp = ({ color, width, size }: searchProps) => {
       <Input
         border={`none`}
         placeholder={'Search'}
-        _placeholder={{ color: '#010101' }}
+        _placeholder={{ color: '#01010140' }}
         w={width}
         bgColor={color}
       />

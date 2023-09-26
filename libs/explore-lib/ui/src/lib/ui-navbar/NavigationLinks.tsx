@@ -10,8 +10,8 @@ import {
 } from '@chakra-ui/react';
 import { NavLink } from 'react-router-dom';
 import style from './navbar.module.scss';
-import { links } from './links';
 import { Icon } from '@iconify/react';
+import { links } from './links';
 
 type SubLink = {
   id: number;
@@ -64,7 +64,7 @@ type NavbarProps = {
 };
 
 const Links = ({ isMobile }: NavbarProps) => {
-  const navLinks = links.map((link) => {
+  const navLinks = links?.map((link) => {
     if (link.type === `dropdown`) {
       return <DropdownLink key={link.id} link={link} />;
     } else {

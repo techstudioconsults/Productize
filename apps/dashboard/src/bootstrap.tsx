@@ -2,7 +2,7 @@ import { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
 
 import App from './app/app';
-import { BrowserRouter as ExternalPagesRouter } from 'react-router-dom';
+import { BrowserRouter as DashboardRouter } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
 // import theme from './theme';
 import globalTheme from '../../../scss/globalTheme';
@@ -15,12 +15,12 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <StrictMode>
-    <ExternalPagesRouter>
+    <DashboardRouter>
       <ChakraProvider theme={globalTheme}>
         <Provider store={store}>
           <App />
         </Provider>
       </ChakraProvider>
-    </ExternalPagesRouter>
+    </DashboardRouter>
   </StrictMode>
 );

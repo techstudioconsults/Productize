@@ -10,9 +10,9 @@ import {
 } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 import { Icon } from '@iconify/react';
-import { AvatarComp, SharedButton } from '@productize/shared/ui';
-import { Sidenav } from './SideNavigationbar';
+import { AvatarComp, SharedButton, Sidenav } from '@productize/shared/ui';
 import Wrapper from '../Wrapper';
+import Links from './NavigationLinks';
 
 interface navProps {
   isAuth: boolean;
@@ -39,20 +39,22 @@ export const ExploreNavBar = ({ isAuth }: navProps) => {
               <Icon icon={`mdi:cart`} />
             </Box>
           </Flex>
-          <Flex gap={10} position="relative" alignItems={`center`}>
-            <InputGroup size={`lg`}>
-              <InputLeftElement
-                pointerEvents="none"
-                fontSize="1.2em"
-                children={<Icon icon={`majesticons:search-line`} />}
-              />
-              <Input
-                placeholder={'Search'}
-                _placeholder={{ color: '#fff' }}
-                w={'100%'}
-                bgColor={'#aedee0'}
-              />
-            </InputGroup>
+          <Flex justifyContent={`space-between`} gap={10} alignItems={`center`}>
+            <Box>
+              <InputGroup size={`lg`}>
+                <InputLeftElement
+                  pointerEvents="none"
+                  fontSize="1.2em"
+                  children={<Icon icon={`majesticons:search-line`} />}
+                />
+                <Input
+                  placeholder={'Search'}
+                  _placeholder={{ color: '#fff' }}
+                  w={'100%'}
+                  bgColor={'#aedee0'}
+                />
+              </InputGroup>
+            </Box>
             <Link
               display={{ base: `none`, lg: `initial` }}
               as={RouterLink}
@@ -61,7 +63,9 @@ export const ExploreNavBar = ({ isAuth }: navProps) => {
               <Icon fontSize={`1.5rem`} icon={`ion:cart-sharp`} />
             </Link>
             {isAuth ? (
-              <AvatarComp />
+              <Box display={{ base: `none`, lg: `initial` }}>
+                <AvatarComp />
+              </Box>
             ) : (
               <Link
                 display={{ base: `none`, lg: `initial` }}
@@ -79,7 +83,7 @@ export const ExploreNavBar = ({ isAuth }: navProps) => {
                 />
               </Link>
             )}
-            <Sidenav />
+            <Sidenav links={<Links isMobile={false} />} />
           </Flex>
         </Flex>
         <Box display={{ base: `none`, lg: `block` }}>

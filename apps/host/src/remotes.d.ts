@@ -5,3 +5,5 @@ declare module 'explore/Module';
 declare module 'external-pages/Module';
 
 declare module 'authentication/Module';
+
+declare module 'dashboard/Module';

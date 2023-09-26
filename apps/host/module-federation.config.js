@@ -1,4 +1,4 @@
 module.exports = {
   name: 'host',
-  remotes: ['explore', 'external-pages', 'authentication'],
+  remotes: ['explore', 'external-pages', 'authentication', 'dashboard'],
 };

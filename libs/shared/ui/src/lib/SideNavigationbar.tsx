@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import {
   Drawer,
   DrawerBody,
@@ -14,11 +14,14 @@ import {
   Stack,
 } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
-import Links from './NavigationLinks';
 import { Icon } from '@iconify/react';
-import { SharedButton } from '@productize/shared/ui';
+import { SharedButton } from './SharedButton';
 
-export const Sidenav = () => {
+interface sidebarProps {
+  links?: ReactNode;
+}
+
+export const Sidenav = ({ links }: sidebarProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -46,9 +49,7 @@ export const Sidenav = () => {
               />
             </Link>
           </DrawerHeader>
-          <DrawerBody py={10}>
-            <Links isMobile={true} />
-          </DrawerBody>
+          <DrawerBody py={10}>{links}</DrawerBody>
           <DrawerFooter>
             <Stack w={`100%`} gap={4}>
               <Link>

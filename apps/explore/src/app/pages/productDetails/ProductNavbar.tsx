@@ -1,7 +1,6 @@
 import { Box, Center, Container, Flex, Image, Input } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
-import { Sidenav } from '@productize/external-pages-lib/ui';
-import { AvatarComp, SharedButton } from '@productize/shared/ui';
+import { AvatarComp, SharedButton, Sidenav } from '@productize/shared/ui';
 import React from 'react';
 import { Link } from 'react-router-dom';
 

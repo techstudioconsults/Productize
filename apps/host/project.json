@@ -103,5 +103,5 @@
     }
   },
   "tags": ["scope:host"],
-  "implicitDependencies": ["external-pages", "explore", "authentication"]
+  "implicitDependencies": ["external-pages", "explore", "authentication", "dashboard"]
 }

@@ -1,6 +1,7 @@
 import {
   Avatar,
   Center,
+  Flex,
   Menu,
   MenuButton,
   MenuItem,
@@ -8,13 +9,15 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
-import { useLogoutMutation } from '@productize/shared/redux';
+import { selectCurrentuser, useLogoutMutation } from '@productize/shared/redux';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 export const AvatarComp = () => {
   const [logout] = useLogoutMutation();
   const navigate = useNavigate();
+  const user = useSelector(selectCurrentuser);
 
   const logOut = async () => {
     try {
@@ -30,6 +33,7 @@ export const AvatarComp = () => {
   return (
     <Menu>
       <MenuButton
+        // w={{ base: `fit-content`, md: `30rem` }}
         transition="all 0.2s"
         borderRadius="md"
         borderWidth="1px"
@@ -43,6 +47,7 @@ export const AvatarComp = () => {
             name="Kent Dodds"
             src="https://bit.ly/kent-c-dodds"
           />
+          <Text color={`white`}>{user?.name}</Text>
           <Icon icon={'eva:chevron-down-outline'} />
         </Center>
       </MenuButton>

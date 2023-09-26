@@ -3,18 +3,11 @@ import {
   Image,
   Center,
   Link,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  Avatar,
 } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 
 import Links from './NavigationLinks';
-import { Sidenav } from './SideNavigationbar';
-import { AvatarComp, SharedButton } from '@productize/shared/ui';
-import { Icon } from '@iconify/react';
+import { AvatarComp, SharedButton, Sidenav } from '@productize/shared/ui';
 
 export const Navbar = ({ isAuth }: any) => {
   return (
@@ -64,7 +57,7 @@ export const Navbar = ({ isAuth }: any) => {
           </>
         )}
       </Flex>
-      <Sidenav />
+      <Sidenav links={<Links isMobile={false} />} />
     </Flex>
   );
 };

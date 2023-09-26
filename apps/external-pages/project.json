@@ -54,7 +54,7 @@
       "options": {
         "buildTarget": "external-pages:build",
         "hmr": true,
-        "port": 4201
+        "port": 4202
       },
       "configurations": {
         "development": {
@@ -78,7 +78,7 @@
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "external-pages:build",
-        "port": 4201
+        "port": 4202
       },
       "configurations": {
         "development": {

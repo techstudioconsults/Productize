@@ -54,7 +54,7 @@
       "options": {
         "buildTarget": "authentication:build",
         "hmr": true,
-        "port": 4203
+        "port": 4201
       },
       "configurations": {
         "development": {
@@ -78,7 +78,7 @@
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "authentication:build",
-        "port": 4203
+        "port": 4201
       },
       "configurations": {
         "development": {

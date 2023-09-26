@@ -5,7 +5,6 @@ import {
 import {
   AuthBackground,
   AuthFormTemplateLogin,
-  VerifyEmailTemplate,
 } from '@productize/auth-lib/ui';
 import { selectEmailConfirmation } from '@productize/shared/redux';
 import React, { useEffect, useState } from 'react';
@@ -13,8 +12,8 @@ import { useSelector } from 'react-redux';
 
 const ForgotPassword = () => {
   const emailConfirmation = useSelector(selectEmailConfirmation);
-  const [FPToken, setFPToken] = useState<string>();
-  const [email, setEmail] = useState<string>();
+  const [FPToken, setFPToken] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
 
   // MAKE THIS A HOOK (USE IN PERLOADER AND HERE!)
   useEffect(() => {
@@ -44,7 +43,8 @@ const ForgotPassword = () => {
           <ForgotPassowrdForm />
         </AuthFormTemplateLogin>
       )}
-      {/* check email or varify email temlate */}
+
+      {/* check email or varify email temlate
       {emailConfirmation.emailSent && !FPToken && (
         <AuthFormTemplateLogin
           title="Check your mail"
@@ -52,10 +52,10 @@ const ForgotPassword = () => {
         >
           <VerifyEmailTemplate />
         </AuthFormTemplateLogin>
-      )}
+      )} */}
 
       {/* change password or change forgot password */}
-      {FPToken && email && (
+      {emailConfirmation.emailSent && (
         <AuthFormTemplateLogin
           title="Reset Password"
           subTitle="Enter your new password."

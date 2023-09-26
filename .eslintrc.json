@@ -34,6 +34,12 @@
                 ]
               },
               {
+                "sourceTag": "scope:host",
+                "onlyDependOnLibsWithTags": [
+                  "scope:shared"
+                ]
+              },
+              {
                 "sourceTag": "scope:authentication",
                 "onlyDependOnLibsWithTags": [
                   "scope:shared",
@@ -55,9 +61,10 @@
                 ]
               },
               {
-                "sourceTag": "scope:host",
+                "sourceTag": "scope:dashboard",
                 "onlyDependOnLibsWithTags": [
-                  "scope:shared"
+                  "scope:shared",
+                  "scope:dashboard"
                 ]
               }
             ]

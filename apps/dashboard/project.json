@@ -1,7 +1,7 @@
 {
-  "name": "explore",
+  "name": "dashboard",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/explore/src",
+  "sourceRoot": "apps/dashboard/src",
   "projectType": "application",
   "targets": {
     "build": {
@@ -10,16 +10,19 @@
       "defaultConfiguration": "production",
       "options": {
         "compiler": "babel",
-        "outputPath": "dist/apps/explore",
-        "index": "apps/explore/src/index.html",
+        "outputPath": "dist/apps/dashboard",
+        "index": "apps/dashboard/src/index.html",
         "baseHref": "/",
-        "main": "apps/explore/src/main.ts",
-        "tsConfig": "apps/explore/tsconfig.app.json",
-        "assets": ["apps/explore/src/favicon.ico", "apps/explore/src/assets"],
-        "styles": ["apps/explore/src/styles.scss"],
+        "main": "apps/dashboard/src/main.ts",
+        "tsConfig": "apps/dashboard/tsconfig.app.json",
+        "assets": [
+          "apps/dashboard/src/favicon.ico",
+          "apps/dashboard/src/assets"
+        ],
+        "styles": ["apps/dashboard/src/styles.scss"],
         "scripts": [],
         "isolatedConfig": true,
-        "webpackConfig": "apps/explore/webpack.config.js"
+        "webpackConfig": "apps/dashboard/webpack.config.js"
       },
       "configurations": {
         "development": {
@@ -31,8 +34,8 @@
         "production": {
           "fileReplacements": [
             {
-              "replace": "apps/explore/src/environments/environment.ts",
-              "with": "apps/explore/src/environments/environment.prod.ts"
+              "replace": "apps/dashboard/src/environments/environment.ts",
+              "with": "apps/dashboard/src/environments/environment.prod.ts"
             }
           ],
           "optimization": true,
@@ -41,7 +44,7 @@
           "namedChunks": false,
           "extractLicenses": true,
           "vendorChunk": false,
-          "webpackConfig": "apps/explore/webpack.config.prod.js"
+          "webpackConfig": "apps/dashboard/webpack.config.prod.js"
         }
       }
     },
@@ -49,16 +52,16 @@
       "executor": "@nx/react:module-federation-dev-server",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "explore:build",
+        "buildTarget": "dashboard:build",
         "hmr": true,
-        "port": 4203
+        "port": 4204
       },
       "configurations": {
         "development": {
-          "buildTarget": "explore:build:development"
+          "buildTarget": "dashboard:build:development"
         },
         "production": {
-          "buildTarget": "explore:build:production",
+          "buildTarget": "dashboard:build:production",
           "hmr": false
         }
       }
@@ -67,22 +70,22 @@
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/explore/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": ["apps/dashboard/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "serve-static": {
       "executor": "@nx/web:file-server",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "explore:build",
-        "port": 4203
+        "buildTarget": "dashboard:build",
+        "port": 4204
       },
       "configurations": {
         "development": {
-          "buildTarget": "explore:build:development"
+          "buildTarget": "dashboard:build:development"
         },
         "production": {
-          "buildTarget": "explore:build:production"
+          "buildTarget": "dashboard:build:production"
         }
       }
     },
@@ -90,7 +93,7 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "apps/explore/jest.config.ts",
+        "jestConfig": "apps/dashboard/jest.config.ts",
         "passWithNoTests": true
       },
       "configurations": {
@@ -101,5 +104,5 @@
       }
     }
   },
-  "tags": ["scope:explore"]
+  "tags": ["scope:dashboard"]
 }

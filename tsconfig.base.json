@@ -17,6 +17,7 @@
     "paths": {
       "@productize/auth-lib/feature": ["libs/auth-lib/feature/src/index.ts"],
       "@productize/auth-lib/ui": ["libs/auth-lib/ui/src/index.ts"],
+      "@productize/dashboard-lib/ui": ["libs/dashboard-lib/ui/src/index.ts"],
       "@productize/explore-lib/feature": [
         "libs/explore-lib/feature/src/index.ts"
       ],

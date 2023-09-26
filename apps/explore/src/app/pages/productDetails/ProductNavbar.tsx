@@ -1,6 +1,11 @@
 import { Box, Center, Container, Flex, Image, Input } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
-import { AvatarComp, SharedButton, Sidenav } from '@productize/shared/ui';
+import {
+  AvatarComp,
+  SearchComp,
+  SharedButton,
+  Sidenav,
+} from '@productize/shared/ui';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -27,33 +32,10 @@ const ProductNavbar = ({ isAuth }: any) => {
             justify={{ lg: 'center' }}
             align={{ lg: 'center' }}
             gap="1.5rem"
-            position="relative"
           >
-            <Flex
-              display={{ base: `none`, xl: `flex` }}
-              alignItems={`center`}
-              gap={3}
-              px={3}
-              bg={`grey.200`}
-            >
-              <Icon fontSize={`1.5rem`} icon={`ri:search-line`} />
-              <Input
-                type={'text'}
-                placeholder={'Search'}
-                _placeholder={{ color: 'grey.400' }}
-                display={'flex'}
-                // flex={'1 0 0'}
-                fontSize={'md'}
-                fontWeight={'normal'}
-                lineHeight={6}
-                // textIndent={'2rem'}
-                w={'20rem'}
-                h={'3rem'}
-                p={'.75rem'}
-                border={`none`}
-                borderRadius={'4px'}
-              />
-            </Flex>
+            <Box display={{ base: `none`, md: `block` }}>
+              <SearchComp size="lg" width={`25rem`} color={`grey.200`} />
+            </Box>
             <Box display={{ base: `none`, xl: `initial` }}>
               <Link to={`cart`}>
                 <Icon fontSize={`1.5rem`} icon={`ion:cart-sharp`} />

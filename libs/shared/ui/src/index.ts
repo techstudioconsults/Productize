@@ -4,3 +4,6 @@ export * from './lib/PreLoader';
 export * from './lib/Avatar';
 export * from './lib/ErrorText';
 export * from './lib/SideNavigationbar';
+export * from './lib/PaymentStatusTag';
+export * from './lib/PaymentStatusTag';
+export * from './lib/SearchComp';

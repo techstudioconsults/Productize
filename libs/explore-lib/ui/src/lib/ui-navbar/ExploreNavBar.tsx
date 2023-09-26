@@ -10,7 +10,12 @@ import {
 } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 import { Icon } from '@iconify/react';
-import { AvatarComp, SharedButton, Sidenav } from '@productize/shared/ui';
+import {
+  AvatarComp,
+  SearchComp,
+  SharedButton,
+  Sidenav,
+} from '@productize/shared/ui';
 import Wrapper from '../Wrapper';
 import Links from './NavigationLinks';
 
@@ -41,19 +46,7 @@ export const ExploreNavBar = ({ isAuth }: navProps) => {
           </Flex>
           <Flex justifyContent={`space-between`} gap={10} alignItems={`center`}>
             <Box>
-              <InputGroup size={`lg`}>
-                <InputLeftElement
-                  pointerEvents="none"
-                  fontSize="1.2em"
-                  children={<Icon icon={`majesticons:search-line`} />}
-                />
-                <Input
-                  placeholder={'Search'}
-                  _placeholder={{ color: '#fff' }}
-                  w={'100%'}
-                  bgColor={'#aedee0'}
-                />
-              </InputGroup>
+              <SearchComp size="lg" color={`coral.100`} />
             </Box>
             <Link
               display={{ base: `none`, lg: `initial` }}

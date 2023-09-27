@@ -98,10 +98,10 @@
       "executor": "nx:run-commands",
       "outputs": [],
       "options": {
-        "command": "rm -rf production && mkdir production && cp -r dist/apps/host/* production && cp -r dist/apps/{external-pages,explore,authentication,dashboard} production && http-server -p 3000 -a localhost production"
+        "command": "rm -rf production && mkdir production && cp -r dist/apps/host/* production && cp -r dist/apps/{external-pages,explore,dashboard,auth} production && http-server -p 3000 -a localhost production"
       }
     }
   },
   "tags": ["scope:host"],
-  "implicitDependencies": ["external-pages", "explore", "authentication", "dashboard"]
+  "implicitDependencies": ["external-pages", "explore", "dashboard", "auth"]
 }

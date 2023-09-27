@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "nx serve --devRemote=external-pages,explore,authentication,dashboard --open",
-    "start-auth": "nx serve authentication --open",
+    "start": "nx serve --devRemote=external-pages,explore,auth,dashboard --open",
+    "start-auth": "nx serve auth --open",
     "start-externalPages": "nx serve external-pages --open",
     "start-explore": "nx serve explore --open",
     "start-dashboard": "nx serve dashboard --open",

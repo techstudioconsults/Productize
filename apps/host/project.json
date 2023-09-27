@@ -98,7 +98,7 @@
       "executor": "nx:run-commands",
       "outputs": [],
       "options": {
-        "command": "rm -rf production && mkdir production && cp -r dist/apps/host/* production && cp -r dist/apps/{external-pages,explore} production && http-server -p 3000 -a localhost production"
+        "command": "rm -rf production && mkdir production && cp -r dist/apps/host/* production && cp -r dist/apps/{external-pages,explore,authentication,dashboard} production && http-server -p 3000 -a localhost production"
       }
     }
   },

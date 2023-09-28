@@ -7,6 +7,7 @@ import {
   SimpleGrid,
   Stack,
   Text,
+  Link,
 } from '@chakra-ui/react';
 import DefaultLayout from '../../layouts/Layout';
 import {
@@ -16,7 +17,7 @@ import {
   SectionLayout,
   SharedSection,
 } from '@productize/external-pages-lib/ui';
-import { Link } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import { SharedButton } from '@productize/shared/ui';
 
 const Home: React.FC = () => {
@@ -39,14 +40,14 @@ const Home: React.FC = () => {
             <Text lineHeight={`shorter`} as={`h1`}>
               Monetize your skills with ease
             </Text>
-            <Text as={`h5`} color={`purple.100`} mt={3}>
+            <Text fontWeight={100} as={`h5`} color={`purple.100`} mt={3}>
               With Productize, selling your products online is hassle-free. You
               can showcase your work and let us handle the backend tasks,
               allowing you to concentrate on what you do best.
             </Text>
           </Container>
           <Container display={{ xl: `none` }} w={`fit-content`}>
-            <Link to={``}>
+            <Link as={RouterLink} to={`/auth`}>
               <SharedButton
                 fontSize={{ base: `sm`, md: `md` }}
                 text={'Get Started'}
@@ -78,21 +79,23 @@ const Home: React.FC = () => {
               <Text as={`h1`} lineHeight={`shorter`}>
                 You can monetize everything
               </Text>
-              <Text my={`2rem`}>
+              <Text as={`h5`} my={`2rem`} fontWeight={100}>
                 Productize offers you an opportunity to monetize your passion by
                 providing a platform that allows you to showcase and sell your
                 work online.
               </Text>
               <Box display={{ base: `none`, xl: `block` }}>
-                <SharedButton
-                  text={'Get Started'}
-                  width={'22.5rem'}
-                  height={'48px'}
-                  bgColor={'purple.200'}
-                  textColor={'white'}
-                  borderRadius={'4px'}
-                  fontSize={{ base: `sm`, md: `md` }}
-                />
+                <Link as={RouterLink} to={`/auth`}>
+                  <SharedButton
+                    text={'Get Started'}
+                    width={'22.5rem'}
+                    height={'48px'}
+                    bgColor={'purple.200'}
+                    textColor={'white'}
+                    borderRadius={'4px'}
+                    fontSize={{ base: `sm`, md: `md` }}
+                  />
+                </Link>
               </Box>
             </Box>
             <SimpleGrid flex={2} columns={{ base: 1, xl: 2 }} spacing={10}>
@@ -207,7 +210,7 @@ const Home: React.FC = () => {
             <Text as={`h1`} lineHeight={`shorter`}>
               Everyone can Buy & Sell on Productize
             </Text>
-            <Text pr={{ xl: 20 }} mt={5}>
+            <Text as={`h5`} fontWeight={100} pr={{ xl: 20 }} mt={5}>
               The opportunity to share knowledge with individuals and businesses
               of same passion.
             </Text>
@@ -224,7 +227,7 @@ const Home: React.FC = () => {
           <Text lineHeight={`shorter`} mb={4} as={`h1`}>
             Start monetizing in 4 simple steps
           </Text>
-          <Text>
+          <Text as={`h5`} fontWeight={`100`}>
             You can easily reach a broader audience, increase your sales, and
             build your brand. Monetize everything with Productize and unleash
             your full potential!

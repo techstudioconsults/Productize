@@ -165,7 +165,7 @@ export function LoginForm() {
           Don’t have an account ?{' '}
           <Link
             display={`inline`}
-            to={`/auth/signup`}
+            to={`/auth`}
             as={RouterLink}
             color={`purple.200`}
           >

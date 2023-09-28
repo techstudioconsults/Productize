@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useCallback, useEffect, useState } from 'react';
 import {
   Drawer,
   DrawerBody,
@@ -13,7 +13,7 @@ import {
   DrawerFooter,
   Stack,
 } from '@chakra-ui/react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import { SharedButton } from './SharedButton';
 
@@ -22,11 +22,27 @@ interface sidebarProps {
 }
 
 export const Sidenav = ({ links }: sidebarProps) => {
+  const [menuColor, setMenuColor] = useState(`white`);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { pathname } = useLocation();
+
+  const switchMenuColor = useCallback(() => {
+    switch (pathname) {
+      case `/`:
+        setMenuColor(`grey.100`);
+        break;
+      default:
+        setMenuColor(`yellow.300`);
+        break;
+    }
+  }, [pathname]);
+  useEffect(() => {
+    switchMenuColor();
+  }, [switchMenuColor]);
 
   return (
     <>
-      <Center cursor={`pointer`} display={{ xl: `none` }}>
+      <Center color={menuColor} cursor={`pointer`} display={{ xl: `none` }}>
         <Icon fontSize={`2rem`} onClick={onOpen} icon={`ci:hamburger-md`} />
       </Center>
 
@@ -52,7 +68,7 @@ export const Sidenav = ({ links }: sidebarProps) => {
           <DrawerBody py={10}>{links}</DrawerBody>
           <DrawerFooter>
             <Stack w={`100%`} gap={4}>
-              <Link>
+              <Link as={RouterLink} to={`/auth/login`}>
                 <SharedButton
                   fontSize={{ base: `sm`, md: `md` }}
                   text={'Login'}
@@ -63,7 +79,7 @@ export const Sidenav = ({ links }: sidebarProps) => {
                   borderRadius={'4px'}
                 />
               </Link>
-              <Link>
+              <Link as={RouterLink} to={`/auth`}>
                 <SharedButton
                   fontSize={{ base: `sm`, md: `md` }}
                   text={'Get Started'}

@@ -10,6 +10,7 @@ interface LayoutProps {
 }
 
 const DefaultLayout = ({ children }: LayoutProps) => {
+  const isAuth = useTokenExists();
   return (
     <>
       <Box
@@ -19,7 +20,7 @@ const DefaultLayout = ({ children }: LayoutProps) => {
         zIndex={999}
         backdropFilter={`blur(5px)`}
       >
-        <Navbar isAuth={useTokenExists()} />
+        <Navbar isAuth={isAuth} />
       </Box>
       {children}
       <Box borderTop={`3px solid white`}>

@@ -1,7 +1,6 @@
 import {
   Avatar,
   Center,
-  Flex,
   Menu,
   MenuButton,
   MenuItem,
@@ -14,7 +13,12 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
-export const AvatarComp = () => {
+interface avatarProp {
+  isScroll?: boolean;
+  linkColor?: string;
+}
+
+export const AvatarComp = ({ isScroll, linkColor }: avatarProp) => {
   const [logout] = useLogoutMutation();
   const navigate = useNavigate();
   const user = useSelector(selectCurrentuser);
@@ -33,7 +37,6 @@ export const AvatarComp = () => {
   return (
     <Menu>
       <MenuButton
-        // w={{ base: `fit-content`, md: `30rem` }}
         transition="all 0.2s"
         borderRadius="md"
         borderWidth="1px"
@@ -47,18 +50,22 @@ export const AvatarComp = () => {
             name="Kent Dodds"
             src="https://bit.ly/kent-c-dodds"
           />
-          <Text color={`white`}>{user?.name}</Text>
+          <Text color={isScroll ? `black` : linkColor}>{user?.name}</Text>
           <Icon icon={'eva:chevron-down-outline'} />
         </Center>
       </MenuButton>
-      <MenuList>
-        <MenuItem color={`grey.400`}>
+      <MenuList textAlign={`start`}>
+        <MenuItem justifyContent={`flex-start`} color={`grey.400`}>
           <Link to={`/dashboard`}>
             <Icon fontSize={`1.3rem`} icon={`ep:menu`} />
             <Text ml={3}>Dashboard</Text>
           </Link>
         </MenuItem>
-        <MenuItem color={`red.200`} onClick={logOut}>
+        <MenuItem
+          justifyContent={`flex-start`}
+          color={`red.200`}
+          onClick={logOut}
+        >
           <Icon fontSize={`1.3rem`} icon={`basil:logout-solid`} />
           <Text ml={3}>Log out</Text>
         </MenuItem>

@@ -1,17 +1,46 @@
-import {
-  Flex,
-  Image,
-  Center,
-  Link,
-} from '@chakra-ui/react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Flex, Image, Center, Link } from '@chakra-ui/react';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
 
 import Links from './NavigationLinks';
 import { AvatarComp, SharedButton, Sidenav } from '@productize/shared/ui';
+import { useCallback, useEffect, useState } from 'react';
 
 export const Navbar = ({ isAuth }: any) => {
+  const [isScroll, setScroll] = useState(false);
+  const [linkColor, setLinkColor] = useState(`white`);
+  const { pathname } = useLocation();
+
+  const switchMenuColor = useCallback(() => {
+    switch (pathname) {
+      case `/`:
+        setLinkColor(`grey.100`);
+        break;
+      default:
+        setLinkColor(`yellow.300`);
+        break;
+    }
+  }, [pathname]);
+  useEffect(() => {
+    switchMenuColor();
+  }, [switchMenuColor]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY >= 10) {
+        setScroll(true);
+      } else if (window.scrollY === 0) {
+        setScroll(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <Flex
+      // ref={navEl}
       className="cc-container"
       justifyContent={`space-between`}
       alignItems={`center`}
@@ -26,10 +55,10 @@ export const Navbar = ({ isAuth }: any) => {
           />
         </Link>
       </Center>
-      <Links isMobile={false} />
+      <Links linkColor={linkColor} isScroll={isScroll} isMobile={false} />
       <Flex display={{ base: `none`, xl: `flex` }} gap={2}>
         {isAuth ? (
-          <AvatarComp />
+          <AvatarComp linkColor={linkColor} isScroll={isScroll} />
         ) : (
           <>
             <Link as={RouterLink} to={`/auth/login`}>
@@ -39,7 +68,7 @@ export const Navbar = ({ isAuth }: any) => {
                 width={'160px'}
                 height={'48px'}
                 bgColor={'transparent'}
-                textColor={'white'}
+                textColor={isScroll ? 'black' : linkColor}
                 borderRadius={'4px'}
               />
             </Link>
@@ -50,14 +79,14 @@ export const Navbar = ({ isAuth }: any) => {
                 width={'160px'}
                 height={'48px'}
                 bgColor={'yellow.200'}
-                textColor={'white'}
+                textColor={isScroll ? 'black' : linkColor}
                 borderRadius={'4px'}
               />
             </Link>
           </>
         )}
       </Flex>
-      <Sidenav links={<Links isMobile={false} />} />
+      <Sidenav links={<Links isMobile={true} />} />
     </Flex>
   );
 };

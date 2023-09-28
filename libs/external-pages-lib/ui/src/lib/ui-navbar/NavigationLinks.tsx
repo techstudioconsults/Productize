@@ -29,9 +29,11 @@ type LinkProp = {
 
 type DropdownLinkProps = {
   link: LinkProp;
+  isScroll?: boolean;
+  linkColor?: string;
 };
 
-const DropdownLink = ({ link }: DropdownLinkProps) => {
+const DropdownLink = ({ isScroll, link, linkColor }: DropdownLinkProps) => {
   const navLinks = link.subLinks?.map((l) => {
     return (
       <NavLink to={l.path} key={l.id}>
@@ -46,7 +48,7 @@ const DropdownLink = ({ link }: DropdownLinkProps) => {
     <Menu>
       <MenuButton
         _hover={{ color: `red.100`, bg: `transparent` }} //change the hover color to that of the theme...DONT FORGET!!!
-        color={{ base: `black`, xl: `white` }}
+        color={{ base: linkColor, xl: isScroll ? `black` : linkColor }}
         fontWeight={`thin`}
         bg={`transparent`}
         as={Button}
@@ -54,19 +56,30 @@ const DropdownLink = ({ link }: DropdownLinkProps) => {
       >
         <Text fontSize={`16px`}>{link.name}</Text>
       </MenuButton>
-      <MenuList color={`black`}>{navLinks}</MenuList>
+      <MenuList ml={-14} color={`black`}>
+        {navLinks}
+      </MenuList>
     </Menu>
   );
 };
 
 type NavbarProps = {
   isMobile: boolean;
+  isScroll?: boolean;
+  linkColor?: string;
 };
 
-const Links = ({ isMobile }: NavbarProps) => {
+const Links = ({ isScroll, isMobile, linkColor }: NavbarProps) => {
   const navLinks = links.map((link) => {
     if (link.type === `dropdown`) {
-      return <DropdownLink key={link.id} link={link} />;
+      return (
+        <DropdownLink
+          linkColor={linkColor}
+          isScroll={isScroll}
+          key={link.id}
+          link={link}
+        />
+      );
     } else {
       return (
         <NavLink
@@ -86,7 +99,7 @@ const Links = ({ isMobile }: NavbarProps) => {
       width={`fit-content`}
       display={{ base: isMobile ? `flex` : `none`, xl: `flex` }}
       flexDir={isMobile ? `column` : `row`}
-      color={isMobile ? `black` : `white`}
+      color={isMobile || isScroll ? `black` : linkColor}
       alignItems={{ xl: `center` }}
       m={`auto`}
       gap={{ base: 10, xl: 10 }}

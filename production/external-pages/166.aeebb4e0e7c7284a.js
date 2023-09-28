@@ -1,0 +1,1 @@
+(self.webpackChunkexternal_pages=self.webpackChunkexternal_pages||[]).push([[166,534],{8534:(e,s,t)=>{t.r(s),t.d(s,{useTokenExists:()=>a});var n=t(1959),u=t(9619),r=t(1818);function a(){const[e,s]=(0,u.useState)(!1),t=(0,r.useSelector)(n.selectCurrentToken);return(0,u.useEffect)((()=>(s(!!t),()=>{})),[t]),e}}}]);

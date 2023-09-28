@@ -9,7 +9,7 @@ import { Route, Routes } from 'react-router-dom';
 export function App() {
   return (
     <Routes>
-      <Route index path="/signup" element={<Signup />} />
+      <Route index element={<Signup />} />
       <Route path="/login" element={<Login />} />
       <Route path="/fetching-data/:provider" element={<PreLoader />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />

@@ -3,9 +3,6 @@ import {
   Box,
   Container,
   Flex,
-  Input,
-  InputGroup,
-  InputLeftElement,
   Link,
 } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
@@ -63,7 +60,7 @@ export const ExploreNavBar = ({ isAuth }: navProps) => {
               <Link
                 display={{ base: `none`, lg: `initial` }}
                 as={RouterLink}
-                to={`/auth/signup`}
+                to={`/auth`}
               >
                 <SharedButton
                   fontSize={{ base: `sm`, md: `md` }}

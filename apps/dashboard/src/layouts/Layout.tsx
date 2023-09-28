@@ -43,7 +43,6 @@ const DashboardLayout = () => {
       </NavLink>
     );
   });
-
   const navLink2 = links2.map((link) => {
     return (
       <NavLink
@@ -122,6 +121,7 @@ const DashboardLayout = () => {
         border={`1px solid #01010120`}
         display={{ base: `none`, lg: `flex` }}
         gap={10}
+        className="hide_scrollbar"
       >
         <Flex
           justifyContent={`center`}
@@ -142,7 +142,7 @@ const DashboardLayout = () => {
         <Stack p={0}>{navLink3}</Stack>
       </Flex>
 
-      <Flex py={4} px={8} flexDir={`column`} w={`100%`}>
+      <Flex py={4} px={{ base: 4, md: 8 }} flexDir={`column`} w={`100%`}>
         <DashboardNavbar />
         <Outlet />
       </Flex>

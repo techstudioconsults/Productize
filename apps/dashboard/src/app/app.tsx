@@ -10,9 +10,9 @@ export function App() {
   return (
     <Routes>
       <Route path="/" element={<DashboardLayout />}>
-        <Route index path="home" element={<Home />} />
-        <Route index path="products" element={<Products />} />
-        <Route index path="orders" element={<Orders />} />
+        <Route path="home" element={<Home />} />
+        <Route path="products" element={<Products />} />
+        <Route path="orders" element={<Orders />} />
       </Route>
       <Route path="*" element={<h1>PAGE NOT FOUND</h1>} />
     </Routes>

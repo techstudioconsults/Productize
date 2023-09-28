@@ -1,13 +1,13 @@
-import { Box, Center, Container, Flex, Image, Input } from '@chakra-ui/react';
+import { Box, Center, Container, Flex, Image, Link } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
+
 import {
   AvatarComp,
   SearchComp,
   SharedButton,
   Sidenav,
 } from '@productize/shared/ui';
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
 const ProductNavbar = ({ isAuth }: any) => {
   return (
@@ -20,7 +20,7 @@ const ProductNavbar = ({ isAuth }: any) => {
           alignItems="center"
         >
           <Center>
-            <Link to={`/`}>
+            <Link as={RouterLink} to={`/`}>
               <Image
                 alt="logo"
                 src={`https://res.cloudinary.com/dkszgtapy/image/upload/v1693034778/productize/Frame_14220_ogchl8.png`}
@@ -37,7 +37,7 @@ const ProductNavbar = ({ isAuth }: any) => {
               <SearchComp size="lg" width={`25rem`} color={`grey.200`} />
             </Box>
             <Box display={{ base: `none`, xl: `initial` }}>
-              <Link to={`cart`}>
+              <Link as={RouterLink} to={`cart`}>
                 <Icon fontSize={`1.5rem`} icon={`ion:cart-sharp`} />
               </Link>
             </Box>
@@ -45,15 +45,17 @@ const ProductNavbar = ({ isAuth }: any) => {
               {isAuth ? (
                 <AvatarComp />
               ) : (
-                <SharedButton
-                  text={'Create Account'}
-                  width={'190px'}
-                  height={'48px'}
-                  bgColor={'yellow.200'}
-                  textColor={'white'}
-                  borderRadius={'4px'}
-                  fontSize={{ base: `sm`, xl: `md` }}
-                />
+                <Link as={RouterLink} to={`/auth`}>
+                  <SharedButton
+                    text={'Create Account'}
+                    width={'190px'}
+                    height={'48px'}
+                    bgColor={'yellow.200'}
+                    textColor={'white'}
+                    borderRadius={'4px'}
+                    fontSize={{ base: `sm`, xl: `md` }}
+                  />
+                </Link>
               )}
             </Box>
           </Flex>

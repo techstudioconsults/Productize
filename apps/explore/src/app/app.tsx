@@ -13,7 +13,6 @@ export function App() {
     <Routes>
       <Route index element={<ExploreIndex />} />
       <Route path="/design" element={<ExploreDesign />} />
-      {/* <Route path="/cart" element={<Cart />} /> */}
       <Route path="/product/details" element={<ProuctDetails />} />
       <Route path="/product/buy" element={<ProductBuy />} />
       <Route path="*" element={<h1>PAGE NOT FOUND</h1>} />

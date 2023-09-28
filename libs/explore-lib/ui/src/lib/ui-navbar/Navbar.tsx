@@ -43,7 +43,7 @@ export const Navbar = ({ isAuth }: any) => {
                 borderRadius={'4px'}
               />
             </Link>
-            <Link as={RouterLink} to={`/auth/signup`}>
+            <Link as={RouterLink} to={`/auth`}>
               <SharedButton
                 fontSize={{ base: `sm`, md: `md` }}
                 text={'Get Started'}

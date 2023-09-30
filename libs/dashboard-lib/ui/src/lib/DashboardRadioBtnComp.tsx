@@ -1,12 +1,4 @@
-import {
-  Box,
-  Center,
-  Checkbox,
-  Flex,
-  Image,
-  Radio,
-  Text,
-} from '@chakra-ui/react';
+import { Box, Center, Checkbox, Flex, Image, Text } from '@chakra-ui/react';
 import { SharedButton } from '@productize/shared/ui';
 import React, { useState } from 'react';
 
@@ -27,10 +19,10 @@ export const DashboardRadioBtnComp = ({
   btnTitle,
   isChecked,
 }: DashboardRadioProp) => {
-  const [checked, setChecked] = useState(false);
-  const toggleBtn = (e: any) => {
-    setChecked(e.target.checked);
-  };
+  // const [checked, setChecked] = useState(false);
+  // const toggleBtn = (e: any) => {
+  //   setChecked(e.target.checked);
+  // };
 
   return (
     <Flex
@@ -42,10 +34,10 @@ export const DashboardRadioBtnComp = ({
     >
       <Center p={0} boxSize={6}>
         <Checkbox
+          isChecked={isChecked}
           colorScheme="purple"
-          onChange={toggleBtn}
+          checked
           size="lg"
-          value="1"
         />
       </Center>
       <Box w={`100%`}>
@@ -55,7 +47,7 @@ export const DashboardRadioBtnComp = ({
         <Flex
           flexDir={{ base: `column`, md: `row` }}
           gap={4}
-          hidden={checked}
+          hidden={isChecked}
           justifyContent={`space-between`}
         >
           <Box>

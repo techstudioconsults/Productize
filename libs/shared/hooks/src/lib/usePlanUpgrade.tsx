@@ -1,12 +1,12 @@
-import { useSubscribeMutation } from '@productize/shared/redux';
+import { useUpgradePlanMutation } from '@productize/shared/redux';
 
 export const usePlanUpgrade = () => {
   // mutations
-  const [subscribe] = useSubscribeMutation();
+  const [upgradePlan] = useUpgradePlanMutation();
 
   const upgrade = async () => {
     try {
-      await subscribe(null).unwrap();
+      await upgradePlan(null).unwrap();
     } catch (error: any) {
       console.log(error);
     }

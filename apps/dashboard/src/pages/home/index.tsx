@@ -4,9 +4,24 @@ import {
   DashboardRadioBtnComp,
   ProgressBar,
 } from '@productize/dashboard-lib/ui';
+import {
+  selectCurrentUser,
+  useVerifyEmailMutation,
+} from '@productize/shared/redux';
 import React from 'react';
+import { useSelector } from 'react-redux';
 
-const index = () => {
+const Home = () => {
+  const [verifyEmail] = useVerifyEmailMutation();
+  const user = useSelector(selectCurrentUser);
+  const verifyEmailAddress = async () => {
+    try {
+      await verifyEmail(null).unwrap();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <Container p={0} my={8} maxW={`47rem`}>
       <DashboardBanner
@@ -38,6 +53,7 @@ const index = () => {
       <Stack>
         <Box>
           <DashboardRadioBtnComp
+            isChecked={user?.email_verified}
             title={'Verify your email'}
             subTitle={
               'Complete your profile to start getting your products published.'
@@ -46,11 +62,11 @@ const index = () => {
               'https://res.cloudinary.com/dkszgtapy/image/upload/v1695984929/productize/Illustration_oblvox.png'
             }
             btnTitle={'Verify Email'}
+            onClick={verifyEmailAddress}
           />
         </Box>
         <Box>
           <DashboardRadioBtnComp
-            isChecked
             title={'Customize your email'}
             subTitle={
               'Complete your profile to start getting your products published.'
@@ -102,4 +118,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Home;

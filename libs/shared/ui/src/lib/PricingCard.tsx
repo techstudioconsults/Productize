@@ -4,6 +4,7 @@ import { Icon } from '@iconify/react';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { CardLayout, cardProps } from '@productize/external-pages-lib/ui';
 import { SharedButton } from './SharedButton';
+import { usePlanUpgrade } from '@productize/shared/hooks';
 
 export interface pricingCardProps {
   cardProps: cardProps;
@@ -32,6 +33,8 @@ export const PricingCard = ({
   tagProps,
   showButton,
 }: pricingCardProps) => {
+  const upgrade = usePlanUpgrade();
+
   const lists = listItems?.map((list, index) => {
     return (
       <ListItem key={index} display={`flex`} alignItems={`flex-start`} gap={2}>
@@ -94,6 +97,7 @@ export const PricingCard = ({
             textColor={'white'}
             borderRadius={'4px'}
             fontSize={{}}
+            onClick={() => upgrade()}
           />
         </Box>
       </Flex>

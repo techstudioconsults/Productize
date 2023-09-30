@@ -1,4 +1,5 @@
 import { apiSlice } from '../apiSlice';
+import { setUser } from '../user-state/userSlice';
 import { logOut, setCredentials, setFPEmailConfirmation } from './authSlice';
 
 export const authApiSlice = apiSlice.injectEndpoints({
@@ -15,6 +16,10 @@ export const authApiSlice = apiSlice.injectEndpoints({
           dispatch(
             setCredentials({
               accessToken: data.token,
+            })
+          );
+          dispatch(
+            setUser({
               user: data.user,
             })
           );
@@ -36,6 +41,10 @@ export const authApiSlice = apiSlice.injectEndpoints({
           dispatch(
             setCredentials({
               accessToken: data.token,
+            })
+          );
+          dispatch(
+            setUser({
               user: data.user,
             })
           );
@@ -77,6 +86,10 @@ export const authApiSlice = apiSlice.injectEndpoints({
           dispatch(
             setCredentials({
               accessToken: data.token,
+            })
+          );
+          dispatch(
+            setUser({
               user: data.user,
             })
           );
@@ -139,6 +152,11 @@ export const authApiSlice = apiSlice.injectEndpoints({
           const { data } = await queryFulfilled;
           console.log(data);
           dispatch(logOut());
+          dispatch(
+            setUser({
+              user: null,
+            })
+          );
         } catch (err) {
           console.log(err);
         }

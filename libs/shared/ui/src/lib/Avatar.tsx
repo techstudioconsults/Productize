@@ -8,8 +8,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
-import { selectCurrentuser, useLogoutMutation } from '@productize/shared/redux';
-import React from 'react';
+import { selectCurrentUser, useLogoutMutation } from '@productize/shared/redux';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -21,7 +20,7 @@ interface avatarProp {
 export const AvatarComp = ({ isScroll, linkColor }: avatarProp) => {
   const [logout] = useLogoutMutation();
   const navigate = useNavigate();
-  const user = useSelector(selectCurrentuser);
+  const user = useSelector(selectCurrentUser);
 
   const logOut = async () => {
     try {

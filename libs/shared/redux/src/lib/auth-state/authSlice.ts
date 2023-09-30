@@ -1,14 +1,12 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 interface AuthState {
   token: string | null;
-  user: object | null;
   forgotPasswordEmailConfirmation: object | null;
 }
 
 const initialState: AuthState = {
   token: null,
-  user: null,
   forgotPasswordEmailConfirmation: {
     emailSent: false,
     email: null,
@@ -16,16 +14,12 @@ const initialState: AuthState = {
 };
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: 'Auth',
   initialState,
   reducers: {
-    setCredentials: (
-      state,
-      action: PayloadAction<{ accessToken: string; user: object }>
-    ) => {
-      const { accessToken, user } = action.payload;
+    setCredentials: (state, action) => {
+      const { accessToken } = action.payload;
       state.token = accessToken;
-      state.user = user;
     },
     setFPEmailConfirmation: (state, action) => {
       // FP - Forgot Password
@@ -33,7 +27,6 @@ const authSlice = createSlice({
     },
     logOut: (state) => {
       state.token = null;
-      state.user = null;
       state.forgotPasswordEmailConfirmation = {
         emailSent: false,
         email: null,
@@ -47,7 +40,6 @@ export const { setCredentials, logOut, setFPEmailConfirmation } =
 
 export default authSlice.reducer;
 
-export const selectCurrentToken = (state: any) => state.auth.token;
-export const selectCurrentuser = (state: any) => state.auth.user;
+export const selectCurrentToken = (state: any) => state.Auth.token;
 export const selectEmailConfirmation = (state: any) =>
-  state.auth.forgotPasswordEmailConfirmation;
+  state.Auth.forgotPasswordEmailConfirmation;

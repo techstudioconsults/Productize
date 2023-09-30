@@ -9,7 +9,14 @@ import React from 'react';
 const index = () => {
   return (
     <Container p={0} my={8} maxW={`47rem`}>
-      <DashboardBanner />
+      <DashboardBanner
+        img={`https://res.cloudinary.com/dkszgtapy/image/upload/v1695996352/productize/Illustration_2_fslyo9.png `}
+        bgImg={`https://res.cloudinary.com/dkszgtapy/image/upload/v1695997135/productize/Lines_t1t27k.png`}
+        title={'Welcome to productize.'}
+        desc={'Complete your profile to start getting your products published.'}
+        py={8}
+        px={8}
+      />
       <Flex
         flexDir={{ base: `column`, md: `row` }}
         my={8}

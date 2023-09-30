@@ -14,9 +14,10 @@ const DashboardLayout = () => {
   const navLink1 = links.map((link) => {
     return (
       <NavLink
+        state={link?.name}
         className={({ isActive }) => (isActive ? style.active : style.inactive)}
-        to={link.path}
-        key={link.id}
+        to={link?.path}
+        key={link?.id}
       >
         <Flex
           borderRadius={`8px`}
@@ -46,6 +47,7 @@ const DashboardLayout = () => {
   const navLink2 = links2.map((link) => {
     return (
       <NavLink
+        state={link?.name}
         className={({ isActive }) => (isActive ? style.active : style.inactive)}
         to={link.path}
         key={link.id}
@@ -78,6 +80,7 @@ const DashboardLayout = () => {
   const navLink3 = links3.map((link) => {
     return (
       <NavLink
+        state={link?.name}
         className={({ isActive }) => (isActive ? style.active : style.inactive)}
         to={link.path}
         key={link.id}

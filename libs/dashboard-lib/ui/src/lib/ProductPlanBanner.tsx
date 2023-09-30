@@ -21,7 +21,7 @@ interface bannerProps {
   showImage: boolean;
 }
 
-export const ProductBanner = ({
+export const ProductPlanBanner = ({
   content,
   textAlign,
   maxW,
@@ -34,7 +34,12 @@ export const ProductBanner = ({
       borderRadius={`10px`}
       border={`1px solid #F3F2FB`}
     >
-      <Container p={0} display={`flex`} alignItems={`center`} maxW={maxW}>
+      <Flex
+        p={0}
+        alignItems={`center`}
+        justifyContent={`space-between`}
+        maxW={maxW}
+      >
         <Box>
           <Text as={`h5`} fontWeight={400} color={`purple.200`}>
             {content.title}
@@ -106,7 +111,7 @@ export const ProductBanner = ({
         <Box display={showImage ? { base: `none`, md: `initial` } : `none`}>
           <Image src={content.img} alt="img" />
         </Box>
-      </Container>
+      </Flex>
     </Box>
   );
 };

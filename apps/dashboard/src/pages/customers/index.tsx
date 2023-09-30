@@ -2,7 +2,7 @@ import { Box } from '@chakra-ui/react';
 import { ProductPlanBanner } from '@productize/dashboard-lib/ui';
 import React from 'react';
 
-const Orders = () => {
+const Customers = () => {
   return (
     <Box>
       <ProductPlanBanner
@@ -19,4 +19,4 @@ const Orders = () => {
   );
 };
 
-export default Orders;
+export default Customers;

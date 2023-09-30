@@ -39,7 +39,7 @@ export const ModalComp = ({ children }: modalProps) => {
         <ModalContent borderRadius={`1rem`} py={10} px={{ base: 4, md: 20 }}>
           {children}
           <Flex p={5} justifyContent={`center`} alignItems={`center`}>
-            <Center onClick={onClose}>
+            <Center cursor={`pointer`} onClick={onClose}>
               <Icon fontSize={`2rem`} icon={'system-uicons:chevron-left'} />
               <Text fontWeight={600}>Go Back</Text>
             </Center>

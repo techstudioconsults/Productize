@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react';
 import { SharedButton } from '@productize/shared/ui';
 import { ProductCards } from './dashboard-product/allProducts/ProductCards';
-import { ProductBanner } from './ProductBanner';
+import { ProductPlanBanner } from './ProductPlanBanner';
 export const DashboardTab = () => {
   // const tabStyle = {}
   const activeStateStyle = {
@@ -90,7 +90,7 @@ export const DashboardTab = () => {
             </Box>
           </Flex>
           <Box my={4}>
-            <ProductBanner
+            <ProductPlanBanner
               content={{
                 title: 'Upgrade your plan to create product',
                 desc: 'Lorem ipsum dolor sit amet consectetur. Nec accumsan amet amet velit. Aliquam dictum id pellentesque aenean turpis nisl. Quam etiam.',
@@ -102,7 +102,7 @@ export const DashboardTab = () => {
         </TabPanel>
         <TabPanel px={0}>
           <Box>
-            <ProductBanner
+            <ProductPlanBanner
               content={{
                 title: 'You’re yet to publish a product.',
                 desc: 'Lorem ipsum dolor sit amet consectetur. Nec accumsan amet amet velit. Aliquam dictum id pellentesque aenean turpis nisl. Quam etiam.',
@@ -116,7 +116,7 @@ export const DashboardTab = () => {
         </TabPanel>
         <TabPanel px={0}>
           <Box>
-            <ProductBanner
+            <ProductPlanBanner
               content={{
                 title: 'Upgrade your plan to create a plan',
                 desc: 'Lorem ipsum dolor sit amet consectetur. Nec accumsan amet amet velit. Aliquam dictum id pellentesque aenean turpis nisl. Quam etiam.',
@@ -130,7 +130,7 @@ export const DashboardTab = () => {
         </TabPanel>
         <TabPanel px={0}>
           <Box>
-            <ProductBanner
+            <ProductPlanBanner
               content={{
                 title: 'Upgrade your plan to create a plan',
                 desc: 'Lorem ipsum dolor sit amet consectetur. Nec accumsan amet amet velit. Aliquam dictum id pellentesque aenean turpis nisl. Quam etiam.',

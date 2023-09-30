@@ -23,7 +23,7 @@ export const links = [
   {
     id: 4,
     name: `Analytics`,
-    path: `analitics`,
+    path: `analytics`,
     type: `premium`,
     icon: `fluent:data-pie-24-filled`,
   },
@@ -76,7 +76,7 @@ export const links3 = [
   {
     id: 3,
     name: `Profile`,
-    path: `profile`,
+    path: `profile/6587698pyhu7fy6f89yvyv8ofgcghjh6u879i`,
     type: `free`,
     icon: `ph:compass-fill`,
   },

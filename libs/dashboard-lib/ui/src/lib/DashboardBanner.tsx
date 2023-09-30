@@ -1,7 +1,25 @@
 import React from 'react';
 import { Box, Flex, Image, Text } from '@chakra-ui/react';
 
-export const DashboardBanner: React.FC = () => {
+interface dashboardProps {
+  bgImg: string;
+  img: string;
+  title: string;
+  desc: string;
+  padding?: string | object | number;
+  py?: string | object | number;
+  px?: string | object | number;
+}
+
+export const DashboardBanner = ({
+  bgImg,
+  img,
+  title,
+  desc,
+  padding,
+  py,
+  px,
+}: dashboardProps) => {
   return (
     <Flex
       flexDir={{ base: `column`, md: `row` }}
@@ -9,27 +27,25 @@ export const DashboardBanner: React.FC = () => {
       bgColor={`purple.200`}
       justifyContent={`space-between`}
       gap={4}
-      bgImg={`https://res.cloudinary.com/dkszgtapy/image/upload/v1695997135/productize/Lines_t1t27k.png`}
+      bgImg={bgImg}
       backgroundRepeat={`no-repeat`}
       backgroundPosition={`right center`}
       backgroundSize={{ base: `cover`, md: `contain` }}
       borderRadius={`9px`}
-      p={8}
+      py={py}
+      px={px}
       color={`purple.100`}
     >
-      <Box>
+      <Box padding={padding}>
         <Text as={`h4`} textAlign={'start'} lineHeight={10} maxW={`35rem`}>
-          Welcome to productize.
+          {title}
         </Text>
         <Text fontSize={`sm`} textAlign={'start'} maxW={`35rem`} mt={4}>
-          Complete your profile to start getting your products <br /> published.
+          {desc}
         </Text>
       </Box>
-      <Box>
-        <Image
-          src={`https://res.cloudinary.com/dkszgtapy/image/upload/v1695996352/productize/Illustration_2_fslyo9.png`}
-          alt="img"
-        />
+      <Box w={`263px`}>
+        <Image src={img} alt="img" />
       </Box>
     </Flex>
   );

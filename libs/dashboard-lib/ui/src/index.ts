@@ -5,4 +5,5 @@ export * from './lib/links';
 export * from './lib/DashboardRadioBtnComp';
 export * from './lib/DashboardTab';
 export * from './lib/dashboard-product/allProducts/ProductCards';
-export * from './lib/ProductBanner';
+export * from './lib/ProductPlanBanner';
+export * from './lib/dashboard-profile/ProfileForm';

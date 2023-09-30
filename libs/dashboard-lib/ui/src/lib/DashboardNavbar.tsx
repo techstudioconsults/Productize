@@ -1,4 +1,4 @@
-import { Box, Center, Flex, Image, Text } from '@chakra-ui/react';
+import { Box, Center, Flex, Text } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
 import { SearchComp, Sidenav } from '@productize/shared/ui';
 import { useCallback, useEffect, useState } from 'react';
@@ -6,25 +6,11 @@ import { Link, useLocation } from 'react-router-dom';
 
 export const DashboardNavbar = () => {
   const [header, setHeader] = useState('');
-  const { pathname } = useLocation();
+  const { state } = useLocation();
 
   const switchHeader = useCallback(() => {
-    switch (pathname) {
-      case `/home`:
-        setHeader('Home');
-        break;
-      case `/products`:
-        setHeader('Products');
-        break;
-      case `/orders`:
-        setHeader('Orders');
-        break;
-
-      default:
-        setHeader('');
-        break;
-    }
-  }, [pathname]);
+    setHeader(state);
+  }, [state]);
 
   useEffect(() => {
     switchHeader();

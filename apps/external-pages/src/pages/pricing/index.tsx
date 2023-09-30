@@ -3,13 +3,12 @@ import DefaultLayout from '../../layouts/Layout';
 import {
   AccordionComponent,
   Hero,
-  PricingCard,
   SectionLayout,
   SharedSection,
 } from '@productize/external-pages-lib/ui';
 import { Box, Container, Flex, Highlight, Stack, Text } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
-import { SharedButton } from '@productize/shared/ui';
+import { PricingCard, SharedButton } from '@productize/shared/ui';
 
 const Pricing = () => {
   return (
@@ -74,6 +73,11 @@ const Pricing = () => {
               status={'Free'}
               textColor={'yellow.300'}
               statusColor={'yellow.300'}
+              tagProps={{
+                title: 'current Plan',
+                bgColor: 'grey.800',
+                color: `white`,
+              }}
             />
             <PricingCard
               cardProps={{
@@ -94,6 +98,11 @@ const Pricing = () => {
               status={'premium'}
               textColor={'purple.100'}
               statusColor={'yellow.100'}
+              tagProps={{
+                title: 'best Plan',
+                bgColor: 'Best Value',
+                color: `white`,
+              }}
             />
           </Flex>
         </Stack>

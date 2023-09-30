@@ -20,7 +20,7 @@ export const PreLoader = () => {
       try {
         const res = await googleAuthCallback(data).unwrap();
         if (res.token) {
-          navigate(`/explore`);
+          navigate(`/dashboard/home`);
         }
       } catch (error: any) {
         setError(error.data.message);

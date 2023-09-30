@@ -10,7 +10,7 @@ export function App() {
   return (
     <Routes>
       <Route path="/" element={<DashboardLayout />}>
-        <Route path="home" element={<Home />} />
+        <Route path="home" index element={<Home />} />
         <Route path="products" element={<Products />} />
         <Route path="orders" element={<Orders />} />
       </Route>

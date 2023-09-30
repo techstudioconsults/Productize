@@ -7,3 +7,5 @@ export * from './lib/SideNavigationbar';
 export * from './lib/PaymentStatusTag';
 export * from './lib/PaymentStatusTag';
 export * from './lib/SearchComp';
+export * from './lib/ModalComp';
+export * from './lib/PricingCard';

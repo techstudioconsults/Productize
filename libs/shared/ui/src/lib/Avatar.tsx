@@ -56,7 +56,7 @@ export const AvatarComp = ({ isScroll, linkColor }: avatarProp) => {
       </MenuButton>
       <MenuList textAlign={`start`}>
         <MenuItem justifyContent={`flex-start`} color={`grey.400`}>
-          <Link to={`/dashboard`}>
+          <Link to={`/dashboard/home`}>
             <Icon fontSize={`1.3rem`} icon={`ep:menu`} />
             <Text ml={3}>Dashboard</Text>
           </Link>

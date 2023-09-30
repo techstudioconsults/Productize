@@ -1,5 +1,9 @@
-import { Box, Container, Flex, Text } from '@chakra-ui/react';
-import { DashboardBanner, ProgressBar } from '@productize/dashboard-lib/ui';
+import { Box, Container, Flex, Stack, Text } from '@chakra-ui/react';
+import {
+  DashboardBanner,
+  DashboardRadioBtnComp,
+  ProgressBar,
+} from '@productize/dashboard-lib/ui';
 import React from 'react';
 
 const index = () => {
@@ -24,6 +28,69 @@ const index = () => {
           <ProgressBar />
         </Box>
       </Flex>
+      <Stack>
+        <Box>
+          <DashboardRadioBtnComp
+            title={'Verify your email'}
+            subTitle={
+              'Complete your profile to start getting your products published.'
+            }
+            image={
+              'https://res.cloudinary.com/dkszgtapy/image/upload/v1695984929/productize/Illustration_oblvox.png'
+            }
+            btnTitle={'Verify Email'}
+          />
+        </Box>
+        <Box>
+          <DashboardRadioBtnComp
+            isChecked
+            title={'Customize your email'}
+            subTitle={
+              'Complete your profile to start getting your products published.'
+            }
+            image={
+              'https://res.cloudinary.com/dkszgtapy/image/upload/v1695984929/productize/Illustration_oblvox.png'
+            }
+            btnTitle={'Customize Email'}
+          />
+        </Box>
+        <Box>
+          <DashboardRadioBtnComp
+            title={'Create your first product'}
+            subTitle={
+              'Complete your profile to start getting your products published.'
+            }
+            image={
+              'https://res.cloudinary.com/dkszgtapy/image/upload/v1693141295/productize/Illustration_2_zibmgb.png'
+            }
+            btnTitle={'Create Product'}
+          />
+        </Box>
+        <Box>
+          <DashboardRadioBtnComp
+            title={'Set up your payout'}
+            subTitle={
+              'Complete your profile to start getting your products published.'
+            }
+            image={
+              'https://res.cloudinary.com/dkszgtapy/image/upload/v1693141295/productize/Illustration_1_wdmvgf.png'
+            }
+            btnTitle={'Make Money'}
+          />
+        </Box>
+        <Box>
+          <DashboardRadioBtnComp
+            title={'make your first sale'}
+            subTitle={
+              'Complete your profile to start getting your products published.'
+            }
+            image={
+              'https://res.cloudinary.com/dkszgtapy/image/upload/v1693141295/productize/Frame_40446_y425kr.png'
+            }
+            btnTitle={'Make Sale'}
+          />
+        </Box>
+      </Stack>
     </Container>
   );
 };

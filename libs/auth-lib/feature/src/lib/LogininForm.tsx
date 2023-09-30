@@ -52,7 +52,7 @@ export function LoginForm() {
     try {
       const res = await login(data).unwrap();
       if (res.token) {
-        navigate(`/explore`);
+        navigate(`/dashboard/home`);
       }
     } catch (error: any) {
       setError(error.data.message);

@@ -1,9 +1,35 @@
-import { Box, Center, Container, Flex, Image, Text } from '@chakra-ui/react';
+import { Box, Center, Flex, Image, Text } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
 import { SearchComp, Sidenav } from '@productize/shared/ui';
-import { Link } from 'react-router-dom';
+import { useCallback, useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 export const DashboardNavbar = () => {
+  const [header, setHeader] = useState('');
+  const { pathname } = useLocation();
+
+  const switchHeader = useCallback(() => {
+    switch (pathname) {
+      case `/home`:
+        setHeader('Home');
+        break;
+      case `/products`:
+        setHeader('Products');
+        break;
+      case `/orders`:
+        setHeader('Orders');
+        break;
+
+      default:
+        setHeader('');
+        break;
+    }
+  }, [pathname]);
+
+  useEffect(() => {
+    switchHeader();
+  }, [switchHeader]);
+
   return (
     <Box borderBottom={`1px solid grey.300`}>
       <Box
@@ -13,8 +39,8 @@ export const DashboardNavbar = () => {
         alignItems="center"
       >
         <Center>
-          <Text as={`h5`} color={`grey.500`}>
-            Home
+          <Text as={`h5`} color={`grey.500`} fontWeight={400}>
+            {header}
           </Text>
         </Center>
 

@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 interface UserState {
-  user: object | null;
+  profile: object | null;
 }
 
 const initialState: UserState = {
-  user: null,
+  profile: null,
 };
 
 const userSlice = createSlice({
@@ -14,7 +14,7 @@ const userSlice = createSlice({
   reducers: {
     setUser: (state, action) => {
       const { user } = action.payload;
-      state.user = user;
+      state.profile = user;
     },
   },
 });
@@ -23,4 +23,4 @@ export const { setUser } = userSlice.actions;
 
 export default userSlice.reducer;
 
-export const selectCurrentUser = (state: any) => state.User.user;
+export const selectCurrentUser = (state: any) => state.User.profile;

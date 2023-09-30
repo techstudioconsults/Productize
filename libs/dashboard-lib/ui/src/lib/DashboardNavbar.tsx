@@ -1,6 +1,5 @@
 import { Box, Center, Flex, Text } from '@chakra-ui/react';
-import { Icon } from '@iconify/react';
-import { SearchComp, Sidenav } from '@productize/shared/ui';
+import { Icon, SearchComp, Sidenav } from '@productize/shared/ui';
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -37,8 +36,8 @@ export const DashboardNavbar = () => {
           <Box display={{ base: `none`, xl: `initial` }}>
             <Link to={`cart`}>
               <Icon
-                fontSize={`1.5rem`}
-                icon={`material-symbols:notifications-sharp`}
+                icon={`https://res.cloudinary.com/dkszgtapy/image/upload/v1696087936/productize/Productize-iconset/Property_2_Notifications_1_w4v7g4.svg`}
+                name={'notification'}
               />
             </Link>
           </Box>

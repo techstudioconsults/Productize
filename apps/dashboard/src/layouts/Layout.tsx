@@ -6,7 +6,7 @@ import {
   links2,
   links3,
 } from '@productize/dashboard-lib/ui';
-import { PaymentStatusTag } from '@productize/shared/ui';
+import { Icon as IconSet, PaymentStatusTag } from '@productize/shared/ui';
 import { NavLink, Outlet, Link as ReactLink } from 'react-router-dom';
 import style from './navbar.module.scss';
 
@@ -30,7 +30,7 @@ const DashboardLayout = () => {
           w={`100%`}
         >
           <Flex gap={2} alignItems={`center`}>
-            <Icon icon={link.icon} />
+            <IconSet icon={link.icon} name={link.name} size={`24px`} />
             <Text>{link?.name}</Text>
           </Flex>
           <Box display={link.type === `free` ? `none` : `block`}>
@@ -63,7 +63,7 @@ const DashboardLayout = () => {
           w={`100%`}
         >
           <Flex gap={2} alignItems={`center`}>
-            <Icon icon={link.icon} />
+            <IconSet icon={link.icon} name={link.name} size={`24px`} />
             <Text>{link?.name}</Text>
           </Flex>
           <Box display={link.type === `free` ? `none` : `block`}>
@@ -96,7 +96,7 @@ const DashboardLayout = () => {
           w={`100%`}
         >
           <Flex gap={2} alignItems={`center`}>
-            <Icon icon={link.icon} />
+            <IconSet icon={link.icon} name={link.name} size={`24px`} />
             <Text>{link?.name}</Text>
           </Flex>
           <Box display={link.type === `free` ? `none` : `block`}>

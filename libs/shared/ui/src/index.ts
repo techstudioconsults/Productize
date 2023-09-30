@@ -9,3 +9,4 @@ export * from './lib/PaymentStatusTag';
 export * from './lib/SearchComp';
 export * from './lib/ModalComp';
 export * from './lib/PricingCard';
+export * from './lib/Icon';

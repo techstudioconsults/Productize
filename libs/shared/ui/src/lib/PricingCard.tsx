@@ -63,9 +63,10 @@ export const PricingCard = ({
                 {status}
               </Text>
               <Tag
+                fontWeight={600}
                 color={tagProps.color}
                 bgColor={tagProps.bgColor}
-                // size={`sm`}
+                size={`lg`}
               >
                 {tagProps.title}
               </Tag>

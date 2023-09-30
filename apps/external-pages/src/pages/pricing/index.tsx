@@ -56,10 +56,10 @@ const Pricing = () => {
           >
             <PricingCard
               cardProps={{
-                bgColor: `white`,
-                width: { base: `100%`, xl: `467px` },
+                bgColor: `purple.100`,
+                width: { base: `100%`, xl: `25rem` },
                 height: `556px`,
-                borderRadius: `4px`,
+                borderRadius: `8px`,
               }}
               listItems={[
                 `lorem lorem lorem lorem lorem lorem lorem lorem lorem`,
@@ -74,17 +74,18 @@ const Pricing = () => {
               textColor={'yellow.300'}
               statusColor={'yellow.300'}
               tagProps={{
-                title: 'current Plan',
+                title: 'Current Plan',
                 bgColor: 'grey.800',
                 color: `white`,
               }}
             />
             <PricingCard
+              showButton
               cardProps={{
                 bgColor: `purple.300`,
-                width: { base: `100%`, xl: `467px` },
+                width: { base: `100%`, xl: `25rem` },
                 height: `556px`,
-                borderRadius: `4px`,
+                borderRadius: `8px`,
               }}
               listItems={[
                 `lorem lorem lorem lorem lorem lorem lorem lorem lorem`,
@@ -99,9 +100,9 @@ const Pricing = () => {
               textColor={'purple.100'}
               statusColor={'yellow.100'}
               tagProps={{
-                title: 'best Plan',
-                bgColor: 'Best Value',
-                color: `white`,
+                title: 'Best Value',
+                bgColor: 'yellow.100',
+                color: `yellow.300`,
               }}
             />
           </Flex>

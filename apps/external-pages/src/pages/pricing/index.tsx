@@ -9,8 +9,10 @@ import {
 import { Box, Container, Flex, Highlight, Stack, Text } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { PricingCard, SharedButton } from '@productize/shared/ui';
+import { useSetPaymentPlan } from '@productize/shared/hooks';
 
 const Pricing = () => {
+  const isPremium = useSetPaymentPlan();
   return (
     <DefaultLayout>
       <Hero
@@ -30,7 +32,7 @@ const Pricing = () => {
             <Text lineHeight={`shorter`} as={`h1`}>
               We prioritize your sales and profit
             </Text>
-            <Text as={`h5`} mt={3}>
+            <Text fontWeight={100} as={`h5`} mt={3}>
               Productize looks out for a better life with a money making system,
               no monthly charges. Just for you
             </Text>
@@ -100,8 +102,8 @@ const Pricing = () => {
               textColor={'purple.100'}
               statusColor={'yellow.100'}
               tagProps={{
-                title: 'Best Value',
-                bgColor: 'yellow.100',
+                title:  'Best Value',
+                bgColor:  'yellow.100',
                 color: `yellow.300`,
               }}
             />
@@ -124,7 +126,7 @@ const Pricing = () => {
               <Text as={`h2`} lineHeight={`shorter`}>
                 Frequently asked questions
               </Text>
-              <Text my={`2rem`}>
+              <Text as={`h5`} fontWeight={100} my={`2rem`}>
                 <Highlight
                   query="Try the Productize Help
                   Center or Contact us"

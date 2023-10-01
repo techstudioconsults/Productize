@@ -41,7 +41,7 @@ const Features: React.FC = () => {
               </Highlight>
             </Text>
 
-            <Text as={`h5`} maxW={`35rem`} margin={`auto`} mt={3}>
+            <Text as={`h5`} maxW={`35rem`} margin={`auto`} mt={3} fontWeight={100}>
               The opportunity to share knowledge with individuals and businesses
               of same passion.
             </Text>
@@ -77,7 +77,7 @@ const Features: React.FC = () => {
           <Text as={`h1`} lineHeight={`shorter`}>
             Grab visitors attention with detailed products.
           </Text>
-          <Text maxW={`34rem`} m={`auto`} my={5}>
+          <Text maxW={`50rem`} m={`auto`} as={`h5`} my={5} fontWeight={100}>
             Explore our massive suite of design features and rich libraries of
             free visual content. They’re all customizable to make your site look
             just right.
@@ -131,7 +131,7 @@ const Features: React.FC = () => {
           <Text as={`h1`} lineHeight={`shorter`}>
             Share your products.
           </Text>
-          <Text maxW={`34rem`} m={`auto`} my={5}>
+          <Text as={`h5`} fontWeight={100} maxW={`50rem`} m={`auto`} my={5}>
             Explore our massive suite of design features and rich libraries of
             free visual content. They’re all customizable to make your site look
             just right.

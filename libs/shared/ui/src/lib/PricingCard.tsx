@@ -4,7 +4,7 @@ import { Icon } from '@iconify/react';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { CardLayout, cardProps } from '@productize/external-pages-lib/ui';
 import { SharedButton } from './SharedButton';
-import { usePlanUpgrade } from '@productize/shared/hooks';
+import { usePlanUpgrade, useSetPaymentPlan } from '@productize/shared/hooks';
 
 export interface pricingCardProps {
   cardProps: cardProps;
@@ -34,6 +34,7 @@ export const PricingCard = ({
   showButton,
 }: pricingCardProps) => {
   const upgrade = usePlanUpgrade();
+  const isPremium = useSetPaymentPlan();
 
   const lists = listItems?.map((list, index) => {
     return (
@@ -67,11 +68,23 @@ export const PricingCard = ({
               </Text>
               <Tag
                 fontWeight={600}
-                color={tagProps.color}
-                bgColor={tagProps.bgColor}
+                color={
+                  isPremium && cardProps.bgColor === `purple.300`
+                    ? `grey.100`
+                    : tagProps.color
+                }
+                bgColor={
+                  isPremium && cardProps.bgColor === `purple.300`
+                    ? `green.200`
+                    : tagProps.bgColor
+                }
                 size={`lg`}
               >
-                {tagProps.title}
+                {isPremium && cardProps.bgColor === `purple.300`
+                  ? `Current Plan`
+                  : isPremium
+                  ? `casual`
+                  : tagProps.title}
               </Tag>
             </Flex>
             <Text mt={4} as={`h3`} color={textColor} fontWeight={700}>
@@ -88,7 +101,7 @@ export const PricingCard = ({
           </Box>
           <List spacing={3}>{lists}</List>
         </Box>
-        <Box hidden={!showButton}>
+        <Box hidden={!showButton || isPremium}>
           <SharedButton
             text={'Upgrade Plan'}
             width={'100%'}

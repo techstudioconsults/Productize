@@ -1,17 +1,14 @@
 import { Box, Flex, Image, Link, Stack, Text } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
-import {
-  DashboardNavbar,
-  links,
-  links2,
-  links3,
-} from '@productize/dashboard-lib/ui';
+import { DashboardNavbar, useLinks } from '@productize/dashboard-lib/ui';
 import { Icon as IconSet, PaymentStatusTag } from '@productize/shared/ui';
 import { NavLink, Outlet, Link as ReactLink } from 'react-router-dom';
 import style from './navbar.module.scss';
 
 const DashboardLayout = () => {
-  const navLink1 = links.map((link) => {
+  const { links1, links2, links3 } = useLinks();
+
+  const navLink1 = links1?.map((link) => {
     return (
       <NavLink
         state={link?.name}
@@ -33,7 +30,7 @@ const DashboardLayout = () => {
             <IconSet icon={link.icon} name={link.name} size={`24px`} />
             <Text>{link?.name}</Text>
           </Flex>
-          <Box display={link.type === `free` ? `none` : `block`}>
+          <Box display={link.type ? `none` : `block`}>
             <Icon
               color={`grey.400`}
               fontSize={`1.1rem`}
@@ -44,7 +41,7 @@ const DashboardLayout = () => {
       </NavLink>
     );
   });
-  const navLink2 = links2.map((link) => {
+  const navLink2 = links2?.map((link) => {
     return (
       <NavLink
         state={link?.name}
@@ -77,7 +74,7 @@ const DashboardLayout = () => {
       </NavLink>
     );
   });
-  const navLink3 = links3.map((link) => {
+  const navLink3 = links3?.map((link) => {
     return (
       <NavLink
         state={link?.name}
@@ -140,7 +137,36 @@ const DashboardLayout = () => {
           </Link>
           <PaymentStatusTag />
         </Flex>
-        <Stack p={0}>{navLink1}</Stack>
+        <Stack p={0}>
+          <NavLink
+            state={`Home`}
+            className={({ isActive }) =>
+              isActive ? style.active : style.inactive
+            }
+            to={`home`}
+          >
+            <Flex
+              borderRadius={`8px`}
+              width={`195px`}
+              py={`12px`}
+              px={`16px`}
+              fontSize={`1.5rem`}
+              alignItems={`center`}
+              justifyContent={`space-between`}
+              w={`100%`}
+            >
+              <Flex gap={2} alignItems={`center`}>
+                <IconSet
+                  icon={`https://res.cloudinary.com/dkszgtapy/image/upload/v1696088709/Stockholm-icons_kizeoq.svg`}
+                  name={`menu`}
+                  size={`24px`}
+                />
+                <Text>Home</Text>
+              </Flex>
+            </Flex>
+          </NavLink>
+          {navLink1}
+        </Stack>
         <Stack p={0}>{navLink2}</Stack>
         <Stack p={0}>{navLink3}</Stack>
       </Flex>

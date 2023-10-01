@@ -8,12 +8,14 @@ import {
   selectCurrentUser,
   useVerifyEmailMutation,
 } from '@productize/shared/redux';
-import React from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const [verifyEmail] = useVerifyEmailMutation();
   const user = useSelector(selectCurrentUser);
+  const navigate = useNavigate();
+
   const verifyEmailAddress = async () => {
     try {
       await verifyEmail(null).unwrap();
@@ -67,14 +69,15 @@ const Home = () => {
         </Box>
         <Box>
           <DashboardRadioBtnComp
-            title={'Customize your email'}
+            onClick={() => navigate(`/dashboard/profile/${user?.id}`)}
+            title={'Customize your profile'}
             subTitle={
               'Complete your profile to start getting your products published.'
             }
             image={
               'https://res.cloudinary.com/dkszgtapy/image/upload/v1695984929/productize/Illustration_oblvox.png'
             }
-            btnTitle={'Customize Email'}
+            btnTitle={'Customize Profile'}
           />
         </Box>
         <Box>

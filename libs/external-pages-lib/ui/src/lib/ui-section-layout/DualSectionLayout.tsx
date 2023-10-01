@@ -1,7 +1,9 @@
 import { Box, Flex, Image, List, ListItem, Text } from '@chakra-ui/react';
 import React from 'react';
 import { Icon } from '@iconify/react';
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { SharedButton } from '@productize/shared/ui';
+import { Link } from 'react-router-dom';
 
 export interface DualSectionLayoutProps {
   children: React.ReactNode;
@@ -84,18 +86,20 @@ export const DualSectionLayoutList = ({
       <Text as={`h1`} fontWeight={700} lineHeight={`shorter`}>
         {title}
       </Text>
-      <Text my={10}>{subTitle}</Text>
+      <Text as={`h5`} fontWeight={100} my={10}>{subTitle}</Text>
       <List spacing={3}>{lists}</List>
       <Box mt={10} display={shouldShowButton ? `block` : `none`}>
-        <SharedButton
-          text={'Get Started'}
-          width={{ base: `100%`, xl: '22.5rem' }}
-          height={'48px'}
-          bgColor={'yellow.200'}
-          textColor={'white'}
-          borderRadius={'4px'}
-          fontSize={{ base: `sm`, md: `md` }}
-        />
+        <Link to={`/auth`}>
+          <SharedButton
+            text={'Get Started'}
+            width={{ base: `100%`, xl: '22.5rem' }}
+            height={'48px'}
+            bgColor={'yellow.200'}
+            textColor={'white'}
+            borderRadius={'4px'}
+            fontSize={{ base: `sm`, md: `md` }}
+          />
+        </Link>
       </Box>
     </Box>
   );

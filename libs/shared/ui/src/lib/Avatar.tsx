@@ -7,10 +7,11 @@ import {
   MenuList,
   Text,
 } from '@chakra-ui/react';
-import { Icon } from '@iconify/react';
 import { selectCurrentUser, useLogoutMutation } from '@productize/shared/redux';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { Icon as IconSet } from './Icon';
+import { Icon } from '@iconify/react';
 
 interface avatarProp {
   isScroll?: boolean;
@@ -56,7 +57,10 @@ export const AvatarComp = ({ isScroll, linkColor }: avatarProp) => {
       <MenuList textAlign={`start`}>
         <MenuItem justifyContent={`flex-start`} color={`grey.400`}>
           <Link to={`/dashboard/home`}>
-            <Icon fontSize={`1.3rem`} icon={`ep:menu`} />
+            <IconSet
+              name="menu"
+              icon={`https://res.cloudinary.com/dkszgtapy/image/upload/v1696088709/Stockholm-icons_kizeoq.svg`}
+            />
             <Text ml={3}>Dashboard</Text>
           </Link>
         </MenuItem>

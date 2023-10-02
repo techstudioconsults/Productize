@@ -16,14 +16,15 @@ import {
   InputRightElement,
 } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
+import { useAxiosInstance } from '@productize/shared/hooks';
 import {
   selectCurrentUser,
-  useUpdateProfileMutation,
+  // useUpdateProfileMutation,
 } from '@productize/shared/redux';
 import { SharedButton } from '@productize/shared/ui';
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 type formTypes = {
   logo: FileList;
@@ -31,7 +32,9 @@ type formTypes = {
 
 export const ProfileForm = () => {
   const user = useSelector(selectCurrentUser);
-  const [updateProfile, profileStatus] = useUpdateProfileMutation();
+  const dispatch = useDispatch();
+  const { query, isLoading } = useAxiosInstance();
+  // const [updateProfile, profileStatus] = useUpdateProfileMutation();
   const fileInput = useRef<HTMLInputElement | null>(null);
   const imgRef = useRef<HTMLImageElement | null>(null);
   const { register, handleSubmit, control } = useForm({
@@ -39,26 +42,33 @@ export const ProfileForm = () => {
   });
 
   const onSubmit: any = async (data: formTypes) => {
-    try {
-      const profileData = {
-        ...data,
-        logo: data.logo?.[0],
-      };
-      console.log(profileData);
-      await updateProfile(profileData).unwrap();
-    } catch (error: any) {
-      console.log(error);
+    // const profileData = {
+    //   ...data,
+    //   logo: data.logo,
+    // };
+    // try {
+    //   await updateProfile(data).unwrap();
+    // } catch (error) {
+    //   console.log(error);
+    // }
+    const res = await query(`post`, `/users/me`, data);
+    if (res?.status === 200) {
+      dispatch({ type: 'User/setUser', payload: { user: res.data.data } });
     }
   };
 
   const previewImg = (files: FileList | null) => {
     if (files && imgRef.current) {
-      imgRef.current.src = URL.createObjectURL(files[0]);
+      imgRef.current.src = null || URL.createObjectURL(files[0]);
     }
   };
 
   return (
-    <FormControl as={`form`} onSubmit={handleSubmit(onSubmit)}>
+    <FormControl
+      encType="multipart/form-data"
+      as={`form`}
+      onSubmit={handleSubmit(onSubmit)}
+    >
       {/* grid one */}
       <Grid templateColumns="repeat(12, 1fr)" gap={6}>
         <GridItem colSpan={{ base: 12, md: 5 }}>
@@ -77,6 +87,8 @@ export const ProfileForm = () => {
                 Full name
               </FormLabel>
               <Input
+                // required
+                defaultValue={user?.name}
                 bgColor={`grey.200`}
                 _focus={{ bgColor: `grey.300`, color: `grey.800` }}
                 _placeholder={{ color: `grey.400` }}
@@ -93,6 +105,8 @@ export const ProfileForm = () => {
                 Username
               </FormLabel>
               <Input
+                // required
+                defaultValue={user?.username}
                 bgColor={`grey.200`}
                 _focus={{ bgColor: `grey.300`, color: `grey.800` }}
                 _placeholder={{ color: `grey.400` }}
@@ -117,6 +131,7 @@ export const ProfileForm = () => {
                 </Text>
               </Flex>
               <Input
+                readOnly
                 defaultValue={user?.email}
                 type="email"
                 bgColor={`grey.200`}
@@ -138,6 +153,8 @@ export const ProfileForm = () => {
                   <Icon icon={`material-symbols:check`} />
                 </InputLeftElement>
                 <Input
+                  // required
+                  defaultValue={user?.phone_number}
                   bgColor={`grey.200`}
                   _focus={{ bgColor: `grey.300`, color: `grey.800` }}
                   _placeholder={{ color: `grey.400` }}
@@ -155,6 +172,8 @@ export const ProfileForm = () => {
                 Bio
               </FormLabel>
               <Textarea
+                // required
+                defaultValue={user?.bio}
                 bgColor={`grey.200`}
                 _focus={{ bgColor: `grey.300`, color: `grey.800` }}
                 _placeholder={{ color: `grey.400` }}
@@ -207,7 +226,7 @@ export const ProfileForm = () => {
                         hidden
                         ref={fileInput}
                         onChange={(e) => {
-                          field.onChange(e.target.files); // update the form value
+                          field.onChange(e.target.files?.[0]);
                           previewImg(e.target.files);
                         }}
                         type="file"
@@ -246,6 +265,8 @@ export const ProfileForm = () => {
               </FormLabel>
               <InputGroup size="lg">
                 <Input
+                  // required
+                  defaultValue={user?.twitter_account}
                   pr="4.5rem"
                   bgColor={`grey.200`}
                   _focus={{ bgColor: `grey.200`, color: `grey.800` }}
@@ -275,6 +296,8 @@ export const ProfileForm = () => {
               </FormLabel>
               <InputGroup size="lg">
                 <Input
+                  // required
+                  defaultValue={user?.facebook_account}
                   pr="4.5rem"
                   bgColor={`grey.200`}
                   _focus={{ bgColor: `grey.200`, color: `grey.800` }}
@@ -304,6 +327,8 @@ export const ProfileForm = () => {
               </FormLabel>
               <InputGroup size="lg">
                 <Input
+                  // required
+                  defaultValue={user?.youtube_account}
                   pr="4.5rem"
                   bgColor={`grey.200`}
                   _focus={{ bgColor: `grey.200`, color: `grey.800` }}
@@ -341,8 +366,10 @@ export const ProfileForm = () => {
             />
             <SharedButton
               btnExtras={{
-                isLoading: profileStatus.isLoading,
+                // isLoading: profileStatus.isLoading,
+                isLoading: isLoading,
                 loadingText: `Saving Profile...`,
+                type: `submit`,
               }}
               text={'Save Changes'}
               width={'fit-content'}

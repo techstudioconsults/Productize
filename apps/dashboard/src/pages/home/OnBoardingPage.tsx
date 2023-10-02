@@ -1,4 +1,5 @@
 import { Box, Container, Flex, Stack, Text } from '@chakra-ui/react';
+import { checkUserProfileValidity } from '@productize/dashboard-lib/feature';
 import {
   DashboardBanner,
   DashboardRadioBtnComp,
@@ -73,6 +74,7 @@ const OnBoardingPage = () => {
         </Box>
         <Box>
           <DashboardRadioBtnComp
+            isChecked={checkUserProfileValidity(user)}
             title={'Customize your profile'}
             subTitle={
               'Complete your profile to start getting your products published.'

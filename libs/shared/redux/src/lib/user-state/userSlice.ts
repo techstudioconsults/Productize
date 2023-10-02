@@ -7,7 +7,7 @@ interface UserState {
 
 const initialState: UserState = {
   profile: null,
-  guideTaskCompleted: 3,
+  guideTaskCompleted: 0,
 };
 
 const userSlice = createSlice({
@@ -16,6 +16,7 @@ const userSlice = createSlice({
   reducers: {
     setUser: (state, action) => {
       const { user } = action.payload;
+
       state.profile = user;
     },
     setTaskCount: (state) => {

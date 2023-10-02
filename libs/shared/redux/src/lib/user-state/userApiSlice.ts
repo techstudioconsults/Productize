@@ -1,8 +1,27 @@
 import { apiSlice } from '../apiSlice';
-import { setTaskCount } from './userSlice';
+import { setTaskCount, setUser } from './userSlice';
 
 export const userApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    getUser: builder.mutation({
+      query: () => ({
+        url: `/users/me`,
+        method: 'GET',
+      }),
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(
+            setUser({
+              user: data.data,
+            })
+          );
+        } catch (err) {
+          console.log(err);
+        }
+      },
+    }),
+
     verifyEmail: builder.mutation({
       query: () => ({
         url: `/auth/email/resend`,
@@ -11,6 +30,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
+          console.log(data);
           dispatch(setTaskCount());
         } catch (err) {
           console.log(err);
@@ -38,11 +58,21 @@ export const userApiSlice = apiSlice.injectEndpoints({
         url: `/users/me`,
         method: 'POST',
         body: { ...credentials },
+        // headers: {
+        //   'Content-Type': 'multipart/form-data',
+        // },
       }),
+
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        console.log(arg);
         try {
           const { data } = await queryFulfilled;
           console.log(data);
+          dispatch(
+            setUser({
+              user: data.data,
+            })
+          );
         } catch (err) {
           console.log(err);
         }

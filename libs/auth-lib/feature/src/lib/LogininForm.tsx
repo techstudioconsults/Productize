@@ -9,7 +9,6 @@ import {
   InputRightElement,
   Link,
   Text,
-  useToast,
 } from '@chakra-ui/react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
@@ -17,7 +16,6 @@ import { ErrorText, SharedButton } from '@productize/shared/ui';
 import { useState } from 'react';
 // import { ErrorMessage } from '@hookform/error-message';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
 import {
   useGoogleAuthMutation,
   useLoginMutation,

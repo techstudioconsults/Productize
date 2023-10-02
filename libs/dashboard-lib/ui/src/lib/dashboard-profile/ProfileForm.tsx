@@ -16,15 +16,49 @@ import {
   InputRightElement,
 } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
+import {
+  selectCurrentUser,
+  useUpdateProfileMutation,
+} from '@productize/shared/redux';
 import { SharedButton } from '@productize/shared/ui';
-import React from 'react';
+import React, { useRef } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
+
+type formTypes = {
+  logo: FileList;
+};
 
 export const ProfileForm = () => {
-  const [show, setShow] = React.useState(false);
-  const handleClick = () => setShow(!show);
+  const user = useSelector(selectCurrentUser);
+  const [updateProfile, profileStatus] = useUpdateProfileMutation();
+  const fileInput = useRef<HTMLInputElement | null>(null);
+  const imgRef = useRef<HTMLImageElement | null>(null);
+  const { register, handleSubmit, control } = useForm({
+    criteriaMode: 'all',
+  });
+
+  const onSubmit: any = async (data: formTypes) => {
+    try {
+      const profileData = {
+        ...data,
+        logo: data.logo?.[0],
+      };
+      console.log(profileData);
+      await updateProfile(profileData).unwrap();
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
+  const previewImg = (files: FileList | null) => {
+    if (files && imgRef.current) {
+      imgRef.current.src = URL.createObjectURL(files[0]);
+    }
+  };
 
   return (
-    <FormControl>
+    <FormControl as={`form`} onSubmit={handleSubmit(onSubmit)}>
       {/* grid one */}
       <Grid templateColumns="repeat(12, 1fr)" gap={6}>
         <GridItem colSpan={{ base: 12, md: 5 }}>
@@ -49,6 +83,7 @@ export const ProfileForm = () => {
                 placeholder="Enter Your Name"
                 variant={`filled`}
                 size={`lg`}
+                {...register('full_name')}
               />
             </FormControl>
           </Box>
@@ -64,6 +99,7 @@ export const ProfileForm = () => {
                 placeholder="Enter Username"
                 variant={`filled`}
                 size={`lg`}
+                {...register('username')}
               />
             </FormControl>
           </Box>
@@ -81,6 +117,8 @@ export const ProfileForm = () => {
                 </Text>
               </Flex>
               <Input
+                defaultValue={user?.email}
+                type="email"
                 bgColor={`grey.200`}
                 _focus={{ bgColor: `grey.300`, color: `grey.800` }}
                 _placeholder={{ color: `grey.400` }}
@@ -106,6 +144,7 @@ export const ProfileForm = () => {
                   variant={`filled`}
                   type="tel"
                   placeholder="Enter number"
+                  {...register('phone_number')}
                 />
               </InputGroup>
             </FormControl>
@@ -121,6 +160,7 @@ export const ProfileForm = () => {
                 _placeholder={{ color: `grey.400` }}
                 variant={`filled`}
                 placeholder="Follow me to unlock your potential with my products."
+                {...register('bio')}
               />
             </FormControl>
           </Box>
@@ -146,28 +186,39 @@ export const ProfileForm = () => {
               </FormLabel>
               <Box>
                 <Center
+                  overflow={`hidden`}
                   borderRadius={`4px`}
                   bgColor={`yellow.100`}
                   boxSize={`120px`}
+                  onClick={() => fileInput.current?.click()}
                 >
                   <Image
+                    ref={imgRef}
+                    objectFit={`contain`}
                     src={`https://res.cloudinary.com/dkszgtapy/image/upload/v1696084137/productize/Star_6_alusuk.png`}
                     alt={`img`}
                   />
+                  <Controller
+                    name="logo"
+                    control={control}
+                    defaultValue={null}
+                    render={({ field }) => (
+                      <Input
+                        hidden
+                        ref={fileInput}
+                        onChange={(e) => {
+                          field.onChange(e.target.files); // update the form value
+                          previewImg(e.target.files);
+                        }}
+                        type="file"
+                      />
+                    )}
+                  />
+                  {/* <Input {...register('logo')} type="file" size={`lg`} /> */}
                 </Center>
-                <Input
-                  hidden
-                  type="file"
-                  bgColor={`grey.200`}
-                  _focus={{ bgColor: `grey.300`, color: `grey.800` }}
-                  _placeholder={{ color: `grey.400` }}
-                  placeholder="Enter Your Name"
-                  variant={`filled`}
-                  size={`lg`}
-                />
               </Box>
               <Text className="small-text" color={`grey.400`}>
-                Your logo will be visible next to your name in your Gumroad
+                Your logo will be visible next to your name in your Productize
                 profile and product pages. Your image should be at least
                 200x200px and must be in JPG or PNG format.
               </Text>
@@ -191,7 +242,7 @@ export const ProfileForm = () => {
           <Box mb={4}>
             <FormControl>
               <FormLabel color={`purple.300`} fontWeight={600}>
-                Twitter
+                X
               </FormLabel>
               <InputGroup size="lg">
                 <Input
@@ -201,6 +252,7 @@ export const ProfileForm = () => {
                   _placeholder={{ color: `grey.400` }}
                   placeholder="Enter username"
                   variant={`filled`}
+                  {...register('twitter_account')}
                 />
                 <InputRightElement>
                   <Center
@@ -229,6 +281,7 @@ export const ProfileForm = () => {
                   _placeholder={{ color: `grey.400` }}
                   placeholder="Enter username"
                   variant={`filled`}
+                  {...register('facebook_account')}
                 />
                 <InputRightElement>
                   <Center
@@ -257,6 +310,7 @@ export const ProfileForm = () => {
                   _placeholder={{ color: `grey.400` }}
                   placeholder="Enter username"
                   variant={`filled`}
+                  {...register('youtube_account')}
                 />
                 <InputRightElement>
                   <Center
@@ -284,10 +338,14 @@ export const ProfileForm = () => {
               fontSize={{ base: `sm`, md: `md` }}
             />
             <SharedButton
+              disabled
+              isLoading={profileStatus.isLoading}
+              loadingText={`Saving...`}
+              type={`submit`}
               text={'Save Changes'}
               width={'fit-content'}
               height={'40px'}
-              bgColor={'grey.300'}
+              bgColor={'purple.200'}
               textColor={'grey.100'}
               borderRadius={'4px'}
               fontSize={{ base: `sm`, md: `md` }}

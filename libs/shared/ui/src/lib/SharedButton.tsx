@@ -17,6 +17,7 @@ export interface ButtonProps {
   type?: string | any;
   loadingText?: string;
   isLoading?: boolean;
+  disabled?: boolean;
 }
 
 export function SharedButton({
@@ -33,6 +34,7 @@ export function SharedButton({
   type,
   loadingText,
   isLoading,
+  disabled,
   onClick,
 }: ButtonProps) {
   return (
@@ -51,6 +53,7 @@ export function SharedButton({
       borderRadius={borderRadius}
       border={border}
       type={type}
+      disabled={disabled}
     >
       {text}
     </Button>

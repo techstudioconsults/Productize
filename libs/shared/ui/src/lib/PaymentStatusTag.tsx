@@ -1,15 +1,17 @@
 import { Tag } from '@chakra-ui/react';
+import { useSetPaymentPlan } from '@productize/shared/hooks';
 
 export const PaymentStatusTag = () => {
+  const isPremium = useSetPaymentPlan();
   return (
     <Tag
       size={`sm`}
       fontSize={`xs`}
-      bgColor={`coral.100`}
-      border={`1px solid #17B6BA`}
+      bgColor={isPremium ? `yellow.100` : `coral.100`}
+      border={isPremium ? `1px solid #F6C21C` : `1px solid #17B6BA`}
       color={`coral.300`}
     >
-      Free
+      {isPremium ? `Premium` : `Free`}
     </Tag>
   );
 };

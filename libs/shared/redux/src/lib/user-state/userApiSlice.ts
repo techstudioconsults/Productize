@@ -1,4 +1,5 @@
 import { apiSlice } from '../apiSlice';
+import { setTaskCount } from './userSlice';
 
 export const userApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -10,7 +11,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          console.log(data);
+          dispatch(setTaskCount());
         } catch (err) {
           console.log(err);
         }
@@ -31,7 +32,27 @@ export const userApiSlice = apiSlice.injectEndpoints({
         }
       },
     }),
+
+    updateProfile: builder.mutation({
+      query: (credentials) => ({
+        url: `/users/me`,
+        method: 'POST',
+        body: { ...credentials },
+      }),
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          console.log(data);
+        } catch (err) {
+          console.log(err);
+        }
+      },
+    }),
   }),
 });
 
-export const { useUpgradePlanMutation, useVerifyEmailMutation } = userApiSlice;
+export const {
+  useUpgradePlanMutation,
+  useVerifyEmailMutation,
+  useUpdateProfileMutation,
+} = userApiSlice;

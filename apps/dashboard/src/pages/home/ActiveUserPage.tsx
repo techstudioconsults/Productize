@@ -12,12 +12,15 @@ import {
 import { Icon } from '@iconify/react';
 import {
   DashboardEmptyState,
+  DashboardTable,
   DataWidgetCard,
 } from '@productize/dashboard-lib/ui';
 import { SharedButton } from '@productize/shared/ui';
+import { useState } from 'react';
 import { DateRangePicker, SelectPicker } from 'rsuite';
 
 const ActiveUserPage = () => {
+  const [emptyState, setEmptyState] = useState(false);
   const data = [
     `All Products`,
     `UX Design Fundamentals`,
@@ -28,7 +31,7 @@ const ActiveUserPage = () => {
 
   return (
     <Box my={8}>
-      {/* dropdown controls and buttons CTAs */}
+      {/* dropdown filters and buttons Controls */}
       <Flex
         alignItems={{ md: `center` }}
         justifyContent={`space-between`}
@@ -75,6 +78,7 @@ const ActiveUserPage = () => {
               btnExtras={{
                 border: `1px solid #6D5DD3`,
                 leftIcon: `basil:refresh-outline`,
+                onClick: () => setEmptyState((prevState) => !prevState),
               }}
             />
             <SharedButton
@@ -153,15 +157,19 @@ const ActiveUserPage = () => {
       <Box my={10}>
         <Text as={`h6`}>Sales</Text>
         <Box mt={4}>
-          <DashboardEmptyState
-            content={{
-              title: '',
-              desc: 'You do not have any sales activities yet.',
-              img: `https://res.cloudinary.com/dkszgtapy/image/upload/v1695984929/productize/Illustration_oblvox.png`,
-            }}
-            textAlign={{ base: `center` }}
-            showImage
-          />
+          {emptyState ? (
+            <DashboardEmptyState
+              content={{
+                title: '',
+                desc: 'You do not have any sales activities yet.',
+                img: `https://res.cloudinary.com/dkszgtapy/image/upload/v1695984929/productize/Illustration_oblvox.png`,
+              }}
+              textAlign={{ base: `center` }}
+              showImage
+            />
+          ) : (
+            <DashboardTable />
+          )}
         </Box>
       </Box>
     </Box>

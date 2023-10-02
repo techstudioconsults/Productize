@@ -9,3 +9,4 @@ export * from './lib/ProductPlanBanner';
 export * from './lib/dashboard-profile/ProfileForm';
 export * from './lib/DashboardEmptyState';
 export * from './lib/DataWidgetCard';
+export * from './lib/DashboardTable';

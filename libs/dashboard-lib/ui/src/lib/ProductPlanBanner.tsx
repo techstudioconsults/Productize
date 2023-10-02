@@ -1,16 +1,7 @@
-import {
-  Box,
-  Center,
-  Container,
-  Flex,
-  Image,
-  ModalContent,
-  Text,
-} from '@chakra-ui/react';
+import { Box, Flex, Image, Text } from '@chakra-ui/react';
 import { ModalComp, PricingCard } from '@productize/shared/ui';
-import React from 'react';
 
-interface bannerProps {
+export interface bannerProps {
   content: {
     title: string;
     desc: string;
@@ -39,6 +30,7 @@ export const ProductPlanBanner = ({
         alignItems={`center`}
         justifyContent={`space-between`}
         maxW={maxW}
+        m={`auto`}
       >
         <Box>
           <Text as={`h5`} fontWeight={400} color={`purple.200`}>

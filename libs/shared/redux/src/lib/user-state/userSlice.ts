@@ -7,7 +7,7 @@ interface UserState {
 
 const initialState: UserState = {
   profile: null,
-  guideTaskCompleted: 0,
+  guideTaskCompleted: 3,
 };
 
 const userSlice = createSlice({

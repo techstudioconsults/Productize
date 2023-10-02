@@ -9,6 +9,8 @@ interface dashboardProps {
   padding?: string | object | number;
   py?: string | object | number;
   px?: string | object | number;
+  height?: string | number;
+  alignContent?: string;
 }
 
 export const DashboardBanner = ({
@@ -19,22 +21,25 @@ export const DashboardBanner = ({
   padding,
   py,
   px,
+  height,
+  alignContent,
 }: dashboardProps) => {
   return (
     <Flex
       flexDir={{ base: `column`, md: `row` }}
-      alignItems={{ base: `center`, md: `flex-start` }}
+      alignItems={{ base: `center`, md: alignContent || `flex-start` }}
       bgColor={`purple.200`}
       justifyContent={`space-between`}
       gap={4}
       bgImg={bgImg}
       backgroundRepeat={`no-repeat`}
       backgroundPosition={`right center`}
-      backgroundSize={{ base: `cover`, md: `contain` }}
+      backgroundSize={`cover`}
       borderRadius={`9px`}
       py={py}
       px={px}
       color={`purple.100`}
+      h={height}
     >
       <Box padding={padding}>
         <Text as={`h4`} textAlign={'start'} lineHeight={10} maxW={`35rem`}>

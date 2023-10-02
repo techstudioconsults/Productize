@@ -7,9 +7,9 @@ import ActiveUserPage from './ActiveUserPage';
 const Home = () => {
   const tashCount = useSelector(selectTaskCompletedCount);
 
-  if (tashCount === 3) {
+  if (tashCount === 5) {
     return <FirstSalePage />;
-  } else if (tashCount === 5) {
+  } else if (tashCount !== 5) {
     return <ActiveUserPage />;
   }
 

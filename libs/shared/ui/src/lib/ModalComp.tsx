@@ -21,7 +21,9 @@ export const ModalComp = ({ children }: modalProps) => {
     <>
       <SharedButton
         text={'Upgrade Plan'}
-        onClick={onOpen}
+        btnExtras={{
+          onClick: onOpen,
+        }}
         width={'fit-content'}
         height={'48px'}
         bgColor={'purple.200'}

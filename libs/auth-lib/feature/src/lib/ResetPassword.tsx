@@ -132,9 +132,11 @@ export function ResetPassword({ email, token }: RPProps) {
       <Box>
         <Box my={5}>
           <SharedButton
-            loadingText="Changing Password"
-            isLoading={resetPasswordStatus.isLoading}
-            type={`submit`}
+            btnExtras={{
+              loadingText: 'Changing Password...',
+              isLoading: resetPasswordStatus.isLoading,
+              type: `submit`,
+            }}
             text={'Reset password'}
             width={`100%`}
             height={'48px'}

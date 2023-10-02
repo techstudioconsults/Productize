@@ -5,7 +5,6 @@ import {
   Tab,
   TabPanel,
   Flex,
-  SimpleGrid,
   Box,
 } from '@chakra-ui/react';
 import { SharedButton } from '@productize/shared/ui';
@@ -23,7 +22,9 @@ export const DashboardTab = () => {
       <Box display={{ base: `flex`, md: `none` }} justifyContent={`flex-end`}>
         <SharedButton
           text={'New Product'}
-          leftIcon={`ei:plus`}
+          btnExtras={{
+            leftIcon: `ei:plus`,
+          }}
           width={'fit-content'}
           height={'40px'}
           bgColor={'purple.200'}
@@ -50,7 +51,9 @@ export const DashboardTab = () => {
         <Box display={{ base: `none`, md: `initial` }}>
           <SharedButton
             text={'New Product'}
-            leftIcon={`ei:plus`}
+            btnExtras={{
+              leftIcon: `ei:plus`,
+            }}
             width={'fit-content'}
             height={'40px'}
             bgColor={'purple.200'}

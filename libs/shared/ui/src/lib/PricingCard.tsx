@@ -33,7 +33,7 @@ export const PricingCard = ({
   tagProps,
   showButton,
 }: pricingCardProps) => {
-  const upgrade = usePlanUpgrade();
+  const { upgrade, upgradeStatus } = usePlanUpgrade();
   const isPremium = useSetPaymentPlan();
 
   const lists = listItems?.map((list, index) => {
@@ -110,7 +110,10 @@ export const PricingCard = ({
             textColor={'white'}
             borderRadius={'4px'}
             fontSize={{}}
-            onClick={() => upgrade()}
+            btnExtras={{
+              isLoading: upgradeStatus.isLoading,
+              onClick: () => upgrade(),
+            }}
           />
         </Box>
       </Flex>

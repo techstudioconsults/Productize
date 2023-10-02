@@ -2,7 +2,7 @@ import { useUpgradePlanMutation } from '@productize/shared/redux';
 
 export const usePlanUpgrade = () => {
   // mutations
-  const [upgradePlan] = useUpgradePlanMutation();
+  const [upgradePlan, upgradeStatus] = useUpgradePlanMutation();
 
   const upgrade = async () => {
     try {
@@ -12,5 +12,5 @@ export const usePlanUpgrade = () => {
     }
   };
 
-  return upgrade;
+  return { upgrade, upgradeStatus };
 };

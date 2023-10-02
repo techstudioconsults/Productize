@@ -328,20 +328,22 @@ export const ProfileForm = () => {
           </Box>
           <Flex gap={4} mt={12}>
             <SharedButton
+              btnExtras={{
+                border: '1px solid #6D5DD3',
+              }}
               text={'Cancel'}
               width={'fit-content'}
               height={'40px'}
               bgColor={'transparent'}
               textColor={'purple.200'}
               borderRadius={'4px'}
-              border="1px solid #6D5DD3"
               fontSize={{ base: `sm`, md: `md` }}
             />
             <SharedButton
-              disabled
-              isLoading={profileStatus.isLoading}
-              loadingText={`Saving...`}
-              type={`submit`}
+              btnExtras={{
+                isLoading: profileStatus.isLoading,
+                loadingText: `Saving Profile...`,
+              }}
               text={'Save Changes'}
               width={'fit-content'}
               height={'40px'}

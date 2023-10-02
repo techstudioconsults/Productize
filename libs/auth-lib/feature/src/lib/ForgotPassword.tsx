@@ -63,7 +63,6 @@ export function ForgotPassowrdForm(props: ForgotPassowrdProps) {
       <Box>
         <Box my={5}>
           <SharedButton
-            type={`submit`}
             text={'Reset Password'}
             width={`100%`}
             height={'48px'}
@@ -71,15 +70,17 @@ export function ForgotPassowrdForm(props: ForgotPassowrdProps) {
             textColor={'white'}
             borderRadius={'4px'}
             fontSize={{ base: `sm`, lg: `md` }}
-            loadingText="Loading..."
-            isLoading={forgotPasswordStatus.isLoading}
+            btnExtras={{
+              loadingText: 'Loading...',
+              type: `submit`,
+              isLoading: forgotPasswordStatus.isLoading,
+            }}
           />
         </Box>
 
         <Center my={5}>
           <Link as={RouterLink} w={`100%`} to={`/auth/login`}>
             <SharedButton
-              leftIcon={`solar:arrow-left-line-duotone`}
               text={'Back to Sign In'}
               width={`100%`}
               height={'48px'}
@@ -87,6 +88,9 @@ export function ForgotPassowrdForm(props: ForgotPassowrdProps) {
               textColor={'purple.200'}
               borderRadius={'4px'}
               fontSize={{ base: `sm` }}
+              btnExtras={{
+                leftIcon: `solar:arrow-left-line-duotone`,
+              }}
             />
           </Link>
         </Center>

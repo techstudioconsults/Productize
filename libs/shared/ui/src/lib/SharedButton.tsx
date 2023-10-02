@@ -2,8 +2,22 @@ import { Button } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
 
 /* eslint-disable-next-line */
-export interface ButtonProps {
+
+export interface BtnExtras {
+  border?: string;
+  leftIcon?: string | any;
+  rightIcon?: string | any;
+  type?: string | any;
+  isLoading?: boolean;
+  loadingText?: string;
+  hasError?: boolean;
+  errorText?: string;
+  isSuccess?: boolean;
+  successText?: string;
+  disabled?: boolean;
   onClick?: () => void;
+}
+export interface ButtonProps {
   text: string;
   width: string | object;
   height: string;
@@ -11,13 +25,7 @@ export interface ButtonProps {
   textColor: string;
   borderRadius: string;
   fontSize: object;
-  border?: string;
-  leftIcon?: string | any;
-  rightIcon?: string | any;
-  type?: string | any;
-  loadingText?: string;
-  isLoading?: boolean;
-  disabled?: boolean;
+  btnExtras?: BtnExtras;
 }
 
 export function SharedButton({
@@ -28,22 +36,15 @@ export function SharedButton({
   textColor,
   borderRadius,
   fontSize,
-  border,
-  leftIcon,
-  rightIcon,
-  type,
-  loadingText,
-  isLoading,
-  disabled,
-  onClick,
+  btnExtras,
 }: ButtonProps) {
   return (
     <Button
-      onClick={onClick}
-      loadingText={loadingText}
-      isLoading={isLoading}
-      leftIcon={<Icon fontSize={`1.5rem`} icon={leftIcon} />}
-      rightIcon={<Icon fontSize={`1.5rem`} icon={rightIcon} />}
+      onClick={btnExtras?.onClick}
+      loadingText={btnExtras?.loadingText}
+      isLoading={btnExtras?.isLoading}
+      leftIcon={<Icon fontSize={`1.5rem`} icon={btnExtras?.leftIcon} />}
+      rightIcon={<Icon fontSize={`1.5rem`} icon={btnExtras?.rightIcon} />}
       fontWeight={500}
       fontSize={fontSize}
       w={width}
@@ -51,9 +52,9 @@ export function SharedButton({
       bgColor={bgColor}
       color={textColor}
       borderRadius={borderRadius}
-      border={border}
-      type={type}
-      disabled={disabled}
+      border={btnExtras?.border}
+      type={btnExtras?.type}
+      disabled={btnExtras?.disabled}
     >
       {text}
     </Button>

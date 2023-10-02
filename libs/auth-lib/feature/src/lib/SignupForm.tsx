@@ -182,9 +182,11 @@ export function SignupForm(props: SignupFormProps) {
         </Text>
         <Box my={5}>
           <SharedButton
-            loadingText="Creating account..."
-            isLoading={signupStatus.isLoading}
-            type={`submit`}
+            btnExtras={{
+              loadingText: 'Creating Account...',
+              isLoading: signupStatus.isLoading,
+              type: `submit`,
+            }}
             text={'Create Account'}
             width={`100%`}
             height={'46px'}
@@ -199,11 +201,13 @@ export function SignupForm(props: SignupFormProps) {
         </Center>
         <Box my={5}>
           <SharedButton
-            rightIcon={`flat-color-icons:google`}
-            loadingText="Creating account..."
-            isLoading={googleSiginStatus.isLoading}
-            onClick={onGoogleButtonClick}
-            border={`1px solid #6D5DD3`}
+            btnExtras={{
+              rightIcon: `flat-color-icons:google`,
+              loadingText: 'Creating Account...',
+              isLoading: googleSiginStatus.isLoading,
+              onClick: onGoogleButtonClick,
+              border: `1px solid #6D5DD3`,
+            }}
             text={'Continue with Google'}
             width={`100%`}
             height={'46px'}

@@ -123,9 +123,11 @@ export function LoginForm() {
       <Box>
         <Box my={5}>
           <SharedButton
-            loadingText="Logging in..."
-            isLoading={loginStatus.isLoading}
-            type={`submit`}
+            btnExtras={{
+              loadingText: 'Logging in...',
+              isLoading: loginStatus.isLoading,
+              type: `submit`,
+            }}
             text={'Sign In'}
             width={`100%`}
             height={'48px'}
@@ -140,11 +142,13 @@ export function LoginForm() {
         </Center>
         <Box my={5}>
           <SharedButton
-            loadingText="Logging in..."
-            isLoading={googleLoginStatus.isLoading}
-            onClick={onGoogleButtonClick}
-            rightIcon={`flat-color-icons:google`}
-            border={`1px solid #6D5DD3`}
+            btnExtras={{
+              loadingText: 'Logging in...',
+              isLoading: googleLoginStatus.isLoading,
+              onClick: onGoogleButtonClick,
+              rightIcon: `flat-color-icons:google`,
+              border: `1px solid #6D5DD3`,
+            }}
             text={'Continue with Google'}
             width={`100%`}
             height={'48px'}

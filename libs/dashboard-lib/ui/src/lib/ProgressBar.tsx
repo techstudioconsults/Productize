@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 export const ProgressBar = () => {
   const taskCompletedCount = useSelector(selectTaskCompletedCount);
   const user = useSelector(selectCurrentUser);
-  const count = taskCompletedCount || user.email_verified ? 1 : 0;
+  const count = taskCompletedCount || user?.email_verified ? 1 : 0;
   return (
     <>
       <Text color={`grey.300`} textAlign={`end`} fontSize={`xs`}>

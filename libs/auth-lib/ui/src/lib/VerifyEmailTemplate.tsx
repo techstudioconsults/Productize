@@ -14,7 +14,9 @@ export function VerifyEmailTemplate() {
   return (
     <Box>
       <SharedButton
-        onClick={checkMail}
+        btnExtras={{
+          onClick: checkMail,
+        }}
         text={'Open email'}
         width={'100%'}
         height={'48px'}

@@ -47,7 +47,9 @@ const ProductSideNav = () => {
             />
             <Link to={`/explore/product/buy`}>
               <SharedButton
-                border="1px solid #6D5DD3"
+                btnExtras={{
+                  border: '1px solid #6D5DD3',
+                }}
                 text={'Buy Now'}
                 width={`100%`}
                 height={'38px'}

@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
-  const [verifyEmail] = useVerifyEmailMutation();
+  const [verifyEmail, verifyEmailStatus] = useVerifyEmailMutation();
   const user = useSelector(selectCurrentUser);
   const navigate = useNavigate();
 
@@ -63,13 +63,16 @@ const Home = () => {
             image={
               'https://res.cloudinary.com/dkszgtapy/image/upload/v1695984929/productize/Illustration_oblvox.png'
             }
-            btnTitle={'Verify Email'}
-            onClick={verifyEmailAddress}
+            btn={{
+              isLoading: verifyEmailStatus.isLoading,
+              loadingText: `Processing..`,
+              onClick: verifyEmailAddress,
+            }}
+            btnText={'Verify Email'}
           />
         </Box>
         <Box>
           <DashboardRadioBtnComp
-            onClick={() => navigate(`/dashboard/profile/${user?.id}`)}
             title={'Customize your profile'}
             subTitle={
               'Complete your profile to start getting your products published.'
@@ -77,7 +80,10 @@ const Home = () => {
             image={
               'https://res.cloudinary.com/dkszgtapy/image/upload/v1695984929/productize/Illustration_oblvox.png'
             }
-            btnTitle={'Customize Profile'}
+            btn={{
+              onClick: () => navigate(`/dashboard/profile/${user?.id}`),
+            }}
+            btnText={'Customize Profile'}
           />
         </Box>
         <Box>
@@ -89,7 +95,8 @@ const Home = () => {
             image={
               'https://res.cloudinary.com/dkszgtapy/image/upload/v1693141295/productize/Illustration_2_zibmgb.png'
             }
-            btnTitle={'Create Product'}
+            btn={{}}
+            btnText={'Create Product'}
           />
         </Box>
         <Box>
@@ -101,7 +108,8 @@ const Home = () => {
             image={
               'https://res.cloudinary.com/dkszgtapy/image/upload/v1693141295/productize/Illustration_1_wdmvgf.png'
             }
-            btnTitle={'Make Money'}
+            btn={{}}
+            btnText={'Make Money'}
           />
         </Box>
         <Box>
@@ -113,7 +121,8 @@ const Home = () => {
             image={
               'https://res.cloudinary.com/dkszgtapy/image/upload/v1693141295/productize/Frame_40446_y425kr.png'
             }
-            btnTitle={'Make Sale'}
+            btn={{}}
+            btnText={'Make Sale'}
           />
         </Box>
       </Stack>

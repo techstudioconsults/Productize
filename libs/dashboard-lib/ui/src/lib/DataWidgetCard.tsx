@@ -24,13 +24,13 @@ export const DataWidgetCard = ({
       bgSize={`cover`}
       bgRepeat={`no-repeat`}
     >
-      <CardBody p={6}>
+      <CardBody>
         <Box display={showIcon ? `block` : `none`} fontSize={`32px`}>
           <Icon icon={`mdi:naira`} />
         </Box>
         <Box mt={4}>
           <Text>{title}</Text>
-          <Text as={`h5`}>{value}</Text>
+          <Text my={2} as={`h5`}>{value}</Text>
         </Box>
       </CardBody>
     </Card>

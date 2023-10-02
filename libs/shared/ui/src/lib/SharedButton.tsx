@@ -43,8 +43,8 @@ export function SharedButton({
       onClick={btnExtras?.onClick}
       loadingText={btnExtras?.loadingText}
       isLoading={btnExtras?.isLoading}
-      leftIcon={<Icon fontSize={`1.5rem`} icon={btnExtras?.leftIcon} />}
-      rightIcon={<Icon fontSize={`1.5rem`} icon={btnExtras?.rightIcon} />}
+      leftIcon={<Icon fontSize={`1rem`} icon={btnExtras?.leftIcon} />}
+      rightIcon={<Icon fontSize={`1rem`} icon={btnExtras?.rightIcon} />}
       fontWeight={500}
       fontSize={fontSize}
       w={width}

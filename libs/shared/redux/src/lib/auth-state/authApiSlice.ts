@@ -1,5 +1,5 @@
 import { apiSlice } from '../apiSlice';
-import { setUser } from '../user-state/userSlice';
+import { resetUserStore, setTaskCount, setUser } from '../user-state/userSlice';
 import { logOut, setCredentials, setFPEmailConfirmation } from './authSlice';
 
 export const authApiSlice = apiSlice.injectEndpoints({
@@ -152,11 +152,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
           const { data } = await queryFulfilled;
           console.log(data);
           dispatch(logOut());
-          dispatch(
-            setUser({
-              user: null,
-            })
-          );
+          dispatch(resetUserStore());
         } catch (err) {
           console.log(err);
         }

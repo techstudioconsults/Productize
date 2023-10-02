@@ -59,16 +59,23 @@ export const ProfileForm = () => {
 
   const previewImg = (files: FileList | null) => {
     if (files && imgRef.current) {
-      imgRef.current.src = null || URL.createObjectURL(files[0]);
+      imgRef.current.src =
+        URL.createObjectURL(files?.[0]) ||
+        `https://res.cloudinary.com/dkszgtapy/image/upload/v1696084137/productize/Star_6_alusuk.png`;
     }
   };
 
+  // function previewImg(e: any) {
+  //   const file = e.target.files[0];
+
+  //   if (file) {
+  //     const objectURL = URL.createObjectURL(file);
+  //     URL.revokeObjectURL(objectURL);
+  //   }
+  // }
+
   return (
-    <FormControl
-      encType="multipart/form-data"
-      as={`form`}
-      onSubmit={handleSubmit(onSubmit)}
-    >
+    <FormControl as={`form`} onSubmit={handleSubmit(onSubmit)}>
       {/* grid one */}
       <Grid templateColumns="repeat(12, 1fr)" gap={6}>
         <GridItem colSpan={{ base: 12, md: 5 }}>

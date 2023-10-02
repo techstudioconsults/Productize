@@ -19,15 +19,23 @@ const userSlice = createSlice({
 
       state.profile = user;
     },
-    setTaskCount: (state) => {
-      if (state.guideTaskCompleted !== 5) {
-        ++state.guideTaskCompleted;
+    setTaskCount: (state, action) => {
+      if (action.payload) {
+        if (state.guideTaskCompleted !== 5) {
+          state.guideTaskCompleted++;
+        }
+      } else {
+        state.guideTaskCompleted = 0;
       }
+    },
+
+    resetUserStore: (state) => {
+      Object.assign(state, initialState);
     },
   },
 });
 
-export const { setUser, setTaskCount } = userSlice.actions;
+export const { setUser, setTaskCount, resetUserStore } = userSlice.actions;
 
 export default userSlice.reducer;
 

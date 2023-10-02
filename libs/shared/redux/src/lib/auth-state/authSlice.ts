@@ -26,11 +26,7 @@ const authSlice = createSlice({
       state.forgotPasswordEmailConfirmation = action.payload;
     },
     logOut: (state) => {
-      state.token = null;
-      state.forgotPasswordEmailConfirmation = {
-        emailSent: false,
-        email: null,
-      };
+      Object.assign(state, initialState);
     },
   },
 });

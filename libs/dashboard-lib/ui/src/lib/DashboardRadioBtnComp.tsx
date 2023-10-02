@@ -1,5 +1,7 @@
 import { Box, Center, Checkbox, Flex, Image, Text } from '@chakra-ui/react';
 import { BtnExtras, SharedButton } from '@productize/shared/ui';
+import { useEffect, useRef } from 'react';
+import { useDispatch } from 'react-redux';
 
 interface DashboardRadioProp {
   title: string;
@@ -18,6 +20,18 @@ export const DashboardRadioBtnComp = ({
   isChecked,
   btnText,
 }: DashboardRadioProp) => {
+  const checkboxRef = useRef<HTMLInputElement | null>(null);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (checkboxRef.current?.checked) {
+      dispatch({
+        type: `User/setTaskCount`,
+        payload: true,
+      });
+    }
+  }, [dispatch]);
+
   return (
     <Flex
       p={4}
@@ -28,6 +42,7 @@ export const DashboardRadioBtnComp = ({
     >
       <Center p={0} boxSize={6}>
         <Checkbox
+          ref={checkboxRef}
           isChecked={isChecked}
           colorScheme="purple"
           checked

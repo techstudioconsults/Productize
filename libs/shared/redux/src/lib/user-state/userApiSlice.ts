@@ -31,7 +31,6 @@ export const userApiSlice = apiSlice.injectEndpoints({
         try {
           const { data } = await queryFulfilled;
           console.log(data);
-          dispatch(setTaskCount());
         } catch (err) {
           console.log(err);
         }

@@ -1,11 +1,11 @@
 import { Box } from '@chakra-ui/react';
-import { ProductPlanBanner } from '@productize/dashboard-lib/ui';
+import { EmptyState } from '@productize/dashboard-lib/ui';
 import React from 'react';
 
 const Orders = () => {
   return (
     <Box>
-      <ProductPlanBanner
+      <EmptyState
         content={{
           title: 'Upgrade your plan to create a plan',
           desc: 'Lorem ipsum dolor sit amet consectetur. Nec accumsan amet amet velit. Aliquam dictum id pellentesque aenean turpis nisl. Quam etiam.',

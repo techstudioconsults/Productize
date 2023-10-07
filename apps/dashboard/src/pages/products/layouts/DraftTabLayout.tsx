@@ -1,7 +1,8 @@
 import { Box } from '@chakra-ui/react';
 import { EmptyState } from '@productize/dashboard-lib/ui';
+import React from 'react';
 
-const Customers = () => {
+const DraftTabLayout = () => {
   return (
     <Box>
       <EmptyState
@@ -18,4 +19,4 @@ const Customers = () => {
   );
 };
 
-export default Customers;
+export default DraftTabLayout;

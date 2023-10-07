@@ -1,5 +1,5 @@
 import { Box, Image, Stack, Text } from '@chakra-ui/react';
-import { bannerProps } from './ProductPlanBanner';
+import { bannerProps } from './EmptyState';
 import { SharedButton } from '@productize/shared/ui';
 
 export const DashboardEmptyState = ({

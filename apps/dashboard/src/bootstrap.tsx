@@ -8,6 +8,8 @@ import { ChakraProvider } from '@chakra-ui/react';
 import globalTheme from '../../../scss/globalTheme';
 import { store } from '@productize/shared/redux';
 import { Provider } from 'react-redux';
+// RSUITE STYLE
+import 'rsuite/dist/rsuite-no-reset.min.css';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

@@ -45,11 +45,7 @@ export const AvatarComp = ({ isScroll, linkColor }: avatarProp) => {
         _focus={{ boxShadow: 'none' }}
       >
         <Center gap={4}>
-          <Avatar
-            size="sm"
-            name="Kent Dodds"
-            src="https://bit.ly/kent-c-dodds"
-          />
+          <Avatar size="sm" name={user?.name} src={user?.logo} />
           <Text color={isScroll ? `black` : linkColor}>{user?.name}</Text>
           <Icon icon={'eva:chevron-down-outline'} />
         </Center>

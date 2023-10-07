@@ -40,7 +40,7 @@ $max_font: 48px;
 // h5,
 // h6 {
 //   // letter-spacing: fn.rem(0.5);
-//   // line-height: fn.rem(0);
+//   line-height: fn.rem(0);
 // }
 
 h1,
@@ -75,6 +75,7 @@ h4 {
 
 h5 {
   @include fluid-type($min_width, $max_width, 18px, 24px);
+  // line-height: fn.rem(32) !important;
 }
 
 h6 {

@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-console.log('test', process.env['NX_BASE_URL']);
+// console.log('test', process.env['NX_BASE_URL']);
 
 const baseQuery = fetchBaseQuery({
   baseUrl: process.env['NX_BASE_URL'],

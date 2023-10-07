@@ -221,7 +221,10 @@ export const ProfileForm = () => {
                   <Image
                     ref={imgRef}
                     objectFit={`contain`}
-                    src={`https://res.cloudinary.com/dkszgtapy/image/upload/v1696084137/productize/Star_6_alusuk.png`}
+                    src={
+                      user?.logo ||
+                      `https://res.cloudinary.com/dkszgtapy/image/upload/v1696084137/productize/Star_6_alusuk.png`
+                    }
                     alt={`img`}
                   />
                   <Controller

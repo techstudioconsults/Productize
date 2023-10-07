@@ -5,15 +5,15 @@ import OnBoardingPage from './OnBoardingPage';
 import ActiveUserPage from './ActiveUserPage';
 
 const Home = () => {
-  const tashCount = useSelector(selectTaskCompletedCount);
+  const taskCount = useSelector(selectTaskCompletedCount);
 
-  if (tashCount === 5) {
-    return <FirstSalePage />;
-  } else if (tashCount !== 5) {
-    return <ActiveUserPage />;
-  }
+  // if (taskCount >= 3 && taskCount !== 5) {
+  //   return <FirstSalePage />;
+  // } else if (taskCount < 3) {
+  //   return <OnBoardingPage />;
+  // }
 
-  return <OnBoardingPage />;
+  return <ActiveUserPage />;
 };
 
 export default Home;

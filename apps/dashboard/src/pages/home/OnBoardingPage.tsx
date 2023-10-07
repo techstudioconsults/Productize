@@ -1,4 +1,13 @@
-import { Box, Container, Flex, Stack, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Container,
+  Flex,
+  Stack,
+  Text,
+  // useDisclosure,
+} from '@chakra-ui/react';
+// eslint-disable-next-line @nx/enforce-module-boundaries
+// import { VerifyEmailTemplate } from '@productize/auth-lib/ui';
 import { checkUserProfileValidity } from '@productize/dashboard-lib/feature';
 import {
   DashboardBanner,
@@ -9,17 +18,23 @@ import {
   selectCurrentUser,
   useVerifyEmailMutation,
 } from '@productize/shared/redux';
+// import { ModalComp } from '@productize/shared/ui';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 const OnBoardingPage = () => {
   const [verifyEmail, verifyEmailStatus] = useVerifyEmailMutation();
+  // const { onOpen, onClose, isOpen } = useDisclosure();
   const user = useSelector(selectCurrentUser);
   const navigate = useNavigate();
 
   const verifyEmailAddress = async () => {
     try {
       await verifyEmail(null).unwrap();
+      // const res = await verifyEmail(null).unwrap();
+      // if (res) {
+      //   onOpen();
+      // }
     } catch (err) {
       console.log(err);
     }
@@ -71,6 +86,9 @@ const OnBoardingPage = () => {
             }}
             btnText={'Verify Email'}
           />
+          {/* <ModalComp modalSize="lg" openModal={isOpen} closeModal={onClose}>
+            <VerifyEmailTemplate text="Email verification link resent successfully" />
+          </ModalComp> */}
         </Box>
         <Box>
           <DashboardRadioBtnComp

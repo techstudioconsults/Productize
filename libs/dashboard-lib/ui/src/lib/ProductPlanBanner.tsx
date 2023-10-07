@@ -1,5 +1,5 @@
 import { Box, Flex, Image, Text } from '@chakra-ui/react';
-import { ModalComp, PricingCard } from '@productize/shared/ui';
+import { PricingCard, UpgradePlanModal } from '@productize/shared/ui';
 
 export interface bannerProps {
   content: {
@@ -28,7 +28,7 @@ export const ProductPlanBanner = ({
       <Flex
         p={0}
         alignItems={`center`}
-        justifyContent={`space-between`}
+        justifyContent={showImage ? `space-between` : `center`}
         maxW={maxW}
         m={`auto`}
       >
@@ -39,7 +39,7 @@ export const ProductPlanBanner = ({
           <Text my={4} color={`grey.400`}>
             {content.desc}
           </Text>
-          <ModalComp>
+          <UpgradePlanModal>
             <Flex
               flexDir={{ base: `column`, md: `row` }}
               justifyContent={`space-between`}
@@ -98,7 +98,7 @@ export const ProductPlanBanner = ({
                 }}
               />
             </Flex>
-          </ModalComp>
+          </UpgradePlanModal>
         </Box>
         <Box display={showImage ? { base: `none`, md: `initial` } : `none`}>
           <Image src={content.img} alt="img" />

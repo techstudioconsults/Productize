@@ -1,10 +1,14 @@
-import { Box, Flex, Link } from '@chakra-ui/react';
+import { Box, Flex, Link, Text } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 import { SharedButton } from '@productize/shared/ui';
 import { useSelector } from 'react-redux';
 import { selectEmailConfirmation } from '@productize/shared/redux';
 
-export function VerifyEmailTemplate() {
+interface emailProps {
+  text?: string;
+}
+
+export function VerifyEmailTemplate({ text }: emailProps) {
   const emailConfirmation = useSelector(selectEmailConfirmation);
 
   const checkMail = () => {
@@ -13,6 +17,9 @@ export function VerifyEmailTemplate() {
 
   return (
     <Box>
+      <Text className="small-text" color={`green.200`} mb={2}>
+        {text}
+      </Text>
       <SharedButton
         btnExtras={{
           onClick: checkMail,

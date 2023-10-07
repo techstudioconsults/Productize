@@ -5,6 +5,8 @@ import { BrowserRouter } from 'react-router-dom';
 import globalTheme from '../../../scss/globalTheme';
 import { Provider } from 'react-redux/es/exports';
 import { store } from '@productize/shared/redux';
+// RSUITE STYLE
+import 'rsuite/dist/rsuite-no-reset.min.css';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

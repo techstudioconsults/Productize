@@ -7,6 +7,7 @@ export * from './lib/SideNavigationbar';
 export * from './lib/PaymentStatusTag';
 export * from './lib/PaymentStatusTag';
 export * from './lib/SearchComp';
-export * from './lib/ModalComp';
+export * from './lib/UpgradePlanModal';
 export * from './lib/PricingCard';
 export * from './lib/Icon';
+export * from './lib/Modal';

@@ -15,7 +15,7 @@ interface modalProps {
   children: ReactNode;
 }
 
-export const ModalComp = ({ children }: modalProps) => {
+export const UpgradePlanModal = ({ children }: modalProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>

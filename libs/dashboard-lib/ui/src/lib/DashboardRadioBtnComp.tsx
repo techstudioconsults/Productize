@@ -7,7 +7,7 @@ interface DashboardRadioProp {
   title: string;
   subTitle: string;
   image: string;
-  isChecked?: boolean;
+  isChecked?: boolean | false;
   btn: BtnExtras;
   btnText: string;
 }

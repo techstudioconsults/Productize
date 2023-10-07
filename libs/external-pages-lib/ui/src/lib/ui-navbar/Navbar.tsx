@@ -2,6 +2,7 @@ import { Flex, Image, Center, Link } from '@chakra-ui/react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 
 import Links from './NavigationLinks';
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { AvatarComp, SharedButton, Sidenav } from '@productize/shared/ui';
 import { useCallback, useEffect, useState } from 'react';
 

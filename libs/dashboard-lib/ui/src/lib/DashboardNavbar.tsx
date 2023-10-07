@@ -1,5 +1,5 @@
 import { Box, Center, Flex, Text } from '@chakra-ui/react';
-import { Icon, SearchComp, Sidenav } from '@productize/shared/ui';
+import { AvatarComp, Icon, SearchComp, Sidenav } from '@productize/shared/ui';
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -40,6 +40,9 @@ export const DashboardNavbar = () => {
                 name={'notification'}
               />
             </Link>
+          </Box>
+          <Box>
+            <AvatarComp />
           </Box>
         </Flex>
         <Sidenav />

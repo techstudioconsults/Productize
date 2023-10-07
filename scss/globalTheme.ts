@@ -53,15 +53,15 @@ const theme = extendTheme({
     heading: 'Neurial Grotesk, sans-serif',
     body: 'Neurial Grotesk, sans-serif',
   },
-  // textStyles: {
-  //   h1: {
-  //     // you can also use responsive styles
-  //     // fontSize: ['48px', '72px'],
-  //     fontSize: '64px',
-  //     lineHeight: '72px',
-  //     fontWeight: 'bold',
-  //   },
-  // },
+  textStyles: {
+    // h1: {
+    //   // you can also use responsive styles
+    //   // fontSize: ['48px', '72px'],
+    //   fontSize: '64px',
+    //   lineHeight: '72px',
+    //   fontWeight: 'bold',
+    // },
+  },
   fontSizes: {
     xs: '0.75rem',
     sm: '0.875rem',

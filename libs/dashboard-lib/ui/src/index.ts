@@ -8,4 +8,7 @@ export * from './lib/empty-states/EmptyState';
 export * from './lib/dashboard-profile/ProfileForm';
 export * from './lib/empty-states/DashboardEmptyState';
 export * from './lib/DataWidgetCard';
-export * from './lib/DashboardTable';
+export * from './lib/tables/DashboardTable';
+export * from './lib/tables/ProductTable';
+export * from './lib/DropdownAction';
+export * from './lib/TableControls';

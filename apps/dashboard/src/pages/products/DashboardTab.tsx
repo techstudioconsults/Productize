@@ -7,8 +7,7 @@ import {
   Flex,
   Box,
 } from '@chakra-ui/react';
-import { EmptyState, ProductCards } from '@productize/dashboard-lib/ui';
-import { SharedButton, UpgradePlanModal } from '@productize/shared/ui';
+import { SharedButton } from '@productize/shared/ui';
 import AllProductsTabLayout from './layouts/AllProductsTabLayout';
 import LiveTabLayout from './layouts/LiveTabLayout';
 import DraftTabLayout from './layouts/DraftTabLayout';

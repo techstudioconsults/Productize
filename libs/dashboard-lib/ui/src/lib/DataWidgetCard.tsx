@@ -6,6 +6,8 @@ interface cardProps {
   value: string | number;
   bgImg?: string;
   showIcon: boolean;
+  bmt?: number;
+  tmy?: number;
 }
 
 export const DataWidgetCard = ({
@@ -13,6 +15,8 @@ export const DataWidgetCard = ({
   value,
   bgImg,
   showIcon,
+  bmt,
+  tmy,
 }: cardProps) => {
   return (
     <Card
@@ -28,9 +32,11 @@ export const DataWidgetCard = ({
         <Box display={showIcon ? `block` : `none`} fontSize={`32px`}>
           <Icon icon={`mdi:naira`} />
         </Box>
-        <Box mt={4}>
+        <Box mt={bmt}>
           <Text>{title}</Text>
-          <Text my={2} as={`h5`}>{value}</Text>
+          <Text my={tmy} as={`h5`}>
+            {value}
+          </Text>
         </Box>
       </CardBody>
     </Card>

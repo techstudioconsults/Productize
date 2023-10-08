@@ -7,11 +7,11 @@ import ActiveUserPage from './ActiveUserPage';
 const Home = () => {
   const taskCount = useSelector(selectTaskCompletedCount);
 
-  if (taskCount >= 3 && taskCount !== 5) {
-    return <FirstSalePage />;
-  } else if (taskCount < 3) {
-    return <OnBoardingPage />;
-  }
+  // if (taskCount >= 3 && taskCount !== 5) {
+  //   return <FirstSalePage />;
+  // } else if (taskCount < 3) {
+  //   return <OnBoardingPage />;
+  // }
 
   return <ActiveUserPage />;
 };

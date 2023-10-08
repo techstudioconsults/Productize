@@ -14,6 +14,7 @@ import {
   DashboardEmptyState,
   DashboardTable,
   DataWidgetCard,
+  TableControls,
 } from '@productize/dashboard-lib/ui';
 import { SharedButton } from '@productize/shared/ui';
 import { useState } from 'react';
@@ -32,92 +33,14 @@ const ActiveUserPage = () => {
   return (
     <Box my={8}>
       {/* dropdown filters and buttons Controls */}
-      <Flex
-        alignItems={{ md: `center` }}
-        justifyContent={`space-between`}
-        gap={4}
-      >
-        <Flex
-          w={{ base: `100%`, md: `fit-content` }}
-          flexDir={{ base: `column`, md: `row` }}
-          gap={4}
-          alignItems={{ base: `flex-start`, md: `center` }}
-        >
-          <Box w={`100%`}>
-            <DateRangePicker
-              placeholder={`15 Feb, 2023 - 22 Feb, 2023`}
-              size="lg"
-              character="-"
-              style={{ width: `100%` }}
-            />
-          </Box>
-          <Box w={`100%`}>
-            <SelectPicker
-              style={{ width: `100%` }}
-              placeholder={`All Products`}
-              size="lg"
-              data={data}
-            />
-          </Box>
-        </Flex>
-        {/* dots and buttons */}
-        <Box>
-          <Flex
-            display={{ base: `none`, md: `flex` }}
-            gap={4}
-            alignItems={`center`}
-          >
-            <SharedButton
-              text={'Refresh'}
-              width={'fit-content'}
-              height={'40px'}
-              bgColor={'transparent'}
-              textColor={'purple.200'}
-              borderRadius={'4px'}
-              fontSize={{ base: `sm`, md: `md` }}
-              btnExtras={{
-                border: `1px solid #6D5DD3`,
-                leftIcon: `basil:refresh-outline`,
-                onClick: () => setEmptyState((prevState) => !prevState),
-              }}
-            />
-            <SharedButton
-              text={'Export'}
-              width={'fit-content'}
-              height={'40px'}
-              bgColor={'transparent'}
-              textColor={'purple.200'}
-              borderRadius={'4px'}
-              fontSize={{ base: `sm`, md: `md` }}
-              btnExtras={{
-                border: `1px solid #6D5DD3`,
-                leftIcon: `solar:export-line-duotone`,
-              }}
-            />
-          </Flex>
-          <Box display={{ md: `none` }}>
-            <Menu>
-              <MenuButton
-                border={`none`}
-                as={IconButton}
-                aria-label="Options"
-                icon={<Icon icon={`zondicons:dots-horizontal-triple`} />}
-                variant="outlined"
-              />
-              <MenuList zIndex={999}>
-                <MenuItem>Export data as</MenuItem>
-                <MenuItem>CSV</MenuItem>
-                <MenuItem>PDF</MenuItem>
-              </MenuList>
-            </Menu>
-          </Box>
-        </Box>
-      </Flex>
+      <TableControls showRefreshBtn />
       {/* grid cards */}
       <Box>
         <SimpleGrid gap={4} my={4} columns={{ base: 1, md: 2 }}>
           <Box>
             <DataWidgetCard
+              tmy={2}
+              bmt={4}
               showIcon
               bgImg="https://res.cloudinary.com/dkszgtapy/image/upload/v1696272023/productize/Data_widget_1_bqcsji.png"
               title={'Total Sales'}
@@ -126,6 +49,8 @@ const ActiveUserPage = () => {
           </Box>
           <Box>
             <DataWidgetCard
+              tmy={2}
+              bmt={4}
               showIcon
               bgImg="https://res.cloudinary.com/dkszgtapy/image/upload/v1696272017/productize/Data_widget_2_fwd9pa.png"
               title={'Total Revenue'}

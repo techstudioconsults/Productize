@@ -17,6 +17,7 @@ export const ProductCards = ({
 }: cardProps) => {
   return (
     <Card
+      variant={`unstyled`}
       bgRepeat={`no-repeat`}
       bgImage={bgImg}
       bgPos={bgPos}

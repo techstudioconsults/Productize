@@ -8,6 +8,7 @@ import Orders from '../pages/orders';
 import Customers from '../pages/customers';
 import Payouts from '../pages/payouts';
 import Profile from '../pages/profile';
+import ProductDetails from '../pages/products/ProductDetails';
 
 export function App() {
   return (
@@ -15,6 +16,7 @@ export function App() {
       <Route path="/" element={<DashboardLayout />}>
         <Route path="home" index element={<Home />} />
         <Route path="products" element={<Products />} />
+        <Route path="products/:productID" element={<ProductDetails />} />
         <Route path="orders" element={<Orders />} />
         <Route path="analytics" element={<Orders />} />
         <Route path="customers" element={<Customers />} />

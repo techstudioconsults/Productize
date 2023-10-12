@@ -1,4 +1,4 @@
-import { Card, Image } from '@chakra-ui/react';
+import { Box, Card, Image } from '@chakra-ui/react';
 
 interface cardProps {
   img: string;
@@ -33,6 +33,16 @@ export const ProductCards = ({
         src={img}
         alt={`img`}
       />
+    </Card>
+  );
+};
+
+export const ProductCardsType = () => {
+  return (
+    <Card>
+      <Box>
+        <Image src="" alt="img" />
+      </Box>
     </Card>
   );
 };

@@ -9,6 +9,7 @@ import Customers from '../pages/customers';
 import Payouts from '../pages/payouts';
 import Profile from '../pages/profile';
 import ProductDetails from '../pages/products/ProductDetails';
+import NewProduct from '../pages/products/NewProduct';
 
 export function App() {
   return (
@@ -17,6 +18,7 @@ export function App() {
         <Route path="home" index element={<Home />} />
         <Route path="products" element={<Products />} />
         <Route path="products/:productID" element={<ProductDetails />} />
+        <Route path="products/new" element={<NewProduct />} />
         <Route path="orders" element={<Orders />} />
         <Route path="analytics" element={<Orders />} />
         <Route path="customers" element={<Customers />} />

@@ -4,8 +4,8 @@ import Allproduct from './empty/Allproduct';
 const AllProductsTabLayout = () => {
   return (
     <>
-      {/* <Allproduct /> */}
-      <AllproductActive />
+      <Allproduct />
+      {/* <AllproductActive /> */}
     </>
   );
 };

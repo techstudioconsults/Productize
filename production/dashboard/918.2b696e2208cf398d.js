@@ -1,0 +1,1 @@
+(self.webpackChunkdashboard=self.webpackChunkdashboard||[]).push([[918],{7283:(a,d,e)=>{e.r(d),e.d(d,{default:()=>h.Z});var h=e(9551)}}]);

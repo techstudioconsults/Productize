@@ -42,7 +42,7 @@ export const ProductTable = ({ draft, live, deleted }: tableProps) => {
   const tableHeader = [`Product`, `Price`, `Sales`, `Type`, `Status`, ''].map(
     (title) => {
       if (deleted && title === `Status`) {
-        return title = `.`;
+        title = `.`;
       }
       if (title === `Product`) {
         return (
@@ -66,7 +66,7 @@ export const ProductTable = ({ draft, live, deleted }: tableProps) => {
     return (
       <Tr
         _hover={{ bgColor: `purple.100`, cursor: `pointer` }}
-        onClick={() => navigate(`/products/282387989839753`)}
+        onClick={() => navigate(`/dashboard/products/282387989839753`)}
         key={content}
       >
         <Td>

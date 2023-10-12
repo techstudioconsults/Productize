@@ -20,10 +20,11 @@ export function AuthBackground({ children, isLogin }: AuthBackgroundProps) {
       bgImg={
         isLogin
           ? `https://res.cloudinary.com/dkszgtapy/image/upload/v1696613891/productize/background_jg4qjv.png`
-          : ``
+          : `https://res.cloudinary.com/kingsleysolomon/image/upload/v1694345357/productize/Lines_1_pa9lat.png`
       }
-      // bgRepeat={`repeat`}
-      // bgPosition={`center`}
+      bgRepeat={isLogin ? `no-repeat` : `repeat`}
+      bgPosition={isLogin ? `` : `center`}
+      bgSize={isLogin ? `cover` : ``}
       // _after={{
       //   pos: `fixed`,
       //   content: "''",

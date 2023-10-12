@@ -1,5 +1,5 @@
 import { Box } from '@chakra-ui/react';
-import { DashboardTab } from './DashboardTab';
+import { DashboardTab } from './layouts/DashboardTab';
 
 const Products = () => {
   return (

@@ -106,6 +106,7 @@ const Home: React.FC = () => {
                   width={'100%'}
                   borderRadius={'16px'}
                   height={`100%`}
+                  showShadow
                 >
                   <CardBody p={`23px`}>
                     <Image
@@ -128,6 +129,7 @@ const Home: React.FC = () => {
                   width={'100%'}
                   borderRadius={'16px'}
                   height={`100%`}
+                  showShadow
                 >
                   <CardBody p={`23px`}>
                     <Image
@@ -150,6 +152,7 @@ const Home: React.FC = () => {
                   width={'100%'}
                   borderRadius={'16px'}
                   height={`100%`}
+                  showShadow
                 >
                   <CardBody p={`23px`}>
                     <Image
@@ -172,6 +175,7 @@ const Home: React.FC = () => {
                   width={'100%'}
                   borderRadius={'16px'}
                   height={`100%`}
+                  showShadow
                 >
                   <CardBody p={`23px`}>
                     <Image
@@ -242,6 +246,7 @@ const Home: React.FC = () => {
                 width={'100%'}
                 borderRadius={'16px'}
                 height={`100%`}
+                showShadow
               >
                 <CardBody
                   p={`24px`}
@@ -274,6 +279,7 @@ const Home: React.FC = () => {
                 width={'100%'}
                 borderRadius={'16px'}
                 height={`100%`}
+                showShadow
               >
                 <CardBody
                   p={`24px`}
@@ -306,6 +312,7 @@ const Home: React.FC = () => {
                 width={'100%'}
                 borderRadius={'16px'}
                 height={`100%`}
+                showShadow
               >
                 <CardBody
                   p={`24px`}
@@ -337,6 +344,7 @@ const Home: React.FC = () => {
                 width={'100%'}
                 borderRadius={'16px'}
                 height={`100%`}
+                showShadow
               >
                 <CardBody
                   p={`24px`}

@@ -11,4 +11,5 @@ export * from './lib/DataWidgetCard';
 export * from './lib/tables/DashboardTable';
 export * from './lib/tables/ProductTable';
 export * from './lib/DropdownAction';
+export * from './lib/UploadExternalFiles';
 export * from './lib/TableControls';

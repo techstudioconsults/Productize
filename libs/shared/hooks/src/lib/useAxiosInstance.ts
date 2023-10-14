@@ -28,7 +28,7 @@ export const useAxiosInstance = () => {
         content,
         headersCredentials
       );
-      if (res.status === 200) {
+      if (res.status === 200 || res.status === 201) {
         setLoading(false);
         return res;
       }

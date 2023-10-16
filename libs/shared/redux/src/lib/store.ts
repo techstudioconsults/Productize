@@ -1,6 +1,7 @@
 // app/store.ts
 import authReducer from './auth-state/authSlice';
 import userReducer from './user-state/userSlice';
+import productReducer from './products-state/productsSlice';
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { persistReducer, persistStore } from 'redux-persist';
@@ -26,6 +27,7 @@ export const store = configureStore({
     [apiSlice.reducerPath]: apiSlice.reducer,
     Auth: authPersistedReducer,
     User: userPersistedReducer,
+    Products: productReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

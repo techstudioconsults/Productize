@@ -1,13 +1,15 @@
-import { Box } from '@chakra-ui/react';
-// import DraftTab from './empty/DraftTab';
+import DraftTab from './empty/DraftTab';
 import DraftTabActive from './active/DraftTabActive';
+import { selectDraftProducts } from '@productize/shared/redux';
+import { useSelector } from 'react-redux';
 
 const DraftTabLayout = () => {
-  return (
-    <>
-      {/* <DraftTab />; */}
-      <DraftTabActive />
-    </>
+  const draftProducts = useSelector(selectDraftProducts);
+
+  return draftProducts?.length ? (
+    <DraftTabActive products={draftProducts} />
+  ) : (
+    <DraftTab />
   );
 };
 

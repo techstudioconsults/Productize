@@ -15,12 +15,13 @@ import DraftTabLayout from './DraftTabLayout';
 import DeleteTabLayout from './DeleteTabLayout';
 import { Link as ReactLink } from 'react-router-dom';
 
+const activeStateStyle = {
+  borderBottom: `2px solid #6D5DD3`,
+  fontWeight: 600,
+  color: `grey.800`,
+};
+
 export const DashboardTab = () => {
-  const activeStateStyle = {
-    borderBottom: `2px solid #6D5DD3`,
-    fontWeight: 600,
-    color: `grey.800`,
-  };
   return (
     <Tabs size={`sm`}>
       <Box display={{ base: `flex`, md: `none` }} justifyContent={`flex-end`}>

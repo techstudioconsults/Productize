@@ -2,6 +2,7 @@ import { Box, Flex } from '@chakra-ui/react';
 import { EmptyState, ProductCards } from '@productize/dashboard-lib/ui';
 import { useSetPaymentPlan } from '@productize/shared/hooks';
 import { SharedButton, UpgradePlanModal } from '@productize/shared/ui';
+import { Link } from 'react-router-dom';
 
 const Allproduct = () => {
   const isPremium = useSetPaymentPlan();
@@ -15,18 +16,20 @@ const Allproduct = () => {
       textAlign={{ base: `center` }}
       showImage={false}
     >
-      <SharedButton
-        text={'Add New Product'}
-        btnExtras={{
-          leftIcon: `ei:plus`,
-        }}
-        width={'fit-content'}
-        height={'40px'}
-        bgColor={'purple.200'}
-        textColor={'white'}
-        borderRadius={'4px'}
-        fontSize={{ base: `sm`, md: `sm` }}
-      />
+      <Link to={`/dashboard/products/new`}>
+        <SharedButton
+          text={'Add New Product'}
+          btnExtras={{
+            leftIcon: `ei:plus`,
+          }}
+          width={'fit-content'}
+          height={'40px'}
+          bgColor={'purple.200'}
+          textColor={'white'}
+          borderRadius={'4px'}
+          fontSize={{ base: `sm`, md: `sm` }}
+        />
+      </Link>
     </EmptyState>
   ) : (
     <EmptyState

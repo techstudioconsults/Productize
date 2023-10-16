@@ -1,4 +1,5 @@
 import { apiSlice } from '../apiSlice';
+import { resetProductStore } from '../products-state/productsSlice';
 import { resetUserStore, setTaskCount, setUser } from '../user-state/userSlice';
 import { logOut, setCredentials, setFPEmailConfirmation } from './authSlice';
 
@@ -153,6 +154,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
           console.log(data);
           dispatch(logOut());
           dispatch(resetUserStore());
+          dispatch(resetProductStore());
         } catch (err) {
           console.log(err);
         }

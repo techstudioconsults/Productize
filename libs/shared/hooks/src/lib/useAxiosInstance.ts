@@ -17,9 +17,9 @@ export const useAxiosInstance = () => {
 
   const query = async (
     method: `get` | `post`,
-    endPoint: string,
+    endPoint?: string,
     content?: object
-  ) => {
+  ): Promise<any> => {
     // console.log(content);
     setLoading(true);
     try {
@@ -35,6 +35,8 @@ export const useAxiosInstance = () => {
     } catch (err) {
       console.log(err);
       setLoading(false);
+      // Handle the error or rethrow it
+      throw err;
     }
   };
 

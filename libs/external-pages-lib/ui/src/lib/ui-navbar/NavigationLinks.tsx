@@ -86,7 +86,7 @@ const Links = ({ isScroll, isMobile, linkColor }: NavbarProps) => {
           key={link.id}
           to={link.path}
           className={({ isActive }) =>
-            isActive ? style.active : style.inactive
+            isActive ? style['active'] : style['inactive']
           }
         >
           <ListItem>{link.name}</ListItem>

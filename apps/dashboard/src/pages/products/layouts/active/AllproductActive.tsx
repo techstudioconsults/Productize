@@ -4,8 +4,21 @@ import {
   ProductTable,
   TableControls,
 } from '@productize/dashboard-lib/ui';
+import { useCurrency } from '@productize/shared/hooks';
+import { selectProductAnalytics } from '@productize/shared/redux';
+import { useSelector } from 'react-redux';
 
-const AllproductActive = () => {
+interface draftActiveProps {
+  products: [];
+}
+
+const AllproductActive = ({ products }: draftActiveProps) => {
+  // const allProducts = useSelector(selectAllProducts);
+  const productsAnalyics = useSelector(selectProductAnalytics);
+  const formatCurrency = useCurrency();
+
+  console.log(productsAnalyics);
+
   return (
     <Box my={8}>
       {/* grid cards */}
@@ -15,20 +28,28 @@ const AllproductActive = () => {
             <DataWidgetCard
               showIcon={false}
               title={'Total Products'}
-              value={50}
+              value={productsAnalyics?.total_products}
             />
           </Box>
           <Box>
-            <DataWidgetCard showIcon={false} title={'Total Sales'} value={20} />
+            <DataWidgetCard
+              showIcon={false}
+              title={'Total Sales'}
+              value={productsAnalyics?.total_sales}
+            />
           </Box>
           <Box>
-            <DataWidgetCard showIcon={false} title={'Customers'} value={10} />
+            <DataWidgetCard
+              showIcon={false}
+              title={'Customers'}
+              value={productsAnalyics?.total_customers}
+            />
           </Box>
           <Box>
             <DataWidgetCard
               showIcon={false}
               title={'Total Revenue'}
-              value={`NGN 348,000`}
+              value={formatCurrency(productsAnalyics?.total_revenues)}
             />
           </Box>
         </SimpleGrid>
@@ -36,7 +57,7 @@ const AllproductActive = () => {
       {/* dropdown filters and buttons Controls */}
       <Stack mt={12} gap={4}>
         <TableControls />
-        <ProductTable live />
+        <ProductTable tableData={products} />
       </Stack>
     </Box>
   );

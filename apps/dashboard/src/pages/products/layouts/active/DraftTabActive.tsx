@@ -1,13 +1,17 @@
 import { Box } from '@chakra-ui/react';
 import { ProductTable, TableControls } from '@productize/dashboard-lib/ui';
 
-const DraftTabActive = () => {
+interface draftActiveProps {
+  products: [];
+}
+
+const DraftTabActive = ({ products }: draftActiveProps) => {
   return (
     <>
       <Box mb={4}>
         <TableControls />
       </Box>
-      <ProductTable draft />
+      <ProductTable tableData={products} />
     </>
   );
 };

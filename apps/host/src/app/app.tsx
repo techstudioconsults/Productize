@@ -1,3 +1,4 @@
+import { ErrorBoundary, SpinnerComponent } from '@productize/shared/ui';
 import * as React from 'react';
 
 import { Route, Routes } from 'react-router-dom';
@@ -9,14 +10,16 @@ const Explore = React.lazy(() => import('explore/Module'));
 
 export function App() {
   return (
-    <React.Suspense fallback={<p>Loading...</p>}>
-      <Routes>
-        <Route index path="/*" element={<ExternalPages />} />
-        <Route path="/auth/*" element={<Auth />} />
-        <Route path="/dashboard/*" element={<Dashboard />} />
-        <Route path="/explore/*" element={<Explore />} />
-      </Routes>
-    </React.Suspense>
+    <ErrorBoundary>
+      <React.Suspense fallback={<SpinnerComponent />}>
+        <Routes>
+          <Route index path="/*" element={<ExternalPages />} />
+          <Route path="/auth/*" element={<Auth />} />
+          <Route path="/dashboard/*" element={<Dashboard />} />
+          <Route path="/explore/*" element={<Explore />} />
+        </Routes>
+      </React.Suspense>
+    </ErrorBoundary>
   );
 }
 

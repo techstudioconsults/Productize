@@ -11,3 +11,5 @@ export * from './lib/UpgradePlanModal';
 export * from './lib/PricingCard';
 export * from './lib/Icon';
 export * from './lib/Modal';
+export * from './lib/SpinnerComponent';
+export * from './lib/ErrorBoundary';

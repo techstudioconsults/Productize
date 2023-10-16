@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import {
   Table,
   Thead,
@@ -21,28 +22,30 @@ import {
   DropdownActionLive,
 } from '../DropdownAction';
 import { useNavigate } from 'react-router-dom';
+import { useCurrency, useDate, useTime } from '@productize/shared/hooks';
 
 interface tableProps {
   draft?: boolean;
   live?: boolean;
   deleted?: boolean;
+  tableData: [];
 }
 
-export const ProductTable = ({ draft, live, deleted }: tableProps) => {
+export const ProductTable = ({
+  draft,
+  live,
+  deleted,
+  tableData,
+}: tableProps) => {
   const navigate = useNavigate();
-
-  const showDropDown = draft ? (
-    <DropdownActionDraft icon={`tabler:dots`} />
-  ) : live ? (
-    <DropdownActionLive icon={`tabler:dots`} />
-  ) : (
-    <DropdownActionDelete icon={`tabler:dots`} />
-  );
+  const formatCurrency = useCurrency();
+  const formatDate = useDate();
+  const formatTime = useTime();
 
   const tableHeader = [`Product`, `Price`, `Sales`, `Type`, `Status`, ''].map(
     (title) => {
       if (deleted && title === `Status`) {
-        title = `.`;
+        title = `...`;
       }
       if (title === `Product`) {
         return (
@@ -62,12 +65,12 @@ export const ProductTable = ({ draft, live, deleted }: tableProps) => {
       }
     }
   );
-  const tableContent = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map((content) => {
+  const tableContent = tableData?.map((content: any) => {
     return (
       <Tr
         _hover={{ bgColor: `purple.100`, cursor: `pointer` }}
-        onClick={() => navigate(`/dashboard/products/282387989839753`)}
-        key={content}
+        onClick={() => navigate(`/dashboard/products/${content.id}`)}
+        key={content.id}
       >
         <Td>
           {/* use navigate to tap into all row */}
@@ -77,46 +80,56 @@ export const ProductTable = ({ draft, live, deleted }: tableProps) => {
             </Box>
             <Avatar
               bgColor={`yellow.100`}
-              src="https://res.cloudinary.com/dkszgtapy/image/upload/v1692269980/learning_atvahc.gif"
+              src={content?.thumbnail}
               borderRadius={`8px`}
               w={`100px`}
               h={`64px`}
             />
             <Stack>
-              <Text>UX Design Fundamentals</Text>
+              <Text>{content?.title}</Text>
               <Flex alignItems={`center`} color={`grey.400`}>
                 <Text className="tiny-text">PDF - 5.5MB</Text>
                 <Icon className="large-text" icon={`mdi:dot`} />
-                <Text className="tiny-text">18 Mar, 2023</Text>
+                <Text className="tiny-text">
+                  {formatDate(content.created_at)}
+                </Text>
                 <Icon className="large-text" icon={`mdi:dot`} />
-                <Text className="tiny-text">11:09AM</Text>
+                <Text className="tiny-text">
+                  {formatTime(content?.created_at)}
+                </Text>
               </Flex>
             </Stack>
           </Flex>
         </Td>
         <Td>
-          <Flex>N 5.500</Flex>
+          <Flex>{formatCurrency(content?.price)}</Flex>
         </Td>
         <Td>
+          {/* if show sale count is true */}
           <Flex>5</Flex>
         </Td>
         <Td>
-          <Flex>Digital Products</Flex>
+          <Flex>{content?.product_type}</Flex>
         </Td>
         <Td>
           <Flex hidden={deleted}>
-            {draft ? (
-              <Tag size={`lg`} colorScheme="yellow">
-                Draft
-              </Tag>
-            ) : (
-              <Tag size={`lg`} colorScheme="green">
-                Live
-              </Tag>
-            )}
+            <Tag
+              size={`lg`}
+              colorScheme={content?.status === `draft` ? `yellow` : `green`}
+            >
+              {content?.status}
+            </Tag>
           </Flex>
         </Td>
-        <Td>{showDropDown}</Td>
+        <Td>
+          {content?.status === `draft` ? (
+            <DropdownActionDraft icon={`tabler:dots`} />
+          ) : content?.status === `live` ? (
+            <DropdownActionLive icon={`tabler:dots`} />
+          ) : (
+            <DropdownActionDelete icon={`tabler:dots`} />
+          )}
+        </Td>
       </Tr>
     );
   });

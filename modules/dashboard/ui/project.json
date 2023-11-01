@@ -1,0 +1,16 @@
+{
+  "name": "modules-dashboard-ui",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "modules/dashboard/ui/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["modules/dashboard/ui/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  }
+}

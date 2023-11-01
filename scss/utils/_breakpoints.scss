@@ -1,0 +1,47 @@
+@use 'functions' as fn;
+
+// MIN-WIDTH BREAKPOINTS : CULLED FROM BOOTSTRAP
+$breakpoints-up: (
+  'xs': fn.em(0),
+  'sm': fn.em(576),
+  'md': fn.em(768),
+  'lg': fn.em(992),
+  'lgII': fn.em(1024),
+  'xl': fn.em(1200),
+  'xxl': fn.em(1400),
+  '2xl': fn.em(1441),
+);
+
+// MAX-WIDTH BREAKPOINTS : CULLED FROM BOOTSTRAP
+$breakpoints-down: (
+  'xs': fn.em(575.98),
+  'sm': fn.em(767.98),
+  'md': fn.em(991.98),
+  'lg': fn.em(1199.98),
+  'xl': fn.em(1399.98),
+);
+
+@mixin breakpoint-up($size) {
+  @media (min-width: map-get($breakpoints-up, $size)) {
+    @content;
+  }
+}
+
+@mixin breakpoint-down($size) {
+  @media (max-width: map-get($breakpoints-down, $size)) {
+    @content;
+  }
+}
+
+// Screen Widths 700px, 900px, 1440px Maps
+// $breakpoints-up: (
+//   'md': fn.em(700),
+//   'lg': fn.em(900),
+//   'xl': fn.em(1440)
+// );
+
+// $breakpoints-up: (
+//     'sm': fn.em(699.98),
+//     'md': fn.em(899.98),
+//     'lg': fn.em(1439.98)
+// );

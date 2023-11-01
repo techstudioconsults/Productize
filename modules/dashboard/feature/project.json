@@ -1,0 +1,16 @@
+{
+  "name": "modules-dashboard-feature",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "modules/dashboard/feature/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["modules/dashboard/feature/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  }
+}

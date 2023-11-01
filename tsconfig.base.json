@@ -1,0 +1,47 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@productize-v1.0.0/modules/auth/feature": [
+        "modules/auth/feature/src/index.ts"
+      ],
+      "@productize-v1.0.0/modules/auth/ui": ["modules/auth/ui/src/index.ts"],
+      "@productize-v1.0.0/modules/dashboard/feature": [
+        "modules/dashboard/feature/src/index.ts"
+      ],
+      "@productize-v1.0.0/modules/dashboard/ui": [
+        "modules/dashboard/ui/src/index.ts"
+      ],
+      "@productize-v1.0.0/modules/external-pages": [
+        "modules/external-pages/src/index.ts"
+      ],
+      "@productize-v1.0.0/modules/external-pages/ui": [
+        "modules/external-pages/ui/src/index.ts"
+      ],
+      "@productize-v1.0.0/modules/external-pages/ui,": [
+        "modules/external-pages/ui,/src/index.ts"
+      ],
+      "@productize-v1.0.0/modules/shared/hooks": [
+        "modules/shared/hooks/src/index.ts"
+      ],
+      "@productize-v1.0.0/modules/shared/redux": [
+        "modules/shared/redux/src/index.ts"
+      ],
+      "@productize-v1.0.0/modules/shared/ui": ["modules/shared/ui/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

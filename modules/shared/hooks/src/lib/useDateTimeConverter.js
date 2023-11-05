@@ -1,5 +1,5 @@
 export const useTime = () => {
-	function formatTime(timestamp: string) {
+	function formatTime(timestamp) {
 		const dateObj = new Date(timestamp);
 		const hours = dateObj.getHours().toString().padStart(2, '0');
 		const minutes = dateObj.getMinutes().toString().padStart(2, '0');
@@ -13,8 +13,8 @@ export const useTime = () => {
 };
 
 export const useDate = () => {
-	function formatDate(timestamp: string) {
-		const months: string[] = [
+	function formatDate(timestamp) {
+		const months = [
 			'Jan',
 			'Feb',
 			'Mar',
@@ -40,7 +40,7 @@ export const useDate = () => {
 };
 
 export const useDateRangeFormat = () => {
-	function convertDateFormat(timestamp: string) {
+	function convertDateFormat(timestamp) {
 		const months = [
 			'Jan',
 			'Feb',

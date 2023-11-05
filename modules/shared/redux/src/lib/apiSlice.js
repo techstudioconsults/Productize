@@ -1,10 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-// console.log('test', process.env['NX_BASE_URL']);
-
 const baseQuery = fetchBaseQuery({
   baseUrl: import.meta.env.VITE_BASE_URL,
-  prepareHeaders: (headers, { getState }: any) => {
+  prepareHeaders: (headers, { getState }) => {
     const token = getState().Auth.token;
     // if we have a token, set the auth header value
     if (token) {

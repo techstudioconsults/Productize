@@ -11,10 +11,6 @@ import { SharedButton } from './SharedButton';
 import { Icon } from '@iconify/react';
 import { PricingCard } from './PricingCard';
 
-// interface modalProps {
-//   children: ReactNode;
-// }
-
 export const UpgradePlanModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (

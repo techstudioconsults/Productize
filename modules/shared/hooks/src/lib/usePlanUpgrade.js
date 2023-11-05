@@ -8,7 +8,7 @@ export const usePlanUpgrade = () => {
   const upgrade = async () => {
     try {
       await upgradePlan(null).unwrap();
-    } catch (error: any) {
+    } catch (error) {
       console.log(error);
     }
   };

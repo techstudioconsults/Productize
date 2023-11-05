@@ -8,7 +8,7 @@ export function useCurrency() {
     });
   }, []);
 
-  function formatCurrency(amount: number) {
+  function formatCurrency(amount) {
     return formatter.format(amount || 0);
   }
 

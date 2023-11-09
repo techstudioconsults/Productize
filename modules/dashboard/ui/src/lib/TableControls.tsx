@@ -17,7 +17,7 @@ import {
 } from '@productize-v1.0.0/modules/shared/ui';
 import download from 'downloadjs';
 
-const BASE_URL = import.meta.env['NX_BASE_URL'];
+const BASE_URL = import.meta.env["VITE_BASE_URL"];
 
 interface controlsProp {
   showRefreshBtn?: boolean;

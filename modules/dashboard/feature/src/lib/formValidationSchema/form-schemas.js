@@ -19,7 +19,7 @@ export const productFormSchema = yup.object().shape({
     description: yup.string().required("Description is required"),
     data: yup.mixed().required("Data is required"),
     cover_photos: yup.mixed().required("Cover photo is required"),
-    thumbnail: yup.string().required("Thumbnail is required"),
+    thumbnail: yup.mixed().required("Thumbnail is required"),
     // highlights: yup.array().min(1, "At least one highlight is required").required("at least one highlight is required"),
     tags: yup.array().min(1, "At least one tags is required").required("at least one tag is required"),
 });

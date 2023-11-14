@@ -12,6 +12,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Icon as IconSet } from './Icon';
 import { Icon } from '@iconify/react';
 import { selectCurrentUser, useLogoutMutation } from '@productize-v1.0.0/modules/shared/redux';
+import menu from '@icons/Property_2_Menu_bwayf6.svg'
 
 interface avatarProp {
   isScroll?: boolean;

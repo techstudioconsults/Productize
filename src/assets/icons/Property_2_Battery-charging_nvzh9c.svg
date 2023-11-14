@@ -1,0 +1,7 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Property 2=Battery-charging">
+<path id="Combined Shape" fill-rule="evenodd" clip-rule="evenodd" d="M17 7H4C2.89543 7 2 7.89543 2 9V15C2 16.1046 2.89543 17 4 17H17C18.1046 17 19 16.1046 19 15V9C19 7.89543 18.1046 7 17 7ZM4 15V9H17V15H4Z" fill="#111014"/>
+<path id="Path 3" opacity="0.3" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.9298C10 14.1189 10.2381 14.2024 10.3562 14.0548L11.74 12.3249C11.8448 12.194 11.7516 12 11.5839 12H11V10.1606C11 9.96267 10.7434 9.88497 10.6336 10.0496L9.20729 12.1891C9.11869 12.322 9.21396 12.5 9.3737 12.5H10V13.9298Z" fill="#111014"/>
+<path id="Rectangle" opacity="0.3" d="M20 10H21C21.5523 10 22 10.4477 22 11V13C22 13.5523 21.5523 14 21 14H20V10Z" fill="#111014"/>
+</g>
+</svg>

@@ -1,0 +1,7 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Property 2=Barcode-scan">
+<path id="Combined Shape" fill-rule="evenodd" clip-rule="evenodd" d="M5 15V20H3C2.44772 20 2 19.5523 2 19V15H5ZM13 15V20H15V15H13ZM15 9H13V5H15V9ZM16 15V20H18V15H16ZM18 9H16V5H18V9ZM20 15V20H21C21.5523 20 22 19.5523 22 19V15H20ZM22 9H20V5H21C21.5523 5 22 5.44772 22 6V9ZM5 9H2V6C2 5.44772 2.44772 5 3 5H5V9Z" fill="#111014"/>
+<path id="Combined Shape_2" opacity="0.3" fill-rule="evenodd" clip-rule="evenodd" d="M9 9V5H7V9H9ZM9 15H7V20H9V15Z" fill="#111014"/>
+<rect id="Rectangle 200" opacity="0.3" y="11" width="24" height="2" rx="1" fill="#111014"/>
+</g>
+</svg>

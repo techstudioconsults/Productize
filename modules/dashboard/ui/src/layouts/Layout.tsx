@@ -9,7 +9,6 @@ import style from './navbar.module.scss';
 import { useLinks } from '../lib/links';
 import { DashboardNavbar } from '../lib/DashboardNavbar';
 import lock from '@icons/Property_2_Lock_xtdcwp.svg'
-import home from "@icons/Stockholm-icons_kizeoq.svg";
 
 export const DashboardLayout = () => {
   const { links1, links2, links3 } = useLinks();
@@ -149,7 +148,7 @@ export const DashboardLayout = () => {
                       >
                           <Flex gap={2} alignItems={`center`}>
                               <IconSet
-                                  icon={home}
+                                  icon={``}
                                   name={`menu`}
                                   size={`24px`}
                               />

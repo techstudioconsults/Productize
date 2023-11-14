@@ -9,7 +9,7 @@
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
-        "outputPath": "dist/productize-v1.0.0"
+        "outputPath": "dist"
       },
       "configurations": {
         "development": {

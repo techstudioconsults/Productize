@@ -19,7 +19,7 @@ const RadioCards = () => {
             {/* <SimpleGrid my={8} gap={4} columns={{ base: 1, md: 2, lg: 3, xl: 4 }}> */}
             <Radio {...register(`productType`)} display={`block`} hidden spacing={0} value="digital_product">
                 <ProductTypeCard
-                    img={"https://res.cloudinary.com/dkszgtapy/image/upload/v1693129664/productize/Image_1_wc3l2p.png"}
+                    img={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951006/productize/Image_1_wc3l2p_a7lovq.png`}
                     title={"Digital Product"}
                     desc={"Any set of file to download or stream"}
                     style={productTypeValue === `digital_product` ? activeCardStyle : {}}
@@ -34,7 +34,7 @@ const RadioCards = () => {
                 value="print_on_demand"
             >
                 <ProductTypeCard
-                    img={"https://res.cloudinary.com/dkszgtapy/image/upload/v1693129663/productize/Image_2_co17c3.png"}
+                    img={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951007/productize/Image_2_co17c3_xwfjxd.png`}
                     title={"Print On Demand"}
                     desc={" Any set of files to download or stream."}
                     style={productTypeValue === `print_on_demand` ? activeCardStyle : {}}
@@ -42,7 +42,7 @@ const RadioCards = () => {
             </Radio>
             <Radio isDisabled display={`block`} hidden spacing={0} value="video_streaming">
                 <ProductTypeCard
-                    img={"https://res.cloudinary.com/dkszgtapy/image/upload/v1693129663/productize/Image_3_l61xsx.png"}
+                    img={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951008/productize/Image_3_l61xsx_qdgenv.png`}
                     title={"Video Streaming"}
                     desc={"Any set of files to download or stream."}
                     style={{}}
@@ -50,7 +50,7 @@ const RadioCards = () => {
             </Radio>
             <Radio isDisabled display={`block`} hidden spacing={0} value="subscription">
                 <ProductTypeCard
-                    img={"https://res.cloudinary.com/dkszgtapy/image/upload/v1693129662/productize/Image_4_hksvcm.png"}
+                    img={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951009/productize/Image_4_hksvcm_ulhhl3.png`}
                     title={"Subscription"}
                     desc={"Any set of files to download or stream."}
                     style={{}}

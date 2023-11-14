@@ -1,5 +1,6 @@
 import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import { Icon } from "./Icon";
+import search from "@icons/Property_2_Search_vjopxj.svg";
 
 interface searchProps {
     color?: string;
@@ -10,16 +11,7 @@ interface searchProps {
 export const SearchComp = ({ color, width, size }: searchProps) => {
     return (
         <InputGroup size={size}>
-            <InputLeftElement
-                pointerEvents="none"
-                fontSize="1.2em"
-                children={
-                    <Icon
-                        icon={`https://res.cloudinary.com/dkszgtapy/image/upload/v1696088263/productize/Productize-iconset/Property_2_Search_vjopxj.svg`}
-                        name={"search"}
-                    />
-                }
-            />
+            <InputLeftElement pointerEvents="none" fontSize="1.2em" children={<Icon icon={search} name={"search"} />} />
             <Input border={`none`} placeholder={"Search"} _placeholder={{ color: "#01010140" }} w={width} bgColor={color} />
         </InputGroup>
     );

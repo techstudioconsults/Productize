@@ -8,6 +8,8 @@ import { NavLink, Outlet, Link as ReactLink } from 'react-router-dom';
 import style from './navbar.module.scss';
 import { useLinks } from '../lib/links';
 import { DashboardNavbar } from '../lib/DashboardNavbar';
+import lock from '@icons/Property_2_Lock_xtdcwp.svg'
+import home from "@icons/Stockholm-icons_kizeoq.svg";
 
 export const DashboardLayout = () => {
   const { links1, links2, links3 } = useLinks();
@@ -38,7 +40,7 @@ export const DashboardLayout = () => {
             <Icon
               color={`grey.400`}
               fontSize={`1.1rem`}
-              icon={'foundation:lock'}
+              icon={lock}
             />
           </Box>
         </Flex>
@@ -113,72 +115,58 @@ export const DashboardLayout = () => {
   });
 
   return (
-    <Flex>
-      <Flex
-        overflow={`auto`}
-        pos={`sticky`}
-        top={0}
-        flexDir={`column`}
-        p={4}
-        height={`100vh`}
-        w={`18rem`}
-        border={`1px solid #01010120`}
-        display={{ base: `none`, lg: `flex` }}
-        gap={10}
-        className="hide_scrollbar"
-      >
-        <Flex
-          justifyContent={`center`}
-          alignItems={`center`}
-          gap={2}
-          minH={`40px`}
-        >
-          <Link as={ReactLink} to={`/`}>
-            <Image
-              alt="logo"
-              src={`https://res.cloudinary.com/dkszgtapy/image/upload/v1693034778/productize/Frame_14220_ogchl8.png`}
-            />
-          </Link>
-          <PaymentStatusTag />
-        </Flex>
-        <Stack p={0}>
-          <NavLink
-            state={`Home`}
-            className={({ isActive }) =>
-              isActive ? style.active : style.inactive
-            }
-            to={`home`}
+      <Flex>
+          <Flex
+              overflow={`auto`}
+              pos={`sticky`}
+              top={0}
+              flexDir={`column`}
+              p={4}
+              height={`100vh`}
+              w={`18rem`}
+              border={`1px solid #01010120`}
+              display={{ base: `none`, lg: `flex` }}
+              gap={10}
+              className="hide_scrollbar"
           >
-            <Flex
-              borderRadius={`8px`}
-              width={`195px`}
-              py={`12px`}
-              px={`16px`}
-              fontSize={`1.5rem`}
-              alignItems={`center`}
-              justifyContent={`space-between`}
-              w={`100%`}
-            >
-              <Flex gap={2} alignItems={`center`}>
-                <IconSet
-                  icon={`https://res.cloudinary.com/dkszgtapy/image/upload/v1696088709/Stockholm-icons_kizeoq.svg`}
-                  name={`menu`}
-                  size={`24px`}
-                />
-                <Text>Home</Text>
+              <Flex justifyContent={`center`} alignItems={`center`} gap={2} minH={`40px`}>
+                  <Link as={ReactLink} to={`/`}>
+                      <Image alt="logo" src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png`} />
+                  </Link>
+                  <PaymentStatusTag />
               </Flex>
-            </Flex>
-          </NavLink>
-          {navLink1}
-        </Stack>
-        <Stack p={0}>{navLink2}</Stack>
-        <Stack p={0}>{navLink3}</Stack>
-      </Flex>
+              <Stack p={0}>
+                  <NavLink state={`Home`} className={({ isActive }) => (isActive ? style.active : style.inactive)} to={`home`}>
+                      <Flex
+                          borderRadius={`8px`}
+                          width={`195px`}
+                          py={`12px`}
+                          px={`16px`}
+                          fontSize={`1.5rem`}
+                          alignItems={`center`}
+                          justifyContent={`space-between`}
+                          w={`100%`}
+                      >
+                          <Flex gap={2} alignItems={`center`}>
+                              <IconSet
+                                  icon={home}
+                                  name={`menu`}
+                                  size={`24px`}
+                              />
+                              <Text>Home</Text>
+                          </Flex>
+                      </Flex>
+                  </NavLink>
+                  {navLink1}
+              </Stack>
+              <Stack p={0}>{navLink2}</Stack>
+              <Stack p={0}>{navLink3}</Stack>
+          </Flex>
 
-      <Flex py={4} px={{ base: 4, md: 8 }} flexDir={`column`} w={`100%`}>
-        <DashboardNavbar />
-        <Outlet />
+          <Flex py={4} px={{ base: 4, md: 8 }} flexDir={`column`} w={`100%`}>
+              <DashboardNavbar />
+              <Outlet />
+          </Flex>
       </Flex>
-    </Flex>
   );
 };

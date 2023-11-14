@@ -7,6 +7,7 @@ import {
 } from '@productize-v1.0.0/modules/shared/ui';
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import notification from "@icons/Property_2_Notifications_1_w4v7g4.svg";
 
 export const DashboardNavbar = () => {
   const [header, setHeader] = useState('');
@@ -44,7 +45,7 @@ export const DashboardNavbar = () => {
           <Box display={{ base: `none`, xl: `initial` }}>
             <Link to={`cart`}>
               <Icon
-                icon={`https://res.cloudinary.com/dkszgtapy/image/upload/v1696087936/productize/Productize-iconset/Property_2_Notifications_1_w4v7g4.svg`}
+                icon={notification}
                 name={'notification'}
               />
             </Link>

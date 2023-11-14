@@ -53,7 +53,7 @@ export const Footer: React.FC = () => {
             <Container maxW={`70rem`}>
                 <SimpleGrid fontWeight={`bold`} spacing={10} columns={{ base: 1, lg: 4 }} marginTop="1rem">
                     <Flex alignItems={`start`} justifyContent={{ base: `center`, lg: `initial` }}>
-                        <img src={`https://res.cloudinary.com/dkszgtapy/image/upload/v1693034778/productize/Frame_14220_ogchl8.png`} alt="Logo" />
+                        <img src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png`} alt="Logo" />
                     </Flex>
 
                     <Flex

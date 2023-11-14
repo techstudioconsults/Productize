@@ -1,0 +1,11 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Property 2=Cooking-book">
+<path id="Combined Shape" opacity="0.3" fill-rule="evenodd" clip-rule="evenodd" d="M19 2H7C5.2536 2 4 3.30584 4 5V19C4 20.6942 5.2536 22 7 22H19C19.6418 22 20 21.6269 20 21V20H8C7.44772 20 7 19.5523 7 19C7 18.4477 7.44772 18 8 18H20V3C20 2.3731 19.6418 2 19 2Z" fill="#111014"/>
+<mask id="mask0_428_7547" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="4" y="2" width="16" height="20">
+<path id="Combined Shape_2" fill-rule="evenodd" clip-rule="evenodd" d="M19 2H7C5.2536 2 4 3.30584 4 5V19C4 20.6942 5.2536 22 7 22H19C19.6418 22 20 21.6269 20 21V20H8C7.44772 20 7 19.5523 7 19C7 18.4477 7.44772 18 8 18H20V3C20 2.3731 19.6418 2 19 2Z" fill="white"/>
+</mask>
+<g mask="url(#mask0_428_7547)">
+<path id="Combined Shape_3" opacity="0.3" fill-rule="evenodd" clip-rule="evenodd" d="M9.35 11.5878C8.57365 11.3788 8 10.6418 8 9.76471C8 8.72511 8.80589 7.88235 9.8 7.88235C9.851 7.88235 9.9015 7.88457 9.95142 7.88892C10.3203 6.78884 11.3221 6 12.5 6C13.6779 6 14.6797 6.78884 15.0486 7.88892C15.0985 7.88457 15.149 7.88235 15.2 7.88235C16.1941 7.88235 17 8.72511 17 9.76471C17 10.6418 16.4264 11.3788 15.65 11.5878V13.5294C15.65 13.7893 15.4485 14 15.2 14H9.8C9.55147 14 9.35 13.7893 9.35 13.5294V11.5878Z" fill="#111014"/>
+</g>
+</g>
+</svg>

@@ -14,7 +14,7 @@ export const ToastFeedback = ({ title, message, icon, bgColor }: toastProps) => 
                 <Image
                     objectFit={`cover`}
                     objectPosition={`center`}
-                    src={icon || `https://res.cloudinary.com/dkszgtapy/image/upload/v1697538678/productize/Rectangle_ikpmwt.png`}
+                    src={icon || `https://res.cloudinary.com/kingsleysolomon/image/upload/v1700045717/productize/Rectangle_lohkyh.png`}
                     alt="img"
                 />
             </Box>

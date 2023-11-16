@@ -19,8 +19,8 @@ export function AuthBackground({ children, isLogin }: AuthBackgroundProps) {
             bgColor={isLogin ? `purple.300` : `white`}
             bgImg={
                 isLogin
-                    ? `https://res.cloudinary.com/dkszgtapy/image/upload/v1696613891/productize/background_jg4qjv.png`
-                    : `https://res.cloudinary.com/dkszgtapy/image/upload/v1698141050/productize/BKground_on2pff.png`
+                    ? `https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951016/productize/background_jg4qjv_hyp0ef.png`
+                    : `https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951017/productize/BKground_on2pff_psvmld.png`
             }
             bgRepeat={isLogin ? `no-repeat` : `repeat`}
             bgPosition={isLogin ? `` : `center`}

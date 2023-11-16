@@ -113,6 +113,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
                     dispatch(
                         setFPEmailConfirmation({
                             emailSent: true,
+                            // emailSent: false,
                             email: arg.email,
                         })
                     );

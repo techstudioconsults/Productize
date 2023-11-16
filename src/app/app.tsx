@@ -21,6 +21,7 @@ import {
     Customers,
     Payouts,
 } from "@productize-v1.0.0/modules/dashboard/ui";
+// import { ResetPassword } from "modules/auth/ui/src/forms/ResetPassword";
 
 export function App() {
     return (
@@ -30,6 +31,7 @@ export function App() {
             <Route path="/auth/login" element={<Login />} />
             <Route path="/auth/fetching-data/:provider" element={<PreLoader />} />
             <Route path="/auth/forgot-password" element={<ForgotPassword />} />
+            {/* <Route path="/auth/reset-password" element={<ResetPassword email={""} token={""} />} /> */}
 
             {/* external pages */}
             <Route index element={<Home />} />

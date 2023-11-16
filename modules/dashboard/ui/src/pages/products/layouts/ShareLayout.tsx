@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react";
 import { useCurrency } from "@productize-v1.0.0/modules/shared/hooks";
 import { Link, useLocation } from "react-router-dom";
 import { DashboardEmptyState } from "../../../lib/empty-states/DashboardEmptyState";
-import rectangle from "@icons/Rectangle_ikpmwt.svg";
+// import rectangle from "@icons/Rectangle_ikpmwt.svg";
 
 const ShareLayout = () => {
     const toast = useToast();
@@ -20,7 +20,7 @@ const ShareLayout = () => {
                     render: () => (
                         <Card display={`flex`} flexDir={`row`} alignItems={`center`} w={{ base: `100%`, lg: `702px` }} p={1} bg="grey.100">
                             <Box borderRight={`1px solid green`} p={2}>
-                                <Image objectFit={`cover`} objectPosition={`center`} src={rectangle} alt="img" />
+                                <Image objectFit={`cover`} objectPosition={`center`} src={`rectangle`} alt="img" />
                             </Box>
                             <Box p={2}>
                                 <Text fontWeight={600}>Product link Copied!</Text>

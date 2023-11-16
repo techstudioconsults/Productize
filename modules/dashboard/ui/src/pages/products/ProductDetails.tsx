@@ -13,7 +13,7 @@ import { useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { DataWidgetCard } from "../../lib/DataWidgetCard";
 import { DashboardTable } from "../../lib/tables/DashboardTable";
-import rectangle from "@icons/Rectangle_ikpmwt.svg";
+// import rectangle from "@icons/Rectangle_ikpmwt.svg";
 import arrowLeft from "@icons/Property_2_Arrow-left_kafkjg.svg";
 
 export const ProductDetails = () => {
@@ -38,7 +38,7 @@ export const ProductDetails = () => {
                     render: () => (
                         <Card display={`flex`} flexDir={`row`} alignItems={`center`} w={{ base: `100%`, lg: `702px` }} p={1} bg="grey.100">
                             <Box borderRight={`1px solid green`} p={2}>
-                                <Image src={rectangle} alt="img" />
+                                <Image src={``} alt="img" />
                             </Box>
                             <Box p={2}>
                                 <Text fontWeight={600}>Product link Copied!</Text>

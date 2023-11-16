@@ -5,22 +5,13 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSignupMutation, useGoogleAuthMutation } from "@productize-v1.0.0/modules/shared/redux";
 import { ErrorText, SharedButton } from "@productize-v1.0.0/modules/shared/ui";
+import { registrationSchema } from "@productize-v1.0.0/modules/auth/services";
+import { yupResolver } from "@hookform/resolvers/yup";
 
-/* eslint-disable-next-line */
-export interface SignupFormProps {}
-
-const validation = {
-    required: "This input is required.",
-    minLength: {
-        value: 4,
-        message: "This input must exceed 3 characters",
-    },
-};
-
-export function SignupForm(props: SignupFormProps) {
+export function SignupForm() {
     const [showPassword, setShowPassword] = useState(false);
     const [showPasswordConfirmation, setShowPasswordConfirmation] = useState(false);
-    const [error, setError] = useState<string>("");
+    const [error, setError] = useState("");
     const handlePasswordClick = () => setShowPassword(!showPassword);
     const handlePasswordConfirmationClick = () => setShowPasswordConfirmation(!showPasswordConfirmation);
     const navigate = useNavigate();
@@ -29,11 +20,17 @@ export function SignupForm(props: SignupFormProps) {
     const [signup, signupStatus] = useSignupMutation();
     const [googleAuth, googleSiginStatus] = useGoogleAuthMutation();
 
-    const { register, handleSubmit } = useForm({
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({
         criteriaMode: "all",
+        mode: "onChange",
+        resolver: yupResolver(registrationSchema),
     });
 
-    const onSubmit = async (data: unknown) => {
+    const onSubmit = async (data: any) => {
         try {
             const res = await signup(data).unwrap();
             if (res.token) {
@@ -68,8 +65,11 @@ export function SignupForm(props: SignupFormProps) {
                     id="fullName"
                     placeholder="Enter full name"
                     _placeholder={{ fontSize: { base: `xs`, lg: `sm` } }}
-                    {...register("full_name", validation)}
+                    {...register("full_name")}
                 />
+                <Text className={`tiny-text`} color={`red.200`}>
+                    {errors?.full_name?.message}
+                </Text>
             </FormControl>
             {/* <FormControl mb={6}>
         <FormLabel fontWeight={600} className="btn-text">
@@ -97,8 +97,11 @@ export function SignupForm(props: SignupFormProps) {
                     variant={`filled`}
                     placeholder="Enter email"
                     _placeholder={{ fontSize: { base: `xs`, lg: `sm` } }}
-                    {...register("email", validation)}
+                    {...register("email")}
                 />
+                <Text className={`tiny-text`} color={`red.200`}>
+                    {errors?.email?.message}
+                </Text>
             </FormControl>
             <FormControl my={6}>
                 <FormLabel fontWeight={600} className="btn-text">
@@ -113,12 +116,15 @@ export function SignupForm(props: SignupFormProps) {
                         type={showPassword ? "text" : "password"}
                         placeholder="Enter password"
                         _placeholder={{ fontSize: { base: `xs`, lg: `sm` } }}
-                        {...register("password", validation)}
+                        {...register("password")}
                     />
                     <InputRightElement onClick={handlePasswordClick} width="2.5rem">
                         {!showPassword ? <Icon icon={`ant-design:eye-twotone`} /> : <Icon icon={`ant-design:eye-invisible-twotone`} />}
                     </InputRightElement>
                 </InputGroup>
+                <Text className={`tiny-text`} color={`red.200`}>
+                    {errors?.password?.message}
+                </Text>
             </FormControl>
             <FormControl my={6}>
                 <FormLabel fontWeight={600} className="btn-text">
@@ -133,12 +139,15 @@ export function SignupForm(props: SignupFormProps) {
                         type={showPasswordConfirmation ? "text" : "password"}
                         placeholder="Enter password confirmation"
                         _placeholder={{ fontSize: { base: `xs`, lg: `sm` } }}
-                        {...register("password_confirmation", validation)}
+                        {...register("password_confirmation")}
                     />
                     <InputRightElement onClick={handlePasswordConfirmationClick} width="2.5rem">
                         {!showPasswordConfirmation ? <Icon icon={`ant-design:eye-twotone`} /> : <Icon icon={`ant-design:eye-invisible-twotone`} />}
                     </InputRightElement>
                 </InputGroup>
+                <Text className={`tiny-text`} color={`red.200`}>
+                    {errors?.password_confirmation?.message}
+                </Text>
             </FormControl>
             <Box>
                 <Text className="small-text" textAlign={`center`}>

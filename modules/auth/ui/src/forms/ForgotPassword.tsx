@@ -1,34 +1,34 @@
-import { Box, Center, FormControl, FormLabel, Input, Link } from "@chakra-ui/react";
+import { Box, Center, FormControl, FormLabel, Input, Link, Text, useToast } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useForgotPasswordMutation } from "@productize-v1.0.0/modules/shared/redux";
-import { ErrorText, SharedButton } from "@productize-v1.0.0/modules/shared/ui";
-import { AuthenticationService } from "@productize-v1.0.0/modules/auth/services";
+// import { useForgotPasswordMutation } from "@productize-v1.0.0/modules/shared/redux";
+import { ErrorText, SharedButton, ToastFeedback } from "@productize-v1.0.0/modules/shared/ui";
+import { AuthenticationService, forgotPasswordSchema } from "@productize-v1.0.0/modules/auth/services";
+import { yupResolver } from "@hookform/resolvers/yup";
 
-const validation = {
-    required: "This input is required.",
-    minLength: {
-        value: 4,
-        message: "This input must exceed 3 characters",
-    },
-};
-
-/* eslint-disable-next-line */
-export interface ForgotPassowrdProps {}
-
-export function ForgotPassowrdForm(props: ForgotPassowrdProps) {
+export function ForgotPassowrdForm() {
     const { forgotPasswordService } = AuthenticationService();
     const [error, setError] = useState<string>("");
+    const toast = useToast();
 
-    const { register, handleSubmit } = useForm({
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({
         criteriaMode: "all",
+        mode: "onChange",
+        resolver: yupResolver(forgotPasswordSchema),
     });
 
     const onSubmit = async (data: unknown) => {
         try {
             const res = await forgotPasswordService.forgotPassword(data).unwrap();
-            console.log(res);
+            toast({
+                position: "top",
+                render: () => <ToastFeedback message={res.message} title="" />,
+            });
         } catch (error: any) {
             console.log(error);
             setError(error.data.message);
@@ -55,8 +55,11 @@ export function ForgotPassowrdForm(props: ForgotPassowrdProps) {
                     variant={`filled`}
                     placeholder="Enter email"
                     _placeholder={{ fontSize: { base: `xs`, lg: `sm` } }}
-                    {...register("email", validation)}
+                    {...register("email")}
                 />
+                <Text className={`tiny-text`} color={`red.200`}>
+                    {errors?.email?.message}
+                </Text>
             </FormControl>
 
             <Box>

@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
-import DeleteTabActive from './active/DeleteTabActive';
-import DeleteTab from './empty/DeleteTab';
 import { useCallback, useEffect } from 'react';
 import { selectDeletedProducts, useGetDeletedProductsMutation } from '@productize-v1.0.0/modules/shared/redux';
+import DeleteTabActive from '../active/DeleteTabActive';
+import DeleteTab from '../empty/DeleteTab';
 
 const DeleteTabLayout = () => {
 	const [getDeletedProducts] = useGetDeletedProductsMutation();

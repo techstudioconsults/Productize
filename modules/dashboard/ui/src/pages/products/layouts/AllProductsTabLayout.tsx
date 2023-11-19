@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
-import AllproductActive from './active/AllproductActive';
-import Allproduct from './empty/Allproduct';
 import { useCallback, useEffect } from 'react';
 import { selectAllProducts, useGetAllProductsMutation } from '@productize-v1.0.0/modules/shared/redux';
+import AllproductActive from '../active/AllproductActive';
+import Allproduct from '../empty/Allproduct';
 
 const AllProductsTabLayout = () => {
 	const [getAllProducts] = useGetAllProductsMutation();
@@ -23,6 +23,7 @@ const AllProductsTabLayout = () => {
 	return allProducts !== null ? (
 		<AllproductActive products={allProducts} />
 	) : (
+		// empty state
 		<Allproduct />
 	);
 };

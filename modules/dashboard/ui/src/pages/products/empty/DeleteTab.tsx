@@ -1,8 +1,8 @@
 import { Box } from '@chakra-ui/react';
 import { useSetPaymentPlan } from '@productize-v1.0.0/modules/shared/hooks';
 import { UpgradePlanModal } from '@productize-v1.0.0/modules/shared/ui';
-import { ProductCards } from '../../../../lib/ProductCards';
-import { EmptyState } from '../../../../lib/empty-states/EmptyState';
+import { ProductCards } from '../../../lib/ProductCards';
+import { EmptyState } from '../../../lib/empty-states/EmptyState';
 
 const DeleteTab = () => {
   const isPremium = useSetPaymentPlan();

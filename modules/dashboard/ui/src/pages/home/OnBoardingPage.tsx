@@ -1,119 +1,125 @@
 import {
-  Box,
-  Container,
-  Flex,
-  Stack,
-  Text,
-  // useDisclosure,
-} from '@chakra-ui/react';
-import { checkUserProfileValidity } from '@productize-v1.0.0/modules/dashboard/feature';
-import { useVerifyEmailMutation, selectCurrentUser } from '@productize-v1.0.0/modules/shared/redux';
+    Box,
+    Container,
+    Flex,
+    Stack,
+    Text,
+    useToast,
+    // useDisclosure,
+} from "@chakra-ui/react";
+import { checkUserProfileValidity } from "@productize-v1.0.0/modules/dashboard/feature";
+import { useVerifyEmailMutation, selectCurrentUser } from "@productize-v1.0.0/modules/shared/redux";
 // import { ModalComp } from '@productize/shared/ui';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { DashboardBanner } from '../../lib/DashboardBanner';
-import { DashboardRadioBtnComp } from '../../lib/DashboardRadioBtnComp';
-import { ProgressBar } from '../../lib/ProgressBar';
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { DashboardBanner } from "../../lib/DashboardBanner";
+import { DashboardRadioBtnComp } from "../../lib/DashboardRadioBtnComp";
+import { ProgressBar } from "../../lib/ProgressBar";
+import { ToastFeedback } from "@productize-v1.0.0/modules/shared/ui";
 
 const OnBoardingPage = () => {
-  const [verifyEmail, verifyEmailStatus] = useVerifyEmailMutation();
-  // const { onOpen, onClose, isOpen } = useDisclosure();
-  const user = useSelector(selectCurrentUser);
-  const navigate = useNavigate();
+    const [verifyEmail, verifyEmailStatus] = useVerifyEmailMutation();
+    // const { onOpen, onClose, isOpen } = useDisclosure();
+    const user = useSelector(selectCurrentUser);
+    const navigate = useNavigate();
+    const toast = useToast();
 
-  const verifyEmailAddress = async () => {
-    try {
-      await verifyEmail(null).unwrap();
-      // const res = await verifyEmail(null).unwrap();
-      // if (res) {
-      //   onOpen();
-      // }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    const verifyEmailAddress = async () => {
+        try {
+            // await verifyEmail(null).unwrap();
+            const res = await verifyEmail(null).unwrap();
+            if (res) {
+                toast({
+                    position: "top",
+                    render: () => <ToastFeedback message={`Check your email for our verification link`} title="Email sent successfully" />,
+                });
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
-  return (
-      <Container p={0} my={8} maxW={`47rem`}>
-          <DashboardBanner
-              img={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951034/productize/Illustration_2_fslyo9_vfqfto.png `}
-              bgImg={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951013/productize/Lines_t1t27k_gg0jau.png`}
-              title={"Welcome to productize."}
-              desc={"Complete your profile to start getting your products published."}
-              py={8}
-              px={8}
-          />
-          <Flex flexDir={{ base: `column`, md: `row` }} my={8} justifyContent={`space-between`} alignItems={{ base: `flex-start`, md: `center` }}>
-              <Box>
-                  <Text as={`h6`} fontWeight={`bold`}>
-                      Get Started Guide
-                  </Text>
-                  <Text color={`grey.400`}>Use this personalized guide to get your store up and running.</Text>
-              </Box>
-              <Box>
-                  <ProgressBar />
-              </Box>
-          </Flex>
-          <Stack>
-              <Box>
-                  <DashboardRadioBtnComp
-                      isChecked={user?.email_verified}
-                      title={"Verify your email"}
-                      subTitle={"Complete your profile to start getting your products published."}
-                      image={"https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951005/productize/Illustration_oblvox_athyeh.png"}
-                      btn={{
-                          isLoading: verifyEmailStatus.isLoading,
-                          loadingText: `Processing..`,
-                          onClick: verifyEmailAddress,
-                      }}
-                      btnText={"Verify Email"}
-                  />
-                  {/* <ModalComp modalSize="lg" openModal={isOpen} closeModal={onClose}>
+    return (
+        <Container p={0} my={8} maxW={`47rem`}>
+            <DashboardBanner
+                img={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951034/productize/Illustration_2_fslyo9_vfqfto.png `}
+                bgImg={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951013/productize/Lines_t1t27k_gg0jau.png`}
+                title={"Welcome to productize."}
+                desc={"Complete your profile to start getting your products published."}
+                py={8}
+                px={8}
+            />
+            <Flex flexDir={{ base: `column`, md: `row` }} my={8} justifyContent={`space-between`} alignItems={{ base: `flex-start`, md: `center` }}>
+                <Box>
+                    <Text as={`h6`} fontWeight={`bold`}>
+                        Get Started Guide
+                    </Text>
+                    <Text color={`grey.400`}>Use this personalized guide to get your store up and running.</Text>
+                </Box>
+                <Box>
+                    <ProgressBar />
+                </Box>
+            </Flex>
+            <Stack>
+                <Box>
+                    <DashboardRadioBtnComp
+                        isChecked={user?.email_verified}
+                        title={"Verify your email"}
+                        subTitle={"Complete your profile to start getting your products published."}
+                        image={"https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951005/productize/Illustration_oblvox_athyeh.png"}
+                        btn={{
+                            isLoading: verifyEmailStatus.isLoading,
+                            loadingText: `Processing..`,
+                            onClick: verifyEmailAddress,
+                        }}
+                        btnText={"Verify Email"}
+                    />
+                    {/* <ModalComp modalSize="lg" openModal={isOpen} closeModal={onClose}>
             <VerifyEmailTemplate text="Email verification link resent successfully" />
           </ModalComp> */}
-              </Box>
-              <Box>
-                  <DashboardRadioBtnComp
-                      isChecked={checkUserProfileValidity(user)}
-                      title={"Customize your profile"}
-                      subTitle={"Complete your profile to start getting your products published."}
-                      image={"https://res.cloudinary.com/dkszgtapy/image/upload/v1695984929/productize/Illustration_oblvox.png"}
-                      btn={{
-                          onClick: () => navigate(`/dashboard/profile/${user?.id}`),
-                      }}
-                      btnText={"Customize Profile"}
-                  />
-              </Box>
-              <Box>
-                  <DashboardRadioBtnComp
-                      title={"Create your first product"}
-                      subTitle={"Complete your profile to start getting your products published."}
-                      image={"https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951002/productize/Illustration_2_zibmgb_aun5ux.png"}
-                      btn={{}}
-                      btnText={"Create Product"}
-                  />
-              </Box>
-              <Box>
-                  <DashboardRadioBtnComp
-                      title={"Set up your payout"}
-                      subTitle={"Complete your profile to start getting your products published."}
-                      image={"https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951033/productize/Illustration_1_wdmvgf_jpnhgm.png"}
-                      btn={{}}
-                      btnText={"Make Money"}
-                  />
-              </Box>
-              <Box>
-                  <DashboardRadioBtnComp
-                      title={"make your first sale"}
-                      subTitle={"Complete your profile to start getting your products published."}
-                      image={"https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951025/productize/Frame_40446_y425kr_pcfgv4.png"}
-                      btn={{}}
-                      btnText={"Make Sale"}
-                  />
-              </Box>
-          </Stack>
-      </Container>
-  );
+                </Box>
+                <Box>
+                    <DashboardRadioBtnComp
+                        isChecked={checkUserProfileValidity(user)}
+                        title={"Customize your profile"}
+                        subTitle={"Complete your profile to start getting your products published."}
+                        image={"https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951003/productize/Star_6_alusuk_sbe2un.png"}
+                        btn={{
+                            onClick: () => navigate(`/dashboard/profile/${user?.id}`),
+                        }}
+                        btnText={"Customize Profile"}
+                    />
+                </Box>
+                <Box>
+                    <DashboardRadioBtnComp
+                        title={"Create your first product"}
+                        subTitle={"Complete your profile to start getting your products published."}
+                        image={"https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951002/productize/Illustration_2_zibmgb_aun5ux.png"}
+                        btn={{}}
+                        btnText={"Create Product"}
+                    />
+                </Box>
+                <Box>
+                    <DashboardRadioBtnComp
+                        title={"Set up your payout"}
+                        subTitle={"Complete your profile to start getting your products published."}
+                        image={"https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951033/productize/Illustration_1_wdmvgf_jpnhgm.png"}
+                        btn={{}}
+                        btnText={"Make Money"}
+                    />
+                </Box>
+                <Box>
+                    <DashboardRadioBtnComp
+                        title={"make your first sale"}
+                        subTitle={"Complete your profile to start getting your products published."}
+                        image={"https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951025/productize/Frame_40446_y425kr_pcfgv4.png"}
+                        btn={{}}
+                        btnText={"Make Sale"}
+                    />
+                </Box>
+            </Stack>
+        </Container>
+    );
 };
 
 export default OnBoardingPage;

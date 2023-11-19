@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
-import LiveTabActive from './active/LiveTabActive';
-import LiveTab from './empty/LiveTab';
 import { useCallback, useEffect } from 'react';
 import { selectLiveProducts, useGetLiveProductsMutation } from '@productize-v1.0.0/modules/shared/redux';
+import LiveTabActive from '../active/LiveTabActive';
+import LiveTab from '../empty/LiveTab';
 
 const LiveTabLayout = () => {
 	const [getLiveProducts] = useGetLiveProductsMutation();

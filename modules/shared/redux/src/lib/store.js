@@ -1,6 +1,7 @@
 // app/store.ts
 import authReducer from "./auth-state/authSlice";
 import userReducer from "./user-state/userSlice";
+import customersReducer from "./customers-state/customersSlice";
 import productReducer from "./products-state/productsSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
@@ -28,6 +29,7 @@ export const store = configureStore({
         Auth: authPersistedReducer,
         User: userPersistedReducer,
         Products: productReducer,
+        Customers: customersReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

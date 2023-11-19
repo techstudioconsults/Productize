@@ -1,11 +1,10 @@
 import { Box } from '@chakra-ui/react';
 import { useSetPaymentPlan } from '@productize-v1.0.0/modules/shared/hooks';
 import { SharedButton, UpgradePlanModal } from '@productize-v1.0.0/modules/shared/ui';
-import { ProductCards } from '../../../../lib/ProductCards';
-import { EmptyState } from '../../../../lib/empty-states/EmptyState';
-import { Link } from 'react-router-dom';
+import { ProductCards } from '../../../lib/ProductCards';
+import { EmptyState } from '../../../lib/empty-states/EmptyState';
 
-const DraftTab = () => {
+const LiveTab = () => {
   const isPremium = useSetPaymentPlan();
 
   const emptyState = isPremium ? (
@@ -19,34 +18,32 @@ const DraftTab = () => {
           />
           <EmptyState
               content={{
-                  title: "Oops! Your draft is empty.",
+                  title: "You’re yet to publish a product.",
                   desc: "Lorem ipsum dolor sit amet consectetur. Nec accumsan amet amet velit. Aliquam dictum id pellentesque aenean turpis nisl. Quam etiam.",
               }}
               textAlign={{ base: `center` }}
               showImage={false}
           >
-              <Link to={`/dashboard/products/new`}>
-                  <SharedButton
-                      text={"Add New Product"}
-                      btnExtras={{
-                          leftIcon: `ei:plus`,
-                      }}
-                      width={"fit-content"}
-                      height={"40px"}
-                      bgColor={"purple.200"}
-                      textColor={"white"}
-                      borderRadius={"4px"}
-                      fontSize={{ base: `sm`, md: `sm` }}
-                  />
-              </Link>
+              <SharedButton
+                  text={"Publish New Product"}
+                  btnExtras={{
+                      leftIcon: `ei:plus`,
+                  }}
+                  width={"fit-content"}
+                  height={"40px"}
+                  bgColor={"purple.200"}
+                  textColor={"white"}
+                  borderRadius={"4px"}
+                  fontSize={{ base: `sm`, md: `sm` }}
+              />
           </EmptyState>
       </>
   ) : (
       <EmptyState
           content={{
-              title: "Upgrade your plan to create a plan",
+              title: "You’re yet to publish a product.",
               desc: "Lorem ipsum dolor sit amet consectetur. Nec accumsan amet amet velit. Aliquam dictum id pellentesque aenean turpis nisl. Quam etiam.",
-              img: `https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951003/productize/Illustration_3_g5iwpj_gurtby.png`,
+              img: `https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951003/productize/Illustration_3_g5iwpj_gurtby.png.png`,
           }}
           textAlign={{ base: `center`, md: `start` }}
           showImage={true}
@@ -58,4 +55,4 @@ const DraftTab = () => {
   return <Box>{emptyState}</Box>;
 };
 
-export default DraftTab;
+export default LiveTab;

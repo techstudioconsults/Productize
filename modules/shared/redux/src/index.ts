@@ -5,3 +5,5 @@ export * from './lib/user-state/userSlice';
 export * from './lib/user-state/userApiSlice';
 export * from './lib/products-state/productsSlice';
 export * from './lib/products-state/productsApiSlice';
+export * from './lib/customers-state/customersSlice';
+export * from './lib/customers-state/customersApiSlice';

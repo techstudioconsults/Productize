@@ -23,14 +23,14 @@ export const DashboardRadioBtnComp = ({
   const checkboxRef = useRef<HTMLInputElement | null>(null);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (checkboxRef.current?.checked) {
-      dispatch({
-        type: `User/setTaskCount`,
-        payload: true,
-      });
-    }
-  }, [dispatch]);
+  // useEffect(() => {
+  //   if (checkboxRef.current?.checked) {
+  //     dispatch({
+  //       type: `User/setTaskCount`,
+  //       payload: true,
+  //     });
+  //   }
+  // }, [dispatch]);
 
   return (
     <Flex

@@ -1,9 +1,9 @@
 import { Box, Flex } from '@chakra-ui/react';
 import { useSetPaymentPlan } from '@productize-v1.0.0/modules/shared/hooks';
 import { SharedButton, UpgradePlanModal } from '@productize-v1.0.0/modules/shared/ui';
-import { EmptyState } from '../../../../lib/empty-states/EmptyState';
-import { ProductCards } from '../../../../lib/ProductCards';
 import { Link } from 'react-router-dom';
+import { EmptyState } from '../../../lib/empty-states/EmptyState';
+import { ProductCards } from '../../../lib/ProductCards';
 
 const Allproduct = () => {
   const isPremium = useSetPaymentPlan();

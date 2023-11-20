@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/react';
+import { Box, useDisclosure } from '@chakra-ui/react';
 import { useSetPaymentPlan } from '@productize-v1.0.0/modules/shared/hooks';
 import { SharedButton, UpgradePlanModal } from '@productize-v1.0.0/modules/shared/ui';
 import { Link } from 'react-router-dom';
@@ -7,6 +7,7 @@ import { EmptyState } from '../../../lib/empty-states/EmptyState';
 
 const DraftTab = () => {
   const isPremium = useSetPaymentPlan();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const emptyState = isPremium ? (
       <>
@@ -52,7 +53,19 @@ const DraftTab = () => {
           showImage={true}
           maxW="100%"
       >
-          <UpgradePlanModal />
+          <SharedButton
+              text={"Upgrade Plan"}
+              btnExtras={{
+                  onClick: onOpen,
+              }}
+              width={"fit-content"}
+              height={"48px"}
+              bgColor={"purple.200"}
+              textColor={"white"}
+              borderRadius={"4px"}
+              fontSize={{ base: `sm`, md: `md` }}
+          />
+          <UpgradePlanModal onClose={onClose} isOpen={isOpen} />
       </EmptyState>
   );
   return <Box>{emptyState}</Box>;

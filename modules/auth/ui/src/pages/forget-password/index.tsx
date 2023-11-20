@@ -5,6 +5,7 @@ import { AuthBackground } from "../../template-views/Auth-background";
 import { AuthFormTemplateLogin } from "../../template-views/Auth-form-template";
 import { ForgotPassowrdForm } from "../../forms/ForgotPassword";
 import { ResetPassword } from "../../forms/ResetPassword";
+import { VerifyEmailTemplate } from "../../template-views/VerifyEmailTemplate";
 
 export const ForgotPassword = () => {
     const emailConfirmation = useSelector(selectEmailConfirmation);
@@ -37,7 +38,7 @@ export const ForgotPassword = () => {
                 </AuthFormTemplateLogin>
             )}
 
-            {/* check email or varify email temlate
+            check email or varify email temlate
       {emailConfirmation.emailSent && !FPToken && (
         <AuthFormTemplateLogin
           title="Check your mail"
@@ -45,10 +46,10 @@ export const ForgotPassword = () => {
         >
           <VerifyEmailTemplate />
         </AuthFormTemplateLogin>
-      )} */}
+      )}
 
             {/* change password or change forgot password */}
-            {emailConfirmation.emailSent && (
+            {emailConfirmation.emailSent && FPToken && (
                 <AuthFormTemplateLogin title="Reset Password" subTitle="Enter your new password.">
                     <ResetPassword email={email} token={FPToken} />
                 </AuthFormTemplateLogin>

@@ -7,14 +7,15 @@ import {
     useToast,
     // useDisclosure,
 } from "@chakra-ui/react";
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { checkUserProfileValidity } from "@productize-v1.0.0/modules/dashboard/feature";
 import { useVerifyEmailMutation, selectCurrentUser } from "@productize-v1.0.0/modules/shared/redux";
 // import { ModalComp } from '@productize/shared/ui';
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { DashboardBanner } from "../../lib/DashboardBanner";
-import { DashboardRadioBtnComp } from "../../lib/DashboardRadioBtnComp";
-import { ProgressBar } from "../../lib/ProgressBar";
+import { DashboardBanner } from "../../../lib/DashboardBanner";
+import { DashboardRadioBtnComp } from "../../../lib/DashboardRadioBtnComp";
+import { ProgressBar } from "../../../lib/ProgressBar";
 import { ToastFeedback } from "@productize-v1.0.0/modules/shared/ui";
 
 const OnBoardingPage = () => {

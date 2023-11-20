@@ -8,7 +8,6 @@ import { useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 // import rectangle from "@icons/Rectangle_ikpmwt.svg";
 import arrowLeft from "@icons/Property_2_Arrow-left_kafkjg.svg";
-import { CustomerTable } from "../../../lib/tables/CustomerTable";
 import { CustomerDetailsTable } from "../../../lib/tables/CustomerDetailsTable";
 import { DataWidgetCard } from "../../../lib/DataWidgetCard";
 
@@ -71,7 +70,7 @@ export const CustomersDetails = () => {
                         <Image src={arrowLeft} />
                     </Box>
                     <Text as={`h6`}>Customer Details</Text>
-                </Flex>
+                </Flex>=
             </Flex>
             {/* row 2 */}
             <Box mt={8} mb={4} color={`purple.300`}>

@@ -68,7 +68,7 @@ export const ProfileForm = () => {
     const previewImg = (files) => {
         if (files && imgRef.current) {
             imgRef.current.src =
-                URL.createObjectURL(files?.[0]) || `https://res.cloudinary.com/dkszgtapy/image/upload/v1696084137/productize/Star_6_alusuk.png`;
+                URL.createObjectURL(files?.[0]) || `https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951003/productize/Star_6_alusuk_sbe2un.png`;
         }
     };
 

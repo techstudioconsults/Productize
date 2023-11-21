@@ -1,14 +1,13 @@
 import { Box, SimpleGrid, Text } from "@chakra-ui/react";
 
 import { useState } from "react";
-import { DataWidgetCard } from "../../lib/DataWidgetCard";
-import { DashboardEmptyState } from "../../lib/empty-states/DashboardEmptyState";
-import { DashboardTable } from "../../lib/tables/DashboardTable";
-import { ProductsTableControl } from "../../lib/tables/tableControls/ProductsTableControl";
+import { DataWidgetCard } from "../../../lib/DataWidgetCard";
+import { DashboardEmptyState } from "../../../lib/empty-states/DashboardEmptyState";
+import { DashboardTable } from "../../../lib/tables/DashboardTable";
+import { ProductsTableControl } from "../../../lib/tables/tableControls/ProductsTableControl";
 
 const ActiveUserPage = () => {
     const [emptyState, setEmptyState] = useState(false);
-
 
     return (
         <Box my={8}>

@@ -489,7 +489,7 @@ const ProductContentDisplay = ({ file }) => {
                     <Image
                         w={`100%`}
                         h={`100%`}
-                        src={`https://res.cloudinary.com/dkszgtapy/image/upload/v1696088266/productize/Productize-iconset/Property_2_Selected-file_ybygib.svg`}
+                        src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951012/productize/Layer_1_m6pvyg_yz7oz1.png`}
                     />
                 </Box>
                 <Box>

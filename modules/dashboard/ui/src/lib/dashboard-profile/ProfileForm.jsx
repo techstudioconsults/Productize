@@ -15,11 +15,12 @@ import {
     Center,
     InputRightElement,
     useToast,
+    useDisclosure,
 } from "@chakra-ui/react";
 import { Icon } from "@iconify/react";
-import { useAxiosInstance } from "@productize-v1.0.0/modules/shared/hooks";
+import { useAxiosInstance, useSetPaymentPlan } from "@productize-v1.0.0/modules/shared/hooks";
 import { selectCurrentUser } from "@productize-v1.0.0/modules/shared/redux";
-import { SharedButton, ToastFeedback } from "@productize-v1.0.0/modules/shared/ui";
+import { SharedButton, ToastFeedback, UpgradePlanModal } from "@productize-v1.0.0/modules/shared/ui";
 import { useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,6 +34,8 @@ export const ProfileForm = () => {
     const dispatch = useDispatch();
     const toast = useToast();
     const { query, isLoading } = useAxiosInstance();
+    const isPremium = useSetPaymentPlan();
+    const { isOpen, onOpen, onClose } = useDisclosure();
     // const [updateProfile, profileStatus] = useUpdateProfileMutation();
     const fileInput = useRef(null);
     const imgRef = useRef(null);
@@ -48,32 +51,37 @@ export const ProfileForm = () => {
     });
 
     const onSubmit = async (data) => {
-        try {
-            const res = await query(`post`, `/users/me`, data);
-            if (res?.status === 200) {
-                toast({
-                    position: "top",
-                    render: () => <ToastFeedback message={``} bgColor="green.100" title="Profile updated successfully" />,
-                });
-                dispatch({
-                    type: "User/setUser",
-                    payload: { user: res.data.data },
-                });
+        if (isPremium) {
+            try {
+                const res = await query(`post`, `/users/me`, data);
+                if (res?.status === 200) {
+                    toast({
+                        position: "top",
+                        render: () => <ToastFeedback message={``} bgColor="green.100" title="Profile updated successfully" />,
+                    });
+                    dispatch({
+                        type: "User/setUser",
+                        payload: { user: res.data.data },
+                    });
+                }
+            } catch (error) {
+                console.log(error);
             }
-        } catch (error) {
-            console.log(error);
+        } else {
+            onOpen();
         }
     };
 
     const previewImg = (files) => {
         if (files && imgRef.current) {
             imgRef.current.src =
-                URL.createObjectURL(files?.[0]) || `https://res.cloudinary.com/dkszgtapy/image/upload/v1696084137/productize/Star_6_alusuk.png`;
+                URL.createObjectURL(files?.[0]) || `https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951003/productize/Star_6_alusuk_sbe2un.png`;
         }
     };
 
     return (
         <FormControl as={`form`} onSubmit={handleSubmit(onSubmit)}>
+            <UpgradePlanModal onClose={onClose} isOpen={isOpen} />
             {/* grid one */}
             <Grid templateColumns="repeat(12, 1fr)" gap={6}>
                 <GridItem colSpan={{ base: 12, md: 5 }}>
@@ -374,6 +382,7 @@ export const ProfileForm = () => {
                                 isLoading: isLoading,
                                 loadingText: `Saving Profile...`,
                                 type: `submit`,
+                                rightIcon: isPremium ? `` : `foundation:lock`,
                             }}
                             text={"Save Changes"}
                             width={"fit-content"}

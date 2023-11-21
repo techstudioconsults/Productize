@@ -7,15 +7,17 @@ import {
     useToast,
     // useDisclosure,
 } from "@chakra-ui/react";
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { checkUserProfileValidity } from "@productize-v1.0.0/modules/dashboard/feature";
 import { useVerifyEmailMutation, selectCurrentUser } from "@productize-v1.0.0/modules/shared/redux";
 // import { ModalComp } from '@productize/shared/ui';
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { DashboardBanner } from "../../lib/DashboardBanner";
-import { DashboardRadioBtnComp } from "../../lib/DashboardRadioBtnComp";
-import { ProgressBar } from "../../lib/ProgressBar";
+import { DashboardBanner } from "../../../lib/DashboardBanner";
+import { DashboardRadioBtnComp } from "../../../lib/DashboardRadioBtnComp";
+import { ProgressBar } from "../../../lib/ProgressBar";
 import { ToastFeedback } from "@productize-v1.0.0/modules/shared/ui";
+import { useSetPaymentPlan } from "@productize-v1.0.0/modules/shared/hooks";
 
 const OnBoardingPage = () => {
     const [verifyEmail, verifyEmailStatus] = useVerifyEmailMutation();
@@ -23,16 +25,17 @@ const OnBoardingPage = () => {
     const user = useSelector(selectCurrentUser);
     const navigate = useNavigate();
     const toast = useToast();
+    const isPremium = useSetPaymentPlan();
 
     const verifyEmailAddress = async () => {
         try {
-            // await verifyEmail(null).unwrap();
             const res = await verifyEmail(null).unwrap();
             if (res) {
                 toast({
                     position: "top",
                     render: () => <ToastFeedback message={`Check your email for our verification link`} title="Email sent successfully" />,
                 });
+                // write a dispatch hook here to update the user profie details for verified user email
             }
         } catch (err) {
             console.log(err);
@@ -63,6 +66,7 @@ const OnBoardingPage = () => {
             <Stack>
                 <Box>
                     <DashboardRadioBtnComp
+                        isPremium={true}
                         isChecked={user?.email_verified}
                         title={"Verify your email"}
                         subTitle={"Complete your profile to start getting your products published."}
@@ -80,6 +84,7 @@ const OnBoardingPage = () => {
                 </Box>
                 <Box>
                     <DashboardRadioBtnComp
+                        isPremium={isPremium}
                         isChecked={checkUserProfileValidity(user)}
                         title={"Customize your profile"}
                         subTitle={"Complete your profile to start getting your products published."}
@@ -92,15 +97,19 @@ const OnBoardingPage = () => {
                 </Box>
                 <Box>
                     <DashboardRadioBtnComp
+                        isPremium={isPremium}
                         title={"Create your first product"}
                         subTitle={"Complete your profile to start getting your products published."}
                         image={"https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951002/productize/Illustration_2_zibmgb_aun5ux.png"}
-                        btn={{}}
+                        btn={{
+                            onClick: () => navigate(`/dashboard/products/new#product-details`),
+                        }}
                         btnText={"Create Product"}
                     />
                 </Box>
                 <Box>
                     <DashboardRadioBtnComp
+                        isPremium={isPremium}
                         title={"Set up your payout"}
                         subTitle={"Complete your profile to start getting your products published."}
                         image={"https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951033/productize/Illustration_1_wdmvgf_jpnhgm.png"}
@@ -110,6 +119,7 @@ const OnBoardingPage = () => {
                 </Box>
                 <Box>
                     <DashboardRadioBtnComp
+                        isPremium={isPremium}
                         title={"make your first sale"}
                         subTitle={"Complete your profile to start getting your products published."}
                         image={"https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951025/productize/Frame_40446_y425kr_pcfgv4.png"}

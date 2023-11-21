@@ -1,72 +1,72 @@
 {
-  "name": "productize-v1.0.0",
-  "$schema": "node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "./src",
-  "projectType": "application",
-  "targets": {
-    "build": {
-      "executor": "@nx/vite:build",
-      "outputs": ["{options.outputPath}"],
-      "defaultConfiguration": "production",
-      "options": {
-        "outputPath": "dist"
-      },
-      "configurations": {
-        "development": {
-          "mode": "development"
+    "name": "productize-v1.0.0",
+    "$schema": "node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "./src",
+    "projectType": "application",
+    "targets": {
+        "build": {
+            "executor": "@nx/vite:build",
+            "outputs": ["{options.outputPath}"],
+            "defaultConfiguration": "production",
+            "options": {
+                "outputPath": "dist"
+            },
+            "configurations": {
+                "development": {
+                    "mode": "development"
+                },
+                "production": {
+                    "mode": "production"
+                }
+            }
         },
-        "production": {
-          "mode": "production"
-        }
-      }
-    },
-    "serve": {
-      "executor": "@nx/vite:dev-server",
-      "defaultConfiguration": "development",
-      "options": {
-        "buildTarget": "productize-v1.0.0:build"
-      },
-      "configurations": {
-        "development": {
-          "buildTarget": "productize-v1.0.0:build:development",
-          "hmr": true
+        "serve": {
+            "executor": "@nx/vite:dev-server",
+            "defaultConfiguration": "development",
+            "options": {
+                "buildTarget": "productize-v1.0.0:build"
+            },
+            "configurations": {
+                "development": {
+                    "buildTarget": "productize-v1.0.0:build:development",
+                    "hmr": true
+                },
+                "production": {
+                    "buildTarget": "productize-v1.0.0:build:production",
+                    "hmr": false
+                }
+            }
         },
-        "production": {
-          "buildTarget": "productize-v1.0.0:build:production",
-          "hmr": false
-        }
-      }
-    },
-    "preview": {
-      "executor": "@nx/vite:preview-server",
-      "defaultConfiguration": "development",
-      "options": {
-        "buildTarget": "productize-v1.0.0:build"
-      },
-      "configurations": {
-        "development": {
-          "buildTarget": "productize-v1.0.0:build:development"
+        "preview": {
+            "executor": "@nx/vite:preview-server",
+            "defaultConfiguration": "development",
+            "options": {
+                "buildTarget": "productize-v1.0.0:build"
+            },
+            "configurations": {
+                "development": {
+                    "buildTarget": "productize-v1.0.0:build:development"
+                },
+                "production": {
+                    "buildTarget": "productize-v1.0.0:build:production"
+                }
+            }
         },
-        "production": {
-          "buildTarget": "productize-v1.0.0:build:production"
+        "test": {
+            "executor": "@nx/vite:test",
+            "outputs": ["{options.reportsDirectory}"],
+            "options": {
+                "passWithNoTests": true,
+                "reportsDirectory": "coverage/productize-v1.0.0"
+            }
+        },
+        "lint": {
+            "executor": "@nx/eslint:lint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["./src/**/*.{ts,tsx,js,jsx}"]
+            }
         }
-      }
     },
-    "test": {
-      "executor": "@nx/vite:test",
-      "outputs": ["{options.reportsDirectory}"],
-      "options": {
-        "passWithNoTests": true,
-        "reportsDirectory": "coverage/productize-v1.0.0"
-      }
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["./src/**/*.{ts,tsx,js,jsx}"]
-      }
-    }
-  },
-  "tags": []
+    "tags": []
 }

@@ -1,5 +1,6 @@
 import { Button } from "@chakra-ui/react";
 import { Icon } from "@iconify/react";
+import { LegacyRef, MutableRefObject, ReactNode, useRef } from "react";
 
 export interface BtnExtras {
     border?: string;
@@ -28,6 +29,7 @@ export interface ButtonProps {
 }
 
 export function SharedButton({ text, width, height, bgColor, textColor, borderRadius, fontSize, btnExtras }: ButtonProps) {
+    useRef();
     return (
         <Button
             onClick={btnExtras?.onClick || btnExtras?.onClickAsync}

@@ -8,4 +8,4 @@ export * from "./pages/customers";
 export * from "./pages/payouts";
 export * from "./pages/profile";
 export * from "./lib/UploadExternalFiles";
-export * from "./pages/customers/active/CustomerDetails";
+export * from "./pages/customers/premium/CustomerDetails";

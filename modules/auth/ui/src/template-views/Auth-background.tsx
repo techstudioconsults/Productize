@@ -25,17 +25,6 @@ export function AuthBackground({ children, isLogin }: AuthBackgroundProps) {
             bgRepeat={isLogin ? `no-repeat` : `repeat`}
             bgPosition={isLogin ? `` : `center`}
             bgSize={isLogin ? `cover` : ``}
-            // _after={{
-            //   pos: `fixed`,
-            //   content: "''",
-            //   top: 0,
-            //   left: 0,
-            //   w: `100%`,
-            //   h: `100vh`,
-            //   bgColor: `purple.300`,
-            //   filter: `opacity(0.5)`,
-            //   // zIndex: 0,
-            // }}
         >
             <Box pos={`relative`} zIndex={1}>
                 {children}

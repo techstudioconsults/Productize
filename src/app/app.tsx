@@ -18,6 +18,7 @@ import {
     NewProduct,
     Profile,
     Orders,
+    OrderDetails as DashboardOrderDetails,
     Customers,
     Payouts,
 } from "@productize-v1.0.0/modules/dashboard/ui";
@@ -47,7 +48,9 @@ export function App() {
                 <Route path="products" element={<Products />} />
                 <Route path="products/:productID" element={<DAshboardProductDetails />} />
                 <Route path="products/new" element={<NewProduct />} />
-                <Route path="orders" element={<Orders />} />
+                <Route path="orders" element={<Orders />}>
+                    <Route path="orderid" element={<DashboardOrderDetails />} />
+                </Route>
                 <Route path="analytics" element={<Orders />} />
                 <Route path="customers" element={<Customers />} />
                 <Route path="payouts" element={<Payouts />} />

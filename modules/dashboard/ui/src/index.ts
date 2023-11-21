@@ -4,6 +4,7 @@ export * from './pages/products';
 export * from './pages/products/ProductDetails';
 export * from './pages/products/NewProduct';
 export * from './pages/orders';
+export * from './pages/orders/OrderDetails';
 export * from './pages/customers';
 export * from './pages/payouts';
 export * from './pages/profile';

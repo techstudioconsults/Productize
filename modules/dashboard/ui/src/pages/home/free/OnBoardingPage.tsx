@@ -29,13 +29,13 @@ const OnBoardingPage = () => {
 
     const verifyEmailAddress = async () => {
         try {
-            // await verifyEmail(null).unwrap();
             const res = await verifyEmail(null).unwrap();
             if (res) {
                 toast({
                     position: "top",
                     render: () => <ToastFeedback message={`Check your email for our verification link`} title="Email sent successfully" />,
                 });
+                // write a dispatch hook here to update the user profie details for verified user email
             }
         } catch (err) {
             console.log(err);
@@ -66,6 +66,7 @@ const OnBoardingPage = () => {
             <Stack>
                 <Box>
                     <DashboardRadioBtnComp
+                        isPremium={true}
                         isChecked={user?.email_verified}
                         title={"Verify your email"}
                         subTitle={"Complete your profile to start getting your products published."}
@@ -100,7 +101,9 @@ const OnBoardingPage = () => {
                         title={"Create your first product"}
                         subTitle={"Complete your profile to start getting your products published."}
                         image={"https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951002/productize/Illustration_2_zibmgb_aun5ux.png"}
-                        btn={{}}
+                        btn={{
+                            onClick: () => navigate(`/dashboard/products/new#product-details`),
+                        }}
                         btnText={"Create Product"}
                     />
                 </Box>

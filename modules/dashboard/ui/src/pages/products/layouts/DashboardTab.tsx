@@ -6,6 +6,7 @@ import DeleteTabLayout from "./DeleteTabLayout";
 import { Link as ReactLink, To, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { SharedButton } from "@productize-v1.0.0/modules/shared/ui";
+import { useSetPaymentPlan } from "@productize-v1.0.0/modules/shared/hooks";
 
 const activeStateStyle = {
     borderBottom: `2px solid #6D5DD3`,
@@ -20,6 +21,7 @@ export const DashboardTab = () => {
     const navigate = useNavigate();
     const getHashIndex = tabNames.findIndex((tab) => hash === `#${tab}`);
     const [tabIndex, setTabIndex] = useState(getHashIndex);
+    const isPremium = useSetPaymentPlan();
     const handleTabClick = (tabId: To) => {
         navigate(tabId);
     };
@@ -61,7 +63,7 @@ export const DashboardTab = () => {
                         Deleted
                     </Tab>
                 </Flex>
-                <Box display={{ base: `none`, md: `initial` }}>
+                <Box display={{ base: `none`, md: isPremium ? `initial` : `none` }}>
                     <Link as={ReactLink} to={`/dashboard/products/new#product-details`}>
                         <SharedButton
                             text={"New Product"}

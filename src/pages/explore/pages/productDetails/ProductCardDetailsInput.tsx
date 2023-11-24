@@ -52,6 +52,15 @@ const ProductCardDetailsInput = () => {
           </FormControl>
         </Stack>
         <Divider mt={3} />
+        <Stack gap={3}>
+          <FormControl>
+            <FormLabel fontWeight={`500`} fontSize={`sm`}>
+              Account Name
+            </FormLabel>
+            <Input bg={`grey.200`} placeholder="Enter name" type="email" />
+          </FormControl>
+        </Stack>
+        <Divider mt={3} />
       </CardBody>
       <CardFooter pt={0}>
         <SharedButton

@@ -8,7 +8,7 @@ import { ForgotPassword, Login, Signup } from "@productize-v1.0.0/modules/auth/u
 import { PreLoader } from "@productize-v1.0.0/modules/shared/ui";
 import ExploreIndex from "../pages/explore/pages/explore";
 import ExploreDesign from "../pages/explore/pages/explore/categories/design";
-import ProductBuy from "../pages/explore/pages/productDetails/ProductBuy";
+import Cart from "../pages/explore/pages/productDetails/ProductBuy";
 import ProductDetails from "../pages/explore/pages/productDetails/ProductDetails";
 import {
     DashboardLayout,
@@ -41,8 +41,8 @@ export function App() {
             <Route path="/pricing" element={<Pricing />} />
             <Route path={`/explore`} element={<ExploreIndex />} />
             <Route path="/explore/design" element={<ExploreDesign />} />
-            <Route path="/explore/product/details" element={<ProductDetails />} />
-            <Route path="/explore/product/buy" element={<ProductBuy />} />
+            <Route path="/explore/product/details/:productID" element={<ProductDetails />} />
+            <Route path="/explore/product/cart" element={<Cart />} />
             <Route path="*" element={<h1>PAGE NOT FOUND</h1>} />
 
             {/* dashboard */}

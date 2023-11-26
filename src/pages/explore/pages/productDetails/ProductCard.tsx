@@ -1,35 +1,43 @@
-import { Avatar, Box, Card, CardBody, CardFooter, Center, Divider, Flex, Image, Stack, Text } from "@chakra-ui/react";
+import { Avatar, Box, Card, CardBody, CardFooter, Center, Divider, Flex, IconButton, Image, Stack, Text } from "@chakra-ui/react";
 import { Icon } from "@iconify/react";
+import { useCurrency } from "@productize-v1.0.0/modules/shared/hooks";
+import { selectCart, usePurchaseProductMutation } from "@productize-v1.0.0/modules/shared/redux";
 import { SharedButton } from "@productize-v1.0.0/modules/shared/ui";
-import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-export const ProductCard = () => {
+interface productProp {
+    product: any;
+}
+
+export const ProductCard = ({ product }: productProp) => {
+    const formatCurrency = useCurrency();
+    const dispatch = useDispatch();
+
+    const deleteProduct = () => {
+        dispatch({ type: `App/deleteProductFromCart`, payload: { productSlug: product.slug } });
+    };
+
     return (
-        <Card direction={{ base: "column", sm: "row" }} overflow="hidden" variant="none">
-            <Image
-                objectFit="cover"
-                maxW={{ base: "100%", sm: "200px" }}
-                src="https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
-                alt="Caffe Latte"
-            />
+        <Card direction={{ base: "column", sm: "row" }} alignItems={`center`} overflow="hidden" variant="none">
+            <Box height={`8.5rem`}>
+                <Image objectFit="cover" height={{ base: "100%" }} width={{ base: "100%", sm: "200px" }} src={product?.thumbnail} alt="Caffe Latte" />
+            </Box>
 
             <Stack w={`100%`}>
                 <CardBody>
                     <Flex justifyContent={`space-between`} fontWeight={600}>
-                        <Text size="md">UI Design Systems Mastery</Text>
-                        <Text>₦3,000</Text>
+                        <Text size="md">{product?.title}</Text>
+                        <Text>{formatCurrency(product?.price)}</Text>
                     </Flex>
                     <Flex mt={3} gap={2} alignItems={`center`}>
-                        <Avatar size={`sm`} name="Christian Nwamba" src="https://bit.ly/code-beast" />
-                        <Text fontWeight={`500`}>Temilade Openiyi</Text>
+                        <Avatar size={`sm`} name={product?.publisher} src="https://bit.ly/code-beast" />
+                        <Text fontWeight={`500`}>{product?.publisher}</Text>
                     </Flex>
                 </CardBody>
 
                 <CardFooter py={0} justifyContent={`space-between`}>
-                    <Text>Qty: 1</Text>
-                    <Center color={`red.200`}>
-                        <Icon icon={`mdi:trash`} />
-                    </Center>
+                    <Text>Qty: {product?.quantity}</Text>
+                    <IconButton onClick={deleteProduct} bgColor={`transparent`} color={`red.200`} icon={<Icon icon={`mdi:trash`} />} aria-label={"delete"} />
                 </CardFooter>
             </Stack>
         </Card>
@@ -37,17 +45,48 @@ export const ProductCard = () => {
 };
 
 export const ProductCards = () => {
+    const cart = useSelector(selectCart);
+    const formatCurrency = useCurrency();
+    const [purchaseProduct] = usePurchaseProductMutation();
+
+    const checkoutProductList = cart.checkoutProducts.map((product: any) => {
+        return (
+            <Box key={product.slug}>
+                <ProductCard product={product} />
+                <Divider my={4} />
+            </Box>
+        );
+    });
+
+    const handlePurchaseProduct = async () => {
+        const checkoutFormat = cart?.checkoutProducts?.map((product: any) => {
+            return {
+                product_slug: product.slug,
+                quantity: product.quantity,
+            };
+        });
+
+        const checkout = {
+            // paystack uses kobo for amounts
+            amount: cart.totalProductPrice,
+            products: checkoutFormat,
+        };
+        console.log(checkout);
+
+        try {
+            // await purchaseProduct(JSON.stringify(checkout)).unwrap();
+            await purchaseProduct(checkout).unwrap();
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
         <Box borderRadius={`8px`} border={`1px solid #CFCFD0`} p={5}>
-            <ProductCard />
-            <Divider my={4} />
-            <ProductCard />
-            <Divider my={4} />
-            <ProductCard />
-            <Divider my={4} />
+            {checkoutProductList}
             <Flex fontWeight={600} justifyContent={`space-between`}>
                 <Text>Total</Text>
-                <Text>₦9,000</Text>
+                <Text px={5}>{formatCurrency(cart.totalProductPrice)}</Text>
             </Flex>
             <Divider my={4} />
             <Stack gap={4}>
@@ -59,8 +98,13 @@ export const ProductCards = () => {
                     textColor={"grey.100"}
                     borderRadius={"4px"}
                     fontSize={{ base: `sm`, md: `md` }}
+                    btnExtras={{
+                        onClick: handlePurchaseProduct,
+                    }}
                 />
-                <Text textAlign={`center`} color={`grey.400`} textDecor={`underline`}>Give As Gift</Text>
+                <Text textAlign={`center`} color={`grey.400`} textDecor={`underline`}>
+                    Give As Gift
+                </Text>
             </Stack>
         </Box>
     );

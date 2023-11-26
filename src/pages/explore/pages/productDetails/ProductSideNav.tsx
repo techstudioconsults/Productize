@@ -13,11 +13,38 @@ import {
     Stack,
     Text,
 } from "@chakra-ui/react";
+import { Icon } from "@iconify/react";
+import { useCurrency } from "@productize-v1.0.0/modules/shared/hooks";
+import { selectSingleProduct_EXTERNAL } from "@productize-v1.0.0/modules/shared/redux";
 import { SharedButton } from "@productize-v1.0.0/modules/shared/ui";
-import React from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const ProductSideNav = () => {
+    const product = useSelector(selectSingleProduct_EXTERNAL);
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [productQuantity, setProductQuantity] = useState(1);
+    const dispatch = useDispatch();
+    const formatCurrency = useCurrency();
+
+    const handleProductQuantity = (quantity: string) => {
+        setTotalPrice(product.price * parseInt(quantity));
+        setProductQuantity(parseInt(quantity));
+    };
+
+    const addToCart = () => {
+        const modifiedProduct = {
+            ...product,
+            quantity: productQuantity,
+        };
+        dispatch({ type: `App/updateCart`, payload: { product: modifiedProduct, totalPrice } });
+    };
+
+    useEffect(() => {
+        setTotalPrice(product?.price);
+    }, [product?.price]);
+
     return (
         <Card maxW="sm">
             <CardBody>
@@ -27,14 +54,18 @@ const ProductSideNav = () => {
                 </Flex>
                 <Box my={4}>
                     <Text color={`grey.800`} fontSize={`22px`} fontWeight={600}>
-                        ₦3,000
+                        {formatCurrency(totalPrice)}
                     </Text>
                     <Box mt={4}>
-                        <NumberInput size={`lg`} defaultValue={1} min={1}>
+                        <NumberInput onChange={handleProductQuantity} defaultValue="1" size={`lg`} min={1}>
                             <NumberInputField />
                             <NumberInputStepper flexDir={`row`} width={`30%`}>
-                                <NumberIncrementStepper />
-                                <NumberDecrementStepper />
+                                <NumberIncrementStepper>
+                                    <Icon icon={`ic:baseline-plus`} />
+                                </NumberIncrementStepper>
+                                <NumberDecrementStepper>
+                                    <Icon icon={`ic:baseline-minus`} />
+                                </NumberDecrementStepper>
                             </NumberInputStepper>
                         </NumberInput>
                     </Box>
@@ -49,8 +80,11 @@ const ProductSideNav = () => {
                             textColor={"white"}
                             borderRadius={"4px"}
                             fontSize={{ base: `sm`, xl: `md` }}
+                            btnExtras={{
+                                onClick: addToCart,
+                            }}
                         />
-                        <Link to={`/explore/product/buy`}>
+                        <Link to={`/explore/product/cart`}>
                             <SharedButton
                                 btnExtras={{
                                     border: "1px solid #6D5DD3",
@@ -72,19 +106,19 @@ const ProductSideNav = () => {
                     <Stack gap={4}>
                         <Flex color={`grey.500`} fontSize={`sm`} alignItems={`center`} justifyContent={`space-between`}>
                             <Text>Format</Text>
-                            <Text>PDF</Text>
+                            <Text>{product?.resources_info?.[0]?.mime_type}</Text>
                         </Flex>
                         <Flex color={`grey.500`} fontSize={`sm`} alignItems={`center`} justifyContent={`space-between`}>
                             <Text>File size</Text>
-                            <Text>3.8MB</Text>
+                            <Text>{product?.resources_info?.[0]?.size}</Text>
                         </Flex>
                         <Flex color={`grey.500`} fontSize={`sm`} alignItems={`center`} justifyContent={`space-between`}>
                             <Text>Articles</Text>
-                            <Text>7</Text>
+                            <Text>0</Text>
                         </Flex>
                         <Flex color={`grey.500`} fontSize={`sm`} alignItems={`center`} justifyContent={`space-between`}>
                             <Text>Downloadable recourses</Text>
-                            <Text>4</Text>
+                            <Text>{product?.no_of_resources}</Text>
                         </Flex>
                     </Stack>
                 </Box>

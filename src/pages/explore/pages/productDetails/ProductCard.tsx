@@ -47,7 +47,7 @@ export const ProductCard = ({ product }: productProp) => {
 export const ProductCards = () => {
     const cart = useSelector(selectCart);
     const formatCurrency = useCurrency();
-    const [purchaseProduct] = usePurchaseProductMutation();
+    const [purchaseProduct, { isLoading }] = usePurchaseProductMutation();
 
     const checkoutProductList = cart.checkoutProducts.map((product: any) => {
         return (
@@ -71,11 +71,13 @@ export const ProductCards = () => {
             amount: cart.totalProductPrice,
             products: checkoutFormat,
         };
-        console.log(checkout);
 
         try {
-            // await purchaseProduct(JSON.stringify(checkout)).unwrap();
-            await purchaseProduct(checkout).unwrap();
+            const res = await purchaseProduct(checkout).unwrap();
+            console.log(res);
+            if (res) {
+                window.location.href = res.authorization_url;
+            }
         } catch (error) {
             console.log(error);
         }
@@ -99,7 +101,10 @@ export const ProductCards = () => {
                     borderRadius={"4px"}
                     fontSize={{ base: `sm`, md: `md` }}
                     btnExtras={{
+                        isLoading: isLoading,
+                        loadingText: `Processing payment...`,
                         onClick: handlePurchaseProduct,
+                        disabled: cart.totalProductPrice ? false : true,
                     }}
                 />
                 <Text textAlign={`center`} color={`grey.400`} textDecor={`underline`}>

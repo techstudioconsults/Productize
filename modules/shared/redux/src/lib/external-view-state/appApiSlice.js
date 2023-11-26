@@ -49,19 +49,19 @@ export const appApiSlice = apiSlice.injectEndpoints({
                 method: "POST",
                 body: { ...credentials },
             }),
-            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-                try {
-                    const { data } = await queryFulfilled;
-                    console.log(data);
-                    // dispatch(
-                    //     setSingleProduct_EXTERNAL({
-                    //         product: data,
-                    //     })
-                    // );
-                } catch (error) {
-                    return error;
-                }
-            },
+            // async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+            //     try {
+            //         const { data } = await queryFulfilled;
+
+            //         // dispatch(
+            //         //     setSingleProduct_EXTERNAL({
+            //         //         product: data,
+            //         //     })
+            //         // );
+            //     } catch (error) {
+            //         return error;
+            //     }
+            // },
         }),
     }),
 });

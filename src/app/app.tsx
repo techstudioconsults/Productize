@@ -30,7 +30,7 @@ export function App() {
         <Routes>
             {/* authentication */}
             <Route path={`/auth`} element={<Signup />} />
-            <Route path="/auth/login" element={<Login />} />
+            <Route path="/auth/login" element={<Login />} />  
             <Route path="/auth/fetching-data/:provider" element={<PreLoader />} />
             <Route path="/auth/forgot-password" element={<ForgotPassword />} />
             {/* <Route path="/auth/reset-password" element={<ResetPassword email={""} token={""} />} /> */}

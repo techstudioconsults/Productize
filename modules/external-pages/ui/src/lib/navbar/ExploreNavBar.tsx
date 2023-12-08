@@ -4,7 +4,8 @@ import { Link as RouterLink } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import Wrapper from "../Wrapper";
 import Links from "./NavigationLinks";
-import { SearchComp, AvatarComp, SharedButton, Sidenav } from "@productize-v1.0.0/modules/shared/ui";
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { SearchComp, AvatarComp, SharedButton, Sidenav, Cart } from "@productize-v1.0.0/modules/shared/ui";
 
 interface navProps {
     isAuth: boolean;
@@ -30,9 +31,7 @@ export const ExploreNavBar = ({ isAuth }: navProps) => {
                         <Box>
                             <SearchComp size="lg" color={`coral.100`} />
                         </Box>
-                        <Link display={{ base: `none`, lg: `initial` }} as={RouterLink} to={`cart`}>
-                            <Icon fontSize={`1.5rem`} icon={`ion:cart-sharp`} />
-                        </Link>
+                        <Cart />
                         {isAuth ? (
                             <Box display={{ base: `none`, lg: `initial` }}>
                                 <AvatarComp />

@@ -2,26 +2,28 @@ import {
     Box,
     Container,
     Flex,
+    ModalCloseButton,
     Stack,
     Text,
+    useDisclosure,
     useToast,
     // useDisclosure,
 } from "@chakra-ui/react";
 // eslint-disable-next-line @nx/enforce-module-boundaries
-import { checkUserProfileValidity } from "@productize-v1.0.0/modules/dashboard/feature";
+import { SetupPaymentForm, checkUserProfileValidity } from "@productize-v1.0.0/modules/dashboard/feature";
 import { useVerifyEmailMutation, selectCurrentUser } from "@productize-v1.0.0/modules/shared/redux";
-// import { ModalComp } from '@productize/shared/ui';
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { DashboardBanner } from "../../../lib/DashboardBanner";
 import { DashboardRadioBtnComp } from "../../../lib/DashboardRadioBtnComp";
 import { ProgressBar } from "../../../lib/ProgressBar";
-import { ToastFeedback } from "@productize-v1.0.0/modules/shared/ui";
+import { ModalComp, ToastFeedback } from "@productize-v1.0.0/modules/shared/ui";
 import { useSetPaymentPlan } from "@productize-v1.0.0/modules/shared/hooks";
+import { Divider } from "rsuite";
 
 const OnBoardingPage = () => {
     const [verifyEmail, verifyEmailStatus] = useVerifyEmailMutation();
-    // const { onOpen, onClose, isOpen } = useDisclosure();
+    const { onOpen, onClose, isOpen } = useDisclosure();
     const user = useSelector(selectCurrentUser);
     const navigate = useNavigate();
     const toast = useToast();
@@ -110,12 +112,26 @@ const OnBoardingPage = () => {
                 <Box>
                     <DashboardRadioBtnComp
                         isPremium={isPremium}
-                        title={"Set up your payout"}
+                        title={"Set up your payout account"}
                         subTitle={"Complete your profile to start getting your products published."}
                         image={"https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951033/productize/Illustration_1_wdmvgf_jpnhgm.png"}
-                        btn={{}}
+                        btn={{
+                            onClick: onOpen,
+                        }}
                         btnText={"Make Money"}
                     />
+                    <ModalComp modalSize={`lg`} openModal={isOpen} closeModal={onClose}>
+                        <Box>
+                            <Flex>
+                                <Text as={`h5`} fontSize={`xl`}>
+                                    Add Bank Account
+                                </Text>
+                                <ModalCloseButton />
+                            </Flex>
+                            <Divider />
+                        </Box>
+                        <SetupPaymentForm />
+                    </ModalComp>
                 </Box>
                 <Box>
                     <DashboardRadioBtnComp

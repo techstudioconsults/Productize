@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     allProducts: null,
-    allProducts_EXTERNAL: [],
     productsAnalytics: {},
     liveProducts: null,
     draftProducts: null,
@@ -19,11 +18,6 @@ const productSlice = createSlice({
             const { products, productsMetaData } = action.payload;
             state.allProducts = products;
             state.productMetaData = productsMetaData;
-        },
-
-        setAllProduct_EXTERNAL: (state, action) => {
-            const { products } = action.payload;
-            state.allProducts_EXTERNAL = products;
         },
 
         setLiveProduct: (state, action) => {
@@ -54,21 +48,12 @@ const productSlice = createSlice({
     },
 });
 
-export const {
-    setAllProduct,
-    setAllProduct_EXTERNAL,
-    setLiveProduct,
-    setDraftProduct,
-    setDeletedProduct,
-    setSingleProduct,
-    setProductsAnalytics,
-    resetProductStore,
-} = productSlice.actions;
+export const { setAllProduct, setLiveProduct, setDraftProduct, setDeletedProduct, setSingleProduct, setProductsAnalytics, resetProductStore } =
+    productSlice.actions;
 export default productSlice.reducer;
 
 export const selectAllProducts = (state) => state.Products.allProducts;
 export const selectProductMetaData = (state) => state.Products.productMetaData;
-export const selectAllProducts_EXTERNAL = (state) => state.Products.allProducts_EXTERNAL;
 export const selectDraftProducts = (state) => state.Products.draftProducts;
 export const selectLiveProducts = (state) => state.Products.liveProducts;
 export const selectDeletedProducts = (state) => state.Products.deletedProducts;

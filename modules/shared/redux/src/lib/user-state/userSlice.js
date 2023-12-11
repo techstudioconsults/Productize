@@ -11,13 +11,12 @@ const userSlice = createSlice({
     reducers: {
         setUser: (state, action) => {
             const { user } = action.payload;
-
             state.profile = user;
         },
         setTaskCount: (state, action) => {
             if (action.payload) {
                 if (state.guideTaskCompleted !== 5) {
-                    state.guideTaskCompleted++;
+                    state.guideTaskCompleted = 4;
                 }
             } else {
                 state.guideTaskCompleted = 0;

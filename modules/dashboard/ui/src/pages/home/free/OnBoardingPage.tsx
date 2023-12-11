@@ -10,7 +10,7 @@ import {
     // useDisclosure,
 } from "@chakra-ui/react";
 // eslint-disable-next-line @nx/enforce-module-boundaries
-import { SetupPaymentForm, checkUserProfileValidity } from "@productize-v1.0.0/modules/dashboard/feature";
+import { SetupPaymentForm } from "@productize-v1.0.0/modules/dashboard/feature";
 import { useVerifyEmailMutation, selectCurrentUser } from "@productize-v1.0.0/modules/shared/redux";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -87,7 +87,7 @@ const OnBoardingPage = () => {
                 <Box>
                     <DashboardRadioBtnComp
                         isPremium={isPremium}
-                        isChecked={checkUserProfileValidity(user)}
+                        isChecked={user?.profile_completed}
                         title={"Customize your profile"}
                         subTitle={"Complete your profile to start getting your products published."}
                         image={"https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951003/productize/Star_6_alusuk_sbe2un.png"}
@@ -100,6 +100,7 @@ const OnBoardingPage = () => {
                 <Box>
                     <DashboardRadioBtnComp
                         isPremium={isPremium}
+                        isChecked={user?.first_product_created}
                         title={"Create your first product"}
                         subTitle={"Complete your profile to start getting your products published."}
                         image={"https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951002/productize/Illustration_2_zibmgb_aun5ux.png"}
@@ -112,6 +113,7 @@ const OnBoardingPage = () => {
                 <Box>
                     <DashboardRadioBtnComp
                         isPremium={isPremium}
+                        isChecked={user?.payout_setup}
                         title={"Set up your payout account"}
                         subTitle={"Complete your profile to start getting your products published."}
                         image={"https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951033/productize/Illustration_1_wdmvgf_jpnhgm.png"}
@@ -136,6 +138,7 @@ const OnBoardingPage = () => {
                 <Box>
                     <DashboardRadioBtnComp
                         isPremium={isPremium}
+                        isChecked={user?.first_sale}
                         title={"make your first sale"}
                         subTitle={"Complete your profile to start getting your products published."}
                         image={"https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951025/productize/Frame_40446_y425kr_pcfgv4.png"}

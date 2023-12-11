@@ -136,6 +136,17 @@ export const NewProductTab = () => {
             }
         } catch (error) {
             console.log(error);
+            toast({
+                position: "top",
+                render: () => (
+                    <ToastFeedback
+                        color={`grey.100`}
+                        bgColor={`#800000`}
+                        title={`Paystack Setup`}
+                        message={`Setup your Paystack account before you can publish a product`}
+                    />
+                ),
+            });
         }
     };
 

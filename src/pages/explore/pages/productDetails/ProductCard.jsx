@@ -1,15 +1,16 @@
 import { Avatar, Box, Card, CardBody, CardFooter, Center, Divider, Flex, IconButton, Image, Stack, Text } from "@chakra-ui/react";
 import { Icon } from "@iconify/react";
 import { useCurrency } from "@productize-v1.0.0/modules/shared/hooks";
-import { selectCart, usePurchaseProductMutation } from "@productize-v1.0.0/modules/shared/redux";
+import { selectCart, useAddToCartMutation, useGetFromCartMutation, usePurchaseProductMutation } from "@productize-v1.0.0/modules/shared/redux";
 import { SharedButton } from "@productize-v1.0.0/modules/shared/ui";
+import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-interface productProp {
-    product: any;
-}
+// interface productProp {
+//     product: any;
+// }
 
-export const ProductCard = ({ product }: productProp) => {
+export const ProductCard = ({ product }) => {
     const formatCurrency = useCurrency();
     const dispatch = useDispatch();
 
@@ -47,9 +48,10 @@ export const ProductCard = ({ product }: productProp) => {
 export const ProductCards = () => {
     const cart = useSelector(selectCart);
     const formatCurrency = useCurrency();
+    const [addToCart] = useAddToCartMutation();
     const [purchaseProduct, { isLoading }] = usePurchaseProductMutation();
 
-    const checkoutProductList = cart.checkoutProducts.map((product: any) => {
+    const checkoutProductList = cart?.checkoutProducts?.map((product) => {
         return (
             <Box key={product.slug}>
                 <ProductCard product={product} />
@@ -59,7 +61,7 @@ export const ProductCards = () => {
     });
 
     const handlePurchaseProduct = async () => {
-        const checkoutFormat = cart?.checkoutProducts?.map((product: any) => {
+        const checkoutProductFormat = cart?.checkoutProducts?.map((product) => {
             return {
                 product_slug: product.slug,
                 quantity: product.quantity,
@@ -69,7 +71,7 @@ export const ProductCards = () => {
         const checkout = {
             // paystack uses kobo for amounts
             amount: cart.totalProductPrice,
-            products: checkoutFormat,
+            products: checkoutProductFormat,
         };
 
         try {
@@ -82,6 +84,37 @@ export const ProductCards = () => {
             console.log(error);
         }
     };
+
+    // const saveCart = useCallback(async () => {
+    //     const checkoutProductFormat = cart?.checkoutProducts?.map((product) => {
+    //         return {
+    //             product_slug: product.slug,
+    //             quantity: product.quantity,
+    //         };
+    //     });
+
+    //     const checkout = {
+    //         // paystack uses kobo for amounts
+    //         total_amount: cart.totalProductPrice,
+    //         products: checkoutProductFormat,
+    //     };
+
+    //     try {
+    //         const res = await addToCart(checkout).unwrap();
+    //         console.log(res);
+    //         // if (res) {
+    //         //     window.location.href = res.authorization_url;
+    //         // }
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }, [addToCart, cart?.checkoutProducts, cart.totalProductPrice]);
+
+    // useEffect(() => {
+    //     saveCart();
+
+    //     console.log(`productcard`);
+    // }, [saveCart]);
 
     return (
         <Box borderRadius={`8px`} border={`1px solid #CFCFD0`} p={5}>

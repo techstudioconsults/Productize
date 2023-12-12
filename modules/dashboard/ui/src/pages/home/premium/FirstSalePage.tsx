@@ -3,8 +3,11 @@ import { DashboardBanner } from "../../../lib/DashboardBanner";
 import { DashboardRadioBtnComp } from "../../../lib/DashboardRadioBtnComp";
 import { ProgressBar } from "../../../lib/ProgressBar";
 import { DashboardEmptyState } from "../../../lib/empty-states/DashboardEmptyState";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "@productize-v1.0.0/modules/shared/redux";
 
 const FirstSalePage = () => {
+    const user = useSelector(selectCurrentUser);
     return (
         <>
             <SimpleGrid columns={{ base: 1, xl: 2 }} gap={8} p={0} my={8}>
@@ -49,19 +52,22 @@ const FirstSalePage = () => {
                     </Box>
                 </Box>
             </SimpleGrid>
-            <Box>
-                <Text as={`h6`}>Activity</Text>
-                <DashboardEmptyState
-                    maxW="50rem"
-                    content={{
-                        title: "",
-                        desc: "You do not have any sales activities yet.",
-                        img: `https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951005/productize/Illustration_oblvox_athyeh.png`,
-                    }}
-                    textAlign={{ base: `center` }}
-                    showImage
-                />
-            </Box>
+            {/* empty state */}
+            {user?.first_product_created ? null : (
+                <Box>
+                    <Text as={`h6`}>Activity</Text>
+                    <DashboardEmptyState
+                        maxW="50rem"
+                        content={{
+                            title: "",
+                            desc: "You do not have any sales activities yet.",
+                            img: `https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951005/productize/Illustration_oblvox_athyeh.png`,
+                        }}
+                        textAlign={{ base: `center` }}
+                        showImage
+                    />
+                </Box>
+            )}
         </>
     );
 };

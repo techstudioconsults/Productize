@@ -31,11 +31,7 @@ const AllproductActive = ({ products }: draftActiveProps) => {
                         <DataWidgetCard showIcon={false} title={"Customers"} value={productsAnalyics?.total_customers} />
                     </Box>
                     <Box>
-                        <DataWidgetCard
-                            showIcon={false}
-                            title={"Total Revenue"}
-                            value={productsAnalyics?.total_revenues ? formatCurrency(productsAnalyics?.total_revenues) : <SpinnerComponentSmall size="sm" />}
-                        />
+                        <DataWidgetCard showIcon={false} title={"Total Revenue"} value={formatCurrency(productsAnalyics?.total_revenues)} />
                     </Box>
                 </SimpleGrid>
             </Box>

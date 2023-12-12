@@ -1,124 +1,168 @@
-import { Box, Flex, Grid, GridItem, IconButton, Image, Stack, Text } from "@chakra-ui/react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/rules-of-hooks */
+import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Text, Stack, Box, Avatar } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { useCurrency, useDate, useTime } from "@productize-v1.0.0/modules/shared/hooks";
+import { selectCurrentToken, selectCustomersMetaData } from "@productize-v1.0.0/modules/shared/redux";
+import { SharedButton } from "@productize-v1.0.0/modules/shared/ui";
 import { Icon } from "@iconify/react";
-import { useCurrency } from "@productize-v1.0.0/modules/shared/hooks";
-import { Link } from "react-router-dom";
-import OrderBtn from "./OrderBtn";
 
-interface Order {
-    _id: string; // Define the properties of an order
+interface tableProps {
+    tableData: [];
 }
 
-export default function OrderList({ orders }: { orders: Order[] }) {
+export const OrderList = ({ tableData }: tableProps) => {
+    const token = useSelector(selectCurrentToken);
+    const navigate = useNavigate();
     const formatCurrency = useCurrency();
+    const formatDate = useDate();
+    const formatTime = useTime();
+    const paginate = useSelector(selectCustomersMetaData);
+    const dispatch = useDispatch();
+    const headersCredentials = {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    };
+
+    const tableHeader = [`Product`, `Price`, `Customer Email`, `Date`].map((title) => {
+        return (
+            <Th py={3} key={title}>
+                {title}
+            </Th>
+        );
+    });
+    const tableCustomer = tableData?.map((customer: any) => {
+        return (
+            <Tr _hover={{ bgColor: `purple.100`, cursor: `pointer` }} onClick={() => navigate(`/dashboard/orders/${customer.id}`)} key={customer.id}>
+                <Td>
+                    <Flex gap={2} alignItems={`center`}>
+                        <Avatar bgColor={`yellow.100`} src={customer?.thumbnail} borderRadius={`8px`} w={`100px`} h={`64px`} />
+                        <Stack>
+                            <Text>{customer?.product_title}</Text>
+                            <Flex alignItems={`center`} color={`grey.400`}>
+                                <Text className="tiny-text">PDF - 5.5MB</Text>
+                            </Flex>
+                        </Stack>
+                    </Flex>
+                </Td>
+                <Td>
+                    <Flex>{formatCurrency(customer.product_price)}</Flex>
+                </Td>
+                <Td>
+                    {/* if show sale count is true */}
+                    <Flex flexDir={`column`} gap={2} py={2}>
+                        <Text>{customer?.email}</Text>
+                    </Flex>
+                </Td>
+                <Td>
+                    <Flex>{`
+                    ${formatDate(customer?.created_at)}
+                    ${formatTime(customer?.created_at)}
+                    `}</Flex>
+                </Td>
+            </Tr>
+        );
+    });
+
+    const handlePrevButton = async () => {
+        try {
+            const res = await axios.get(paginate?.links?.prev, headersCredentials);
+            if (res.status === 200) {
+                dispatch({
+                    type: `Customers/setAllCustomers`,
+                    payload: {
+                        customers: res.data.data,
+                        customersMetaData: {
+                            links: res.data.links,
+                            meta: res.data.meta,
+                        },
+                    },
+                });
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    const handleNextButton = async () => {
+        try {
+            const res = await axios.get(paginate?.links?.next, headersCredentials);
+            if (res.status === 200) {
+                dispatch({
+                    type: `Customers/setAllCustomers`,
+                    payload: {
+                        customers: res.data.data,
+                        customersMetaData: {
+                            links: res.data.links,
+                            meta: res.data.meta,
+                        },
+                    },
+                });
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
         <>
-            <Box mt="24px" mb="12px" minH="80vh">
-                <Grid
-                    templateColumns="repeat(12, 1fr)"
-                    bg="purple.100"
-                    p="12px"
-                    alignItems="center"
-                    color="grey.500"
-                    lineHeight="24px"
-                    h="48px"
-                    mb="12px"
-                    hideBelow="md"
-                >
-                    <GridItem colSpan={{ md: 4 }} mb={4}>
-                        <Text>Product</Text>
-                    </GridItem>
-                    <GridItem colSpan={{ md: 2 }} mb={4}>
-                        <Text>Price</Text>
-                    </GridItem>
-                    <GridItem colSpan={{ md: 3 }} mb={4}>
-                        <Text>Customer Email</Text>
-                    </GridItem>
-                    <GridItem colSpan={{ md: 3 }} mb={4}>
-                        <Text>Date</Text>
-                    </GridItem>
-                </Grid>
-                <Grid
-                    templateColumns="repeat(12, 1fr)"
-                    bg="#FFFFFF"
-                    p={{ base: "12px", md: "4px" }}
-                    alignItems="center"
-                    color="grey.200"
-                    lineHeight="24px"
-                    rounded={{ base: "8px", md: "none" }}
-                    border={{ base: "2px solid #F3F3F3", md: "none" }}
-                    borderBottom={{ base: "2px", md: "2px" }}
-                    h={{ base: "368px", md: "56px" }}
-                    gap="4px"
-                >
-                    <GridItem colSpan={{ base: 12, md: 4 }} mb={4}>
-                        <Flex justify="space-between">
-                            <Flex gap="8px" direction={{ base: "column", md: "row" }} as={Link} to="/dashboard/orders/orderid">
-                                <Image
-                                    objectFit="cover"
-                                    w={{ base: "100px", md: "44px" }}
-                                    h={{ base: "64px", md: "44px" }}
-                                    src="https://res.cloudinary.com/ceenobi/image/upload/v1699646899/icons/Frame_40207_b0pksv.png"
-                                    alt="lll"
-                                    borderRadius="4px"
-                                    mb={{ base: 2, md: 0 }}
-                                    mr="auto"
-                                />
-                                <Box>
-                                    <Text color="grey.400" hideFrom="md">
-                                        Product
-                                    </Text>
-                                    <Text color="purple.300">UX Design Fundamentals</Text>
-                                </Box>
-                            </Flex>
-                            <IconButton aria-label="See more" icon={<Icon icon="solar:menu-dots-bold" />} hideFrom="md" variant="ghost" />
-                        </Flex>
-                    </GridItem>
-                    <GridItem colSpan={{ base: 12, md: 2 }} mb={4}>
-                        <Text color="grey.400" hideFrom="md">
-                            Price
-                        </Text>
-                        <Text color="purple.300">{formatCurrency(5500)}</Text>
-                    </GridItem>
-                    <GridItem colSpan={{ base: 12, md: 3 }} mb={4}>
-                        <Text color="grey.400" hideFrom="md">
-                            Customer Email
-                        </Text>
-                        <Text color="purple.300">aishaaish@techstudio.com</Text>
-                    </GridItem>
-                    <GridItem colSpan={{ base: 12, md: 3 }} mb={4}>
-                        <Text color="grey.400" hideFrom="md">
-                            Date
-                        </Text>
-                        <Text color="purple.300">15 May 2020 8:00 am</Text>
-                    </GridItem>
-                </Grid>
-            </Box>
-            <Flex justify="space-between" align="center" h="40px">
-                <Text color="grey.400" fontSize="16px" lineHeight="24px">
-                    10 Entries per page
-                </Text>
-                <Text color="grey.400" fontSize="16px" lineHeight="24px">
-                    Page 1 of 1
-                </Text>
-                <Stack spacing={4} direction="row" hideBelow="md">
-                    <OrderBtn
-                        title="Previous"
-                        color="grey.400"
-                        borderColor="grey.400"
-                        fontSize="16px"
-                        leftIcon={<Icon icon="material-symbols-light:arrow-back-ios" />}
+            <TableContainer display={`flex`} flexDir={`column`} height={`40rem`} justifyContent={`space-between`} overflowY={`auto`}>
+                <Table size={`sm`} variant="simple">
+                    {/* head */}
+                    <Thead zIndex={1} pos={`sticky`} top={0}>
+                        <Tr bgColor={`purple.100`} color={`grey.300`}>
+                            {tableHeader}
+                        </Tr>
+                    </Thead>
+                    {/* body */}
+                    <Tbody color={`purple.300`}>{tableCustomer}</Tbody>
+                </Table>
+            </TableContainer>
+            {/* TABLE PAGINATION */}
+            <Flex mt={4} color={`grey.400`} alignItems={`center`} justifyContent={`space-between`}>
+                <Box display={{ base: `none`, md: `initial` }}>
+                    <Text>10 Entries per page </Text>
+                </Box>
+                <Box display={{ base: `none`, md: `initial` }}>
+                    <Text>
+                        Page {paginate?.meta?.current_page} of {paginate?.meta?.last_page}
+                    </Text>
+                </Box>
+                <Stack direction={`row`}>
+                    <SharedButton
+                        btnExtras={{
+                            leftIcon: `material-symbols:chevron-left`,
+                            border: `1px solid #CFCFD0`,
+                            onClick: handlePrevButton,
+                            disabled: !paginate?.links?.prev,
+                        }}
+                        text={"Previous"}
+                        width={"137px"}
+                        height={"40px"}
+                        bgColor={"transparent"}
+                        textColor={"grey.400"}
+                        borderRadius={"4px"}
+                        fontSize={{ base: `sm`, md: `md` }}
                     />
-                    <OrderBtn
-                        title="Next"
-                        color="grey.400"
-                        borderColor="grey.400"
-                        fontSize="16px"
-                        rightIcon={<Icon icon="ion:chevron-forward-outline" />}
-                        leftIcon={null}
+                    <SharedButton
+                        btnExtras={{
+                            leftIcon: `material-symbols:chevron-right`,
+                            border: `1px solid #CFCFD0`,
+                            onClick: handleNextButton,
+                            disabled: !paginate?.links?.next,
+                        }}
+                        text={"Next"}
+                        width={"137px"}
+                        height={"40px"}
+                        bgColor={"transparent"}
+                        textColor={"grey.400"}
+                        borderRadius={"4px"}
+                        fontSize={{ base: `sm`, md: `md` }}
                     />
                 </Stack>
             </Flex>
         </>
     );
-}
+};

@@ -3,11 +3,12 @@ import { Icon } from "@iconify/react";
 import { AllProducts, OrderBtn, DatePicker, OrderList } from "./components";
 import { Outlet, useLocation } from "react-router-dom";
 
-interface Order {
-    _id: string; // Define the properties of an order
-}
+// interface Order {
+//     _id: string; // Define the properties of an order
+// }
 
-export default function ActiveOrders({ orders }: { orders: Order[] }) {
+export default function ActiveOrders({ orders }) {
+    // export default function ActiveOrders({ orders }: { orders: Order[] }) {
     const location = useLocation();
 
     return (
@@ -25,8 +26,8 @@ export default function ActiveOrders({ orders }: { orders: Order[] }) {
                         </Stack>
                         <IconButton aria-label="See more" icon={<Icon icon="charm:menu-kebab" />} hideFrom="md" variant="ghost" />
                     </Flex>
-                    <Box>
-                        <OrderList orders={orders} />
+                    <Box my={5}>
+                        <OrderList tableData={orders.data} />
                     </Box>
                 </>
             ) : (

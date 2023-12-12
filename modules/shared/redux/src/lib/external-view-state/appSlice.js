@@ -23,6 +23,11 @@ const appSlice = createSlice({
             state.singleProduct_EXTERNAL = product;
         },
 
+        setCart: (state, action) => {
+            state.cart.checkoutProducts = action.payload.product.products
+            state.cart.totalProductPrice = action.payload.product.total_amount
+        },
+
         updateCart: (state, action) => {
             const { product, totalPrice } = action.payload;
             const index = state.cart.checkoutProducts.findIndex((item) => product.slug === item.slug);
@@ -61,7 +66,7 @@ const appSlice = createSlice({
     },
 });
 
-export const { setAllProduct_EXTERNAL, setSingleProduct_EXTERNAL } = appSlice.actions;
+export const { setAllProduct_EXTERNAL, setSingleProduct_EXTERNAL, setCart } = appSlice.actions;
 export default appSlice.reducer;
 
 export const selectAllProducts_EXTERNAL = (state) => state.App.allProducts_EXTERNAL;

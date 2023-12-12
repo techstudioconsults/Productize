@@ -30,7 +30,7 @@ export function App() {
         <Routes>
             {/* authentication */}
             <Route path={`/auth`} element={<Signup />} />
-            <Route path="/auth/login" element={<Login />} />  
+            <Route path="/auth/login" element={<Login />} />
             <Route path="/auth/fetching-data/:provider" element={<PreLoader />} />
             <Route path="/auth/forgot-password" element={<ForgotPassword />} />
             {/* <Route path="/auth/reset-password" element={<ResetPassword email={""} token={""} />} /> */}
@@ -52,7 +52,7 @@ export function App() {
                 <Route path="products/:productID" element={<DAshboardProductDetails />} />
                 <Route path="products/new" element={<NewProduct />} />
                 <Route path="orders" element={<Orders />}>
-                    <Route path="orderid" element={<DashboardOrderDetails />} />
+                    <Route path=":orderid" element={<DashboardOrderDetails />} />
                 </Route>
                 <Route path="analytics" element={<Orders />} />
                 <Route path="customers" element={<Customers />} />

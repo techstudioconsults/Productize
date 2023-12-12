@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { apiSlice } from "../apiSlice";
-import { setAllProduct_EXTERNAL, setSingleProduct_EXTERNAL } from "./appSlice";
+import { setAllProduct_EXTERNAL, setCart, setSingleProduct_EXTERNAL } from "./appSlice";
 
 //productize-api.techstudio.academy/api/products
 export const appApiSlice = apiSlice.injectEndpoints({
@@ -42,6 +42,47 @@ export const appApiSlice = apiSlice.injectEndpoints({
                 }
             },
         }),
+        addToCart: builder.mutation({
+            query: (credentials) => ({
+                // generate a random token value instead of using a hardcoded string
+                url: `/carts`,
+                method: "POST",
+                body: { ...credentials },
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    console.log(data);
+                    // dispatch(
+                    //     setCart({
+                    //         product: data.data,
+                    //     })
+                    // );
+                } catch (error) {
+                    return error;
+                }
+            },
+        }),
+        getFromCart: builder.mutation({
+            query: (credentials) => ({
+                // generate a random token value instead of using a hardcoded string
+                url: `/carts`,
+                method: "GET",
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    console.log(data);
+                    dispatch(
+                        setCart({
+                            product: data.data,
+                        })
+                    );
+                } catch (error) {
+                    return error;
+                }
+            },
+        }),
         purchaseProduct: builder.mutation({
             query: (credentials) => ({
                 // generate a random token value instead of using a hardcoded string
@@ -66,4 +107,4 @@ export const appApiSlice = apiSlice.injectEndpoints({
     }),
 });
 
-export const { useGetAllProducts_EXTERNALMutation, useGetSingleProduct_EXTERNALMutation, usePurchaseProductMutation } = appApiSlice;
+export const { useGetAllProducts_EXTERNALMutation, useGetSingleProduct_EXTERNALMutation, usePurchaseProductMutation, useAddToCartMutation, useGetFromCartMutation } = appApiSlice;

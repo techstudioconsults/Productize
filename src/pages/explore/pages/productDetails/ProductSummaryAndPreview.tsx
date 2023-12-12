@@ -11,7 +11,7 @@ import "swiper/css/pagination";
 
 // import required modules
 import { Pagination } from "swiper/modules";
-import { Avatar, Box, Divider, Flex, Image, ListItem, Text } from "@chakra-ui/react";
+import { Avatar, Box, Divider, Flex, Image, List, ListItem, Stack, Text } from "@chakra-ui/react";
 import { Icon } from "@iconify/react";
 import { selectSingleProduct_EXTERNAL } from "@productize-v1.0.0/modules/shared/redux";
 import { useSelector } from "react-redux";
@@ -105,9 +105,9 @@ const ProductSummaryAndPreview = () => {
                         <Divider />
                     </Box>
                     <Box>
-                        {features}
-                        {/* <List color={`grey.700`} as={Stack} gap={3}>
-                            <ListItem display={`flex`} alignItems={`flex-start`} gap={2}>
+                        <List color={`grey.700`} as={Stack} gap={3}>
+                            {features}
+                            {/* <ListItem display={`flex`} alignItems={`flex-start`} gap={2}>
                                 <Icon fontSize={`1.5rem`} icon={`gg:check`} />
                                 <Text>24 x 24px Pixel grid.</Text>
                             </ListItem>
@@ -122,8 +122,8 @@ const ProductSummaryAndPreview = () => {
                             <ListItem display={`flex`} alignItems={`flex-start`} gap={2}>
                                 <Icon fontSize={`1.5rem`} icon={`gg:check`} />
                                 <Text>Lifetime free updates.</Text>
-                            </ListItem>
-                        </List> */}
+                            </ListItem> */}
+                        </List>
                     </Box>
                 </Box>
                 <Box my={10}>

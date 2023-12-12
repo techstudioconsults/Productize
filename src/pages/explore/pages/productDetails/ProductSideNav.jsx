@@ -28,7 +28,7 @@ const ProductSideNav = () => {
     const dispatch = useDispatch();
     const formatCurrency = useCurrency();
 
-    const handleProductQuantity = (quantity: string) => {
+    const handleProductQuantity = (quantity) => {
         setTotalPrice(product.price * parseInt(quantity));
         setProductQuantity(parseInt(quantity));
     };

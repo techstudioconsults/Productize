@@ -1,15 +1,16 @@
 import { Box, Card, Flex, Image, SimpleGrid, Stack, Tag, Text, useToast } from "@chakra-ui/react";
 import { Icon } from "@iconify/react";
 import { useDate, useCurrency } from "@productize-v1.0.0/modules/shared/hooks";
-import { useGetSingleProductDetailsMutation, selectSingleProduct, selectAllCustomers } from "@productize-v1.0.0/modules/shared/redux";
+import { useGetSingleProductDetailsMutation, selectSingleProduct, selectAllCustomers, selectCurrentToken } from "@productize-v1.0.0/modules/shared/redux";
 import { SpinnerComponentSmall } from "@productize-v1.0.0/modules/shared/ui";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 // import rectangle from "@icons/Rectangle_ikpmwt.svg";
 import arrowLeft from "@icons/Property_2_Arrow-left_kafkjg.svg";
 import { CustomerDetailsTable } from "../../../lib/tables/CustomerDetailsTable";
 import { DataWidgetCard } from "../../../lib/DataWidgetCard";
+import axios from "axios";
 
 export const CustomersDetails = () => {
     const { productID } = useParams();
@@ -17,13 +18,36 @@ export const CustomersDetails = () => {
     const toast = useToast();
     const allCustomers = useSelector(selectAllCustomers);
     const [getSingleProduct, singleProductStatus] = useGetSingleProductDetailsMutation();
-    const product = useSelector(selectSingleProduct);
+    // const product = useSelector(selectSingleProduct);
     const formatDate = useDate();
     const formatCurrency = useCurrency();
+    const { customerID } = useParams();
+    const token = useSelector(selectCurrentToken);
+    const [singleCustomer, setSingleCustomer] = useState({});
+
+    const getSingleOrder = useCallback(async () => {
+        try {
+            const res = await axios.get(`https://productize-api.techstudio.academy/api/customers/${customerID}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            console.log(res);
+            if (res.status === 200) {
+                setSingleCustomer(res.data.data);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }, [customerID, token]);
+
+    useEffect(() => {
+        getSingleOrder();
+    }, [getSingleOrder]);
 
     // copy test to clipboard
     const copyTextToClipBoard = () => {
-        const textToCopy = product?.data?.[0];
+        const textToCopy = singleCustomer?.email;
         navigator.clipboard
             .writeText(textToCopy)
             .then(() => {
@@ -70,13 +94,13 @@ export const CustomersDetails = () => {
                         <Image src={arrowLeft} />
                     </Box>
                     <Text as={`h6`}>Customer Details</Text>
-                </Flex>=
+                </Flex>
             </Flex>
             {/* row 2 */}
             <Box mt={8} mb={4} color={`purple.300`}>
                 <SimpleGrid columns={{ base: 1, xl: 2 }} gap={5}>
                     <Box mt={8} mb={4} color={`purple.300`}>
-                        <Text as={`h6`}>{product?.title}</Text>
+                        <Text as={`h6`}>{singleCustomer?.title}</Text>
                         <Flex
                             flexDir={{ base: `column`, xl: `row` }}
                             borderBlock={`1px solid #EFEFEF`}
@@ -91,8 +115,8 @@ export const CustomersDetails = () => {
                                     <SpinnerComponentSmall size="sm" />
                                 ) : (
                                     <Flex gap={2} alignItems={`center`}>
-                                        <Link target="_blank" to={product?.data?.[0]}>
-                                            <Text>{product?.data?.[0].slice(0, 20)}...</Text>
+                                        <Link target="_blank" to={singleCustomer?.email}>
+                                            <Text>{singleCustomer?.email}</Text>
                                         </Link>
                                         <Box _hover={{ color: `purple.200` }}>
                                             <Icon cursor={`pointer`} onClick={copyTextToClipBoard} color="grey" icon={`ph:copy-simple-light`} />
@@ -102,21 +126,21 @@ export const CustomersDetails = () => {
                             </Stack>
                             <Stack gap={2}>
                                 <Text fontWeight={600}>Joined</Text>
-                                {singleProductStatus.isLoading ? <SpinnerComponentSmall size="sm" /> : <Text>{formatDate(product?.created_at)}</Text>}
+                                {singleProductStatus.isLoading ? <SpinnerComponentSmall size="sm" /> : <Text>{formatDate(singleCustomer?.created_at)}</Text>}
                             </Stack>
                         </Flex>
                         <SimpleGrid gap={4} columns={{ base: 1, md: 2 }}>
                             <Box>
-                                <DataWidgetCard showIcon={false} title={"Total Order"} value={3} />
+                                <DataWidgetCard showIcon={false} title={"Total Order"} value={singleCustomer.total_orders} />
                             </Box>
                             <Box>
-                                <DataWidgetCard showIcon={false} title={"Total Transaction"} value={`NGN 8,700.00`} />
+                                <DataWidgetCard showIcon={false} title={"Total Transaction"} value={formatCurrency(singleCustomer.total_transactions)} />
                             </Box>
                             <Box>
-                                <DataWidgetCard showIcon={false} title={"Free Products"} value={`2`} />
+                                <DataWidgetCard showIcon={false} title={"Free Products"} value={singleCustomer.free_products} />
                             </Box>
                             <Box>
-                                <DataWidgetCard showIcon={false} title={"Sale Products"} value={`1`} />
+                                <DataWidgetCard showIcon={false} title={"Sale Products"} value={singleCustomer.sale_products} />
                             </Box>
                         </SimpleGrid>
                     </Box>

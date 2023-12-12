@@ -21,20 +21,21 @@ const userPersistConfig = {
     storage,
 };
 
-const appPersistConfig = {
-    key: "user",
-    version: 1,
-    storage,
-};
+// const appPersistConfig = {
+//     key: "user",
+//     version: 1,
+//     storage,
+// };
 
 const authPersistedReducer = persistReducer(authPersistConfig, authReducer);
 const userPersistedReducer = persistReducer(userPersistConfig, userReducer);
-const appPersistedReducer = persistReducer(appPersistConfig, appReducer);
+// const appPersistedReducer = persistReducer(appPersistConfig, appReducer);
 
 export const store = configureStore({
     reducer: {
         [apiSlice.reducerPath]: apiSlice.reducer,
-        App: appPersistedReducer,
+        // App: appPersistedReducer,
+        App: appReducer,
         Auth: authPersistedReducer,
         User: userPersistedReducer,
         Products: productReducer,

@@ -54,7 +54,7 @@ export function App() {
                 <Route path="orders" element={<Orders />}>
                     <Route path=":orderid" element={<DashboardOrderDetails />} />
                 </Route>
-                <Route path="analytics" element={<Orders />} />
+                <Route path="analytics" element={<Analytics />} />
                 <Route path="customers" element={<Customers />} />
                 <Route path="customers/:customerID" element={<CustomersDetails />} />
                 <Route path="payouts" element={<Payouts />} />

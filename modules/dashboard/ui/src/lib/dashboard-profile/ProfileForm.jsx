@@ -19,7 +19,7 @@ import {
 } from "@chakra-ui/react";
 import { Icon } from "@iconify/react";
 import { useAxiosInstance, useSetPaymentPlan } from "@productize-v1.0.0/modules/shared/hooks";
-import { selectCurrentUser } from "@productize-v1.0.0/modules/shared/redux";
+import { selectCurrentUser, useGetUserMutation } from "@productize-v1.0.0/modules/shared/redux";
 import { SharedButton, ToastFeedback, UpgradePlanModal } from "@productize-v1.0.0/modules/shared/ui";
 import { useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -36,7 +36,7 @@ export const ProfileForm = () => {
     const { query, isLoading } = useAxiosInstance();
     const isPremium = useSetPaymentPlan();
     const { isOpen, onOpen, onClose } = useDisclosure();
-    // const [updateProfile, profileStatus] = useUpdateProfileMutation();
+    const [getUser] = useGetUserMutation();
     const fileInput = useRef(null);
     const imgRef = useRef(null);
     const {
@@ -59,10 +59,11 @@ export const ProfileForm = () => {
                         position: "top",
                         render: () => <ToastFeedback message={``} bgColor="green.100" title="Profile updated successfully" />,
                     });
-                    dispatch({
-                        type: "User/setUser",
-                        payload: { user: res.data.data },
-                    });
+                    // dispatch({
+                    //     type: "User/setUser",
+                    //     payload: { user: res.data.data },
+                    // });
+                    await getUser(null).unwrap();
                 }
             } catch (error) {
                 console.log(error);

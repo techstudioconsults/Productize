@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { SetupPaymentForm } from "@productize-v1.0.0/modules/dashboard/feature";
-import { useVerifyEmailMutation, selectCurrentUser } from "@productize-v1.0.0/modules/shared/redux";
+import { useVerifyEmailMutation, selectCurrentUser, useGetUserMutation } from "@productize-v1.0.0/modules/shared/redux";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { DashboardBanner } from "../../../lib/DashboardBanner";
@@ -23,6 +23,7 @@ import { Divider } from "rsuite";
 
 const OnBoardingPage = () => {
     const [verifyEmail, verifyEmailStatus] = useVerifyEmailMutation();
+    const [getUser] = useGetUserMutation();
     const { onOpen, onClose, isOpen } = useDisclosure();
     const user = useSelector(selectCurrentUser);
     const navigate = useNavigate();
@@ -38,6 +39,7 @@ const OnBoardingPage = () => {
                     render: () => <ToastFeedback message={`Check your email for our verification link`} title="Email sent successfully" />,
                 });
                 // write a dispatch hook here to update the user profie details for verified user email
+                await getUser(null).unwrap();
             }
         } catch (err) {
             console.log(err);

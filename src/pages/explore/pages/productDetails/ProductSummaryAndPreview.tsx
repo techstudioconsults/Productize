@@ -19,15 +19,15 @@ import { useSelector } from "react-redux";
 const ProductSummaryAndPreview = () => {
     const product = useSelector(selectSingleProduct_EXTERNAL);
 
-    // const coverPhoto = product?.cover_photos?.map((photo: string, index: number) => {
-    //     return (
-    //         <SwiperSlide key={index}>
-    //             <Box borderRadius={`8px`} overflow={`hidden`} height={`248px`}>
-    //                 <Image src={photo} alt="img" objectFit={`cover`} objectPosition={`center`} />
-    //             </Box>
-    //         </SwiperSlide>
-    //     );
-    // });
+    const coverPhoto = product?.cover_photos?.map((photo: string, index: number) => {
+        return (
+            <SwiperSlide key={index}>
+                <Box borderRadius={`8px`} overflow={`hidden`} height={`248px`}>
+                    <Image src={photo} alt="img" objectFit={`cover`} objectPosition={`center`} />
+                </Box>
+            </SwiperSlide>
+        );
+    });
 
     const features = product?.highlights?.map((highlight: string, index: number) => {
         return (
@@ -49,11 +49,12 @@ const ProductSummaryAndPreview = () => {
                 }}
                 modules={[Pagination]}
             >
-                <SwiperSlide>
+                {coverPhoto}
+                {/* <SwiperSlide>
                     <Box borderRadius={`8px`} overflow={`hidden`} height={`248px`}>
                         <Image src={product?.thumbnail} alt="img" />
                     </Box>
-                </SwiperSlide>
+                </SwiperSlide> */}
             </Swiper>
             {/* =================================================== */}
             <Box borderRadius={`8px`} border={`1px solid #CFCFD0`} p={5} my={4}>

@@ -48,7 +48,7 @@ export const ProductCard = ({ product }) => {
 export const ProductCards = () => {
     const cart = useSelector(selectCart);
     const formatCurrency = useCurrency();
-    const [addToCart] = useAddToCartMutation();
+   
     const [purchaseProduct, { isLoading }] = usePurchaseProductMutation();
 
     const checkoutProductList = cart?.checkoutProducts?.map((product) => {
@@ -84,37 +84,6 @@ export const ProductCards = () => {
             console.log(error);
         }
     };
-
-    // const saveCart = useCallback(async () => {
-    //     const checkoutProductFormat = cart?.checkoutProducts?.map((product) => {
-    //         return {
-    //             product_slug: product.slug,
-    //             quantity: product.quantity,
-    //         };
-    //     });
-
-    //     const checkout = {
-    //         // paystack uses kobo for amounts
-    //         total_amount: cart.totalProductPrice,
-    //         products: checkoutProductFormat,
-    //     };
-
-    //     try {
-    //         const res = await addToCart(checkout).unwrap();
-    //         console.log(res);
-    //         // if (res) {
-    //         //     window.location.href = res.authorization_url;
-    //         // }
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }, [addToCart, cart?.checkoutProducts, cart.totalProductPrice]);
-
-    // useEffect(() => {
-    //     saveCart();
-
-    //     console.log(`productcard`);
-    // }, [saveCart]);
 
     return (
         <Box borderRadius={`8px`} border={`1px solid #CFCFD0`} p={5}>

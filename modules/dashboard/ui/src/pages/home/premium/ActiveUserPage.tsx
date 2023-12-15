@@ -1,13 +1,23 @@
 import { Box, SimpleGrid, Text } from "@chakra-ui/react";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DataWidgetCard } from "../../../lib/DataWidgetCard";
 import { DashboardEmptyState } from "../../../lib/empty-states/DashboardEmptyState";
 import { DashboardTable } from "../../../lib/tables/DashboardTable";
 import { ProductsTableControl } from "../../../lib/tables/tableControls/ProductsTableControl";
+import { selectProductAnalytics, useGetProductAnalyticsMutation } from "@productize-v1.0.0/modules/shared/redux";
+import { useSelector } from "react-redux";
+import { useCurrency } from "@productize-v1.0.0/modules/shared/hooks";
 
 const ActiveUserPage = () => {
-    const [emptyState, setEmptyState] = useState(false);
+    const [emptyState] = useState(false);
+    const [getProductAnaysis] = useGetProductAnalyticsMutation();
+    const formatCurrency = useCurrency();
+    const productAnaysis = useSelector(selectProductAnalytics);
+
+    useEffect(() => {
+        getProductAnaysis(null).unwrap();
+    }, [getProductAnaysis]);
 
     return (
         <Box my={8}>
@@ -23,7 +33,7 @@ const ActiveUserPage = () => {
                             showIcon
                             bgImg="https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951020/productize/Data_widget_1_bqcsji_dvrrm5.png"
                             title={"Total Sales"}
-                            value={"NGN 0.00"}
+                            value={formatCurrency(productAnaysis.total_sales)}
                         />
                     </Box>
                     <Box>
@@ -33,19 +43,19 @@ const ActiveUserPage = () => {
                             showIcon
                             bgImg="https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951021/productize/Data_widget_2_fwd9pa_nhxqwd.png"
                             title={"Total Revenue"}
-                            value={"NGN 0.00"}
+                            value={formatCurrency(productAnaysis.total_revenues)}
                         />
                     </Box>
                 </SimpleGrid>
                 <SimpleGrid gap={4} my={4} columns={{ base: 1, md: 3 }}>
                     <Box>
-                        <DataWidgetCard showIcon={false} title={"New Order"} value={0} />
+                        <DataWidgetCard showIcon={false} title={"New Order"} value={formatCurrency(productAnaysis.new_orders)} />
                     </Box>
                     <Box>
-                        <DataWidgetCard showIcon={false} title={"New Order Revenue"} value={"NGN 0.00"} />
+                        <DataWidgetCard showIcon={false} title={"New Order Revenue"} value={formatCurrency(productAnaysis.new_orders_revenue)} />
                     </Box>
                     <Box>
-                        <DataWidgetCard showIcon={false} title={"Total Products"} value={0} />
+                        <DataWidgetCard showIcon={false} title={"Total Products"} value={formatCurrency(productAnaysis.total_products)} />
                     </Box>
                 </SimpleGrid>
             </Box>

@@ -1,4 +1,5 @@
 import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Avatar, Text } from "@chakra-ui/react";
+import { useCurrency, useDate } from "@productize-v1.0.0/modules/shared/hooks";
 import { selectCurrentToken } from "@productize-v1.0.0/modules/shared/redux";
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
@@ -6,7 +7,9 @@ import { useSelector } from "react-redux";
 
 export const DashboardTable = () => {
     const [data, setData] = useState([]);
-        const token = useSelector(selectCurrentToken);
+    const token = useSelector(selectCurrentToken);
+    const formatCurrrency = useCurrency();
+    const formatDate = useDate();
 
     const tableHeader = [`Product`, `Price`, `Customer's Email`, `Date`].map((title) => {
         return (
@@ -15,9 +18,9 @@ export const DashboardTable = () => {
             </Th>
         );
     });
-    const tableContent = [1].map((content) => {
+    const tableContent = data?.data?.map((content) => {
         return (
-            <Tr key={content}>
+            <Tr key={content.id}>
                 <Td>
                     <Flex gap={2} alignItems={`center`}>
                         <Avatar
@@ -27,17 +30,17 @@ export const DashboardTable = () => {
                             borderRadius={`4px`}
                             boxSize={`44px`}
                         />
-                        <Text>UX Design Fundamentals</Text>
+                        <Text>{content?.product_title}</Text>
                     </Flex>
                 </Td>
                 <Td>
-                    <Flex>NGN 5.500</Flex>
+                    <Flex>{formatCurrrency(content?.product_price)}</Flex>
                 </Td>
                 <Td>
-                    <Flex>example@gmail.com</Flex>
+                    <Flex>{content?.email}</Flex>
                 </Td>
                 <Td>
-                    <Flex>15 May 2023 8:00 am</Flex>
+                    <Flex>{formatDate(content?.created_at)}</Flex>
                 </Td>
             </Tr>
         );
@@ -52,13 +55,13 @@ export const DashboardTable = () => {
                 },
             });
             console.log(res.data);
-            if(res.status === 200){
-              setData(res.data)
+            if (res.status === 200) {
+                setData(res.data);
             }
         } catch (error) {
             console.error(error);
         }
-    },[token])
+    }, [token]);
 
     useEffect(() => {
         getTableData();
@@ -71,7 +74,7 @@ export const DashboardTable = () => {
                 <Thead pos={`sticky`} top={0}>
                     <Tr bgColor={`purple.100`} color={`grey.300`}>
                         {tableHeader}
-                    </Tr> 
+                    </Tr>
                 </Thead>
                 {/* body */}
                 <Tbody color={`purple.300`}>{tableContent}</Tbody>

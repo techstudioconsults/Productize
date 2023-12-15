@@ -8,9 +8,8 @@ import { selectProductAnalytics, useGetProductAnalyticsMutation } from "@product
 import { useCurrency } from "@productize-v1.0.0/modules/shared/hooks";
 import { useSelector } from "react-redux";
 import { DashboardEmptyState } from "../../lib/empty-states/DashboardEmptyState";
-import { DashboardTable } from "../../lib/tables/DashboardTable";
+
 import { AnalyticsTable } from "./AnalyticsTable";
-import { SelectPicker } from "rsuite";
 
 export const Analytics = () => {
     const [status, setStatus] = useState(``);
@@ -31,6 +30,7 @@ export const Analytics = () => {
     const handleStatusChange = (value) => {
         setStatus(value.toLowerCase());
     };
+
     return (
         <Box my={8}>
             {/* dropdown filters and buttons Controls */}
@@ -54,7 +54,7 @@ export const Analytics = () => {
                         <DataWidgetCard showIcon={false} title={"New Order Revenue"} value={formatCurrency(productAnaysis.new_orders_revenue)} />
                     </Box>
                     <Box>
-                        <DataWidgetCard showIcon={false} title={"Total Products"} value={formatCurrency(productAnaysis.total_products)} />
+                        <DataWidgetCard showIcon={false} title={"Total Products"} value={productAnaysis.total_products} />
                     </Box>
                 </SimpleGrid>
             </Box>

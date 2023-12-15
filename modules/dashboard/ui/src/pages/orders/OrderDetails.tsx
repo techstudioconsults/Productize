@@ -16,7 +16,7 @@ export const OrderDetails = () => {
     const [singleOrder, setSingleOrder] = useState({});
     const fontStyle = {
         color: "purple.300",
-        fontWeight: 500,
+        fontWeight: 600,
         fontSize: "18px",
     };
 
@@ -56,7 +56,7 @@ export const OrderDetails = () => {
                     templateColumns="repeat(12, 1fr)"
                     p="12px"
                     alignItems="center"
-                    color="grey.500"
+                    color="grey.600"
                     lineHeight="24px"
                     borderBottom="2px"
                     borderColor="grey.200"
@@ -86,41 +86,41 @@ export const OrderDetails = () => {
                 {/* <Box borderBottom="2px" borderColor="grey.200" w='full'/> */}
                 <Grid templateColumns="repeat(12, 1fr)" p="12px" alignItems="center" mt="16px" gap="16px">
                     <GridItem colSpan={{ base: 12, md: 3 }} mb="16px" border="1px solid #F3F3F3" rounded="8px">
-                        <Stack spacing="10px" direction="column" color="purple.300" p="16px">
+                        <Stack h={`98px`} spacing="10px" direction="column" color="purple.300" p="16px">
                             <Text fontSize="16px" lineHeight="24px" fontWeight="400">
                                 Viewed
                             </Text>
-                            <Text fontWeight="500" fontSize="24px" lineHeight="32px">
+                            <Text fontWeight="600" fontSize="24px" lineHeight="32px">
                                 {singleOrder?.total_views}
                             </Text>
                         </Stack>
                     </GridItem>
                     <GridItem colSpan={{ base: 12, md: 3 }} mb="16px" border="1px solid #F3F3F3" rounded="8px">
-                        <Stack spacing="10px" direction="column" color="purple.300" p="16px">
+                        <Stack h={`98px`} spacing="10px" direction="column" color="purple.300" p="16px">
                             <Text fontSize="16px" lineHeight="24px" fontWeight="400">
                                 Total Order
                             </Text>
-                            <Text fontWeight="500" fontSize="24px" lineHeight="32px">
+                            <Text fontWeight="600" fontSize="24px" lineHeight="32px">
                                 {singleOrder?.total_order}
                             </Text>
                         </Stack>
                     </GridItem>
                     <GridItem colSpan={{ base: 12, md: 3 }} mb="16px" border="1px solid #F3F3F3" rounded="8px">
-                        <Stack spacing="10px" direction="column" color="purple.300" p="16px">
+                        <Stack h={`98px`} spacing="10px" direction="column" color="purple.300" p="16px">
                             <Text fontSize="16px" lineHeight="24px" fontWeight="400">
                                 Total Sales
                             </Text>
-                            <Text fontWeight="500" fontSize="24px" lineHeight="32px">
+                            <Text fontWeight="600" fontSize="24px" lineHeight="32px">
                                 {formatCurrency(singleOrder?.total_sales)}
                             </Text>
                         </Stack>
                     </GridItem>
                     <GridItem colSpan={{ base: 12, md: 3 }} mb="16px" border="1px solid #F3F3F3" rounded="8px">
-                        <Stack spacing="10px" direction="column" color="purple.300" p="16px">
+                        <Stack h={`98px`} spacing="10px" direction="column" color="purple.300" p="16px">
                             <Text fontSize="16px" lineHeight="24px" fontWeight="400">
                                 Total Value
                             </Text>
-                            <Text fontWeight="500" fontSize="24px" lineHeight="32px">
+                            <Text fontWeight="600" fontSize="24px" lineHeight="32px">
                                 NGN 8,700.00
                             </Text>
                         </Stack>

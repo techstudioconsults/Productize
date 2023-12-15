@@ -1,4 +1,4 @@
-import { Box, Flex, Image, Link, Stack, Text } from "@chakra-ui/react";
+import { Badge, Box, Center, Flex, Image, Link, Stack, Text } from "@chakra-ui/react";
 import { Icon } from "@iconify/react";
 import { Icon as IconSet, PaymentStatusTag } from "@productize-v1.0.0/modules/shared/ui";
 import { NavLink, Outlet, Link as ReactLink } from "react-router-dom";
@@ -23,9 +23,22 @@ export const DashboardLayout = () => {
                     justifyContent={`space-between`}
                     w={`100%`}
                 >
-                    <Flex gap={2} alignItems={`center`}>
-                        <IconSet icon={link.icon} name={link.name} size={`24px`} />
-                        <Text>{link?.name}</Text>
+                    <Flex w={`100%`} gap={2} alignItems={`center`} justifyContent={`space-between`}>
+                        <Flex gap={2} alignItems={`center`}>
+                            <IconSet icon={link.icon} name={link.name} size={`24px`} />
+                            <Text>{link?.name}</Text>
+                        </Flex>
+                        <Center
+                            display={link?.analysis ? `flex` : `none`}
+                            w={`1.5rem`}
+                            h={`1.5rem`}
+                            fontSize={`0.8rem`}
+                            borderRadius={`100%`}
+                            color={`grey.100`}
+                            bg={`red.200`}
+                        >
+                            {link?.analysis}
+                        </Center>
                     </Flex>
 
                     <Box display={link.type ? `none` : `block`}>

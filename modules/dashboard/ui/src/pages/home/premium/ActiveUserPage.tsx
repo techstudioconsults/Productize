@@ -33,7 +33,8 @@ const ActiveUserPage = () => {
                             showIcon
                             bgImg="https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951020/productize/Data_widget_1_bqcsji_dvrrm5.png"
                             title={"Total Sales"}
-                            value={formatCurrency(productAnaysis.total_sales)}
+                            // value={formatCurrency(productAnaysis.total_sales)}
+                            value={productAnaysis.total_sales}
                         />
                     </Box>
                     <Box>
@@ -49,13 +50,18 @@ const ActiveUserPage = () => {
                 </SimpleGrid>
                 <SimpleGrid gap={4} my={4} columns={{ base: 1, md: 3 }}>
                     <Box>
-                        <DataWidgetCard showIcon={false} title={"New Order"} value={formatCurrency(productAnaysis.new_orders)} />
+                        <DataWidgetCard showIcon={false} title={"New Order"} value={productAnaysis.new_orders} />
                     </Box>
                     <Box>
                         <DataWidgetCard showIcon={false} title={"New Order Revenue"} value={formatCurrency(productAnaysis.new_orders_revenue)} />
                     </Box>
                     <Box>
-                        <DataWidgetCard showIcon={false} title={"Total Products"} value={formatCurrency(productAnaysis.total_products)} />
+                        <DataWidgetCard
+                            showIcon={false}
+                            title={"Total Products"}
+                            value={productAnaysis.total_products}
+                            // value={formatCurrency(productAnaysis.total_products)}
+                        />
                     </Box>
                 </SimpleGrid>
             </Box>

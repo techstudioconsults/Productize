@@ -22,6 +22,7 @@ import {
     Customers,
     Payouts,
     CustomersDetails,
+    Analytics,
 } from "@productize-v1.0.0/modules/dashboard/ui";
 // import { ResetPassword } from "modules/auth/ui/src/forms/ResetPassword";
 

@@ -1,14 +1,15 @@
-import { Box, Flex, FormControl, FormLabel, Input, Select, Text } from "@chakra-ui/react";
+import { Box, Flex, FormControl, FormLabel, Input, Select, Text, useToast } from "@chakra-ui/react";
 import React, { useCallback, useEffect, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { SharedButton } from "@productize-v1.0.0/modules/shared/ui";
+import { SharedButton, ToastFeedback } from "@productize-v1.0.0/modules/shared/ui";
 import { Divider } from "rsuite";
 import { useGetBankListMutation, useSetupPaymentAccountMutation } from "@productize-v1.0.0/modules/shared/redux";
 
 export const SetupPaymentForm = () => {
+     const toast = useToast();
     const [getBankList] = useGetBankListMutation();
-    const [setUpPayment] = useSetupPaymentAccountMutation();
+    const [setUpPayment, paymentStatus] = useSetupPaymentAccountMutation();
     const [bankList, setBankList] = useState([]);
     const [selectedOption, setSelectedOption] = useState({ value: "", text: "" });
     const {
@@ -51,6 +52,10 @@ export const SetupPaymentForm = () => {
             const res = await setUpPayment(paymentDetails).unwrap();
             if (res.status === 200) {
                 console.log(res);
+                  toast({
+                      position: "top",
+                      render: () => <ToastFeedback message={`Payment profile setup successfully`} bgColor="green.100" title="Paystack Setup" />,
+                  });
             }
         } catch (error) {
             console.log(error);
@@ -83,7 +88,7 @@ export const SetupPaymentForm = () => {
             </FormControl>
             <FormControl mb={6}>
                 <FormLabel fontWeight={600} className="btn-text">
-                    Bankai
+                    Bank
                 </FormLabel>
                 <Select
                     onChange={handleDropdownChange}
@@ -121,8 +126,6 @@ export const SetupPaymentForm = () => {
                 <Box flex={1}>
                     <SharedButton
                         btnExtras={{
-                            loadingText: "Logging in...",
-                            // isLoading: loginStatus.isLoading,
                             border: `1px solid #6D5DD3`,
                         }}
                         text={"Cancel"}
@@ -137,8 +140,8 @@ export const SetupPaymentForm = () => {
                 <Box flex={1}>
                     <SharedButton
                         btnExtras={{
-                            loadingText: "Logging in...",
-                            // isLoading: loginStatus.isLoading,
+                            loadingText: " please wait...",
+                            isLoading: paymentStatus.isLoading,
                             type: `submit`,
                         }}
                         text={"Save changes"}

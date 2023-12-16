@@ -1,5 +1,5 @@
 import { useSetPaymentPlan } from "@productize-v1.0.0/modules/shared/hooks";
-import { selectCurrentUser } from "@productize-v1.0.0/modules/shared/redux";
+import { selectCurrentUser, selectProductAnalytics } from "@productize-v1.0.0/modules/shared/redux";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import download from "@icons/Property_2_Downloads-folder_zb8tdq.svg";
@@ -19,11 +19,14 @@ interface link {
     path: string;
     type: boolean;
     icon: string;
+    analysis: string | number;
 }
 
 export const useLinks = () => {
     const isPremium = useSetPaymentPlan();
     const user = useSelector(selectCurrentUser);
+    const productAnaysis = useSelector(selectProductAnalytics);
+    console.log(productAnaysis);
 
     const [links1, setLinks1] = useState<Array<link>>();
     const [links2] = useState([
@@ -74,37 +77,42 @@ export const useLinks = () => {
                 path: `products#all-products`,
                 type: isPremium,
                 icon: product,
+                analysis: productAnaysis.total_products,
             },
             {
                 id: 3,
                 name: `Orders`,
                 path: `orders`,
+                analysis: productAnaysis.new_orders,
                 type: isPremium,
                 icon: order,
             },
             {
                 id: 4,
-                name: `Analytics`,
-                path: `analytics`,
-                type: isPremium,
-                icon: analysis
-            },
-            {
-                id: 5,
                 name: `Customers`,
                 path: `customers`,
                 type: isPremium,
                 icon: consumer,
+                analysis: productAnaysis.total_customers,
             },
             {
-                id: 6,
+                id: 5,
                 name: `Payouts`,
                 path: `payouts`,
                 type: isPremium,
                 icon: payment,
+                analysis: null,
+            },
+            {
+                id: 6,
+                name: `Analytics`,
+                path: `analytics`,
+                type: isPremium,
+                icon: analysis,
+                analysis: null,
             },
         ]);
-    }, [isPremium]);
+    }, [isPremium, productAnaysis.new_orders, productAnaysis.total_customers, productAnaysis.total_products]);
 
     return { links1, links2, links3 };
 };

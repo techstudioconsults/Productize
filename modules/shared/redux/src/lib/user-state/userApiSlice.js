@@ -110,5 +110,11 @@ export const userApiSlice = apiSlice.injectEndpoints({
     }),
 });
 
-export const { useUpgradePlanMutation, useVerifyEmailMutation, useUpdateProfileMutation, useSetupPaymentAccountMutation, useGetBankListMutation } =
-    userApiSlice;
+export const {
+    useGetUserMutation,
+    useUpgradePlanMutation,
+    useVerifyEmailMutation,
+    useUpdateProfileMutation,
+    useSetupPaymentAccountMutation,
+    useGetBankListMutation,
+} = userApiSlice;

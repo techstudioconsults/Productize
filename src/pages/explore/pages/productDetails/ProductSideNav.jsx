@@ -15,13 +15,15 @@ import {
 } from "@chakra-ui/react";
 import { Icon } from "@iconify/react";
 import { useCurrency } from "@productize-v1.0.0/modules/shared/hooks";
-import { selectSingleProduct_EXTERNAL } from "@productize-v1.0.0/modules/shared/redux";
+import { selectCart, selectSingleProduct_EXTERNAL, useAddToCartMutation } from "@productize-v1.0.0/modules/shared/redux";
 import { SharedButton } from "@productize-v1.0.0/modules/shared/ui";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const ProductSideNav = () => {
+    const cart = useSelector(selectCart);
+     const [addToCart] = useAddToCartMutation();
     const product = useSelector(selectSingleProduct_EXTERNAL);
     const [totalPrice, setTotalPrice] = useState(0);
     const [productQuantity, setProductQuantity] = useState(1);
@@ -33,7 +35,63 @@ const ProductSideNav = () => {
         setProductQuantity(parseInt(quantity));
     };
 
-    const addToCart = () => {
+    // const saveCart = useCallback(async () => {
+    //     const checkoutProductFormat = cart?.checkoutProducts?.map((product) => {
+    //         return {
+    //             product_slug: product.slug,
+    //             quantity: product.quantity,
+    //         };
+    //     });
+
+    //     const checkout = {
+    //         // paystack uses kobo for amounts
+    //         total_amount: cart.totalProductPrice,
+    //         products: checkoutProductFormat,
+    //     };
+
+    //     try {
+    //         const res = await addToCart(checkout).unwrap();
+    //         console.log(res);
+    //         // if (res) {
+    //         //     window.location.href = res.authorization_url;
+    //         // }
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }, [addToCart, cart?.checkoutProducts, cart.totalProductPrice]);
+
+    // useEffect(() => {
+    //     saveCart();
+
+    //     console.log(`productcard`);
+    // }, [saveCart]);
+
+    const saveToCartMemo = async () => {
+        const checkoutProductFormat = cart?.checkoutProducts?.map((product) => {
+            return {
+                product_slug: product.slug,
+                quantity: product.quantity,
+            };
+        });
+
+        const checkout = {
+            // paystack uses kobo for amounts
+            total_amount: cart.totalProductPrice,
+            products: checkoutProductFormat,
+        };
+
+        try {
+            const res = await addToCart(checkout).unwrap();
+            console.log(res);
+            // if (res) {
+            //     window.location.href = res.authorization_url;
+            // }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const sendToCart = () => {
         const modifiedProduct = {
             ...product,
             quantity: productQuantity,
@@ -81,13 +139,14 @@ const ProductSideNav = () => {
                             borderRadius={"4px"}
                             fontSize={{ base: `sm`, xl: `md` }}
                             btnExtras={{
-                                onClick: addToCart,
+                                onClick: sendToCart,
                             }}
                         />
                         <Link to={`/explore/product/cart`}>
                             <SharedButton
                                 btnExtras={{
                                     border: "1px solid #6D5DD3",
+                                    onClick: saveToCartMemo,
                                 }}
                                 text={"Buy Now"}
                                 width={`100%`}

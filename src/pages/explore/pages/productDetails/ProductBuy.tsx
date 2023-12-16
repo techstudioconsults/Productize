@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+// import { useCallback, useEffect } from "react";
 import { ProductCards } from "./ProductCard";
 // import ProductCardDetailsInput from './ProductCardDetailsInput';
 import ProductNavbar from "./ProductNavbar";
@@ -7,7 +7,7 @@ import { useTokenExists } from "@productize-v1.0.0/modules/shared/hooks";
 import { TwoColumnLayout } from "../../layouts/TwoColumnLayout";
 import arrowLeft from "@icons/Property_2_Arrow-left_kafkjg.svg";
 import { useNavigate } from "react-router-dom";
-import { useGetFromCartMutation } from "@productize-v1.0.0/modules/shared/redux";
+// import { useGetFromCartMutation } from "@productize-v1.0.0/modules/shared/redux";
 
 const ProductBuy = () => {
     const navigate = useNavigate();

@@ -1,33 +1,12 @@
-import { Box } from '@chakra-ui/react';
-import React from 'react';
-import { DashboardBanner } from '../../lib/DashboardBanner';
-import { EmptyState } from '../../lib/empty-states/EmptyState';
+import { useSetPaymentPlan } from "@productize-v1.0.0/modules/shared/hooks";
+import PayoutFreeView from "./free/PayoutFreeView";
+import { Box } from "@chakra-ui/react";
+import PremiumLayout from "./layout/PremiumLayout";
 
 export const Payouts = () => {
-  return (
-    <Box>
-      <Box my={8}>
-        <DashboardBanner
-          padding={{ base: 4, md: 8 }}
-          img={`https://res.cloudinary.com/dkszgtapy/image/upload/v1693134664/productize/Layer_1_3_hn7gd9.png `}
-          bgImg={``}
-          title={'Grow communities and get paid.'}
-          desc={'Make as much as ₦10,000 sale for your first withdraw'}
-          px={8}
-        />
-      </Box>
-      <Box>
-        <EmptyState
-          content={{
-            title: 'Upgrade your plan to create a plan',
-            desc: 'Lorem ipsum dolor sit amet consectetur. Nec accumsan amet amet velit. Aliquam dictum id pellentesque aenean turpis nisl. Quam etiam.',
-            img: `https://res.cloudinary.com/dkszgtapy/image/upload/v1696068934/productize/Illustration_3_g5iwpj.png`,
-          }}
-          textAlign={{ base: `center`, md: `start` }}
-          showImage={true}
-          maxW="100%"
-        />
-      </Box>
-    </Box>
-  );
+    const isPremium = useSetPaymentPlan();
+
+    const state = isPremium ? <PremiumLayout /> : <PayoutFreeView />;
+
+    return <Box my={4}>{state}</Box>;
 };

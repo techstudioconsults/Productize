@@ -14,3 +14,4 @@ export * from "./pages/Download/Download";
 export * from "./lib/UploadExternalFiles";
 export * from "./pages/customers/premium/CustomerDetails";
 export * from "./lib/UploadExternalFiles";
+export * from "./pages/payouts/premium/PayoutDetails";

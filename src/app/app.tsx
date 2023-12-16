@@ -25,6 +25,7 @@ import {
     Analytics,
     Help,
     Download,
+    PayoutDetails,
 } from "@productize-v1.0.0/modules/dashboard/ui";
 // import { ResetPassword } from "modules/auth/ui/src/forms/ResetPassword";
 
@@ -57,10 +58,15 @@ export function App() {
                 <Route path="orders" element={<Orders />}>
                     <Route path=":orderid" element={<DashboardOrderDetails />} />
                 </Route>
-                <Route path="analytics" element={<Analytics />} />
-                <Route path="customers" element={<Customers />} />
-                <Route path="customers/:customerID" element={<CustomersDetails />} />
+
                 <Route path="payouts" element={<Payouts />} />
+                <Route path="payouts/:payoutid" element={<PayoutDetails />} />
+
+                <Route path="analytics" element={<Analytics />} />
+
+                <Route path="customers" element={<Customers />}></Route>
+                <Route path="customers/:customerID" element={<CustomersDetails />} />
+
                 <Route path="profile/:userID" element={<Profile />} />
                 <Route path="help" element={<Help />} />
                 <Route path="downloads" element={<Download />} />

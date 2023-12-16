@@ -9,6 +9,7 @@ export * from "./pages/customers";
 export * from "./pages/payouts";
 export * from "./pages/profile";
 export * from "./pages/analytics/Analytics";
+export * from "./pages/help/Help";
 export * from "./lib/UploadExternalFiles";
 export * from "./pages/customers/premium/CustomerDetails";
 export * from "./lib/UploadExternalFiles";

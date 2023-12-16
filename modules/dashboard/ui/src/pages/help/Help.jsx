@@ -18,7 +18,7 @@ import { SharedButton } from "@productize-v1.0.0/modules/shared/ui";
 
 export const Help = () => {
     return (
-        <Box maxW={900} my={10}>
+        <Box maxW={1200} my={10}>
             <FormControl as={`form`}>
                 {/* grid one */}
                 <Grid templateColumns="repeat(12, 1fr)" gap={6}>
@@ -63,7 +63,7 @@ export const Help = () => {
                             Contact Support
                         </Text>
                     </GridItem>
-                    <GridItem colSpan={{ base: 12, md: 7 }}>
+                    <GridItem mr={{ xxl: `15rem` }} colSpan={{ base: 12, md: 7 }}>
                         <Box mb={4}>
                             <FormControl>
                                 <FormLabel color={`purple.300`} fontWeight={600}>

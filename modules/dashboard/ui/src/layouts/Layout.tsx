@@ -1,4 +1,4 @@
-import { Badge, Box, Center, Flex, Image, Link, Stack, Text } from "@chakra-ui/react";
+import { Badge, Box, Center, Container, Flex, Image, Link, Stack, Text } from "@chakra-ui/react";
 import { Icon } from "@iconify/react";
 import { Icon as IconSet, PaymentStatusTag } from "@productize-v1.0.0/modules/shared/ui";
 import { NavLink, Outlet, Link as ReactLink } from "react-router-dom";
@@ -150,7 +150,9 @@ export const DashboardLayout = () => {
 
             <Flex py={4} px={{ base: 4, md: 8 }} flexDir={`column`} w={`100%`}>
                 <DashboardNavbar />
-                <Outlet />
+                <Container p={0} maxW={1220}>
+                    <Outlet />
+                </Container>
             </Flex>
         </Flex>
     );

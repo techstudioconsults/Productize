@@ -26,6 +26,7 @@ import {
     Help,
     Download,
     PayoutDetails,
+    WithdrawalEarnings,
 } from "@productize-v1.0.0/modules/dashboard/ui";
 // import { ResetPassword } from "modules/auth/ui/src/forms/ResetPassword";
 
@@ -61,6 +62,7 @@ export function App() {
 
                 <Route path="payouts" element={<Payouts />} />
                 <Route path="payouts/:payoutid" element={<PayoutDetails />} />
+                <Route path="payouts/:payoutid/withdraw-earnings" element={<WithdrawalEarnings />} />
 
                 <Route path="analytics" element={<Analytics />} />
 

@@ -1,7 +1,7 @@
-import { Avatar, Box, Flex, Grid, GridItem, Heading, Stack, Tag, Text } from "@chakra-ui/react";
+import { Avatar, Box, Flex, Grid, GridItem, Heading, Link, Stack, Tag, Text } from "@chakra-ui/react";
 import { Icon } from "@iconify/react";
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 
 export const PayoutDetails = () => {
     const navigate = useNavigate();
@@ -24,10 +24,14 @@ export const PayoutDetails = () => {
                     borderColor="grey.200"
                 >
                     <GridItem colSpan={{ base: 12, md: 4 }} mb="16px">
-                        <Stack spacing="10px" direction="column" color="purple.300" lineHeight="24px" fontWeight="400" fontSize="16px">
-                            <Text>Withdraw Earnings</Text>
-                            <Text as={`h5`} fontWeight={600}>155,000.00</Text>
-                        </Stack>
+                        <Link w={`fit-content`} as={RouterLink} to={`/dashboard/payouts/${`38y23862938`}/withdraw-earnings`}>
+                            <Stack spacing="10px" direction="column" color="purple.300" lineHeight="24px" fontWeight="400" fontSize="16px">
+                                <Text>Withdraw Earnings</Text>
+                                <Text as={`h5`} fontWeight={600}>
+                                    155,000.00
+                                </Text>
+                            </Stack>
+                        </Link>
                     </GridItem>
                     <GridItem colSpan={{ base: 12, md: 8 }} mb="16px">
                         <Stack spacing="10px" direction="column" color="purple.300" lineHeight="24px" fontWeight="400" fontSize="16px">

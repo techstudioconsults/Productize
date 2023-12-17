@@ -199,13 +199,13 @@ export const ProductDetails = () => {
             <Box>
                 <SimpleGrid gap={4} columns={{ base: 1, md: 3 }}>
                     <Box>
-                        <DataWidgetCard showIcon={false} title={"Viewed"} value={12} />
+                        <DataWidgetCard showIcon={false} title={"Viewed"} value={0} />
                     </Box>
                     <Box>
-                        <DataWidgetCard showIcon={false} title={"Total Order"} value={3} />
+                        <DataWidgetCard showIcon={false} title={"Total Order"} value={product?.total_order} />
                     </Box>
                     <Box>
-                        <DataWidgetCard showIcon={false} title={"Total Sales"} value={`NGN 26,100.00`} />
+                        <DataWidgetCard showIcon={false} title={"Total Sales"} value={`NGN00.00`} />
                     </Box>
                 </SimpleGrid>
                 <Box mt={8}>

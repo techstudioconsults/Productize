@@ -77,7 +77,44 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 }
             },
         }),
+
+        setupPaymentAccount: builder.mutation({
+            query: (credentials) => ({
+                url: `/payments/account`,
+                method: "POST",
+                body: { ...credentials },
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    console.log(data);
+                } catch (err) {
+                    console.log(err);
+                }
+            },
+        }),
+
+        getBankList: builder.mutation({
+            query: () => ({
+                url: `/payments/bank-list`,
+                method: "GET",
+            }),
+            // async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+            //     try {
+            //         const { data } = await queryFulfilled;
+            //     } catch (err) {
+            //         console.log(err);
+            //     }
+            // },
+        }),
     }),
 });
 
-export const { useUpgradePlanMutation, useVerifyEmailMutation, useUpdateProfileMutation } = userApiSlice;
+export const {
+    useGetUserMutation,
+    useUpgradePlanMutation,
+    useVerifyEmailMutation,
+    useUpdateProfileMutation,
+    useSetupPaymentAccountMutation,
+    useGetBankListMutation,
+} = userApiSlice;

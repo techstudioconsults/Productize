@@ -1,6 +1,6 @@
 import { Box, Center, Checkbox, Flex, Image, Text, useDisclosure } from "@chakra-ui/react";
 import { BtnExtras, SharedButton, UpgradePlanModal } from "@productize-v1.0.0/modules/shared/ui";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 // import { useDispatch } from 'react-redux';
 
 interface DashboardRadioProp {

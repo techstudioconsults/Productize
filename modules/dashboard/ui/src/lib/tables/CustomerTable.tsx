@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/rules-of-hooks */
-import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Avatar, Text, Stack, Checkbox, Box, Tag } from "@chakra-ui/react";
-import { Icon } from "@iconify/react";
-import { DropdownActionDelete, DropdownActionDraft, DropdownActionLive } from "../DropdownAction";
+import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Text, Stack, Box} from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";

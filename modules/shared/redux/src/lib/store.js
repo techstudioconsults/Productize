@@ -1,6 +1,7 @@
 // app/store.ts
 import authReducer from "./auth-state/authSlice";
 import userReducer from "./user-state/userSlice";
+import appReducer from "./external-view-state/appSlice";
 import customersReducer from "./customers-state/customersSlice";
 import productReducer from "./products-state/productsSlice";
 import { configureStore } from "@reduxjs/toolkit";
@@ -20,12 +21,21 @@ const userPersistConfig = {
     storage,
 };
 
+// const appPersistConfig = {
+//     key: "user",
+//     version: 1,
+//     storage,
+// };
+
 const authPersistedReducer = persistReducer(authPersistConfig, authReducer);
 const userPersistedReducer = persistReducer(userPersistConfig, userReducer);
+// const appPersistedReducer = persistReducer(appPersistConfig, appReducer);
 
 export const store = configureStore({
     reducer: {
         [apiSlice.reducerPath]: apiSlice.reducer,
+        // App: appPersistedReducer,
+        App: appReducer,
         Auth: authPersistedReducer,
         User: userPersistedReducer,
         Products: productReducer,
@@ -35,6 +45,7 @@ export const store = configureStore({
         getDefaultMiddleware({
             serializableCheck: false,
         }).concat(apiSlice.middleware),
+
     // devTools: process.env.NODE_ENV !== 'production',
 });
 

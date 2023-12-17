@@ -1,17 +1,19 @@
-import { useSelector } from "react-redux";
 import FirstSalePage from "./premium/FirstSalePage";
 import OnBoardingPage from "./free/OnBoardingPage";
 import ActiveUserPage from "./premium/ActiveUserPage";
-import { selectTaskCompletedCount } from "@productize-v1.0.0/modules/shared/redux";
+import { useStepGuide } from "@productize-v1.0.0/modules/shared/hooks";
 
 export const Home = () => {
-    const taskCount = useSelector(selectTaskCompletedCount);
+    const totalSteps = useStepGuide();
 
-    if (taskCount >= 3 && taskCount !== 5) {
-        return <FirstSalePage />;
-    } else if (taskCount < 3) {
+    if (totalSteps >= 3 && totalSteps !== 5) {
+        // return <FirstSalePage />;
+        return <ActiveUserPage />;
+    } else if (totalSteps < 3) {
         return <OnBoardingPage />;
     }
 
+    // return <FirstSalePage />;
+    // return <OnBoardingPage />;
     return <ActiveUserPage />;
 };

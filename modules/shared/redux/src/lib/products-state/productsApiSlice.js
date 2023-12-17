@@ -1,14 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { apiSlice } from "../apiSlice";
-import {
-    setAllProduct,
-    setAllProduct_EXTERNAL,
-    setDeletedProduct,
-    setDraftProduct,
-    setLiveProduct,
-    setProductsAnalytics,
-    setSingleProduct,
-} from "./productsSlice";
+import { setAllProduct, setDeletedProduct, setDraftProduct, setLiveProduct, setProductsAnalytics, setSingleProduct } from "./productsSlice";
 
 //productize-api.techstudio.academy/api/products
 export const productsApiSlice = apiSlice.injectEndpoints({
@@ -119,6 +111,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
+                    console.log(data);
                     dispatch(
                         setSingleProduct({
                             product: data,
@@ -159,28 +152,6 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                 method: "GET",
             }),
         }),
-
-        // ======================================================
-        // EXTERNAL PROUCT API (TESTING)
-        // ======================================================
-        getAllProducts_EXTERNAL: builder.mutation({
-            query: (credentials) => ({
-                url: `/products`,
-                method: "GET",
-            }),
-            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-                try {
-                    const { data } = await queryFulfilled;
-                    dispatch(
-                        setAllProduct_EXTERNAL({
-                            products: data.data,
-                        })
-                    );
-                } catch (error) {
-                    return error;
-                }
-            },
-        }),
     }),
 });
 
@@ -196,5 +167,4 @@ export const {
     useDeleteProductPermanentlyMutation,
     useRestoreSoftDeletedProductMutation,
     useDownloadProductsListMutation,
-    useGetAllProducts_EXTERNALMutation,
 } = productsApiSlice;

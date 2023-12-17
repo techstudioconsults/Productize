@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     profile: null,
-    guideTaskCompleted: 0,
+    // guideTaskCompleted: 0,
 };
 
 const userSlice = createSlice({
@@ -11,18 +11,17 @@ const userSlice = createSlice({
     reducers: {
         setUser: (state, action) => {
             const { user } = action.payload;
-
             state.profile = user;
         },
-        setTaskCount: (state, action) => {
-            if (action.payload) {
-                if (state.guideTaskCompleted !== 5) {
-                    state.guideTaskCompleted++;
-                }
-            } else {
-                state.guideTaskCompleted = 0;
-            }
-        },
+        // setTaskCount: (state, action) => {
+        //     if (action.payload) {
+        //         if (state.guideTaskCompleted !== 5) {
+        //             state.guideTaskCompleted = 4;
+        //         }
+        //     } else {
+        //         state.guideTaskCompleted = 0;
+        //     }
+        // },
 
         resetUserStore: (state) => {
             Object.assign(state, initialState);
@@ -30,7 +29,7 @@ const userSlice = createSlice({
     },
 });
 
-export const { setUser, setTaskCount, resetUserStore } = userSlice.actions;
+export const { setUser, resetUserStore } = userSlice.actions;
 
 export default userSlice.reducer;
 

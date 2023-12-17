@@ -8,7 +8,7 @@ import { ForgotPassword, Login, Signup } from "@productize-v1.0.0/modules/auth/u
 import { PreLoader } from "@productize-v1.0.0/modules/shared/ui";
 import ExploreIndex from "../pages/explore/pages/explore";
 import ExploreDesign from "../pages/explore/pages/explore/categories/design";
-import ProductBuy from "../pages/explore/pages/productDetails/ProductBuy";
+import Cart from "../pages/explore/pages/productDetails/ProductBuy";
 import ProductDetails from "../pages/explore/pages/productDetails/ProductDetails";
 import {
     DashboardLayout,
@@ -22,6 +22,11 @@ import {
     Customers,
     Payouts,
     CustomersDetails,
+    Analytics,
+    Help,
+    Download,
+    PayoutDetails,
+    WithdrawalEarnings,
 } from "@productize-v1.0.0/modules/dashboard/ui";
 // import { ResetPassword } from "modules/auth/ui/src/forms/ResetPassword";
 
@@ -41,8 +46,8 @@ export function App() {
             <Route path="/pricing" element={<Pricing />} />
             <Route path={`/explore`} element={<ExploreIndex />} />
             <Route path="/explore/design" element={<ExploreDesign />} />
-            <Route path="/explore/product/details" element={<ProductDetails />} />
-            <Route path="/explore/product/buy" element={<ProductBuy />} />
+            <Route path="/explore/product/details/:productID" element={<ProductDetails />} />
+            <Route path="/explore/product/cart" element={<Cart />} />
             <Route path="*" element={<h1>PAGE NOT FOUND</h1>} />
 
             {/* dashboard */}
@@ -52,13 +57,21 @@ export function App() {
                 <Route path="products/:productID" element={<DAshboardProductDetails />} />
                 <Route path="products/new" element={<NewProduct />} />
                 <Route path="orders" element={<Orders />}>
-                    <Route path="orderid" element={<DashboardOrderDetails />} />
+                    <Route path=":orderid" element={<DashboardOrderDetails />} />
                 </Route>
-                <Route path="analytics" element={<Orders />} />
-                <Route path="customers" element={<Customers />} />
-                <Route path="customers/:customerID" element={<CustomersDetails />} />
+
                 <Route path="payouts" element={<Payouts />} />
+                <Route path="payouts/:payoutid" element={<PayoutDetails />} />
+                <Route path="payouts/:payoutid/withdraw-earnings" element={<WithdrawalEarnings />} />
+
+                <Route path="analytics" element={<Analytics />} />
+
+                <Route path="customers" element={<Customers />}></Route>
+                <Route path="customers/:customerID" element={<CustomersDetails />} />
+
                 <Route path="profile/:userID" element={<Profile />} />
+                <Route path="help" element={<Help />} />
+                <Route path="downloads" element={<Download />} />
             </Route>
         </Routes>
     );

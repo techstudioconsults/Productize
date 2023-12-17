@@ -4,10 +4,11 @@ interface toastProps {
     title?: string;
     message: string;
     bgColor?: string;
+    color?: string;
     icon?: string;
 }
 
-export const ToastFeedback = ({ title, message, icon, bgColor }: toastProps) => {
+export const ToastFeedback = ({ title, message, icon, bgColor, color }: toastProps) => {
     return (
         <Card display={`flex`} flexDir={`row`} alignItems={`center`} w={{ base: `100%`, lg: `702px` }} p={1} bg={bgColor || `grey.100`}>
             <Box borderRight={`1px solid green`} p={2}>
@@ -20,7 +21,7 @@ export const ToastFeedback = ({ title, message, icon, bgColor }: toastProps) => 
             </Box>
             <Box p={2}>
                 <Text fontWeight={600}>{title || `Congratulations!`}</Text>
-                <Text className="small-text" color={`grey.400`}>
+                <Text className="small-text" color={color || `grey.400`}>
                     {message}
                 </Text>
             </Box>

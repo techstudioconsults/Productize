@@ -6,11 +6,13 @@ const AccountSettings = () => {
     const [showResetPasswordView, setShowResetPassword] = useState(true);
 
     const handleShowResetPasswordView = () => {
-        setShowResetPassword((prevState) => {
-            prevState = !prevState;
-        });
-        console.log(showResetPasswordView);
+        if (showResetPasswordView) {
+            setShowResetPassword(false);
+        } else {
+            setShowResetPassword(true);
+        }
     };
+
     return (
         <div>
             <FormControl as={`form`}>
@@ -69,6 +71,7 @@ const AccountSettings = () => {
                                 <Switch size="lg" colorScheme="green" />
                             </Flex>
                         </FormControl>
+                        <Divider my={4} />
                     </GridItem>
                 </Grid>
                 {/* grid two */}
@@ -83,7 +86,7 @@ const AccountSettings = () => {
                             <Box>
                                 <FormLabel display={`flex`} alignItems={`center`} justifyContent={`space-between`} className="small-text">
                                     <Text fontWeight={600}>Password</Text>
-                                    <Text onClick={() => setShowResetPassword(false)} color={`purple.200`} fontSize={`sm`}>
+                                    <Text onClick={handleShowResetPasswordView} color={`purple.200`} fontSize={`sm`}>
                                         Change password
                                     </Text>
                                 </FormLabel>
@@ -159,7 +162,7 @@ const AccountSettings = () => {
                                     <SharedButton
                                         btnExtras={{
                                             border: "1px solid #6D5DD3",
-                                            onClick: () => setShowResetPassword(false),
+                                            onClick: handleShowResetPasswordView,
                                         }}
                                         text={"Cancel"}
                                         width={"fit-content"}
@@ -204,6 +207,7 @@ const AccountSettings = () => {
                                     <Flex gap={10}>
                                         <Input
                                             // required
+                                            id={`email`}
                                             bgColor={`grey.200`}
                                             _focus={{ bgColor: `grey.300`, color: `grey.800` }}
                                             _placeholder={{ color: `grey.400` }}
@@ -223,6 +227,7 @@ const AccountSettings = () => {
                                     <Flex gap={10}>
                                         <Input
                                             // required
+                                            id={`alt-email`}
                                             bgColor={`grey.200`}
                                             _focus={{ bgColor: `grey.300`, color: `grey.800` }}
                                             _placeholder={{ color: `grey.400` }}
@@ -246,7 +251,7 @@ const AccountSettings = () => {
                         </Text>
                     </GridItem>
                     <GridItem colSpan={{ base: 12, md: 7 }}>
-                        <Flex alignItems={`center`} mt={4}>
+                        <Flex flexDir={{ base: `column`, lg: `row` }} alignItems={`center`} mt={4}>
                             <Box>
                                 <Text fontSize={`lg`} fontWeight={600}>
                                     Current Account

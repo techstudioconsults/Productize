@@ -6,14 +6,18 @@ import { useStepGuide } from "@productize-v1.0.0/modules/shared/hooks";
 export const Home = () => {
     const totalSteps = useStepGuide();
 
-    if (totalSteps >= 3 && totalSteps !== 5) {
+    if (totalSteps >= 4) {
         // return <FirstSalePage />;
         return <ActiveUserPage />;
-    } else if (totalSteps < 3) {
+    } else if (totalSteps < 4) {
         return <OnBoardingPage />;
     }
 
-    // return <FirstSalePage />;
-    // return <OnBoardingPage />;
-    return <ActiveUserPage />;
+    // return (
+    //     <>
+    //         {/* <OnBoardingPage />; */}
+    //         <FirstSalePage />;
+    //         {/* <ActiveUserPage />; */}
+    //     </>
+    // );
 };

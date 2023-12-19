@@ -16,3 +16,4 @@ export * from "./pages/customers/premium/CustomerDetails";
 export * from "./lib/UploadExternalFiles";
 export * from "./pages/payouts/premium/PayoutDetails";
 export * from "./pages/payouts/premium/WithdrawalEarnings";
+export * from "./pages/settings";

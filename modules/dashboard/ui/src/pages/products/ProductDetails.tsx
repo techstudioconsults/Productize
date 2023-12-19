@@ -205,7 +205,7 @@ export const ProductDetails = () => {
                         <DataWidgetCard showIcon={false} title={"Total Order"} value={product?.total_order} />
                     </Box>
                     <Box>
-                        <DataWidgetCard showIcon={false} title={"Total Sales"} value={`NGN00.00`} />
+                        <DataWidgetCard showIcon={false} title={"Total Sales"} value={formatCurrency(product.total_sales)} />
                     </Box>
                 </SimpleGrid>
                 <Box mt={8}>

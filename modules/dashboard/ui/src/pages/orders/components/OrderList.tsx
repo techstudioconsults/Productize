@@ -39,11 +39,11 @@ export const OrderList = ({ tableData }: tableProps) => {
             <Tr _hover={{ bgColor: `purple.100`, cursor: `pointer` }} onClick={() => navigate(`/dashboard/orders/${customer.id}`)} key={customer.id}>
                 <Td>
                     <Flex gap={2} alignItems={`center`}>
-                        <Avatar bgColor={`yellow.100`} src={customer?.thumbnail} borderRadius={`8px`} w={`100px`} h={`64px`} />
+                        <Avatar bgColor={`yellow.100`} src={customer?.product_thumbnail} borderRadius={`8px`} w={`100px`} h={`64px`} />
                         <Stack>
                             <Text>{customer?.product_title}</Text>
                             <Flex alignItems={`center`} color={`grey.400`}>
-                                <Text className="tiny-text">PDF - 5.5MB</Text>
+                                <Text className="tiny-text">{}</Text>
                             </Flex>
                         </Stack>
                     </Flex>
@@ -54,13 +54,13 @@ export const OrderList = ({ tableData }: tableProps) => {
                 <Td>
                     {/* if show sale count is true */}
                     <Flex flexDir={`column`} gap={2} py={2}>
-                        <Text>{customer?.email}</Text>
+                        <Text>{customer?.customer_email}</Text>
                     </Flex>
                 </Td>
                 <Td>
                     <Flex>{`
-                    ${formatDate(customer?.created_at)}
-                    ${formatTime(customer?.created_at)}
+                    ${formatDate(customer?.date)}
+                    ${formatTime(customer?.date)}
                     `}</Flex>
                 </Td>
             </Tr>

@@ -27,8 +27,8 @@ import {
     Download,
     PayoutDetails,
     WithdrawalEarnings,
+    Settings,
 } from "@productize-v1.0.0/modules/dashboard/ui";
-// import { ResetPassword } from "modules/auth/ui/src/forms/ResetPassword";
 
 export function App() {
     return (
@@ -72,6 +72,8 @@ export function App() {
                 <Route path="profile/:userID" element={<Profile />} />
                 <Route path="help" element={<Help />} />
                 <Route path="downloads" element={<Download />} />
+
+                <Route path="settings" element={<Settings />} />
             </Route>
         </Routes>
     );

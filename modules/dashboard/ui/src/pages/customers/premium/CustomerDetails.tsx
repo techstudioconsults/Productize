@@ -1,7 +1,7 @@
 import { Box, Card, Flex, Image, SimpleGrid, Stack, Tag, Text, useToast } from "@chakra-ui/react";
 import { Icon } from "@iconify/react";
 import { useDate, useCurrency } from "@productize-v1.0.0/modules/shared/hooks";
-import { useGetSingleProductDetailsMutation, selectSingleProduct, selectAllCustomers, selectCurrentToken } from "@productize-v1.0.0/modules/shared/redux";
+import { useGetSingleProductDetailsMutation, selectAllCustomers, selectCurrentToken } from "@productize-v1.0.0/modules/shared/redux";
 import { SpinnerComponentSmall } from "@productize-v1.0.0/modules/shared/ui";
 import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -16,7 +16,6 @@ export const CustomersDetails = () => {
     const { productID } = useParams();
     const navigate = useNavigate();
     const toast = useToast();
-    const allCustomers = useSelector(selectAllCustomers);
     const [getSingleProduct, singleProductStatus] = useGetSingleProductDetailsMutation();
     // const product = useSelector(selectSingleProduct);
     const formatDate = useDate();
@@ -126,12 +125,12 @@ export const CustomersDetails = () => {
                             </Stack>
                             <Stack gap={2}>
                                 <Text fontWeight={600}>Joined</Text>
-                                {singleProductStatus.isLoading ? <SpinnerComponentSmall size="sm" /> : <Text>{formatDate(singleCustomer?.created_at)}</Text>}
+                                {singleProductStatus.isLoading ? <SpinnerComponentSmall size="sm" /> : <Text>{formatDate(singleCustomer?.joined)}</Text>}
                             </Stack>
                         </Flex>
                         <SimpleGrid gap={4} columns={{ base: 1, md: 2 }}>
                             <Box>
-                                <DataWidgetCard showIcon={false} title={"Total Order"} value={singleCustomer.total_orders} />
+                                <DataWidgetCard showIcon={false} title={"Total Order"} value={singleCustomer.total_order} />
                             </Box>
                             <Box>
                                 <DataWidgetCard showIcon={false} title={"Total Transaction"} value={formatCurrency(singleCustomer.total_transactions)} />
@@ -145,7 +144,7 @@ export const CustomersDetails = () => {
                         </SimpleGrid>
                     </Box>
                     <Box>
-                        <CustomerDetailsTable tableData={allCustomers} />
+                        <CustomerDetailsTable tableData={singleCustomer?.latest_purchases} />
                     </Box>
                 </SimpleGrid>
             </Box>

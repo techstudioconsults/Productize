@@ -1,14 +1,14 @@
 import { Box, Flex, FormControl, FormLabel, Input, Select, Text, useToast } from "@chakra-ui/react";
 import React, { useCallback, useEffect, useState } from "react";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { SharedButton, ToastFeedback } from "@productize-v1.0.0/modules/shared/ui";
 import { Divider } from "rsuite";
-import { useGetBankListMutation, useSetupPaymentAccountMutation } from "@productize-v1.0.0/modules/shared/redux";
+import { useGetBankListMutation, useGetUserMutation, useSetupPaymentAccountMutation } from "@productize-v1.0.0/modules/shared/redux";
 
 export const SetupPaymentForm = () => {
-     const toast = useToast();
+    const toast = useToast();
     const [getBankList] = useGetBankListMutation();
+    const [getUser] = useGetUserMutation();
     const [setUpPayment, paymentStatus] = useSetupPaymentAccountMutation();
     const [bankList, setBankList] = useState([]);
     const [selectedOption, setSelectedOption] = useState({ value: "", text: "" });
@@ -50,15 +50,20 @@ export const SetupPaymentForm = () => {
         console.log(paymentDetails);
         try {
             const res = await setUpPayment(paymentDetails).unwrap();
-            if (res.status === 200) {
+            if (res.data) {
                 console.log(res);
-                  toast({
-                      position: "top",
-                      render: () => <ToastFeedback message={`Payment profile setup successfully`} bgColor="green.100" title="Paystack Setup" />,
-                  });
+                toast({
+                    position: "top",
+                    render: () => <ToastFeedback message={res.data?.message} bgColor="green.100" title="Paystack Setup" />,
+                });
+                 await getUser(null).unwrap();
             }
         } catch (error) {
             console.log(error);
+            toast({
+                position: "top",
+                render: () => <ToastFeedback message={error.data.message} color={`grey.700`} bgColor="yellow.100" title="Paystack Setup" />,
+            });
         }
     };
 

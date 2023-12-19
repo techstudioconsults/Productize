@@ -19,11 +19,13 @@ import { useSelector } from "react-redux";
 const ProductSummaryAndPreview = () => {
     const product = useSelector(selectSingleProduct_EXTERNAL);
 
+    console.log(product);
+
     const coverPhoto = product?.cover_photos?.map((photo: string, index: number) => {
         return (
             <SwiperSlide key={index}>
                 <Box borderRadius={`8px`} overflow={`hidden`} height={`248px`}>
-                    <Image src={photo} alt="img" objectFit={`cover`} objectPosition={`center`} />
+                    <Image src={photo} w={`100%`} h={`100%`} alt="img" objectFit={`cover`} objectPosition={`center`} />
                 </Box>
             </SwiperSlide>
         );
@@ -74,13 +76,13 @@ const ProductSummaryAndPreview = () => {
             </Box>
             {/* =================================================== */}
             <Box borderRadius={`8px`} border={`1px solid #CFCFD0`} p={5} my={4}>
-                <Box>
+                {/* <Box>
                     <Text fontWeight={600}>What you’ll get</Text>
                     <Box my={5}>
                         <Divider />
                     </Box>
                     <Box>
-                        {/* <List color={`grey.700`} as={Stack} gap={3}>
+                        <List color={`grey.700`} as={Stack} gap={3}>
                             <ListItem display={`flex`} alignItems={`flex-start`} gap={2}>
                                 <Icon fontSize={`1.5rem`} icon={`gg:check`} />
                                 <Text>5,400+ Icons (1,350+ icons × 4 styles).</Text>
@@ -97,9 +99,9 @@ const ProductSummaryAndPreview = () => {
                                 <Icon fontSize={`1.5rem`} icon={`gg:check`} />
                                 <Text>29 Popular categories.</Text>
                             </ListItem>
-                        </List> */}
+                        </List>
                     </Box>
-                </Box>
+                </Box> */}
                 <Box my={10}>
                     <Text fontWeight={600}>Features</Text>
                     <Box my={5}>

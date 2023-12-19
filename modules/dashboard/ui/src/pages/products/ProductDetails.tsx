@@ -15,6 +15,7 @@ import { DataWidgetCard } from "../../lib/DataWidgetCard";
 import { DashboardTable } from "../../lib/tables/DashboardTable";
 // import rectangle from "@icons/Rectangle_ikpmwt.svg";
 import arrowLeft from "@icons/Property_2_Arrow-left_kafkjg.svg";
+import { ProductCustomerTable } from "../../lib/tables/ProductCustomerTable";
 
 export const ProductDetails = () => {
     const { productID } = useParams();
@@ -209,7 +210,8 @@ export const ProductDetails = () => {
                     </Box>
                 </SimpleGrid>
                 <Box mt={8}>
-                    <DashboardTable />
+                    {/* <DashboardTable /> */}
+                    <ProductCustomerTable />
                 </Box>
             </Box>
         </Box>

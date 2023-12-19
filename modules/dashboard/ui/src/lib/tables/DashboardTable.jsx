@@ -5,6 +5,9 @@ import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
+
+// USE REDUX TO FETCH THE DATA -- DANIEL
+
 export const DashboardTable = () => {
     const [data, setData] = useState([]);
     const token = useSelector(selectCurrentToken);
@@ -26,7 +29,7 @@ export const DashboardTable = () => {
                         <Avatar
                             zIndex={-1}
                             bgColor={`yellow.100`}
-                            src="https://res.cloudinary.com/dkszgtapy/image/upload/v1692269980/learning_atvahc.gif"
+                            src={content.product_thumbnail}
                             borderRadius={`4px`}
                             boxSize={`44px`}
                         />
@@ -37,10 +40,10 @@ export const DashboardTable = () => {
                     <Flex>{formatCurrrency(content?.product_price)}</Flex>
                 </Td>
                 <Td>
-                    <Flex>{content?.email}</Flex>
+                    <Flex>{content?.customer_email}</Flex>
                 </Td>
                 <Td>
-                    <Flex>{formatDate(content?.created_at)}</Flex>
+                    <Flex>{formatDate(content?.date)}</Flex>
                 </Td>
             </Tr>
         );

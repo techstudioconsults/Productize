@@ -57,12 +57,12 @@ export const CustomerTable = ({ draft, live, deleted, tableData }: tableProps) =
                     </Flex>
                 </Td>
                 <Td>
-                    <Flex>{formatCurrency(customer.product_price)}</Flex>
+                    <Flex>{formatCurrency(customer.total_transactions)}</Flex>
                 </Td>
                 <Td>
                     <Flex>{`
-                    ${formatDate(customer?.created_at)}
-                    ${formatTime(customer?.created_at)}
+                    ${formatDate(customer?.latest_purchase_date)}
+                    ${formatTime(customer?.latest_purchase_date)}
                     `}</Flex>
                 </Td>
             </Tr>

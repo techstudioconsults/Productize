@@ -102,19 +102,6 @@ const OnBoardingPage = () => {
                 <Box>
                     <DashboardRadioBtnComp
                         isPremium={isPremium}
-                        isChecked={user?.first_product_created}
-                        title={"Create your first product"}
-                        subTitle={"Complete your profile to start getting your products published."}
-                        image={"https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951002/productize/Illustration_2_zibmgb_aun5ux.png"}
-                        btn={{
-                            onClick: () => navigate(`/dashboard/products/new#product-details`),
-                        }}
-                        btnText={"Create Product"}
-                    />
-                </Box>
-                <Box>
-                    <DashboardRadioBtnComp
-                        isPremium={isPremium}
                         isChecked={user?.payout_setup}
                         title={"Set up your payout account"}
                         subTitle={"Complete your profile to start getting your products published."}
@@ -136,6 +123,19 @@ const OnBoardingPage = () => {
                         </Box>
                         <SetupPaymentForm />
                     </ModalComp>
+                </Box>
+                <Box>
+                    <DashboardRadioBtnComp
+                        isPremium={isPremium}
+                        isChecked={user?.first_product_created}
+                        title={"Create your first product"}
+                        subTitle={"Complete your profile to start getting your products published."}
+                        image={"https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951002/productize/Illustration_2_zibmgb_aun5ux.png"}
+                        btn={{
+                            onClick: () => navigate(`/dashboard/products/new#product-details`),
+                        }}
+                        btnText={"Create Product"}
+                    />
                 </Box>
                 <Box>
                     <DashboardRadioBtnComp

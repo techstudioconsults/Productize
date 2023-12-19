@@ -1,14 +1,16 @@
-import { Badge, Box, Center, Container, Flex, Image, Link, Stack, Text } from "@chakra-ui/react";
+import { Box, Center, Container, Flex, Image, Link, Stack, Text } from "@chakra-ui/react";
 import { Icon } from "@iconify/react";
 import { Icon as IconSet, PaymentStatusTag } from "@productize-v1.0.0/modules/shared/ui";
 import { NavLink, Outlet, Link as ReactLink } from "react-router-dom";
 import style from "./navbar.module.scss";
 import { useLinks } from "../lib/links";
 import { DashboardNavbar } from "../lib/DashboardNavbar";
-import lock from "@icons/Property_2_Lock_xtdcwp.svg";
+import { useCallback, useEffect } from "react";
+import { useGetUserMutation } from "@productize-v1.0.0/modules/shared/redux";
 
 export const DashboardLayout = () => {
     const { links1, links2, links3 } = useLinks();
+    const [getUser] = useGetUserMutation();
 
     const navLink1 = links1?.map((link) => {
         return (
@@ -98,6 +100,14 @@ export const DashboardLayout = () => {
             </NavLink>
         );
     });
+
+    const setUser = useCallback(async () => {
+        await getUser(null).unwrap();
+    }, [getUser]);
+
+    useEffect(() => {
+        setUser();
+    }, [setUser]);
 
     return (
         <Flex>

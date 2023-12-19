@@ -64,7 +64,7 @@ export const OrderDetails = () => {
                     <GridItem colSpan={{ base: 12, md: 3 }} mb="16px">
                         <Stack spacing="10px" direction="column" color="purple.300" lineHeight="24px" fontWeight="400" fontSize="16px">
                             <Text>Publish Date</Text>
-                            <Text>{formatDate(singleOrder?.created_at)}</Text>
+                            <Text>{formatDate(singleOrder?.date)}</Text>
                         </Stack>
                     </GridItem>
                     <GridItem colSpan={{ base: 12, md: 3 }} mb="16px">
@@ -77,7 +77,7 @@ export const OrderDetails = () => {
                         <Stack spacing="10px" direction="column" color="purple.300" lineHeight="24px" fontWeight="400" fontSize="16px">
                             <Text>Product Link</Text>
                             <Flex align="center" gap="16px">
-                                <Text>UX Design Fundamentals.com</Text>
+                                <Text>{singleOrder?.link}</Text>
                                 <Icon icon="ph:copy-thin" style={{ cursor: "pointer" }} />
                             </Flex>
                         </Stack>
@@ -121,7 +121,7 @@ export const OrderDetails = () => {
                                 Total Value
                             </Text>
                             <Text fontWeight="600" fontSize="24px" lineHeight="32px">
-                                NGN 8,700.00
+                                {singleOrder?.total_value}
                             </Text>
                         </Stack>
                     </GridItem>

@@ -46,15 +46,15 @@ export const CustomerDetailsTable = ({ draft, live, deleted, tableData }: tableP
                     <Flex gap={2} alignItems={`center`}>
                         <Avatar
                             bgColor={`yellow.100`}
-                            src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951031/productize/Group_7_osmkqe_ojsekq.png`}
+                            src={customer.product_thumbnail}
                             borderRadius={`8px`}
                             w={`100px`}
                             h={`64px`}
                         />
                         <Stack>
-                            <Text>{`title`}</Text>
+                            <Text>{customer.product_title}</Text>
                             <Flex alignItems={`center`} color={`grey.400`}>
-                                <Text className="tiny-text">PDF - 5.5MB</Text>
+                                {/* <Text className="tiny-text">PDF - 5.5MB</Text> */}
                                 {/* <Icon className="large-text" icon={`mdi:dot`} /> */}
                                 {/* <Text className="tiny-text">{formatDate(null)}</Text>
                                 <Icon className="large-text" icon={`mdi:dot`} />
@@ -68,8 +68,8 @@ export const CustomerDetailsTable = ({ draft, live, deleted, tableData }: tableP
                 </Td>
                 <Td>
                     <Flex>{`
-                    ${formatDate(customer?.created_at)}
-                    ${formatTime(customer?.created_at)}
+                    ${formatDate(customer?.date)}
+                    ${formatTime(customer?.date)}
                     `}</Flex>
                 </Td>
             </Tr>

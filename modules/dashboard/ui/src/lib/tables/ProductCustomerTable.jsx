@@ -4,6 +4,7 @@ import { selectCurrentToken } from "@productize-v1.0.0/modules/shared/redux";
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 // USE REDUX TO FETCH THE DATA -- DANIEL
 
@@ -13,6 +14,7 @@ export const ProductCustomerTable = () => {
     // const formatCurrrency = useCurrency();
     const formatDate = useDate();
     const formatTime = useTime();
+    const { productID } = useParams();
 
     const tableHeader = [`Customer name`, `Customer Email`, `Quantity`, `Date`].map((title) => {
         return (
@@ -21,7 +23,7 @@ export const ProductCustomerTable = () => {
             </Th>
         );
     });
-    const tableContent = data?.data?.map((content) => {
+    const tableContent = data?.map((content) => {
         return (
             <Tr key={content.id}>
                 <Td>
@@ -56,12 +58,15 @@ export const ProductCustomerTable = () => {
             });
             console.log(res.data);
             if (res.status === 200) {
-                setData(res.data);
+                const filteredCustomer = res.data.data.filter((customer) => {
+                    return customer.product_id === productID;
+                });
+                setData(filteredCustomer);
             }
         } catch (error) {
             console.error(error);
         }
-    }, [token]);
+    }, [productID, token]);
 
     useEffect(() => {
         getTableData();

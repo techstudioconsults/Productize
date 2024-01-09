@@ -80,7 +80,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
 
         setupPaymentAccount: builder.mutation({
             query: (credentials) => ({
-                url: `/payments/account`,
+                url: `/payments/accounts`,
                 method: "POST",
                 body: { ...credentials },
             }),

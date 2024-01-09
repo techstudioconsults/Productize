@@ -1,5 +1,5 @@
-import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Avatar, Text } from "@chakra-ui/react";
-import { useCurrency, useDate, useTime } from "@productize-v1.0.0/modules/shared/hooks";
+import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Text } from "@chakra-ui/react";
+import { useDate, useTime } from "@productize-v1.0.0/modules/shared/hooks";
 import { selectCurrentToken } from "@productize-v1.0.0/modules/shared/redux";
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";

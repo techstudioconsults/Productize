@@ -8,6 +8,7 @@ import { ProductsTableControl } from "../../../lib/tables/tableControls/Products
 import { selectProductAnalytics, useGetProductAnalyticsMutation } from "@productize-v1.0.0/modules/shared/redux";
 import { useSelector } from "react-redux";
 import { useCurrency } from "@productize-v1.0.0/modules/shared/hooks";
+import { HomeFilterController } from "./components/HomeFilterController";
 
 const ActiveUserPage = () => {
     const [emptyState] = useState(false);
@@ -22,7 +23,7 @@ const ActiveUserPage = () => {
     return (
         <Box my={8}>
             {/* dropdown filters and buttons Controls */}
-            <ProductsTableControl showRefreshBtn />
+            <HomeFilterController showRefreshBtn />
             {/* grid cards */}
             <Box>
                 <SimpleGrid gap={4} my={4} columns={{ base: 1, md: 2 }}>

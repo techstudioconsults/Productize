@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Container, Flex, Link } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 import { Icon } from "@iconify/react";
-import Wrapper from "../Wrapper";
+import Wrapper from "../explore/Wrapper";
 import Links from "./NavigationLinks";
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { SearchComp, AvatarComp, SharedButton, Sidenav, Cart } from "@productize-v1.0.0/modules/shared/ui";

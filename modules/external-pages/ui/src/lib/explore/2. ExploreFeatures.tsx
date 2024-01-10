@@ -1,6 +1,6 @@
 import { Box, Container, Flex, Grid, Text } from "@chakra-ui/react";
 import React, { useState, useEffect, useCallback } from "react";
-import Card from "./Card";
+import Card from "../cards/Card";
 import { Icon } from "@iconify/react";
 import { useSelector } from "react-redux";
 import { selectAllProducts_EXTERNAL, useGetAllProducts_EXTERNALMutation } from "@productize-v1.0.0/modules/shared/redux";

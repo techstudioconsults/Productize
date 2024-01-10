@@ -1,5 +1,5 @@
 import React from "react";
-import { ExploreNavBar } from "./navbar/ExploreNavBar";
+import { ExploreNavBar } from "../../navbar/ExploreNavBar";
 import { useTokenExists } from "@productize-v1.0.0/modules/shared/hooks";
 
 type ExploreProps = {

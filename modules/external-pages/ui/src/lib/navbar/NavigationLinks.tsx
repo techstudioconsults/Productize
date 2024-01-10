@@ -9,8 +9,8 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { NavLink } from 'react-router-dom';
-import style from './navbar.module.scss';
-import { links } from './links';
+import style from './scss/navbar.module.scss';
+import { links } from './utils/links';
 import { Icon } from '@iconify/react';
 
 type SubLink = {

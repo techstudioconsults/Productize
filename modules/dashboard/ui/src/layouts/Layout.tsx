@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react";
 import { Icon as IconSet, PaymentStatusTag } from "@productize-v1.0.0/modules/shared/ui";
 import { NavLink, Outlet, Link as ReactLink } from "react-router-dom";
 import style from "./navbar.module.scss";
-import { useLinks } from "../lib/links";
+import { useLinks } from "../lib/utils/links";
 import { DashboardNavbar } from "../lib/DashboardNavbar";
 import { useCallback, useEffect } from "react";
 import { useGetUserMutation } from "@productize-v1.0.0/modules/shared/redux";

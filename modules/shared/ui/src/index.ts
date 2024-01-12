@@ -16,3 +16,4 @@ export * from "./lib/ErrorBoundary";
 export * from "./lib/PreviewProductSummary";
 export * from "./lib/ToastFeedback";
 export * from "./lib/Cart";
+export * from "./lib/layouts/CardLayout";

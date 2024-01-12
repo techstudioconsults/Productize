@@ -2,7 +2,10 @@ import React from "react";
 import DefaultLayout from "../../layouts/Layout";
 import { Box, Container, Image, Stack, Text, Highlight, Flex } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { DualSectionLayout, DualSectionLayoutList, Hero, SectionLayout, SharedSection } from "@productize-v1.0.0/modules/external-pages/ui";
+import { Hero } from "../../components/Hero";
+import { SectionLayout } from "../../components/section-layout/SectionLayout";
+import { DualSectionLayout, DualSectionLayoutList } from "../../components/section-layout/DualSectionLayout";
+import { SharedSection } from "../../components/section-layout/SharedSection";
 import { SharedButton } from "@productize-v1.0.0/modules/shared/ui";
 
 const Features: React.FC = () => {

@@ -15,13 +15,8 @@
         "skipDefaultLibCheck": true,
         "baseUrl": ".",
         "paths": {
-            "@productize-v1.0.0/modules/auth/services": ["modules/auth/services/src/index.ts"],
-            "@productize-v1.0.0/modules/auth/ui": ["modules/auth/ui/src/index.ts"],
-            "@productize-v1.0.0/modules/dashboard/feature": ["modules/dashboard/feature/src/index.ts"],
-            "@productize-v1.0.0/modules/dashboard/ui": ["modules/dashboard/ui/src/index.ts"],
-            "@productize-v1.0.0/modules/external-pages": ["modules/external-pages/src/index.ts"],
-            "@productize-v1.0.0/modules/external-pages/ui": ["modules/external-pages/ui/src/index.ts"],
-            "@productize-v1.0.0/modules/external-pages/ui,": ["modules/external-pages/ui,/src/index.ts"],
+            "@productize-v1.0.0/auth": ["modules/auth/src/index.ts"],
+            "@productize-v1.0.0/dashboard": ["modules/dashboard/src/index.ts"],
             "@productize-v1.0.0/modules/shared/hooks": ["modules/shared/hooks/src/index.ts"],
             "@productize-v1.0.0/modules/shared/redux": ["modules/shared/redux/src/index.ts"],
             "@productize-v1.0.0/modules/shared/ui": ["modules/shared/ui/src/index.ts"]

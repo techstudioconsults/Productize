@@ -3,13 +3,8 @@ import "../styles.scss";
 import { Route, Routes } from "react-router-dom";
 import { Home } from "../pages/home/Home";
 import Features from "../pages/features";
-import Pricing from "../pages/pricing";
-import { ForgotPassword, Login, Signup } from "@productize-v1.0.0/modules/auth/ui";
+import Pricing from "../pages/pricing/Pricing";
 import { PreLoader } from "@productize-v1.0.0/modules/shared/ui";
-import ExploreIndex from "../pages/explore/pages/explore";
-import ExploreDesign from "../pages/explore/pages/explore/categories/design";
-import Cart from "../pages/explore/pages/productDetails/ProductBuy";
-import ProductDetails from "../pages/explore/pages/productDetails/ProductDetails";
 import {
     DashboardLayout,
     Home as DashboardHome,
@@ -28,7 +23,12 @@ import {
     PayoutDetails,
     WithdrawalEarnings,
     Settings,
-} from "@productize-v1.0.0/modules/dashboard/ui";
+} from "@productize-v1.0.0/dashboard";
+import { ForgotPassword, Login, Signup } from "@productize-v1.0.0/auth";
+import Explore from "../pages/explore/views";
+import ProductDetails from "../pages/explore/views/productDetails/ProductDetails";
+import ProductCart from "../pages/explore/views/productDetails/ProductCart";
+
 
 export function App() {
     return (
@@ -44,10 +44,10 @@ export function App() {
             <Route index element={<Home />} />
             <Route path="/features" element={<Features />} />
             <Route path="/pricing" element={<Pricing />} />
-            <Route path={`/explore`} element={<ExploreIndex />} />
-            <Route path="/explore/design" element={<ExploreDesign />} />
+            <Route path={`/explore`} element={<Explore />} />
+            {/* <Route path="/explore/design" element={<ExploreDesign />} /> */}
             <Route path="/explore/product/details/:productID" element={<ProductDetails />} />
-            <Route path="/explore/product/cart" element={<Cart />} />
+            <Route path="/explore/product/cart" element={<ProductCart />} />
             <Route path="*" element={<h1>PAGE NOT FOUND</h1>} />
 
             {/* dashboard */}

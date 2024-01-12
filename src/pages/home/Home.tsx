@@ -11,8 +11,11 @@ import {
 } from '@chakra-ui/react';
 import DefaultLayout from '../../layouts/Layout';
 import { Link as RouterLink } from 'react-router-dom';
-import { SharedButton } from '@productize-v1.0.0/modules/shared/ui';
-import { CardLayout, DualSectionLayout, Hero, SectionLayout, SharedSection } from '@productize-v1.0.0/modules/external-pages/ui';
+import { CardLayout, SharedButton } from '@productize-v1.0.0/modules/shared/ui';
+import { Hero } from "../../components/Hero";
+import { SectionLayout } from '../../components/section-layout/SectionLayout';
+import { DualSectionLayout } from '../../components/section-layout/DualSectionLayout';
+import { SharedSection } from '../../components/section-layout/SharedSection';
 
 export const Home = () => {
   return (

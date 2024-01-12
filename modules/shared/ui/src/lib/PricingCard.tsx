@@ -3,7 +3,8 @@ import { Box, Flex, List, ListItem, Tag, Text } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
 import { SharedButton } from './SharedButton';
 import { usePlanUpgrade, useSetPaymentPlan } from '@productize-v1.0.0/modules/shared/hooks';
-import { CardLayout, cardProps } from '@productize-v1.0.0/modules/external-pages/ui';
+import { CardLayout, cardProps } from './layouts/CardLayout';
+// import { CardLayout, cardProps } from '@productize-v1.0.0/modules/external-pages/ui';
 
 
 export interface pricingCardProps {

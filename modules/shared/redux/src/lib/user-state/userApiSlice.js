@@ -107,6 +107,53 @@ export const userApiSlice = apiSlice.injectEndpoints({
             //     }
             // },
         }),
+
+        changePassword: builder.mutation({
+            query: (credentials) => ({
+                url: `/users/change-password`,
+                method: "POST",
+                body: { ...credentials },
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    console.log(data);
+                } catch (err) {
+                    console.log(err);
+                }
+            },
+        }),
+
+        sendHelpMessage: builder.mutation({
+            query: (credentials) => ({
+                url: `/users/request-help`,
+                method: "POST",
+                body: { ...credentials },
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    console.log(data);
+                } catch (err) {
+                    console.log(err);
+                }
+            },
+        }),
+
+        retrieveAllPayoutAccount: builder.mutation({
+            query: (credentials) => ({
+                url: `/payments/accounts`,
+                method: "GET",
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    console.log(data);
+                } catch (err) {
+                    console.log(err);
+                }
+            },
+        }),
     }),
 });
 
@@ -117,4 +164,7 @@ export const {
     useUpdateProfileMutation,
     useSetupPaymentAccountMutation,
     useGetBankListMutation,
+    useChangePasswordMutation,
+    useSendHelpMessageMutation,
+    useRetrieveAllPayoutAccountMutation,
 } = userApiSlice;

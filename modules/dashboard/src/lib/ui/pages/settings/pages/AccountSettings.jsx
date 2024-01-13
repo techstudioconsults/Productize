@@ -1,9 +1,16 @@
-import { Box, Divider, Flex, FormControl, FormLabel, Grid, GridItem, Input, Radio, Switch, Text } from "@chakra-ui/react";
-import { SharedButton } from "@productize-v1.0.0/modules/shared/ui";
+import { Box, Divider, Flex, FormControl, FormLabel, Grid, GridItem, Input, Radio, Switch, Text, useToast } from "@chakra-ui/react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { changePasswordSchema } from "@productize-v1.0.0/auth";
+import { useChangePasswordMutation } from "@productize-v1.0.0/modules/shared/redux";
+import { ErrorText, SharedButton, ToastFeedback } from "@productize-v1.0.0/modules/shared/ui";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 const AccountSettings = () => {
     const [showResetPasswordView, setShowResetPassword] = useState(true);
+    const [error, setError] = useState("");
+    const toast = useToast();
+    const [changePassword, changePasswordStatus] = useChangePasswordMutation();
 
     const handleShowResetPasswordView = () => {
         if (showResetPasswordView) {
@@ -13,9 +20,35 @@ const AccountSettings = () => {
         }
     };
 
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({
+        criteriaMode: "all",
+        mode: "onChange",
+        resolver: yupResolver(changePasswordSchema),
+    });
+
+    const handlePasswordChange = async (data) => {
+        try {
+            console.log(data);
+            const res = await changePassword(data).unwrap();
+            if (res) {
+                toast({
+                    position: "top",
+                    render: () => <ToastFeedback message={``} bgColor="green.100" title="Password changed successfully" />,
+                });
+            }
+        } catch (error) {
+            setError(error.data.message);
+            console.log(error);
+        }
+    };
+
     return (
         <div>
-            <FormControl as={`form`}>
+            <FormControl>
                 {/* grid one */}
                 <Grid templateColumns="repeat(12, 1fr)" gap={6}>
                     <GridItem colSpan={{ base: 12, md: 5 }}>
@@ -99,25 +132,25 @@ const AccountSettings = () => {
                         <Divider my={4} />
                     </GridItem>
                     <GridItem display={showResetPasswordView ? `none` : `grid`} colSpan={{ base: 12, md: 7 }}>
-                        <FormControl maxW={500} mt={4}>
+                        <FormControl as={`form`} onSubmit={handleSubmit(handlePasswordChange)} maxW={500} mt={4}>
                             <Box>
+                                {changePasswordStatus.isError && <ErrorText error={error} />}
                                 <FormControl>
                                     <FormLabel color={`purple.300`} fontWeight={600}>
                                         Current Password
                                     </FormLabel>
                                     <Input
-                                        // required
-                                        // defaultValue={`user?.name`}
+                                        type={`password`}
                                         bgColor={`grey.200`}
                                         _focus={{ bgColor: `grey.300`, color: `grey.800` }}
                                         _placeholder={{ color: `grey.400` }}
                                         placeholder="Enter current password"
                                         variant={`filled`}
                                         size={`lg`}
-                                        // {...register("full_name")}
+                                        {...register("password")}
                                     />
                                     <Text className={`tiny-text`} color={`red.200`}>
-                                        {/* {errors?.full_name?.message} */}
+                                        {errors?.password?.message}
                                     </Text>
                                 </FormControl>
                                 <FormControl my={5}>
@@ -125,18 +158,17 @@ const AccountSettings = () => {
                                         New Password
                                     </FormLabel>
                                     <Input
-                                        // required
-                                        // defaultValue={`user?.name`}
+                                        type={`password`}
                                         bgColor={`grey.200`}
                                         _focus={{ bgColor: `grey.300`, color: `grey.800` }}
                                         _placeholder={{ color: `grey.400` }}
                                         placeholder="Enter current password"
                                         variant={`filled`}
                                         size={`lg`}
-                                        // {...register("full_name")}
+                                        {...register("new_password")}
                                     />
                                     <Text className={`tiny-text`} color={`red.200`}>
-                                        {/* {errors?.full_name?.message} */}
+                                        {errors?.new_password?.message}
                                     </Text>
                                 </FormControl>
                                 <FormControl>
@@ -144,18 +176,17 @@ const AccountSettings = () => {
                                         Confirm New Password
                                     </FormLabel>
                                     <Input
-                                        // required
-                                        // defaultValue={`user?.name`}
+                                        type={`password`}
                                         bgColor={`grey.200`}
                                         _focus={{ bgColor: `grey.300`, color: `grey.800` }}
                                         _placeholder={{ color: `grey.400` }}
                                         placeholder="Enter current password"
                                         variant={`filled`}
                                         size={`lg`}
-                                        // {...register("full_name")}
+                                        {...register("new_password_confirmation")}
                                     />
                                     <Text className={`tiny-text`} color={`red.200`}>
-                                        {/* {errors?.full_name?.message} */}
+                                        {errors?.new_password_confirmation?.message}
                                     </Text>
                                 </FormControl>
                                 <Flex my={5} gap={2}>
@@ -173,6 +204,11 @@ const AccountSettings = () => {
                                         fontSize={{ base: `sm`, md: `md` }}
                                     />
                                     <SharedButton
+                                        btnExtras={{
+                                            loadingText: "Changing password...",
+                                            isLoading: changePasswordStatus.isLoading,
+                                            type: `submit`,
+                                        }}
                                         text={"Save Changes"}
                                         width={"fit-content"}
                                         height={"40px"}

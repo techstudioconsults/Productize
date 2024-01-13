@@ -14,12 +14,42 @@ import {
     Text,
     Textarea,
 } from "@chakra-ui/react";
-import { SharedButton } from "@productize-v1.0.0/modules/shared/ui";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { helpSchema } from "@productize-v1.0.0/auth";
+import { useSendHelpMessageMutation } from "@productize-v1.0.0/modules/shared/redux";
+import { ErrorText, SharedButton } from "@productize-v1.0.0/modules/shared/ui";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 export const Help = () => {
+    const [error, setError] = useState("");
+    const [sendHelpMessage, sendHelpMessageStatus] = useSendHelpMessageMutation();
+
+    const {
+        register,
+        handleSubmit,
+        control,
+        formState: { errors },
+    } = useForm({
+        criteriaMode: "all",
+        mode: "onChange",
+        resolver: yupResolver(helpSchema),
+    });
+
+    const onSubmit = async (data) => {
+        try {
+            console.log(data);
+            const res = await sendHelpMessage(data).unwrap();
+            console.log(res);
+        } catch (error) {
+            setError(error.data.message);
+            console.log(error);
+        }
+    };
+
     return (
         <Box maxW={1200} my={10}>
-            <FormControl as={`form`}>
+            <FormControl>
                 {/* grid one */}
                 <Grid templateColumns="repeat(12, 1fr)" gap={6}>
                     <GridItem colSpan={{ base: 12, md: 5 }}>
@@ -64,96 +94,93 @@ export const Help = () => {
                         </Text>
                     </GridItem>
                     <GridItem mr={{ xxl: `15rem` }} colSpan={{ base: 12, md: 7 }}>
-                        <Box mb={4}>
-                            <FormControl>
-                                <FormLabel color={`purple.300`} fontWeight={600}>
-                                    Your Email
-                                </FormLabel>
-                                <Input
-                                    // required
-                                    // defaultValue={`user?.name`}
-                                    bgColor={`grey.200`}
-                                    _focus={{ bgColor: `grey.300`, color: `grey.800` }}
-                                    _placeholder={{ color: `grey.400` }}
-                                    placeholder="Enter email"
-                                    variant={`filled`}
-                                    size={`lg`}
-                                    // {...register("full_name")}
+                        <FormControl as={`form`} onSubmit={handleSubmit(onSubmit)}>
+                            <Box mb={4}>
+                                {null && <ErrorText error={error} />}
+                                <FormControl>
+                                    <FormLabel color={`purple.300`} fontWeight={600}>
+                                        Your Email
+                                    </FormLabel>
+                                    <Input
+                                        bgColor={`grey.200`}
+                                        _focus={{ bgColor: `grey.300`, color: `grey.800` }}
+                                        _placeholder={{ color: `grey.400` }}
+                                        placeholder="Enter email"
+                                        variant={`filled`}
+                                        size={`lg`}
+                                    />
+                                    <Text className={`tiny-text`} color={`red.200`}>
+                                        {/* {errors?.full_name?.message} */}
+                                    </Text>
+                                </FormControl>
+                            </Box>
+                            <Box mb={4}>
+                                <FormControl>
+                                    <FormLabel color={`purple.300`} fontWeight={600}>
+                                        Your Subject
+                                    </FormLabel>
+                                    <Input
+                                        bgColor={`grey.200`}
+                                        _focus={{ bgColor: `grey.300`, color: `grey.800` }}
+                                        _placeholder={{ color: `grey.400` }}
+                                        placeholder="Type a subject for your message"
+                                        variant={`filled`}
+                                        size={`lg`}
+                                        {...register("subject")}
+                                    />
+                                    <Text className={`tiny-text`} color={`red.200`}>
+                                        {errors?.subject?.message}
+                                    </Text>
+                                </FormControl>
+                            </Box>
+                            <Box mb={4}>
+                                <FormControl>
+                                    <FormLabel color={`purple.300`} fontWeight={600}>
+                                        Message
+                                    </FormLabel>
+                                    <Textarea
+                                        height={`10rem`}
+                                        bgColor={`grey.200`}
+                                        _focus={{ bgColor: `grey.300`, color: `grey.800` }}
+                                        _placeholder={{ color: `grey.400` }}
+                                        variant={`filled`}
+                                        placeholder="Type your message"
+                                        {...register("message")}
+                                    />
+                                    <Text className={`tiny-text`} color={`red.200`}>
+                                        {errors?.message?.message}
+                                    </Text>
+                                </FormControl>
+                            </Box>
+                            <Flex gap={4} mt={6}>
+                                <SharedButton
+                                    btnExtras={{
+                                        border: "1px solid #6D5DD3",
+                                    }}
+                                    text={"Cancel"}
+                                    width={"fit-content"}
+                                    height={"40px"}
+                                    bgColor={"transparent"}
+                                    textColor={"purple.200"}
+                                    borderRadius={"4px"}
+                                    fontSize={{ base: `sm`, md: `md` }}
                                 />
-                                <Text className={`tiny-text`} color={`red.200`}>
-                                    {/* {errors?.full_name?.message} */}
-                                </Text>
-                            </FormControl>
-                        </Box>
-                        <Box mb={4}>
-                            <FormControl>
-                                <FormLabel color={`purple.300`} fontWeight={600}>
-                                    Your Subject
-                                </FormLabel>
-                                <Input
-                                    // required
-                                    defaultValue={`user?.name`}
-                                    bgColor={`grey.200`}
-                                    _focus={{ bgColor: `grey.300`, color: `grey.800` }}
-                                    _placeholder={{ color: `grey.400` }}
-                                    placeholder="Type a subject for your message"
-                                    variant={`filled`}
-                                    size={`lg`}
-                                    // {...register("full_name")}
+                                <SharedButton
+                                    btnExtras={{
+                                        isLoading: sendHelpMessageStatus.isLoading,
+                                        loadingText: `Sending message...`,
+                                        type: `submit`,
+                                    }}
+                                    text={"Send Message"}
+                                    width={"fit-content"}
+                                    height={"40px"}
+                                    bgColor={"purple.200"}
+                                    textColor={"grey.100"}
+                                    borderRadius={"4px"}
+                                    fontSize={{ base: `sm`, md: `md` }}
                                 />
-                                <Text className={`tiny-text`} color={`red.200`}>
-                                    {/* {errors?.full_name?.message} */}
-                                </Text>
-                            </FormControl>
-                        </Box>
-                        <Box mb={4}>
-                            <FormControl>
-                                <FormLabel color={`purple.300`} fontWeight={600}>
-                                    Message
-                                </FormLabel>
-                                <Textarea
-                                    // required
-                                    // defaultValue={user?.bio}
-                                    height={`10rem`}
-                                    bgColor={`grey.200`}
-                                    _focus={{ bgColor: `grey.300`, color: `grey.800` }}
-                                    _placeholder={{ color: `grey.400` }}
-                                    variant={`filled`}
-                                    placeholder="Type your message"
-                                    // {...register("bio")}
-                                />
-                            </FormControl>
-                        </Box>
-                        <Flex gap={4} mt={6}>
-                            <SharedButton
-                                btnExtras={{
-                                    border: "1px solid #6D5DD3",
-                                }}
-                                text={"Cancel"}
-                                width={"fit-content"}
-                                height={"40px"}
-                                bgColor={"transparent"}
-                                textColor={"purple.200"}
-                                borderRadius={"4px"}
-                                fontSize={{ base: `sm`, md: `md` }}
-                            />
-                            <SharedButton
-                                btnExtras={{
-                                    // isLoading: profileStatus.isLoading,
-                                    // isLoading: isLoading,
-                                    loadingText: `Saving Profile...`,
-                                    type: `submit`,
-                                    // rightIcon: isPremium ? `` : `foundation:lock`,
-                                }}
-                                text={"Send Message"}
-                                width={"fit-content"}
-                                height={"40px"}
-                                bgColor={"purple.200"}
-                                textColor={"grey.100"}
-                                borderRadius={"4px"}
-                                fontSize={{ base: `sm`, md: `md` }}
-                            />
-                        </Flex>
+                            </Flex>
+                        </FormControl>
                     </GridItem>
                 </Grid>
             </FormControl>

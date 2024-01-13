@@ -82,7 +82,6 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                 }
             },
         }),
-
         getProductAnalytics: builder.mutation({
             query: () => ({
                 url: `/products/analytics`,
@@ -102,7 +101,6 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                 }
             },
         }),
-
         getSingleProductDetails: builder.mutation({
             query: (credentials) => ({
                 url: `/products/${credentials?.productID}`,
@@ -152,6 +150,12 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                 method: "GET",
             }),
         }),
+        downloadedProducts: builder.mutation({
+            query: (credentials) => ({
+                url: `/products/downloads`,
+                method: "GET",
+            }),
+        }),
     }),
 });
 
@@ -167,4 +171,5 @@ export const {
     useDeleteProductPermanentlyMutation,
     useRestoreSoftDeletedProductMutation,
     useDownloadProductsListMutation,
+    useDownloadedProductsMutation,
 } = productsApiSlice;

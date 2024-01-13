@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react";
 import { useCurrency } from "@productize-v1.0.0/modules/shared/hooks";
 import React from "react";
 
-const DownloadCard = () => {
+const DownloadCard = ({ product }) => {
     const formatCurrency = useCurrency();
     return (
         <Card variant={`outline`} overflow={`hidden`} maxW={`266px`}>
@@ -12,23 +12,23 @@ const DownloadCard = () => {
                     w={`100%`}
                     h={`100%`}
                     objectFit="cover"
-                    src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1702731396/Images_j3apr5.png"
-                    alt="Chakra UI"
+                    src={product?.thumbnail}
+                    alt={product?.title}
                 />
             </Box>
             <CardBody p={3} pb={0}>
                 <Stack gap={1}>
                     <Text fontSize={{ base: `12px`, lg: `sm` }} fontWeight={700}>
-                        SUI Design Systems Mastery
+                        {product?.title}
                     </Text>
-                    <Text fontSize={{ base: `10px`, lg: `xs` }}>By Temilade Openiyi</Text>
+                    <Text fontSize={{ base: `10px`, lg: `xs` }}>{product?.publisher}</Text>
                 </Stack>
             </CardBody>
             <CardHeader p={3}>
                 <Flex>
                     <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
                         <Text fontWeight={700} color={`purple.200`}>
-                            {formatCurrency(3000)}
+                            {formatCurrency(product?.price)}
                         </Text>
                     </Flex>
                     {/* <IconButton variant="ghost" colorScheme="gray" aria-label="See menu" icon={<Icon icon={`pepicons-pop:dots-y`} />} /> */}
@@ -40,6 +40,7 @@ const DownloadCard = () => {
                             aria-label="Options"
                             icon={<Icon icon={`pepicons-pop:dots-y`} />}
                             variant="outlined"
+                            isDisabled
                         />
                         <MenuList zIndex={999}>
                             <MenuItem justifyContent={`flex-start`}>Share</MenuItem>

@@ -9,7 +9,7 @@ import { SectionLayout } from '../../components/section-layout/SectionLayout';
 import { AccordionComponent } from '../../components/Accordion';
 import { SharedSection } from '../../components/section-layout/SharedSection';
 
-const Pricing = () => {
+export const Pricing = () => {
   const isPremium = useSetPaymentPlan();
   return (
     <DefaultLayout>

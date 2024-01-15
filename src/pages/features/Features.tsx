@@ -8,7 +8,7 @@ import { DualSectionLayout, DualSectionLayoutList } from "../../components/secti
 import { SharedSection } from "../../components/section-layout/SharedSection";
 import { SharedButton } from "@productize-v1.0.0/modules/shared/ui";
 
-const Features: React.FC = () => {
+export const Features = () => {
     return (
         <DefaultLayout>
             <Hero height={{ base: `35rem`, xl: `39rem` }} bgImg={""} bgColor={"green.100"}>
@@ -157,4 +157,4 @@ const Features: React.FC = () => {
     );
 };
 
-export default Features;
+// export default Features;

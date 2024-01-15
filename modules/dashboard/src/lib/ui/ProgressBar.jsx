@@ -1,7 +1,7 @@
 import { Progress, Text } from "@chakra-ui/react";
 import { useStepGuide } from "@productize-v1.0.0/modules/shared/hooks";
 
-export const ProgressBar = () => {
+const ProgressBar = () => {
     const totalSteps = useStepGuide();
     return (
         <>
@@ -15,3 +15,5 @@ export const ProgressBar = () => {
         </>
     );
 };
+
+export default ProgressBar;

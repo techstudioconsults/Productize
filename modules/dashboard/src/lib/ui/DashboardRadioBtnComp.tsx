@@ -68,3 +68,6 @@ export const DashboardRadioBtnComp = ({ title, subTitle, image, btn, isChecked, 
         </Flex>
     );
 };
+
+
+export default DashboardRadioBtnComp;

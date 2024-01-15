@@ -4,7 +4,7 @@ import { ExploreBanner } from "../components/ExploreBanner";
 import { ExploreFeatures } from "../components/ExploreFeatures";
 import { ExploreLayout } from "../../../layouts/ExploreLayout";
 
-const Explore = () => {
+export const Explore = () => {
     return (
         <ExploreLayout>
             <Container p={{ base: 4, lg: 0 }} maxW={`70rem`} my={{ base: `3rem`, lg: `7rem` }}>
@@ -22,5 +22,3 @@ const Explore = () => {
         </ExploreLayout>
     );
 };
-
-export default Explore;

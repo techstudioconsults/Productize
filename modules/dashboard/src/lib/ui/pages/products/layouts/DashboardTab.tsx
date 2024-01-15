@@ -1,12 +1,13 @@
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Flex, Box, Link } from "@chakra-ui/react";
-import AllProductsTabLayout from "./AllProductsTabLayout";
+import { useSetPaymentPlan } from "@productize-v1.0.0/modules/shared/hooks";
+import { SharedButton } from "@productize-v1.0.0/modules/shared/ui";
+
 import LiveTabLayout from "./LiveTabLayout";
 import DraftTabLayout from "./DraftTabLayout";
 import DeleteTabLayout from "./DeleteTabLayout";
 import { Link as ReactLink, To, useLocation, useNavigate } from "react-router-dom";
+import AllProductsTabLayout from "./AllProductsTabLayout";
 import { useEffect, useState } from "react";
-import { SharedButton } from "@productize-v1.0.0/modules/shared/ui";
-import { useSetPaymentPlan } from "@productize-v1.0.0/modules/shared/hooks";
 
 const activeStateStyle = {
     borderBottom: `2px solid #6D5DD3`,

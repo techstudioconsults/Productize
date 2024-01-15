@@ -1,10 +1,11 @@
 import { Box, Flex, SimpleGrid, Text } from "@chakra-ui/react";
-import { DashboardBanner } from "../../../lib/DashboardBanner";
-import { DashboardRadioBtnComp } from "../../../lib/DashboardRadioBtnComp";
-import { ProgressBar } from "../../../lib/ProgressBar";
-import { DashboardEmptyState } from "../../../lib/empty-states/DashboardEmptyState";
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "@productize-v1.0.0/modules/shared/redux";
+import { DashboardBanner } from "../../../DashboardBanner";
+import { DashboardRadioBtnComp } from "../../../DashboardRadioBtnComp";
+
+import ProgressBar from "../../../ProgressBar";
+import { DashboardTable } from "../../../tables/DashboardTable";
 
 const FirstSalePage = () => {
     const user = useSelector(selectCurrentUser);
@@ -56,16 +57,10 @@ const FirstSalePage = () => {
             {user?.first_product_created ? null : (
                 <Box>
                     <Text as={`h6`}>Activity</Text>
-                    <DashboardEmptyState
-                        maxW="50rem"
-                        content={{
-                            title: "",
-                            desc: "You do not have any sales activities yet.",
-                            img: `https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951005/productize/Illustration_oblvox_athyeh.png`,
-                        }}
-                        textAlign={{ base: `center` }}
-                        showImage
-                    />
+
+                    <Box mt={4}>
+                        <DashboardTable />
+                    </Box>
                 </Box>
             )}
         </>

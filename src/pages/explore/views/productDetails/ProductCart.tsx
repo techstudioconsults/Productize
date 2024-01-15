@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { TwoColumnLayout } from "@productize-v1.0.0/modules/shared/ui";
 // import { useGetFromCartMutation } from "@productize-v1.0.0/modules/shared/redux";
 
-const ProductCart = () => {
+export const ProductCart = () => {
     const navigate = useNavigate();
 
     // const [getFromCart] = useGetFromCartMutation();

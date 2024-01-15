@@ -11,7 +11,7 @@ import { useParams } from "react-router-dom";
 import { TwoColumnLayout } from "@productize-v1.0.0/modules/shared/ui";
 // import Footers from 'apps/explore/src/libs/layouts/footer/Footer';
 
-const ProductDetails = () => {
+export const ProductDetails = () => {
     const [getSingleProducts_EXTERNAL] = useGetSingleProduct_EXTERNALMutation();
 
     const { productID } = useParams();
@@ -38,5 +38,3 @@ const ProductDetails = () => {
         </>
     );
 };
-
-export default ProductDetails;

@@ -1,3 +1,4 @@
+import React from "react";
 import FirstSalePage from "./premium/FirstSalePage";
 import OnBoardingPage from "./free/OnBoardingPage";
 import ActiveUserPage from "./premium/ActiveUserPage";
@@ -16,7 +17,7 @@ export const Home = () => {
     // return (
     //     <>
     //         {/* <OnBoardingPage />; */}
-    //         <FirstSalePage />;
+    //         {/* <FirstSalePage /> */}
     //         {/* <ActiveUserPage />; */}
     //     </>
     // );

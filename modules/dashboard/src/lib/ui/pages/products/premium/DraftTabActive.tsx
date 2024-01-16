@@ -1,6 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import { ProductsTableControl } from "../../../tables/tableControls/ProductsTableControl";
-import { ProductTable } from "../../../tables/ProductTable";
+import { DraftTable } from "../../../tables/DraftTable";
 
 interface draftActiveProps {
     products: [];
@@ -12,7 +12,7 @@ const DraftTabActive = ({ products }: draftActiveProps) => {
             <Box mb={4}>
                 <ProductsTableControl />
             </Box>
-            <ProductTable tableData={products} />
+            <DraftTable draft tableData={[]} />
         </>
     );
 };

@@ -1,6 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import { ProductsTableControl } from "../../../tables/tableControls/ProductsTableControl";
-import { ProductTable } from "../../../tables/ProductTable";
+import { DeletedTable } from "../../../tables/DeletedTable";
 
 interface draftActiveProps {
     products: [];
@@ -12,7 +12,7 @@ const DeleteTabActive = ({ products }: draftActiveProps) => {
             <Box mb={4}>
                 <ProductsTableControl />
             </Box>
-            <ProductTable deleted tableData={products} />
+            <DeletedTable deleted tableData={[]} />
         </Box>
     );
 };

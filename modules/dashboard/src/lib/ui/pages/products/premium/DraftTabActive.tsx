@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { useCallback, useEffect } from "react";
 import { ProductCards } from "../../../ProductCards";
 import { EmptyState } from "../../../empty-states/EmptyState";
-import { SharedButton } from "@productize-v1.0.0/modules/shared/ui";
+import { OnBoardingLoader, SharedButton } from "@productize-v1.0.0/modules/shared/ui";
 import { Link } from "react-router-dom";
 
 const DraftTabActive = () => {
@@ -23,6 +23,10 @@ const DraftTabActive = () => {
     useEffect(() => {
         showAllProducts();
     }, [showAllProducts]);
+
+     if (getDraftProductsStatus.isLoading) {
+         return <OnBoardingLoader />;
+     }
 
     if (!draftProducts?.length) {
         return (

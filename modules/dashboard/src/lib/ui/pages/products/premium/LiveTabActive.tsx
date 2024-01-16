@@ -7,7 +7,7 @@ import { EmptyState } from "../../../empty-states/EmptyState";
 import { useCallback, useEffect } from "react";
 import { selectLiveProducts, useGetLiveProductsMutation } from "@productize-v1.0.0/modules/shared/redux";
 import { useSelector } from "react-redux";
-import { SharedButton } from "@productize-v1.0.0/modules/shared/ui";
+import { OnBoardingLoader, SharedButton } from "@productize-v1.0.0/modules/shared/ui";
 
 const LiveTabActive = () => {
     const [getLiveProducts, getLiveProductsStatus] = useGetLiveProductsMutation();
@@ -24,6 +24,10 @@ const LiveTabActive = () => {
     useEffect(() => {
         showAllProducts();
     }, [showAllProducts]);
+
+    if (getLiveProductsStatus.isLoading) {
+        return <OnBoardingLoader />;
+    }
 
     if (!liveProducts?.length) {
         return (

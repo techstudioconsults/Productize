@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Skeleton } from "@chakra-ui/react";
 import { ProductsTableControl } from "../../../tables/tableControls/ProductsTableControl";
 import { DeletedTable } from "../../../tables/DeletedTable";
 import { useSelector } from "react-redux";
@@ -6,6 +6,7 @@ import { selectDeletedProducts, useGetDeletedProductsMutation } from "@productiz
 import { ProductCards } from "../../../ProductCards";
 import { EmptyState } from "../../../empty-states/EmptyState";
 import { useCallback, useEffect } from "react";
+import { OnBoardingLoader } from "@productize-v1.0.0/modules/shared/ui";
 
 const DeleteTabActive = () => {
     const [getDeletedProducts, getDeletedProductsStatus] = useGetDeletedProductsMutation();
@@ -22,6 +23,10 @@ const DeleteTabActive = () => {
     useEffect(() => {
         showAllProducts();
     }, [showAllProducts]);
+
+    if (getDeletedProductsStatus.isLoading) {
+        return <OnBoardingLoader />;
+    }
 
     if (!deletedProducts?.length) {
         return (

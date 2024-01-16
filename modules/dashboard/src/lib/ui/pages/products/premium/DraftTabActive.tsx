@@ -8,6 +8,7 @@ import { ProductCards } from "../../../ProductCards";
 import { EmptyState } from "../../../empty-states/EmptyState";
 import { OnBoardingLoader, SharedButton } from "@productize-v1.0.0/modules/shared/ui";
 import { Link } from "react-router-dom";
+import { DraftTableControl } from "./components/DraftTableControl";
 
 const DraftTabActive = () => {
     const [getDraftProducts, getDraftProductsStatus] = useGetDraftProductsMutation();
@@ -24,9 +25,9 @@ const DraftTabActive = () => {
         showAllProducts();
     }, [showAllProducts]);
 
-     if (getDraftProductsStatus.isLoading) {
-         return <OnBoardingLoader />;
-     }
+    if (getDraftProductsStatus.isLoading) {
+        return <OnBoardingLoader />;
+    }
 
     if (!draftProducts?.length) {
         return (
@@ -68,7 +69,7 @@ const DraftTabActive = () => {
     return (
         <>
             <Box mb={4}>
-                <ProductsTableControl />
+                <DraftTableControl showRefreshBtn={false} />
             </Box>
             <DraftTable draft tableData={draftProducts} />
         </>

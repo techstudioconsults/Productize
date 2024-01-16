@@ -7,6 +7,7 @@ import { ProductCards } from "../../../ProductCards";
 import { EmptyState } from "../../../empty-states/EmptyState";
 import { useCallback, useEffect } from "react";
 import { OnBoardingLoader } from "@productize-v1.0.0/modules/shared/ui";
+import { DeletedTableControl } from "./components/DeletedTableControl";
 
 const DeleteTabActive = () => {
     const [getDeletedProducts, getDeletedProductsStatus] = useGetDeletedProductsMutation();
@@ -53,7 +54,7 @@ const DeleteTabActive = () => {
     return (
         <Box>
             <Box mb={4}>
-                <ProductsTableControl />
+                <DeletedTableControl showRefreshBtn={false} />
             </Box>
             <DeletedTable deleted tableData={deletedProducts} />
         </Box>

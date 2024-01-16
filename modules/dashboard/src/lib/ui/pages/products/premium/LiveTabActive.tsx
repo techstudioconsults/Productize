@@ -8,6 +8,7 @@ import { useCallback, useEffect } from "react";
 import { selectLiveProducts, useGetLiveProductsMutation } from "@productize-v1.0.0/modules/shared/redux";
 import { useSelector } from "react-redux";
 import { OnBoardingLoader, SharedButton } from "@productize-v1.0.0/modules/shared/ui";
+import { LivetableControl } from "./components/LiveTableControl";
 
 const LiveTabActive = () => {
     const [getLiveProducts, getLiveProductsStatus] = useGetLiveProductsMutation();
@@ -67,7 +68,7 @@ const LiveTabActive = () => {
     return (
         <Box>
             <Box mb={4}>
-                <ProductsTableControl />
+                <LivetableControl showRefreshBtn={false} />
             </Box>
             <LiveTable live tableData={liveProducts} />
         </Box>

@@ -7,11 +7,9 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { useCurrency, useDate, useTime } from "@productize-v1.0.0/modules/shared/hooks";
-import { selectCurrentToken, selectDeletedProducts, selectProductMetaData, useGetDeletedProductsMutation } from "@productize-v1.0.0/modules/shared/redux";
-import { OnBoardingLoader, SharedButton } from "@productize-v1.0.0/modules/shared/ui";
-import { useCallback, useEffect } from "react";
+import { selectCurrentToken, selectProductMetaData } from "@productize-v1.0.0/modules/shared/redux";
+import { SharedButton } from "@productize-v1.0.0/modules/shared/ui";
 import { DropdownActionDelete, DropdownActionDraft, DropdownActionLive } from "../DropdownAction";
-import { EmptyState } from "../empty-states/EmptyState";
 
 interface tableProps {
     draft?: boolean;
@@ -21,8 +19,6 @@ interface tableProps {
 }
 
 export const DeletedTable = ({ draft, live, deleted, tableData }: tableProps) => {
-    const [getDeletedProducts, getDeletedProductsStatus] = useGetDeletedProductsMutation();
-    const deletedProducts = useSelector(selectDeletedProducts);
     const token = useSelector(selectCurrentToken);
     const navigate = useNavigate();
     const formatCurrency = useCurrency();
@@ -57,71 +53,57 @@ export const DeletedTable = ({ draft, live, deleted, tableData }: tableProps) =>
             );
         }
     });
-    const tableproduct = deletedProducts?.map((product: any) => {
-        if (!deletedProducts.length) {
-            return (
-                <Tr _hover={{ bgColor: `purple.100`, cursor: `pointer` }} onClick={() => navigate(`/dashboard/products/${product.id}`)} key={product.id}>
-                    <Td>
-                        {/* use navigate to tap into all row */}
-                        <Flex gap={2} alignItems={`center`}>
-                            <Box onClick={(e) => e.stopPropagation()}>
-                                <Checkbox size={`lg`} colorScheme="purple" />
-                            </Box>
-                            <Avatar bgColor={`yellow.100`} src={product?.thumbnail} borderRadius={`8px`} w={`100px`} h={`64px`} />
-                            <Stack>
-                                <Text>{product?.title}</Text>
-                                <Flex alignItems={`center`} color={`grey.400`}>
-                                    <Text className="tiny-text">PDF - 5.5MB</Text>
-                                    <Icon className="large-text" icon={`mdi:dot`} />
-                                    <Text className="tiny-text">{formatDate(product.created_at)}</Text>
-                                    <Icon className="large-text" icon={`mdi:dot`} />
-                                    <Text className="tiny-text">{formatTime(product?.created_at)}</Text>
-                                </Flex>
-                            </Stack>
-                        </Flex>
-                    </Td>
-                    <Td>
-                        <Flex>{formatCurrency(product?.price)}</Flex>
-                    </Td>
-                    <Td>
-                        {/* if show sale count is true */}
-                        <Flex>{product?.total_order}</Flex>
-                    </Td>
-                    <Td>
-                        <Flex>{product?.product_type}</Flex>
-                    </Td>
-                    <Td>
-                        <Flex hidden={deleted}>
-                            <Tag size={`lg`} colorScheme={product?.status === `draft` ? `yellow` : `green`}>
-                                {product?.status}
-                            </Tag>
-                        </Flex>
-                    </Td>
-                    <Td>
-                        {/* there is a status bug here...call tobi later 🤒 */}
-                        {product?.status === `draft` && !product?.deleted_at ? (
-                            <DropdownActionDraft product={product} icon={`tabler:dots`} />
-                        ) : product?.status === `published` ? (
-                            <DropdownActionLive product={product} icon={`tabler:dots`} />
-                        ) : product?.status === `deleted` || product?.deleted_at ? (
-                            <DropdownActionDelete product={product} icon={`tabler:dots`} />
-                        ) : null}
-                    </Td>
-                </Tr>
-            );
-        } else {
-            return (
-                <EmptyState
-                    content={{
-                        title: "EMPTY",
-                        desc: "You dont have a deleted Product",
-                        img: undefined,
-                    }}
-                    textAlign={{ base: `center` }}
-                    showImage={false}
-                />
-            );
-        }
+    const tableproduct = tableData?.map((product: any) => {
+        return (
+            <Tr _hover={{ bgColor: `purple.100`, cursor: `pointer` }} onClick={() => navigate(`/dashboard/products/${product.id}`)} key={product.id}>
+                <Td>
+                    {/* use navigate to tap into all row */}
+                    <Flex gap={2} alignItems={`center`}>
+                        <Box onClick={(e) => e.stopPropagation()}>
+                            <Checkbox size={`lg`} colorScheme="purple" />
+                        </Box>
+                        <Avatar bgColor={`yellow.100`} src={product?.thumbnail} borderRadius={`8px`} w={`100px`} h={`64px`} />
+                        <Stack>
+                            <Text>{product?.title}</Text>
+                            <Flex alignItems={`center`} color={`grey.400`}>
+                                <Text className="tiny-text">PDF - 5.5MB</Text>
+                                <Icon className="large-text" icon={`mdi:dot`} />
+                                <Text className="tiny-text">{formatDate(product.created_at)}</Text>
+                                <Icon className="large-text" icon={`mdi:dot`} />
+                                <Text className="tiny-text">{formatTime(product?.created_at)}</Text>
+                            </Flex>
+                        </Stack>
+                    </Flex>
+                </Td>
+                <Td>
+                    <Flex>{formatCurrency(product?.price)}</Flex>
+                </Td>
+                <Td>
+                    {/* if show sale count is true */}
+                    <Flex>{product?.total_order}</Flex>
+                </Td>
+                <Td>
+                    <Flex>{product?.product_type}</Flex>
+                </Td>
+                <Td>
+                    <Flex hidden={deleted}>
+                        <Tag size={`lg`} colorScheme={product?.status === `draft` ? `yellow` : `green`}>
+                            {product?.status}
+                        </Tag>
+                    </Flex>
+                </Td>
+                <Td>
+                    {/* there is a status bug here...call tobi later 🤒 */}
+                    {product?.status === `draft` && !product?.deleted_at ? (
+                        <DropdownActionDraft product={product} icon={`tabler:dots`} />
+                    ) : product?.status === `published` ? (
+                        <DropdownActionLive product={product} icon={`tabler:dots`} />
+                    ) : product?.status === `deleted` || product?.deleted_at ? (
+                        <DropdownActionDelete product={product} icon={`tabler:dots`} />
+                    ) : null}
+                </Td>
+            </Tr>
+        );
     });
 
     const handlePrevButton = async () => {
@@ -163,35 +145,19 @@ export const DeletedTable = ({ draft, live, deleted, tableData }: tableProps) =>
         }
     };
 
-    const showAllProducts = useCallback(async () => {
-        try {
-            await getDeletedProducts(null).unwrap();
-        } catch (error) {
-            return error;
-        }
-    }, [getDeletedProducts]);
-
-    useEffect(() => {
-        showAllProducts();
-    }, [showAllProducts]);
-
     return (
         <>
             <TableContainer display={`flex`} flexDir={`column`} height={`40rem`} justifyContent={`space-between`} overflowY={`auto`}>
-                {getDeletedProductsStatus.isLoading ? (
-                    <OnBoardingLoader />
-                ) : (
-                    <Table size={`sm`} variant="simple">
-                        {/* head */}
-                        <Thead zIndex={1} pos={`sticky`} top={0}>
-                            <Tr bgColor={`purple.100`} color={`grey.300`}>
-                                {tableHeader}
-                            </Tr>
-                        </Thead>
-                        {/* body */}
-                        <Tbody color={`purple.300`}>{tableproduct}</Tbody>
-                    </Table>
-                )}
+                <Table size={`sm`} variant="simple">
+                    {/* head */}
+                    <Thead zIndex={1} pos={`sticky`} top={0}>
+                        <Tr bgColor={`purple.100`} color={`grey.300`}>
+                            {tableHeader}
+                        </Tr>
+                    </Thead>
+                    {/* body */}
+                    <Tbody color={`purple.300`}>{tableproduct}</Tbody>
+                </Table>
             </TableContainer>
             {/* TABLE PAGINATION */}
             <Flex mt={4} color={`grey.400`} alignItems={`center`} justifyContent={`space-between`}>

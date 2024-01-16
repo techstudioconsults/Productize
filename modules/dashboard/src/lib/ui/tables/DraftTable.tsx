@@ -7,9 +7,9 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { useCurrency, useDate, useTime } from "@productize-v1.0.0/modules/shared/hooks";
-import { selectCurrentToken, selectDraftProducts, selectProductMetaData, useGetDraftProductsMutation } from "@productize-v1.0.0/modules/shared/redux";
-import { OnBoardingLoader, SharedButton } from "@productize-v1.0.0/modules/shared/ui";
-import { useCallback, useEffect } from "react";
+import { selectCurrentToken, selectProductMetaData } from "@productize-v1.0.0/modules/shared/redux";
+import { SharedButton } from "@productize-v1.0.0/modules/shared/ui";
+
 import { DropdownActionDelete, DropdownActionDraft, DropdownActionLive } from "../DropdownAction";
 
 interface tableProps {
@@ -20,8 +20,6 @@ interface tableProps {
 }
 
 export const DraftTable = ({ draft, live, deleted, tableData }: tableProps) => {
-    const [getDraftProducts, getDraftProductsStatus] = useGetDraftProductsMutation();
-    const draftProducts = useSelector(selectDraftProducts);
     const token = useSelector(selectCurrentToken);
     const navigate = useNavigate();
     const formatCurrency = useCurrency();
@@ -56,7 +54,7 @@ export const DraftTable = ({ draft, live, deleted, tableData }: tableProps) => {
             );
         }
     });
-    const tableproduct = draftProducts?.map((product: any) => {
+    const tableproduct = tableData?.map((product: any) => {
         return (
             <Tr _hover={{ bgColor: `purple.100`, cursor: `pointer` }} onClick={() => navigate(`/dashboard/products/${product.id}`)} key={product.id}>
                 <Td>
@@ -148,35 +146,19 @@ export const DraftTable = ({ draft, live, deleted, tableData }: tableProps) => {
         }
     };
 
-    const showAllProducts = useCallback(async () => {
-        try {
-            await getDraftProducts(null).unwrap();
-        } catch (error) {
-            return error;
-        }
-    }, [getDraftProducts]);
-
-    useEffect(() => {
-        showAllProducts();
-    }, [showAllProducts]);
-
     return (
         <>
             <TableContainer display={`flex`} flexDir={`column`} height={`40rem`} justifyContent={`space-between`} overflowY={`auto`}>
-                {getDraftProductsStatus.isLoading ? (
-                    <OnBoardingLoader />
-                ) : (
-                    <Table size={`sm`} variant="simple">
-                        {/* head */}
-                        <Thead zIndex={1} pos={`sticky`} top={0}>
-                            <Tr bgColor={`purple.100`} color={`grey.300`}>
-                                {tableHeader}
-                            </Tr>
-                        </Thead>
-                        {/* body */}
-                        <Tbody color={`purple.300`}>{tableproduct}</Tbody>
-                    </Table>
-                )}
+                <Table size={`sm`} variant="simple">
+                    {/* head */}
+                    <Thead zIndex={1} pos={`sticky`} top={0}>
+                        <Tr bgColor={`purple.100`} color={`grey.300`}>
+                            {tableHeader}
+                        </Tr>
+                    </Thead>
+                    {/* body */}
+                    <Tbody color={`purple.300`}>{tableproduct}</Tbody>
+                </Table>
             </TableContainer>
             {/* TABLE PAGINATION */}
             <Flex mt={4} color={`grey.400`} alignItems={`center`} justifyContent={`space-between`}>

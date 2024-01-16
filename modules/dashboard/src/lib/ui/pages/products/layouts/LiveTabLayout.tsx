@@ -1,26 +1,43 @@
-import { useSelector } from "react-redux";
-import { useCallback, useEffect } from "react";
-import { selectLiveProducts, useGetLiveProductsMutation } from "@productize-v1.0.0/modules/shared/redux";
 import LiveTabActive from "../premium/LiveTabActive";
-import LiveTab from "../empty/LiveTab";
+import { useSetPaymentPlan } from "@productize-v1.0.0/modules/shared/hooks";
+import { useDisclosure } from "@chakra-ui/react";
+import { EmptyState } from "../../../empty-states/EmptyState";
+import { SharedButton, UpgradePlanModal } from "@productize-v1.0.0/modules/shared/ui";
 
 const LiveTabLayout = () => {
-    const [getLiveProducts] = useGetLiveProductsMutation();
-    const liveProducts = useSelector(selectLiveProducts);
+    const isPremium = useSetPaymentPlan();
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
-    const showLiveProducts = useCallback(async () => {
-        try {
-            await getLiveProducts(null).unwrap();
-        } catch (error) {
-            return error;
-        }
-    }, [getLiveProducts]);
-
-    useEffect(() => {
-        showLiveProducts();
-    }, [showLiveProducts]);
-
-    return liveProducts !== null ? <LiveTabActive products={liveProducts} /> : <LiveTab />;
+    if (isPremium) {
+        return <LiveTabActive />;
+    } else {
+        return (
+            <EmptyState
+                content={{
+                    title: "Upgrade your plan to create a plan",
+                    desc: "Lorem ipsum dolor sit amet consectetur. Nec accumsan amet amet velit. Aliquam dictum id pellentesque aenean turpis nisl. Quam etiam.",
+                    img: `https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951003/productize/Illustration_3_g5iwpj_gurtby.png`,
+                }}
+                textAlign={{ base: `center`, md: `start` }}
+                showImage={true}
+                maxW="100%"
+            >
+                <SharedButton
+                    text={"Upgrade Plan"}
+                    btnExtras={{
+                        onClick: onOpen,
+                    }}
+                    width={"fit-content"}
+                    height={"48px"}
+                    bgColor={"purple.200"}
+                    textColor={"white"}
+                    borderRadius={"4px"}
+                    fontSize={{ base: `sm`, md: `md` }}
+                />
+                <UpgradePlanModal onClose={onClose} isOpen={isOpen} />
+            </EmptyState>
+        );
+    }
 };
 
 export default LiveTabLayout;

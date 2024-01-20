@@ -48,7 +48,7 @@ const OrderActive = () => {
 
     return (
         <Box mt={5}>
-            <Box mb={4}>
+            {/* <Box mb={4}>
                 <Flex justify="space-between" align="center">
                     <Stack spacing={4} direction="row" justify="space-between">
                         <DatePicker />
@@ -60,7 +60,7 @@ const OrderActive = () => {
                     </Stack>
                     <IconButton aria-label="See more" icon={<Icon icon="charm:menu-kebab" />} hideFrom="md" variant="ghost" />
                 </Flex>
-            </Box>
+            </Box> */}
             <OrderTable tableData={orders} />
         </Box>
     );

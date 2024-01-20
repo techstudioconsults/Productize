@@ -8,6 +8,7 @@ import { useCurrency, useDate, useTime } from "@productize-v1.0.0/modules/shared
 import { selectCurrentToken, selectCustomersMetaData } from "@productize-v1.0.0/modules/shared/redux";
 import { SharedButton } from "@productize-v1.0.0/modules/shared/ui";
 import { Icon } from "@iconify/react";
+import { HomeFilterController } from "../../../home/premium/components/HomeFilterController";
 
 interface tableProps {
     tableData: [];
@@ -108,6 +109,9 @@ export const OrderTable = ({ tableData }: tableProps) => {
 
     return (
         <>
+            <Box my={10}>
+                <HomeFilterController showRefreshBtn />
+            </Box>
             <TableContainer display={`flex`} flexDir={`column`} height={`40rem`} justifyContent={`space-between`} overflowY={`auto`}>
                 <Table size={`sm`} variant="simple">
                     {/* head */}

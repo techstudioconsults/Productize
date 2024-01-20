@@ -14,7 +14,7 @@ export default function AllProducts() {
         { name: "UX Design Fundamentals" },
     ];
     return (
-        <Select w="150px">
+        <Select disabled w="150px">
             {products.map((item: FilterItem, i: number) => (
                 <option key={i} value={item.name}>
                     {item.name}

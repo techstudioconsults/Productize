@@ -79,7 +79,7 @@ export const OrderDetails = () => {
                         <Stack spacing="10px" direction="column" color="purple.300" lineHeight="24px" fontWeight="400" fontSize="16px">
                             <Text>Product Link</Text>
                             <SkeletonText isLoaded={!getAllOrdersStatus.isLoading} noOfLines={1} w={`10rem`}>
-                                <Text>{singleOrder?.link}</Text>
+                                <Text>{singleOrder?.link || `N/A`}</Text>
                                 <Flex align="center" gap="16px">
                                     <Icon icon="ph:copy-thin" style={{ cursor: "pointer" }} />
                                 </Flex>
@@ -132,7 +132,7 @@ export const OrderDetails = () => {
                                     Total Value
                                 </Text>
                                 <Text fontWeight="600" fontSize="24px" lineHeight="32px">
-                                    {singleOrder?.total_value}
+                                    {singleOrder?.total_value || `N/A`}
                                 </Text>
                             </Stack>
                         </Skeleton>

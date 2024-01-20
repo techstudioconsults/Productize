@@ -8,13 +8,7 @@ const DownloadCard = ({ product }) => {
     return (
         <Card variant={`outline`} overflow={`hidden`} maxW={`266px`}>
             <Box h={{ base: ``, lg: `266px` }}>
-                <Image
-                    w={`100%`}
-                    h={`100%`}
-                    objectFit="cover"
-                    src={product?.thumbnail}
-                    alt={product?.title}
-                />
+                <Image w={`100%`} h={`100%`} objectFit="cover" src={product?.thumbnail} alt={product?.title} />
             </Box>
             <CardBody p={3} pb={0}>
                 <Stack gap={1}>
@@ -31,25 +25,6 @@ const DownloadCard = ({ product }) => {
                             {formatCurrency(product?.price)}
                         </Text>
                     </Flex>
-                    {/* <IconButton variant="ghost" colorScheme="gray" aria-label="See menu" icon={<Icon icon={`pepicons-pop:dots-y`} />} /> */}
-                    <Menu>
-                        <MenuButton
-                            onClick={(e) => e.stopPropagation()}
-                            border={`none`}
-                            as={IconButton}
-                            aria-label="Options"
-                            icon={<Icon icon={`pepicons-pop:dots-y`} />}
-                            variant="outlined"
-                            isDisabled
-                        />
-                        <MenuList zIndex={999}>
-                            <MenuItem justifyContent={`flex-start`}>Share</MenuItem>
-                            <MenuItem justifyContent={`flex-start`}>View receipt</MenuItem>
-                            <MenuItem color={`red.200`} justifyContent={`flex-start`}>
-                                Delete
-                            </MenuItem>
-                        </MenuList>
-                    </Menu>
                 </Flex>
             </CardHeader>
         </Card>

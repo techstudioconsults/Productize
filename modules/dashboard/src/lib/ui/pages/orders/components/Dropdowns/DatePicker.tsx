@@ -8,6 +8,7 @@ export default function DatePicker() {
     return (
         <Box w={{ base: "170px", lg: "220px" }}>
             <DateRangePicker
+                disabled
                 placeholder="Select Date Range"
                 hoverRange="month"
                 value={value}

@@ -1,10 +1,10 @@
-import { Box, Flex, Select } from "@chakra-ui/react";
-import DownloadLists from "./active-state/DownloadLists";
+import { Box } from "@chakra-ui/react";
+import { DownloadTab } from "./active-state/DownloadTab";
 
 export const Download = () => {
     return (
-        <Box>
-            <DownloadLists />
+        <Box my={10}>
+            <DownloadTab />
         </Box>
     );
 };

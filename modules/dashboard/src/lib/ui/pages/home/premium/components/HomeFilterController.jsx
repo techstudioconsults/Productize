@@ -27,28 +27,13 @@ export const HomeFilterController = ({ showRefreshBtn }) => {
         },
     };
 
-    const data = [`All`, `Draft`, `Published`].map((item) => ({
+    const data = [`Digital Products`, `Print on Demand`, `Video Streaming`, `Subscription`].map((item) => ({
         label: item,
         value: item,
     }));
 
     const handleExport = async () => {
-        try {
-            setExportLoading(true);
-            const res = await axios.get(
-                `${BASE_URL}/products/download?status=${status}&format=csv`,
-                // `${BASE_URL}products/download?start_date=${startDate}&end_date=${endDate}&format=csv`,
-                headersCredentials
-            );
-            if (res.status === 200) {
-                setExportLoading(false);
-                const blob = new Blob([res.data], { type: "text/csv" });
-                download(blob, `Products.csv`);
-            }
-        } catch (error) {
-            setExportLoading(false);
-            console.log(error);
-        }
+        console.log(`export funtionality`);
     };
 
     const handleStatusChange = (value) => {
@@ -60,24 +45,7 @@ export const HomeFilterController = ({ showRefreshBtn }) => {
     };
 
     const filterTable = async () => {
-        if (status === `all`) {
-            try {
-                await getAllProducts(null).unwrap();
-            } catch (error) {
-                console.log(error);
-            }
-        } else {
-            try {
-                await getAllProducts({
-                    page: null,
-                    startDate,
-                    endDate,
-                    status,
-                }).unwrap();
-            } catch (error) {
-                console.log(error);
-            }
-        }
+        console.log(`filter funtionality`);
     };
 
     return (
@@ -93,9 +61,17 @@ export const HomeFilterController = ({ showRefreshBtn }) => {
                     />
                 </Box>
                 <Box w={`100%`}>
-                    <SelectPicker searchable={false} onSelect={handleStatusChange} style={{ width: `100%` }} placeholder={`Status`} size="lg" data={data} />
+                    <SelectPicker
+                        searchable={false}
+                        onSelect={handleStatusChange}
+                        style={{ width: `100%` }}
+                        placeholder={`All Products`}
+                        size="lg"
+                        data={data}
+                    />
                 </Box>
                 <IconButton
+                    isDisabled
                     color={`purple.200`}
                     bgColor={`purple.100`}
                     isLoading={getAllProductsStatus.isLoading}

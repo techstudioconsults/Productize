@@ -80,7 +80,7 @@ export function App() {
 
                     <Route path="analytics" element={<Analytics />} />
 
-                    <Route path="customers" element={<Customers />}></Route>
+                    <Route path="customers" element={<Customers />} />
                     <Route path="customers/:customerID" element={<CustomersDetails />} />
 
                     <Route path="profile/:userID" element={<Profile />} />

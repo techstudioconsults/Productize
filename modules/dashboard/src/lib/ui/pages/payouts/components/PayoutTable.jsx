@@ -4,53 +4,69 @@ import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Text, Stack, Box
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { selectCurrentToken } from "@productize-v1.0.0/modules/shared/redux";
+import { selectAllOrders, selectCurrentToken } from "@productize-v1.0.0/modules/shared/redux";
 import { useCurrency, useDate, useTime } from "@productize-v1.0.0/modules/shared/hooks";
 import { SharedButton } from "@productize-v1.0.0/modules/shared/ui";
 import { DropdownActionLive } from "../../../DropdownAction";
 
 export const PayoutTable = ({ tableData }) => {
-    const token = useSelector(selectCurrentToken);
-
+    // const token = useSelector(selectCurrentToken);
+    const orders = useSelector(selectAllOrders);
     const formatCurrency = useCurrency();
     const formatDate = useDate();
     const formatTime = useTime();
     // const paginate = useSelector(selectearningsMetaData);
-    const dispatch = useDispatch();
-    const headersCredentials = {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    };
+    // const dispatch = useDispatch();
+    // const headersCredentials = {
+    //     headers: {
+    //         Authorization: `Bearer ${token}`,
+    //     },
+    // };
 
-    const tableHeader = [`Price`, `BAnk Account`, `Period`, `Commission amount`].map((title) => {
+    function calculatePercentage(percentage, baseValue) {
+        const percentageDecimal = percentage / 100;
+        const result = percentageDecimal * baseValue;
+        return result;
+    }
+
+    const tableHeader = [`Price`, `BAnk Account`, `Period`, `Commission amount`, `amount`].map((title) => {
         return (
             <Th py={3} key={title}>
                 {title}
             </Th>
         );
     });
-    const withdrawEarnings = [1, 2, 3, 4, 5]?.map((earning) => {
+    const withdrawEarnings = orders?.map((earning) => {
         return (
-            <Tr _hover={{ bgColor: `purple.100`, cursor: `pointer` }} key={earning}>
+            <Tr _hover={{ bgColor: `purple.100`, cursor: `pointer` }} key={earning.id}>
                 <Td>
                     <Flex alignItems={`center`}>
-                        <Text>{formatCurrency(120000)}</Text>
+                        <Text>{formatCurrency(earning.product_price)}</Text>
                     </Flex>
                 </Td>
                 <Td py={5}>
                     <Flex alignItems={`center`} gap={5}>
                         <Avatar size={`xs`} src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1702765305/productize/Bank_Logo_f98woi.png`} />
-                        <Text>First Bank 366****234</Text>
+                        <Text>{`${earning.bank_name} ${earning.bank_account_number.slice(0, 3)}****${earning.bank_account_number.slice(7)}`}</Text>
                     </Flex>
                 </Td>
                 <Td>
-                    <Flex>15 May 2020 8:00 am</Flex>
+                    <Flex>{`
+                    ${formatDate(earning?.date)}
+                    ${formatTime(earning?.date)}
+                    `}</Flex>
                 </Td>
                 <Td>
                     <Flex>
-                        <Tag bg={`grey.200`} color={`yellow.300`} size={`lg`} fontSize={`sm`}>
-                            N/A
+                        <Tag bg={`grey.200`} color={`green.300`} fontWeight={600} size={`lg`} fontSize={`sm`}>
+                            5%
+                        </Tag>
+                    </Flex>
+                </Td>
+                <Td>
+                    <Flex>
+                        <Tag bg={`grey.200`} color={`green.200`} fontWeight={600} size={`lg`} fontSize={`sm`}>
+                            {formatCurrency(calculatePercentage(5, earning.product_price))}
                         </Tag>
                     </Flex>
                 </Td>

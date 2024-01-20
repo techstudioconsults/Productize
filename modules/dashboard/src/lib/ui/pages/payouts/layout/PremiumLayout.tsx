@@ -1,10 +1,31 @@
+import { OnBoardingLoader } from "@productize-v1.0.0/modules/shared/ui";
 import { DashboardBanner } from "../../../DashboardBanner";
 import { DashboardEmptyState } from "../../../empty-states/DashboardEmptyState";
 import PayoutPremiumView from "../premium/PayoutPremiumView";
 import { Box } from "@chakra-ui/react";
+import { useCallback, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { selectAllOrders, useGetAllOrdersMutation } from "@productize-v1.0.0/modules/shared/redux";
 
 const PremiumLayout = () => {
-    const value = true;
+    const [getAllOrders, getLiveProductsStatus] = useGetAllOrdersMutation();
+    const orders = useSelector(selectAllOrders);
+
+    const showAllOrders = useCallback(async () => {
+        try {
+            await getAllOrders(null).unwrap();
+        } catch (error) {
+            return error;
+        }
+    }, [getAllOrders]);
+
+    useEffect(() => {
+        showAllOrders();
+    }, [showAllOrders]);
+
+    if (getLiveProductsStatus.isLoading) {
+        return <OnBoardingLoader />;
+    }
 
     return (
         <Box my={8}>
@@ -17,7 +38,7 @@ const PremiumLayout = () => {
                 px={8}
             />
             <Box my={8}>
-                {value ? (
+                {orders.length ? (
                     <PayoutPremiumView />
                 ) : (
                     <DashboardEmptyState

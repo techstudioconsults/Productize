@@ -44,22 +44,7 @@ export const CustomersTableControl = ({ showRefreshBtn }: controlsProp) => {
     }));
 
     const handleExport = async () => {
-        // try {
-        //     setExportLoading(true);
-        //     const res = await axios.get(
-        //         `${BASE_URL}/products/download?status=${status}&format=csv`,
-        //         // `${BASE_URL}products/download?start_date=${startDate}&end_date=${endDate}&format=csv`,
-        //         headersCredentials
-        //     );
-        //     if (res.status === 200) {
-        //         setExportLoading(false);
-        //         const blob = new Blob([res.data], { type: "text/csv" });
-        //         download(blob, `Products.csv`);
-        //     }
-        // } catch (error) {
-        //     setExportLoading(false);
-        //     console.log(error);
-        // }
+        console.log(`export funtion`);
     };
 
     const handleStatusChange = (value: string) => {
@@ -107,6 +92,7 @@ export const CustomersTableControl = ({ showRefreshBtn }: controlsProp) => {
                     <SelectPicker searchable={false} onSelect={handleStatusChange} style={{ width: `100%` }} placeholder={`Status`} size="lg" data={data} />
                 </Box>
                 <IconButton
+                    isDisabled
                     color={`purple.200`}
                     bgColor={`purple.100`}
                     isLoading={getAllProductsStatus.isLoading}

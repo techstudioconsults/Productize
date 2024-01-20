@@ -65,24 +65,24 @@ export const ProductsTableControl = ({ showRefreshBtn }: controlsProp) => {
     };
 
     const filterTable = async () => {
-        if (status === `all`) {
-            try {
-                await getAllProducts(null).unwrap();
-            } catch (error) {
-                console.log(error);
-            }
-        } else {
-            try {
-                await getAllProducts({
-                    page: null,
-                    startDate,
-                    endDate,
-                    status,
-                }).unwrap();
-            } catch (error) {
-                console.log(error);
-            }
-        }
+        // if (status === `all`) {
+        //     try {
+        //         await getAllProducts(null).unwrap();
+        //     } catch (error) {
+        //         console.log(error);
+        //     }
+        // } else {
+        //     try {
+        //         await getAllProducts({
+        //             page: null,
+        //             startDate,
+        //             endDate,
+        //             status,
+        //         }).unwrap();
+        //     } catch (error) {
+        //         console.log(error);
+        //     }
+        // }
     };
 
     return (
@@ -101,6 +101,7 @@ export const ProductsTableControl = ({ showRefreshBtn }: controlsProp) => {
                     <SelectPicker searchable={false} onSelect={handleStatusChange} style={{ width: `100%` }} placeholder={`Status`} size="lg" data={data} />
                 </Box>
                 <IconButton
+                    isDisabled
                     color={`purple.200`}
                     bgColor={`purple.100`}
                     isLoading={getAllProductsStatus.isLoading}

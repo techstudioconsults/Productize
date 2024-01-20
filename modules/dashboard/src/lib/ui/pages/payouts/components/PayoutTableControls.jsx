@@ -13,14 +13,13 @@ import { DropdownAction } from "../../../DropdownAction";
 
 const BASE_URL = import.meta.env["VITE_BASE_URL"];
 
-
 export const PayoutTableControl = ({ showRefreshBtn }) => {
     const [exportLoading, setExportLoading] = useState(false);
     const token = useSelector(selectCurrentToken);
     const [startDate, setStartDate] = useState(``);
     const [endDate, setEndDate] = useState(``);
     const [status, setStatus] = useState(``);
-    const [getAllProducts, getAllProductsStatus] = useGetAllProductsMutation();
+    // const [getAllProducts, getAllProductsStatus] = useGetAllProductsMutation();
     const formatDateRange = useDateRangeFormat();
 
     const headersCredentials = {
@@ -62,24 +61,24 @@ export const PayoutTableControl = ({ showRefreshBtn }) => {
     };
 
     const filterTable = async () => {
-        if (status === `all`) {
-            try {
-                await getAllProducts(null).unwrap();
-            } catch (error) {
-                console.log(error);
-            }
-        } else {
-            try {
-                await getAllProducts({
-                    page: null,
-                    startDate,
-                    endDate,
-                    status,
-                }).unwrap();
-            } catch (error) {
-                console.log(error);
-            }
-        }
+        // if (status === `all`) {
+        //     try {
+        //         await getAllProducts(null).unwrap();
+        //     } catch (error) {
+        //         console.log(error);
+        //     }
+        // } else {
+        //     try {
+        //         await getAllProducts({
+        //             page: null,
+        //             startDate,
+        //             endDate,
+        //             status,
+        //         }).unwrap();
+        //     } catch (error) {
+        //         console.log(error);
+        //     }
+        // }
     };
 
     return (
@@ -96,9 +95,10 @@ export const PayoutTableControl = ({ showRefreshBtn }) => {
                 </Box>
 
                 <IconButton
+                    isDisabled
                     color={`purple.200`}
                     bgColor={`purple.100`}
-                    isLoading={getAllProductsStatus.isLoading}
+                    // isLoading={getAllProductsStatus.isLoading}
                     spinner={<SpinnerComponentSmall size="sm" />}
                     onClick={filterTable}
                     fontSize={`xl`}

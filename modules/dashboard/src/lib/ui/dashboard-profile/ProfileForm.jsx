@@ -27,6 +27,7 @@ import { useDispatch, useSelector } from "react-redux";
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { yupResolver } from "@hookform/resolvers/yup";
 import { profileFormSchema } from "../../feature/formValidationSchema/form-schemas";
+import { Link } from "react-router-dom";
 // eslint-disable-next-line @nx/enforce-module-boundaries
 
 export const ProfileForm = () => {
@@ -142,9 +143,11 @@ export const ProfileForm = () => {
                                 <Text color={`grey.400`} className="tiny-text">
                                     This email is linked to your account
                                 </Text>
-                                <Text color={`purple.200`} className="tiny-text">
-                                    Change Account Email
-                                </Text>
+                                <Link to={`/dashboard/settings`}>
+                                    <Text color={`purple.200`} className="tiny-text">
+                                        Change Account Email
+                                    </Text>
+                                </Link>
                             </Flex>
                             <Input
                                 readOnly

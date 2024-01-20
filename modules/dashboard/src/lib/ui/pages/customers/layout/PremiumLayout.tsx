@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from "react";
 import { selectAllProducts, useGetAllProductsMutation } from "@productize-v1.0.0/modules/shared/redux";
 import { useSelector } from "react-redux";
-import Customers from "../premium/Customers";
+import Customers from "../premium/CustomersActive";
 import { DashboardEmptyState } from "../../../empty-states/DashboardEmptyState";
 
 const PremiumLayout = () => {

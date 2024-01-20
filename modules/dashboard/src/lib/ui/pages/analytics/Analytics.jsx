@@ -45,7 +45,7 @@ export const Analytics = () => {
                         <DataWidgetCard showIcon={false} title={"Views"} value={0} />
                     </Box>
                     <Box>
-                        <DataWidgetCard showIcon={false} title={"Revenue"} value={formatCurrency(0)} />
+                        <DataWidgetCard showIcon={false} title={"Revenue"} value={formatCurrency(productAnaysis.new_orders_revenue)} />
                     </Box>
                     <Box>
                         <DataWidgetCard showIcon={false} title={"New Order"} value={productAnaysis.new_orders} />
@@ -60,7 +60,7 @@ export const Analytics = () => {
             </Box>
             {/* empty state */}
             <Box my={10}>
-                <Text as={`h6`}>Product Overview</Text>
+                <Text as={`h6`}>Revenue Overview</Text>
                 <Box mt={4}>
                     {emptyState ? (
                         <DashboardEmptyState
@@ -77,12 +77,12 @@ export const Analytics = () => {
                             <div className={style.header}>
                                 <Flex w={`100%`} justifyContent={`space-between`} alignItems={`center`} className={style.title}>
                                     <Flex color={`grey.300`} gap={5}>
-                                        <Text>Orders (2)</Text>
+                                        {/* <Text>Orders (2)</Text>
                                         <Text>Cancellted (1)</Text>
-                                        <Text>Product Sold (2)</Text>
+                                        <Text>Product Sold (2)</Text> */}
                                     </Flex>
                                     <Flex>
-                                        <Select placeholder="Digital Product">
+                                        <Select placeholder="View By Months">
                                             <option value="option1">Option 1</option>
                                             <option value="option2">Option 2</option>
                                             <option value="option3">Option 3</option>

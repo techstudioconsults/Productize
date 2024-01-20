@@ -1,44 +1,42 @@
-import { Flex, Box, Text, Heading, Grid, GridItem, Stack } from "@chakra-ui/react";
+import { Flex, Box, Text, Heading, Grid, GridItem, Stack, SkeletonText, Skeleton } from "@chakra-ui/react";
 import { Icon } from "@iconify/react";
 import { useCurrency, useDate } from "@productize-v1.0.0/modules/shared/hooks";
-import { selectCurrentToken } from "@productize-v1.0.0/modules/shared/redux";
-import axios from "axios";
-import { useCallback, useEffect, useState } from "react";
+import { selectSingleOrder, useGetSingleOrderDetailsMutation } from "@productize-v1.0.0/modules/shared/redux";
+import { OnBoardingLoader } from "@productize-v1.0.0/modules/shared/ui";
+import { useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import NoOrders from "./NoOrders";
 
 export const OrderDetails = () => {
+    const [getAllOrders, getAllOrdersStatus] = useGetSingleOrderDetailsMutation();
+    const singleOrder = useSelector(selectSingleOrder);
     const navigate = useNavigate();
     const formatCurrency = useCurrency();
     const formatDate = useDate();
-    const { orderid } = useParams();
-    const token = useSelector(selectCurrentToken);
-    const [singleOrder, setSingleOrder] = useState({});
+    const { orderID } = useParams();
+
     const fontStyle = {
         color: "purple.300",
         fontWeight: 600,
         fontSize: "18px",
     };
 
-    const getSingleOrder = useCallback(async () => {
+    const showAllOrders = useCallback(async () => {
         try {
-            const res = await axios.get(`https://productize-api.techstudio.academy/api/orders/${orderid}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            console.log(res);
-            if (res.status === 200) {
-                setSingleOrder(res.data.data);
-            }
+            await getAllOrders({ orderID }).unwrap();
         } catch (error) {
-            console.log(error);
+            return error;
         }
-    }, [orderid, token]);
+    }, [getAllOrders, orderID]);
 
     useEffect(() => {
-        getSingleOrder();
-    }, [getSingleOrder]);
+        showAllOrders();
+    }, [showAllOrders]);
+
+    if (!singleOrder) {
+        return <NoOrders />;
+    }
 
     return (
         <Box mt="24px">
@@ -64,66 +62,80 @@ export const OrderDetails = () => {
                     <GridItem colSpan={{ base: 12, md: 3 }} mb="16px">
                         <Stack spacing="10px" direction="column" color="purple.300" lineHeight="24px" fontWeight="400" fontSize="16px">
                             <Text>Publish Date</Text>
-                            <Text>{formatDate(singleOrder?.date)}</Text>
+                            <SkeletonText isLoaded={!getAllOrdersStatus.isLoading} noOfLines={1} w={`10rem`}>
+                                <Text>{formatDate(singleOrder?.date)}</Text>
+                            </SkeletonText>
                         </Stack>
                     </GridItem>
                     <GridItem colSpan={{ base: 12, md: 3 }} mb="16px">
                         <Stack spacing="10px" direction="column" color="purple.300" lineHeight="24px" fontWeight="400" fontSize="16px">
                             <Text>Price</Text>
-                            <Text>{formatCurrency(singleOrder?.product_price)}</Text>
+                            <SkeletonText isLoaded={!getAllOrdersStatus.isLoading} noOfLines={1} w={`10rem`}>
+                                <Text>{formatCurrency(singleOrder?.product_price)}</Text>
+                            </SkeletonText>
                         </Stack>
                     </GridItem>
                     <GridItem colSpan={{ base: 12, md: 6 }} mb="16px">
                         <Stack spacing="10px" direction="column" color="purple.300" lineHeight="24px" fontWeight="400" fontSize="16px">
                             <Text>Product Link</Text>
-                            <Flex align="center" gap="16px">
+                            <SkeletonText isLoaded={!getAllOrdersStatus.isLoading} noOfLines={1} w={`10rem`}>
                                 <Text>{singleOrder?.link}</Text>
-                                <Icon icon="ph:copy-thin" style={{ cursor: "pointer" }} />
-                            </Flex>
+                                <Flex align="center" gap="16px">
+                                    <Icon icon="ph:copy-thin" style={{ cursor: "pointer" }} />
+                                </Flex>
+                            </SkeletonText>
                         </Stack>
                     </GridItem>
                 </Grid>
                 {/* <Box borderBottom="2px" borderColor="grey.200" w='full'/> */}
                 <Grid templateColumns="repeat(12, 1fr)" p="12px" alignItems="center" mt="16px" gap="16px">
                     <GridItem colSpan={{ base: 12, md: 3 }} mb="16px" border="1px solid #F3F3F3" rounded="8px">
-                        <Stack h={`98px`} spacing="10px" direction="column" color="purple.300" p="16px">
-                            <Text fontSize="16px" lineHeight="24px" fontWeight="400">
-                                Viewed
-                            </Text>
-                            <Text fontWeight="600" fontSize="24px" lineHeight="32px">
-                                {singleOrder?.total_views}
-                            </Text>
-                        </Stack>
+                        <Skeleton isLoaded={!getAllOrdersStatus.isLoading}>
+                            <Stack h={`98px`} spacing="10px" direction="column" color="purple.300" p="16px">
+                                <Text fontSize="16px" lineHeight="24px" fontWeight="400">
+                                    Viewed
+                                </Text>
+                                <Text fontWeight="600" fontSize="24px" lineHeight="32px">
+                                    {singleOrder?.total_views}
+                                </Text>
+                            </Stack>
+                        </Skeleton>
                     </GridItem>
                     <GridItem colSpan={{ base: 12, md: 3 }} mb="16px" border="1px solid #F3F3F3" rounded="8px">
-                        <Stack h={`98px`} spacing="10px" direction="column" color="purple.300" p="16px">
-                            <Text fontSize="16px" lineHeight="24px" fontWeight="400">
-                                Total Order
-                            </Text>
-                            <Text fontWeight="600" fontSize="24px" lineHeight="32px">
-                                {singleOrder?.total_order}
-                            </Text>
-                        </Stack>
+                        <Skeleton isLoaded={!getAllOrdersStatus.isLoading}>
+                            <Stack h={`98px`} spacing="10px" direction="column" color="purple.300" p="16px">
+                                <Text fontSize="16px" lineHeight="24px" fontWeight="400">
+                                    Total Order
+                                </Text>
+                                <Text fontWeight="600" fontSize="24px" lineHeight="32px">
+                                    {singleOrder?.total_order}
+                                </Text>
+                            </Stack>
+                        </Skeleton>
                     </GridItem>
                     <GridItem colSpan={{ base: 12, md: 3 }} mb="16px" border="1px solid #F3F3F3" rounded="8px">
-                        <Stack h={`98px`} spacing="10px" direction="column" color="purple.300" p="16px">
-                            <Text fontSize="16px" lineHeight="24px" fontWeight="400">
-                                Total Sales
-                            </Text>
-                            <Text fontWeight="600" fontSize="24px" lineHeight="32px">
-                                {formatCurrency(singleOrder?.total_sales)}
-                            </Text>
-                        </Stack>
+                        <Skeleton isLoaded={!getAllOrdersStatus.isLoading}>
+                            <Stack h={`98px`} spacing="10px" direction="column" color="purple.300" p="16px">
+                                <Text fontSize="16px" lineHeight="24px" fontWeight="400">
+                                    Total Sales
+                                </Text>
+                                <Text fontWeight="600" fontSize="24px" lineHeight="32px">
+                                    {formatCurrency(singleOrder?.total_sales)}
+                                </Text>
+                            </Stack>
+                        </Skeleton>
                     </GridItem>
                     <GridItem colSpan={{ base: 12, md: 3 }} mb="16px" border="1px solid #F3F3F3" rounded="8px">
-                        <Stack h={`98px`} spacing="10px" direction="column" color="purple.300" p="16px">
-                            <Text fontSize="16px" lineHeight="24px" fontWeight="400">
-                                Total Value
-                            </Text>
-                            <Text fontWeight="600" fontSize="24px" lineHeight="32px">
-                                {singleOrder?.total_value}
-                            </Text>
-                        </Stack>
+                        <Skeleton isLoaded={!getAllOrdersStatus.isLoading}>
+                            <Stack h={`98px`} spacing="10px" direction="column" color="purple.300" p="16px">
+                                <Text fontSize="16px" lineHeight="24px" fontWeight="400">
+                                    Total Value
+                                </Text>
+                                <Text fontWeight="600" fontSize="24px" lineHeight="32px">
+                                    {singleOrder?.total_value}
+                                </Text>
+                            </Stack>
+                        </Skeleton>
                     </GridItem>
                 </Grid>
             </Box>

@@ -1,20 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/rules-of-hooks */
-import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Avatar, Text, Stack } from "@chakra-ui/react";
+import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Text, Stack, Box, Avatar } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { useCurrency, useDate, useTime } from "@productize-v1.0.0/modules/shared/hooks";
 import { selectCurrentToken, selectCustomersMetaData } from "@productize-v1.0.0/modules/shared/redux";
+import { SharedButton } from "@productize-v1.0.0/modules/shared/ui";
+import { Icon } from "@iconify/react";
 
 interface tableProps {
-    draft?: boolean;
-    live?: boolean;
-    deleted?: boolean;
     tableData: [];
 }
 
-export const CustomerDetailsTable = ({ tableData }: tableProps) => {
+export const OrderTable = ({ tableData }: tableProps) => {
     const token = useSelector(selectCurrentToken);
     const navigate = useNavigate();
     const formatCurrency = useCurrency();
@@ -28,7 +27,7 @@ export const CustomerDetailsTable = ({ tableData }: tableProps) => {
         },
     };
 
-    const tableHeader = [`Latest Purchase`, `Price`, `Date`].map((title) => {
+    const tableHeader = [`Product`, `Price`, `Customer Email`, `Date`].map((title) => {
         return (
             <Th py={3} key={title}>
                 {title}
@@ -37,25 +36,26 @@ export const CustomerDetailsTable = ({ tableData }: tableProps) => {
     });
     const tableCustomer = tableData?.map((customer: any) => {
         return (
-            <Tr _hover={{ bgColor: `purple.100`, cursor: `pointer` }} onClick={() => navigate(`/dashboard/customers/${customer.id}`)} key={customer.id}>
+            <Tr _hover={{ bgColor: `purple.100`, cursor: `pointer` }} onClick={() => navigate(`/dashboard/orders/${customer.id}`)} key={customer.id}>
                 <Td>
-                    {/* use navigate to tap into all row */}
                     <Flex gap={2} alignItems={`center`}>
-                        <Avatar bgColor={`yellow.100`} src={customer.product_thumbnail} borderRadius={`8px`} w={`100px`} h={`64px`} />
+                        <Avatar bgColor={`yellow.100`} src={customer?.product_thumbnail} borderRadius={`8px`} w={`100px`} h={`64px`} />
                         <Stack>
-                            <Text>{customer.product_title}</Text>
+                            <Text>{customer?.product_title}</Text>
                             <Flex alignItems={`center`} color={`grey.400`}>
-                                {/* <Text className="tiny-text">PDF - 5.5MB</Text> */}
-                                {/* <Icon className="large-text" icon={`mdi:dot`} /> */}
-                                {/* <Text className="tiny-text">{formatDate(null)}</Text>
-                                <Icon className="large-text" icon={`mdi:dot`} />
-                                <Text className="tiny-text">{formatTime(null)}</Text> */}
+                                <Text className="tiny-text">{}</Text>
                             </Flex>
                         </Stack>
                     </Flex>
                 </Td>
                 <Td>
                     <Flex>{formatCurrency(customer.product_price)}</Flex>
+                </Td>
+                <Td>
+                    {/* if show sale count is true */}
+                    <Flex flexDir={`column`} gap={2} py={2}>
+                        <Text>{customer?.customer_email}</Text>
+                    </Flex>
                 </Td>
                 <Td>
                     <Flex>{`
@@ -121,7 +121,7 @@ export const CustomerDetailsTable = ({ tableData }: tableProps) => {
                 </Table>
             </TableContainer>
             {/* TABLE PAGINATION */}
-            {/* <Flex mt={4} color={`grey.400`} alignItems={`center`} justifyContent={`space-between`}>
+            <Flex mt={4} color={`grey.400`} alignItems={`center`} justifyContent={`space-between`}>
                 <Box display={{ base: `none`, md: `initial` }}>
                     <Text>10 Entries per page </Text>
                 </Box>
@@ -162,7 +162,7 @@ export const CustomerDetailsTable = ({ tableData }: tableProps) => {
                         fontSize={{ base: `sm`, md: `md` }}
                     />
                 </Stack>
-            </Flex> */}
+            </Flex>
         </>
     );
 };

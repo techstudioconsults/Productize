@@ -1,48 +1,36 @@
-import { Box, Card, Flex, Image, SimpleGrid, Stack, Tag, Text, useToast } from "@chakra-ui/react";
+import { Box, Card, Flex, Image, SimpleGrid, Skeleton, SkeletonText, Stack, Text, useToast } from "@chakra-ui/react";
 import { Icon } from "@iconify/react";
 import { useDate, useCurrency } from "@productize-v1.0.0/modules/shared/hooks";
-import { useGetSingleProductDetailsMutation, selectAllCustomers, selectCurrentToken } from "@productize-v1.0.0/modules/shared/redux";
-import { SpinnerComponentSmall } from "@productize-v1.0.0/modules/shared/ui";
-import { useCallback, useEffect, useState } from "react";
+import { selectSingleCustomer, useGetSingleCustomerDetailsMutation } from "@productize-v1.0.0/modules/shared/redux";
+import { OnBoardingLoader, SpinnerComponentSmall } from "@productize-v1.0.0/modules/shared/ui";
+import { useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 // import rectangle from "@icons/Rectangle_ikpmwt.svg";
 import arrowLeft from "@icons/Property_2_Arrow-left_kafkjg.svg";
-import axios from "axios";
 import { DataWidgetCard } from "../../../DataWidgetCard";
 import { CustomerDetailsTable } from "../../../tables/CustomerDetailsTable";
 
 export const CustomersDetails = () => {
-    const { productID } = useParams();
     const navigate = useNavigate();
     const toast = useToast();
-    const [getSingleProduct, singleProductStatus] = useGetSingleProductDetailsMutation();
-    // const product = useSelector(selectSingleProduct);
+    const [getSingleCustomerDetails, getSingleCustomerDetailsStatus] = useGetSingleCustomerDetailsMutation();
+    const singleCustomer = useSelector(selectSingleCustomer);
     const formatDate = useDate();
     const formatCurrency = useCurrency();
     const { customerID } = useParams();
-    const token = useSelector(selectCurrentToken);
-    const [singleCustomer, setSingleCustomer] = useState({});
 
-    const getSingleOrder = useCallback(async () => {
+    const showSingleCustomer = useCallback(async () => {
         try {
-            const res = await axios.get(`https://productize-api.techstudio.academy/api/customers/${customerID}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            console.log(res);
-            if (res.status === 200) {
-                setSingleCustomer(res.data.data);
-            }
+            await getSingleCustomerDetails({ customerID }).unwrap();
         } catch (error) {
-            console.log(error);
+            return error;
         }
-    }, [customerID, token]);
+    }, [customerID, getSingleCustomerDetails]);
 
     useEffect(() => {
-        getSingleOrder();
-    }, [getSingleOrder]);
+        showSingleCustomer();
+    }, [showSingleCustomer]);
 
     // copy test to clipboard
     const copyTextToClipBoard = () => {
@@ -72,18 +60,6 @@ export const CustomersDetails = () => {
             });
     };
 
-    const showSingleProduct = useCallback(async () => {
-        try {
-            await getSingleProduct({ productID }).unwrap();
-        } catch (error) {
-            return error;
-        }
-    }, [getSingleProduct, productID]);
-
-    useEffect(() => {
-        showSingleProduct();
-    }, [showSingleProduct]);
-
     return (
         <Box my={8}>
             {/* row 1 */}
@@ -99,7 +75,9 @@ export const CustomersDetails = () => {
             <Box mt={8} mb={4} color={`purple.300`}>
                 <SimpleGrid columns={{ base: 1, xl: 2 }} gap={5}>
                     <Box mt={8} mb={4} color={`purple.300`}>
-                        <Text as={`h6`}>{singleCustomer?.title}</Text>
+                        <SkeletonText isLoaded={!getSingleCustomerDetailsStatus.isLoading} noOfLines={1} w={`10rem`}>
+                            <Text as={`h6`}>{singleCustomer?.name}</Text>
+                        </SkeletonText>
                         <Flex
                             flexDir={{ base: `column`, xl: `row` }}
                             borderBlock={`1px solid #EFEFEF`}
@@ -110,9 +88,7 @@ export const CustomersDetails = () => {
                         >
                             <Stack gap={2}>
                                 <Text fontWeight={600}>Email Address</Text>
-                                {singleProductStatus.isLoading ? (
-                                    <SpinnerComponentSmall size="sm" />
-                                ) : (
+                                <SkeletonText isLoaded={!getSingleCustomerDetailsStatus.isLoading} noOfLines={1} w={`10rem`}>
                                     <Flex gap={2} alignItems={`center`}>
                                         <Link target="_blank" to={singleCustomer?.email}>
                                             <Text>{singleCustomer?.email}</Text>
@@ -121,30 +97,44 @@ export const CustomersDetails = () => {
                                             <Icon cursor={`pointer`} onClick={copyTextToClipBoard} color="grey" icon={`ph:copy-simple-light`} />
                                         </Box>
                                     </Flex>
-                                )}
+                                </SkeletonText>
                             </Stack>
                             <Stack gap={2}>
                                 <Text fontWeight={600}>Joined</Text>
-                                {singleProductStatus.isLoading ? <SpinnerComponentSmall size="sm" /> : <Text>{formatDate(singleCustomer?.joined)}</Text>}
+                                <SkeletonText isLoaded={!getSingleCustomerDetailsStatus.isLoading} noOfLines={1} w={`10rem`}>
+                                    <Text>{formatDate(singleCustomer?.joined)}</Text>
+                                </SkeletonText>
                             </Stack>
                         </Flex>
                         <SimpleGrid gap={4} columns={{ base: 1, md: 2 }}>
-                            <Box>
-                                <DataWidgetCard showIcon={false} title={"Total Order"} value={singleCustomer.total_order} />
-                            </Box>
-                            <Box>
-                                <DataWidgetCard showIcon={false} title={"Total Transaction"} value={formatCurrency(singleCustomer.total_transactions)} />
-                            </Box>
-                            <Box>
-                                <DataWidgetCard showIcon={false} title={"Free Products"} value={singleCustomer.free_products} />
-                            </Box>
-                            <Box>
-                                <DataWidgetCard showIcon={false} title={"Sale Products"} value={singleCustomer.sale_products} />
-                            </Box>
+                            <Skeleton isLoaded={!getSingleCustomerDetailsStatus.isLoading}>
+                                <Box>
+                                    <DataWidgetCard showIcon={false} title={"Total Order"} value={singleCustomer.total_order} />
+                                </Box>
+                            </Skeleton>
+                            <Skeleton isLoaded={!getSingleCustomerDetailsStatus.isLoading}>
+                                <Box>
+                                    <DataWidgetCard showIcon={false} title={"Total Transaction"} value={formatCurrency(singleCustomer.total_transactions)} />
+                                </Box>
+                            </Skeleton>
+                            <Skeleton isLoaded={!getSingleCustomerDetailsStatus.isLoading}>
+                                <Box>
+                                    <DataWidgetCard showIcon={false} title={"Free Products"} value={singleCustomer.free_products} />
+                                </Box>
+                            </Skeleton>
+                            <Skeleton isLoaded={!getSingleCustomerDetailsStatus.isLoading}>
+                                <Box>
+                                    <DataWidgetCard showIcon={false} title={"Sale Products"} value={singleCustomer.sale_products} />
+                                </Box>
+                            </Skeleton>
                         </SimpleGrid>
                     </Box>
                     <Box>
-                        <CustomerDetailsTable tableData={singleCustomer?.latest_purchases} />
+                        {getSingleCustomerDetailsStatus.isLoading ? (
+                            <OnBoardingLoader />
+                        ) : (
+                            <CustomerDetailsTable tableData={singleCustomer?.latest_purchases} />
+                        )}
                     </Box>
                 </SimpleGrid>
             </Box>

@@ -11,7 +11,7 @@ import { DropdownActionLive } from "../../../DropdownAction";
 
 export const PayoutTable = ({ tableData }) => {
     const token = useSelector(selectCurrentToken);
-    const navigate = useNavigate();
+
     const formatCurrency = useCurrency();
     const formatDate = useDate();
     const formatTime = useTime();
@@ -23,7 +23,7 @@ export const PayoutTable = ({ tableData }) => {
         },
     };
 
-    const tableHeader = [`Price`, `BAnk Account`, `Period`, `Status`, ``].map((title) => {
+    const tableHeader = [`Price`, `BAnk Account`, `Period`, `Commission amount`].map((title) => {
         return (
             <Th py={3} key={title}>
                 {title}
@@ -32,7 +32,7 @@ export const PayoutTable = ({ tableData }) => {
     });
     const withdrawEarnings = [1, 2, 3, 4, 5]?.map((earning) => {
         return (
-            <Tr _hover={{ bgColor: `purple.100`, cursor: `pointer` }} onClick={() => navigate(`/dashboard/payouts/${earning.id}`)} key={earning}>
+            <Tr _hover={{ bgColor: `purple.100`, cursor: `pointer` }} key={earning}>
                 <Td>
                     <Flex alignItems={`center`}>
                         <Text>{formatCurrency(120000)}</Text>
@@ -49,21 +49,10 @@ export const PayoutTable = ({ tableData }) => {
                 </Td>
                 <Td>
                     <Flex>
-                        <Tag bg={`yellow.200`} color={`yellow.300`} size={`lg`} fontSize={`sm`}>
-                            Pending
+                        <Tag bg={`grey.200`} color={`yellow.300`} size={`lg`} fontSize={`sm`}>
+                            N/A
                         </Tag>
                     </Flex>
-                </Td>
-                <Td>
-                    {/* there is a status bug here...call tobi later 🤒 */}
-                    {/* {earning?.status === `draft` && !earning?.deleted_at ? (
-                        <DropdownActionDraft earning={earning} icon={`tabler:dots`} />
-                    ) : earning?.status === `published` ? (
-                        <DropdownActionLive earning={earning} icon={`tabler:dots`} />
-                    ) : earning?.status === `deleted` || earning?.deleted_at ? (
-                        <DropdownActionDelete earning={earning} icon={`tabler:dots`} />
-                    ) : null} */}
-                    <DropdownActionLive earning={earning} icon={`tabler:dots`} />
                 </Td>
             </Tr>
         );

@@ -1,6 +1,3 @@
-import { useSelector } from "react-redux";
-import { useCallback, useEffect } from "react";
-import { selectAllProducts, useGetAllProductsMutation } from "@productize-v1.0.0/modules/shared/redux";
 import AllproductActive from "../premium/AllproductActive";
 import AccountStatus from "../empty/AccountStatus";
 import { Box, Flex } from "@chakra-ui/react";
@@ -8,21 +5,7 @@ import { ProductCards } from "../../../ProductCards";
 import { useSetPaymentPlan } from "@productize-v1.0.0/modules/shared/hooks";
 
 const AllProductsTabLayout = () => {
-    // const [getAllProducts, getAllProductsStatus] = useGetAllProductsMutation();
-    // const allProducts = useSelector(selectAllProducts);
     const isPremium = useSetPaymentPlan();
-
-    // const showAllProducts = useCallback(async () => {
-    //     try {
-    //         await getAllProducts(null).unwrap();
-    //     } catch (error) {
-    //         return error;
-    //     }
-    // }, [getAllProducts]);
-
-    // useEffect(() => {
-    //     showAllProducts();
-    // }, [showAllProducts]);
 
     /* display cards for asthetics */
 

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/rules-of-hooks */
-import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Avatar, Text, Stack, Checkbox, Box, Tag } from "@chakra-ui/react";
+import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Avatar, Text, Stack, Checkbox, Box, Tag, Skeleton } from "@chakra-ui/react";
 import { Icon } from "@iconify/react";
 import { DropdownActionDelete, DropdownActionDraft, DropdownActionLive } from "../DropdownAction";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +10,7 @@ import { useCurrency, useDate, useTime } from "@productize-v1.0.0/modules/shared
 import { selectAllProducts, selectCurrentToken, selectProductMetaData, useGetAllProductsMutation } from "@productize-v1.0.0/modules/shared/redux";
 import { OnBoardingLoader, SharedButton } from "@productize-v1.0.0/modules/shared/ui";
 import { useCallback, useEffect } from "react";
+import { ProductsTableControl } from "./tableControls/ProductsTableControl";
 
 interface tableProps {
     draft?: boolean;
@@ -154,13 +155,16 @@ export const ProductTable = ({ draft, live, deleted, tableData }: tableProps) =>
             return error;
         }
     }, [getAllProducts]);
- 
+
     useEffect(() => {
         showAllProducts();
     }, [showAllProducts]);
 
     return (
         <>
+            <Skeleton isLoaded={!getAllProductsStatus.isLoading}>
+                <ProductsTableControl />
+            </Skeleton>
             <TableContainer display={`flex`} flexDir={`column`} height={`40rem`} justifyContent={`space-between`} overflowY={`auto`}>
                 {getAllProductsStatus.isLoading ? (
                     <OnBoardingLoader />

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { apiSlice } from "../apiSlice";
-import { setAllCustomers } from "./customersSlice";
+import { setAllCustomers, setSingleCustomer } from "./customersSlice";
 
 //productize-api.techstudio.academy/api/Customers
 export const CustomersApiSlice = apiSlice.injectEndpoints({
@@ -25,32 +25,33 @@ export const CustomersApiSlice = apiSlice.injectEndpoints({
             },
         }),
 
-        // getSingleCustomerDetails: builder.mutation({
-        //     query: (credentials) => ({
-        //         url: `/Customers/${credentials?.productID}`,
-        //         method: "GET",
-        //     }),
-        //     async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-        //         try {
-        //             const { data } = await queryFulfilled;
-        //             dispatch(
-        //                 setSingleCustomer({
-        //                     product: data,
-        //                 })
-        //             );
-        //         } catch (error) {
-        //             return error;
-        //         }
-        //     },
-        // }),
+        getSingleCustomerDetails: builder.mutation({
+            query: (credentials) => ({
+                url: `/customers/${credentials?.customerID}`,
+                method: "GET",
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    console.log(data);
+                    dispatch(
+                        setSingleCustomer({
+                            customer: data.data,
+                        })
+                    );
+                } catch (error) {
+                    return error;
+                }
+            },
+        }),
 
-        // downloadCustomersList: builder.mutation({
-        //     query: (credentials) => ({
-        //         url: `Customers/download?page=1&format=csv`,
-        //         method: "GET",
-        //     }),
-        // }),
+        downloadCustomersList: builder.mutation({
+            query: (credentials) => ({
+                url: `Customers/download?page=1&format=csv`,
+                method: "GET",
+            }),
+        }),
     }),
 });
 
-export const { useGetAllCustomersMutation } = CustomersApiSlice;
+export const { useGetAllCustomersMutation, useGetSingleCustomerDetailsMutation } = CustomersApiSlice;

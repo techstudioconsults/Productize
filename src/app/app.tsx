@@ -66,16 +66,17 @@ export function App() {
                 {/* dashboard */}
                 <Route path="/dashboard" element={<DashboardLayout />}>
                     <Route path="home" index element={<DashboardHome />} />
+
                     <Route path="products" element={<Products />} />
                     <Route path="products/:productID" element={<DAshboardProductDetails />} />
                     <Route path="products/new" element={<NewProduct />} />
-                    <Route path="orders" element={<Orders />}>
-                        <Route path=":orderid" element={<DashboardOrderDetails />} />
-                    </Route>
+
+                    <Route path="orders" element={<Orders />} />
+                    <Route path="orders/:orderID" element={<DashboardOrderDetails />} />
 
                     <Route path="payouts" element={<Payouts />} />
-                    <Route path="payouts/:payoutid" element={<PayoutDetails />} />
-                    <Route path="payouts/:payoutid/withdraw-earnings" element={<WithdrawalEarnings />} />
+                    {/* <Route path="payouts/:payoutid" element={<PayoutDetails />} /> */}
+                    {/* <Route path="payouts/:payoutid/withdraw-earnings" element={<WithdrawalEarnings />} /> */}
 
                     <Route path="analytics" element={<Analytics />} />
 

@@ -1,8 +1,10 @@
-import { Box } from "@chakra-ui/react";
+import { Box, useDisclosure } from "@chakra-ui/react";
 import { EmptyState } from "../../../empty-states/EmptyState";
 import { DashboardBanner } from "../../../DashboardBanner";
+import { SharedButton, UpgradePlanModal } from "@productize-v1.0.0/modules/shared/ui";
 
 const PayoutFreeView = () => {
+    const { isOpen, onOpen, onClose } = useDisclosure();
     return (
         <Box>
             <Box my={8}>
@@ -25,7 +27,21 @@ const PayoutFreeView = () => {
                     textAlign={{ base: `center`, md: `start` }}
                     showImage={true}
                     maxW="100%"
-                />
+                >
+                    <SharedButton
+                        text={"Upgrade Plan"}
+                        btnExtras={{
+                            onClick: onOpen,
+                        }}
+                        width={"fit-content"}
+                        height={"48px"}
+                        bgColor={"purple.200"}
+                        textColor={"white"}
+                        borderRadius={"4px"}
+                        fontSize={{ base: `sm`, md: `md` }}
+                    />
+                    <UpgradePlanModal onClose={onClose} isOpen={isOpen} />
+                </EmptyState>
             </Box>
         </Box>
     );

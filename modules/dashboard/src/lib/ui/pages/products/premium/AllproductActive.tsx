@@ -3,7 +3,6 @@ import { useCurrency } from "@productize-v1.0.0/modules/shared/hooks";
 import { selectProductAnalytics, useGetProductAnalyticsMutation } from "@productize-v1.0.0/modules/shared/redux";
 import { useSelector } from "react-redux";
 import { DataWidgetCard } from "../../../DataWidgetCard";
-import { ProductsTableControl } from "../../../tables/tableControls/ProductsTableControl";
 import { ProductTable } from "../../../tables/ProductTable";
 import { useCallback, useEffect } from "react";
 
@@ -57,7 +56,6 @@ const AllproductActive = ({ products }: draftActiveProps) => {
             </Box>
             {/* dropdown filters and buttons Controls */}
             <Stack mt={12} gap={4}>
-                <ProductsTableControl />
                 <ProductTable tableData={products} />
             </Stack>
         </Box>

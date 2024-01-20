@@ -18,8 +18,8 @@ const CustomerSlice = createSlice({
         },
 
         setSingleCustomer: (state, action) => {
-            const { Customer } = action.payload;
-            state.singleCustomer = Customer;
+            const { customer } = action.payload;
+            state.singleCustomer = customer;
         },
 
         resetCustomersStore: (state) => {

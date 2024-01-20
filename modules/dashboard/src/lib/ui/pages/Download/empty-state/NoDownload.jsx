@@ -1,8 +1,7 @@
 import { SharedButton } from "@productize-v1.0.0/modules/shared/ui";
 import { Box, Flex, Image, Text } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { DashboardBanner } from "../../../lib/DashboardBanner";
-import { DashboardEmptyState } from "../../../lib/empty-states/DashboardEmptyState";
+import { DashboardBanner } from "../../../DashboardBanner";
 
 const NoDownload = () => {
     return (
@@ -45,4 +44,3 @@ const NoDownload = () => {
 };
 
 export default NoDownload;
-

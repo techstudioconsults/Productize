@@ -5,7 +5,7 @@ import { SharedButton, ToastFeedback } from "@productize-v1.0.0/modules/shared/u
 import { Divider } from "rsuite";
 import { useGetBankListMutation, useGetUserMutation, useSetupPaymentAccountMutation } from "@productize-v1.0.0/modules/shared/redux";
 
-export const SetupPaymentForm = () => {
+export const SetupPaymentForm = ({ closeModal }) => {
     const toast = useToast();
     const [getBankList] = useGetBankListMutation();
     const [getUser] = useGetUserMutation();
@@ -56,7 +56,7 @@ export const SetupPaymentForm = () => {
                     position: "top",
                     render: () => <ToastFeedback message={res.data?.message} bgColor="green.100" title="Paystack Setup" />,
                 });
-                 await getUser(null).unwrap();
+                await getUser(null).unwrap();
             }
         } catch (error) {
             console.log(error);
@@ -132,6 +132,7 @@ export const SetupPaymentForm = () => {
                     <SharedButton
                         btnExtras={{
                             border: `1px solid #6D5DD3`,
+                            onClick: closeModal,
                         }}
                         text={"Cancel"}
                         width={`100%`}

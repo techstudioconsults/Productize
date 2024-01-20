@@ -33,7 +33,7 @@ export const useLinks = () => {
         {
             id: 1,
             name: `Downloads`,
-            path: `downloads`,
+            path: `downloads#all-downloads`,
             type: `free`,
             icon: download,
         },
@@ -56,7 +56,7 @@ export const useLinks = () => {
         {
             id: 2,
             name: `Settings`,
-            path: `settings`,
+            path: `settings#account`,
             type: `free`,
             icon: setting,
         },

@@ -23,3 +23,5 @@ export * from "./lib/ui/UploadExternalFiles";
 export * from "./lib/ui/pages/payouts/premium/PayoutDetails";
 export * from "./lib/ui/pages/payouts/premium/WithdrawalEarnings";
 export * from "./lib/ui/pages/settings";
+export * from "./lib/ui/pages/settings/layout/SettingsTab";
+export * from "./lib/ui/pages/settings/pages/PlanSettings";

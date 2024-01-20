@@ -45,7 +45,7 @@ export const Analytics = () => {
                         <DataWidgetCard showIcon={false} title={"Views"} value={0} />
                     </Box>
                     <Box>
-                        <DataWidgetCard showIcon={false} title={"Revenue"} value={formatCurrency(productAnaysis.new_orders_revenue)} />
+                        <DataWidgetCard showIcon={false} title={"Revenue"} value={formatCurrency(productAnaysis.total_revenues)} />
                     </Box>
                     <Box>
                         <DataWidgetCard showIcon={false} title={"New Order"} value={productAnaysis.new_orders} />

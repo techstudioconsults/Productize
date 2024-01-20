@@ -17,14 +17,14 @@ import {
     Analytics,
     Help,
     Download,
-    PayoutDetails,
-    WithdrawalEarnings,
     Settings,
+    SettingsTab,
 } from "@productize-v1.0.0/dashboard";
 import { ForgotPassword, Login, Signup } from "@productize-v1.0.0/auth";
 import React from "react";
 
 import { Suspense } from "react";
+import { PlanSettings } from "@productize-v1.0.0/dashboard";
 
 // using suspense and lazy loading
 const Home = React.lazy(() => import("../pages/home/Home").then((module) => ({ default: module.Home })));
@@ -75,8 +75,8 @@ export function App() {
                     <Route path="orders/:orderID" element={<DashboardOrderDetails />} />
 
                     <Route path="payouts" element={<Payouts />} />
-                    {/* <Route path="payouts/:payoutid" element={<PayoutDetails />} /> */}
-                    {/* <Route path="payouts/:payoutid/withdraw-earnings" element={<WithdrawalEarnings />} /> */}
+                    {/* <Route path="payouts/:payoutid" element={<PayoutDetails />} />
+                    <Route path="payouts/:payoutid/withdraw-earnings" element={<WithdrawalEarnings />} /> */}
 
                     <Route path="analytics" element={<Analytics />} />
 

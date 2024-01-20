@@ -38,7 +38,7 @@ const PremiumLayout = () => {
                 px={8}
             />
             <Box my={8}>
-                {orders.length ? (
+                {orders?.length ? (
                     <PayoutPremiumView />
                 ) : (
                     <DashboardEmptyState

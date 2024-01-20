@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 import { Icon } from "@iconify/react";
 import { useDateRangeFormat } from "@productize-v1.0.0/modules/shared/hooks";
-import { selectCurrentToken, useGetAllProductsMutation } from "@productize-v1.0.0/modules/shared/redux";
+import { selectCurrentToken, useGetDraftProductsMutation } from "@productize-v1.0.0/modules/shared/redux";
 import { SpinnerComponentSmall, SharedButton } from "@productize-v1.0.0/modules/shared/ui";
 import download from "downloadjs";
 import { DropdownAction } from "../../../../DropdownAction";
@@ -19,7 +19,7 @@ export const DraftTableControl = ({ showRefreshBtn }) => {
     const [startDate, setStartDate] = useState(``);
     const [endDate, setEndDate] = useState(``);
     const [status, setStatus] = useState(``);
-    const [getAllProducts, getAllProductsStatus] = useGetAllProductsMutation();
+    const [getDraftProducts, getDraftProductsStatus] = useGetDraftProductsMutation();
     const formatDateRange = useDateRangeFormat();
 
     const headersCredentials = {
@@ -37,14 +37,14 @@ export const DraftTableControl = ({ showRefreshBtn }) => {
         try {
             setExportLoading(true);
             const res = await axios.get(
-                `${BASE_URL}/products/download?status=${status}&format=csv`,
+                `${BASE_URL}/products/download?status=${`draft`}&format=csv`,
                 // `${BASE_URL}products/download?start_date=${startDate}&end_date=${endDate}&format=csv`,
                 headersCredentials
             );
             if (res.status === 200) {
                 setExportLoading(false);
                 const blob = new Blob([res.data], { type: "text/csv" });
-                download(blob, `Products.csv`);
+                download(blob, `Draft Products.csv`);
             }
         } catch (error) {
             setExportLoading(false);
@@ -61,24 +61,24 @@ export const DraftTableControl = ({ showRefreshBtn }) => {
     };
 
     const filterTable = async () => {
-        if (status === `all`) {
-            try {
-                await getAllProducts(null).unwrap();
-            } catch (error) {
-                console.log(error);
-            }
-        } else {
-            try {
-                await getAllProducts({
-                    page: null,
-                    startDate,
-                    endDate,
-                    status,
-                }).unwrap();
-            } catch (error) {
-                console.log(error);
-            }
+        // if (status === `all`) {
+        //     try {
+        //         await getDraftProducts(null).unwrap();
+        //     } catch (error) {
+        //         console.log(error);
+        //     }
+        // } else {
+        try {
+            await getDraftProducts({
+                page: null,
+                startDate,
+                endDate,
+                status,
+            }).unwrap();
+        } catch (error) {
+            console.log(error);
         }
+        // }
     };
 
     return (
@@ -94,12 +94,20 @@ export const DraftTableControl = ({ showRefreshBtn }) => {
                     />
                 </Box>
                 <Box w={`100%`}>
-                    <SelectPicker searchable={false} onSelect={handleStatusChange} style={{ width: `100%` }} placeholder={`Status`} size="lg" data={data} />
+                    <SelectPicker
+                        disabled
+                        searchable={false}
+                        onSelect={handleStatusChange}
+                        style={{ width: `100%` }}
+                        placeholder={`Status`}
+                        size="lg"
+                        data={data}
+                    />
                 </Box>
                 <IconButton
                     color={`purple.200`}
                     bgColor={`purple.100`}
-                    isLoading={getAllProductsStatus.isLoading}
+                    isLoading={getDraftProductsStatus.isLoading}
                     spinner={<SpinnerComponentSmall size="sm" />}
                     onClick={filterTable}
                     fontSize={`xl`}

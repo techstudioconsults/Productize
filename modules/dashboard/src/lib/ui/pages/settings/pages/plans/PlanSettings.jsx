@@ -1,6 +1,7 @@
 import { Box, Card, Center, Divider, Flex, Grid, GridItem, ModalCloseButton, Skeleton, Stack, Text, useDisclosure } from "@chakra-ui/react";
 import { Icon } from "@iconify/react";
 import { SharedButton } from "@productize-v1.0.0/modules/shared/ui";
+import { Link } from "react-router-dom";
 
 export const PlanSettings = () => {
     return (
@@ -24,19 +25,22 @@ export const PlanSettings = () => {
                         </Text>
                     </Box>
                     <Box>
-                        <SharedButton
-                            text={"Change Plan"}
-                            width={`100%`}
-                            height={"48px"}
-                            bgColor={"purple.200"}
-                            textColor={"white"}
-                            borderRadius={"4px"}
-                            fontSize={{ base: `sm`, lg: `md` }}
-                        />
+                        <Link to={`/dashboard/settings/plans/change-plans`}>
+                            <SharedButton
+                                text={"Change Plan"}
+                                width={`100%`}
+                                height={"48px"}
+                                bgColor={"purple.200"}
+                                textColor={"white"}
+                                borderRadius={"4px"}
+                                fontSize={{ base: `sm`, lg: `md` }}
+                            />
+                        </Link>
                     </Box>
                 </Flex>
                 <Divider my={5} />
-                <Flex alignItems={`center`} justifyContent={`space-between`}>
+
+                <Flex as={Link} to={`/dashboard/settings/plans/billing-cycle`} alignItems={`center`} justifyContent={`space-between`}>
                     <Box>
                         <Text fontWeight={600} textAlign={{ base: `center`, md: `initial` }} color={`purple.300`} my={2}>
                             Billing cycle

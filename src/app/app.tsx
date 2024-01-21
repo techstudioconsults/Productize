@@ -19,6 +19,10 @@ import {
     Download,
     Settings,
     SettingsTab,
+    AccountSettings,
+    PaymentSettings,
+    ChangePlans,
+    BillingCycle,
 } from "@productize-v1.0.0/dashboard";
 import { ForgotPassword, Login, Signup } from "@productize-v1.0.0/auth";
 import React from "react";
@@ -87,7 +91,11 @@ export function App() {
                     <Route path="help" element={<Help />} />
                     <Route path="downloads" element={<Download />} />
 
-                    <Route path="settings" element={<Settings />} />
+                    <Route path="settings" element={<Settings />}>
+                        <Route path="plans" element={<PlanSettings />} />
+                        <Route path="plans/change-plans" element={<ChangePlans />} />
+                        <Route path="plans/billing-cycle" element={<BillingCycle />} />
+                    </Route>
                 </Route>
             </Routes>
         </Suspense>

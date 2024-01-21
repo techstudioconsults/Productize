@@ -9,6 +9,8 @@ export * from "./lib/PaymentStatusTag";
 export * from "./lib/SearchComp";
 export * from "./lib/UpgradePlanModal";
 export * from "./lib/PricingCard";
+export * from "./lib/FreePricingCard";
+export * from "./lib/PremiumPricingCard";
 export * from "./lib/Icon";
 export * from "./lib/Modal";
 export * from "./lib/SpinnerComponent";

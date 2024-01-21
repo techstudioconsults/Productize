@@ -1,10 +1,10 @@
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Flex } from "@chakra-ui/react";
 
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Link, Outlet, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import AccountSettings from "../pages/AccountSettings";
 import PaymentSettings from "../pages/PaymentSettings";
-import PlanSettings from "../pages/PlanSettings";
+import PlanSettings from "../pages/plans/PlanSettings";
 
 const activeStateStyle = {
     borderBottom: `2px solid #6D5DD3`,
@@ -38,8 +38,8 @@ export const SettingsTab = () => {
                     <Tab onClick={() => handleTabClick("#payment")} id="payment" _selected={activeStateStyle} py={6}>
                         Payment
                     </Tab>
-                    <Tab onClick={() => handleTabClick("#plans")} id="plans" _selected={activeStateStyle} py={6}>
-                        Plans
+                    <Tab id="plans" _selected={activeStateStyle} py={6}>
+                        <Link to="/dashboard/settings/plans">Plans</Link>
                     </Tab>
                 </Flex>
             </TabList>
@@ -52,7 +52,7 @@ export const SettingsTab = () => {
                     <PaymentSettings />
                 </TabPanel>
                 <TabPanel px={0}>
-                    <PlanSettings />
+                    <Outlet />
                 </TabPanel>
             </TabPanels>
         </Tabs>

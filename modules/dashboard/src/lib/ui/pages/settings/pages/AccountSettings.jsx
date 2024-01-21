@@ -6,7 +6,7 @@ import { ErrorText, SharedButton, ToastFeedback } from "@productize-v1.0.0/modul
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-const AccountSettings = () => {
+export const AccountSettings = () => {
     const [showResetPasswordView, setShowResetPassword] = useState(true);
     const [error, setError] = useState("");
     const toast = useToast();

@@ -3,26 +3,26 @@ import { Box, Flex, List, ListItem, Stack, Tag, Text } from "@chakra-ui/react";
 import { Icon } from "@iconify/react";
 import { SharedButton } from "./SharedButton";
 import { usePlanUpgrade, useSetPaymentPlan } from "@productize-v1.0.0/modules/shared/hooks";
-import { CardLayout, cardProps } from "./layouts/CardLayout";
+import { CardLayout } from "./layouts/CardLayout";
 // import { CardLayout, cardProps } from '@productize-v1.0.0/modules/external-pages/ui';
 
-export interface pricingCardProps {
-    cardProps: cardProps;
-    listItems: Array<string>;
-    iconColor: string;
-    amount: string | number;
-    status: string;
-    textColor: string;
-    tagProps: {
-        title: string;
-        bgColor: string;
-        color: string;
-    };
-    statusColor: string;
-    showButton?: boolean;
-}
+// export interface pricingCardProps {
+//     cardProps: cardProps;
+//     listItems: Array<string>;
+//     iconColor: string;
+//     amount: string | number;
+//     status: string;
+//     textColor: string;
+//     tagProps: {
+//         title: string,
+//         bgColor: string,
+//         color: string,
+//     };
+//     statusColor: string;
+//     showButton?: boolean;
+// }
 
-export const PricingCard = ({ cardProps, listItems, iconColor, amount, status, textColor, statusColor, tagProps, showButton }: pricingCardProps) => {
+export const FreePricingCard = ({ cardProps, listItems, iconColor, amount, status, textColor, statusColor }) => {
     const { upgrade, upgradeStatus } = usePlanUpgrade();
     const isPremium = useSetPaymentPlan();
 
@@ -46,15 +46,14 @@ export const PricingCard = ({ cardProps, listItems, iconColor, amount, status, t
                             <Text fontWeight={500} color={statusColor}>
                                 {status}
                             </Text>
-                            <Tag
+                            {/* <Tag
                                 fontWeight={600}
                                 // color={isPremium && cardProps.bgColor === `purple.300` ? `grey.100` : tagProps.color}
                                 bgColor={isPremium && cardProps.bgColor === `purple.300` ? `yellow.200` : ``}
                                 size={`lg`}
                             >
-                                {/* {isPremium && cardProps.bgColor === `purple.300` ? `Current Plan` : isPremium ? `casual` : tagProps.title} */}
                                 {cardProps.bgColor === `purple.300` ? `Best Value` : null}
-                            </Tag>
+                            </Tag> */}
                         </Flex>
                         <Text mt={4} as={`h3`} color={textColor} fontWeight={700}>
                             NGN {amount}
@@ -66,13 +65,13 @@ export const PricingCard = ({ cardProps, listItems, iconColor, amount, status, t
                     <List spacing={3}>{lists}</List>
                 </Box>
                 <Stack gap={3}>
-                    {isPremium ? (
+                    {!isPremium ? (
                         <SharedButton
                             text={"Current Plan"}
                             width={"100%"}
                             height={"56px"}
                             bgColor={"transparent"}
-                            textColor={"white"}
+                            textColor={"black"}
                             borderRadius={"4px"}
                             fontSize={{}}
                             btnExtras={{

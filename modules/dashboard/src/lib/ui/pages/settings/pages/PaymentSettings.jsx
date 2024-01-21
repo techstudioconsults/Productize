@@ -6,7 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useRetrieveAllPayoutAccountMutation } from "@productize-v1.0.0/modules/shared/redux";
 import BankCard from "../../payouts/components/BankCard";
 
-const PaymentSettings = () => {
+export const PaymentSettings = () => {
     const { onOpen, onClose, isOpen } = useDisclosure();
     const [payoutAccountList, setPayoutAccountList] = useState([]);
     const [retieveAllPayoutAccounts, retieveAllPayoutAccountsStatus] = useRetrieveAllPayoutAccountMutation();

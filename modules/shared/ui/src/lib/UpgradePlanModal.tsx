@@ -1,6 +1,7 @@
 import { Center, Flex, Modal, ModalContent, ModalOverlay, Text } from "@chakra-ui/react";
 import { Icon } from "@iconify/react";
-import { PricingCard } from "./PricingCard";
+import { FreePricingCard } from "./FreePricingCard";
+import { PremiumPricingCard } from "./PremiumPricingCard";
 
 interface modalProp {
     onClose: () => void;
@@ -8,13 +9,12 @@ interface modalProp {
 }
 
 export const UpgradePlanModal = ({ isOpen, onClose }: modalProp) => {
-
     return (
         <Modal size={{ base: `full`, md: `5xl` }} isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent borderRadius={`1rem`} py={10} px={{ base: 4, md: 20 }}>
                 <Flex flexDir={{ base: `column`, md: `row` }} justifyContent={`space-between`} alignItems={`center`} gap={`10`}>
-                    <PricingCard
+                    <FreePricingCard
                         cardProps={{
                             bgColor: `purple.100`,
                             width: { base: `100%`, xl: `25rem` },
@@ -33,14 +33,8 @@ export const UpgradePlanModal = ({ isOpen, onClose }: modalProp) => {
                         status={"Free"}
                         textColor={"yellow.300"}
                         statusColor={"yellow.300"}
-                        tagProps={{
-                            title: "Current Plan",
-                            bgColor: "grey.800",
-                            color: `white`,
-                        }}
                     />
-                    <PricingCard
-                        showButton
+                    <PremiumPricingCard
                         cardProps={{
                             bgColor: `purple.300`,
                             width: { base: `100%`, xl: `25rem` },
@@ -59,11 +53,6 @@ export const UpgradePlanModal = ({ isOpen, onClose }: modalProp) => {
                         status={"premium"}
                         textColor={"purple.100"}
                         statusColor={"yellow.100"}
-                        tagProps={{
-                            title: "Best Value",
-                            bgColor: "yellow.100",
-                            color: `yellow.300`,
-                        }}
                     />
                 </Flex>
                 <Flex p={5} justifyContent={`center`} alignItems={`center`}>

@@ -55,8 +55,8 @@ export const Sidenav = ({ links }: sidebarProps) => {
                             <Image
                                 w={`60%`}
                                 cursor={`pointer`}
-                                src={`https://res.cloudinary.com/dkszgtapy/image/upload/v1693034778/productize/Frame_14220_ogchl8.png`}
-                                alt="metabnb"
+                                src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png`}
+                                alt="Productize"
                             />
                         </Link>
                     </DrawerHeader>

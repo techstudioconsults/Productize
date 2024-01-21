@@ -12,7 +12,7 @@ import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 import { Avatar, Box, Card, CardBody, Container, Divider, Flex, Grid, GridItem, Image, List, ListItem, Stack, Text } from "@chakra-ui/react";
 import { Icon } from "@iconify/react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { SharedButton } from "./SharedButton";
 import { useCurrency } from "@productize-v1.0.0/modules/shared/hooks";
 
@@ -51,6 +51,8 @@ export interface TwoColumnLayoutProps {
 }
 
 export const TwoColumnLayout = ({ C1, C2 }: TwoColumnLayoutProps) => {
+    const { pathname } = useLocation();
+    const { productID } = useParams();
     return (
         <Grid
             // h="200px"
@@ -58,7 +60,7 @@ export const TwoColumnLayout = ({ C1, C2 }: TwoColumnLayoutProps) => {
             templateColumns="repeat(12, 1fr)"
             gap={4}
         >
-            <GridItem colSpan={{ base: 12, xl: 8 }}>{C1}</GridItem>
+            <GridItem colSpan={{ base: 12, xl: pathname === `/explore/product/details/${productID}` ? 8 : 12 }}>{C1}</GridItem>
             <GridItem colSpan={{ base: 12, xl: 4 }}>{C2}</GridItem>
         </Grid>
     );

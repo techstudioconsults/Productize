@@ -77,7 +77,7 @@ export const useLinks = () => {
                 path: `products#all-products`,
                 type: isPremium,
                 icon: product,
-                analysis: productAnaysis.total_products,
+                analysis: null,
             },
             {
                 id: 3,

@@ -13,22 +13,23 @@ import {
     Input,
     Text,
     Textarea,
+    useToast,
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { helpSchema } from "@productize-v1.0.0/auth";
 import { useSendHelpMessageMutation } from "@productize-v1.0.0/modules/shared/redux";
-import { ErrorText, SharedButton } from "@productize-v1.0.0/modules/shared/ui";
+import { ErrorText, SharedButton, ToastFeedback } from "@productize-v1.0.0/modules/shared/ui";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 export const Help = () => {
     const [error, setError] = useState("");
     const [sendHelpMessage, sendHelpMessageStatus] = useSendHelpMessageMutation();
+    const toast = useToast();
 
     const {
         register,
         handleSubmit,
-        control,
         formState: { errors },
     } = useForm({
         criteriaMode: "all",
@@ -41,6 +42,12 @@ export const Help = () => {
             console.log(data);
             const res = await sendHelpMessage(data).unwrap();
             console.log(res);
+            if (res.message) {
+                toast({
+                    position: "top",
+                    render: () => <ToastFeedback message={res.message} bgColor="green.100" color={`grey.400`} title="Done" />,
+                });
+            }
         } catch (error) {
             setError(error.data.message);
             console.log(error);

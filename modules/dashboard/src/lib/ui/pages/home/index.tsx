@@ -7,7 +7,7 @@ import { useStepGuide } from "@productize-v1.0.0/modules/shared/hooks";
 export const Home = () => {
     const totalSteps = useStepGuide();
 
-    if (totalSteps >= 3) {
+    if (totalSteps >= 4) {
         // return <FirstSalePage />;
         return <ActiveUserPage />;
     } else if (totalSteps < 4) {

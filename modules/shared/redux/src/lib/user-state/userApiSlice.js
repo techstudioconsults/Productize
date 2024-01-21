@@ -1,5 +1,5 @@
 import { apiSlice } from "../apiSlice";
-import { setUser } from "./userSlice";
+import { setBillingHistory, setUser } from "./userSlice";
 
 export const userApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
@@ -46,6 +46,55 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 try {
                     const { data } = await queryFulfilled;
                     console.log(data);
+                } catch (err) {
+                    console.log(err);
+                }
+            },
+        }),
+
+        enableSubscription: builder.mutation({
+            query: () => ({
+                url: `/payments/paystack/subscribe/enable`,
+                method: "GET",
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    console.log(data);
+                } catch (err) {
+                    console.log(err);
+                }
+            },
+        }),
+
+        manageSubscription: builder.mutation({
+            query: (credentials) => ({
+                url: `payments/subscription/manage`,
+                method: "GET",
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    console.log(data);
+                } catch (err) {
+                    console.log(err);
+                }
+            },
+        }),
+        billingHistory: builder.mutation({
+            query: (credentials) => ({
+                url: `/payments/subscription/billing`,
+                method: "GET",
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    console.log(data);
+                    dispatch(
+                        setBillingHistory({
+                            billingHistory: data,
+                        })
+                    );
                 } catch (err) {
                     console.log(err);
                 }
@@ -167,4 +216,7 @@ export const {
     useChangePasswordMutation,
     useSendHelpMessageMutation,
     useRetrieveAllPayoutAccountMutation,
+    useEnableSubscriptionMutation,
+    useManageSubscriptionMutation,
+    useBillingHistoryMutation,
 } = userApiSlice;

@@ -23,7 +23,7 @@ import { selectCurrentUser, useGetUserMutation } from "@productize-v1.0.0/module
 import { SharedButton, ToastFeedback, UpgradePlanModal } from "@productize-v1.0.0/modules/shared/ui";
 import { useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { yupResolver } from "@hookform/resolvers/yup";
 import { profileFormSchema } from "../../feature/formValidationSchema/form-schemas";
@@ -32,9 +32,8 @@ import { Link } from "react-router-dom";
 
 export const ProfileForm = () => {
     const user = useSelector(selectCurrentUser);
-    const dispatch = useDispatch();
     const toast = useToast();
-    const { query, isLoading } = useAxiosInstance();
+    const { query, isLoading } = useAxiosInstance({ MIME_TYPE: "multipart/form-data" });
     const isPremium = useSetPaymentPlan();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [getUser] = useGetUserMutation();
@@ -52,6 +51,7 @@ export const ProfileForm = () => {
     });
 
     const onSubmit = async (data) => {
+        console.log(data);
         if (isPremium) {
             try {
                 const res = await query(`post`, `/users/me`, data);
@@ -60,10 +60,6 @@ export const ProfileForm = () => {
                         position: "top",
                         render: () => <ToastFeedback message={``} bgColor="green.100" title="Profile updated successfully" />,
                     });
-                    // dispatch({
-                    //     type: "User/setUser",
-                    //     payload: { user: res.data.data },
-                    // });
                     await getUser(null).unwrap();
                 }
             } catch (error) {
@@ -143,7 +139,7 @@ export const ProfileForm = () => {
                                 <Text color={`grey.400`} className="tiny-text">
                                     This email is linked to your account
                                 </Text>
-                                <Link to={`/dashboard/settings`}>
+                                <Link to={`/dashboard/settings#account`}>
                                     <Text color={`purple.200`} className="tiny-text">
                                         Change Account Email
                                     </Text>

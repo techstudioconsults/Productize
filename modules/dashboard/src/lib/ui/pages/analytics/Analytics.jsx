@@ -94,7 +94,7 @@ export const Analytics = () => {
                                 <LineChart />
                             </div>
                             <Box my={10}>
-                                <Text as={`h6`}>Top Product</Text>
+                                <Text as={`h6`} my={5}>Top Product</Text>
                                 <AnalyticsTable />
                             </Box>
                         </section>

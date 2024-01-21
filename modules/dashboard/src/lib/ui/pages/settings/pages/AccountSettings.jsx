@@ -1,13 +1,18 @@
 import { Box, Divider, Flex, FormControl, FormLabel, Grid, GridItem, Input, Radio, Switch, Text, useToast } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { changePasswordSchema } from "@productize-v1.0.0/auth";
-import { useChangePasswordMutation } from "@productize-v1.0.0/modules/shared/redux";
+import { useAxiosInstance } from "@productize-v1.0.0/modules/shared/hooks";
+import { selectCurrentUser, useChangePasswordMutation, useGetUserMutation } from "@productize-v1.0.0/modules/shared/redux";
 import { ErrorText, SharedButton, ToastFeedback } from "@productize-v1.0.0/modules/shared/ui";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 
 export const AccountSettings = () => {
-    const [showResetPasswordView, setShowResetPassword] = useState(true);
+    const user = useSelector(selectCurrentUser);
+    const { query } = useAxiosInstance({ MIME_TYPE: "application/json" });
+    const [getUser] = useGetUserMutation();
+    const [showResetPasswordView, setShowResetPassword] = useState();
     const [error, setError] = useState("");
     const toast = useToast();
     const [changePassword, changePasswordStatus] = useChangePasswordMutation();
@@ -46,6 +51,74 @@ export const AccountSettings = () => {
         }
     };
 
+    const [purchaseNotice, setPurchaseNotice] = useState(false);
+    const handlePurchaseNotice = async () => {
+        setPurchaseNotice(!purchaseNotice);
+        try {
+            const res = await query(`post`, `/users/me`, { purchase_notification: purchaseNotice });
+            if (res?.status === 200) {
+                // toast({
+                //     position: "top",
+                //     render: () => <ToastFeedback message={``} bgColor="green.100" title="Profile updated successfully" />,
+                // });
+                await getUser(null).unwrap();
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const [newsAndUpdate, setNewsAndUpdateNotice] = useState(false);
+    const handleNewsAndUpdateNotice = async () => {
+        setNewsAndUpdateNotice(!newsAndUpdate);
+        try {
+            const res = await query(`post`, `/users/me`, { news_and_update_notification: newsAndUpdate });
+            if (res?.status === 200) {
+                // toast({
+                //     position: "top",
+                //     render: () => <ToastFeedback message={``} bgColor="green.100" title="Profile updated successfully" />,
+                // });
+                await getUser(null).unwrap();
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const [productCreationNotice, setProductCreationNotice] = useState(false);
+    const handleProductCreationNotice = async () => {
+        setProductCreationNotice(!productCreationNotice);
+        try {
+            const res = await query(`post`, `/users/me`, { product_creation_notification: productCreationNotice });
+            if (res?.status === 200) {
+                // toast({
+                //     position: "top",
+                //     render: () => <ToastFeedback message={``} bgColor="green.100" title="Profile updated successfully" />,
+                // });
+                await getUser(null).unwrap();
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const [payoutNotice, setPayoutNotice] = useState(false);
+    const handlePayoutNotice = async () => {
+        setPayoutNotice(!payoutNotice);
+        try {
+            const res = await query(`post`, `/users/me`, { payout_notification: payoutNotice });
+            if (res?.status === 200) {
+                // toast({
+                //     position: "top",
+                //     render: () => <ToastFeedback message={``} bgColor="green.100" title="Profile updated successfully" />,
+                // });
+                await getUser(null).unwrap();
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
         <div>
             <FormControl>
@@ -65,7 +138,7 @@ export const AccountSettings = () => {
                                         Lorem ipsum dolor sit amet.
                                     </Text>
                                 </FormLabel>
-                                <Switch size="lg" colorScheme="green" />
+                                <Switch onChange={handlePurchaseNotice} size="lg" colorScheme="green" isChecked={user?.purchase_notification} />
                             </Flex>
                         </FormControl>
                         <Divider my={4} />
@@ -77,7 +150,7 @@ export const AccountSettings = () => {
                                         Lorem ipsum dolor sit amet.
                                     </Text>
                                 </FormLabel>
-                                <Switch size="lg" colorScheme="green" />
+                                <Switch onChange={handleNewsAndUpdateNotice} size="lg" colorScheme="green" isChecked={user?.news_and_update_notification} />
                             </Flex>
                         </FormControl>
                         <Divider my={4} />
@@ -89,7 +162,7 @@ export const AccountSettings = () => {
                                         Lorem ipsum dolor sit amet.
                                     </Text>
                                 </FormLabel>
-                                <Switch size="lg" colorScheme="green" />
+                                <Switch onChange={handleProductCreationNotice} size="lg" colorScheme="green" isChecked={user?.product_creation_notification} />
                             </Flex>
                         </FormControl>
                         <Divider my={4} />
@@ -101,7 +174,7 @@ export const AccountSettings = () => {
                                         Lorem ipsum dolor sit amet.
                                     </Text>
                                 </FormLabel>
-                                <Switch size="lg" colorScheme="green" />
+                                <Switch onChange={handlePayoutNotice} isChecked={user?.payout_notification} size="lg" colorScheme="green" />
                             </Flex>
                         </FormControl>
                         <Divider my={4} />
@@ -242,7 +315,7 @@ export const AccountSettings = () => {
                                     </FormLabel>
                                     <Flex gap={10}>
                                         <Input
-                                            // required
+                                            disabled
                                             id={`email`}
                                             bgColor={`grey.200`}
                                             _focus={{ bgColor: `grey.300`, color: `grey.800` }}
@@ -251,7 +324,7 @@ export const AccountSettings = () => {
                                             variant={`filled`}
                                             size={`lg`}
                                         />
-                                        <Radio size={`lg`} />
+                                        <Radio disabled size={`lg`} />
                                     </Flex>
                                 </FormControl>
                             </Box>
@@ -262,7 +335,7 @@ export const AccountSettings = () => {
                                     </FormLabel>
                                     <Flex gap={10}>
                                         <Input
-                                            // required
+                                            disabled
                                             id={`alt-email`}
                                             bgColor={`grey.200`}
                                             _focus={{ bgColor: `grey.300`, color: `grey.800` }}
@@ -271,7 +344,7 @@ export const AccountSettings = () => {
                                             variant={`filled`}
                                             size={`lg`}
                                         />
-                                        <Radio size={`lg`} />
+                                        <Radio disabled size={`lg`} />
                                     </Flex>
                                 </FormControl>
                             </Box>
@@ -298,6 +371,9 @@ export const AccountSettings = () => {
                             </Box>
                             <Flex gap={2}>
                                 <SharedButton
+                                    btnExtras={{
+                                        disabled: true,
+                                    }}
                                     text={"Disable Account"}
                                     width={"fit-content"}
                                     height={"40px"}
@@ -309,6 +385,7 @@ export const AccountSettings = () => {
                                 <SharedButton
                                     btnExtras={{
                                         border: "1px solid #6D5DD3",
+                                        disabled: true,
                                     }}
                                     text={"Delete Account"}
                                     width={"fit-content"}

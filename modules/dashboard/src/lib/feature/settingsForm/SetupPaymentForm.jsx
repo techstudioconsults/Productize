@@ -3,13 +3,14 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { SharedButton, ToastFeedback } from "@productize-v1.0.0/modules/shared/ui";
 import { Divider } from "rsuite";
-import { useGetBankListMutation, useGetUserMutation, useSetupPaymentAccountMutation } from "@productize-v1.0.0/modules/shared/redux";
+import { useGetBankListMutation, useGetUserMutation, useRetrieveAllPayoutAccountMutation, useSetupPaymentAccountMutation } from "@productize-v1.0.0/modules/shared/redux";
 
 export const SetupPaymentForm = ({ closeModal }) => {
     const toast = useToast();
     const [getBankList] = useGetBankListMutation();
     const [getUser] = useGetUserMutation();
     const [setUpPayment, paymentStatus] = useSetupPaymentAccountMutation();
+    const [retieveAllPayoutAccounts] = useRetrieveAllPayoutAccountMutation();
     const [bankList, setBankList] = useState([]);
     const [selectedOption, setSelectedOption] = useState({ value: "", text: "" });
     const {
@@ -57,6 +58,7 @@ export const SetupPaymentForm = ({ closeModal }) => {
                     render: () => <ToastFeedback message={res.data?.message} bgColor="green.100" title="Paystack Setup" />,
                 });
                 await getUser(null).unwrap();
+                await retieveAllPayoutAccounts(null).unwrap();
             }
         } catch (error) {
             console.log(error);
@@ -74,7 +76,7 @@ export const SetupPaymentForm = ({ closeModal }) => {
     return (
         <FormControl as={`form`} onSubmit={handleSubmit(onSubmit)}>
             {/* {(loginStatus.isError || googleLoginStatus.isError) && <ErrorText error={error} />} */}
-            <FormControl mb={6}>
+            <FormControl mt={6}>
                 <FormLabel fontWeight={600} className="btn-text">
                     Account Name
                 </FormLabel>
@@ -91,7 +93,7 @@ export const SetupPaymentForm = ({ closeModal }) => {
                     {/* {errors?.email?.message} */}
                 </Text>
             </FormControl>
-            <FormControl mb={6}>
+            <FormControl mt={6}>
                 <FormLabel fontWeight={600} className="btn-text">
                     Bank
                 </FormLabel>
@@ -109,7 +111,7 @@ export const SetupPaymentForm = ({ closeModal }) => {
                     {/* {errors?.email?.message} */}
                 </Text>
             </FormControl>
-            <FormControl mb={6}>
+            <FormControl mt={6}>
                 <FormLabel fontWeight={600} className="btn-text">
                     Account Number
                 </FormLabel>

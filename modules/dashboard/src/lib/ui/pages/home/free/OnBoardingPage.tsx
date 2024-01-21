@@ -110,22 +110,10 @@ const OnBoardingPage = () => {
                             subTitle={"Complete your profile to start getting your products published."}
                             image={"https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951033/productize/Illustration_1_wdmvgf_jpnhgm.png"}
                             btn={{
-                                onClick: onOpen,
+                                onClick: () => navigate(`/dashboard/settings#payment`),
                             }}
                             btnText={"Make Money"}
                         />
-                        <ModalComp modalSize={`lg`} openModal={isOpen} closeModal={onClose}>
-                            <Box>
-                                <Flex>
-                                    <Text as={`h5`} fontSize={`xl`}>
-                                        Add Bank Account
-                                    </Text>
-                                    <ModalCloseButton />
-                                </Flex>
-                                <Divider />
-                            </Box>
-                            <SetupPaymentForm />
-                        </ModalComp>
                     </Box>
                     <Box>
                         <DashboardRadioBtnComp

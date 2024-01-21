@@ -30,7 +30,7 @@ export const DownloadLoader = () => {
     return (
         <SimpleGrid mt={10} columns={{ base: 2, lg: 4 }} spacing={{ base: 1, lg: 5 }}>
             {[2, 3, 4, 5, 6, 7, 8, 9].map((num) => {
-                return <Skeleton startColor={`purple.100`} height="387px" maxW={`266px`} borderRadius={`8px`} />;
+                return <Skeleton key={num} startColor={`purple.100`} height="387px" maxW={`266px`} borderRadius={`8px`} />;
             })}
         </SimpleGrid>
     );

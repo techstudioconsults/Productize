@@ -6,7 +6,7 @@ import { selectCurrentToken } from "../../../redux/src";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-export const useAxiosInstance = () => {
+export const useAxiosInstance = ({ MIME_TYPE }) => {
     const [isLoading, setLoading] = useState(false);
     const token = useSelector(selectCurrentToken);
     // console.log(token);
@@ -14,7 +14,7 @@ export const useAxiosInstance = () => {
     const headersCredentials = {
         headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
+            "Content-Type": MIME_TYPE,
         },
     };
 

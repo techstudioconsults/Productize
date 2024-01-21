@@ -4,49 +4,51 @@ import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { DashboardEmptyState } from "../../empty-states/DashboardEmptyState";
+import { useCurrency } from "@productize-v1.0.0/modules/shared/hooks";
+import { OnBoardingLoader } from "@productize-v1.0.0/modules/shared/ui";
 
 export const AnalyticsTable = () => {
     const [data, setData] = useState([]);
+    const [isLoading, setLoading] = useState(false);
+    const formatCurrency = useCurrency();
     const token = useSelector(selectCurrentToken);
 
-    const tableHeader = [`Latest Purchase`, `View`, `Price`, `Purchases`, `Revenuce`].map((title) => {
+    const tableHeader = [`Latest Purchase`, `View`, `Price`, `Purchases`, `Revenue`].map((title) => {
         return (
             <Th py={3} key={title}>
                 {title}
             </Th>
         );
     });
-    const tableContent = [1].map((content) => {
+    const tableContent = data?.data?.map((content) => {
         return (
-            <Tr key={content}>
-                {/* <Td>
+            <Tr key={content?.id}>
+                <Td>
                     <Flex gap={2} alignItems={`center`}>
-                        <Avatar
-                            zIndex={-1}
-                            bgColor={`yellow.100`}
-                            src="https://res.cloudinary.com/dkszgtapy/image/upload/v1692269980/learning_atvahc.gif"
-                            borderRadius={`4px`}
-                            boxSize={`44px`}
-                        />
-                        <Text>UX Design Fundamentals</Text>
+                        <Avatar zIndex={-1} bgColor={`yellow.100`} src={content?.thumbnail} borderRadius={`4px`} boxSize={`44px`} />
+                        <Text>{content?.title}</Text>
                     </Flex>
                 </Td>
                 <Td>
-                    <Flex>NGN 5.500</Flex>
+                    <Flex>N/A</Flex>
                 </Td>
                 <Td>
-                    <Flex>example@gmail.com</Flex>
+                    <Flex>{formatCurrency(content?.price)}</Flex>
                 </Td>
                 <Td>
-                    <Flex>15 May 2023 8:00 am</Flex>
-                </Td> */}
+                    <Flex>{content?.total_order}</Flex>
+                </Td>
+                <Td>
+                    <Flex>{formatCurrency(content?.total_sales)}</Flex>
+                </Td>
             </Tr>
         );
     });
 
     const getTableData = useCallback(async () => {
+        setLoading(true);
         try {
-            const res = await axios.get(`https://productize-api.techstudio.academy/api/orders`, {
+            const res = await axios.get(`https://productize-api.techstudio.academy/api/products/top`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     "Content-Type": "multipart/form-data",
@@ -55,8 +57,10 @@ export const AnalyticsTable = () => {
             console.log(res.data);
             if (res.status === 200) {
                 setData(res.data);
+                setLoading(false);
             }
         } catch (error) {
+            setLoading(false);
             console.error(error);
         }
     }, [token]);
@@ -64,6 +68,10 @@ export const AnalyticsTable = () => {
     useEffect(() => {
         getTableData();
     }, [getTableData]);
+
+    if (isLoading) {
+        return <OnBoardingLoader />;
+    }
 
     return (
         <TableContainer maxH={`25rem`} overflowY={`auto`}>
@@ -77,17 +85,19 @@ export const AnalyticsTable = () => {
                 {/* body */}
                 <Tbody color={`purple.300`}>{tableContent}</Tbody>
             </Table>
-            <Box my={10}>
-                <DashboardEmptyState
-                    content={{
-                        title: "",
-                        desc: "You do not have Customers activities yet.",
-                        img: `https://res.cloudinary.com/kingsleysolomon/image/upload/v1700317427/productize/Illustration_4_pujumv.png`,
-                    }}
-                    textAlign={{ base: `center` }}
-                    showImage
-                />
-            </Box>
+            {!data?.data?.length && (
+                <Box my={10}>
+                    <DashboardEmptyState
+                        content={{
+                            title: "",
+                            desc: "You do not have Customers activities yet.",
+                            img: `https://res.cloudinary.com/kingsleysolomon/image/upload/v1700317427/productize/Illustration_4_pujumv.png`,
+                        }}
+                        textAlign={{ base: `center` }}
+                        showImage
+                    />
+                </Box>
+            )}
         </TableContainer>
     );
 };

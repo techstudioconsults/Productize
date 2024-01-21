@@ -23,7 +23,7 @@ const disabledStateStyle = {
 const tabNames = ["product-details", "content-delivery", "preview", "share"];
 
 export const NewProductTab = () => {
-    const { query, isLoading } = useAxiosInstance();
+    const { query, isLoading } = useAxiosInstance({ MIME_TYPE: "multipart/form-data" });
     const [updateProductStatus, updateProductStatusStatus] = useUpdateProductStatusMutation();
 
     const toast = useToast();

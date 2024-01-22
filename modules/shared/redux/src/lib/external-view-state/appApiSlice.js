@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { apiSlice } from "../apiSlice";
-import { setAllProduct_EXTERNAL, setCart, setSingleProduct_EXTERNAL } from "./appSlice";
+import { setAllProduct_EXTERNAL, setCart, setSingleProduct_EXTERNAL, setTags } from "./appSlice";
 
 //productize-api.techstudio.academy/api/products
 export const appApiSlice = apiSlice.injectEndpoints({
@@ -83,6 +83,25 @@ export const appApiSlice = apiSlice.injectEndpoints({
                 }
             },
         }),
+        getProductTags: builder.mutation({
+            query: (credentials) => ({
+                url: `/products/tags`,
+                method: "GET",
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    console.log(data);
+                    dispatch(
+                        setTags({
+                            tags: data.data,
+                        })
+                    );
+                } catch (error) {
+                    return error;
+                }
+            },
+        }),
         purchaseProduct: builder.mutation({
             query: (credentials) => ({
                 // generate a random token value instead of using a hardcoded string
@@ -107,4 +126,11 @@ export const appApiSlice = apiSlice.injectEndpoints({
     }),
 });
 
-export const { useGetAllProducts_EXTERNALMutation, useGetSingleProduct_EXTERNALMutation, usePurchaseProductMutation, useAddToCartMutation, useGetFromCartMutation } = appApiSlice;
+export const {
+    useGetAllProducts_EXTERNALMutation,
+    useGetSingleProduct_EXTERNALMutation,
+    usePurchaseProductMutation,
+    useAddToCartMutation,
+    useGetFromCartMutation,
+    useGetProductTagsMutation,
+} = appApiSlice;

@@ -29,6 +29,8 @@ import { SharedButton } from "@productize-v1.0.0/modules/shared/ui";
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { ErrorMessage } from "@hookform/error-message";
 import { UploadExternalFiles } from "../../ui/UploadExternalFiles";
+import { useSelector } from "react-redux";
+import { selectTags } from "@productize-v1.0.0/modules/shared/redux";
 
 const quillModules = {
     toolbar: [
@@ -41,12 +43,9 @@ const quillModules = {
     ],
 };
 
-const tagData = ["3D", "Audio", "Business/Finance", "Comics", "Design", "Design/painting", "Education", "Fiction books", "Motion assets", "Printing"].map(
-    (item) => ({ label: item, value: item })
-);
-
 export const SetNewProductForm = () => {
     const { state, hash } = useLocation();
+    const tags = useSelector(selectTags);
     const location = useLocation();
     const [dataPreview, setDataPreview] = useState([]);
     const [coverPhotoPreview, setCoverPhotoPreview] = useState([]);
@@ -57,6 +56,8 @@ export const SetNewProductForm = () => {
         setValue,
         formState: { errors },
     } = useFormContext(); // retrieve all hook methods
+
+    const tagData = tags.map((item) => ({ label: item, value: item }));
 
     const showFiles = (inputId) => {
         document.getElementById(inputId)?.click();

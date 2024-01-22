@@ -18,9 +18,6 @@ import {
     Help,
     Download,
     Settings,
-    SettingsTab,
-    AccountSettings,
-    PaymentSettings,
     ChangePlans,
     BillingCycle,
 } from "@productize-v1.0.0/dashboard";

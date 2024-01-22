@@ -13,12 +13,12 @@ export const Explore = () => {
             <Container my={{ base: `3rem`, lg: `7rem` }} p={{ base: 4, lg: 0 }} maxW={`70rem`}>
                 <ExploreFeatures title={`Featured`} />
             </Container>
-            <Container my={{ base: `3rem`, lg: `7rem` }} p={{ base: 4, lg: 0 }} maxW={`70rem`}>
+            {/* <Container my={{ base: `3rem`, lg: `7rem` }} p={{ base: 4, lg: 0 }} maxW={`70rem`}>
                 <ExploreFeatures title={`Based on your recent search`} />
             </Container>
             <Container my={{ base: `3rem`, lg: `7rem` }} p={{ base: 4, lg: 0 }} maxW={`70rem`}>
                 <ExploreFeatures title={`Most Downloaded`} />
-            </Container>
+            </Container> */}
         </ExploreLayout>
     );
 };

@@ -101,7 +101,6 @@ export const ProductsTableControl = ({ showRefreshBtn }: controlsProp) => {
                     <SelectPicker searchable={false} onSelect={handleStatusChange} style={{ width: `100%` }} placeholder={`Status`} size="lg" data={data} />
                 </Box>
                 <IconButton
-                    isDisabled
                     color={`purple.200`}
                     bgColor={`purple.100`}
                     isLoading={getAllProductsStatus.isLoading}

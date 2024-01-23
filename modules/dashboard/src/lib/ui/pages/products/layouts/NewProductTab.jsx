@@ -6,11 +6,12 @@ import { FormProvider, useForm } from "react-hook-form";
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { useAxiosInstance } from "@productize-v1.0.0/modules/shared/hooks";
 import { useUpdateProductStatusMutation } from "@productize-v1.0.0/modules/shared/redux";
-import { ToastFeedback, SharedButton, PreviewProductSummary } from "@productize-v1.0.0/modules/shared/ui";
+import { ToastFeedback, SharedButton, PreviewProductSummary, useToastAction } from "@productize-v1.0.0/modules/shared/ui";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { productFormSchema } from "@productize-v1.0.0/dashboard";
 import { SetNewProductForm } from "@productize-v1.0.0/dashboard";
 import { ContentDeliveryForm } from "@productize-v1.0.0/dashboard";
+import errorImg from "@icons/error.svg";
 
 const activeStateStyle = {
     borderBottom: `2px solid #6D5DD3`,
@@ -24,9 +25,10 @@ const tabNames = ["product-details", "content-delivery", "preview", "share"];
 
 export const NewProductTab = () => {
     const { query, isLoading } = useAxiosInstance({ MIME_TYPE: "multipart/form-data" });
+    // const { query, isLoading } = useAxiosInstance({ MIME_TYPE: "application/json" });
     const [updateProductStatus, updateProductStatusStatus] = useUpdateProductStatusMutation();
 
-    const toast = useToast();
+    const { toast, toastIdRef, close } = useToastAction();
     const methods = useForm({
         criteriaMode: "all",
         mode: "onChange",
@@ -49,65 +51,125 @@ export const NewProductTab = () => {
     const onSubmit = async (data) => {
         console.log(data);
         if (state) {
-            const formData = {
-                title: data.title,
-                price: data.price,
-                // product_type: data.productType,
-                description: data.description,
-                data: [...data.data],
-                cover_photos: [...data.cover_photos],
-                thumbnail: data.thumbnail,
-                highlights: [data?.highlight_1, data?.highlight_2, data?.highlight_3],
-                tags: data.tags,
-                // stock_count: data.stock_count,
-                // choose_quantity: data.choose_quantity,
-                // show_sales_count: data.show_sales_count,
-            };
+            // const formData = {
+            //     title: data.title,
+            //     price: data.price,
+            //     // product_type: data.productType,
+            //     description: data.description,
+            //     data: [...data.data],
+            //     cover_photos: [...data.cover_photos],
+            //     thumbnail: data.thumbnail,
+            //     highlights: [data?.highlight_1, data?.highlight_2, data?.highlight_3],
+            //     tags: data.tags,
+            //     stock_count: data.stock_count,
+            //     choose_quantity: data.choose_quantity,
+            //     show_sales_count: data.show_sales_count,
+            // };
+            const formData = new FormData();
+
+            formData.append("title", data.title);
+            formData.append("price", data.price);
+            formData.append("description", data.description);
+            formData.append("thumbnail", data.thumbnail);
+            formData.append("tags", data.tags);
+            formData.append("stock_count", data.stock_count);
+            formData.append("choose_quantity", data.choose_quantity);
+            formData.append("show_sales_count", data.show_sales_count);
+            formData.append("data", JSON.stringify([...data.data]));
+            formData.append("cover_photos", JSON.stringify([...data.cover_photos]));
+            formData.append("highlights", JSON.stringify([data?.highlight_1, data?.highlight_2, data?.highlight_3]));
             try {
                 const res = await query(`post`, `/products/${state?.product?.id}?_method=PUT`, formData);
 
                 if (res.status === 200) {
-                    console.log(res);
-                    toast({
+                    toastIdRef.current = toast({
                         position: "top",
-                        render: () => <ToastFeedback message={`Product updated Successfully!`} />,
+                        render: () => (
+                            <ToastFeedback
+                                btnColor={`purple.200`}
+                                message={`Product updated Successfully!`}
+                                icon={undefined}
+                                bgColor={undefined}
+                                color={undefined}
+                                handleClose={close}
+                            />
+                        ),
                     });
                     navigate(`/dashboard/products/new#preview`, {
                         state: { product: res.data },
                     });
                 }
             } catch (err) {
-                console.log(err);
+                toastIdRef.current = toast({
+                    position: "top",
+                    render: () => (
+                        <ToastFeedback
+                            message={err.response.data.message || `something went wrong`}
+                            title="Error!"
+                            icon={errorImg}
+                            color={`red.600`}
+                            btnColor={`red.600`}
+                            bgColor={undefined}
+                            handleClose={close}
+                        />
+                    ),
+                });
             }
         } else {
-            const formData = {
-                title: data.title,
-                price: data.price,
-                product_type: data.productType,
-                description: data.description,
-                data: [...data.data],
-                cover_photos: [...data.cover_photos],
-                thumbnail: data.thumbnail,
-                highlights: [data?.highlight_1, data?.highlight_2, data?.highlight_3],
-                tags: data.tags,
-                // stock_count: data.stock_count,
-                // choose_quantity: data.choose_quantity,
-                // show_sales_count: data.show_sales_count,
-            };
+            // const formData = {
+            //     title: data.title,
+            //     price: data.price,
+            //     product_type: data.productType,
+            //     description: data.description,
+            //     data: [...data.data],
+            //     cover_photos: [...data.cover_photos],
+            //     thumbnail: data.thumbnail,
+            //     highlights: [data?.highlight_1, data?.highlight_2, data?.highlight_3],
+            //     tags: data.tags,
+            //     stock_count: data.stock_count,
+            //     choose_quantity: data.choose_quantity,
+            //     show_sales_count: data.show_sales_count,
+            // };
+            const formData = new FormData();
+
+            formData.append("title", data.title);
+            formData.append("price", data.price);
+            formData.append("description", data.description);
+            formData.append("thumbnail", data.thumbnail);
+            formData.append("tags", data.tags);
+            formData.append("stock_count", data.stock_count);
+            formData.append("choose_quantity", data.choose_quantity);
+            formData.append("show_sales_count", data.show_sales_count);
+            formData.append("data", JSON.stringify([...data.data]));
+            formData.append("cover_photos", JSON.stringify([...data.cover_photos]));
+            formData.append("highlights", JSON.stringify([data?.highlight_1, data?.highlight_2, data?.highlight_3]));
             try {
                 const res = await query(`post`, `/products`, formData);
                 if (res.status === 201) {
-                    console.log(res);
-                    toast({
+                    toastIdRef.current = toast({
                         position: "top",
-                        render: () => <ToastFeedback message={`Product Created Successfully!`} />,
+                        render: () => <ToastFeedback btnColor={`purple.200`} message={`Product Created Successfully!`} handleClose={close} />,
                     });
+
                     navigate(`/dashboard/products/new#preview`, {
                         state: { product: res.data },
                     });
                 }
             } catch (err) {
-                console.log(err);
+                toastIdRef.current = toast({
+                    position: "top",
+                    render: () => (
+                        <ToastFeedback
+                            message={err?.response?.data?.message || `something went wrong`}
+                            title="Error!"
+                            icon={errorImg}
+                            color={`red.600`}
+                            btnColor={`red.600`}
+                            bgColor={undefined}
+                            handleClose={close}
+                        />
+                    ),
+                });
             }
         }
     };
@@ -120,32 +182,34 @@ export const NewProductTab = () => {
             }).unwrap();
             console.log(res);
             if (res?.data?.status === `published`) {
-                toast({
+                toastIdRef.current = toast({
                     position: "top",
-                    render: () => <ToastFeedback message={`Product	published Successfully!`} />,
+                    render: () => <ToastFeedback btnColor={`purple.200`} message={`Product	published Successfully!`} handleClose={close} />,
                 });
                 navigate(`/dashboard/products/new#share`, {
                     state: { product: res },
                 });
             } else {
-                toast({
+                toastIdRef.current = toast({
                     position: "top",
-                    render: () => <ToastFeedback message={`Product	sent to draft Successfully!`} />,
+                    render: () => <ToastFeedback btnColor={`purple.200`} message={`Product	sent to draft Successfully!`} handleClose={close} />,
                 });
                 navigate(`/dashboard/products/new#preview`, {
                     state: { product: res?.data },
                 });
             }
         } catch (error) {
-            console.log(error);
-            toast({
+            toastIdRef.current = toast({
                 position: "top",
                 render: () => (
                     <ToastFeedback
-                        color={`grey.100`}
-                        bgColor={`#800000`}
+                        message={err?.response?.data?.message || `Setup your Paystack account before you can publish a product`}
                         title={`Paystack Setup`}
-                        message={`Setup your Paystack account before you can publish a product`}
+                        icon={errorImg}
+                        color={`red.600`}
+                        btnColor={`red.600`}
+                        bgColor={undefined}
+                        handleClose={close}
                     />
                 ),
             });

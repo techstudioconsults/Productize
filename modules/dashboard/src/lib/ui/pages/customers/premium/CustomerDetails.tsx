@@ -2,7 +2,7 @@ import { Box, Card, Flex, Image, SimpleGrid, Skeleton, SkeletonText, Stack, Text
 import { Icon } from "@iconify/react";
 import { useDate, useCurrency } from "@productize-v1.0.0/modules/shared/hooks";
 import { selectSingleCustomer, useGetSingleCustomerDetailsMutation } from "@productize-v1.0.0/modules/shared/redux";
-import { OnBoardingLoader, SpinnerComponentSmall } from "@productize-v1.0.0/modules/shared/ui";
+import { OnBoardingLoader, SpinnerComponentSmall, ToastFeedback, useToastAction } from "@productize-v1.0.0/modules/shared/ui";
 import { useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -10,10 +10,12 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import arrowLeft from "@icons/Property_2_Arrow-left_kafkjg.svg";
 import { DataWidgetCard } from "../../../DataWidgetCard";
 import { CustomerDetailsTable } from "../../../tables/CustomerDetailsTable";
+import toastimg from "@icons/star-notice.png";
+import errorImg from "@icons/error.svg";
 
 export const CustomersDetails = () => {
     const navigate = useNavigate();
-    const toast = useToast();
+    const { toast, toastIdRef, close } = useToastAction();
     const [getSingleCustomerDetails, getSingleCustomerDetailsStatus] = useGetSingleCustomerDetailsMutation();
     const singleCustomer = useSelector(selectSingleCustomer);
     const formatDate = useDate();
@@ -38,28 +40,38 @@ export const CustomersDetails = () => {
         navigator.clipboard
             .writeText(textToCopy)
             .then(() => {
-                toast({
+                toastIdRef.current = toast({
                     position: "top",
                     render: () => (
-                        <Card display={`flex`} flexDir={`row`} alignItems={`center`} w={{ base: `100%`, lg: `702px` }} p={1} bg="grey.100">
-                            <Box borderRight={`1px solid green`} p={2}>
-                                <Image src={``} alt="img" />
-                            </Box>
-                            <Box p={2}>
-                                <Text fontWeight={600}>Product link Copied!</Text>
-                                <Text className="small-text" color={`grey.400`}>
-                                    You have successfully your product link
-                                </Text>
-                            </Box>
-                        </Card>
+                        <ToastFeedback
+                            btnColor={`purple.200`}
+                            message={` You have successfully copied your product link`}
+                            title="Product link Copied!"
+                            icon={toastimg}
+                            bgColor={undefined}
+                            color={undefined}
+                            handleClose={close}
+                        />
                     ),
                 });
             })
             .catch((error) => {
-                console.error("Failed to copy text: ", error);
+                toastIdRef.current = toast({
+                    position: "top",
+                    render: () => (
+                        <ToastFeedback
+                            message={`Failed to copy.`}
+                            title="Error!"
+                            icon={errorImg}
+                            color={`red.600`}
+                            btnColor={`red.600`}
+                            bgColor={undefined}
+                            handleClose={close}
+                        />
+                    ),
+                });
             });
     };
-
     return (
         <Box my={8}>
             {/* row 1 */}
@@ -117,7 +129,7 @@ export const CustomersDetails = () => {
                                     <DataWidgetCard showIcon={false} title={"Total Transaction"} value={formatCurrency(singleCustomer.total_transactions)} />
                                 </Box>
                             </Skeleton>
-                            <Skeleton isLoaded={!getSingleCustomerDetailsStatus.isLoading}>
+                            {/* <Skeleton isLoaded={!getSingleCustomerDetailsStatus.isLoading}>
                                 <Box>
                                     <DataWidgetCard showIcon={false} title={"Free Products"} value={singleCustomer.free_products} />
                                 </Box>
@@ -126,7 +138,7 @@ export const CustomersDetails = () => {
                                 <Box>
                                     <DataWidgetCard showIcon={false} title={"Sale Products"} value={singleCustomer.sale_products} />
                                 </Box>
-                            </Skeleton>
+                            </Skeleton> */}
                         </SimpleGrid>
                     </Box>
                     <Box>

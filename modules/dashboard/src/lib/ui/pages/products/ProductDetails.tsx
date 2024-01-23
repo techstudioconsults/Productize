@@ -7,18 +7,20 @@ import {
     useUpdateProductStatusMutation,
     selectSingleProduct,
 } from "@productize-v1.0.0/modules/shared/redux";
-import { ToastFeedback, SharedButton, SpinnerComponentSmall } from "@productize-v1.0.0/modules/shared/ui";
+import { ToastFeedback, SharedButton, SpinnerComponentSmall, useToastAction } from "@productize-v1.0.0/modules/shared/ui";
 import { useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import arrowLeft from "@icons/Property_2_Arrow-left_kafkjg.svg";
 import { DataWidgetCard } from "../../DataWidgetCard";
 import { ProductCustomerTable } from "../../tables/ProductCustomerTable";
+import toastimg from "@icons/star-notice.png";
+import errorImg from "@icons/error.svg";
 
 export const ProductDetails = () => {
     const { productID } = useParams();
     const navigate = useNavigate();
-    const toast = useToast();
+    const { toast, toastIdRef, close } = useToastAction();
     const [getSingleProduct, singleProductStatus] = useGetSingleProductDetailsMutation();
     const [deleteProductSoftly, deleteStatus] = useDeleteProductSoftlyMutation();
     const [updateProductStatus, updateProductStatusStatus] = useUpdateProductStatusMutation();
@@ -32,25 +34,36 @@ export const ProductDetails = () => {
         navigator.clipboard
             .writeText(textToCopy)
             .then(() => {
-                toast({
+                toastIdRef.current = toast({
                     position: "top",
                     render: () => (
-                        <Card display={`flex`} flexDir={`row`} alignItems={`center`} w={{ base: `100%`, lg: `702px` }} p={1} bg="grey.100">
-                            <Box borderRight={`1px solid green`} p={2}>
-                                <Image src={``} alt="img" />
-                            </Box>
-                            <Box p={2}>
-                                <Text fontWeight={600}>Product link Copied!</Text>
-                                <Text className="small-text" color={`grey.400`}>
-                                    You have successfully your product link
-                                </Text>
-                            </Box>
-                        </Card>
+                        <ToastFeedback
+                            btnColor={`purple.200`}
+                            message={` You have successfully copied your product link`}
+                            title="Product link Copied!"
+                            icon={toastimg}
+                            bgColor={undefined}
+                            color={undefined}
+                            handleClose={close}
+                        />
                     ),
                 });
             })
             .catch((error) => {
-                console.error("Failed to copy text: ", error);
+                toastIdRef.current = toast({
+                    position: "top",
+                    render: () => (
+                        <ToastFeedback
+                            message={`Failed to copy.`}
+                            title="Error!"
+                            icon={errorImg}
+                            color={`red.600`}
+                            btnColor={`red.600`}
+                            bgColor={undefined}
+                            handleClose={close}
+                        />
+                    ),
+                });
             });
     };
 
@@ -74,15 +87,36 @@ export const ProductDetails = () => {
 
             if (res) {
                 navigate(`/dashboard/products#deleted`);
-                toast({
+                toastIdRef.current = toast({
                     position: "top",
                     render: () => (
-                        <ToastFeedback message={`Check the deleted tab to recover product`} bgColor="yellow.100" title="Product Deleted Temporarily" />
+                        <ToastFeedback
+                            btnColor={`purple.200`}
+                            message={`Check the deleted tab to recover product`}
+                            title="Product Deleted Temporarily"
+                            icon={toastimg}
+                            bgColor={undefined}
+                            color={undefined}
+                            handleClose={close}
+                        />
                     ),
                 });
             }
-        } catch (error) {
-            console.log(error);
+        } catch (err) {
+            toastIdRef.current = toast({
+                position: "top",
+                render: () => (
+                    <ToastFeedback
+                        message={`something went wrong`}
+                        title="Error!"
+                        icon={errorImg}
+                        color={`red.600`}
+                        btnColor={`red.600`}
+                        bgColor={undefined}
+                        handleClose={close}
+                    />
+                ),
+            });
         }
     };
 

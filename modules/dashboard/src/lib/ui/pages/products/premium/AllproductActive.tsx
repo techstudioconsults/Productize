@@ -5,6 +5,8 @@ import { useSelector } from "react-redux";
 import { DataWidgetCard } from "../../../DataWidgetCard";
 import { ProductTable } from "../../../tables/ProductTable";
 import { useCallback, useEffect } from "react";
+import { ToastFeedback, useToastAction } from "@productize-v1.0.0/modules/shared/ui";
+import errorImg from "@icons/error.svg";
 
 interface draftActiveProps {
     products: [];
@@ -19,7 +21,7 @@ const AllproductActive = ({ products }: draftActiveProps) => {
         try {
             await getProductsAnalytics(null).unwrap();
         } catch (error) {
-            return error;
+            console.error(error);
         }
     }, [getProductsAnalytics]);
 

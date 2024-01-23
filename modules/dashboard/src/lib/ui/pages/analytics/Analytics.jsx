@@ -7,9 +7,9 @@ import { useCurrency } from "@productize-v1.0.0/modules/shared/hooks";
 import { useSelector } from "react-redux";
 
 import { AnalyticsTable } from "./AnalyticsTable";
-import { ProductsTableControl } from "../../tables/tableControls/ProductsTableControl";
 import { DataWidgetCard } from "../../DataWidgetCard";
 import { DashboardEmptyState } from "../../empty-states/DashboardEmptyState";
+import { HomeFilterController } from "../home/premium/components/HomeFilterController";
 
 export const Analytics = () => {
     const [status, setStatus] = useState(``);
@@ -34,7 +34,7 @@ export const Analytics = () => {
     return (
         <Box my={8}>
             {/* dropdown filters and buttons Controls */}
-            <ProductsTableControl showRefreshBtn />
+            <HomeFilterController />
             {/* grid cards */}
             <Box>
                 <SimpleGrid gap={4} my={4} columns={{ base: 1, md: 3 }}>
@@ -94,7 +94,9 @@ export const Analytics = () => {
                                 <LineChart />
                             </div>
                             <Box my={10}>
-                                <Text as={`h6`} my={5}>Top Product</Text>
+                                <Text as={`h6`} my={5}>
+                                    Top Product
+                                </Text>
                                 <AnalyticsTable />
                             </Box>
                         </section>

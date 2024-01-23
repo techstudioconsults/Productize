@@ -13,7 +13,6 @@ interface NavList {
 
 const ProductTagNav: React.FC = () => {
     const tags = useSelector(selectTags);
-    const [getProductTags] = useGetProductTagsMutation();
 
     const listData = tags?.map((tag: string) => {
         return (
@@ -24,14 +23,6 @@ const ProductTagNav: React.FC = () => {
             </Box>
         );
     });
-
-    const getTags = useCallback(async () => {
-        await getProductTags(null).unwrap();
-    }, [getProductTags]);
-
-    useEffect(() => {
-        getTags();
-    }, [getTags]);
 
     return (
         <Flex

@@ -1,12 +1,11 @@
-import { useToast } from "@chakra-ui/react";
+import { Text, useToast } from "@chakra-ui/react";
 import { useUpgradePlanMutation } from "@productize-v1.0.0/modules/shared/redux";
-// import { ToastFeedback } from "@productize-v1.0.0/modules/shared/ui";
+import { ToastFeedback, useToastAction } from "../../../ui/src/lib/ToastFeedback";
+import errorImg from "@icons/error.svg";
 
 export const usePlanUpgrade = () => {
-    // const navigate = useNavigate();
-    const toast = useToast();
-    // mutations
     const [upgradePlan, upgradeStatus] = useUpgradePlanMutation();
+    const { toast, toastIdRef, close } = useToastAction();
 
     const upgrade = async () => {
         try {
@@ -17,17 +16,19 @@ export const usePlanUpgrade = () => {
                 // navigate(`https://checkout.paystack.com/${res?.data?.access_code}`, { state: { paystackMetadata: res.data } });
             }
         } catch (error) {
-            if (error.status === 400) {
-                toast({
-                    position: `bottom-left`,
-                    title: `Upgrade Plan`,
-                    description: error?.data?.message,
-                    status: `error`,
-                    // render: () => <ToastFeedback bgColor={`yellow.100`} message={`Upgrade Plan`} title={error?.data?.message} />,
-                });
-            } else {
-                console.log(error);
-            }
+            toastIdRef.current = toast({
+                position: "top",
+                render: () => (
+                    <ToastFeedback
+                        handleClose={close}
+                        btnColor={`red.600`}
+                        message={error?.data?.message}
+                        title={`Upgrade Plan failed!`}
+                        icon={errorImg}
+                        color={`red.600`}
+                    />
+                ),
+            });
         }
     };
 

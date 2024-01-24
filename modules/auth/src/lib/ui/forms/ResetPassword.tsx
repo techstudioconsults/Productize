@@ -4,7 +4,7 @@ import { Icon } from "@iconify/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useResetPasswordMutation } from "@productize-v1.0.0/modules/shared/redux";
-import { ErrorText, SharedButton, ToastFeedback } from "@productize-v1.0.0/modules/shared/ui";
+import { ErrorText, SharedButton, ToastFeedback, useToastAction } from "@productize-v1.0.0/modules/shared/ui";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { resetPasswordSchema } from "./form-validation-schema/auth-schema";
 
@@ -20,7 +20,7 @@ export function ResetPassword({ email, token }: RPProps) {
     const handlePasswordClick = () => setShowPassword(!showPassword);
     const handlePasswordConfirmationClick = () => setShowPasswordConfirmation(!showPasswordConfirmation);
     const navigate = useNavigate();
-    const toast = useToast();
+    const { toast, toastIdRef, close } = useToastAction();
 
     // mutation
     const [resetPassword, resetPasswordStatus] = useResetPasswordMutation();
@@ -44,11 +44,21 @@ export function ResetPassword({ email, token }: RPProps) {
         };
         try {
             const res = await resetPassword(formData).unwrap();
-            console.log(res);
+
             if (res.message) {
-                toast({
+                toastIdRef.current = toast({
                     position: "top",
-                    render: () => <ToastFeedback message={res.message} title="" />,
+                    render: () => (
+                        <ToastFeedback
+                            btnColor={`purple.200`}
+                            message={res.message}
+                            title=""
+                            icon={undefined}
+                            bgColor={undefined}
+                            color={undefined}
+                            handleClose={close}
+                        />
+                    ),
                 });
                 navigate(`/auth/login`);
             }
@@ -58,7 +68,7 @@ export function ResetPassword({ email, token }: RPProps) {
     };
 
     return (
-        <FormControl as={`form`} onSubmit={handleSubmit(onSubmit)}>
+        <FormControl w={{ base: `fit-content`, md: `22rem` }} as={`form`} onSubmit={handleSubmit(onSubmit)}>
             {resetPasswordStatus.isError && <ErrorText error={error} />}
             <FormControl my={6}>
                 <FormLabel fontWeight={600} className="btn-text">

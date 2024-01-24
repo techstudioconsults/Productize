@@ -1,4 +1,4 @@
-import { Box, Center, FormControl, FormLabel, Input, InputGroup, InputRightElement, Link, Text } from "@chakra-ui/react";
+import { Box, Center, Flex, FormControl, FormLabel, Input, InputGroup, InputRightElement, Link, Text } from "@chakra-ui/react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
@@ -122,6 +122,10 @@ export function SignupForm() {
                         {!showPassword ? <Icon icon={`ant-design:eye-twotone`} /> : <Icon icon={`ant-design:eye-invisible-twotone`} />}
                     </InputRightElement>
                 </InputGroup>
+                <Flex mt={1} color={`grey.400`} alignItems={`flex-start`} gap={2}>
+                    <Icon fontSize={`14px`} icon={`ep:info-filled`} />
+                    <Text fontStyle={`italic`} fontSize={`10px`}>Password should be at least 8 characters long, contain one uppercase letter and one special character.</Text>
+                </Flex>
                 <Text className={`tiny-text`} color={`red.200`}>
                     {errors?.password?.message}
                 </Text>

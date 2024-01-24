@@ -3,7 +3,6 @@ import {
     Box,
     Card,
     Center,
-    Divider,
     Flex,
     FormControl,
     FormHelperText,
@@ -14,7 +13,6 @@ import {
     InputRightElement,
     SimpleGrid,
     Stack,
-    Switch,
     Text,
 } from "@chakra-ui/react";
 import { Icon } from "@iconify/react";

@@ -20,6 +20,7 @@ import {
     Settings,
     ChangePlans,
     BillingCycle,
+    DownloadedContent,
 } from "@productize-v1.0.0/dashboard";
 import { ForgotPassword, Login, Signup } from "@productize-v1.0.0/auth";
 import React, { useCallback, useEffect } from "react";
@@ -73,7 +74,6 @@ export function App() {
                 {/* <Route path="/explore/design" element={<ExploreDesign />} /> */}
                 <Route path="/explore/product/details/:productID" element={<ProductDetails />} />
                 <Route path="/explore/product/cart" element={<ProductCart />} />
-                <Route path="*" element={<h1>PAGE NOT FOUND</h1>} />
 
                 {/* dashboard */}
                 <Route path="/dashboard" element={<DashboardLayout />}>
@@ -97,7 +97,9 @@ export function App() {
 
                     <Route path="profile/:userID" element={<Profile />} />
                     <Route path="help" element={<Help />} />
+
                     <Route path="downloads" element={<Download />} />
+                    <Route path="downloads/:downloadedContentID" element={<DownloadedContent />} />
 
                     <Route path="settings" element={<Settings />}>
                         <Route path="plans" element={<PlanSettings />} />
@@ -105,6 +107,7 @@ export function App() {
                         <Route path="plans/billing-cycle" element={<BillingCycle />} />
                     </Route>
                 </Route>
+                <Route path="*" element={<h1>PAGE NOT FOUND</h1>} />
             </Routes>
         </Suspense>
     );

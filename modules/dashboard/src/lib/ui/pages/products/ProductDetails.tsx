@@ -128,13 +128,36 @@ export const ProductDetails = () => {
 
             if (res) {
                 navigate(`/dashboard/products#draft`);
-                toast({
+                toastIdRef.current = toast({
                     position: "top",
-                    render: () => <ToastFeedback message={`Check draft to view product`} title="Product Unpublished successfully!" />,
+                    render: () => (
+                        <ToastFeedback
+                            btnColor={`purple.200`}
+                            message={`Check draft to view product`}
+                            title="Product Unpublished successfully!"
+                            icon={toastimg}
+                            bgColor={undefined}
+                            color={undefined}
+                            handleClose={close}
+                        />
+                    ),
                 });
             }
         } catch (error) {
-            console.log(error);
+            toastIdRef.current = toast({
+                position: "top",
+                render: () => (
+                    <ToastFeedback
+                        message={`something went wrong`}
+                        title="Error!"
+                        icon={errorImg}
+                        color={`red.600`}
+                        btnColor={`red.600`}
+                        bgColor={undefined}
+                        handleClose={close}
+                    />
+                ),
+            });
         }
     };
 

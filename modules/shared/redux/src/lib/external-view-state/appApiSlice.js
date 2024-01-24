@@ -52,12 +52,6 @@ export const appApiSlice = apiSlice.injectEndpoints({
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
-                    console.log(data);
-                    // dispatch(
-                    //     setCart({
-                    //         product: data.data,
-                    //     })
-                    // );
                 } catch (error) {
                     return error;
                 }
@@ -72,7 +66,7 @@ export const appApiSlice = apiSlice.injectEndpoints({
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
-                    console.log(data);
+
                     dispatch(
                         setCart({
                             product: data.data,
@@ -91,7 +85,7 @@ export const appApiSlice = apiSlice.injectEndpoints({
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
-                    console.log(data);
+
                     dispatch(
                         setTags({
                             tags: data.data,

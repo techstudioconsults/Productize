@@ -56,7 +56,7 @@ export const ProductCustomerTable = () => {
                     "Content-Type": "multipart/form-data",
                 },
             });
-            console.log(res.data);
+
             if (res.status === 200) {
                 const filteredCustomer = res.data.data.filter((customer) => {
                     return customer.product_id === productID;

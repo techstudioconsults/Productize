@@ -9,6 +9,7 @@ import { selectLiveProducts, useGetLiveProductsMutation } from "@productize-v1.0
 import { useSelector } from "react-redux";
 import { OnBoardingLoader, SharedButton } from "@productize-v1.0.0/modules/shared/ui";
 import { LivetableControl } from "./components/LiveTableControl";
+import { Link } from "react-router-dom";
 
 const LiveTabActive = () => {
     const [getLiveProducts, getLiveProductsStatus] = useGetLiveProductsMutation();
@@ -48,18 +49,20 @@ const LiveTabActive = () => {
                     textAlign={{ base: `center` }}
                     showImage={false}
                 >
-                    <SharedButton
-                        text={"Publish New Product"}
-                        btnExtras={{
-                            leftIcon: `ei:plus`,
-                        }}
-                        width={"fit-content"}
-                        height={"40px"}
-                        bgColor={"purple.200"}
-                        textColor={"white"}
-                        borderRadius={"4px"}
-                        fontSize={{ base: `sm`, md: `sm` }}
-                    />
+                    <Link to={`/dashboard/products#draft`}>
+                        <SharedButton
+                            text={"Publish New Product"}
+                            btnExtras={{
+                                leftIcon: `ei:plus`,
+                            }}
+                            width={"fit-content"}
+                            height={"40px"}
+                            bgColor={"purple.200"}
+                            textColor={"white"}
+                            borderRadius={"4px"}
+                            fontSize={{ base: `sm`, md: `sm` }}
+                        />
+                    </Link>
                 </EmptyState>
             </>
         );

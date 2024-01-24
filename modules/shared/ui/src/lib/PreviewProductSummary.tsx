@@ -14,6 +14,7 @@ import { Avatar, Box, Card, CardBody, Container, Divider, Flex, Grid, GridItem, 
 import { Icon } from "@iconify/react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { SharedButton } from "./SharedButton";
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { useCurrency } from "@productize-v1.0.0/modules/shared/hooks";
 
 interface productProp {
@@ -52,7 +53,7 @@ export interface TwoColumnLayoutProps {
 
 export const TwoColumnLayout = ({ C1, C2 }: TwoColumnLayoutProps) => {
     const { pathname } = useLocation();
-    const { productID } = useParams();
+
     return (
         <Grid
             // h="200px"
@@ -60,7 +61,8 @@ export const TwoColumnLayout = ({ C1, C2 }: TwoColumnLayoutProps) => {
             templateColumns="repeat(12, 1fr)"
             gap={4}
         >
-            <GridItem colSpan={{ base: 12, xl: pathname === `/explore/product/details/${productID}` ? 8 : 12 }}>{C1}</GridItem>
+            {/* <GridItem colSpan={{ base: 12, xl: 8 }}>{C1}</GridItem> */}
+            <GridItem colSpan={{ base: 12, xl: pathname === `/explore/product/cart` ? 12 : 8 }}>{C1}</GridItem>
             <GridItem colSpan={{ base: 12, xl: 4 }}>{C2}</GridItem>
         </Grid>
     );
@@ -238,3 +240,4 @@ const ProductSideNav = ({ product }: productProp) => {
         </Card>
     );
 };
+// http://localhost:4200/dashboard/products/new#preview

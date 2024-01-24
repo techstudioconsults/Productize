@@ -64,7 +64,7 @@ export const SetupPaymentForm = ({ closeModal }) => {
                     render: () => (
                         <ToastFeedback
                             btnColor={`purple.200`}
-                            message={res.data?.message}
+                            message={res.data?.message || `Payment account setup successfully`}
                             title="Paystack Setup"
                             icon={undefined}
                             bgColor={undefined}

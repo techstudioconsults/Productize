@@ -38,7 +38,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
-                    console.log(data);
+
                     dispatch(
                         setLiveProduct({
                             products: data.data,
@@ -119,7 +119,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
-                    console.log(data);
+
                     dispatch(
                         setSingleProduct({
                             product: data,

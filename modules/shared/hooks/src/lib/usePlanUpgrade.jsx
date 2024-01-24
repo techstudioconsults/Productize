@@ -1,7 +1,7 @@
 import { Text, useToast } from "@chakra-ui/react";
 import { useUpgradePlanMutation } from "@productize-v1.0.0/modules/shared/redux";
 import { ToastFeedback, useToastAction } from "../../../ui/src/lib/ToastFeedback";
-import errorImg from "@icons/error.svg";
+import errorImg from "@icons/bad-notice.png";
 
 export const usePlanUpgrade = () => {
     const [upgradePlan, upgradeStatus] = useUpgradePlanMutation();

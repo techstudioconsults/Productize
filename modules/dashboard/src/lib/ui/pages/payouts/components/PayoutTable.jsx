@@ -139,12 +139,12 @@ export const PayoutTable = ({ tableData }) => {
                 </Box> */}
             </TableContainer>
             {/* TABLE PAGINATION */}
-            <Flex display={withdrawEarnings ? `flex` : `none`} mt={4} color={`grey.400`} alignItems={`center`} justifyContent={`space-between`}>
+            {/* <Flex display={withdrawEarnings ? `flex` : `none`} mt={4} color={`grey.400`} alignItems={`center`} justifyContent={`space-between`}>
                 <Box display={{ base: `none`, md: `initial` }}>
                     <Text>10 Entries per page </Text>
                 </Box>
                 <Box display={{ base: `none`, md: `initial` }}>
-                    <Text>{/* Page {paginate?.meta?.current_page} of {paginate?.meta?.last_page} */}</Text>
+                    <Text>Page {paginate?.meta?.current_page} of {paginate?.meta?.last_page}</Text>
                 </Box>
                 <Stack direction={`row`}>
                     <SharedButton
@@ -152,7 +152,7 @@ export const PayoutTable = ({ tableData }) => {
                             leftIcon: `material-symbols:chevron-left`,
                             border: `1px solid #CFCFD0`,
                             onClick: null,
-                            // disabled: !paginate?.links?.prev,
+                            disabled: !paginate?.links?.prev,
                         }}
                         text={"Previous"}
                         width={"137px"}
@@ -167,7 +167,7 @@ export const PayoutTable = ({ tableData }) => {
                             leftIcon: `material-symbols:chevron-right`,
                             border: `1px solid #CFCFD0`,
                             onClick: null,
-                            // disabled: !paginate?.links?.next,
+                            disabled: !paginate?.links?.next,
                         }}
                         text={"Next"}
                         width={"137px"}
@@ -178,7 +178,7 @@ export const PayoutTable = ({ tableData }) => {
                         fontSize={{ base: `sm`, md: `md` }}
                     />
                 </Stack>
-            </Flex>
+            </Flex> */}
         </>
     );
 };

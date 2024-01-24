@@ -1,15 +1,7 @@
 import "../styles.scss";
 
 import { Route, Routes } from "react-router-dom";
-import { Home } from "../pages/home/Home";
-import Features from "../pages/features";
-import Pricing from "../pages/pricing";
-import { ForgotPassword, Login, Signup } from "@productize-v1.0.0/modules/auth/ui";
-import { PreLoader } from "@productize-v1.0.0/modules/shared/ui";
-import ExploreIndex from "../pages/explore/pages/explore";
-import ExploreDesign from "../pages/explore/pages/explore/categories/design";
-import Cart from "../pages/explore/pages/productDetails/ProductBuy";
-import ProductDetails from "../pages/explore/pages/productDetails/ProductDetails";
+import { PreLoader, SpinnerComponent } from "@productize-v1.0.0/modules/shared/ui";
 import {
     DashboardLayout,
     Home as DashboardHome,
@@ -25,57 +17,99 @@ import {
     Analytics,
     Help,
     Download,
-    PayoutDetails,
-    WithdrawalEarnings,
     Settings,
-} from "@productize-v1.0.0/modules/dashboard/ui";
+    ChangePlans,
+    BillingCycle,
+    DownloadedContent,
+} from "@productize-v1.0.0/dashboard";
+import { ForgotPassword, Login, Signup } from "@productize-v1.0.0/auth";
+import React, { useCallback, useEffect } from "react";
+
+import { Suspense } from "react";
+import { PlanSettings } from "@productize-v1.0.0/dashboard";
+import { useGetProductTagsMutation } from "@productize-v1.0.0/modules/shared/redux";
+
+// using suspense and lazy loading
+const Home = React.lazy(() => import("../pages/home/Home").then((module) => ({ default: module.Home })));
+const Features = React.lazy(() => import("../pages/features/Features").then((module) => ({ default: module.Features })));
+const Pricing = React.lazy(() => import("../pages/pricing/Pricing").then((module) => ({ default: module.Pricing })));
+const Explore = React.lazy(() => import("../pages/explore/views").then((module) => ({ default: module.Explore })));
+const ProductDetails = React.lazy(() => import("../pages/explore/views/productDetails/ProductDetails").then((module) => ({ default: module.ProductDetails })));
+const ProductCart = React.lazy(() => import("../pages/explore/views/productDetails/ProductCart").then((module) => ({ default: module.ProductCart })));
+
+export { Home, Features, Pricing, Explore, ProductDetails, ProductCart };
 
 export function App() {
+    const [getProductTags] = useGetProductTagsMutation();
+
+    const getTags = useCallback(async () => {
+        await getProductTags(null).unwrap();
+    }, [getProductTags]);
+
+    useEffect(() => {
+        getTags();
+    }, [getTags]);
+
     return (
-        <Routes>
-            {/* authentication */}
-            <Route path={`/auth`} element={<Signup />} />
-            <Route path="/auth/login" element={<Login />} />
-            <Route path="/auth/fetching-data/:provider" element={<PreLoader />} />
-            <Route path="/auth/forgot-password" element={<ForgotPassword />} />
-            {/* <Route path="/auth/reset-password" element={<ResetPassword email={""} token={""} />} /> */}
+        <Suspense
+            fallback={
+                <div style={{ width: `100%`, height: `100vh` }} className="d-flex align-items-center justify-content-center">
+                    <SpinnerComponent />
+                </div>
+            }
+        >
+            <Routes>
+                {/* authentication */}
+                <Route path={`/auth`} element={<Signup />} />
+                <Route path="/auth/login" element={<Login />} />
+                <Route path="/auth/fetching-data/:provider" element={<PreLoader />} />
+                <Route path="/auth/forgot-password" element={<ForgotPassword />} />
+                {/* <Route path="/auth/reset-password" element={<ResetPassword email={""} token={""} />} /> */}
 
-            {/* external pages */}
-            <Route index element={<Home />} />
-            <Route path="/features" element={<Features />} />
-            <Route path="/pricing" element={<Pricing />} />
-            <Route path={`/explore`} element={<ExploreIndex />} />
-            <Route path="/explore/design" element={<ExploreDesign />} />
-            <Route path="/explore/product/details/:productID" element={<ProductDetails />} />
-            <Route path="/explore/product/cart" element={<Cart />} />
-            <Route path="*" element={<h1>PAGE NOT FOUND</h1>} />
+                {/* external pages */}
+                <Route index element={<Home />} />
+                <Route path="/features" element={<Features />} />
+                <Route path="/pricing" element={<Pricing />} />
+                <Route path={`/explore`} element={<Explore />} />
+                {/* <Route path="/explore/design" element={<ExploreDesign />} /> */}
+                <Route path="/explore/product/details/:productID" element={<ProductDetails />} />
+                <Route path="/explore/product/cart" element={<ProductCart />} />
 
-            {/* dashboard */}
-            <Route path="/dashboard" element={<DashboardLayout />}>
-                <Route path="home" index element={<DashboardHome />} />
-                <Route path="products" element={<Products />} />
-                <Route path="products/:productID" element={<DAshboardProductDetails />} />
-                <Route path="products/new" element={<NewProduct />} />
-                <Route path="orders" element={<Orders />}>
-                    <Route path=":orderid" element={<DashboardOrderDetails />} />
+                {/* dashboard */}
+                <Route path="/dashboard" element={<DashboardLayout />}>
+                    <Route path="home" index element={<DashboardHome />} />
+
+                    <Route path="products" element={<Products />} />
+                    <Route path="products/:productID" element={<DAshboardProductDetails />} />
+                    <Route path="products/new" element={<NewProduct />} />
+
+                    <Route path="orders" element={<Orders />} />
+                    <Route path="orders/:orderID" element={<DashboardOrderDetails />} />
+
+                    <Route path="payouts" element={<Payouts />} />
+                    {/* <Route path="payouts/:payoutid" element={<PayoutDetails />} />
+                    <Route path="payouts/:payoutid/withdraw-earnings" element={<WithdrawalEarnings />} /> */}
+
+                    <Route path="analytics" element={<Analytics />} />
+
+                    <Route path="customers" element={<Customers />} />
+                    <Route path="customers/:customerID" element={<CustomersDetails />} />
+
+                    <Route path="profile/:userID" element={<Profile />} />
+                    <Route path="help" element={<Help />} />
+
+                    <Route path="downloads" element={<Download />} />
+                    <Route path="downloads/:downloadedContentID" element={<DownloadedContent />} />
+
+                    <Route path="settings" element={<Settings />}>
+                        <Route path="plans" element={<PlanSettings />} />
+                        <Route path="plans/change-plans" element={<ChangePlans />} />
+                        <Route path="plans/billing-cycle" element={<BillingCycle />} />
+                    </Route>
                 </Route>
-
-                <Route path="payouts" element={<Payouts />} />
-                <Route path="payouts/:payoutid" element={<PayoutDetails />} />
-                <Route path="payouts/:payoutid/withdraw-earnings" element={<WithdrawalEarnings />} />
-
-                <Route path="analytics" element={<Analytics />} />
-
-                <Route path="customers" element={<Customers />}></Route>
-                <Route path="customers/:customerID" element={<CustomersDetails />} />
-
-                <Route path="profile/:userID" element={<Profile />} />
-                <Route path="help" element={<Help />} />
-                <Route path="downloads" element={<Download />} />
-
-                <Route path="settings" element={<Settings />} />
-            </Route>
-        </Routes>
+                <Route path="*" element={<h1>PAGE NOT FOUND</h1>} />
+            </Routes>
+        </Suspense>
     );
 }
 

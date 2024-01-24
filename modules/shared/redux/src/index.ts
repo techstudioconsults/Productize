@@ -12,5 +12,8 @@ export * from "./lib/user-state/userApiSlice";
 export * from "./lib/products-state/productsSlice";
 export * from "./lib/products-state/productsApiSlice";
 
+export * from "./lib/order-state/ordersSlice";
+export * from "./lib/order-state/ordersApiSlice";
+
 export * from "./lib/customers-state/customersSlice";
 export * from "./lib/customers-state/customersApiSlice";

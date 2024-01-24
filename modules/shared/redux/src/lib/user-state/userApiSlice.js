@@ -27,14 +27,14 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 url: `/auth/email/resend`,
                 method: "GET",
             }),
-            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-                try {
-                    const { data } = await queryFulfilled;
-                    console.log(data);
-                } catch (err) {
-                    console.log(err);
-                }
-            },
+            // async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+            //     try {
+            //         const { data } = await queryFulfilled;
+            //         console.log(data);
+            //     } catch (err) {
+            //         console.log(err);
+            //     }
+            // },
         }),
 
         upgradePlan: builder.mutation({
@@ -42,14 +42,14 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 url: `/payments/subscription`,
                 method: "POST",
             }),
-            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-                try {
-                    const { data } = await queryFulfilled;
-                    console.log(data);
-                } catch (err) {
-                    console.log(err);
-                }
-            },
+            // async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+            //     try {
+            //         const { data } = await queryFulfilled;
+            //         console.log(data);
+            //     } catch (err) {
+            //         console.log(err);
+            //     }
+            // },
         }),
 
         enableSubscription: builder.mutation({

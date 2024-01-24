@@ -10,7 +10,7 @@ const AllProductsTabLayout = () => {
     /* display cards for asthetics */
 
     const display = isPremium ? (
-        <AllproductActive products={[]} />
+        <AllproductActive />
     ) : (
         <>
             <Flex gap={12} justifyContent={`space-between`}>

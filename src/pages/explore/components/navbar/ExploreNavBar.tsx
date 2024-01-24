@@ -5,7 +5,7 @@ import { Icon } from "@iconify/react";
 import Links from "./NavigationLinks";
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { SearchComp, AvatarComp, SharedButton, Sidenav, Cart } from "@productize-v1.0.0/modules/shared/ui";
-import Wrapper from "../Wrapper";
+import Wrapper from "../ProductTagNav";
 
 interface navProps {
     isAuth: boolean;

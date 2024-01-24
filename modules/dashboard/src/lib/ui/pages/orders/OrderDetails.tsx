@@ -2,7 +2,6 @@ import { Flex, Box, Text, Heading, Grid, GridItem, Stack, SkeletonText, Skeleton
 import { Icon } from "@iconify/react";
 import { useCurrency, useDate } from "@productize-v1.0.0/modules/shared/hooks";
 import { selectSingleOrder, useGetSingleOrderDetailsMutation } from "@productize-v1.0.0/modules/shared/redux";
-import { OnBoardingLoader } from "@productize-v1.0.0/modules/shared/ui";
 import { useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -125,7 +124,7 @@ export const OrderDetails = () => {
                             </Stack>
                         </Skeleton>
                     </GridItem>
-                    <GridItem colSpan={{ base: 12, md: 3 }} mb="16px" border="1px solid #F3F3F3" rounded="8px">
+                    {/* <GridItem colSpan={{ base: 12, md: 3 }} mb="16px" border="1px solid #F3F3F3" rounded="8px">
                         <Skeleton isLoaded={!getAllOrdersStatus.isLoading}>
                             <Stack h={`98px`} spacing="10px" direction="column" color="purple.300" p="16px">
                                 <Text fontSize="16px" lineHeight="24px" fontWeight="400">
@@ -136,7 +135,7 @@ export const OrderDetails = () => {
                                 </Text>
                             </Stack>
                         </Skeleton>
-                    </GridItem>
+                    </GridItem> */}
                 </Grid>
             </Box>
         </Box>

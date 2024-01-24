@@ -133,6 +133,7 @@ export const CustomersTableControl = ({ showRefreshBtn }: controlsProp) => {
                             borderRadius={"4px"}
                             fontSize={{ base: `sm`, md: `md` }}
                             btnExtras={{
+                                disabled: true,
                                 border: `1px solid #6D5DD3`,
                                 leftIcon: `solar:export-line-duotone`,
                                 onClick: handleExport,

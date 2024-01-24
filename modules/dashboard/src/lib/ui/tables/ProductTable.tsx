@@ -11,15 +11,15 @@ import { selectAllProducts, selectCurrentToken, selectProductMetaData, useGetAll
 import { OnBoardingLoader, SharedButton } from "@productize-v1.0.0/modules/shared/ui";
 import { useCallback, useEffect } from "react";
 import { ProductsTableControl } from "./tableControls/ProductsTableControl";
+import { DashboardEmptyState } from "../empty-states/DashboardEmptyState";
 
 interface tableProps {
     draft?: boolean;
     live?: boolean;
     deleted?: boolean;
-    tableData: [];
 }
 
-export const ProductTable = ({ draft, live, deleted, tableData }: tableProps) => {
+export const ProductTable = ({ draft, live, deleted }: tableProps) => {
     const [getAllProducts, getAllProductsStatus] = useGetAllProductsMutation();
     const allProducts = useSelector(selectAllProducts);
     const token = useSelector(selectCurrentToken);
@@ -165,7 +165,13 @@ export const ProductTable = ({ draft, live, deleted, tableData }: tableProps) =>
             <Skeleton isLoaded={!getAllProductsStatus.isLoading}>
                 <ProductsTableControl />
             </Skeleton>
-            <TableContainer display={`flex`} flexDir={`column`} height={`40rem`} justifyContent={`space-between`} overflowY={`auto`}>
+            <TableContainer
+                display={`flex`}
+                flexDir={`column`}
+                height={allProducts?.length ? `40rem` : `fit-Content`}
+                justifyContent={`space-between`}
+                overflowY={`auto`}
+            >
                 {getAllProductsStatus.isLoading ? (
                     <OnBoardingLoader />
                 ) : (
@@ -179,6 +185,19 @@ export const ProductTable = ({ draft, live, deleted, tableData }: tableProps) =>
                         {/* body */}
                         <Tbody color={`purple.300`}>{tableproduct}</Tbody>
                     </Table>
+                )}
+                {!allProducts?.length && (
+                    <Box my={10}>
+                        <DashboardEmptyState
+                            content={{
+                                title: "",
+                                desc: "Product Table is Empty.",
+                                img: `https://res.cloudinary.com/kingsleysolomon/image/upload/v1700317427/productize/Illustration_4_pujumv.png`,
+                            }}
+                            textAlign={{ base: `center` }}
+                            showImage
+                        />
+                    </Box>
                 )}
             </TableContainer>
             {/* TABLE PAGINATION */}

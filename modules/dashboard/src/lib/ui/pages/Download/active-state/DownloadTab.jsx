@@ -33,16 +33,16 @@ export const DownloadTab = () => {
                     <Tab onClick={() => handleTabClick("#all-downloads")} id="all-downloads" _selected={activeStateStyle} py={6}>
                         All Downloads
                     </Tab>
-                    <Tab onClick={() => handleTabClick("#digital-products")} id="digital-products" _selected={activeStateStyle} py={6}>
+                    <Tab isDisabled onClick={() => handleTabClick("#digital-products")} id="digital-products" _selected={activeStateStyle} py={6}>
                         Digital Products
                     </Tab>
-                    <Tab onClick={() => handleTabClick("#print-on-demand")} id="print-on-demand" _selected={activeStateStyle} py={6}>
+                    <Tab isDisabled onClick={() => handleTabClick("#print-on-demand")} id="print-on-demand" _selected={activeStateStyle} py={6}>
                         Print On Demand
                     </Tab>
-                    <Tab onClick={() => handleTabClick("#video-streaming")} id="video-streaming" _selected={activeStateStyle} py={6}>
+                    <Tab isDisabled onClick={() => handleTabClick("#video-streaming")} id="video-streaming" _selected={activeStateStyle} py={6}>
                         Video Streaming
                     </Tab>
-                    <Tab onClick={() => handleTabClick("#subscription")} id="subscription" _selected={activeStateStyle} py={6}>
+                    <Tab isDisabled onClick={() => handleTabClick("#subscription")} id="subscription" _selected={activeStateStyle} py={6}>
                         Subscription
                     </Tab>
                 </Flex>

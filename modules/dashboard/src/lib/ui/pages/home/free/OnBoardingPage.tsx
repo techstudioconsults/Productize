@@ -3,11 +3,8 @@ import {
     Box,
     Container,
     Flex,
-    ModalCloseButton,
     Stack,
     Text,
-    useDisclosure,
-    useToast,
     // useDisclosure,
 } from "@chakra-ui/react";
 // eslint-disable-next-line @nx/enforce-module-boundaries
@@ -15,36 +12,57 @@ import { useVerifyEmailMutation, selectCurrentUser, useGetUserMutation } from "@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useSetPaymentPlan } from "@productize-v1.0.0/modules/shared/hooks";
-import { Divider } from "rsuite";
-import { ModalComp, OnBoardingLoader, ToastFeedback } from "@productize-v1.0.0/modules/shared/ui";
+import { OnBoardingLoader, ToastFeedback, useToastAction } from "@productize-v1.0.0/modules/shared/ui";
 import { DashboardBanner } from "../../../DashboardBanner";
-import { SetupPaymentForm } from "@productize-v1.0.0/dashboard";
 import { Suspense } from "react";
+import errorImg from "@icons/error.svg";
 const DashboardRadioBtnComp = React.lazy(() => import("../../../DashboardRadioBtnComp"));
 const ProgressBar = React.lazy(() => import("../../../ProgressBar"));
 
 const OnBoardingPage = () => {
     const [verifyEmail, verifyEmailStatus] = useVerifyEmailMutation();
     const [getUser] = useGetUserMutation();
-    const { onOpen, onClose, isOpen } = useDisclosure();
     const user = useSelector(selectCurrentUser);
     const navigate = useNavigate();
-    const toast = useToast();
+    const { toast, toastIdRef, close } = useToastAction();
     const isPremium = useSetPaymentPlan();
 
     const verifyEmailAddress = async () => {
         try {
             const res = await verifyEmail(null).unwrap();
             if (res) {
-                toast({
+                toastIdRef.current = toast({
                     position: "top",
-                    render: () => <ToastFeedback message={`Check your email for our verification link`} title="Email sent successfully" />,
+                    render: () => (
+                        <ToastFeedback
+                            btnColor={`purple.200`}
+                            message={`Check your email for our verification link`}
+                            title="Email sent successfully"
+                            icon={undefined}
+                            bgColor={undefined}
+                            color={undefined}
+                            handleClose={close}
+                        />
+                    ),
                 });
                 // write a dispatch hook here to update the user profie details for verified user email
                 await getUser(null).unwrap();
             }
-        } catch (err) {
-            console.log(err);
+        } catch (err: any) {
+            toastIdRef.current = toast({
+                position: "top",
+                render: () => (
+                    <ToastFeedback
+                        message={`Something went wrong, please try again later.`}
+                        title="Email not sent!"
+                        icon={errorImg}
+                        color={`red.600`}
+                        btnColor={`red.600`}
+                        bgColor={undefined}
+                        handleClose={close}
+                    />
+                ),
+            });
         }
     };
 

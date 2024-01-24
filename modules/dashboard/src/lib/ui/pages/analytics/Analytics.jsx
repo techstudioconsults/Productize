@@ -7,9 +7,9 @@ import { useCurrency } from "@productize-v1.0.0/modules/shared/hooks";
 import { useSelector } from "react-redux";
 
 import { AnalyticsTable } from "./AnalyticsTable";
-import { ProductsTableControl } from "../../tables/tableControls/ProductsTableControl";
 import { DataWidgetCard } from "../../DataWidgetCard";
 import { DashboardEmptyState } from "../../empty-states/DashboardEmptyState";
+import { HomeFilterController } from "../home/premium/components/HomeFilterController";
 
 export const Analytics = () => {
     const [status, setStatus] = useState(``);
@@ -17,6 +17,7 @@ export const Analytics = () => {
     const [getProductAnaysis] = useGetProductAnalyticsMutation();
     const formatCurrency = useCurrency();
     const productAnaysis = useSelector(selectProductAnalytics);
+    const currentMonth = new Date().toLocaleString("en-US", { month: "long" });
 
     const data = [`All`, `Draft`, `Published`].map((item) => ({
         label: item,
@@ -34,7 +35,7 @@ export const Analytics = () => {
     return (
         <Box my={8}>
             {/* dropdown filters and buttons Controls */}
-            <ProductsTableControl showRefreshBtn />
+            <HomeFilterController />
             {/* grid cards */}
             <Box>
                 <SimpleGrid gap={4} my={4} columns={{ base: 1, md: 3 }}>
@@ -75,17 +76,28 @@ export const Analytics = () => {
                     ) : (
                         <section className={style.graphCard}>
                             <div className={style.header}>
-                                <Flex w={`100%`} justifyContent={`space-between`} alignItems={`center`} className={style.title}>
-                                    <Flex color={`grey.300`} gap={5}>
-                                        {/* <Text>Orders (2)</Text>
-                                        <Text>Cancellted (1)</Text>
-                                        <Text>Product Sold (2)</Text> */}
+                                <Flex w={`100%`} justifyContent={`flex-end`} alignItems={`center`} className={style.title} gap={5}>
+                                    <Flex>
+                                        <Select placeholder="Months" defaultValue={currentMonth}>
+                                            <option value="January">January</option>
+                                            <option value="February">February</option>
+                                            <option value="March">March</option>
+                                            <option value="April">April</option>
+                                            <option value="May">May</option>
+                                            <option value="June">June</option>
+                                            <option value="July">July</option>
+                                            <option value="August">August</option>
+                                            <option value="September">September</option>
+                                            <option value="October">October</option>
+                                            <option value="November">November</option>
+                                            <option value="December">December</option>
+                                        </Select>
                                     </Flex>
                                     <Flex>
-                                        <Select placeholder="View By Months">
-                                            <option value="option1">Option 1</option>
-                                            <option value="option2">Option 2</option>
-                                            <option value="option3">Option 3</option>
+                                        <Select placeholder="View By Digital Product">
+                                            <option value="option1">option 1</option>
+                                            <option value="option2">option 2</option>
+                                            <option value="option3">option 3</option>
                                         </Select>
                                     </Flex>
                                 </Flex>
@@ -94,7 +106,9 @@ export const Analytics = () => {
                                 <LineChart />
                             </div>
                             <Box my={10}>
-                                <Text as={`h6`} my={5}>Top Product</Text>
+                                <Text as={`h6`} my={5}>
+                                    Top Product
+                                </Text>
                                 <AnalyticsTable />
                             </Box>
                         </section>

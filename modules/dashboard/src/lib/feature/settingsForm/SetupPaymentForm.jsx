@@ -1,12 +1,18 @@
 import { Box, Flex, FormControl, FormLabel, Input, Select, Text, useToast } from "@chakra-ui/react";
 import React, { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { SharedButton, ToastFeedback } from "@productize-v1.0.0/modules/shared/ui";
+import { SharedButton, ToastFeedback, useToastAction } from "@productize-v1.0.0/modules/shared/ui";
 import { Divider } from "rsuite";
-import { useGetBankListMutation, useGetUserMutation, useRetrieveAllPayoutAccountMutation, useSetupPaymentAccountMutation } from "@productize-v1.0.0/modules/shared/redux";
+import {
+    useGetBankListMutation,
+    useGetUserMutation,
+    useRetrieveAllPayoutAccountMutation,
+    useSetupPaymentAccountMutation,
+} from "@productize-v1.0.0/modules/shared/redux";
+import errorImg from "@icons/error.svg";
 
 export const SetupPaymentForm = ({ closeModal }) => {
-    const toast = useToast();
+    const { toast, toastIdRef, close } = useToastAction();
     const [getBankList] = useGetBankListMutation();
     const [getUser] = useGetUserMutation();
     const [setUpPayment, paymentStatus] = useSetupPaymentAccountMutation();
@@ -17,6 +23,7 @@ export const SetupPaymentForm = ({ closeModal }) => {
         register,
         handleSubmit,
         formState: { errors },
+        reset,
     } = useForm({
         criteriaMode: "all",
         mode: "onChange",
@@ -52,19 +59,38 @@ export const SetupPaymentForm = ({ closeModal }) => {
         try {
             const res = await setUpPayment(paymentDetails).unwrap();
             if (res.data) {
-                console.log(res);
-                toast({
+                toastIdRef.current = toast({
                     position: "top",
-                    render: () => <ToastFeedback message={res.data?.message} bgColor="green.100" title="Paystack Setup" />,
+                    render: () => (
+                        <ToastFeedback
+                            btnColor={`purple.200`}
+                            message={res.data?.message || `Payment account setup successfully`}
+                            title="Paystack Setup"
+                            icon={undefined}
+                            bgColor={undefined}
+                            color={undefined}
+                            handleClose={close}
+                        />
+                    ),
                 });
                 await getUser(null).unwrap();
                 await retieveAllPayoutAccounts(null).unwrap();
             }
         } catch (error) {
             console.log(error);
-            toast({
+            toastIdRef.current = toast({
                 position: "top",
-                render: () => <ToastFeedback message={error.data.message} color={`grey.700`} bgColor="yellow.100" title="Paystack Setup" />,
+                render: () => (
+                    <ToastFeedback
+                        message={error.data.message}
+                        title="Paystack Setup"
+                        icon={errorImg}
+                        color={`red.600`}
+                        btnColor={`red.600`}
+                        bgColor={undefined}
+                        handleClose={close}
+                    />
+                ),
             });
         }
     };
@@ -134,7 +160,7 @@ export const SetupPaymentForm = ({ closeModal }) => {
                     <SharedButton
                         btnExtras={{
                             border: `1px solid #6D5DD3`,
-                            onClick: closeModal,
+                            onClick: () => reset(),
                         }}
                         text={"Cancel"}
                         width={`100%`}

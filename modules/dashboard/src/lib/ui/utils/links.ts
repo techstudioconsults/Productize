@@ -26,7 +26,6 @@ export const useLinks = () => {
     const isPremium = useSetPaymentPlan();
     const user = useSelector(selectCurrentUser);
     const productAnaysis = useSelector(selectProductAnalytics);
-    console.log(productAnaysis);
 
     const [links1, setLinks1] = useState<Array<link>>();
     const [links2] = useState([

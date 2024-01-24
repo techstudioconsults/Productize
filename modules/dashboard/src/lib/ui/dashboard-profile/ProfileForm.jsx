@@ -20,25 +20,28 @@ import {
 import { Icon } from "@iconify/react";
 import { useAxiosInstance, useSetPaymentPlan } from "@productize-v1.0.0/modules/shared/hooks";
 import { selectCurrentUser, useGetUserMutation } from "@productize-v1.0.0/modules/shared/redux";
-import { SharedButton, ToastFeedback, UpgradePlanModal } from "@productize-v1.0.0/modules/shared/ui";
+import { SharedButton, ToastFeedback, UpgradePlanModal, useToastAction } from "@productize-v1.0.0/modules/shared/ui";
 import { useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { yupResolver } from "@hookform/resolvers/yup";
 import { profileFormSchema } from "../../feature/formValidationSchema/form-schemas";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import errorImg from "@icons/error.svg";
+import toastImg from "@icons/star-notice.png";
 // eslint-disable-next-line @nx/enforce-module-boundaries
 
 export const ProfileForm = () => {
     const user = useSelector(selectCurrentUser);
-    const toast = useToast();
+    const { toast, toastIdRef, close } = useToastAction();
     const { query, isLoading } = useAxiosInstance({ MIME_TYPE: "multipart/form-data" });
     const isPremium = useSetPaymentPlan();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [getUser] = useGetUserMutation();
     const fileInput = useRef(null);
     const imgRef = useRef(null);
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
@@ -51,19 +54,41 @@ export const ProfileForm = () => {
     });
 
     const onSubmit = async (data) => {
-        console.log(data);
         if (isPremium) {
             try {
                 const res = await query(`post`, `/users/me`, data);
                 if (res?.status === 200) {
-                    toast({
+                    toastIdRef.current = toast({
                         position: "top",
-                        render: () => <ToastFeedback message={``} bgColor="green.100" title="Profile updated successfully" />,
+                        render: () => (
+                            <ToastFeedback
+                                btnColor={`purple.200`}
+                                message={`Profile updated successfully`}
+                                title="Profile updated"
+                                icon={toastImg}
+                                bgColor={undefined}
+                                color={undefined}
+                                handleClose={close}
+                            />
+                        ),
                     });
                     await getUser(null).unwrap();
                 }
             } catch (error) {
-                console.log(error);
+                toastIdRef.current = toast({
+                    position: "top",
+                    render: () => (
+                        <ToastFeedback
+                            message={error.response.data.message}
+                            title="Profile update"
+                            icon={errorImg}
+                            color={`red.600`}
+                            btnColor={`red.600`}
+                            bgColor={undefined}
+                            handleClose={close}
+                        />
+                    ),
+                });
             }
         } else {
             onOpen();
@@ -367,6 +392,7 @@ export const ProfileForm = () => {
                         <SharedButton
                             btnExtras={{
                                 border: "1px solid #6D5DD3",
+                                onClick: () => navigate(-1),
                             }}
                             text={"Cancel"}
                             width={"fit-content"}

@@ -6,11 +6,11 @@ import { DataWidgetCard } from "../../../DataWidgetCard";
 import { ProductTable } from "../../../tables/ProductTable";
 import { useCallback, useEffect } from "react";
 
-interface draftActiveProps {
-    products: [];
-}
+// interface draftActiveProps {
+//     products: [];
+// }
 
-const AllproductActive = ({ products }: draftActiveProps) => {
+const AllproductActive = () => {
     const [getProductsAnalytics, getProductsAnalyticsStatus] = useGetProductAnalyticsMutation();
     const productsAnalyics = useSelector(selectProductAnalytics);
     const formatCurrency = useCurrency();
@@ -19,7 +19,7 @@ const AllproductActive = ({ products }: draftActiveProps) => {
         try {
             await getProductsAnalytics(null).unwrap();
         } catch (error) {
-            return error;
+            console.error(error);
         }
     }, [getProductsAnalytics]);
 
@@ -56,7 +56,7 @@ const AllproductActive = ({ products }: draftActiveProps) => {
             </Box>
             {/* dropdown filters and buttons Controls */}
             <Stack mt={12} gap={4}>
-                <ProductTable tableData={products} />
+                <ProductTable />
             </Stack>
         </Box>
     );

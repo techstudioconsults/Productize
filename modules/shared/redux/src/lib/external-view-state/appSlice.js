@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     allProducts_EXTERNAL: [],
     singleProduct_EXTERNAL: {},
+    tags: [],
     cart: {
         totalProductQuantity: 0,
         totalProductPrice: 0,
@@ -24,8 +25,12 @@ const appSlice = createSlice({
         },
 
         setCart: (state, action) => {
-            state.cart.checkoutProducts = action.payload.product.products
-            state.cart.totalProductPrice = action.payload.product.total_amount
+            state.cart.checkoutProducts = action.payload.product.products;
+            state.cart.totalProductPrice = action.payload.product.total_amount;
+        },
+        setTags: (state, action) => {
+            const { tags } = action.payload;
+            state.tags = tags;
         },
 
         updateCart: (state, action) => {
@@ -66,9 +71,10 @@ const appSlice = createSlice({
     },
 });
 
-export const { setAllProduct_EXTERNAL, setSingleProduct_EXTERNAL, setCart } = appSlice.actions;
+export const { setAllProduct_EXTERNAL, setSingleProduct_EXTERNAL, setCart, setTags } = appSlice.actions;
 export default appSlice.reducer;
 
 export const selectAllProducts_EXTERNAL = (state) => state.App.allProducts_EXTERNAL;
 export const selectSingleProduct_EXTERNAL = (state) => state.App.singleProduct_EXTERNAL;
 export const selectCart = (state) => state.App.cart;
+export const selectTags = (state) => state.App.tags;

@@ -16,7 +16,6 @@ interface tableProps {
 
 export const CustomerDetailsTable = ({ tableData }: tableProps) => {
     const token = useSelector(selectCurrentToken);
-    const navigate = useNavigate();
     const formatCurrency = useCurrency();
     const formatDate = useDate();
     const formatTime = useTime();
@@ -37,7 +36,7 @@ export const CustomerDetailsTable = ({ tableData }: tableProps) => {
     });
     const tableCustomer = tableData?.map((customer: any) => {
         return (
-            <Tr _hover={{ bgColor: `purple.100`, cursor: `pointer` }} onClick={() => navigate(`/dashboard/customers/${customer.id}`)} key={customer.id}>
+            <Tr _hover={{ bgColor: `purple.100`, cursor: `pointer` }} key={customer.id}>
                 <Td>
                     {/* use navigate to tap into all row */}
                     <Flex gap={2} alignItems={`center`}>

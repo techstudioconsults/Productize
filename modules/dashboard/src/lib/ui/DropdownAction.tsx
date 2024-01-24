@@ -10,8 +10,9 @@ import {
     useGetLiveProductsMutation,
     useGetDraftProductsMutation,
 } from "@productize-v1.0.0/modules/shared/redux";
-import { ToastFeedback } from "@productize-v1.0.0/modules/shared/ui";
+import { ToastFeedback, useToastAction } from "@productize-v1.0.0/modules/shared/ui";
 import { useNavigate } from "react-router-dom";
+import errorImg from "@icons/error.svg";
 
 interface dropProp {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -47,7 +48,7 @@ export const DropdownAction = ({ icon, product, handleExport }: dropProp) => {
 
 export const DropdownActionDraft = ({ icon, product }: dropProp) => {
     const navigate = useNavigate();
-    const toast = useToast();
+    const { toast, toastIdRef, close } = useToastAction();
     const [deleteProductSoftly] = useDeleteProductSoftlyMutation();
     const [getAllProducts] = useGetAllProductsMutation();
     const [getLiveProducts] = useGetLiveProductsMutation();
@@ -64,15 +65,36 @@ export const DropdownActionDraft = ({ icon, product }: dropProp) => {
                 await getAllProducts(null).unwrap();
                 await getLiveProducts(null).unwrap();
                 await getDraftProducts(null).unwrap();
-                toast({
+                toastIdRef.current = toast({
                     position: "top",
                     render: () => (
-                        <ToastFeedback message={`Check the deleted tab to recover product`} bgColor="yellow.100" title="Product Deleted Temporarily" />
+                        <ToastFeedback
+                            btnColor={`purple.200`}
+                            message={`Check the deleted tab to recover product`}
+                            title="Product Deleted Temporarily"
+                            icon={undefined}
+                            bgColor={undefined}
+                            color={undefined}
+                            handleClose={close}
+                        />
                     ),
                 });
             }
         } catch (error) {
-            console.log(error);
+            toastIdRef.current = toast({
+                position: "top",
+                render: () => (
+                    <ToastFeedback
+                        message={`Something went wrong, please try again later.`}
+                        title="Error!"
+                        icon={errorImg}
+                        color={`red.600`}
+                        btnColor={`red.600`}
+                        bgColor={undefined}
+                        handleClose={close}
+                    />
+                ),
+            });
         }
     };
     const handleTabAction = (e: { stopPropagation: () => void }, tabAction: string) => {
@@ -106,7 +128,7 @@ export const DropdownActionDraft = ({ icon, product }: dropProp) => {
 
 export const DropdownActionLive = ({ icon, product }: dropProp) => {
     const navigate = useNavigate();
-    const toast = useToast();
+    const { toast, toastIdRef, close } = useToastAction();
     const [updateProductStatus] = useUpdateProductStatusMutation();
     const [deleteProductSoftly] = useDeleteProductSoftlyMutation();
     const [getLiveProducts] = useGetLiveProductsMutation();
@@ -124,13 +146,36 @@ export const DropdownActionLive = ({ icon, product }: dropProp) => {
                 await getAllProducts(null).unwrap();
                 await getLiveProducts(null).unwrap();
                 await getDraftProducts(null).unwrap();
-                toast({
+                toastIdRef.current = toast({
                     position: "top",
-                    render: () => <ToastFeedback message={`Check draft to view product`} title="Product Unpublished successfully!" />,
+                    render: () => (
+                        <ToastFeedback
+                            btnColor={`purple.200`}
+                            message={`Check draft to view product`}
+                            title="Product Unpublished successfully!"
+                            icon={undefined}
+                            bgColor={undefined}
+                            color={undefined}
+                            handleClose={close}
+                        />
+                    ),
                 });
             }
         } catch (error) {
-            console.log(error);
+            toastIdRef.current = toast({
+                position: "top",
+                render: () => (
+                    <ToastFeedback
+                        message={`Something went wrong, please try again later.`}
+                        title="Error!"
+                        icon={errorImg}
+                        color={`red.600`}
+                        btnColor={`red.600`}
+                        bgColor={undefined}
+                        handleClose={close}
+                    />
+                ),
+            });
         }
     };
     const handleDeleteProductSoftly = async (e: { stopPropagation: () => void }) => {
@@ -144,15 +189,36 @@ export const DropdownActionLive = ({ icon, product }: dropProp) => {
                 await getAllProducts(null).unwrap();
                 await getLiveProducts(null).unwrap();
                 await getDraftProducts(null).unwrap();
-                toast({
+                toastIdRef.current = toast({
                     position: "top",
                     render: () => (
-                        <ToastFeedback message={`Check the deleted tab to recover product`} bgColor="yellow.100" title="Product Deleted Temporarily" />
+                        <ToastFeedback
+                            btnColor={`purple.200`}
+                            message={`Check the deleted tab to recover product`}
+                            title="Product Deleted Temporarily"
+                            icon={undefined}
+                            bgColor={undefined}
+                            color={undefined}
+                            handleClose={close}
+                        />
                     ),
                 });
             }
         } catch (error) {
-            console.log(error);
+            toastIdRef.current = toast({
+                position: "top",
+                render: () => (
+                    <ToastFeedback
+                        message={`Something went wrong, please try again later.`}
+                        title="Error!"
+                        icon={errorImg}
+                        color={`red.600`}
+                        btnColor={`red.600`}
+                        bgColor={undefined}
+                        handleClose={close}
+                    />
+                ),
+            });
         }
     };
     const handleTabAction = (e: { stopPropagation: () => void }, tabAction: string) => {
@@ -189,7 +255,7 @@ export const DropdownActionLive = ({ icon, product }: dropProp) => {
 
 export const DropdownActionDelete = ({ icon, product }: dropProp) => {
     const navigate = useNavigate();
-    const toast = useToast();
+    const { toast, toastIdRef, close } = useToastAction();
 
     const [getDeletedProducts] = useGetDeletedProductsMutation();
     const [restoreSoftDeletedProduct] = useRestoreSoftDeletedProductMutation();
@@ -209,13 +275,36 @@ export const DropdownActionDelete = ({ icon, product }: dropProp) => {
 
             if (res) {
                 await getDeletedProducts(null).unwrap();
-                toast({
+                toastIdRef.current = toast({
                     position: "top",
-                    render: () => <ToastFeedback title="Product recovered successfully!" message={`Check draft to view recovered product`} />,
+                    render: () => (
+                        <ToastFeedback
+                            btnColor={`purple.200`}
+                            message={`Check draft to view recovered product`}
+                            title="Product recovered successfully!"
+                            icon={undefined}
+                            bgColor={undefined}
+                            color={undefined}
+                            handleClose={close}
+                        />
+                    ),
                 });
             }
         } catch (error) {
-            console.log(error);
+            toastIdRef.current = toast({
+                position: "top",
+                render: () => (
+                    <ToastFeedback
+                        message={`Something went wrong, please try again later.`}
+                        title="Error!"
+                        icon={errorImg}
+                        color={`red.600`}
+                        btnColor={`red.600`}
+                        bgColor={undefined}
+                        handleClose={close}
+                    />
+                ),
+            });
         }
     };
 
@@ -228,17 +317,36 @@ export const DropdownActionDelete = ({ icon, product }: dropProp) => {
 
             if (res) {
                 await getDeletedProducts(null).unwrap();
-                toast({
+                toastIdRef.current = toast({
                     position: "top",
-                    render: () => <ToastFeedback title="Product Deleted Permanently" message={`This product cannot be recovered`} bgColor="red.100" />,
+                    render: () => (
+                        <ToastFeedback
+                            btnColor={`purple.200`}
+                            message={`This product cannot be recovered`}
+                            title="Product Deleted Permanently"
+                            icon={undefined}
+                            bgColor={undefined}
+                            color={undefined}
+                            handleClose={close}
+                        />
+                    ),
                 });
             }
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
-            if (error.originalStatus === 200) await getDeletedProducts(null).unwrap();
-            toast({
+            toastIdRef.current = toast({
                 position: "top",
-                render: () => <ToastFeedback title="Product Deleted Permanently" message={`This product cannot be recovered`} bgColor="red.100" />,
+                render: () => (
+                    <ToastFeedback
+                        message={`Something went wrong, please try again later.`}
+                        title="Error!"
+                        icon={errorImg}
+                        color={`red.600`}
+                        btnColor={`red.600`}
+                        bgColor={undefined}
+                        handleClose={close}
+                    />
+                ),
             });
         }
     };

@@ -8,8 +8,9 @@ import { useState } from "react";
 import { Icon } from "@iconify/react";
 import { useDateRangeFormat } from "@productize-v1.0.0/modules/shared/hooks";
 import { selectCurrentToken, useGetAllProductsMutation } from "@productize-v1.0.0/modules/shared/redux";
-import { SpinnerComponentSmall, SharedButton } from "@productize-v1.0.0/modules/shared/ui";
+import { SpinnerComponentSmall, SharedButton, ToastFeedback, useToastAction } from "@productize-v1.0.0/modules/shared/ui";
 import download from "downloadjs";
+import errorImg from "@icons/error.svg";
 
 const BASE_URL = import.meta.env["VITE_BASE_URL"];
 
@@ -25,6 +26,7 @@ export const ProductsTableControl = ({ showRefreshBtn }: controlsProp) => {
     const [status, setStatus] = useState(``);
     const [getAllProducts, getAllProductsStatus] = useGetAllProductsMutation();
     const formatDateRange = useDateRangeFormat();
+    const { toast, toastIdRef, close } = useToastAction();
 
     const headersCredentials = {
         headers: {
@@ -49,10 +51,37 @@ export const ProductsTableControl = ({ showRefreshBtn }: controlsProp) => {
                 setExportLoading(false);
                 const blob = new Blob([res.data], { type: "text/csv" });
                 download(blob, `Products.csv`);
+                toastIdRef.current = toast({
+                    position: "top",
+                    render: () => (
+                        <ToastFeedback
+                            btnColor={`purple.200`}
+                            message={`Check your download folder for product file`}
+                            title="Downloaded successfully"
+                            icon={undefined}
+                            bgColor={undefined}
+                            color={undefined}
+                            handleClose={close}
+                        />
+                    ),
+                });
             }
         } catch (error) {
             setExportLoading(false);
-            console.log(error);
+            toastIdRef.current = toast({
+                position: "top",
+                render: () => (
+                    <ToastFeedback
+                        message={`Something went wrong, please try again later.`}
+                        title="Download Error!"
+                        icon={errorImg}
+                        color={`red.600`}
+                        btnColor={`red.600`}
+                        bgColor={undefined}
+                        handleClose={close}
+                    />
+                ),
+            });
         }
     };
 
@@ -65,24 +94,24 @@ export const ProductsTableControl = ({ showRefreshBtn }: controlsProp) => {
     };
 
     const filterTable = async () => {
-        // if (status === `all`) {
-        //     try {
-        //         await getAllProducts(null).unwrap();
-        //     } catch (error) {
-        //         console.log(error);
-        //     }
-        // } else {
-        //     try {
-        //         await getAllProducts({
-        //             page: null,
-        //             startDate,
-        //             endDate,
-        //             status,
-        //         }).unwrap();
-        //     } catch (error) {
-        //         console.log(error);
-        //     }
-        // }
+        if (status === `all`) {
+            try {
+                await getAllProducts(null).unwrap();
+            } catch (error) {
+                console.error(error);
+            }
+        } else {
+            try {
+                await getAllProducts({
+                    page: null,
+                    startDate,
+                    endDate,
+                    status,
+                }).unwrap();
+            } catch (error) {
+                console.error(error);
+            }
+        }
     };
 
     return (
@@ -101,7 +130,6 @@ export const ProductsTableControl = ({ showRefreshBtn }: controlsProp) => {
                     <SelectPicker searchable={false} onSelect={handleStatusChange} style={{ width: `100%` }} placeholder={`Status`} size="lg" data={data} />
                 </Box>
                 <IconButton
-                    isDisabled
                     color={`purple.200`}
                     bgColor={`purple.100`}
                     isLoading={getAllProductsStatus.isLoading}

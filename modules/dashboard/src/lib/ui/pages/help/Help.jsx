@@ -13,24 +13,26 @@ import {
     Input,
     Text,
     Textarea,
-    useToast,
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { helpSchema } from "@productize-v1.0.0/auth";
 import { useSendHelpMessageMutation } from "@productize-v1.0.0/modules/shared/redux";
-import { ErrorText, SharedButton, ToastFeedback } from "@productize-v1.0.0/modules/shared/ui";
+import { ErrorText, SharedButton, ToastFeedback, useToastAction } from "@productize-v1.0.0/modules/shared/ui";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import errorImg from "@icons/error.svg";
+import toastImg from "@icons/star-notice.png";
 
 export const Help = () => {
     const [error, setError] = useState("");
     const [sendHelpMessage, sendHelpMessageStatus] = useSendHelpMessageMutation();
-    const toast = useToast();
+    const { toast, toastIdRef, close } = useToastAction();
 
     const {
         register,
         handleSubmit,
         formState: { errors },
+        reset,
     } = useForm({
         criteriaMode: "all",
         mode: "onChange",
@@ -43,14 +45,37 @@ export const Help = () => {
             const res = await sendHelpMessage(data).unwrap();
             console.log(res);
             if (res.message) {
-                toast({
+                toastIdRef.current = toast({
                     position: "top",
-                    render: () => <ToastFeedback message={res.message} bgColor="green.100" color={`grey.400`} title="Done" />,
+                    render: () => (
+                        <ToastFeedback
+                            btnColor={`purple.200`}
+                            message={res?.message}
+                            title="Email sent successfully"
+                            icon={toastImg}
+                            bgColor={undefined}
+                            color={undefined}
+                            handleClose={close}
+                        />
+                    ),
                 });
             }
         } catch (error) {
             setError(error.data.message);
-            console.log(error);
+            toastIdRef.current = toast({
+                position: "top",
+                render: () => (
+                    <ToastFeedback
+                        message={error?.data?.message}
+                        title="Email not sent!"
+                        icon={errorImg}
+                        color={`red.600`}
+                        btnColor={`red.600`}
+                        bgColor={undefined}
+                        handleClose={close}
+                    />
+                ),
+            });
         }
     };
 
@@ -109,6 +134,7 @@ export const Help = () => {
                                         Your Email
                                     </FormLabel>
                                     <Input
+                                        type={`email`}
                                         bgColor={`grey.200`}
                                         _focus={{ bgColor: `grey.300`, color: `grey.800` }}
                                         _placeholder={{ color: `grey.400` }}
@@ -163,6 +189,7 @@ export const Help = () => {
                                 <SharedButton
                                     btnExtras={{
                                         border: "1px solid #6D5DD3",
+                                        onClick: () => reset(),
                                     }}
                                     text={"Cancel"}
                                     width={"fit-content"}

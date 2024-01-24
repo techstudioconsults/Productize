@@ -3,10 +3,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { changePasswordSchema } from "@productize-v1.0.0/auth";
 import { useAxiosInstance } from "@productize-v1.0.0/modules/shared/hooks";
 import { selectCurrentUser, useChangePasswordMutation, useGetUserMutation } from "@productize-v1.0.0/modules/shared/redux";
-import { ErrorText, SharedButton, ToastFeedback } from "@productize-v1.0.0/modules/shared/ui";
+import { ErrorText, SharedButton, ToastFeedback, useToastAction } from "@productize-v1.0.0/modules/shared/ui";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
+import errorImg from "@icons/error.svg";
+import toastImg from "@icons/star-notice.png";
 
 export const AccountSettings = () => {
     const user = useSelector(selectCurrentUser);
@@ -14,8 +16,8 @@ export const AccountSettings = () => {
     const [getUser] = useGetUserMutation();
     const [showResetPasswordView, setShowResetPassword] = useState();
     const [error, setError] = useState("");
-    const toast = useToast();
     const [changePassword, changePasswordStatus] = useChangePasswordMutation();
+    const { toast, toastIdRef, close } = useToastAction();
 
     const handleShowResetPasswordView = () => {
         if (showResetPasswordView) {
@@ -29,6 +31,7 @@ export const AccountSettings = () => {
         register,
         handleSubmit,
         formState: { errors },
+        reset,
     } = useForm({
         criteriaMode: "all",
         mode: "onChange",
@@ -40,14 +43,37 @@ export const AccountSettings = () => {
             console.log(data);
             const res = await changePassword(data).unwrap();
             if (res) {
-                toast({
+                toastIdRef.current = toast({
                     position: "top",
-                    render: () => <ToastFeedback message={``} bgColor="green.100" title="Password changed successfully" />,
+                    render: () => (
+                        <ToastFeedback
+                            btnColor={`purple.200`}
+                            message={`Password changed successfully`}
+                            title="Password changed"
+                            icon={toastImg}
+                            bgColor={undefined}
+                            color={undefined}
+                            handleClose={close}
+                        />
+                    ),
                 });
             }
         } catch (error) {
             setError(error.data.message);
-            console.log(error);
+            toastIdRef.current = toast({
+                position: "top",
+                render: () => (
+                    <ToastFeedback
+                        message={error.data.message}
+                        title="Error!"
+                        icon={errorImg}
+                        color={`red.600`}
+                        btnColor={`red.600`}
+                        bgColor={undefined}
+                        handleClose={close}
+                    />
+                ),
+            });
         }
     };
 
@@ -207,7 +233,7 @@ export const AccountSettings = () => {
                     <GridItem display={showResetPasswordView ? `none` : `grid`} colSpan={{ base: 12, md: 7 }}>
                         <FormControl as={`form`} onSubmit={handleSubmit(handlePasswordChange)} maxW={500} mt={4}>
                             <Box>
-                                {changePasswordStatus.isError && <ErrorText error={error} />}
+                                {/* {changePasswordStatus.isError && <ErrorText error={error} />} */}
                                 <FormControl>
                                     <FormLabel color={`purple.300`} fontWeight={600}>
                                         Current Password
@@ -266,7 +292,10 @@ export const AccountSettings = () => {
                                     <SharedButton
                                         btnExtras={{
                                             border: "1px solid #6D5DD3",
-                                            onClick: handleShowResetPasswordView,
+                                            onClick: () => {
+                                                handleShowResetPasswordView();
+                                                reset();
+                                            },
                                         }}
                                         text={"Cancel"}
                                         width={"fit-content"}

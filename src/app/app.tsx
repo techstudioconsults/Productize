@@ -18,17 +18,16 @@ import {
     Help,
     Download,
     Settings,
-    SettingsTab,
-    AccountSettings,
-    PaymentSettings,
     ChangePlans,
     BillingCycle,
+    DownloadedContent,
 } from "@productize-v1.0.0/dashboard";
 import { ForgotPassword, Login, Signup } from "@productize-v1.0.0/auth";
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 
 import { Suspense } from "react";
 import { PlanSettings } from "@productize-v1.0.0/dashboard";
+import { useGetProductTagsMutation } from "@productize-v1.0.0/modules/shared/redux";
 
 // using suspense and lazy loading
 const Home = React.lazy(() => import("../pages/home/Home").then((module) => ({ default: module.Home })));
@@ -41,6 +40,16 @@ const ProductCart = React.lazy(() => import("../pages/explore/views/productDetai
 export { Home, Features, Pricing, Explore, ProductDetails, ProductCart };
 
 export function App() {
+    const [getProductTags] = useGetProductTagsMutation();
+
+    const getTags = useCallback(async () => {
+        await getProductTags(null).unwrap();
+    }, [getProductTags]);
+
+    useEffect(() => {
+        getTags();
+    }, [getTags]);
+
     return (
         <Suspense
             fallback={
@@ -65,7 +74,6 @@ export function App() {
                 {/* <Route path="/explore/design" element={<ExploreDesign />} /> */}
                 <Route path="/explore/product/details/:productID" element={<ProductDetails />} />
                 <Route path="/explore/product/cart" element={<ProductCart />} />
-                <Route path="*" element={<h1>PAGE NOT FOUND</h1>} />
 
                 {/* dashboard */}
                 <Route path="/dashboard" element={<DashboardLayout />}>
@@ -89,7 +97,9 @@ export function App() {
 
                     <Route path="profile/:userID" element={<Profile />} />
                     <Route path="help" element={<Help />} />
+
                     <Route path="downloads" element={<Download />} />
+                    <Route path="downloads/:downloadedContentID" element={<DownloadedContent />} />
 
                     <Route path="settings" element={<Settings />}>
                         <Route path="plans" element={<PlanSettings />} />
@@ -97,6 +107,7 @@ export function App() {
                         <Route path="plans/billing-cycle" element={<BillingCycle />} />
                     </Route>
                 </Route>
+                <Route path="*" element={<h1>PAGE NOT FOUND</h1>} />
             </Routes>
         </Suspense>
     );

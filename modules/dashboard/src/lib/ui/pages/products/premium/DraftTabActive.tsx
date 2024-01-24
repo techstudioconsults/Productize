@@ -47,7 +47,7 @@ const DraftTabActive = () => {
                     textAlign={{ base: `center` }}
                     showImage={false}
                 >
-                    <Link to={`/dashboard/products/new`}>
+                    <Link to={`/dashboard/products/new#product-details`}>
                         <SharedButton
                             text={"Add New Product"}
                             btnExtras={{

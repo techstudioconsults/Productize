@@ -2,25 +2,21 @@ import { Box, Card, Center, Divider, Flex, Grid, GridItem, ModalCloseButton, Ske
 import { ModalComp } from "@productize-v1.0.0/modules/shared/ui";
 import { SetupPaymentForm } from "../../../../feature/settingsForm/SetupPaymentForm";
 import { Icon } from "@iconify/react";
-import { useCallback, useEffect, useState } from "react";
-import { useRetrieveAllPayoutAccountMutation } from "@productize-v1.0.0/modules/shared/redux";
+import { useCallback, useEffect } from "react";
+import { selectAccountList, useRetrieveAllPayoutAccountMutation } from "@productize-v1.0.0/modules/shared/redux";
 import BankCard from "../../payouts/components/BankCard";
+import { useSelector } from "react-redux";
 
 export const PaymentSettings = () => {
     const { onOpen, onClose, isOpen } = useDisclosure();
-    const [payoutAccountList, setPayoutAccountList] = useState([]);
+    const payoutAccountList = useSelector(selectAccountList);
     const [retieveAllPayoutAccounts, retieveAllPayoutAccountsStatus] = useRetrieveAllPayoutAccountMutation();
 
     const retrivePayoutAcc = useCallback(async () => {
         try {
-            const res = await retieveAllPayoutAccounts(null).unwrap();
-            console.log(res);
-            if (res.data) {
-                setPayoutAccountList(res.data);
-            }
+            await retieveAllPayoutAccounts(null).unwrap();
         } catch (error) {
-            // setError(error.data.message);
-            console.log(error);
+            console.error(error);
         }
     }, [retieveAllPayoutAccounts]);
 
@@ -31,11 +27,7 @@ export const PaymentSettings = () => {
     const accountList = payoutAccountList?.map((account) => {
         return (
             <Skeleton isLoaded={!retieveAllPayoutAccountsStatus.isLoading} key={account.id} borderRadius={`8px`}>
-                <BankCard
-                    key={account.id}
-                    account={account}
-                    src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1702765305/productize/Bank_Logo_f98woi.png`}
-                />
+                <BankCard key={account.id} account={account} src={null} />
             </Skeleton>
         );
     });

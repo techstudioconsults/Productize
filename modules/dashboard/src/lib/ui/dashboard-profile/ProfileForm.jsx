@@ -326,11 +326,11 @@ export const ProfileForm = () => {
                                     variant={`filled`}
                                     {...register("twitter_account")}
                                 />
-                                <InputRightElement>
-                                    <Center cursor={`pointer`} bgColor={`grey.300`} borderRadius={`100%`} boxSize={`1rem`} color={`grey.100`}>
+                                {/* <InputRightElement>
+                                    <Center cursor={`pointer`} bgColor={`purple.200`} borderRadius={`100%`} boxSize={`1rem`} color={`grey.100`}>
                                         <Icon icon={`system-uicons:close`} />
                                     </Center>
-                                </InputRightElement>
+                                </InputRightElement> */}
                             </InputGroup>
                             <Text className={`tiny-text`} color={`red.200`}>
                                 {errors?.twitter_account?.message}
@@ -354,11 +354,11 @@ export const ProfileForm = () => {
                                     variant={`filled`}
                                     {...register("facebook_account")}
                                 />
-                                <InputRightElement>
+                                {/* <InputRightElement>
                                     <Center cursor={`pointer`} bgColor={`grey.300`} borderRadius={`100%`} boxSize={`1rem`} color={`grey.100`}>
                                         <Icon icon={`system-uicons:close`} />
                                     </Center>
-                                </InputRightElement>
+                                </InputRightElement> */}
                             </InputGroup>
                             <Text className={`tiny-text`} color={`red.200`}>
                                 {errors?.facebook_account?.message}
@@ -382,11 +382,11 @@ export const ProfileForm = () => {
                                     variant={`filled`}
                                     {...register("youtube_account")}
                                 />
-                                <InputRightElement>
+                                {/* <InputRightElement>
                                     <Center cursor={`pointer`} bgColor={`grey.300`} borderRadius={`100%`} boxSize={`1rem`} color={`grey.100`}>
                                         <Icon icon={`system-uicons:close`} />
                                     </Center>
-                                </InputRightElement>
+                                </InputRightElement> */}
                             </InputGroup>
                             <Text className={`tiny-text`} color={`red.200`}>
                                 {errors?.youtube_account?.message}

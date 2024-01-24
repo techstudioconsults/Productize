@@ -55,7 +55,6 @@ export const SetupPaymentForm = ({ closeModal }) => {
             bank_name: selectedOption.text,
             bank_code: selectedOption.value,
         };
-        console.log(paymentDetails);
         try {
             const res = await setUpPayment(paymentDetails).unwrap();
             if (res.data) {
@@ -73,11 +72,12 @@ export const SetupPaymentForm = ({ closeModal }) => {
                         />
                     ),
                 });
+                closeModal();
                 await getUser(null).unwrap();
                 await retieveAllPayoutAccounts(null).unwrap();
+                // close modal
             }
         } catch (error) {
-            console.log(error);
             toastIdRef.current = toast({
                 position: "top",
                 render: () => (

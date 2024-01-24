@@ -6,7 +6,7 @@ const BankCard = ({ account, src }) => {
         <Card w={{ base: `fit-content` }} borderRadius={`8px`} variant={`outline`} p={5} bgColor={`purple.100`}>
             <Flex gap={16}>
                 <Flex alignItems={`center`} gap={2}>
-                    <Avatar size={`sm`} src={src} />
+                    <Avatar name={account?.bank_name} size={`sm`} src={src} />
                     <Text fontWeight={600}>{account.bank_name}</Text>
                 </Flex>
                 <Radio isChecked={account.active} value="1" size={`lg`} />
@@ -19,6 +19,7 @@ const BankCard = ({ account, src }) => {
             <Flex justifyContent={`flex-end`}>
                 <Menu>
                     <MenuButton
+                        isDisabled
                         size={`sm`}
                         onClick={(e) => e.stopPropagation()}
                         border={`none`}

@@ -89,11 +89,16 @@ export const SetNewProductForm = () => {
 
     // Function to convert an array of URLs to File objects and create a FileList object
     const createFileList = useCallback(async (urls) => {
+        if (!urls || !Array.isArray(urls)) {
+            // console.error("Invalid or undefined URLs array");
+            return [];
+        }
+
         try {
-            const files = await Promise.all(urls?.map((url) => urlToFile(url)));
+            const files = await Promise?.all(urls.map((url) => urlToFile(url)));
             return files;
         } catch (error) {
-            console.log(error);
+            console.error(error);
             return [];
         }
     }, []);
@@ -208,8 +213,8 @@ export const SetNewProductForm = () => {
                                 name="data"
                                 render={({ messages }) => {
                                     return messages
-                                        ? Object.entries(messages).map(([type, message]) => (
-                                              <Text className={`tiny-text`} color={`red.200`} key={type}>
+                                        ? Object.entries(messages).map(([type, message], index) => (
+                                              <Text className={`tiny-text`} color={`red.200`} key={index}>
                                                   {message}
                                               </Text>
                                           ))
@@ -261,8 +266,8 @@ export const SetNewProductForm = () => {
                             />
                         </Box>
                         <SimpleGrid display={dataPreview?.length ? `grid` : `none`} my={4} columns={{ base: 1, md: 2 }} gap={4}>
-                            {dataPreview?.map((file) => {
-                                return <ProductContentDisplay key={file.name} file={file} />;
+                            {dataPreview?.map((file, index) => {
+                                return <ProductContentDisplay key={index} file={file} />;
                             })}
                         </SimpleGrid>
                     </Box>
@@ -326,8 +331,8 @@ export const SetNewProductForm = () => {
                         />
                     </Box>
                     <SimpleGrid display={coverPhotoPreview?.length ? `grid` : `none`} my={4} columns={{ base: 1, md: 3 }} gap={4}>
-                        {coverPhotoPreview?.map((file) => {
-                            return <CoverPhotoThumbnailActiveContent key={file.name} file={file} />;
+                        {coverPhotoPreview?.map((file, index) => {
+                            return <CoverPhotoThumbnailActiveContent key={index} file={file} />;
                         })}
                     </SimpleGrid>
                 </Box>
@@ -446,7 +451,7 @@ export const SetNewProductForm = () => {
                 </Box>
             </SimpleGrid>
             {/* grid 6 */}
-            <SimpleGrid my={8} columns={{ base: 1, md: 2 }}>
+            {/* <SimpleGrid my={8} columns={{ base: 1, md: 2 }}>
                 <Box>
                     <Text color={`purple.300`} fontWeight={600}>
                         Settings
@@ -474,7 +479,7 @@ export const SetNewProductForm = () => {
                         </FormControl>
                     </FormControl>
                 </Box>
-            </SimpleGrid>
+            </SimpleGrid> */}
         </FormControl>
     );
 };

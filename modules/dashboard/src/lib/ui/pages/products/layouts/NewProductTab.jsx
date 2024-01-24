@@ -134,15 +134,16 @@ export const NewProductTab = () => {
 
             // formData.append("title", data.title);
             // formData.append("price", data.price);
+            // formData.append("product_type", data.productType);
             // formData.append("description", data.description);
             // formData.append("thumbnail", data.thumbnail);
-            // formData.append("tags", data.tags);
+            // formData.append("tags[]", data.tags);
             // formData.append("stock_count", data.stock_count);
             // formData.append("choose_quantity", data.choose_quantity);
             // formData.append("show_sales_count", data.show_sales_count);
-            // formData.append("data", JSON.stringify([...data.data]));
-            // formData.append("cover_photos", JSON.stringify([...data.cover_photos]));
-            // formData.append("highlights", JSON.stringify([data?.highlight_1, data?.highlight_2, data?.highlight_3]));
+            // formData.append("data[]", [...data.data]);
+            // formData.append("cover_photos[]", [...data.cover_photos]);
+            // formData.append("highlights[]", [data?.highlight_1, data?.highlight_2, data?.highlight_3]);
             try {
                 const res = await query(`post`, `/products`, formData);
                 if (res.status === 201) {

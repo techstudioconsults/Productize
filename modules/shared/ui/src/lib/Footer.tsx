@@ -93,7 +93,7 @@ export const Footer: React.FC = () => {
                     gap={5}
                 >
                     <Box>
-                        <span>2023</span>
+                        <span>&copy; {new Date().getFullYear()}</span>
                     </Box>
 
                     <Flex fontSize={`1.5rem`} color={`black`} align="center" gap="1.4rem" cursor={"pointer"}>

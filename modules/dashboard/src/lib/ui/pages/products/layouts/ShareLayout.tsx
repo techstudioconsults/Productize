@@ -3,10 +3,12 @@ import { Icon } from "@iconify/react";
 import { useCurrency } from "@productize-v1.0.0/modules/shared/hooks";
 import { Link, useLocation } from "react-router-dom";
 import { DashboardEmptyState } from "../../../empty-states/DashboardEmptyState";
-// import rectangle from "@icons/Rectangle_ikpmwt.svg";
+import { ToastFeedback, useToastAction } from "@productize-v1.0.0/modules/shared/ui";
+import toastimg from "@icons/star-notice.png";
+import errorImg from "@icons/error.svg";
 
 const ShareLayout = () => {
-    const toast = useToast();
+    const { toast, toastIdRef, close } = useToastAction();
     const { state } = useLocation();
     const formatCurrency = useCurrency();
 
@@ -15,25 +17,36 @@ const ShareLayout = () => {
         navigator.clipboard
             .writeText(state?.product?.link)
             .then(() => {
-                toast({
+                toastIdRef.current = toast({
                     position: "top",
                     render: () => (
-                        <Card display={`flex`} flexDir={`row`} alignItems={`center`} w={{ base: `100%`, lg: `702px` }} p={1} bg="grey.100">
-                            <Box borderRight={`1px solid green`} p={2}>
-                                <Image objectFit={`cover`} objectPosition={`center`} src={`rectangle`} alt="img" />
-                            </Box>
-                            <Box p={2}>
-                                <Text fontWeight={600}>Product link Copied!</Text>
-                                <Text className="small-text" color={`grey.400`}>
-                                    You have successfully your product link
-                                </Text>
-                            </Box>
-                        </Card>
+                        <ToastFeedback
+                            btnColor={`purple.200`}
+                            message={` You have successfully copied your product link`}
+                            title="Product link Copied!"
+                            icon={toastimg}
+                            bgColor={undefined}
+                            color={undefined}
+                            handleClose={close}
+                        />
                     ),
                 });
             })
             .catch((error) => {
-                console.error("Failed to copy text: ", error);
+               toastIdRef.current = toast({
+                   position: "top",
+                   render: () => (
+                       <ToastFeedback
+                           message={`Failed to copy link.`}
+                           title="Error!"
+                           icon={errorImg}
+                           color={`red.600`}
+                           btnColor={`red.600`}
+                           bgColor={undefined}
+                           handleClose={close}
+                       />
+                   ),
+               });
             });
     };
 

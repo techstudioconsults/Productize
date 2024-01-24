@@ -12,25 +12,15 @@ import { DashboardEmptyState } from "../../empty-states/DashboardEmptyState";
 import { HomeFilterController } from "../home/premium/components/HomeFilterController";
 
 export const Analytics = () => {
-    const [status, setStatus] = useState(``);
     const [emptyState] = useState(false);
     const [getProductAnaysis] = useGetProductAnalyticsMutation();
     const formatCurrency = useCurrency();
     const productAnaysis = useSelector(selectProductAnalytics);
     const currentMonth = new Date().toLocaleString("en-US", { month: "long" });
 
-    const data = [`All`, `Draft`, `Published`].map((item) => ({
-        label: item,
-        value: item,
-    }));
-
     useEffect(() => {
         getProductAnaysis(null).unwrap();
     }, [getProductAnaysis]);
-
-    const handleStatusChange = (value) => {
-        setStatus(value.toLowerCase());
-    };
 
     return (
         <Box my={8}>

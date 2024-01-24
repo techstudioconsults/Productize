@@ -12,15 +12,14 @@ import { TwoColumnLayout } from "@productize-v1.0.0/modules/shared/ui";
 // import Footers from 'apps/explore/src/libs/layouts/footer/Footer';
 
 export const ProductDetails = () => {
-    const [getSingleProducts_EXTERNAL] = useGetSingleProduct_EXTERNALMutation();
-
+    const [getSingleProducts_EXTERNAL, getAllProducts_EXTERNALStatus] = useGetSingleProduct_EXTERNALMutation();
     const { productID } = useParams();
 
     const fetchData = useCallback(async () => {
         try {
             await getSingleProducts_EXTERNAL({ productID }).unwrap();
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     }, [getSingleProducts_EXTERNAL, productID]);
 
@@ -32,7 +31,10 @@ export const ProductDetails = () => {
         <>
             <ProductNavbar isAuth={useTokenExists()} />
             <Container mt={`5rem`} maxW={`70rem`}>
-                <TwoColumnLayout C1={<ProductSummaryAndPreview />} C2={<ProductSideNav />} />
+                <TwoColumnLayout
+                    C1={<ProductSummaryAndPreview status={getAllProducts_EXTERNALStatus} />}
+                    C2={<ProductSideNav status={getAllProducts_EXTERNALStatus} />}
+                />
             </Container>
             {/* <Footers /> */}
         </>

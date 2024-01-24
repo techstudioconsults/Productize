@@ -14,7 +14,16 @@ export const PageNotFound = () => {
                     <Image alt="logo" src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png`} />
                 </Link>
             </Flex>
-            <Flex as={Container} maxW={`1220px`} p={5} my={`10rem`} justifyContent={`space-around`} alignItems={`center`}>
+            <Flex
+                flexDir={{ base: `column-reverse`, lg: `initial` }}
+                gap={10}
+                as={Container}
+                maxW={`1220px`}
+                p={5}
+                my={`10rem`}
+                justifyContent={`space-around`}
+                alignItems={`center`}
+            >
                 <Box>
                     <Text fontWeight={700} as={`h2`}>
                         Ooops...

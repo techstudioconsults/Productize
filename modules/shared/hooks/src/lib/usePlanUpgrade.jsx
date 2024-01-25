@@ -29,10 +29,6 @@ export const usePlanUpgrade = () => {
                     />
                 ),
             });
-        } finally {
-            location.reload();
-            // force refresh
-            // location.reload(true);
         }
     };
 

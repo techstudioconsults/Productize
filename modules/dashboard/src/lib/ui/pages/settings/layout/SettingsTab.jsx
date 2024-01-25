@@ -32,14 +32,14 @@ export const SettingsTab = () => {
         <Tabs isLazy={true} index={tabIndex} onChange={(index) => setTabIndex(index)} size={`sm`}>
             <TabList justifyContent={`space-between`} color={`grey.400`}>
                 <Flex>
-                    <Tab onClick={() => handleTabClick("#account")} id="account" _selected={activeStateStyle} py={6}>
+                    <Tab id="account" _selected={activeStateStyle} py={6}>
                         Account
                     </Tab>
-                    <Tab onClick={() => handleTabClick("#payment")} id="payment" _selected={activeStateStyle} py={6}>
+                    <Tab id="payment" _selected={activeStateStyle} py={6}>
                         Payment
                     </Tab>
-                    <Tab id="plans" _selected={activeStateStyle} py={6}>
-                        <Link to="/dashboard/settings/plans">Plans</Link>
+                    <Tab onClick={() => navigate(`/dashboard/settings/plans`)} id="plans" _selected={activeStateStyle} py={6}>
+                        Plans
                     </Tab>
                 </Flex>
             </TabList>

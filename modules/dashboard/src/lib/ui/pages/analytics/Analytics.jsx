@@ -12,25 +12,15 @@ import { DashboardEmptyState } from "../../empty-states/DashboardEmptyState";
 import { HomeFilterController } from "../home/premium/components/HomeFilterController";
 
 export const Analytics = () => {
-    const [status, setStatus] = useState(``);
     const [emptyState] = useState(false);
     const [getProductAnaysis] = useGetProductAnalyticsMutation();
     const formatCurrency = useCurrency();
     const productAnaysis = useSelector(selectProductAnalytics);
     const currentMonth = new Date().toLocaleString("en-US", { month: "long" });
 
-    const data = [`All`, `Draft`, `Published`].map((item) => ({
-        label: item,
-        value: item,
-    }));
-
     useEffect(() => {
         getProductAnaysis(null).unwrap();
     }, [getProductAnaysis]);
-
-    const handleStatusChange = (value) => {
-        setStatus(value.toLowerCase());
-    };
 
     return (
         <Box my={8}>
@@ -95,9 +85,12 @@ export const Analytics = () => {
                                     </Flex>
                                     <Flex>
                                         <Select placeholder="View By Digital Product">
-                                            <option value="option1">option 1</option>
-                                            <option value="option2">option 2</option>
-                                            <option value="option3">option 3</option>
+                                            <option selected value="digital-product">
+                                                Digital Product
+                                            </option>
+                                            <option value="print-on-demand">Print on demand</option>
+                                            <option value="video-stream">Video streaming</option>
+                                            <option value="subscription">Subscription</option>
                                         </Select>
                                     </Flex>
                                 </Flex>

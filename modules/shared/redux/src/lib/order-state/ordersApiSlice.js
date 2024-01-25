@@ -6,13 +6,18 @@ import { setAllOrders, setSingleOrder } from "./ordersSlice";
 export const OrdersApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         getAllOrders: builder.mutation({
-            query: () => ({
-                url: `/orders`,
+            query: (credentials) => ({
+                url: credentials ? `/orders?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}` : `/orders`,
                 method: "GET",
             }),
+            // query: () => ({
+            //     url: `/orders`,
+            //     method: "GET",
+            // }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
+                    console.log(data);
                     dispatch(
                         setAllOrders({
                             orders: data.data,

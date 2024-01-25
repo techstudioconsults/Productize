@@ -3,7 +3,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 // import { useForgotPasswordMutation } from "@productize-v1.0.0/modules/shared/redux";
-import { ErrorText, SharedButton, ToastFeedback } from "@productize-v1.0.0/modules/shared/ui";
+import { ErrorText, SharedButton, ToastFeedback, useToastAction } from "@productize-v1.0.0/modules/shared/ui";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { AuthenticationService } from "./AuthenticationService";
 import { forgotPasswordSchema } from "./form-validation-schema/auth-schema";
@@ -11,7 +11,7 @@ import { forgotPasswordSchema } from "./form-validation-schema/auth-schema";
 export function ForgotPassowrdForm() {
     const { forgotPasswordService } = AuthenticationService();
     const [error, setError] = useState<string>("");
-    const toast = useToast();
+    const { toast, close, toastIdRef } = useToastAction();
 
     const {
         register,
@@ -26,12 +26,21 @@ export function ForgotPassowrdForm() {
     const onSubmit = async (data: unknown) => {
         try {
             const res = await forgotPasswordService.forgotPassword(data).unwrap();
-            toast({
+            toastIdRef.current = toast({
                 position: "top",
-                render: () => <ToastFeedback message={res.message} title="" />,
+                render: () => (
+                    <ToastFeedback
+                        btnColor={`purple.200`}
+                        message={res.message}
+                        title=""
+                        icon={undefined}
+                        bgColor={undefined}
+                        color={undefined}
+                        handleClose={close}
+                    />
+                ),
             });
         } catch (error: any) {
-            console.log(error);
             setError(error.data.message);
         }
         // try {

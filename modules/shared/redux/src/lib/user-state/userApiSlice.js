@@ -1,5 +1,5 @@
 import { apiSlice } from "../apiSlice";
-import { setBillingHistory, setUser } from "./userSlice";
+import { setAccountList, setBillingHistory, setUser } from "./userSlice";
 
 export const userApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
@@ -197,7 +197,11 @@ export const userApiSlice = apiSlice.injectEndpoints({
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
-                    console.log(data);
+                    dispatch(
+                        setAccountList({
+                            accounts: data.data,
+                        })
+                    );
                 } catch (err) {
                     console.log(err);
                 }

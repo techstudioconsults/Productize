@@ -19,3 +19,4 @@ export * from "./lib/PreviewProductSummary";
 export * from "./lib/ToastFeedback";
 export * from "./lib/Cart";
 export * from "./lib/layouts/CardLayout";
+export * from "./lib/PageNotFound";

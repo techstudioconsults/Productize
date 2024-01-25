@@ -9,10 +9,11 @@ import { DashboardEmptyState } from "../empty-states/DashboardEmptyState";
 
 // USE REDUX TO FETCH THE DATA -- DANIEL
 
-export const DashboardTable = () => {
-    const [data, setData] = useState([]);
-    const [isLoading, setLoading] = useState(false);
-    const token = useSelector(selectCurrentToken);
+export const DashboardTable = ({ data, status }) => {
+    console.log(data);
+    // const [data, setData] = useState([]);
+    // const [isLoading, setLoading] = useState(false);
+    // const token = useSelector(selectCurrentToken);
     const formatCurrrency = useCurrency();
     const formatDate = useDate();
 
@@ -23,7 +24,7 @@ export const DashboardTable = () => {
             </Th>
         );
     });
-    const tableContent = data?.data?.map((content) => {
+    const tableContent = data?.map((content) => {
         return (
             <Tr key={content.id}>
                 <Td>
@@ -45,35 +46,35 @@ export const DashboardTable = () => {
         );
     });
 
-    const getTableData = useCallback(async () => {
-        try {
-            setLoading(true);
-            const res = await axios.get(`https://productize-api.techstudio.academy/api/orders`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "multipart/form-data",
-                },
-            });
+    // const getTableData = useCallback(async () => {
+    //     try {
+    //         setLoading(true);
+    //         const res = await axios.get(`https://productize-api.techstudio.academy/api/orders`, {
+    //             headers: {
+    //                 Authorization: `Bearer ${token}`,
+    //                 "Content-Type": "multipart/form-data",
+    //             },
+    //         });
 
-            if (res.status === 200) {
-                setLoading(false);
-                setData(res.data);
-            }
-        } catch (error) {
-            setLoading(false);
-            console.error(error);
-        }
-    }, [token]);
+    //         if (res.status === 200) {
+    //             setLoading(false);
+    //             setData(res.data);
+    //         }
+    //     } catch (error) {
+    //         setLoading(false);
+    //         console.error(error);
+    //     }
+    // }, [token]);
 
-    useEffect(() => {
-        getTableData();
-    }, [getTableData]);
+    // useEffect(() => {
+    //     getTableData();
+    // }, [getTableData]);
 
     return (
         <TableContainer maxH={`25rem`} overflowY={`auto`}>
-            {isLoading ? (
+            {status?.isLoading ? (
                 <OnBoardingLoader />
-            ) : data?.data?.length ? (
+            ) : data?.length ? (
                 <Table size={`sm`} variant="simple">
                     {/* head */}
                     <Thead pos={`sticky`} top={0}>

@@ -1,28 +1,42 @@
 import { Box, SimpleGrid, Skeleton, Text } from "@chakra-ui/react";
 
-import { useEffect, useState } from "react";
-import { selectProductAnalytics, useGetProductAnalyticsMutation } from "@productize-v1.0.0/modules/shared/redux";
+import { useCallback, useEffect, useState } from "react";
+import { selectAllOrders, selectProductAnalytics, useGetAllOrdersMutation, useGetProductAnalyticsMutation } from "@productize-v1.0.0/modules/shared/redux";
 import { useSelector } from "react-redux";
 import { useCurrency } from "@productize-v1.0.0/modules/shared/hooks";
 import { HomeFilterController } from "./components/HomeFilterController";
 import { DataWidgetCard } from "../../../DataWidgetCard";
 import { DashboardEmptyState } from "../../../empty-states/DashboardEmptyState";
 import { DashboardTable } from "../../../tables/DashboardTable";
+import { OrdersTableControl } from "../../../tables/tableControls/OrdersTableControl";
 
 const ActiveUserPage = () => {
     const [emptyState] = useState(false);
     const [getProductAnaysis, getProductAnaysisStatus] = useGetProductAnalyticsMutation();
+    const [getAllOrders, getLiveProductsStatus] = useGetAllOrdersMutation();
     const formatCurrency = useCurrency();
     const productAnaysis = useSelector(selectProductAnalytics);
+    const orders = useSelector(selectAllOrders);
+
+    const showAllOrders = useCallback(async () => {
+        try {
+            await getAllOrders(null).unwrap();
+        } catch (error) {
+            return error;
+        }
+    }, [getAllOrders]);
 
     useEffect(() => {
+        showAllOrders();
         getProductAnaysis(null).unwrap();
-    }, [getProductAnaysis]);
+    }, [getProductAnaysis, showAllOrders]);
 
     return (
         <Box my={8}>
             {/* dropdown filters and buttons Controls */}
-            <HomeFilterController showRefreshBtn />
+            <Box>
+                <OrdersTableControl />
+            </Box>
             {/* grid cards */}
             <Box>
                 <SimpleGrid gap={4} my={4} columns={{ base: 1, md: 2 }}>
@@ -79,7 +93,7 @@ const ActiveUserPage = () => {
             <Box my={10}>
                 <Text as={`h6`}>Sales</Text>
                 <Box mt={4}>
-                    {emptyState ? (
+                    {/* {!orders?.length ? (
                         <DashboardEmptyState
                             content={{
                                 title: "",
@@ -89,9 +103,9 @@ const ActiveUserPage = () => {
                             textAlign={{ base: `center` }}
                             showImage
                         />
-                    ) : (
-                        <DashboardTable />
-                    )}
+                    ) : ( */}
+                        <DashboardTable data={orders} status={getLiveProductsStatus} />
+                    {/* )} */}
                 </Box>
             </Box>
         </Box>

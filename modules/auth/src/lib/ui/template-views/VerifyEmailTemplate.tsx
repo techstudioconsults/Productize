@@ -12,7 +12,7 @@ interface emailProps {
 export function VerifyEmailTemplate({ text }: emailProps) {
     const emailConfirmation = useSelector(selectEmailConfirmation);
     const navigate = useNavigate();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     const checkMail = () => {
         window.location.href = emailConfirmation.email;
@@ -31,10 +31,10 @@ export function VerifyEmailTemplate({ text }: emailProps) {
 
     return (
         <Box>
-            <Text className="small-text" color={`green.200`} mb={2}>
+            <Text textAlign={`center`} className="small-text" color={`green.200`} mb={2}>
                 {text}
             </Text>
-            <SharedButton
+            {/* <SharedButton
                 btnExtras={{
                     onClick: checkMail,
                     disabled: true,
@@ -46,15 +46,15 @@ export function VerifyEmailTemplate({ text }: emailProps) {
                 textColor={"white"}
                 borderRadius={"4px"}
                 fontSize={{ base: `sm`, md: `md` }}
-            />
-            <Flex my={4} justifyContent={`space-between`}>
+            /> */}
+            {/* <Flex my={4} justifyContent={`space-between`}>
                 <Link color={`purple.200`} as={RouterLink} fontSize={`sm`}>
                     Try another email address
                 </Link>
                 <Link color={`purple.200`} as={`p`} onClick={handleNavigation} fontSize={`sm`}>
                     Skip, i'll confirm later
                 </Link>
-            </Flex>
+            </Flex> */}
         </Box>
     );
 }

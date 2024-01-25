@@ -3,11 +3,15 @@ import * as yup from "yup";
 export const profileFormSchema = yup.object().shape({
     full_name: yup.string().required("Fullname is required"),
     username: yup.string().required("Username is required"),
+
     // email: yup
     //     .string()
     //     .required("Email is required")
     //     .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Invalid email address"),
-    phone_number: yup.string().required("Phone number is required"),
+    phone_number: yup
+        .string()
+        .required("Phone number is required")
+        .matches(/^\+234\d{10}$/, "format should be +234xxxxxxxxxx"),
     bio: yup.string().required("Tell us something about you"),
     // logo: yup.string().required("Profile picture is required"),
     twitter_account: yup

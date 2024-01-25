@@ -3,37 +3,50 @@ import { Icon } from "@iconify/react";
 import { useCurrency } from "@productize-v1.0.0/modules/shared/hooks";
 import { Link, useLocation } from "react-router-dom";
 import { DashboardEmptyState } from "../../../empty-states/DashboardEmptyState";
-// import rectangle from "@icons/Rectangle_ikpmwt.svg";
+import { ToastFeedback, useToastAction } from "@productize-v1.0.0/modules/shared/ui";
+import toastimg from "@icons/star-notice.png";
+import errorImg from "@icons/error.svg";
 
 const ShareLayout = () => {
-    const toast = useToast();
+    const { toast, toastIdRef, close } = useToastAction();
     const { state } = useLocation();
     const formatCurrency = useCurrency();
 
     const copyTextToClipBoard = () => {
         // const textToCopy = product?.data?.data?.[0];
         navigator.clipboard
-            .writeText(state?.product?.link)
+            .writeText(state?.product?.data?.data?.[0])
             .then(() => {
-                toast({
+                toastIdRef.current = toast({
                     position: "top",
                     render: () => (
-                        <Card display={`flex`} flexDir={`row`} alignItems={`center`} w={{ base: `100%`, lg: `702px` }} p={1} bg="grey.100">
-                            <Box borderRight={`1px solid green`} p={2}>
-                                <Image objectFit={`cover`} objectPosition={`center`} src={`rectangle`} alt="img" />
-                            </Box>
-                            <Box p={2}>
-                                <Text fontWeight={600}>Product link Copied!</Text>
-                                <Text className="small-text" color={`grey.400`}>
-                                    You have successfully your product link
-                                </Text>
-                            </Box>
-                        </Card>
+                        <ToastFeedback
+                            btnColor={`purple.200`}
+                            message={` You have successfully copied your product link`}
+                            title="Product link Copied!"
+                            icon={toastimg}
+                            bgColor={undefined}
+                            color={undefined}
+                            handleClose={close}
+                        />
                     ),
                 });
             })
             .catch((error) => {
-                console.error("Failed to copy text: ", error);
+                toastIdRef.current = toast({
+                    position: "top",
+                    render: () => (
+                        <ToastFeedback
+                            message={`Failed to copy link.`}
+                            title="Error!"
+                            icon={errorImg}
+                            color={`red.600`}
+                            btnColor={`red.600`}
+                            bgColor={undefined}
+                            handleClose={close}
+                        />
+                    ),
+                });
             });
     };
 
@@ -56,16 +69,16 @@ const ShareLayout = () => {
                             Copy and send this link to someone and they’ll be able to get your product
                         </Text>
                         <Flex w={`100%`} p={`8px`} borderRadius={5} bgColor={`grey.200`} gap={2} alignItems={`center`} justifyContent={`space-around`}>
-                            <Link target="_blank" to={`product?.data?.data?.[0]`}>
-                                <Text>
-                                    {state?.product?.link}
-                                    {/* https://aishat-akinwumi.productize.store/product/product-title */}
-                                </Text>
-                            </Link>
+                            {/* <Link target="_blank" to={`product?.data?.data?.[0]`}> */}
+                            <Text>
+                                {state?.product?.data?.data?.[0].slice(68)}
+                                {/* https://aishat-akinwumi.productize.store/product/product-title */}
+                            </Text>
+                            {/* </Link> */}
 
                             <Icon fontSize={`24px`} cursor={`pointer`} onClick={copyTextToClipBoard} icon={`ph:copy-simple-light`} />
                         </Flex>
-                        <Flex gap={4} my={4}>
+                        {/* <Flex gap={4} my={4}>
                             <Center fontSize={`24px`} borderRadius={`100%`} bgColor={`grey.200`} p={2}>
                                 <Icon cursor={`pointer`} icon={`mdi:twitter`} />
                             </Center>
@@ -75,7 +88,7 @@ const ShareLayout = () => {
                             <Center fontSize={`24px`} borderRadius={`100%`} bgColor={`grey.200`} p={2}>
                                 <Icon cursor={`pointer`} icon={`ri:linkedin-fill`} />
                             </Center>
-                        </Flex>
+                        </Flex> */}
                     </Stack>
                 </>
             ) : (

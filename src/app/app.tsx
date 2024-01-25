@@ -1,7 +1,7 @@
 import "../styles.scss";
 
 import { Route, Routes } from "react-router-dom";
-import { PreLoader, SpinnerComponent } from "@productize-v1.0.0/modules/shared/ui";
+import { PageNotFound, PreLoader, SpinnerComponent } from "@productize-v1.0.0/modules/shared/ui";
 import {
     DashboardLayout,
     Home as DashboardHome,
@@ -107,7 +107,7 @@ export function App() {
                         <Route path="plans/billing-cycle" element={<BillingCycle />} />
                     </Route>
                 </Route>
-                <Route path="*" element={<h1>PAGE NOT FOUND</h1>} />
+                <Route path="*" element={<PageNotFound />} />
             </Routes>
         </Suspense>
     );

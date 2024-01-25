@@ -14,7 +14,6 @@ import {
     Textarea,
     Center,
     InputRightElement,
-    useToast,
     useDisclosure,
 } from "@chakra-ui/react";
 import { Icon } from "@iconify/react";
@@ -114,6 +113,12 @@ export const ProfileForm = () => {
                 </GridItem>
                 <GridItem colSpan={{ base: 12, md: 7 }}>
                     <Box mb={4}>
+                        <Flex mb={5} color={`grey.400`} alignItems={`center`} gap={1}>
+                            <Icon color={`green`} fontSize={`14px`} icon={`ep:info-filled`} />
+                            <Text fontStyle={`italic`} fontSize={`12px`}>
+                                To Complete your profile to start getting your products published, Fill all profile field and upload an image.
+                            </Text>
+                        </Flex>
                         <FormControl>
                             <FormLabel color={`purple.300`} fontWeight={600}>
                                 Full name
@@ -193,7 +198,7 @@ export const ProfileForm = () => {
                             </FormLabel>
                             <InputGroup size={`lg`}>
                                 <InputLeftElement color={`green`} pointerEvents="none">
-                                    <Icon icon={`material-symbols:check`} />
+                                    <Icon hidden={errors?.phone_number?.message} icon={`material-symbols:check`} />
                                 </InputLeftElement>
                                 <Input
                                     // required
@@ -321,11 +326,11 @@ export const ProfileForm = () => {
                                     variant={`filled`}
                                     {...register("twitter_account")}
                                 />
-                                <InputRightElement>
-                                    <Center cursor={`pointer`} bgColor={`grey.300`} borderRadius={`100%`} boxSize={`1rem`} color={`grey.100`}>
+                                {/* <InputRightElement>
+                                    <Center cursor={`pointer`} bgColor={`purple.200`} borderRadius={`100%`} boxSize={`1rem`} color={`grey.100`}>
                                         <Icon icon={`system-uicons:close`} />
                                     </Center>
-                                </InputRightElement>
+                                </InputRightElement> */}
                             </InputGroup>
                             <Text className={`tiny-text`} color={`red.200`}>
                                 {errors?.twitter_account?.message}
@@ -349,11 +354,11 @@ export const ProfileForm = () => {
                                     variant={`filled`}
                                     {...register("facebook_account")}
                                 />
-                                <InputRightElement>
+                                {/* <InputRightElement>
                                     <Center cursor={`pointer`} bgColor={`grey.300`} borderRadius={`100%`} boxSize={`1rem`} color={`grey.100`}>
                                         <Icon icon={`system-uicons:close`} />
                                     </Center>
-                                </InputRightElement>
+                                </InputRightElement> */}
                             </InputGroup>
                             <Text className={`tiny-text`} color={`red.200`}>
                                 {errors?.facebook_account?.message}
@@ -377,11 +382,11 @@ export const ProfileForm = () => {
                                     variant={`filled`}
                                     {...register("youtube_account")}
                                 />
-                                <InputRightElement>
+                                {/* <InputRightElement>
                                     <Center cursor={`pointer`} bgColor={`grey.300`} borderRadius={`100%`} boxSize={`1rem`} color={`grey.100`}>
                                         <Icon icon={`system-uicons:close`} />
                                     </Center>
-                                </InputRightElement>
+                                </InputRightElement> */}
                             </InputGroup>
                             <Text className={`tiny-text`} color={`red.200`}>
                                 {errors?.youtube_account?.message}

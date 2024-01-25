@@ -19,7 +19,7 @@ interface link {
     path: string;
     type: boolean;
     icon: string;
-    analysis: string | number;
+    analysis: string | number | null;
 }
 
 export const useLinks = () => {
@@ -82,7 +82,7 @@ export const useLinks = () => {
                 id: 3,
                 name: `Orders`,
                 path: `orders`,
-                analysis: productAnaysis.new_orders,
+                analysis: null,
                 type: isPremium,
                 icon: order,
             },
@@ -92,7 +92,7 @@ export const useLinks = () => {
                 path: `customers`,
                 type: isPremium,
                 icon: consumer,
-                analysis: productAnaysis.total_customers,
+                analysis: null,
             },
             {
                 id: 5,

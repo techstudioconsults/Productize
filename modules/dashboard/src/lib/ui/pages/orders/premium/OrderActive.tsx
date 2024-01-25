@@ -9,6 +9,7 @@ import { OrderTable } from "./component/OrderTable";
 import { AllProducts, DatePicker, OrderBtn } from "../components";
 import { Icon } from "@iconify/react";
 import { DashboardEmptyState } from "../../../empty-states/DashboardEmptyState";
+import { OrdersTableControl } from "../../../tables/tableControls/OrdersTableControl";
 
 const OrderActive = () => {
     const [getAllOrders, getLiveProductsStatus] = useGetAllOrdersMutation();
@@ -33,6 +34,9 @@ const OrderActive = () => {
     if (!orders?.length) {
         return (
             <Box my={10}>
+                <Box my={10}>
+                    <OrdersTableControl />
+                </Box>
                 <DashboardEmptyState
                     content={{
                         title: "",
@@ -61,6 +65,9 @@ const OrderActive = () => {
                     <IconButton aria-label="See more" icon={<Icon icon="charm:menu-kebab" />} hideFrom="md" variant="ghost" />
                 </Flex>
             </Box> */}
+            <Box my={10}>
+                <OrdersTableControl />
+            </Box>
             <OrderTable tableData={orders} />
         </Box>
     );

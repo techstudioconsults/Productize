@@ -1,4 +1,4 @@
-import { Avatar, Box, Card, CardBody, CardFooter, Center, Divider, Flex, IconButton, Image, Stack, Text } from "@chakra-ui/react";
+import { Avatar, Box, Card, CardBody, CardFooter, Center, Divider, Flex, IconButton, Image, Skeleton, Stack, Text } from "@chakra-ui/react";
 import { Icon } from "@iconify/react";
 import { useCurrency } from "@productize-v1.0.0/modules/shared/hooks";
 import { selectCart, useAddToCartMutation, useGetFromCartMutation, usePurchaseProductMutation } from "@productize-v1.0.0/modules/shared/redux";
@@ -31,7 +31,7 @@ export const ProductCard = ({ product }) => {
                         <Text>{formatCurrency(product?.price)}</Text>
                     </Flex>
                     <Flex mt={3} gap={2} alignItems={`center`}>
-                        <Avatar size={`sm`} name={product?.publisher} src="https://bit.ly/code-beast" />
+                        <Avatar size={`sm`} bg={`grey.300`} name={product?.publisher} src={product?.publisher_logo} />
                         <Text fontWeight={`500`}>{product?.publisher}</Text>
                     </Flex>
                 </CardBody>
@@ -48,15 +48,17 @@ export const ProductCard = ({ product }) => {
 export const ProductCards = () => {
     const cart = useSelector(selectCart);
     const formatCurrency = useCurrency();
-   
+
     const [purchaseProduct, { isLoading }] = usePurchaseProductMutation();
 
     const checkoutProductList = cart?.checkoutProducts?.map((product) => {
         return (
-            <Box key={product.slug}>
-                <ProductCard product={product} />
-                <Divider my={4} />
-            </Box>
+            <Skeleton key={product.slug} borderRadius={8} isLoaded={!isLoading}>
+                <Box>
+                    <ProductCard product={product} />
+                    <Divider my={4} />
+                </Box>
+            </Skeleton>
         );
     });
 
@@ -76,12 +78,11 @@ export const ProductCards = () => {
 
         try {
             const res = await purchaseProduct(checkout).unwrap();
-            console.log(res);
             if (res) {
                 window.location.href = res.authorization_url;
             }
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     };
 
@@ -90,7 +91,9 @@ export const ProductCards = () => {
             {checkoutProductList}
             <Flex fontWeight={600} justifyContent={`space-between`}>
                 <Text>Total</Text>
-                <Text px={5}>{formatCurrency(cart.totalProductPrice)}</Text>
+                <Skeleton borderRadius={8} isLoaded={!isLoading}>
+                    <Text px={5}>{formatCurrency(cart.totalProductPrice)}</Text>
+                </Skeleton>
             </Flex>
             <Divider my={4} />
             <Stack gap={4}>
@@ -109,9 +112,9 @@ export const ProductCards = () => {
                         disabled: cart.totalProductPrice ? false : true,
                     }}
                 />
-                <Text textAlign={`center`} color={`grey.400`} textDecor={`underline`}>
+                {/* <Text textAlign={`center`} color={`grey.400`} textDecor={`underline`}>
                     Give As Gift
-                </Text>
+                </Text> */}
             </Stack>
         </Box>
     );

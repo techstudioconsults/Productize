@@ -1,9 +1,10 @@
-import { Box, Container, Flex, Grid, Text } from "@chakra-ui/react";
+import { Box, Container, Flex, Grid, Skeleton, Text } from "@chakra-ui/react";
 import React, { useState, useEffect, useCallback } from "react";
 import { Icon } from "@iconify/react";
 import { useSelector } from "react-redux";
 import { selectAllProducts_EXTERNAL, useGetAllProducts_EXTERNALMutation } from "@productize-v1.0.0/modules/shared/redux";
 import Card from "./cards/Card";
+import { EmptyState } from "modules/dashboard/src/lib/ui/empty-states/EmptyState";
 // import Container from '../shared-ui/Container';
 
 // Define the type for a product
@@ -26,14 +27,14 @@ export const ExploreFeatures = ({ title }: slideProps) => {
     // State to hold the products and error message
     // const [products, setProducts] = useState<Product[]>([]); // Change type to Product[]
     const [error] = useState<string | null>(null);
-    const [getAllProducts_EXTERNAL] = useGetAllProducts_EXTERNALMutation();
+    const [getAllProducts_EXTERNAL, getAllProducts_EXTERNALStatus] = useGetAllProducts_EXTERNALMutation();
     const products = useSelector(selectAllProducts_EXTERNAL);
 
     const fetchData = useCallback(async () => {
         try {
             await getAllProducts_EXTERNAL(null).unwrap();
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     }, [getAllProducts_EXTERNAL]);
 
@@ -44,14 +45,9 @@ export const ExploreFeatures = ({ title }: slideProps) => {
     // Render product cards
     const renderCards = () => {
         return products.map((product: any) => (
-            <Card
-                key={product?.slug}
-                productID={product?.slug}
-                image={product?.thumbnail}
-                heading={product?.title}
-                price={product.price}
-                publisher={product?.publisher}
-            />
+            <Skeleton isLoaded={!getAllProducts_EXTERNALStatus.isLoading} key={product?.slug}>
+                <Card productID={product?.slug} image={product?.thumbnail} heading={product?.title} price={product.price} publisher={product?.publisher} />
+            </Skeleton>
         ));
     };
 

@@ -26,8 +26,8 @@ export const ProductCart = () => {
         <>
             <ProductNavbar isAuth={useTokenExists()} />
             <Container mt={`5rem`} maxW={`60rem`}>
-                <Flex w={`100%`} gap={8} alignItems={`center`} mb={5}>
-                    <Box cursor={`pointer`} onClick={() => navigate(-1)}>
+                <Flex w={`fit-content`} gap={8} alignItems={`center`} mb={5} cursor={`pointer`} onClick={() => navigate(-1)}>
+                    <Box>
                         <Image src={arrowLeft} />
                     </Box>
                     <Text as={`h6`}>Back to product page</Text>

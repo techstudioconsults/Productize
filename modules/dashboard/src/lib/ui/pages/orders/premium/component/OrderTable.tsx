@@ -109,9 +109,6 @@ export const OrderTable = ({ tableData }: tableProps) => {
 
     return (
         <>
-            <Box my={10}>
-                <HomeFilterController showRefreshBtn />
-            </Box>
             <TableContainer display={`flex`} flexDir={`column`} height={`40rem`} justifyContent={`space-between`} overflowY={`auto`}>
                 <Table size={`sm`} variant="simple">
                     {/* head */}

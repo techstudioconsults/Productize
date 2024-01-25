@@ -59,7 +59,7 @@ const ProductSummaryAndPreview = ({ status }) => {
                     <Flex alignItems={{ base: `flex-start`, xl: `center` }} flexDir={{ base: `column`, xl: `row` }} gap={{ base: 5, xl: 10 }}>
                         <Flex gap={2} alignItems={`center`}>
                             <Avatar size={`sm`} bg={`grey.300`} name={product?.publisher} src={product?.publisher_logo} />
-                            <Text fontWeight={`500`}>{product?.publisher}</Text>
+                            <Text fontWeight={`500`}>By {product?.publisher}</Text>
                         </Flex>
                         {/* <Flex alignItems={`baseline`} gap={2}>
                             <StarRatings rating={3} starDimension="22px" starRatedColor="#F6C21C" numberOfStars={5} starSpacing="3px" name="rating" />

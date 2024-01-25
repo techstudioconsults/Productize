@@ -6,10 +6,11 @@ import { setAllCustomers, setSingleCustomer } from "./customersSlice";
 export const CustomersApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         getAllCustomers: builder.mutation({
-            query: () => ({
-                url: `/customers`,
+            query: (credentials) => ({
+                url: credentials ? `/customers?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}` : `/customers`,
                 method: "GET",
             }),
+
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;

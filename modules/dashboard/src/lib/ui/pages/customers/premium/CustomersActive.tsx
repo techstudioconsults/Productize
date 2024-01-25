@@ -30,6 +30,9 @@ const CustomersActive = () => {
     if (!allCustomers?.length) {
         return (
             <Box my={10}>
+                <Box my={10}>
+                    <CustomersTableControl />
+                </Box>
                 <DashboardEmptyState
                     content={{
                         title: "",

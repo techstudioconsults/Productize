@@ -69,8 +69,8 @@ export const ProductTable = ({ draft, live, deleted }: tableProps) => {
                         <Stack>
                             <Text>{product?.title}</Text>
                             <Flex alignItems={`center`} color={`grey.400`}>
-                                <Text className="tiny-text">PDF - 5.5MB</Text>
-                                <Icon className="large-text" icon={`mdi:dot`} />
+                                {/* <Text className="tiny-text">PDF - 5.5MB</Text> */}
+                                {/* <Icon className="large-text" icon={`mdi:dot`} /> */}
                                 <Text className="tiny-text">{formatDate(product.created_at)}</Text>
                                 <Icon className="large-text" icon={`mdi:dot`} />
                                 <Text className="tiny-text">{formatTime(product?.created_at)}</Text>

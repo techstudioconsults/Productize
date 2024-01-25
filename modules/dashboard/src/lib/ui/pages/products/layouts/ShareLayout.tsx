@@ -15,7 +15,7 @@ const ShareLayout = () => {
     const copyTextToClipBoard = () => {
         // const textToCopy = product?.data?.data?.[0];
         navigator.clipboard
-            .writeText(state?.product?.link)
+            .writeText(state?.product?.data?.data?.[0])
             .then(() => {
                 toastIdRef.current = toast({
                     position: "top",
@@ -33,20 +33,20 @@ const ShareLayout = () => {
                 });
             })
             .catch((error) => {
-               toastIdRef.current = toast({
-                   position: "top",
-                   render: () => (
-                       <ToastFeedback
-                           message={`Failed to copy link.`}
-                           title="Error!"
-                           icon={errorImg}
-                           color={`red.600`}
-                           btnColor={`red.600`}
-                           bgColor={undefined}
-                           handleClose={close}
-                       />
-                   ),
-               });
+                toastIdRef.current = toast({
+                    position: "top",
+                    render: () => (
+                        <ToastFeedback
+                            message={`Failed to copy link.`}
+                            title="Error!"
+                            icon={errorImg}
+                            color={`red.600`}
+                            btnColor={`red.600`}
+                            bgColor={undefined}
+                            handleClose={close}
+                        />
+                    ),
+                });
             });
     };
 
@@ -69,16 +69,16 @@ const ShareLayout = () => {
                             Copy and send this link to someone and they’ll be able to get your product
                         </Text>
                         <Flex w={`100%`} p={`8px`} borderRadius={5} bgColor={`grey.200`} gap={2} alignItems={`center`} justifyContent={`space-around`}>
-                            <Link target="_blank" to={`product?.data?.data?.[0]`}>
-                                <Text>
-                                    {state?.product?.link}
-                                    {/* https://aishat-akinwumi.productize.store/product/product-title */}
-                                </Text>
-                            </Link>
+                            {/* <Link target="_blank" to={`product?.data?.data?.[0]`}> */}
+                            <Text>
+                                {state?.product?.data?.data?.[0].slice(68)}
+                                {/* https://aishat-akinwumi.productize.store/product/product-title */}
+                            </Text>
+                            {/* </Link> */}
 
                             <Icon fontSize={`24px`} cursor={`pointer`} onClick={copyTextToClipBoard} icon={`ph:copy-simple-light`} />
                         </Flex>
-                        <Flex gap={4} my={4}>
+                        {/* <Flex gap={4} my={4}>
                             <Center fontSize={`24px`} borderRadius={`100%`} bgColor={`grey.200`} p={2}>
                                 <Icon cursor={`pointer`} icon={`mdi:twitter`} />
                             </Center>
@@ -88,7 +88,7 @@ const ShareLayout = () => {
                             <Center fontSize={`24px`} borderRadius={`100%`} bgColor={`grey.200`} p={2}>
                                 <Icon cursor={`pointer`} icon={`ri:linkedin-fill`} />
                             </Center>
-                        </Flex>
+                        </Flex> */}
                     </Stack>
                 </>
             ) : (

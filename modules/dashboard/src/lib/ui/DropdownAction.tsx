@@ -368,7 +368,7 @@ export const DropdownActionDelete = ({ icon, product }: dropProp) => {
                 <MenuItem onClick={(e) => handleTabAction(e, `#preview`)} justifyContent={`flex-start`}>
                     Preview
                 </MenuItem>
-                <MenuItem color={`red.200`} onClick={handleDeleteProductPermanently} justifyContent={`flex-start`}>
+                <MenuItem isDisabled color={`red.200`} onClick={handleDeleteProductPermanently} justifyContent={`flex-start`}>
                     Delete permanently
                 </MenuItem>
             </MenuList>

@@ -1,6 +1,6 @@
 import { Box, Stack, Text } from "@chakra-ui/react";
-import { PayoutTableControl } from "../components/PayoutTableControls";
 import { PayoutTable } from "../components/PayoutTable";
+import { OrdersTableControl } from "../../../tables/tableControls/OrdersTableControl";
 
 const PayoutPremiumView = () => {
     return (
@@ -8,7 +8,7 @@ const PayoutPremiumView = () => {
             {/* table */}
             <Stack>
                 <Box my={10}>
-                    <PayoutTableControl />
+                    <OrdersTableControl />
                 </Box>
                 <Box>
                     <Text as={`h6`}>Withdraw Earnings</Text>

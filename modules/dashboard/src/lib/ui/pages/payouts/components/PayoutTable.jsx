@@ -46,7 +46,7 @@ export const PayoutTable = ({ tableData }) => {
                 </Td>
                 <Td py={5}>
                     <Flex alignItems={`center`} gap={5}>
-                        <Avatar size={`xs`} src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1702765305/productize/Bank_Logo_f98woi.png`} />
+                        <Avatar size={`xs`} name={earning.bank_name} src={null} />
                         <Text>{`${earning.bank_name} ${earning.bank_account_number.slice(0, 3)}****${earning.bank_account_number.slice(7)}`}</Text>
                     </Flex>
                 </Td>

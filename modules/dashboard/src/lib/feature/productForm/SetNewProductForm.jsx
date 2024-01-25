@@ -82,7 +82,7 @@ export const SetNewProductForm = () => {
     const urlToFile = async (url) => {
         const response = await fetch(url);
         const blob = await response.blob();
-        return new File([blob], "filename.jpg", { type: blob.type });
+        return new File([blob], "", { type: blob.type });
     };
 
     // Function to convert an array of URLs to File objects and create a FileList object
@@ -529,11 +529,11 @@ const HighLightField = ({ name }) => {
                     variant={`filled`}
                     {...register(name)}
                 />
-                <InputRightElement>
+                {/* <InputRightElement>
                     <Center cursor={`pointer`} bgColor={`purple.200`} borderRadius={`100%`} boxSize={`1rem`} color={`grey.100`}>
                         <Icon icon={`system-uicons:close`} />
                     </Center>
-                </InputRightElement>
+                </InputRightElement> */}
             </InputGroup>
             <Text className={`tiny-text`} color={`red.200`}>
                 {errors?.highlight_1?.message}

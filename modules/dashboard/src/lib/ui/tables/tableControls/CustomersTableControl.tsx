@@ -7,9 +7,10 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 import { Icon } from "@iconify/react";
 import { useDateRangeFormat } from "@productize-v1.0.0/modules/shared/hooks";
-import { selectCurrentToken, useGetAllProductsMutation } from "@productize-v1.0.0/modules/shared/redux";
-import { SpinnerComponentSmall, SharedButton } from "@productize-v1.0.0/modules/shared/ui";
+import { selectCurrentToken, useGetAllCustomersMutation, useGetAllProductsMutation } from "@productize-v1.0.0/modules/shared/redux";
+import { SpinnerComponentSmall, SharedButton, useToastAction, ToastFeedback } from "@productize-v1.0.0/modules/shared/ui";
 import download from "downloadjs";
+import errorImg from "@icons/error.svg";
 
 const BASE_URL = import.meta.env["VITE_BASE_URL"];
 
@@ -19,11 +20,12 @@ interface controlsProp {
 
 export const CustomersTableControl = ({ showRefreshBtn }: controlsProp) => {
     const [exportLoading, setExportLoading] = useState(false);
+    const { toast, toastIdRef, close } = useToastAction();
     const token = useSelector(selectCurrentToken);
     const [startDate, setStartDate] = useState(``);
     const [endDate, setEndDate] = useState(``);
     const [status, setStatus] = useState(``);
-    const [getAllProducts, getAllProductsStatus] = useGetAllProductsMutation();
+    const [getAllCustomers, getAllCustomersStatus] = useGetAllCustomersMutation();
     const formatDateRange = useDateRangeFormat();
 
     const headersCredentials = {
@@ -56,24 +58,52 @@ export const CustomersTableControl = ({ showRefreshBtn }: controlsProp) => {
     };
 
     const filterTable = async () => {
-        // if (status === `all`) {
-        //     try {
-        //         await getAllProducts(null).unwrap();
-        //     } catch (error) {
-        //         console.log(error);
-        //     }
-        // } else {
-        //     try {
-        //         await getAllProducts({
-        //             page: null,
-        //             startDate,
-        //             endDate,
-        //             status,
-        //         }).unwrap();
-        //     } catch (error) {
-        //         console.log(error);
-        //     }
-        // }
+        if (status === `all`) {
+            try {
+                await getAllCustomers(null).unwrap();
+            } catch (error: any) {
+                toastIdRef.current = toast({
+                    position: "top",
+                    render: () => (
+                        <ToastFeedback
+                            message={error?.data?.message}
+                            title="Error!"
+                            icon={errorImg}
+                            color={`red.600`}
+                            btnColor={`red.600`}
+                            bgColor={undefined}
+                            handleClose={close}
+                        />
+                    ),
+                });
+            }
+        } else {
+            try {
+                await getAllCustomers({
+                    page: null,
+                    startDate,
+                    endDate,
+                    status,
+                }).unwrap();
+            } catch (error: any) {
+                console.log(error);
+
+                toastIdRef.current = toast({
+                    position: "top",
+                    render: () => (
+                        <ToastFeedback
+                            message={error?.data?.message}
+                            title="Error!"
+                            icon={errorImg}
+                            color={`red.600`}
+                            btnColor={`red.600`}
+                            bgColor={undefined}
+                            handleClose={close}
+                        />
+                    ),
+                });
+            }
+        }
     };
 
     return (
@@ -89,13 +119,21 @@ export const CustomersTableControl = ({ showRefreshBtn }: controlsProp) => {
                     />
                 </Box>
                 <Box w={`100%`}>
-                    <SelectPicker searchable={false} onSelect={handleStatusChange} style={{ width: `100%` }} placeholder={`Status`} size="lg" data={data} />
+                    <SelectPicker
+                        disabled
+                        searchable={false}
+                        onSelect={handleStatusChange}
+                        style={{ width: `100%` }}
+                        placeholder={`Status`}
+                        size="lg"
+                        data={data}
+                    />
                 </Box>
                 <IconButton
-                    isDisabled
+                    // isDisabled
                     color={`purple.200`}
                     bgColor={`purple.100`}
-                    isLoading={getAllProductsStatus.isLoading}
+                    isLoading={getAllCustomersStatus.isLoading}
                     spinner={<SpinnerComponentSmall size="sm" />}
                     onClick={filterTable}
                     fontSize={`xl`}

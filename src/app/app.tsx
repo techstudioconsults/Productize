@@ -60,7 +60,7 @@ export function App() {
         };
 
         // Set up a media query listener
-        const mediaQueryList = window.matchMedia("(min-width: 1200px)");
+        const mediaQueryList = window.matchMedia("(min-width: 992px)");
         mediaQueryList.addListener(handleMediaChange);
         handleMediaChange(mediaQueryList);
         return () => {

@@ -259,7 +259,7 @@ export const SetNewProductForm = () => {
                                 icon="ri:file-upload-line"
                                 fileType={`all`}
                                 btnTitle={"Upload File"}
-                                descText={"File can be an image, video, document in various formats (jpg, png, mp4, pdf etc)"}
+                                descText={"File can be an image, video, document in various formats (jpg, png, mp4, pdf etc). min: 100mb"}
                                 showFiles={() => showFiles(`dataFileInput`)}
                             />
                         </Box>
@@ -324,7 +324,7 @@ export const SetNewProductForm = () => {
                             icon="ri:file-upload-line"
                             fileType={`all`}
                             btnTitle={"Upload Photos"}
-                            descText={"File can be an image, video, document in various formats (jpg, png, mp4, pdf etc)"}
+                            descText={"File can be an image, video, document in various formats (jpg, png, mp4, pdf etc). min: 100mb"}
                             showFiles={() => showFiles(`coverPhotosInput`)}
                         />
                     </Box>

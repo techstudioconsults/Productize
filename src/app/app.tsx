@@ -1,6 +1,6 @@
 import "../styles.scss";
 
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation, Link as RouterLink } from "react-router-dom";
 import { PageNotFound, PreLoader, SpinnerComponent } from "@productize-v1.0.0/modules/shared/ui";
 import {
     DashboardLayout,
@@ -23,11 +23,12 @@ import {
     DownloadedContent,
 } from "@productize-v1.0.0/dashboard";
 import { ForgotPassword, Login, Signup } from "@productize-v1.0.0/auth";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import { Suspense } from "react";
 import { PlanSettings } from "@productize-v1.0.0/dashboard";
 import { useGetProductTagsMutation } from "@productize-v1.0.0/modules/shared/redux";
+import { Center, Image, Link, Text } from "@chakra-ui/react";
 
 // using suspense and lazy loading
 const Home = React.lazy(() => import("../pages/home/Home").then((module) => ({ default: module.Home })));
@@ -40,7 +41,9 @@ const ProductCart = React.lazy(() => import("../pages/explore/views/productDetai
 export { Home, Features, Pricing, Explore, ProductDetails, ProductCart };
 
 export function App() {
+    const [isDesktop, setIsDesktop] = useState(true);
     const [getProductTags] = useGetProductTagsMutation();
+    const location = useLocation();
 
     const getTags = useCallback(async () => {
         await getProductTags(null).unwrap();
@@ -48,7 +51,43 @@ export function App() {
 
     useEffect(() => {
         getTags();
+
+        // Function to handle changes in media query
+        const handleMediaChange = (mediaQueryList: any) => {
+            const matches = mediaQueryList.matches;
+            setIsDesktop(matches); // Update the state to track desktop view
+            return matches; // Return the boolean value
+        };
+
+        // Set up a media query listener
+        const mediaQueryList = window.matchMedia("(min-width: 1200px)");
+        mediaQueryList.addListener(handleMediaChange);
+        handleMediaChange(mediaQueryList);
+        return () => {
+            mediaQueryList.removeListener(handleMediaChange);
+        };
     }, [getTags]);
+
+    if (location.pathname.includes("dashboard")) {
+        if (!isDesktop) {
+            return (
+                <Center p={10} h={`100vh`} flexDir={`column`}>
+                    <Link as={RouterLink} to={`/`}>
+                        <Image
+                            alt="logo"
+                            src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png`}
+                        />
+                    </Link>
+                    <Text color={`purple.200`} fontWeight={600} as={`h4`}>
+                        Mobile View detected...
+                    </Text>
+                    <Text fontSize={`xs`} textAlign={`center`}>
+                        cannot open dashboard on a mobile device. please use a desktop or a screen with a min size of 1200px
+                    </Text>
+                </Center>
+            );
+        }
+    }
 
     return (
         <Suspense

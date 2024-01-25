@@ -12,8 +12,9 @@ import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 import { Avatar, Box, Card, CardBody, Container, Divider, Flex, Grid, GridItem, Image, List, ListItem, Stack, Text } from "@chakra-ui/react";
 import { Icon } from "@iconify/react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { SharedButton } from "./SharedButton";
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { useCurrency } from "@productize-v1.0.0/modules/shared/hooks";
 
 interface productProp {
@@ -51,6 +52,8 @@ export interface TwoColumnLayoutProps {
 }
 
 export const TwoColumnLayout = ({ C1, C2 }: TwoColumnLayoutProps) => {
+    const { pathname } = useLocation();
+
     return (
         <Grid
             // h="200px"
@@ -58,7 +61,8 @@ export const TwoColumnLayout = ({ C1, C2 }: TwoColumnLayoutProps) => {
             templateColumns="repeat(12, 1fr)"
             gap={4}
         >
-            <GridItem colSpan={{ base: 12, xl: 8 }}>{C1}</GridItem>
+            {/* <GridItem colSpan={{ base: 12, xl: 8 }}>{C1}</GridItem> */}
+            <GridItem colSpan={{ base: 12, xl: pathname === `/explore/product/cart` ? 12 : 8 }}>{C1}</GridItem>
             <GridItem colSpan={{ base: 12, xl: 4 }}>{C2}</GridItem>
         </Grid>
     );
@@ -69,7 +73,7 @@ const ProductSummaryAndPreview = ({ product }: productProp) => {
         return (
             <SwiperSlide key={index}>
                 <Box borderRadius={`8px`} overflow={`hidden`} height={`248px`}>
-                    <Image src={photo} alt="img" objectFit={`cover`} objectPosition={`center`} />
+                    <Image w={`100%`} h={`100%`} src={photo} alt="img" objectFit={`contain`} objectPosition={`center`} />
                 </Box>
             </SwiperSlide>
         );
@@ -104,8 +108,8 @@ const ProductSummaryAndPreview = ({ product }: productProp) => {
                 </Text>
                 <Flex alignItems={{ base: `flex-start`, xl: `center` }} flexDir={{ base: `column`, xl: `row` }} gap={{ base: 5, xl: 10 }}>
                     <Flex gap={2} alignItems={`center`}>
-                        <Avatar size={`sm`} name="Christian Nwamba" src="https://bit.ly/code-beast" />
-                        <Text fontWeight={`500`}>Temilade Openiyi</Text>
+                        <Avatar size={`sm`} name={product?.publisher} src={product?.publisher_avatar} />
+                        <Text fontWeight={`500`}>{product?.publisher}</Text>
                     </Flex>
                     <Flex alignItems={`baseline`} gap={2}>
                         <StarRatings rating={3} starDimension="22px" starRatedColor="#F6C21C" numberOfStars={5} starSpacing="3px" name="rating" />
@@ -115,7 +119,7 @@ const ProductSummaryAndPreview = ({ product }: productProp) => {
             </Box>
             {/* =================================================== */}
             <Box borderRadius={`8px`} border={`1px solid #CFCFD0`} p={5} my={4}>
-                <Box>
+                {/* <Box>
                     <Text fontWeight={600}>What you’ll get</Text>
                     <Box my={5}>
                         <Divider />
@@ -125,7 +129,7 @@ const ProductSummaryAndPreview = ({ product }: productProp) => {
                             {features}
                         </List>
                     </Box>
-                </Box>
+                </Box> */}
                 <Box my={10}>
                     <Text fontWeight={600}>Features</Text>
                     <Box my={5}>
@@ -236,3 +240,4 @@ const ProductSideNav = ({ product }: productProp) => {
         </Card>
     );
 };
+// http://localhost:4200/dashboard/products/new#preview

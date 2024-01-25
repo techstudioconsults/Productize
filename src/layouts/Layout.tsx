@@ -3,7 +3,7 @@ import { Footer } from "@productize-v1.0.0/modules/shared/ui";
 import { useTokenExists } from "@productize-v1.0.0/modules/shared/hooks";
 
 import React from "react";
-import { Navbar } from "@productize-v1.0.0/modules/external-pages/ui";
+import { Navbar } from "../components/navbar/Navbar";
 
 interface LayoutProps {
     children: React.ReactNode;

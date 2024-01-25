@@ -29,16 +29,20 @@ export const productsApiSlice = apiSlice.injectEndpoints({
             },
         }),
         getLiveProducts: builder.mutation({
-            query: () => ({
-                url: `/products/users?status=published`,
+            query: (credentials) => ({
+                url: credentials
+                    ? `/products/users?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}&status=published`
+                    : `/products/users?status=published`,
                 method: "GET",
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
+
                     dispatch(
                         setLiveProduct({
                             products: data.data,
+                            productsMetaData: { links: data.links, meta: data.meta },
                         })
                     );
                 } catch (error) {
@@ -47,8 +51,10 @@ export const productsApiSlice = apiSlice.injectEndpoints({
             },
         }),
         getDraftProducts: builder.mutation({
-            query: () => ({
-                url: `/products/users?status=draft`,
+            query: (credentials) => ({
+                url: credentials
+                    ? `/products/users?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}&status=draft`
+                    : `/products/users?status=draft`,
                 method: "GET",
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
@@ -57,6 +63,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                     dispatch(
                         setDraftProduct({
                             products: data.data,
+                            productsMetaData: { links: data.links, meta: data.meta },
                         })
                     );
                 } catch (error) {
@@ -65,8 +72,10 @@ export const productsApiSlice = apiSlice.injectEndpoints({
             },
         }),
         getDeletedProducts: builder.mutation({
-            query: () => ({
-                url: `/products/users?status=deleted`,
+            query: (credentials) => ({
+                url: credentials
+                    ? `/products/users?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}&status=deleted`
+                    : `/products/users?status=deleted`,
                 method: "GET",
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
@@ -75,6 +84,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                     dispatch(
                         setDeletedProduct({
                             products: data.data,
+                            productsMetaData: { links: data.links, meta: data.meta },
                         })
                     );
                 } catch (error) {
@@ -82,7 +92,6 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                 }
             },
         }),
-
         getProductAnalytics: builder.mutation({
             query: () => ({
                 url: `/products/analytics`,
@@ -102,7 +111,6 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                 }
             },
         }),
-
         getSingleProductDetails: builder.mutation({
             query: (credentials) => ({
                 url: `/products/${credentials?.productID}`,
@@ -111,7 +119,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
-                    console.log(data);
+
                     dispatch(
                         setSingleProduct({
                             product: data,
@@ -152,6 +160,12 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                 method: "GET",
             }),
         }),
+        downloadedProducts: builder.mutation({
+            query: (credentials) => ({
+                url: `/products/downloads`,
+                method: "GET",
+            }),
+        }),
     }),
 });
 
@@ -167,4 +181,5 @@ export const {
     useDeleteProductPermanentlyMutation,
     useRestoreSoftDeletedProductMutation,
     useDownloadProductsListMutation,
+    useDownloadedProductsMutation,
 } = productsApiSlice;

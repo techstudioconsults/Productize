@@ -43,14 +43,10 @@ export const AvatarComp = ({ isScroll, linkColor }: avatarProp) => {
                     <Icon icon={"eva:chevron-down-outline"} />
                 </Center>
             </MenuButton>
-            <MenuList textAlign={`start`}>
+            <MenuList zIndex={999} textAlign={`start`}>
                 <MenuItem justifyContent={`flex-start`} color={`grey.400`}>
                     <Link to={`/dashboard/home`}>
                         <Icon icon={`ph:squares-four-fill`} />
-                        {/* <IconSet
-              name="menu"
-              icon={`https://res.cloudinary.com/dkszgtapy/image/upload/v1696088709/Stockholm-icons_kizeoq.svg`}
-            /> */}
                         <Text ml={3}>Dashboard</Text>
                     </Link>
                 </MenuItem>

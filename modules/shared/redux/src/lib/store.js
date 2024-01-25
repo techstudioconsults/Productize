@@ -3,6 +3,7 @@ import authReducer from "./auth-state/authSlice";
 import userReducer from "./user-state/userSlice";
 import appReducer from "./external-view-state/appSlice";
 import customersReducer from "./customers-state/customersSlice";
+import ordersReducer from "./order-state/ordersSlice";
 import productReducer from "./products-state/productsSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
@@ -40,6 +41,7 @@ export const store = configureStore({
         User: userPersistedReducer,
         Products: productReducer,
         Customers: customersReducer,
+        Orders: ordersReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

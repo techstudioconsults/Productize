@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     profile: null,
+    billingHistory: null,
+    accountList: [],
     // guideTaskCompleted: 0,
 };
 
@@ -13,15 +15,16 @@ const userSlice = createSlice({
             const { user } = action.payload;
             state.profile = user;
         },
-        // setTaskCount: (state, action) => {
-        //     if (action.payload) {
-        //         if (state.guideTaskCompleted !== 5) {
-        //             state.guideTaskCompleted = 4;
-        //         }
-        //     } else {
-        //         state.guideTaskCompleted = 0;
-        //     }
-        // },
+
+        setBillingHistory: (state, action) => {
+            const { billingHistory } = action.payload;
+            state.billingHistory = billingHistory;
+        },
+
+        setAccountList: (state, action) => {
+            const { accounts } = action.payload;
+            state.accountList = accounts;
+        },
 
         resetUserStore: (state) => {
             Object.assign(state, initialState);
@@ -29,9 +32,11 @@ const userSlice = createSlice({
     },
 });
 
-export const { setUser, resetUserStore } = userSlice.actions;
+export const { setUser, setBillingHistory, setAccountList, resetUserStore } = userSlice.actions;
 
 export default userSlice.reducer;
 
 export const selectCurrentUser = (state) => state.User.profile;
-export const selectTaskCompletedCount = (state) => state.User.guideTaskCompleted;
+export const selectBillingHistory = (state) => state.User.billingHistory;
+export const selectAccountList = (state) => state.User.accountList;
+// export const selectTaskCompletedCount = (state) => state.User.guideTaskCompleted;

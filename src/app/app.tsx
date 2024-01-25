@@ -72,7 +72,7 @@ export function App() {
         if (!isDesktop) {
             return (
                 <Center p={10} h={`100vh`} flexDir={`column`}>
-                    <Link as={RouterLink} to={`/`}>
+                    <Link my={5} as={RouterLink} to={`/`}>
                         <Image
                             alt="logo"
                             src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png`}

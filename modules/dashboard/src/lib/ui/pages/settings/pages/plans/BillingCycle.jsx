@@ -62,7 +62,7 @@ export const BillingCycle = () => {
                             <Text>Renewal Date</Text>
                             <Flex alignItems={`center`} justifyContent={`space-between`}>
                                 <Text as={`h5`}>{formatDate(billingHistoryData?.renewal_date)}</Text>
-                                <Text onClick={handlePlanDeactivation} color={`red.200`}>
+                                <Text cursor={`pointer`} onClick={handlePlanDeactivation} color={`red.200`}>
                                     Deactivate Plan
                                 </Text>
                             </Flex>

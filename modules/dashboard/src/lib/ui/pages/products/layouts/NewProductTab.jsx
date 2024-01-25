@@ -204,7 +204,7 @@ export const NewProductTab = () => {
                 position: "top",
                 render: () => (
                     <ToastFeedback
-                        message={err?.response?.data?.message || `Setup your Paystack account before you can publish a product`}
+                        message={error?.message || `Setup your Paystack account before you can publish a product`}
                         title={`Paystack Setup`}
                         icon={errorImg}
                         color={`red.600`}

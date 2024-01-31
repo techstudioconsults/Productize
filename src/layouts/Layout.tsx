@@ -13,7 +13,7 @@ const DefaultLayout = ({ children }: LayoutProps) => {
     const isAuth = useTokenExists();
     return (
         <>
-            <Box pos={`fixed`} top={0} w={`100%`} zIndex={999} backdropFilter={`blur(5px)`}>
+            <Box>
                 <Navbar isAuth={isAuth} />
             </Box>
             {children}

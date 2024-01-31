@@ -1,4 +1,4 @@
-import { OrderedList, ListItem, Menu, MenuButton, Button, MenuList, MenuItem, Text } from "@chakra-ui/react";
+import { OrderedList, ListItem, Menu, MenuButton, Button, MenuList, MenuItem, Text, Flex, Center } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
 import style from "./scss/navbar.module.scss";
 import { links } from "./utils/links";
@@ -41,14 +41,22 @@ const DropdownLink = ({ isScroll, link, linkColor }: DropdownLinkProps) => {
     return (
         <Menu>
             <MenuButton
+                p={0}
                 _hover={{ color: `red.100`, bg: `transparent` }} //change the hover color to that of the theme...DONT FORGET!!!
                 color={{ base: linkColor, xl: isScroll ? `black` : linkColor }}
                 fontWeight={`thin`}
                 bg={`transparent`}
                 as={Button}
-                rightIcon={<Icon icon={`mdi:chevron-down`} />}
+                variant={`link`}
+                rightIcon={
+                    <Center display={{ base: `none`, lg: `initial` }}>
+                        <Icon icon={`mdi:chevron-down`} />
+                    </Center>
+                }
             >
-                <Text fontSize={`16px`}>{link.name}</Text>
+                <Text fontSize={`16px`} fontWeight={600}>
+                    {link.name}
+                </Text>
             </MenuButton>
             <MenuList ml={-14} color={`black`}>
                 <NavLink to={`/explore`}>
@@ -71,24 +79,31 @@ type NavbarProps = {
 const Links = ({ isScroll, isMobile, linkColor }: NavbarProps) => {
     const navLinks = links.map((link) => {
         if (link.type === `dropdown`) {
-            return <DropdownLink linkColor={linkColor} isScroll={isScroll} key={link.id} link={link} />;
+            return (
+                <Flex key={link.id} my={5} py={5} justifyContent={`center`}>
+                    <DropdownLink linkColor={linkColor} isScroll={isScroll} link={link} />
+                </Flex>
+            );
         } else {
             return (
-                <NavLink key={link.id} to={link.path} className={({ isActive }) => (isActive ? style["active"] : style["inactive"])}>
-                    <ListItem>{link.name}</ListItem>
-                </NavLink>
+                <Flex key={link.id} my={5} py={5} justifyContent={`center`}>
+                    <NavLink to={link.path} className={({ isActive }) => (isActive ? style["active"] : style["inactive"])}>
+                        <ListItem fontWeight={600}>{link.name}</ListItem>
+                    </NavLink>
+                </Flex>
             );
         }
     });
     return (
         <OrderedList
-            width={`fit-content`}
-            display={{ base: isMobile ? `flex` : `none`, xl: `flex` }}
+            m={0}
+            // width={`fit-content`}
+            display={{ base: isMobile ? `flex` : `none`, lg: `flex` }}
             flexDir={isMobile ? `column` : `row`}
             color={isMobile || isScroll ? `black` : linkColor}
-            alignItems={{ xl: `center` }}
-            m={`auto`}
-            gap={{ base: 10, xl: 10 }}
+            // alignItems={{ xl: `center` }}
+            // m={`auto`}
+            gap={{ base: 0, lg: 10 }}
         >
             {navLinks}
         </OrderedList>

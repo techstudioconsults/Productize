@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { useDisclosure } from "@chakra-ui/react";
 // import { EmptyState } from "../../lib/empty-states/EmptyState";
 import { useSetPaymentPlan } from "@productize-v1.0.0/modules/shared/hooks";

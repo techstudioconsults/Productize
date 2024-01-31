@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Flex, Box, Link } from "@chakra-ui/react";
 import { useSetPaymentPlan } from "@productize-v1.0.0/modules/shared/hooks";
 import { SharedButton } from "@productize-v1.0.0/modules/shared/ui";
@@ -33,8 +34,8 @@ export const DashboardTab = () => {
 
     return (
         <Tabs isLazy={true} index={tabIndex} onChange={(index) => setTabIndex(index)} size={`sm`}>
-            <Box display={{ base: `flex`, md: `none` }} justifyContent={`flex-end`}>
-                <Link as={ReactLink} to={`/dashboard/products/new`}>
+            <Box display={{ base: `flex`, md: `none` }} justifyContent={`flex-end`} my={10}>
+                <Link as={ReactLink} to={`/dashboard/products/new#product-details`}>
                     <SharedButton
                         text={"New Product"}
                         btnExtras={{

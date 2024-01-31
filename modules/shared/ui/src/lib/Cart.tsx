@@ -7,7 +7,7 @@ import { Link as RouterLink } from "react-router-dom";
 export const Cart = () => {
     const cart = useSelector(selectCart);
     return (
-        <Box display={{ base: `none`, xl: `initial` }}>
+        <Box>
             <Link as={RouterLink} to={`/explore/product/cart`}>
                 <Avatar color={`black`} bgColor={`transparent`} icon={<Icon fontSize={`1.5rem`} icon={`ion:cart-sharp`} />} size={`sm`}>
                     <Box display={cart.totalProductQuantity ? `block` : `none`}>

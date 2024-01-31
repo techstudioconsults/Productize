@@ -384,13 +384,19 @@ export const AccountSettings = () => {
                 {/* grid four */}
                 <Grid my={10} templateColumns="repeat(12, 1fr)" gap={6}>
                     <GridItem colSpan={{ base: 12, md: 5 }}>
-                        <Text textAlign={{ base: `center`, md: `initial` }} color={`purple.300`} as={`h5`}>
+                        <Text textAlign={{ base: `center`, md: `initial` }} color={`red.200`} as={`h5`}>
                             Delete Account
                         </Text>
                     </GridItem>
                     <GridItem colSpan={{ base: 12, md: 7 }}>
-                        <Flex flexDir={{ base: `column`, lg: `row` }} alignItems={`center`} mt={4}>
-                            <Box>
+                        <Flex
+                            flexDir={{ base: `column`, lg: `row` }}
+                            
+                            gap={2}
+                            alignItems={{ base: `center`, md: `flex-start`, lg: `center` }}
+                            justifyContent={{ base: `center`, lg: `initial` }}
+                        >
+                            <Box textAlign={{ base: `center`, md: `initial` }}>
                                 <Text fontSize={`lg`} fontWeight={600}>
                                     Current Account
                                 </Text>

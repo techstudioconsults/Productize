@@ -1,4 +1,4 @@
-import { Box, Flex, Image, Switch, Tag, Text } from "@chakra-ui/react";
+import { Box, Container, Flex, Image, Switch, Tag, Text } from "@chakra-ui/react";
 import { Icon } from "@iconify/react";
 import arrowLeft from "@icons/Property_2_Arrow-left_kafkjg.svg";
 import { FreePricingCard, PremiumPricingCard } from "@productize-v1.0.0/modules/shared/ui";
@@ -22,12 +22,12 @@ export const ChangePlans = () => {
                     Manage you plan and choose what is best work for you and your team.
                 </Text>
             </Box>
-            <Flex justifyContent={`space-between`}>
+            <Flex justifyContent={`space-between`} alignItems={`center`} gap={5} flexDir={{ base: `column`, md: `row` }}>
                 <Flex alignItems={`center`} gap={2}>
                     <Icon icon={`solar:calendar-bold-duotone`} />
                     <Text fontSize={`sm`}>Renewal date</Text>
                 </Flex>
-                <Flex gap={10}>
+                <Flex gap={5} alignItems={`center`} flexDir={{ base: `column`, sm: `row` }}>
                     <Flex alignItems={`center`} gap={2}>
                         <Text>Bill Monthly</Text>
                         <Switch size="md" colorScheme="green" />
@@ -38,58 +38,60 @@ export const ChangePlans = () => {
                     </Flex>
                 </Flex>
             </Flex>
-            <Flex my={5} flexDir={{ base: `column`, md: `row` }} justifyContent={`space-between`} alignItems={`center`} gap={`10`}>
-                <FreePricingCard
-                    cardProps={{
-                        bgColor: `purple.100`,
-                        width: { base: `100%`, xl: `25rem` },
-                        height: `556px`,
-                        borderRadius: `8px`,
-                    }}
-                    listItems={[
-                        `lorem lorem lorem lorem lorem lorem lorem lorem lorem`,
-                        `lorem lorem lorem lorem lorem lorem lorem lorem lorem`,
-                        `lorem lorem lorem lorem lorem lorem lorem lorem lorem`,
-                        `lorem lorem lorem lorem lorem lorem lorem lorem lorem`,
-                        `lorem lorem lorem lorem lorem lorem lorem lorem lorem`,
-                    ]}
-                    iconColor={"black"}
-                    amount={0}
-                    status={"Free"}
-                    textColor={"yellow.300"}
-                    statusColor={"yellow.300"}
-                    tagProps={{
-                        title: "Current Plan",
-                        bgColor: "grey.800",
-                        color: `white`,
-                    }}
-                />
-                <PremiumPricingCard
-                    cardProps={{
-                        bgColor: `purple.300`,
-                        width: { base: `100%`, xl: `25rem` },
-                        height: `556px`,
-                        borderRadius: `8px`,
-                    }}
-                    listItems={[
-                        `lorem lorem lorem lorem lorem lorem lorem lorem lorem`,
-                        `lorem lorem lorem lorem lorem lorem lorem lorem lorem`,
-                        `lorem lorem lorem lorem lorem lorem lorem lorem lorem`,
-                        `lorem lorem lorem lorem lorem lorem lorem lorem lorem`,
-                        `lorem lorem lorem lorem lorem lorem lorem lorem lorem`,
-                    ]}
-                    iconColor={"gold"}
-                    amount={5000}
-                    status={"premium"}
-                    textColor={"purple.100"}
-                    statusColor={"yellow.100"}
-                    tagProps={{
-                        title: "Best Value",
-                        bgColor: "yellow.100",
-                        color: `yellow.300`,
-                    }}
-                />
-            </Flex>
+            <Container p={0} maxW={{ base: `400px`, md: `1200px` }}>
+                <Flex my={5} flexDir={{ base: `column`, md: `row` }} justifyContent={`space-between`} alignItems={`center`} gap={`10`}>
+                    <FreePricingCard
+                        cardProps={{
+                            bgColor: `purple.100`,
+                            width: { base: `100%`, xl: `25rem` },
+                            height: `556px`,
+                            borderRadius: `8px`,
+                        }}
+                        listItems={[
+                            `lorem lorem lorem lorem lorem lorem lorem lorem lorem`,
+                            `lorem lorem lorem lorem lorem lorem lorem lorem lorem`,
+                            `lorem lorem lorem lorem lorem lorem lorem lorem lorem`,
+                            `lorem lorem lorem lorem lorem lorem lorem lorem lorem`,
+                            `lorem lorem lorem lorem lorem lorem lorem lorem lorem`,
+                        ]}
+                        iconColor={"black"}
+                        amount={0}
+                        status={"Free"}
+                        textColor={"yellow.300"}
+                        statusColor={"yellow.300"}
+                        tagProps={{
+                            title: "Current Plan",
+                            bgColor: "grey.800",
+                            color: `white`,
+                        }}
+                    />
+                    <PremiumPricingCard
+                        cardProps={{
+                            bgColor: `purple.300`,
+                            width: { base: `100%`, xl: `25rem` },
+                            height: `556px`,
+                            borderRadius: `8px`,
+                        }}
+                        listItems={[
+                            `lorem lorem lorem lorem lorem lorem lorem lorem lorem`,
+                            `lorem lorem lorem lorem lorem lorem lorem lorem lorem`,
+                            `lorem lorem lorem lorem lorem lorem lorem lorem lorem`,
+                            `lorem lorem lorem lorem lorem lorem lorem lorem lorem`,
+                            `lorem lorem lorem lorem lorem lorem lorem lorem lorem`,
+                        ]}
+                        iconColor={"gold"}
+                        amount={5000}
+                        status={"premium"}
+                        textColor={"purple.100"}
+                        statusColor={"yellow.100"}
+                        tagProps={{
+                            title: "Best Value",
+                            bgColor: "yellow.100",
+                            color: `yellow.300`,
+                        }}
+                    />
+                </Flex>
+            </Container>
         </Box>
     );
 };

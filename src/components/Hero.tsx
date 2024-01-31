@@ -20,6 +20,7 @@ export const Hero = ({ children, height, bgImg, bgColor }: HeroProps) => {
       bgSize={`contain`}
       bgRepeat={`no-repeat`}
       bgColor={bgColor}
+      pb={10}
     >
       {children}
     </Flex>

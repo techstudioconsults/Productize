@@ -118,7 +118,7 @@ export const CustomersTableControl = ({ showRefreshBtn }: controlsProp) => {
                         style={{ width: `100%` }}
                     />
                 </Box>
-                <Box w={`100%`}>
+                <Flex w={{ base: `100%`, md: `fit-content` }} gap={4} alignItems={{ base: `flex-start`, md: `center` }}>
                     <SelectPicker
                         disabled
                         searchable={false}
@@ -128,19 +128,19 @@ export const CustomersTableControl = ({ showRefreshBtn }: controlsProp) => {
                         size="lg"
                         data={data}
                     />
-                </Box>
-                <IconButton
-                    // isDisabled
-                    color={`purple.200`}
-                    bgColor={`purple.100`}
-                    isLoading={getAllCustomersStatus.isLoading}
-                    spinner={<SpinnerComponentSmall size="sm" />}
-                    onClick={filterTable}
-                    fontSize={`xl`}
-                    // variant={`outline`}
-                    aria-label="Filter table"
-                    icon={<Icon icon={`system-uicons:filtering`} />}
-                />
+                    <IconButton
+                        // isDisabled
+                        color={`purple.200`}
+                        bgColor={`purple.100`}
+                        isLoading={getAllCustomersStatus.isLoading}
+                        spinner={<SpinnerComponentSmall size="sm" />}
+                        onClick={filterTable}
+                        fontSize={`xl`}
+                        // variant={`outline`}
+                        aria-label="Filter table"
+                        icon={<Icon icon={`system-uicons:filtering`} />}
+                    />
+                </Flex>
             </Flex>
             {/* dots and buttons */}
             <Box>

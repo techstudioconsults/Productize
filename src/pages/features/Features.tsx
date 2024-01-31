@@ -37,7 +37,7 @@ export const Features = () => {
                             />
                         </Link>
                     </Container>
-                    <Box mt={{ base: `-4rem`, xl: `-18rem` }}>
+                    <Box mt={{ base: `-4rem`, md: `-10rem`, lg: `-15rem`, xl: `-20rem` }}>
                         <Image
                             alt={`hero-illustration`}
                             src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1700125298/productize/shopping_box_tshirt_hat_wristwatch_stickers_sticker_2_bxbocb.png`}
@@ -46,7 +46,7 @@ export const Features = () => {
                 </Stack>
             </Hero>
             <SectionLayout height={""} bgColor={""} bgImg={""}>
-                <Container maxW={`60rem`} textAlign={`center`} py={20} color={`yellow.300`}>
+                <Container maxW={`60rem`} textAlign={`center`} py={{ base: 20, sm: 40 }} color={`yellow.300`}>
                     <Text as={`h1`} lineHeight={`shorter`}>
                         Grab visitors attention with detailed products.
                     </Text>
@@ -62,7 +62,7 @@ export const Features = () => {
                 flexDirection={{ base: `column`, xl: `row` }}
                 textSectionBgColor={"purple.100"}
                 imgSectionBgColor={"coral.300"}
-                justifyContent={`flex-end`}
+                justifyContent={{ base: `center`, xl: `flex-end` }}
                 imgPosition={`center`}
                 imgFit={{ base: `contain` }}
             >
@@ -100,7 +100,7 @@ export const Features = () => {
                 flexDirection={{ base: `column`, xl: `row` }}
                 textSectionBgColor={"yellow.200"}
                 imgSectionBgColor={"purple.100"}
-                justifyContent={`flex-end`}
+                justifyContent={{ base: `center`, xl: `flex-end` }}
                 imgPosition={`center`}
                 imgFit={{ base: `contain` }}
             >
@@ -127,7 +127,7 @@ export const Features = () => {
                 flexDirection={{ base: `column`, xl: `row-reverse` }}
                 textSectionBgColor={"purple.300"}
                 imgSectionBgColor={"purple.100"}
-                justifyContent={`flex-start`}
+                justifyContent={{ base: `center`, xl: `flex-start` }}
                 imgPosition={`center`}
                 imgFit={{ base: `contain` }}
             >

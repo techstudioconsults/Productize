@@ -62,8 +62,8 @@ export const TwoColumnLayout = ({ C1, C2 }: TwoColumnLayoutProps) => {
             gap={4}
         >
             {/* <GridItem colSpan={{ base: 12, xl: 8 }}>{C1}</GridItem> */}
-            <GridItem colSpan={{ base: 12, xl: pathname === `/explore/product/cart` ? 12 : 8 }}>{C1}</GridItem>
-            <GridItem colSpan={{ base: 12, xl: 4 }}>{C2}</GridItem>
+            <GridItem colSpan={{ base: 12, md: 7, xl: pathname === `/explore/product/cart` ? 12 : 8 }}>{C1}</GridItem>
+            <GridItem colSpan={{ base: 12, md: 5, xl: 4 }}>{C2}</GridItem>
         </Grid>
     );
 };

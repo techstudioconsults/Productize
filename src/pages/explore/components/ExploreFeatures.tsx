@@ -1,4 +1,4 @@
-import { Box, Container, Flex, Grid, Skeleton, Text } from "@chakra-ui/react";
+import { Box, Container, Flex, Grid, SimpleGrid, Skeleton, Text } from "@chakra-ui/react";
 import React, { useState, useEffect, useCallback } from "react";
 import { Icon } from "@iconify/react";
 import { useSelector } from "react-redux";
@@ -61,28 +61,25 @@ export const ExploreFeatures = ({ title }: slideProps) => {
                     </Flex>
                 </Flex>
 
-                <Flex py={2} w={`100%`} overflow={`auto`}>
-                    {/* Conditional rendering based on error state */}
-                    {error ? (
-                        <Box>Error: {error}</Box>
-                    ) : (
-                        <Grid
-                            templateColumns={{
-                                base: `repeat(4, 1fr)`,
-                            }}
-                            w={`100%`}
-                            justifyContent={`space-between`}
-                            // templateColumns={{
-                            //   base: `repeat(1, 1fr)`,
-                            //   md: `repeat(2, 1fr)`,
-                            //   lg: `repeat(4, 1fr)`,
-                            // }}
-                            gap={`1.64rem`}
-                        >
-                            {renderCards()}
-                        </Grid>
-                    )}
-                </Flex>
+                {/* <Flex py={2}> */}
+                {/* Conditional rendering based on error state */}
+                {error ? (
+                    <Box>Error: {error}</Box>
+                ) : (
+                    <SimpleGrid
+                        columns={{ base: 1, sm: 2, md: 3, lg: 4 }}
+                        justifyContent={`space-between`}
+                        // templateColumns={{
+                        //   base: `repeat(1, 1fr)`,
+                        //   md: `repeat(2, 1fr)`,
+                        //   lg: `repeat(4, 1fr)`,
+                        // }}
+                        gap={`1.64rem`}
+                    >
+                        {renderCards()}
+                    </SimpleGrid>
+                )}
+                {/* </Flex> */}
             </Container>
         </Flex>
     );

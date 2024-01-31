@@ -219,25 +219,25 @@ export const NewProductTab = () => {
 
     const productCallsToAction =
         state?.product?.status === `draft` || hash === `#product-details` ? (
-            <Flex display={hash !== `#share` ? `flex` : `none`} gap={4}>
+            <Flex w={`100%`} display={hash !== `#share` ? `flex` : `none`} gap={4}>
                 <SharedButton
                     btnExtras={{
                         border: `1px solid red`,
                         onClick: () => navigate(`/dashboard/products#all-products`),
                     }}
                     text={"Cancel"}
-                    width={"fit-content"}
+                    width={{ base: `100%`, lg: `fit-content` }}
                     height={"40px"}
                     bgColor={"transparent"}
                     textColor={"red"}
                     borderRadius={"4px"}
                     fontSize={{ base: `sm`, md: `sm` }}
                 />
-                <Box display={hash !== `#preview` ? `block` : `none`}>
+                <Box width={{ base: `100%`, lg: `fit-content` }} display={hash !== `#preview` ? `block` : `none`}>
                     <SharedButton
                         text={"Save & Continue"}
-                        width={"fit-content"}
                         height={"40px"}
+                        width={{ base: `100%`, lg: `fit-content` }}
                         bgColor={"purple.200"}
                         textColor={"white"}
                         borderRadius={"4px"}
@@ -249,10 +249,10 @@ export const NewProductTab = () => {
                         }}
                     />
                 </Box>
-                <Box display={hash === `#preview` ? `block` : `none`}>
+                <Box width={{ base: `100%`, lg: `fit-content` }} display={hash === `#preview` ? `block` : `none`}>
                     <SharedButton
                         text={"Publish & Continue"}
-                        width={"fit-content"}
+                        width={{ base: `100%`, lg: `fit-content` }}
                         height={"40px"}
                         bgColor={"purple.200"}
                         textColor={"white"}
@@ -275,17 +275,17 @@ export const NewProductTab = () => {
                         onClick: handlePublishAction,
                     }}
                     text={"Unpublished"}
-                    width={"fit-content"}
+                    width={{ base: `100%`, lg: `fit-content` }}
                     height={"40px"}
                     bgColor={"transparent"}
                     textColor={"purple.200"}
                     borderRadius={"4px"}
                     fontSize={{ base: `sm`, md: `sm` }}
                 />
-                <Box>
+                <Box width={{ base: `100%`, lg: `fit-content` }}>
                     <SharedButton
                         text={"Close"}
-                        width={"fit-content"}
+                        width={{ base: `100%`, lg: `fit-content` }}
                         height={"40px"}
                         bgColor={"purple.200"}
                         textColor={"white"}
@@ -302,31 +302,10 @@ export const NewProductTab = () => {
     return (
         <FormProvider {...methods}>
             <Tabs index={tabIndex} onChange={(index) => setTabIndex(index)} size={`sm`}>
-                <Flex gap={4} display={{ base: `flex`, md: `none` }} justifyContent={`flex-end`}>
-                    <SharedButton
-                        btnExtras={{
-                            border: `1px solid red`,
-                        }}
-                        text={"Cancel"}
-                        width={"100%"}
-                        height={"40px"}
-                        bgColor={"transparent"}
-                        textColor={"red"}
-                        borderRadius={"4px"}
-                        fontSize={{ base: `sm`, md: `sm` }}
-                    />
-
-                    <SharedButton
-                        text={"Save & Continue"}
-                        width={"100%"}
-                        height={"40px"}
-                        bgColor={"purple.200"}
-                        textColor={"white"}
-                        borderRadius={"4px"}
-                        fontSize={{ base: `sm`, md: `sm` }}
-                    />
+                <Flex display={{ lg: `none` }} my={5}>
+                    {productCallsToAction}
                 </Flex>
-                <TabList justifyContent={`space-between`} color={`grey.400`}>
+                <TabList overflowX={`scroll`} overflowY={`hidden`} justifyContent={`space-between`} color={`grey.400`}>
                     <Flex>
                         <Tab
                             // onClick={() => handleTabClick('#product-details')}
@@ -335,6 +314,7 @@ export const NewProductTab = () => {
                             _disabled={disabledStateStyle}
                             _selected={activeStateStyle}
                             py={6}
+                            w={{ base: `10rem`, sm: `initial` }}
                         >
                             Product Details
                         </Tab>
@@ -345,6 +325,7 @@ export const NewProductTab = () => {
                             _disabled={disabledStateStyle}
                             _selected={activeStateStyle}
                             py={6}
+                            w={{ base: `10rem`, sm: `initial` }}
                         >
                             Content Delivery
                         </Tab>
@@ -355,6 +336,7 @@ export const NewProductTab = () => {
                             _disabled={disabledStateStyle}
                             _selected={activeStateStyle}
                             py={6}
+                            w={{ base: `10rem`, sm: `initial` }}
                         >
                             Preview
                         </Tab>
@@ -365,11 +347,12 @@ export const NewProductTab = () => {
                             _disabled={disabledStateStyle}
                             _selected={activeStateStyle}
                             py={6}
+                            w={{ base: `10rem`, sm: `initial` }}
                         >
                             Share
                         </Tab>
                     </Flex>
-                    {productCallsToAction}
+                    <Flex display={{ base: `none`, lg: `initial` }}>{productCallsToAction}</Flex>
                 </TabList>
 
                 <TabPanels>

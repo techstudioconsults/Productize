@@ -25,13 +25,13 @@ const Card: React.FC<CardProps> = ({ image, heading, rate, count, price, publish
             alignItems={"flex-start"}
             border="1px solid #F3F2FB"
             p={".625rem"}
-            w={"14.0625rem"}
+            // w={"14.0625rem"}
             // w={{ base: `100%`, lg: '14.0625rem' }}
             h={"19.8125rem"}
             cursor={"pointer"}
             _hover={{ boxShadow: "5px 5px 5px #000", transform: "scale(1.01)" }}
         >
-            <Box display="flex" justifyContent={"center"} alignItems="center" alignSelf={"center"} mb=".75rem">
+            <Box display="flex" w={`100%`} justifyContent={"center"} alignItems="center" alignSelf={"center"} mb=".75rem">
                 <Image src={image} alt={heading} w={"100%"} h={"12.063rem"} objectFit={"contain"} />
             </Box>
             <Heading fontSize="sm" fontWeight={"bold"} lineHeight={5} color="hsla(248, 11%, 7%, 1)" textAlign={"start"}>

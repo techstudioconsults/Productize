@@ -1,4 +1,4 @@
-import { Avatar, Center, Menu, MenuButton, MenuItem, MenuList, Text } from "@chakra-ui/react";
+import { Avatar, Center, Flex, Menu, MenuButton, MenuItem, MenuList, Text } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Icon as IconSet } from "./Icon";
@@ -39,8 +39,12 @@ export const AvatarComp = ({ isScroll, linkColor }: avatarProp) => {
             >
                 <Center gap={4}>
                     <Avatar size="sm" name={user?.name} src={user?.logo} />
-                    <Text color={isScroll ? `black` : linkColor}>{user?.name}</Text>
-                    <Icon icon={"eva:chevron-down-outline"} />
+                    <Flex display={{ base: `none`, lg: `Flex` }} alignItems={`center`} gap={2}>
+                        <Text fontWeight={600} color={linkColor}>
+                            {user?.name}
+                        </Text>
+                        {/* <Icon icon={"eva:chevron-down-outline"} color={`white`} fontSize={`1.5rem`} fontWeight={`10rem`} /> */}
+                    </Flex>
                 </Center>
             </MenuButton>
             <MenuList zIndex={999} textAlign={`start`}>

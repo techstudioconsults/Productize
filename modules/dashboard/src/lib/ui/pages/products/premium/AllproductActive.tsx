@@ -31,7 +31,7 @@ const AllproductActive = () => {
         <Box my={8}>
             {/* grid cards */}
             <Box>
-                <SimpleGrid gap={4} my={4} columns={{ base: 1, md: 4 }}>
+                <SimpleGrid gap={4} my={4} columns={{ base: 1, sm: 2, lg: 4 }}>
                     <Skeleton isLoaded={!getProductsAnalyticsStatus.isLoading}>
                         <Box>
                             <DataWidgetCard showIcon={false} title={"Total Products"} value={productsAnalyics?.total_products} />

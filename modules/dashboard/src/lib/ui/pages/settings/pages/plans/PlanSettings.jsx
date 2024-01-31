@@ -15,8 +15,8 @@ export const PlanSettings = () => {
                 </Text>
             </GridItem>
             <GridItem colSpan={{ base: 12, md: 7 }}>
-                <Flex alignItems={`flex-end`} justifyContent={`space-between`}>
-                    <Box>
+                <Flex alignItems={`flex-end`} justifyContent={{ base: `center`, md: `space-between` }}>
+                    <Box display={{ base: `none`, md: `initial` }}>
                         <Text fontWeight={600} textAlign={{ base: `center`, md: `initial` }} color={`purple.300`} my={2}>
                             Plan Type
                         </Text>

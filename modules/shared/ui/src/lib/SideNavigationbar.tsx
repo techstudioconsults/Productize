@@ -64,7 +64,9 @@ export const Sidenav = ({ links }: sidebarProps) => {
             <Drawer size={{ base: `xs` }} isOpen={isOpen} placement="left" onClose={onClose}>
                 <DrawerOverlay />
                 <DrawerContent
-                    // bgImage={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951016/productize/background_jg4qjv_hyp0ef.png`}
+                    boxShadow={`3px 0 3px #000`}
+                    bgSize={`50%`}
+                    bgImage={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951013/productize/Lines_t1t27k_gg0jau.png`}
                     bgColor={bgColor}
                     px={10}
                 >

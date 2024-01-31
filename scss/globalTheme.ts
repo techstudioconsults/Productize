@@ -43,7 +43,7 @@ const theme = extendTheme({
   },
   breakpoints: {
     sm: '576px', //756px
-    md: '640px', //768px
+    md: '768px', //768px
     lg: '992px', //960px
     xl: '1200px', //1200px
     xxl: '1400px', //1400px

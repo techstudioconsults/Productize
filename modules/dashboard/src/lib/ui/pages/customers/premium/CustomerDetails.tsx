@@ -86,14 +86,14 @@ export const CustomersDetails = () => {
             {/* row 2 */}
             <Box mt={8} mb={4} color={`purple.300`}>
                 <SimpleGrid columns={{ base: 1, xl: 2 }} gap={5}>
-                    <Box mt={8} mb={4} color={`purple.300`}>
+                    <Box  mb={4} color={`purple.300`}>
                         <SkeletonText isLoaded={!getSingleCustomerDetailsStatus.isLoading} noOfLines={1} w={`10rem`}>
                             <Text as={`h6`}>{singleCustomer?.name}</Text>
                         </SkeletonText>
                         <Flex
-                            flexDir={{ base: `column`, xl: `row` }}
+                            flexDir={{ base: `column`, md: `row` }}
                             borderBlock={`1px solid #EFEFEF`}
-                            gap={{ base: 8, xl: 32 }}
+                            gap={{ base: 8, md: 32 }}
                             py={8}
                             alignItems={{ base: `flex-start`, xl: `center` }}
                             my={2}
@@ -118,7 +118,7 @@ export const CustomersDetails = () => {
                                 </SkeletonText>
                             </Stack>
                         </Flex>
-                        <SimpleGrid gap={4} columns={{ base: 1, md: 2 }}>
+                        <SimpleGrid gap={4} columns={{ base: 1, sm: 2 }}>
                             <Skeleton isLoaded={!getSingleCustomerDetailsStatus.isLoading}>
                                 <Box>
                                     <DataWidgetCard showIcon={false} title={"Total Order"} value={singleCustomer.total_order} />

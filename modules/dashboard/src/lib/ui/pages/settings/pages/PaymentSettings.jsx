@@ -1,4 +1,4 @@
-import { Box, Card, Center, Divider, Flex, Grid, GridItem, ModalCloseButton, Skeleton, Stack, Text, useDisclosure } from "@chakra-ui/react";
+import { Box, Card, Center, Divider, Flex, Grid, GridItem, ModalCloseButton, SimpleGrid, Skeleton, Stack, Text, useDisclosure } from "@chakra-ui/react";
 import { ModalComp } from "@productize-v1.0.0/modules/shared/ui";
 import { SetupPaymentForm } from "../../../../feature/settingsForm/SetupPaymentForm";
 import { Icon } from "@iconify/react";
@@ -46,12 +46,11 @@ export const PaymentSettings = () => {
                 <Text fontWeight={600} textAlign={{ base: `center`, md: `initial` }} color={`purple.300`} my={2}>
                     Gateway
                 </Text>
-                <Stack flexDir={`row`}>
-                    <Flex>{accountList}</Flex>
+                <Stack>
                     <Card
                         onClick={onOpen}
                         cursor={`pointer`}
-                        w={{ base: `fit-content` }}
+                        w={{ base: `100%` }}
                         h={`160px`}
                         borderRadius={`8px`}
                         as={Center}
@@ -77,6 +76,9 @@ export const PaymentSettings = () => {
                             <SetupPaymentForm closeModal={onClose} />
                         </ModalComp>
                     </Card>
+                    <SimpleGrid columns={{ base: 1, sm: 2, md: 1, lg: 2 }} gridGap={5}>
+                        {accountList}
+                    </SimpleGrid>
                 </Stack>
                 <Divider my={5} />
             </GridItem>

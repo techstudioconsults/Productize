@@ -36,7 +36,7 @@ const AllDownloads = () => {
         return <NoDownload />;
     }
     return (
-        <SimpleGrid columns={{ base: 2, lg: 4 }} spacing={{ base: 1, lg: 5 }}>
+        <SimpleGrid columns={{ base: 1, sm: 2, lg: 3, xxl: 4 }} spacing={{ base: 2, sm: 5 }}>
             {downloadedProductsList}
         </SimpleGrid>
     );

@@ -1,4 +1,4 @@
-import { Box, Card, Flex, Image, SimpleGrid, Stack, Tag, Text, useToast } from "@chakra-ui/react";
+import { Box, Card, Flex, Image, SimpleGrid, Skeleton, Stack, Tag, Text, useToast } from "@chakra-ui/react";
 import { Icon } from "@iconify/react";
 import { useDate, useCurrency } from "@productize-v1.0.0/modules/shared/hooks";
 import {
@@ -208,11 +208,12 @@ export const ProductDetails = () => {
             <Box mt={8} mb={4} color={`purple.300`}>
                 <Text as={`h6`}>{product?.title}</Text>
                 <Flex
-                    flexDir={{ base: `column`, xl: `row` }}
+                    flexDir={{ base: `column`, sm: `row` }}
                     borderBlock={`1px solid #EFEFEF`}
-                    gap={{ base: 8, xl: 32 }}
+                    gap={{ base: 8, lg: 32 }}
                     py={8}
-                    alignItems={{ base: `flex-start`, xl: `center` }}
+                    justifyContent={{ md: `space-between`, lg: `initial` }}
+                    alignItems={{ base: `flex-start`, sm: `center` }}
                     my={2}
                 >
                     <Stack gap={2}>
@@ -253,16 +254,22 @@ export const ProductDetails = () => {
             {/* row3 */}
             {/* grid cards */}
             <Box>
-                <SimpleGrid gap={4} columns={{ base: 1, md: 3 }}>
-                    <Box>
-                        <DataWidgetCard showIcon={false} title={"Viewed"} value={0} />
-                    </Box>
-                    <Box>
-                        <DataWidgetCard showIcon={false} title={"Total Order"} value={product?.total_order} />
-                    </Box>
-                    <Box>
-                        <DataWidgetCard showIcon={false} title={"Total Sales"} value={formatCurrency(product.total_sales)} />
-                    </Box>
+                <SimpleGrid gap={4} columns={{ base: 1, sm: 2, md: 3 }}>
+                    <Skeleton borderRadius={8} isLoaded={!singleProductStatus.isLoading}>
+                        <Box>
+                            <DataWidgetCard showIcon={false} title={"Viewed"} value={0} />
+                        </Box>
+                    </Skeleton>
+                    <Skeleton borderRadius={8} isLoaded={!singleProductStatus.isLoading}>
+                        <Box>
+                            <DataWidgetCard showIcon={false} title={"Total Order"} value={product?.total_order} />
+                        </Box>
+                    </Skeleton>
+                    <Skeleton borderRadius={8} isLoaded={!singleProductStatus.isLoading}>
+                        <Box>
+                            <DataWidgetCard showIcon={false} title={"Total Sales"} value={formatCurrency(product.total_sales)} />
+                        </Box>
+                    </Skeleton>
                 </SimpleGrid>
                 <Box mt={8}>
                     {/* <DashboardTable /> */}

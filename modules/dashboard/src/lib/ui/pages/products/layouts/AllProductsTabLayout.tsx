@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import AllproductActive from "../premium/AllproductActive";
 import AccountStatus from "../empty/AccountStatus";
 import { Box, Flex } from "@chakra-ui/react";

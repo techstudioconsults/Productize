@@ -28,7 +28,7 @@ export const Analytics = () => {
             <HomeFilterController />
             {/* grid cards */}
             <Box>
-                <SimpleGrid gap={4} my={4} columns={{ base: 1, md: 3 }}>
+                <SimpleGrid gap={4} my={4} columns={{ base: 1, sm: 2, md: 3 }}>
                     <Box>
                         <DataWidgetCard showIcon={false} title={"Order"} value={0} />
                     </Box>

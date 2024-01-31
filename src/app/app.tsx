@@ -125,15 +125,11 @@ export function App() {
                     <Route path="orders" element={<Orders />} />
                     <Route path="orders/:orderID" element={<DashboardOrderDetails />} />
 
-                    <Route path="payouts" element={<Payouts />} />
-                    {/* <Route path="payouts/:payoutid" element={<PayoutDetails />} />
-                    <Route path="payouts/:payoutid/withdraw-earnings" element={<WithdrawalEarnings />} /> */}
-
-                    <Route path="analytics" element={<Analytics />} />
-
                     <Route path="customers" element={<Customers />} />
                     <Route path="customers/:customerID" element={<CustomersDetails />} />
 
+                    <Route path="payouts" element={<Payouts />} />
+                    <Route path="analytics" element={<Analytics />} />
                     <Route path="profile/:userID" element={<Profile />} />
                     <Route path="help" element={<Help />} />
 

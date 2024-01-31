@@ -5,9 +5,9 @@ import { Link as ReactLink } from "react-router-dom";
 const DownloadCard = ({ product }) => {
     const formatCurrency = useCurrency();
     return (
-        <Link w={`266px`} as={ReactLink} to={`/dashboard/downloads/${product?.id}`} state={product}>
+        <Link w={{ base: `100%`, lg: `266px` }} as={ReactLink} to={`/dashboard/downloads/${product?.id}`} state={product}>
             <Card variant={`outline`} overflow={`hidden`} w={`100%`}>
-                <Box h={{ base: ``, lg: `266px` }}>
+                <Box h={{ base: `266px` }}>
                     <Image w={`100%`} h={`100%`} objectFit="cover" src={product?.thumbnail} alt={product?.title} />
                 </Box>
                 <CardBody p={3} pb={0}>

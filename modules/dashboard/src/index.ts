@@ -30,3 +30,4 @@ export * from "./lib/ui/pages/settings/pages/plans/ChangePlans";
 export * from "./lib/ui/pages/settings/pages/plans/BillingCycle";
 export * from "./lib/ui/pages/settings/pages/AccountSettings";
 export * from "./lib/ui/pages/settings/pages/PaymentSettings";
+export * from "./lib/ui/utils/DashboardLinks";

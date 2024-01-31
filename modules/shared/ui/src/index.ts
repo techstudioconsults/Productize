@@ -20,3 +20,4 @@ export * from "./lib/ToastFeedback";
 export * from "./lib/Cart";
 export * from "./lib/layouts/CardLayout";
 export * from "./lib/PageNotFound";
+export * from "./lib/DashboardDrawer";

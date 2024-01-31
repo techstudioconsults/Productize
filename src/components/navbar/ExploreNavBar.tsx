@@ -14,24 +14,27 @@ interface navProps {
 export const ExploreNavBar = ({ isAuth }: navProps) => {
     return (
         <Box background={`coral.200`} py={4}>
-            <Container px={{ base: 4, lg: 0 }} maxW={`70rem`}>
+            <Container px={{ base: 4, sm: 8, xl: 0 }} maxW={`70rem`}>
                 <Flex justifyContent={`space-between`} flexDir={{ base: `column`, lg: `row` }} as="nav" gap={4}>
                     <Flex justifyContent={`space-between`} alignItems={`center`}>
+                        <Sidenav links={<Links isMobile={true} />} />
                         <Link as={RouterLink} to={`/`}>
                             <img
                                 src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png`}
                                 alt="Website logo"
                             />
                         </Link>
-                        <Box display={{ base: `block`, lg: `none` }} fontSize={`1.5rem`}>
-                            <Icon icon={`mdi:cart`} />
+                        <Box display={{ lg: `none` }}>
+                            <AvatarComp />
                         </Box>
                     </Flex>
                     <Flex justifyContent={`space-between`} gap={10} alignItems={`center`}>
                         <Box>
                             <SearchComp size="lg" color={`coral.100`} />
                         </Box>
-                        <Cart />
+                        <Box fontSize={`1.5rem`}>
+                            <Cart />
+                        </Box>
                         {isAuth ? (
                             <Box display={{ base: `none`, lg: `initial` }}>
                                 <AvatarComp />
@@ -49,7 +52,6 @@ export const ExploreNavBar = ({ isAuth }: navProps) => {
                                 />
                             </Link>
                         )}
-                        <Sidenav links={<Links isMobile={false} />} />
                     </Flex>
                 </Flex>
                 <Box display={{ base: `none`, lg: `block` }}>

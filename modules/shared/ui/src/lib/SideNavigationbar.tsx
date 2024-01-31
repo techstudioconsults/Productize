@@ -27,6 +27,7 @@ interface sidebarProps {
 export const Sidenav = ({ links }: sidebarProps) => {
     const isAuth = useTokenExists();
     const [menuColor, setMenuColor] = useState(`white`);
+    const [bgColor, setBgColor] = useState(`white`);
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { pathname } = useLocation();
 
@@ -34,9 +35,19 @@ export const Sidenav = ({ links }: sidebarProps) => {
         switch (pathname) {
             case `/`:
                 setMenuColor(`grey.100`);
+                setBgColor(`purple.200`);
+                break;
+            case `/features`:
+                setMenuColor(`coral.300`);
+                setBgColor(`coral.100`);
+                break;
+            case `/pricing`:
+                setMenuColor(`yellow.300`);
+                setBgColor(`yellow.100`);
                 break;
             default:
-                setMenuColor(`yellow.300`);
+                setMenuColor(`black.300`);
+                setBgColor(`white`);
                 break;
         }
     }, [pathname]);
@@ -50,37 +61,28 @@ export const Sidenav = ({ links }: sidebarProps) => {
                 <Icon fontSize={`2rem`} onClick={onOpen} icon={`ci:hamburger-md`} />
             </Center>
 
-            <Drawer size={{ base: `sm` }} isOpen={isOpen} placement="left" onClose={onClose}>
+            <Drawer size={{ base: `xs` }} isOpen={isOpen} placement="left" onClose={onClose}>
                 <DrawerOverlay />
-                <DrawerContent px={10}>
-                    <DrawerCloseButton my={2} />
+                <DrawerContent
+                    // bgImage={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951016/productize/background_jg4qjv_hyp0ef.png`}
+                    bgColor={bgColor}
+                    px={10}
+                >
+                    {/* <DrawerCloseButton my={2} /> */}
                     <DrawerHeader p={0} py={5}>
-                        {isAuth ? (
-                            <AvatarComp />
-                        ) : (
-                            <Link as={RouterLink} to={`/`}>
-                                <Image
-                                    w={`60%`}
-                                    cursor={`pointer`}
-                                    src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png`}
-                                    alt="Productize"
-                                />
-                            </Link>
-                        )}
+                        <Link as={RouterLink} to={`/`}>
+                            <Image
+                                w={`60%`}
+                                cursor={`pointer`}
+                                src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png`}
+                                alt="Productize"
+                            />
+                        </Link>
                     </DrawerHeader>
                     <DrawerBody p={0}>{links}</DrawerBody>
                     <DrawerFooter>
                         <Flex gap={5} w={`100%`} flexDir={`column`}>
-                            {isAuth ? (
-                                <Link as={RouterLink} to={`/`}>
-                                    <Image
-                                        w={`60%`}
-                                        cursor={`pointer`}
-                                        src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png`}
-                                        alt="Productize"
-                                    />
-                                </Link>
-                            ) : (
+                            {!isAuth && (
                                 <>
                                     <Link as={RouterLink} to={`/auth/login`}>
                                         <SharedButton

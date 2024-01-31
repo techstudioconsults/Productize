@@ -123,16 +123,18 @@ export const CustomerTable = ({ draft, live, deleted, tableData }: tableProps) =
                 </Table>
             </TableContainer>
             {/* TABLE PAGINATION */}
-            <Flex mt={4} color={`grey.400`} alignItems={`center`} justifyContent={`space-between`}>
-                <Box display={{ base: `none`, md: `initial` }}>
-                    <Text>10 Entries per page </Text>
-                </Box>
-                <Box display={{ base: `none`, md: `initial` }}>
-                    <Text>
-                        Page {paginate?.meta?.current_page} of {paginate?.meta?.last_page}
-                    </Text>
-                </Box>
-                <Stack direction={`row`}>
+            <Flex mt={4} gap={5} color={`grey.400`} alignItems={`center`} justifyContent={`space-between`} flexDir={{ base: `column-reverse`, lg: `row` }}>
+                <Flex alignItems={`center`} justifyContent={`space-between`} flexDir={{ base: `column`, lg: `row` }} gap={{ lg: 60 }}>
+                    <Box>
+                        <Text>10 Entries per page </Text>
+                    </Box>
+                    <Box>
+                        <Text>
+                            Page {paginate?.meta?.current_page} of {paginate?.meta?.last_page}
+                        </Text>
+                    </Box>
+                </Flex>
+                <Stack w={{ base: `100%`, lg: `initial` }} justifyContent={`space-between`} direction={`row`}>
                     <SharedButton
                         btnExtras={{
                             leftIcon: `material-symbols:chevron-left`,

@@ -10,11 +10,10 @@ import { AccordionComponent } from "../../components/Accordion";
 import { SharedSection } from "../../components/section-layout/SharedSection";
 
 export const Pricing = () => {
-    const isPremium = useSetPaymentPlan();
     return (
         <DefaultLayout>
             <Hero
-                height={{ base: `30rem`, xl: "60rem" }}
+                height={{ base: `fit-content`, xl: "60rem" }}
                 bgImg={"https://res.cloudinary.com/kingsleysolomon/image/upload/v1693817846/productize/Lines_pqnlnq.png"}
                 bgColor={"yellow.100"}
             >
@@ -40,11 +39,11 @@ export const Pricing = () => {
                             />
                         </Link>
                     </Container>
-                    <Flex display={{ base: `none`, xl: `flex` }} flexDir={{ base: `column`, xl: `row` }} gap={10} mt={`7rem`}>
+                    <Flex flexDir={{ base: `column`, lg: `row` }} p={5} gap={10} mt={`7rem`} alignItems={`center`}>
                         <FreePricingCard
                             cardProps={{
                                 bgColor: `purple.100`,
-                                width: { base: `100%`, xl: `25rem` },
+                                width: { base: `100%`, sm: `25rem` },
                                 height: `556px`,
                                 borderRadius: `8px`,
                             }}
@@ -64,7 +63,7 @@ export const Pricing = () => {
                         <PremiumPricingCard
                             cardProps={{
                                 bgColor: `purple.300`,
-                                width: { base: `100%`, xl: `25rem` },
+                                width: { base: `100%`, sm: `25rem` },
                                 height: `556px`,
                                 borderRadius: `8px`,
                             }}
@@ -86,7 +85,7 @@ export const Pricing = () => {
             </Hero>
             <SectionLayout height={"fit-content"} bgColor={"white"} bgImg={""}>
                 <Container maxW={`70rem`} pt={{ base: `5rem`, xl: `15rem` }} pb={{ base: `5rem`, xl: `15rem` }} px={{ base: 4, xl: 0 }}>
-                    <Flex gap={20} flexDir={{ base: `column`, xl: `row` }} alignItems={`flex-start`}>
+                    <Flex gap={20} flexDir={{ base: `column`, xl: `row` }} alignItems={{ base: `center`, xl: `flex-start` }}>
                         <Box textAlign={{ base: `center`, xl: `initial` }} flex={1}>
                             <Text as={`h2`} lineHeight={`shorter`}>
                                 Frequently asked questions

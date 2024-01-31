@@ -3,8 +3,8 @@ import { Icon } from "@iconify/react";
 
 const BankCard = ({ account, src }) => {
     return (
-        <Card w={{ base: `fit-content` }} borderRadius={`8px`} variant={`outline`} p={5} bgColor={`purple.100`}>
-            <Flex gap={16}>
+        <Card w={{ base: `100%` }} borderRadius={`8px`} variant={`outline`} p={5} bgColor={`purple.100`}>
+            <Flex justifyContent={`space-between`}>
                 <Flex alignItems={`center`} gap={2}>
                     <Avatar name={account?.bank_name} size={`sm`} src={src} />
                     <Text fontWeight={600}>{account.bank_name}</Text>

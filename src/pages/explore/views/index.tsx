@@ -7,10 +7,10 @@ import { ExploreLayout } from "../../../layouts/ExploreLayout";
 export const Explore = () => {
     return (
         <ExploreLayout>
-            <Container p={{ base: 4, lg: 0 }} maxW={`70rem`} my={{ base: `3rem`, lg: `7rem` }}>
+            <Container px={{ base: 4, sm: 8, xl: 0 }} maxW={`70rem`} my={{ base: `3rem`, lg: `7rem` }}>
                 <ExploreBanner />
             </Container>
-            <Container my={{ base: `3rem`, lg: `7rem` }} p={{ base: 4, lg: 0 }} maxW={`70rem`}>
+            <Container my={{ base: `3rem`, lg: `7rem` }} px={{ base: 4, sm: 8, xl: 0 }} maxW={`70rem`}>
                 <ExploreFeatures title={`Featured`} />
             </Container>
             {/* <Container my={{ base: `3rem`, lg: `7rem` }} p={{ base: 4, lg: 0 }} maxW={`70rem`}>

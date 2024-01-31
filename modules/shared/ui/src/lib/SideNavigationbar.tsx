@@ -12,17 +12,22 @@ import {
     DrawerCloseButton,
     DrawerFooter,
     Stack,
+    Flex,
 } from "@chakra-ui/react";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import { SharedButton } from "./SharedButton";
+import { useTokenExists } from "../../../hooks/src/lib/useToken";
+import { AvatarComp } from "./Avatar";
 
 interface sidebarProps {
     links?: ReactNode;
 }
 
 export const Sidenav = ({ links }: sidebarProps) => {
+    const isAuth = useTokenExists();
     const [menuColor, setMenuColor] = useState(`white`);
+    const [bgColor, setBgColor] = useState(`white`);
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { pathname } = useLocation();
 
@@ -30,9 +35,19 @@ export const Sidenav = ({ links }: sidebarProps) => {
         switch (pathname) {
             case `/`:
                 setMenuColor(`grey.100`);
+                setBgColor(`purple.200`);
+                break;
+            case `/features`:
+                setMenuColor(`coral.300`);
+                setBgColor(`coral.100`);
+                break;
+            case `/pricing`:
+                setMenuColor(`yellow.300`);
+                setBgColor(`yellow.100`);
                 break;
             default:
-                setMenuColor(`yellow.300`);
+                setMenuColor(`black.300`);
+                setBgColor(`white`);
                 break;
         }
     }, [pathname]);
@@ -42,15 +57,21 @@ export const Sidenav = ({ links }: sidebarProps) => {
 
     return (
         <>
-            <Center color={menuColor} cursor={`pointer`} display={{ xl: `none` }}>
+            <Center color={menuColor} cursor={`pointer`} display={{ lg: `none` }}>
                 <Icon fontSize={`2rem`} onClick={onOpen} icon={`ci:hamburger-md`} />
             </Center>
 
-            <Drawer size={{ base: `sm` }} isOpen={isOpen} placement="left" onClose={onClose}>
+            <Drawer size={{ base: `xs` }} isOpen={isOpen} placement="left" onClose={onClose}>
                 <DrawerOverlay />
-                <DrawerContent px={10}>
-                    <DrawerCloseButton my={2} />
-                    <DrawerHeader py={5}>
+                <DrawerContent
+                    boxShadow={`3px 0 3px #000`}
+                    bgSize={`50%`}
+                    bgImage={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951013/productize/Lines_t1t27k_gg0jau.png`}
+                    bgColor={bgColor}
+                    px={10}
+                >
+                    {/* <DrawerCloseButton my={2} /> */}
+                    <DrawerHeader p={0} py={5}>
                         <Link as={RouterLink} to={`/`}>
                             <Image
                                 w={`60%`}
@@ -60,32 +81,36 @@ export const Sidenav = ({ links }: sidebarProps) => {
                             />
                         </Link>
                     </DrawerHeader>
-                    <DrawerBody py={10}>{links}</DrawerBody>
+                    <DrawerBody p={0}>{links}</DrawerBody>
                     <DrawerFooter>
-                        <Stack w={`100%`} gap={4}>
-                            <Link as={RouterLink} to={`/auth/login`}>
-                                <SharedButton
-                                    fontSize={{ base: `sm`, md: `md` }}
-                                    text={"Login"}
-                                    width={"100%"}
-                                    height={"48px"}
-                                    bgColor={"transparent"}
-                                    textColor={"grey"}
-                                    borderRadius={"4px"}
-                                />
-                            </Link>
-                            <Link as={RouterLink} to={`/auth`}>
-                                <SharedButton
-                                    fontSize={{ base: `sm`, md: `md` }}
-                                    text={"Get Started"}
-                                    width={"100%"}
-                                    height={"48px"}
-                                    bgColor={"yellow.200"}
-                                    textColor={"white"}
-                                    borderRadius={"4px"}
-                                />
-                            </Link>
-                        </Stack>
+                        <Flex gap={5} w={`100%`} flexDir={`column`}>
+                            {!isAuth && (
+                                <>
+                                    <Link as={RouterLink} to={`/auth/login`}>
+                                        <SharedButton
+                                            fontSize={{ base: `sm`, md: `md` }}
+                                            text={"Login"}
+                                            width={"100%"}
+                                            height={"48px"}
+                                            bgColor={"transparent"}
+                                            textColor={"black"}
+                                            borderRadius={"4px"}
+                                        />
+                                    </Link>
+                                    <Link as={RouterLink} to={`/auth`}>
+                                        <SharedButton
+                                            fontSize={{ base: `sm`, md: `md` }}
+                                            text={"Get Started"}
+                                            width={"100%"}
+                                            height={"48px"}
+                                            bgColor={"yellow.200"}
+                                            textColor={"black"}
+                                            borderRadius={"4px"}
+                                        />
+                                    </Link>
+                                </>
+                            )}
+                        </Flex>
                     </DrawerFooter>
                 </DrawerContent>
             </Drawer>

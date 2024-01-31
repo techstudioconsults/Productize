@@ -1,14 +1,14 @@
-import { Box, Center, Container, Flex, Image, Link, Stack, Text } from "@chakra-ui/react";
-import { Icon } from "@iconify/react";
-import { Icon as IconSet, PaymentStatusTag } from "@productize-v1.0.0/modules/shared/ui";
-import { NavLink, Outlet, Link as ReactLink } from "react-router-dom";
-import style from "./navbar.module.scss";
-import { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
+import { useLinks } from "./links";
 import { useGetUserMutation } from "@productize-v1.0.0/modules/shared/redux";
-import { useLinks } from "../utils/links";
-import { DashboardNavbar } from "../DashboardNavbar";
+import { Icon } from "@iconify/react";
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { Icon as IconSet } from "@productize-v1.0.0/modules/shared/ui";
+import { NavLink } from "react-router-dom";
+import { Box, Center, Flex, Stack, Text } from "@chakra-ui/react";
+import style from "../layouts/navbar.module.scss";
 
-export const DashboardLayout = () => {
+export const DashboardLinks = () => {
     const { links1, links2, links3 } = useLinks();
     const [getUser] = useGetUserMutation();
 
@@ -108,62 +108,33 @@ export const DashboardLayout = () => {
     useEffect(() => {
         setUser();
     }, [setUser]);
-
     return (
-        <Flex>
-            <Flex
-                overflow={`auto`}
-                pos={`sticky`}
-                top={0}
-                flexDir={`column`}
-                p={4}
-                height={`100vh`}
-                w={`18rem`}
-                border={`1px solid #01010120`}
-                display={{ base: `none`, xl: `flex` }}
-                gap={10}
-                className="hide_scrollbar"
-            >
-                <Flex justifyContent={`center`} alignItems={`center`} gap={2} minH={`40px`}>
-                    <Link as={ReactLink} to={`/`}>
-                        <Image
-                            alt="logo"
-                            src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png`}
-                        />
-                    </Link>
-                    <PaymentStatusTag />
-                </Flex>
-                <Stack p={0}>
-                    <NavLink state={`Home`} className={({ isActive }) => (isActive ? style.active : style.inactive)} to={`home`}>
-                        <Flex
-                            borderRadius={`8px`}
-                            width={`195px`}
-                            py={`12px`}
-                            px={`16px`}
-                            fontSize={`1.5rem`}
-                            alignItems={`center`}
-                            justifyContent={`space-between`}
-                            w={`100%`}
-                        >
-                            <Flex gap={2} alignItems={`center`}>
-                                {/* <IconSet icon={`ph:squares-four-fill`} name={`menu`} size={`24px`} /> */}
-                                <Icon icon={`ph:squares-four-fill`} />
-                                <Text>Home</Text>
-                            </Flex>
+        <Flex overflow={`auto`} flexDir={`column`} gap={10} className="hide_scrollbar" p={2}>
+            <Stack p={0}>
+                <NavLink state={`Home`} className={({ isActive }) => (isActive ? style.active : style.inactive)} to={`home`}>
+                    <Flex
+                        borderRadius={`8px`}
+                        width={`195px`}
+                        py={`12px`}
+                        px={`16px`}
+                        fontSize={`1.5rem`}
+                        alignItems={`center`}
+                        justifyContent={`space-between`}
+                        w={`100%`}
+                    >
+                        <Flex gap={2} alignItems={`center`}>
+                            {/* <IconSet icon={`ph:squares-four-fill`} name={`menu`} size={`24px`} /> */}
+                            <Icon icon={`ph:squares-four-fill`} />
+                            <Text>Home</Text>
                         </Flex>
-                    </NavLink>
-                    {navLink1}
-                </Stack>
-                <Stack p={0}>{navLink2}</Stack>
-                <Stack p={0}>{navLink3}</Stack>
-            </Flex>
-
-            <Flex py={4} px={{ base: 4, md: 8 }} flexDir={`column`} w={`100%`}>
-                <DashboardNavbar />
-                <Container p={0} maxW={1220}>
-                    <Outlet />
-                </Container>
-            </Flex>
+                    </Flex>
+                </NavLink>
+                {navLink1}
+            </Stack>
+            <Stack p={0}>{navLink2}</Stack>
+            <Stack p={0}>{navLink3}</Stack>
         </Flex>
     );
 };
+
+export default DashboardLinks;

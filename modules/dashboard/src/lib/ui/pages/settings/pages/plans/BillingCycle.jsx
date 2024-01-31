@@ -55,7 +55,7 @@ export const BillingCycle = () => {
                 <Text as={`h6`}>Billing Cycle</Text>
             </Flex>
             {/* billing summary */}
-            <SimpleGrid columns={{ base: 1, lg: 3 }} spacing={5} my={5}>
+            <SimpleGrid columns={{ base: 1, sm: 2, lg: 3 }} spacing={5} my={5}>
                 <Skeleton isLoaded={!billingHistoryStatus.isLoading}>
                     <Box>
                         <Card variant={`outline`} p={5} gap={3}>

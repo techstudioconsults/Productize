@@ -132,7 +132,7 @@ export const SetNewProductForm = () => {
     return (
         <FormControl>
             {/* grid 1 */}
-            <SimpleGrid my={8} gap={4} columns={2}>
+            <SimpleGrid my={8} gap={4} columns={{ base: 1, sm: 2 }}>
                 <FormControl>
                     <FormLabel color={`purple.300`} fontWeight={600}>
                         Product Title
@@ -200,12 +200,14 @@ export const SetNewProductForm = () => {
                 </FormControl>
                 {/* row 2 */}
                 <Box mt={`5rem`} mb={8}>
-                    <Flex alignItems={`center`} justifyContent={`space-between`}>
+                    <Flex alignItems={`flex-end`} justifyContent={`space-between`} gap={5}>
                         <Box>
                             <Text color={`purple.300`} fontWeight={600}>
                                 Product
                             </Text>
-                            <FormHelperText color={`grey.400`}>Upload the actual product you want to sell. Upload the product file</FormHelperText>
+                            <FormHelperText fontSize={{ base: `xs`, md: `sm` }} color={`grey.400`}>
+                                Upload the actual product you want to sell. Upload the product file
+                            </FormHelperText>
                             <ErrorMessage
                                 errors={errors}
                                 name="data"
@@ -272,12 +274,12 @@ export const SetNewProductForm = () => {
                 </Box>
                 {/* row 3 */}
                 <Box my={8}>
-                    <Flex alignItems={`center`} justifyContent={`space-between`}>
+                    <Flex alignItems={`flex-end`} justifyContent={`space-between`} gap={5}>
                         <Box>
                             <Text color={`purple.300`} fontWeight={600}>
                                 Cover photo
                             </Text>
-                            <FormHelperText color={`grey.400`}>
+                            <FormHelperText fontSize={{ base: `xs`, md: `sm` }} color={`grey.400`}>
                                 Upload the photos to promote your product, a maximum of 4 photos. Images should be horizontal, at least 1280x720px, and 72 DPI
                                 (dots per inch)
                             </FormHelperText>
@@ -340,7 +342,9 @@ export const SetNewProductForm = () => {
                         <Text color={`purple.300`} fontWeight={600}>
                             Thumbnail
                         </Text>
-                        <FormHelperText color={`grey.400`}>This image will appear in the explore page, upload a square size of 2mb.</FormHelperText>
+                        <FormHelperText color={`grey.400`} fontSize={{ base: `xs`, md: `sm` }}>
+                            This image will appear in the explore page, upload a square size of 2mb.
+                        </FormHelperText>
                         <Text className={`tiny-text`} color={`red.200`}>
                             {errors?.thumbnail?.message}
                         </Text>
@@ -387,13 +391,15 @@ export const SetNewProductForm = () => {
                 </Box>
             </SimpleGrid>
             {/* grid 4 */}
-            <SimpleGrid my={8} columns={{ base: 1, md: 2 }}>
+            <SimpleGrid my={8} columns={{ base: 1, lg: 2 }}>
                 <Box>
                     <>
                         <Text color={`purple.300`} fontWeight={600}>
                             Highlights
                         </Text>
-                        <FormHelperText color={`grey.400`}>Write key features that highlight your product.</FormHelperText>
+                        <FormHelperText fontSize={{ base: `xs`, md: `sm` }} color={`grey.400`}>
+                            Write key features that highlight your product.
+                        </FormHelperText>
                     </>
                     <Stack mt={4} gap={4}>
                         <HighLightField name={`highlight_1`} />
@@ -418,12 +424,12 @@ export const SetNewProductForm = () => {
                 </Box>
             </SimpleGrid>
             {/* grid 5 */}
-            <SimpleGrid my={8} columns={{ base: 1, md: 2 }}>
+            <SimpleGrid my={8} columns={{ base: 1, lg: 2 }}>
                 <Box>
                     <Text color={`purple.300`} fontWeight={600}>
                         Tags
                     </Text>
-                    <FormHelperText mb={2} color={`grey.400`}>
+                    <FormHelperText fontSize={{ base: `xs`, md: `sm` }} mb={2} color={`grey.400`}>
                         Select tags you want your product to be categorised under.
                     </FormHelperText>
                     <FormControl>
@@ -506,7 +512,7 @@ const ProductContentDisplay = ({ file }) => {
 };
 const CoverPhotoThumbnailActiveContent = ({ file }) => {
     return (
-        <Card w={`368px`} h={`200px`} borderRadius={`5px`} variant={`outline`} border={`5px solid #F3F2FB`} overflow={`hidden`}>
+        <Card maxW={`368px`} w={`100%`} minH={`200px`} h={`100%`} borderRadius={`5px`} variant={`outline`} border={`5px solid #F3F2FB`} overflow={`hidden`}>
             <Image w={`100%`} h={`100%`} objectFit={`contain`} src={URL.createObjectURL(file)} alt={`img`} />
         </Card>
     );

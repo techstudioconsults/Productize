@@ -289,7 +289,7 @@ export const ProfileForm = () => {
                                     {/* <Input {...register('logo')} type="file" size={`lg`} /> */}
                                 </Center>
                             </Box>
-                            <Text className="small-text" color={`grey.400`}>
+                            <Text fontSize={{ base: `xs`, lg: `sm` }} className="small-text" color={`grey.400`}>
                                 Your logo will be visible next to your name in your Productize profile and product pages. Your image should be at least
                                 200x200px and must be in JPG or PNG format.
                             </Text>
@@ -308,7 +308,7 @@ export const ProfileForm = () => {
                         Social Links
                     </Text>
                 </GridItem>
-                <GridItem colSpan={{ base: 12, md: 5 }}>
+                <GridItem colSpan={{ base: 12, md: 7, xl: 5 }}>
                     <Box mb={4}>
                         <FormControl>
                             <FormLabel color={`purple.300`} fontWeight={600}>

@@ -46,8 +46,8 @@ const theme = extendTheme({
     md: '768px', //768px
     lg: '992px', //960px
     xl: '1200px', //1200px
-    xxl: '1400px', //1400
-    '2xl': '1440px', //1440
+    xxl: '1400px', //1400px
+    '2xl': '1440px', //1440px
   },
   fonts: {
     heading: 'Neurial Grotesk, sans-serif',

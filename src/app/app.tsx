@@ -60,7 +60,7 @@ export function App() {
         };
 
         // Set up a media query listener
-        const mediaQueryList = window.matchMedia("(min-width: 1200px)");
+        const mediaQueryList = window.matchMedia("(min-width: 992px)");
         mediaQueryList.addListener(handleMediaChange);
         handleMediaChange(mediaQueryList);
         return () => {
@@ -68,26 +68,26 @@ export function App() {
         };
     }, [getTags]);
 
-    if (location.pathname.includes("dashboard")) {
-        if (!isDesktop) {
-            return (
-                <Center p={10} h={`100vh`} flexDir={`column`}>
-                    <Link my={5} as={RouterLink} to={`/`}>
-                        <Image
-                            alt="logo"
-                            src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png`}
-                        />
-                    </Link>
-                    <Text color={`purple.200`} fontWeight={600} as={`h4`}>
-                        Mobile View detected...
-                    </Text>
-                    <Text fontSize={`xs`} textAlign={`center`}>
-                        cannot open dashboard on a mobile device. please use a desktop or a screen with a min size of 1200px
-                    </Text>
-                </Center>
-            );
-        }
-    }
+    // if (location.pathname.includes("dashboard")) {
+    //     if (!isDesktop) {
+    //         return (
+    //             <Center p={10} h={`100vh`} flexDir={`column`}>
+    //                 <Link my={5} as={RouterLink} to={`/`}>
+    //                     <Image
+    //                         alt="logo"
+    //                         src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png`}
+    //                     />
+    //                 </Link>
+    //                 <Text color={`purple.200`} fontWeight={600} as={`h4`}>
+    //                     Mobile View detected...
+    //                 </Text>
+    //                 <Text fontSize={`xs`} textAlign={`center`}>
+    //                     cannot open dashboard on a mobile device. please use a desktop or a screen with a min size of 1200px
+    //                 </Text>
+    //             </Center>
+    //         );
+    //     }
+    // }
 
     return (
         <Suspense
@@ -125,15 +125,11 @@ export function App() {
                     <Route path="orders" element={<Orders />} />
                     <Route path="orders/:orderID" element={<DashboardOrderDetails />} />
 
-                    <Route path="payouts" element={<Payouts />} />
-                    {/* <Route path="payouts/:payoutid" element={<PayoutDetails />} />
-                    <Route path="payouts/:payoutid/withdraw-earnings" element={<WithdrawalEarnings />} /> */}
-
-                    <Route path="analytics" element={<Analytics />} />
-
                     <Route path="customers" element={<Customers />} />
                     <Route path="customers/:customerID" element={<CustomersDetails />} />
 
+                    <Route path="payouts" element={<Payouts />} />
+                    <Route path="analytics" element={<Analytics />} />
                     <Route path="profile/:userID" element={<Profile />} />
                     <Route path="help" element={<Help />} />
 

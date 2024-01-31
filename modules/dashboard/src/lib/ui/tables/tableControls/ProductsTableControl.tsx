@@ -126,20 +126,20 @@ export const ProductsTableControl = ({ showRefreshBtn }: controlsProp) => {
                         style={{ width: `100%` }}
                     />
                 </Box>
-                <Box w={`100%`}>
+                <Flex w={{ base: `100%`, md: `fit-content` }} gap={4} alignItems={{ base: `flex-start`, md: `center` }}>
                     <SelectPicker searchable={false} onSelect={handleStatusChange} style={{ width: `100%` }} placeholder={`Status`} size="lg" data={data} />
-                </Box>
-                <IconButton
-                    color={`purple.200`}
-                    bgColor={`purple.100`}
-                    isLoading={getAllProductsStatus.isLoading}
-                    spinner={<SpinnerComponentSmall size="sm" />}
-                    onClick={filterTable}
-                    fontSize={`xl`}
-                    // variant={`outline`}
-                    aria-label="Filter table"
-                    icon={<Icon icon={`system-uicons:filtering`} />}
-                />
+                    <IconButton
+                        color={`purple.200`}
+                        bgColor={`purple.100`}
+                        isLoading={getAllProductsStatus.isLoading}
+                        spinner={<SpinnerComponentSmall size="sm" />}
+                        onClick={filterTable}
+                        fontSize={`xl`}
+                        // variant={`outline`}
+                        aria-label="Filter table"
+                        icon={<Icon icon={`system-uicons:filtering`} />}
+                    />
+                </Flex>
             </Flex>
             {/* dots and buttons */}
             <Box>

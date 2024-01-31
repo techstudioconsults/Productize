@@ -1,13 +1,17 @@
 import { Box, Center, Container, Flex, Image, Link } from "@chakra-ui/react";
 import { SearchComp, AvatarComp, SharedButton, Sidenav, Cart } from "@productize-v1.0.0/modules/shared/ui";
 import { Link as RouterLink } from "react-router-dom";
+import Links from "../../components/navbar/NavigationLinks";
 
 const ProductNavbar = ({ isAuth }: any) => {
     return (
         <Box bg={`grey.100`} py={5} borderBottom={`1px solid grey.300`}>
             <Container maxW={`70rem`}>
                 <Box as="nav" display="flex" justifyContent="space-between" alignItems="center">
-                    <Center>
+                    <Center gap={4}>
+                        <Box>
+                            <Sidenav links={<Links isMobile={true} />} />
+                        </Box>
                         <Link as={RouterLink} to={`/`}>
                             <Image
                                 alt="logo"
@@ -16,12 +20,14 @@ const ProductNavbar = ({ isAuth }: any) => {
                         </Link>
                     </Center>
 
-                    <Flex justify={{ lg: "center" }} align={{ lg: "center" }} gap="1.5rem">
+                    <Flex justify={{ lg: "center" }} alignItems={"center"} gap="1.5rem">
                         <Box display={{ base: `none`, md: `block` }}>
                             <SearchComp size="lg" width={`25rem`} color={`grey.200`} />
                         </Box>
-                        <Cart />
-                        <Box display={{ base: `none`, xl: `initial` }}>
+                        <Box>
+                            <Cart />
+                        </Box>
+                        <Box display={{ base: `none`, lg: `initial` }}>
                             {isAuth ? (
                                 <AvatarComp />
                             ) : (
@@ -38,8 +44,10 @@ const ProductNavbar = ({ isAuth }: any) => {
                                 </Link>
                             )}
                         </Box>
+                        <Box display={{ lg: `none` }}>
+                            <AvatarComp />
+                        </Box>
                     </Flex>
-                    <Sidenav />
                 </Box>
             </Container>
         </Box>

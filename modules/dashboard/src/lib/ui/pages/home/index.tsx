@@ -2,6 +2,7 @@ import React from "react";
 import FirstSalePage from "./premium/FirstSalePage";
 import OnBoardingPage from "./free/OnBoardingPage";
 import ActiveUserPage from "./premium/ActiveUserPage";
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { useStepGuide } from "@productize-v1.0.0/modules/shared/hooks";
 
 export const Home = () => {

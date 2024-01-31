@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import React from "react";
 import {
     Box,
@@ -83,7 +84,7 @@ const OnBoardingPage = () => {
                     </Text>
                     <Text color={`grey.400`}>Use this personalized guide to get your store up and running.</Text>
                 </Box>
-                <Box>
+                <Box my={{ base: 4, lg: `initial` }}>
                     <ProgressBar />
                 </Box>
             </Flex>

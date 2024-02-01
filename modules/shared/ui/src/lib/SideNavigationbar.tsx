@@ -13,12 +13,12 @@ import {
     DrawerFooter,
     Stack,
     Flex,
+    Text,
 } from "@chakra-ui/react";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import { SharedButton } from "./SharedButton";
 import { useTokenExists } from "../../../hooks/src/lib/useToken";
-import { AvatarComp } from "./Avatar";
 
 interface sidebarProps {
     links?: ReactNode;
@@ -112,6 +112,9 @@ export const Sidenav = ({ links }: sidebarProps) => {
                             )}
                         </Flex>
                     </DrawerFooter>
+                    <Text color={menuColor} py={2} fontSize={`xs`} textAlign={`center`}>
+                        &copy;{new Date().getFullYear()}
+                    </Text>
                 </DrawerContent>
             </Drawer>
         </>

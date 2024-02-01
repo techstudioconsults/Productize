@@ -1,10 +1,12 @@
-import { OrderedList, ListItem, Menu, MenuButton, Button, MenuList, MenuItem, Text, Flex, Center } from "@chakra-ui/react";
+import { OrderedList, ListItem, Menu, MenuButton, Button, MenuList, MenuItem, Text, Flex, Center, Link } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
 import style from "./scss/navbar.module.scss";
 import { links } from "./utils/links";
 import { Icon } from "@iconify/react";
 import { useSelector } from "react-redux";
 import { selectTags } from "@productize-v1.0.0/modules/shared/redux";
+
+// testing links
 
 type SubLink = {
     id: number;
@@ -86,7 +88,7 @@ const Links = ({ isScroll, isMobile, linkColor }: NavbarProps) => {
             );
         } else {
             return (
-                <Flex key={link.id} my={5} py={5} justifyContent={`center`}>
+                <Flex color={linkColor} key={link.id} my={5} py={5} justifyContent={`center`}>
                     <NavLink to={link.path} className={({ isActive }) => (isActive ? style["active"] : style["inactive"])}>
                         <ListItem fontWeight={600}>{link.name}</ListItem>
                     </NavLink>

@@ -27,7 +27,7 @@ export const Pricing = () => {
                         </Text>
                     </Container>
                     <Container display={{ xl: `none` }} w={`fit-content`}>
-                        <Link to={``}>
+                        <Link to={`/auth`}>
                             <SharedButton
                                 fontSize={{ base: `sm`, md: `md` }}
                                 text={"Get Started"}

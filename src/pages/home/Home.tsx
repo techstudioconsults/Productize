@@ -148,7 +148,7 @@ export const Home = () => {
                 </Container>
             </SectionLayout>
             <DualSectionLayout
-                height={{ base: `20rem`, lg: `40rem` }}
+                height={{ base: `30rem`, lg: `40rem` }}
                 img={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951011/productize/Layer_1_3_hn7gd9_kdxcwg.png`}
                 flexDirection={{ base: `column`, xl: `row` }}
                 textSectionBgColor={"purple.300"}

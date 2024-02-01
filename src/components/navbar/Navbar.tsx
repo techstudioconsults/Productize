@@ -54,7 +54,7 @@ export const Navbar = ({ isAuth }: any) => {
         <Box pos={`fixed`} top={0} w={`100%`} zIndex={999} backdropFilter={`blur(5px)`} bgColor={isScroll ? bgColor : ``}>
             <Flex className="cc-container" justifyContent={`space-between`} alignItems={`center`} height={`5rem`} paddingInline={{ base: 4, xl: 0 }}>
                 <Center gap={4}>
-                    <Sidenav links={<Links isMobile={true} />} />
+                    <Sidenav links={<Links linkColor={linkColor} isMobile={true} />} />
                     <Link as={RouterLink} to={`/`}>
                         <Image
                             alt="logo"

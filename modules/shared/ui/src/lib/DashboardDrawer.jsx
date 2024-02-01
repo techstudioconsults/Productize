@@ -1,4 +1,4 @@
-import  {  useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
     Drawer,
     DrawerBody,
@@ -11,7 +11,6 @@ import {
     Center,
     DrawerCloseButton,
     DrawerFooter,
-
     Flex,
 } from "@chakra-ui/react";
 import { Link as RouterLink, useLocation } from "react-router-dom";
@@ -24,25 +23,25 @@ export const DashboardDrawer = ({ links }) => {
     const isAuth = useTokenExists();
     const [menuColor, setMenuColor] = useState(`white`);
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const { pathname } = useLocation();
+    // const { pathname } = useLocation();
 
-    const switchMenuColor = useCallback(() => {
-        switch (pathname) {
-            case `/`:
-                setMenuColor(`grey.100`);
-                break;
-            default:
-                setMenuColor(`yellow.300`);
-                break;
-        }
-    }, [pathname]);
-    useEffect(() => {
-        switchMenuColor();
-    }, [switchMenuColor]);
+    // const switchMenuColor = useCallback(() => {
+    //     switch (pathname) {
+    //         case `/`:
+    //             setMenuColor(`grey.100`);
+    //             break;
+    //         default:
+    //             setMenuColor(`yellow.300`);
+    //             break;
+    //     }
+    // }, [pathname]);
+    // useEffect(() => {
+    //     switchMenuColor();
+    // }, [switchMenuColor]);
 
     return (
         <>
-            <Center color={menuColor} cursor={`pointer`} display={{ xl: `none` }}>
+            <Center color={`grey.600`} cursor={`pointer`} display={{ xl: `none` }}>
                 <Icon fontSize={`2rem`} onClick={onOpen} icon={`ci:hamburger-md`} />
             </Center>
 
@@ -62,7 +61,7 @@ export const DashboardDrawer = ({ links }) => {
                         </Flex>
                     </DrawerHeader>
                     <DrawerBody p={0}>
-                        <DashboardLinks />
+                        <DashboardLinks close={onClose} />
                     </DrawerBody>
                     {/* <DrawerFooter></DrawerFooter> */}
                 </DrawerContent>
@@ -70,4 +69,3 @@ export const DashboardDrawer = ({ links }) => {
         </>
     );
 };
-

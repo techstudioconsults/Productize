@@ -1,7 +1,7 @@
 import { Box, Center, Container, Flex, Image, Link } from "@chakra-ui/react";
 import { SearchComp, AvatarComp, SharedButton, Sidenav, Cart } from "@productize-v1.0.0/modules/shared/ui";
 import { Link as RouterLink } from "react-router-dom";
-import Links from "../../components/navbar/NavigationLinks";
+import Links from "../../../../components/navbar/NavigationLinks";
 
 const ProductNavbar = ({ isAuth }: any) => {
     return (

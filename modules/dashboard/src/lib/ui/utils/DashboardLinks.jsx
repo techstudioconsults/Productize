@@ -8,13 +8,19 @@ import { NavLink } from "react-router-dom";
 import { Box, Center, Flex, Stack, Text } from "@chakra-ui/react";
 import style from "../layouts/navbar.module.scss";
 
-export const DashboardLinks = () => {
+export const DashboardLinks = ({ close }) => {
     const { links1, links2, links3 } = useLinks();
     const [getUser] = useGetUserMutation();
 
     const navLink1 = links1?.map((link) => {
         return (
-            <NavLink state={link?.name} className={({ isActive }) => (isActive ? style.active : style.inactive)} to={link?.path} key={link?.id}>
+            <NavLink
+                onClick={() => close()}
+                state={link?.name}
+                className={({ isActive }) => (isActive ? style.active : style.inactive)}
+                to={link?.path}
+                key={link?.id}
+            >
                 <Flex
                     borderRadius={`8px`}
                     width={`195px`}
@@ -52,7 +58,13 @@ export const DashboardLinks = () => {
     });
     const navLink2 = links2?.map((link) => {
         return (
-            <NavLink state={link?.name} className={({ isActive }) => (isActive ? style.active : style.inactive)} to={link.path} key={link.id}>
+            <NavLink
+                onClick={() => close()}
+                state={link?.name}
+                className={({ isActive }) => (isActive ? style.active : style.inactive)}
+                to={link.path}
+                key={link.id}
+            >
                 <Flex
                     borderRadius={`8px`}
                     width={`195px`}
@@ -77,7 +89,13 @@ export const DashboardLinks = () => {
     });
     const navLink3 = links3?.map((link) => {
         return (
-            <NavLink state={link?.name} className={({ isActive }) => (isActive ? style.active : style.inactive)} to={link.path} key={link.id}>
+            <NavLink
+                onClick={() => close()}
+                state={link?.name}
+                className={({ isActive }) => (isActive ? style.active : style.inactive)}
+                to={link.path}
+                key={link.id}
+            >
                 <Flex
                     borderRadius={`8px`}
                     width={`195px`}
@@ -111,7 +129,7 @@ export const DashboardLinks = () => {
     return (
         <Flex overflow={`auto`} flexDir={`column`} gap={10} className="hide_scrollbar" p={2}>
             <Stack p={0}>
-                <NavLink state={`Home`} className={({ isActive }) => (isActive ? style.active : style.inactive)} to={`home`}>
+                <NavLink onClick={() => close()} state={`Home`} className={({ isActive }) => (isActive ? style.active : style.inactive)} to={`home`}>
                     <Flex
                         borderRadius={`8px`}
                         width={`195px`}

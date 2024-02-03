@@ -1,13 +1,13 @@
-import { Box, Center, Flex, Text } from "@chakra-ui/react";
+import {Box, Center, Flex, Text} from "@chakra-ui/react";
 // eslint-disable-next-line @nx/enforce-module-boundaries
-import { SearchComp, AvatarComp, Icon, DashboardDrawer } from "@productize-v1.0.0/modules/shared/ui";
-import { useCallback, useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import {SearchComp, AvatarComp, Icon, DashboardDrawer} from "@productize-v1.0.0/modules/shared/ui";
+import {useCallback, useEffect, useState} from "react";
+import {useLocation} from "react-router-dom";
 import notification from "@icons/Property_2_Notifications_1_w4v7g4.svg";
 
 export const DashboardNavbar = () => {
     const [header, setHeader] = useState("");
-    const { state } = useLocation();
+    const {state} = useLocation();
 
     const switchHeader = useCallback(() => {
         if (typeof state === `object`) {
@@ -25,22 +25,22 @@ export const DashboardNavbar = () => {
         <Box borderBottom={`1px solid grey.300`}>
             <Box as="nav" display="flex" justifyContent="space-between" alignItems="center">
                 <Flex alignItems={`center`} gap={4}>
-                    <DashboardDrawer links={undefined} />
+                    <DashboardDrawer links={undefined}/>
                     <Center>
                         <Text as={`h5`} color={`grey.500`} fontWeight={600}>
                             {header}
                         </Text>
                     </Center>
                 </Flex>
-                <Flex justify={{ lg: "center" }} alignItems={`center`} gap="1.5rem">
-                    <Box display={{ base: `none`, md: `block` }}>
-                        <SearchComp width={`17rem`} color={`grey.200`} />
+                <Flex justify={{lg: "center"}} alignItems={`center`} gap="1.5rem">
+                    <Box display={{base: `none`, md: `block`}}>
+                        <SearchComp width={`17rem`} color={`grey.200`}/>
                     </Box>
                     <Box>
-                        <Icon icon={notification} name={"notification"} />
+                        <Icon icon={notification} name={"notification"}/>
                     </Box>
                     <Box>
-                        <AvatarComp />
+                        <AvatarComp/>
                     </Box>
                 </Flex>
                 {/* <Sidenav /> */}

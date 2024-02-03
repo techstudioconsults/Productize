@@ -1,16 +1,16 @@
-import { Flex, Image, Center, Link, Box } from "@chakra-ui/react";
-import { Link as RouterLink, useLocation } from "react-router-dom";
+import {Flex, Image, Center, Link, Box} from "@chakra-ui/react";
+import {Link as RouterLink, useLocation} from "react-router-dom";
 
 import Links from "./NavigationLinks";
 // eslint-disable-next-line @nx/enforce-module-boundaries
-import { useCallback, useEffect, useState } from "react";
-import { AvatarComp, SharedButton, Sidenav } from "@productize-v1.0.0/modules/shared/ui";
+import {useCallback, useEffect, useState} from "react";
+import {AvatarComp, SharedButton, Sidenav} from "@productize-v1.0.0/modules/shared/ui";
 
-export const Navbar = ({ isAuth }: any) => {
+export const Navbar = ({isAuth}: any) => {
     const [isScroll, setScroll] = useState(false);
     const [linkColor, setLinkColor] = useState(`white`);
     const [bgColor, setBgColor] = useState(`white`);
-    const { pathname } = useLocation();
+    const {pathname} = useLocation();
 
     const switchMenuColor = useCallback(() => {
         switch (pathname) {
@@ -52,9 +52,9 @@ export const Navbar = ({ isAuth }: any) => {
 
     return (
         <Box pos={`fixed`} top={0} w={`100%`} zIndex={999} backdropFilter={`blur(5px)`} bgColor={isScroll ? bgColor : ``}>
-            <Flex className="cc-container" justifyContent={`space-between`} alignItems={`center`} height={`5rem`} paddingInline={{ base: 4, xl: 0 }}>
+            <Flex className="cc-container" justifyContent={`space-between`} alignItems={`center`} height={`5rem`} paddingInline={{base: 4, xl: 0}}>
                 <Center gap={4}>
-                    <Sidenav links={<Links linkColor={linkColor} isMobile={true} />} />
+                    <Sidenav links={<Links linkColor={linkColor} isMobile={true}/>}/>
                     <Link as={RouterLink} to={`/`}>
                         <Image
                             alt="logo"
@@ -62,15 +62,15 @@ export const Navbar = ({ isAuth }: any) => {
                         />
                     </Link>
                 </Center>
-                <Links linkColor={linkColor} isMobile={false} />
-                <Flex display={{ base: `none`, lg: `flex` }} gap={2}>
+                <Links linkColor={linkColor} isMobile={false}/>
+                <Flex display={{base: `none`, lg: `flex`}} gap={2}>
                     {isAuth ? (
-                        <AvatarComp linkColor={linkColor} isScroll={isScroll} />
+                        <AvatarComp linkColor={linkColor} isScroll={isScroll}/>
                     ) : (
                         <>
                             <Link as={RouterLink} to={`/auth/login`}>
                                 <SharedButton
-                                    fontSize={{ base: `sm`, md: `md` }}
+                                    fontSize={{base: `sm`, md: `md`}}
                                     text={"Login"}
                                     width={"160px"}
                                     height={"48px"}
@@ -81,7 +81,7 @@ export const Navbar = ({ isAuth }: any) => {
                             </Link>
                             <Link as={RouterLink} to={`/auth`}>
                                 <SharedButton
-                                    fontSize={{ base: `sm`, md: `md` }}
+                                    fontSize={{base: `sm`, md: `md`}}
                                     text={"Get Started"}
                                     width={"160px"}
                                     height={"48px"}
@@ -93,8 +93,22 @@ export const Navbar = ({ isAuth }: any) => {
                         </>
                     )}
                 </Flex>
-                <Box display={{ lg: `none` }}>
-                    <AvatarComp linkColor={linkColor} isScroll={isScroll} />
+                <Box display={{lg: `none`}}>
+                    {
+                        isAuth ?
+                            <AvatarComp linkColor={linkColor} isScroll={isScroll}/> :
+                            <Link as={RouterLink} to={`/auth/login`}>
+                                <SharedButton
+                                    fontSize={{base: `sm`, md: `md`}}
+                                    text={"Login"}
+                                    width={"fit-content"}
+                                    height={"48px"}
+                                    bgColor={linkColor == `grey.100` ? `grey:100` : `purple.200`}
+                                    textColor={bgColor == `purple.200` ? `purple.200` : `grey.100`}
+                                    borderRadius={"4px"}
+                                />
+                            </Link>
+                    }
                 </Box>
             </Flex>
         </Box>

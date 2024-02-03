@@ -1,12 +1,12 @@
-import { Box, Center, Flex, FormControl, FormLabel, Input, InputGroup, InputRightElement, Link, Text } from "@chakra-ui/react";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
-import { Icon } from "@iconify/react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { useSignupMutation, useGoogleAuthMutation } from "@productize-v1.0.0/modules/shared/redux";
-import { ErrorText, SharedButton } from "@productize-v1.0.0/modules/shared/ui";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { registrationSchema } from "./form-validation-schema/auth-schema";
+import {Box, Center, Checkbox, Flex, FormControl, FormLabel, Input, InputGroup, InputRightElement, Link, Stack, Text} from "@chakra-ui/react";
+import {Link as RouterLink, useNavigate} from "react-router-dom";
+import {Icon} from "@iconify/react";
+import React, {useState} from "react";
+import {useForm} from "react-hook-form";
+import {useSignupMutation, useGoogleAuthMutation} from "@productize-v1.0.0/modules/shared/redux";
+import {ErrorText, SharedButton} from "@productize-v1.0.0/modules/shared/ui";
+import {yupResolver} from "@hookform/resolvers/yup";
+import {registrationSchema} from "@productize-v1.0.0/auth";
 
 export function SignupForm() {
     const [showPassword, setShowPassword] = useState(false);
@@ -23,7 +23,8 @@ export function SignupForm() {
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        getValues,
+        formState: {errors, isValid},
     } = useForm({
         criteriaMode: "all",
         mode: "onChange",
@@ -51,9 +52,16 @@ export function SignupForm() {
         }
     };
 
+
+    const checkValidation = (pattern) => {
+        const password = getValues("password")
+        return pattern.test(password); // Return true only if the pattern matches the password value
+    }
+
     return (
+
         <FormControl as={`form`} onSubmit={handleSubmit(onSubmit)}>
-            {(signupStatus.isError || googleSiginStatus.isError) && <ErrorText error={error} />}
+            {(signupStatus.isError || googleSiginStatus.isError) && <ErrorText error={error}/>}
             <FormControl mb={6}>
                 <FormLabel fontWeight={600} className="btn-text">
                     First Name
@@ -64,7 +72,7 @@ export function SignupForm() {
                     variant={`filled`}
                     id="fullName"
                     placeholder="Enter full name"
-                    _placeholder={{ fontSize: { base: `xs`, lg: `sm` } }}
+                    _placeholder={{fontSize: {base: `xs`, lg: `sm`}}}
                     {...register("full_name")}
                 />
                 <Text className={`tiny-text`} color={`red.200`}>
@@ -96,7 +104,7 @@ export function SignupForm() {
                     bgColor={`grey.200`}
                     variant={`filled`}
                     placeholder="Enter email"
-                    _placeholder={{ fontSize: { base: `xs`, lg: `sm` } }}
+                    _placeholder={{fontSize: {base: `xs`, lg: `sm`}}}
                     {...register("email")}
                 />
                 <Text className={`tiny-text`} color={`red.200`}>
@@ -115,20 +123,32 @@ export function SignupForm() {
                         pr="4.5rem"
                         type={showPassword ? "text" : "password"}
                         placeholder="Enter password"
-                        _placeholder={{ fontSize: { base: `xs`, lg: `sm` } }}
+                        _placeholder={{fontSize: {base: `xs`, lg: `sm`}}}
                         {...register("password")}
                     />
                     <InputRightElement onClick={handlePasswordClick} width="2.5rem">
-                        {!showPassword ? <Icon icon={`ant-design:eye-twotone`} /> : <Icon icon={`ant-design:eye-invisible-twotone`} />}
+                        {!showPassword ? <Icon icon={`ant-design:eye-twotone`}/> : <Icon icon={`ant-design:eye-invisible-twotone`}/>}
                     </InputRightElement>
                 </InputGroup>
-                <Flex mt={1} color={`grey.400`} alignItems={`flex-start`} gap={2}>
-                    <Icon fontSize={`14px`} icon={`ep:info-filled`} />
-                    <Text fontStyle={`italic`} fontSize={`10px`}>Password should be at least 8 characters long, contain one uppercase letter and one special character.</Text>
-                </Flex>
                 <Text className={`tiny-text`} color={`red.200`}>
-                    {errors?.password?.message}
+                    {errors?.password?.message.toString().includes(`required`) ? errors?.password?.message : ``}
                 </Text>
+                <Flex hidden={!getValues("password")} mt={1} color={`grey.400`} alignItems={`flex-start`} gap={2}>
+                    <Stack spacing={2} direction='column' py={2}>
+                        <Checkbox id={`1`} isChecked={checkValidation(/^.{8,}$/)} colorScheme={`green`} size={`sm`}>
+                            <Text fontSize={`xs`}>Password should be at least 8 characters long</Text>
+                        </Checkbox>
+                        <Checkbox id={`2`} isChecked={checkValidation(/^(?=.*[A-Z])/)} colorScheme={`green`} size={`sm`}>
+                            <Text fontSize={`xs`}>Password should contain at least one uppercase letter</Text>
+                        </Checkbox>
+                        <Checkbox id={`3`} isChecked={checkValidation(/^(?=.*\d)/)} colorScheme={`green`} size={`sm`}>
+                            <Text fontSize={`xs`}>Password should contain at least one number</Text>
+                        </Checkbox>
+                        <Checkbox id={`4`} isChecked={checkValidation(/^(?=.*[!@#$%^.&*])/)} colorScheme={`green`} size={`sm`}>
+                            <Text fontSize={`xs`}>Password should contain at least one special character (!@#$%^.&*)</Text>
+                        </Checkbox>
+                    </Stack>
+                </Flex>
             </FormControl>
             <FormControl my={6}>
                 <FormLabel fontWeight={600} className="btn-text">
@@ -142,11 +162,11 @@ export function SignupForm() {
                         pr="4.5rem"
                         type={showPasswordConfirmation ? "text" : "password"}
                         placeholder="Enter password confirmation"
-                        _placeholder={{ fontSize: { base: `xs`, lg: `sm` } }}
+                        _placeholder={{fontSize: {base: `xs`, lg: `sm`}}}
                         {...register("password_confirmation")}
                     />
                     <InputRightElement onClick={handlePasswordConfirmationClick} width="2.5rem">
-                        {!showPasswordConfirmation ? <Icon icon={`ant-design:eye-twotone`} /> : <Icon icon={`ant-design:eye-invisible-twotone`} />}
+                        {!showPasswordConfirmation ? <Icon icon={`ant-design:eye-twotone`}/> : <Icon icon={`ant-design:eye-invisible-twotone`}/>}
                     </InputRightElement>
                 </InputGroup>
                 <Text className={`tiny-text`} color={`red.200`}>
@@ -171,6 +191,7 @@ export function SignupForm() {
                             loadingText: "Creating Account...",
                             isLoading: signupStatus.isLoading,
                             type: `submit`,
+                            disabled: !isValid
                         }}
                         text={"Create Account"}
                         width={`100%`}
@@ -178,7 +199,7 @@ export function SignupForm() {
                         bgColor={"purple.200"}
                         textColor={"white"}
                         borderRadius={"4px"}
-                        fontSize={{ base: `sm`, lg: `md` }}
+                        fontSize={{base: `sm`, lg: `md`}}
                     />
                 </Box>
                 <Center>
@@ -199,7 +220,7 @@ export function SignupForm() {
                         bgColor={"white"}
                         textColor={"purple.200"}
                         borderRadius={"4px"}
-                        fontSize={{ base: `sm`, lg: `md` }}
+                        fontSize={{base: `sm`, lg: `md`}}
                     />
                 </Box>
                 <Text className="small-text" textAlign={`center`}>
@@ -210,5 +231,8 @@ export function SignupForm() {
                 </Text>
             </Box>
         </FormControl>
-    );
+
+
+    )
+        ;
 }

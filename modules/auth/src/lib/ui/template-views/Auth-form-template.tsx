@@ -29,7 +29,8 @@ export const AuthFormTemplateSignup = ({children}: AuthFormTamplateProps) => {
 
 export const AuthFormTemplateLogin = ({children, title, subTitle}: AuthFormTamplateProps) => {
     return (
-        <Card bgColor={{base: `white`, sm: `transparent`}} maxW={`444px`} w={`100%`} py={{sm: `5rem`}} h={{base: `100vh`, sm: `fit-content`}}>
+        <Card bgColor={{base: `white`, sm: `transparent`}} maxW={{base: `100%`, sm: `444px`}} py={{sm: `5rem`}}
+              h={{base: `100vh`, sm: `fit-content`}}>
             <CardHeader>
                 <Center>
                     <Link as={RouterLink} to={`/`}>
@@ -38,7 +39,7 @@ export const AuthFormTemplateLogin = ({children, title, subTitle}: AuthFormTampl
                     </Link>
                 </Center>
             </CardHeader>
-            <CardBody borderRadius={`8px`} bgColor={`white`}  p={{base: 8, sm: 12}}>
+            <CardBody borderRadius={`8px`} bgColor={`white`} p={{base: 8, sm: 12}}>
                 <CardHeader color={`grey.600`} p={0} mb={5}>
                     <Text as={`h4`}>{title}</Text>
                     <Text mt={4}>{subTitle}</Text>

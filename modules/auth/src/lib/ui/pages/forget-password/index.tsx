@@ -1,11 +1,11 @@
-import { selectEmailConfirmation } from "@productize-v1.0.0/modules/shared/redux";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { AuthBackground } from "../../template-views/Auth-background";
-import { AuthFormTemplateLogin } from "../../template-views/Auth-form-template";
-import { ForgotPassowrdForm } from "../../forms/ForgotPassword";
-import { ResetPassword } from "../../forms/ResetPassword";
-import { VerifyEmailTemplate } from "../../template-views/VerifyEmailTemplate";
+import {selectEmailConfirmation} from "@productize-v1.0.0/modules/shared/redux";
+import {useEffect, useState} from "react";
+import {useSelector} from "react-redux";
+import {AuthBackground} from "../../template-views/Auth-background";
+import {AuthFormTemplateLogin} from "../../template-views/Auth-form-template";
+import {ForgotPassowrdForm} from "../../forms/ForgotPassword";
+import {ResetPassword} from "../../forms/ResetPassword";
+import {VerifyEmailTemplate} from "../../template-views/VerifyEmailTemplate";
 
 export const ForgotPassword = () => {
     const emailConfirmation = useSelector(selectEmailConfirmation);
@@ -34,24 +34,22 @@ export const ForgotPassword = () => {
         <AuthBackground isLogin={true}>
             {!emailConfirmation.emailSent && !FPToken && (
                 <AuthFormTemplateLogin title="Forgot password" subTitle="Enter your email address to reset your password.">
-                    <ForgotPassowrdForm />
+                    <ForgotPassowrdForm/>
                 </AuthFormTemplateLogin>
             )}
-
-            check email or varify email temlate
-      {emailConfirmation.emailSent && !FPToken && (
-        <AuthFormTemplateLogin
-          title="Check your mail"
-          subTitle="We have sent a password recovery instructions to your email."
-        >
-          <VerifyEmailTemplate />
-        </AuthFormTemplateLogin>
-      )}
-
+            {/*check email or varify email temlate*/}
+            {emailConfirmation.emailSent && !FPToken && (
+                <AuthFormTemplateLogin
+                    title="Check your mail"
+                    subTitle="We have sent a password recovery instructions to your email."
+                >
+                    <VerifyEmailTemplate/>
+                </AuthFormTemplateLogin>
+            )}
             {/* change password or change forgot password */}
             {emailConfirmation.emailSent && FPToken && (
                 <AuthFormTemplateLogin title="Reset Password" subTitle="Enter your new password.">
-                    <ResetPassword email={email} token={FPToken} />
+                    <ResetPassword email={email} token={FPToken}/>
                 </AuthFormTemplateLogin>
             )}
         </AuthBackground>

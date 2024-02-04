@@ -17,7 +17,7 @@ export const SharedSection = () => {
           With Productize, turn your creativity into a lucrative business
           venture by showcasing and selling your work online.
         </Text>
-        <Link as={RouterLink} to={`/auth`}>
+        <Link as={RouterLink} to={`/auth`} w={`fit-content`} m={`auto`}>
           <SharedButton
             text={'Create an Account'}
             width={{ base: `100%`, xl: `307px` }}

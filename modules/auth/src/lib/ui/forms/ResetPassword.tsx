@@ -1,26 +1,26 @@
-import { Box, FormControl, FormLabel, Input, InputGroup, InputRightElement, Text, useToast } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
-import { Icon } from "@iconify/react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { useResetPasswordMutation } from "@productize-v1.0.0/modules/shared/redux";
-import { ErrorText, SharedButton, ToastFeedback, useToastAction } from "@productize-v1.0.0/modules/shared/ui";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { resetPasswordSchema } from "./form-validation-schema/auth-schema";
+import {Box, FormControl, FormLabel, Input, InputGroup, InputRightElement, Text, useToast} from "@chakra-ui/react";
+import {useNavigate} from "react-router-dom";
+import {Icon} from "@iconify/react";
+import {useState} from "react";
+import {useForm} from "react-hook-form";
+import {useResetPasswordMutation} from "@productize-v1.0.0/modules/shared/redux";
+import {ErrorText, SharedButton, ToastFeedback, useToastAction} from "@productize-v1.0.0/modules/shared/ui";
+import {yupResolver} from "@hookform/resolvers/yup";
+import {resetPasswordSchema} from "./form-validation-schema/auth-schema";
 
 interface RPProps {
     email: string;
     token: string;
 }
 
-export function ResetPassword({ email, token }: RPProps) {
+export function ResetPassword({email, token}: RPProps) {
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState("");
     const [showPasswordConfirmation, setShowPasswordConfirmation] = useState(false);
     const handlePasswordClick = () => setShowPassword(!showPassword);
     const handlePasswordConfirmationClick = () => setShowPasswordConfirmation(!showPasswordConfirmation);
     const navigate = useNavigate();
-    const { toast, toastIdRef, close } = useToastAction();
+    const {toast, toastIdRef, close} = useToastAction();
 
     // mutation
     const [resetPassword, resetPasswordStatus] = useResetPasswordMutation();
@@ -28,7 +28,7 @@ export function ResetPassword({ email, token }: RPProps) {
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        formState: {errors},
     } = useForm({
         criteriaMode: "all",
         mode: "onChange",
@@ -68,8 +68,8 @@ export function ResetPassword({ email, token }: RPProps) {
     };
 
     return (
-        <FormControl w={{ base: `fit-content`, md: `22rem` }} as={`form`} onSubmit={handleSubmit(onSubmit)}>
-            {resetPasswordStatus.isError && <ErrorText error={error} />}
+        <FormControl as={`form`} onSubmit={handleSubmit(onSubmit)}>
+            {resetPasswordStatus.isError && <ErrorText error={error}/>}
             <FormControl my={6}>
                 <FormLabel fontWeight={600} className="btn-text">
                     New Password
@@ -82,11 +82,11 @@ export function ResetPassword({ email, token }: RPProps) {
                         pr="4.5rem"
                         type={showPassword ? "text" : "password"}
                         placeholder="Enter password"
-                        _placeholder={{ fontSize: { base: `xs`, lg: `sm` } }}
+                        _placeholder={{fontSize: {base: `xs`, lg: `sm`}}}
                         {...register("password")}
                     />
                     <InputRightElement onClick={handlePasswordClick} width="2.5rem">
-                        {!showPassword ? <Icon icon={`ant-design:eye-twotone`} /> : <Icon icon={`ant-design:eye-invisible-twotone`} />}
+                        {!showPassword ? <Icon icon={`ant-design:eye-twotone`}/> : <Icon icon={`ant-design:eye-invisible-twotone`}/>}
                     </InputRightElement>
                 </InputGroup>
                 <Text className={`tiny-text`} color={`red.200`}>
@@ -105,11 +105,11 @@ export function ResetPassword({ email, token }: RPProps) {
                         pr="4.5rem"
                         type={showPasswordConfirmation ? "text" : "password"}
                         placeholder="Enter password confirmation"
-                        _placeholder={{ fontSize: { base: `xs`, lg: `sm` } }}
+                        _placeholder={{fontSize: {base: `xs`, lg: `sm`}}}
                         {...register("password_confirmation")}
                     />
                     <InputRightElement onClick={handlePasswordConfirmationClick} width="2.5rem">
-                        {!showPasswordConfirmation ? <Icon icon={`ant-design:eye-twotone`} /> : <Icon icon={`ant-design:eye-invisible-twotone`} />}
+                        {!showPasswordConfirmation ? <Icon icon={`ant-design:eye-twotone`}/> : <Icon icon={`ant-design:eye-invisible-twotone`}/>}
                     </InputRightElement>
                 </InputGroup>
                 <Text className={`tiny-text`} color={`red.200`}>
@@ -130,7 +130,7 @@ export function ResetPassword({ email, token }: RPProps) {
                         bgColor={"purple.200"}
                         textColor={"white"}
                         borderRadius={"4px"}
-                        fontSize={{ base: `sm`, lg: `md` }}
+                        fontSize={{base: `sm`, lg: `md`}}
                     />
                 </Box>
             </Box>

@@ -1,17 +1,17 @@
-import { Box, CardBody, Container, Flex, Image, SimpleGrid, Stack, Text, Link } from "@chakra-ui/react";
+import {Box, CardBody, Container, Flex, Image, SimpleGrid, Stack, Text, Link} from "@chakra-ui/react";
 import DefaultLayout from "../../layouts/Layout";
-import { Link as RouterLink } from "react-router-dom";
-import { CardLayout, SharedButton } from "@productize-v1.0.0/modules/shared/ui";
-import { Hero } from "../../components/Hero";
-import { SectionLayout } from "../../components/section-layout/SectionLayout";
-import { DualSectionLayout } from "../../components/section-layout/DualSectionLayout";
-import { SharedSection } from "../../components/section-layout/SharedSection";
+import {Link as RouterLink} from "react-router-dom";
+import {CardLayout, SharedButton} from "@productize-v1.0.0/modules/shared/ui";
+import {Hero} from "../../components/Hero";
+import {SectionLayout} from "../../components/section-layout/SectionLayout";
+import {DualSectionLayout} from "../../components/section-layout/DualSectionLayout";
+import {SharedSection} from "../../components/section-layout/SharedSection";
 
 export const Home = () => {
     return (
         <DefaultLayout>
             <Hero
-                height={{ base: `39rem`, xl: `42.2rem` }}
+                height={{base: `39rem`, xl: `42.2rem`}}
                 bgImg={"https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951030/productize/Group_6_jgbemc_kzeaf2.png"}
                 bgColor={"purple.200"}
             >
@@ -21,14 +21,15 @@ export const Home = () => {
                             Monetize your skills with ease
                         </Text>
                         <Text fontWeight={100} as={`h5`} color={`purple.100`} mt={3}>
-                            With Productize, selling your products online is hassle-free. You can showcase your work and let us handle the backend tasks,
+                            With Productize, selling your products online is hassle-free. You can showcase your work and let us handle the backend
+                            tasks,
                             allowing you to concentrate on what you do best.
                         </Text>
                     </Container>
-                    <Container display={{ xl: `none` }} w={`fit-content`}>
+                    <Container display={{xl: `none`}} w={`fit-content`}>
                         <Link as={RouterLink} to={`/auth`}>
                             <SharedButton
-                                fontSize={{ base: `sm`, md: `md` }}
+                                fontSize={{base: `sm`, md: `md`}}
                                 text={"Get Started"}
                                 width={"160px"}
                                 height={"48px"}
@@ -38,7 +39,7 @@ export const Home = () => {
                             />
                         </Link>
                     </Container>
-                    <Container zIndex={2} maxW={{ base: `90%` }}>
+                    <Container zIndex={2} maxW={{base: `90%`}}>
                         <Image
                             alt={`hero-illustration`}
                             src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951027/productize/Group_5_pximlf_m8bs3m.png`}
@@ -49,20 +50,21 @@ export const Home = () => {
             <SectionLayout height={"fit-content"} bgColor={"yellow.100"} bgImg={""}>
                 <Container
                     maxW={`70rem`}
-                    pt={{ base: `5rem`, sm: `10rem`, md: `15rem`, lg: `25rem` }}
-                    pb={{ base: `5rem`, xl: `15rem` }}
-                    px={{ base: 4, xl: 0 }}
+                    pt={{base: `5rem`, sm: `10rem`, md: `15rem`, lg: `25rem`}}
+                    pb={{base: `5rem`, xl: `15rem`}}
+                    px={{base: 4, xl: 0}}
                 >
-                    <Flex gap={20} flexDir={{ base: `column`, xl: `row` }}>
+                    <Flex gap={{sm: 20}} flexDir={{base: `column`, xl: `row`}}>
                         <Box flex={1} color={`yellow.300`}>
                             <Text as={`h1`} lineHeight={`shorter`}>
                                 You can monetize everything
                             </Text>
                             <Text as={`h5`} my={`2rem`} fontWeight={100}>
-                                Productize offers you an opportunity to monetize your passion by providing a platform that allows you to showcase and sell your
+                                Productize offers you an opportunity to monetize your passion by providing a platform that allows you to showcase and
+                                sell your
                                 work online.
                             </Text>
-                            <Box display={{ base: `none`, xl: `block` }}>
+                            <Box display={{base: `none`, xl: `block`}}>
                                 <Link as={RouterLink} to={`/auth`}>
                                     <SharedButton
                                         text={"Get Started"}
@@ -71,12 +73,12 @@ export const Home = () => {
                                         bgColor={"purple.200"}
                                         textColor={"white"}
                                         borderRadius={"4px"}
-                                        fontSize={{ base: `sm`, md: `md` }}
+                                        fontSize={{base: `sm`, md: `md`}}
                                     />
                                 </Link>
                             </Box>
                         </Box>
-                        <SimpleGrid flex={2} columns={{ base: 1, sm: 2 }} spacing={10}>
+                        <SimpleGrid flex={2} columns={{base: 1, sm: 2}} spacing={10}>
                             {/* card 1 */}
                             <Box>
                                 <CardLayout bgColor={"white"} width={"100%"} borderRadius={"16px"} height={`100%`}>
@@ -148,21 +150,21 @@ export const Home = () => {
                 </Container>
             </SectionLayout>
             <DualSectionLayout
-                height={{ base: `30rem`, lg: `40rem` }}
+                height={{base: `40rem`, md: `20rem`, lg: `50rem`, xl: `40rem`}}
                 img={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951011/productize/Layer_1_3_hn7gd9_kdxcwg.png`}
-                flexDirection={{ base: `column`, xl: `row` }}
+                flexDirection={{base: `column`, xl: `row`}}
                 textSectionBgColor={"purple.300"}
                 imgSectionBgColor={"purple.200"}
-                justifyContent={{ base: `center`, xl: `flex-end` }}
-                imgPosition={{ base: `-3rem bottom`, xl: "-10rem bottom" }}
-                imgFit={{ base: `contain` }}
+                justifyContent={{base: `center`, xl: `flex-end`}}
+                imgPosition={{base: `-3rem bottom`, xl: "-10rem bottom"}}
+                imgFit={{base: `contain`}}
             >
                 <Flex alignItems={`center`} color={`purple.100`} height={`100%`}>
-                    <Container textAlign={{ base: `center`, xl: `initial` }} maxW={`35rem`} px={{ base: 4, xl: 0 }}>
+                    <Container textAlign={{base: `center`, xl: `initial`}} maxW={`35rem`} px={{base: 4, xl: 0}}>
                         <Text as={`h1`} lineHeight={`shorter`}>
                             Everyone can Buy & Sell on Productize
                         </Text>
-                        <Text as={`h5`} fontWeight={100} pr={{ xl: 20 }} mt={5}>
+                        <Text as={`h5`} fontWeight={100} pr={{xl: 20}} mt={5}>
                             The opportunity to share knowledge with individuals and businesses of same passion.
                         </Text>
                     </Container>
@@ -174,12 +176,13 @@ export const Home = () => {
                         Start monetizing in 4 simple steps
                     </Text>
                     <Text as={`h5`} fontWeight={`100`}>
-                        You can easily reach a broader audience, increase your sales, and build your brand. Monetize everything with Productize and unleash your
+                        You can easily reach a broader audience, increase your sales, and build your brand. Monetize everything with Productize and
+                        unleash your
                         full potential!
                     </Text>
                 </Container>
-                <Container maxW={`70rem`} px={{ base: 4, xl: 0 }} py={`5rem`}>
-                    <SimpleGrid columns={{ base: 1, sm: 2 }} spacing={10}>
+                <Container maxW={`70rem`} px={{base: 4, xl: 0}} py={`5rem`}>
+                    <SimpleGrid columns={{base: 1, sm: 2}} spacing={10}>
                         {/* card 1 */}
                         <Box>
                             <CardLayout bgColor={"white"} width={"100%"} borderRadius={"16px"} height={`100%`}>
@@ -207,7 +210,8 @@ export const Home = () => {
                                         <Text as={`h5`} my={2}>
                                             Set up your payout
                                         </Text>
-                                        <Text color={`grey.500`}>Set up your payout, and start receiving payments for your products or services!</Text>
+                                        <Text color={`grey.500`}>Set up your payout, and start receiving payments for your products or
+                                                                 services!</Text>
                                     </Box>
                                     <Flex justifyContent={`flex-end`}>
                                         <Image
@@ -261,7 +265,7 @@ export const Home = () => {
                     </SimpleGrid>
                 </Container>
             </SectionLayout>
-            <SharedSection />
+            <SharedSection/>
         </DefaultLayout>
     );
 };

@@ -20,7 +20,7 @@ export const Navbar = ({isAuth}: any) => {
                 break;
             case `/features`:
                 setLinkColor(`coral.300`);
-                setBgColor(`coral.100`);
+                setBgColor(`green.100`);
                 break;
             case `/pricing`:
                 setLinkColor(`yellow.300`);

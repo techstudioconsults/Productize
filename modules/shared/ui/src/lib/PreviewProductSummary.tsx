@@ -1,5 +1,5 @@
 // Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
+import {Swiper, SwiperSlide} from "swiper/react";
 import StarRatings from "react-star-ratings";
 
 // Import Swiper styles
@@ -9,26 +9,26 @@ import "swiper/css/pagination";
 // import './styles.css';
 
 // import required modules
-import { Pagination } from "swiper/modules";
-import { Avatar, Box, Card, CardBody, Container, Divider, Flex, Grid, GridItem, Image, List, ListItem, Stack, Text } from "@chakra-ui/react";
-import { Icon } from "@iconify/react";
-import { Link, useLocation, useParams } from "react-router-dom";
-import { SharedButton } from "./SharedButton";
+import {Pagination} from "swiper/modules";
+import {Avatar, Box, Card, CardBody, Container, Divider, Flex, Grid, GridItem, Image, List, ListItem, Stack, Text} from "@chakra-ui/react";
+import {Icon} from "@iconify/react";
+import {Link, useLocation, useParams} from "react-router-dom";
+import {SharedButton} from "./SharedButton";
 // eslint-disable-next-line @nx/enforce-module-boundaries
-import { useCurrency } from "@productize-v1.0.0/modules/shared/hooks";
+import {useCurrency} from "@productize-v1.0.0/modules/shared/hooks";
 
 interface productProp {
     product: any;
 }
 
 export const PreviewProductSummary = () => {
-    const { state } = useLocation();
+    const {state} = useLocation();
     console.log(state);
 
     return (
         <Container mt={`5rem`} maxW={`70rem`}>
             {state ? (
-                <TwoColumnLayout C1={<ProductSummaryAndPreview product={state?.product} />} C2={<ProductSideNav product={state?.product} />} />
+                <TwoColumnLayout C1={<ProductSummaryAndPreview product={state?.product}/>} C2={<ProductSideNav product={state?.product}/>}/>
             ) : (
                 <h1>no product</h1>
                 // eslint-disable-next-line react/jsx-no-undef
@@ -51,8 +51,8 @@ export interface TwoColumnLayoutProps {
     C2: React.ReactNode;
 }
 
-export const TwoColumnLayout = ({ C1, C2 }: TwoColumnLayoutProps) => {
-    const { pathname } = useLocation();
+export const TwoColumnLayout = ({C1, C2}: TwoColumnLayoutProps) => {
+    const {pathname} = useLocation();
 
     return (
         <Grid
@@ -62,18 +62,22 @@ export const TwoColumnLayout = ({ C1, C2 }: TwoColumnLayoutProps) => {
             gap={4}
         >
             {/* <GridItem colSpan={{ base: 12, xl: 8 }}>{C1}</GridItem> */}
-            <GridItem colSpan={{ base: 12, md: 7, xl: pathname === `/explore/product/cart` ? 12 : 8 }}>{C1}</GridItem>
-            <GridItem colSpan={{ base: 12, md: 5, xl: 4 }}>{C2}</GridItem>
+            <GridItem colSpan={{base: 12, md: 7, xl: pathname === `/explore/product/cart` ? 12 : 8}}>{C1}</GridItem>
+            <GridItem colSpan={{base: 12, md: 5, xl: 4}}>
+                <Box pos={`sticky`} top={`5rem`}>
+                    {C2}
+                </Box>
+            </GridItem>
         </Grid>
     );
 };
 
-const ProductSummaryAndPreview = ({ product }: productProp) => {
+const ProductSummaryAndPreview = ({product}: productProp) => {
     const coverPhoto = product?.cover_photos?.map((photo: string, index: number) => {
         return (
             <SwiperSlide key={index}>
                 <Box borderRadius={`8px`} overflow={`hidden`} height={`248px`}>
-                    <Image w={`100%`} h={`100%`} src={photo} alt="img" objectFit={`contain`} objectPosition={`center`} />
+                    <Image w={`100%`} h={`100%`} src={photo} alt="img" objectFit={`contain`} objectPosition={`center`}/>
                 </Box>
             </SwiperSlide>
         );
@@ -82,7 +86,7 @@ const ProductSummaryAndPreview = ({ product }: productProp) => {
     const features = product?.highlights?.map((highlight: string, index: number) => {
         return (
             <ListItem key={index} display={`flex`} alignItems={`flex-start`} gap={2}>
-                <Icon fontSize={`1.5rem`} icon={`gg:check`} />
+                <Icon fontSize={`1.5rem`} icon={`gg:check`}/>
                 <Text>{highlight}</Text>
             </ListItem>
         );
@@ -106,13 +110,13 @@ const ProductSummaryAndPreview = ({ product }: productProp) => {
                 <Text as={`h4`} fontWeight={600} color={`grey.800`}>
                     {product?.title}
                 </Text>
-                <Flex alignItems={{ base: `flex-start`, xl: `center` }} flexDir={{ base: `column`, xl: `row` }} gap={{ base: 5, xl: 10 }}>
+                <Flex alignItems={{base: `flex-start`, xl: `center`}} flexDir={{base: `column`, xl: `row`}} gap={{base: 5, xl: 10}}>
                     <Flex gap={2} alignItems={`center`}>
-                        <Avatar size={`sm`} name={product?.publisher} src={product?.publisher_avatar} />
+                        <Avatar size={`sm`} name={product?.publisher} src={product?.publisher_avatar}/>
                         <Text fontWeight={`500`}>{product?.publisher}</Text>
                     </Flex>
                     <Flex alignItems={`baseline`} gap={2}>
-                        <StarRatings rating={3} starDimension="22px" starRatedColor="#F6C21C" numberOfStars={5} starSpacing="3px" name="rating" />
+                        <StarRatings rating={3} starDimension="22px" starRatedColor="#F6C21C" numberOfStars={5} starSpacing="3px" name="rating"/>
                         <Text fontWeight={`500`}>24 ratings</Text>
                     </Flex>
                 </Flex>
@@ -133,7 +137,7 @@ const ProductSummaryAndPreview = ({ product }: productProp) => {
                 <Box my={10}>
                     <Text fontWeight={600}>Features</Text>
                     <Box my={5}>
-                        <Divider />
+                        <Divider/>
                     </Box>
                     <Box>
                         <List color={`grey.700`} as={Stack} gap={3}>
@@ -144,10 +148,10 @@ const ProductSummaryAndPreview = ({ product }: productProp) => {
                 <Box my={10}>
                     <Text fontWeight={600}>Description</Text>
                     <Box my={5}>
-                        <Divider />
+                        <Divider/>
                     </Box>
                     <Box>
-                        <Text dangerouslySetInnerHTML={{ __html: product?.description }} />
+                        <Text dangerouslySetInnerHTML={{__html: product?.description}}/>
                     </Box>
                 </Box>
             </Box>
@@ -155,10 +159,10 @@ const ProductSummaryAndPreview = ({ product }: productProp) => {
     );
 };
 
-const ProductSideNav = ({ product }: productProp) => {
+const ProductSideNav = ({product}: productProp) => {
     const formatCurrency = useCurrency();
     return (
-        <Card maxW="sm">
+        <Card variant={ `outline` } maxW="sm">
             <CardBody>
                 <Flex bg={`purple.100`} justifyContent={`space-between`} p={2} borderRadius={`4px`}>
                     <Text fontWeight={500}>Sold</Text>
@@ -178,7 +182,7 @@ const ProductSideNav = ({ product }: productProp) => {
                             bgColor={"purple.200"}
                             textColor={"white"}
                             borderRadius={"4px"}
-                            fontSize={{ base: `sm`, xl: `md` }}
+                            fontSize={{base: `sm`, xl: `md`}}
                             btnExtras={{
                                 disabled: true,
                             }}
@@ -195,14 +199,14 @@ const ProductSideNav = ({ product }: productProp) => {
                                 bgColor={"white"}
                                 textColor={"purple.200"}
                                 borderRadius={"4px"}
-                                fontSize={{ base: `sm`, xl: `md` }}
+                                fontSize={{base: `sm`, xl: `md`}}
                             />
                         </Link>
                     </Flex>
                 </Box>
                 <Box my={10}>
                     <Text fontWeight={600}>The product includes</Text>
-                    <Divider my={3} />
+                    <Divider my={3}/>
                     <Stack gap={4}>
                         <Flex color={`grey.500`} fontSize={`sm`} alignItems={`center`} justifyContent={`space-between`}>
                             <Text>Format</Text>

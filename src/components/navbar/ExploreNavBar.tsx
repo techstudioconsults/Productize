@@ -28,8 +28,8 @@ export const ExploreNavBar = ({ isAuth }: navProps) => {
                             <AvatarComp />
                         </Box>
                     </Flex>
-                    <Flex justifyContent={`space-between`} gap={10} alignItems={`center`}>
-                        <Box>
+                    <Flex justifyContent={`space-between`} gap={5} alignItems={`center`}>
+                        <Box w={{base:`100%`, lg:`initial`}}>
                             <SearchComp size="lg" color={`coral.100`} />
                         </Box>
                         <Box fontSize={`1.5rem`}>

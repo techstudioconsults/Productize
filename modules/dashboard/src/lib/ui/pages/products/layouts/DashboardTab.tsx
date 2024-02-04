@@ -1,14 +1,14 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import { Tabs, TabList, TabPanels, Tab, TabPanel, Flex, Box, Link } from "@chakra-ui/react";
-import { useSetPaymentPlan } from "@productize-v1.0.0/modules/shared/hooks";
-import { SharedButton } from "@productize-v1.0.0/modules/shared/ui";
+import {Tabs, TabList, TabPanels, Tab, TabPanel, Flex, Box, Link} from "@chakra-ui/react";
+import {useSetPaymentPlan} from "@productize-v1.0.0/modules/shared/hooks";
+import {SharedButton} from "@productize-v1.0.0/modules/shared/ui";
 
 import LiveTabLayout from "./LiveTabLayout";
 import DraftTabLayout from "./DraftTabLayout";
 import DeleteTabLayout from "./DeleteTabLayout";
-import { Link as ReactLink, To, useLocation, useNavigate } from "react-router-dom";
+import {Link as ReactLink, To, useLocation, useNavigate} from "react-router-dom";
 import AllProductsTabLayout from "./AllProductsTabLayout";
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 
 const activeStateStyle = {
     borderBottom: `2px solid #6D5DD3`,
@@ -19,7 +19,7 @@ const activeStateStyle = {
 const tabNames = ["all-products", "live", "draft", "deleted"];
 
 export const DashboardTab = () => {
-    const { state, hash } = useLocation();
+    const {state, hash} = useLocation();
     const navigate = useNavigate();
     const getHashIndex = tabNames.findIndex((tab) => hash === `#${tab}`);
     const [tabIndex, setTabIndex] = useState(getHashIndex);
@@ -34,19 +34,19 @@ export const DashboardTab = () => {
 
     return (
         <Tabs isLazy={true} index={tabIndex} onChange={(index) => setTabIndex(index)} size={`sm`}>
-            <Box display={{ base: `flex`, md: `none` }} justifyContent={`flex-end`} my={10}>
+            <Box display={{md: `none`}} my={10}>
                 <Link as={ReactLink} to={`/dashboard/products/new#product-details`}>
                     <SharedButton
                         text={"New Product"}
                         btnExtras={{
                             leftIcon: `ei:plus`,
                         }}
-                        width={"fit-content"}
+                        width={"100%"}
                         height={"40px"}
                         bgColor={"purple.200"}
                         textColor={"white"}
                         borderRadius={"4px"}
-                        fontSize={{ base: `sm`, md: `sm` }}
+                        fontSize={{base: `sm`, md: `sm`}}
                     />
                 </Link>
             </Box>
@@ -65,7 +65,7 @@ export const DashboardTab = () => {
                         Deleted
                     </Tab>
                 </Flex>
-                <Box display={{ base: `none`, md: isPremium ? `initial` : `none` }}>
+                <Box display={{base: `none`, md: isPremium ? `initial` : `none`}}>
                     <Link as={ReactLink} to={`/dashboard/products/new#product-details`}>
                         <SharedButton
                             text={"New Product"}
@@ -77,24 +77,23 @@ export const DashboardTab = () => {
                             bgColor={"purple.200"}
                             textColor={"white"}
                             borderRadius={"4px"}
-                            fontSize={{ base: `sm`, md: `sm` }}
+                            fontSize={{base: `sm`, md: `sm`}}
                         />
                     </Link>
                 </Box>
             </TabList>
-
             <TabPanels>
                 <TabPanel px={0}>
-                    <AllProductsTabLayout />
+                    <AllProductsTabLayout/>
                 </TabPanel>
                 <TabPanel px={0}>
-                    <LiveTabLayout />
+                    <LiveTabLayout/>
                 </TabPanel>
                 <TabPanel px={0}>
-                    <DraftTabLayout />
+                    <DraftTabLayout/>
                 </TabPanel>
                 <TabPanel px={0}>
-                    <DeleteTabLayout />
+                    <DeleteTabLayout/>
                 </TabPanel>
             </TabPanels>
         </Tabs>

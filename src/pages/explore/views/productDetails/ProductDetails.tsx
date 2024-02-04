@@ -33,7 +33,7 @@ export const ProductDetails = () => {
             <Container mt={`5rem`} maxW={`70rem`}>
                 <TwoColumnLayout
                     C1={<ProductSummaryAndPreview status={getAllProducts_EXTERNALStatus}/>}
-                    C2={<Box pos={`sticky`} top={`10.5rem`}>
+                    C2={<Box pos={`sticky`} top={`20rem`}>
                         <ProductSideNav status={getAllProducts_EXTERNALStatus}/>
                     </Box>}
                 />

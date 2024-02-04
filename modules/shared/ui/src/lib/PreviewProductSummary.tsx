@@ -10,12 +10,30 @@ import "swiper/css/pagination";
 
 // import required modules
 import {Pagination} from "swiper/modules";
-import {Avatar, Box, Card, CardBody, Container, Divider, Flex, Grid, GridItem, Image, List, ListItem, Stack, Text} from "@chakra-ui/react";
+import {
+    Avatar,
+    Box,
+    Card,
+    CardBody,
+    Container,
+    Divider,
+    Flex,
+    Grid,
+    GridItem,
+    Image,
+    List,
+    ListItem,
+    Stack,
+    Text,
+    useDisclosure
+} from "@chakra-ui/react";
 import {Icon} from "@iconify/react";
 import {Link, useLocation, useParams} from "react-router-dom";
 import {SharedButton} from "./SharedButton";
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import {useCurrency} from "@productize-v1.0.0/modules/shared/hooks";
+import {ModalComp} from "./Modal";
+import React from "react";
 
 interface productProp {
     product: any;
@@ -64,7 +82,7 @@ export const TwoColumnLayout = ({C1, C2}: TwoColumnLayoutProps) => {
             {/* <GridItem colSpan={{ base: 12, xl: 8 }}>{C1}</GridItem> */}
             <GridItem colSpan={{base: 12, md: 7, xl: pathname === `/explore/product/cart` ? 12 : 8}}>{C1}</GridItem>
             <GridItem colSpan={{base: 12, md: 5, xl: 4}}>
-                <Box pos={`sticky`} top={`5rem`}>
+                <Box pos={`sticky`} top={`6rem`} display={{base: `none`, md: `block`}}>
                     {C2}
                 </Box>
             </GridItem>
@@ -73,6 +91,7 @@ export const TwoColumnLayout = ({C1, C2}: TwoColumnLayoutProps) => {
 };
 
 const ProductSummaryAndPreview = ({product}: productProp) => {
+    const {onOpen, onClose, isOpen} = useDisclosure()
     const coverPhoto = product?.cover_photos?.map((photo: string, index: number) => {
         return (
             <SwiperSlide key={index}>
@@ -110,15 +129,33 @@ const ProductSummaryAndPreview = ({product}: productProp) => {
                 <Text as={`h4`} fontWeight={600} color={`grey.800`}>
                     {product?.title}
                 </Text>
-                <Flex alignItems={{base: `flex-start`, xl: `center`}} flexDir={{base: `column`, xl: `row`}} gap={{base: 5, xl: 10}}>
+                <Flex alignItems={{base: `flex-end`, xl: `center`}} flexDir={{base: `row`, xl: `row`}} justifyContent={`space-between`}
+                      gap={{base: 5, xl: 10}}>
                     <Flex gap={2} alignItems={`center`}>
                         <Avatar size={`sm`} name={product?.publisher} src={product?.publisher_avatar}/>
                         <Text fontWeight={`500`}>{product?.publisher}</Text>
                     </Flex>
-                    <Flex alignItems={`baseline`} gap={2}>
-                        <StarRatings rating={3} starDimension="22px" starRatedColor="#F6C21C" numberOfStars={5} starSpacing="3px" name="rating"/>
-                        <Text fontWeight={`500`}>24 ratings</Text>
-                    </Flex>
+                    <Box display={{md: `none`}}>
+                        <SharedButton btnExtras={{
+                            onClick: onOpen,
+                        }} text={`Buy Product`} width={`fit-content`} height={`40px`}
+                                      bgColor={`purple.200`}
+                                      textColor={`grey.100`}
+                                      borderRadius={`8px`}
+                                      fontSize={{base: `sm`, md: `md`}}/>
+                        <ModalComp modalSize={`lg`} openModal={isOpen} closeModal={onClose}>
+                            <Flex justifyContent={`flex-end`} pb={5} fontSize={`2rem`} color={`purple.200`}>
+                                <Icon icon={`material-symbols:cancel`} onClick={onClose}/>
+                            </Flex>
+                            <Container p={0} maxW={`500px`}>
+                                <ProductSideNav product={product}/>
+                            </Container>
+                        </ModalComp>
+                    </Box>
+                    {/*<Flex alignItems={`baseline`} gap={2}>*/}
+                    {/*    <StarRatings rating={3} starDimension="22px" starRatedColor="#F6C21C" numberOfStars={5} starSpacing="3px" name="rating"/>*/}
+                    {/*    <Text fontWeight={`500`}>24 ratings</Text>*/}
+                    {/*</Flex>*/}
                 </Flex>
             </Box>
             {/* =================================================== */}
@@ -162,7 +199,7 @@ const ProductSummaryAndPreview = ({product}: productProp) => {
 const ProductSideNav = ({product}: productProp) => {
     const formatCurrency = useCurrency();
     return (
-        <Card variant={ `outline` } maxW="sm">
+        <Card variant={`outline`}>
             <CardBody>
                 <Flex bg={`purple.100`} justifyContent={`space-between`} p={2} borderRadius={`4px`}>
                     <Text fontWeight={500}>Sold</Text>
@@ -226,20 +263,20 @@ const ProductSideNav = ({product}: productProp) => {
                         </Flex>
                     </Stack>
                 </Box>
-                <Flex fontWeight={600} alignItems={`center`} gap={5}>
-                    <Link
-                        state={{
-                            product: {
-                                link: `http://localhost:4200/${product?.title}`,
-                                data: product,
-                            },
-                        }}
-                        to={`/dashboard/products/new#share`}
-                    >
-                        Share
-                    </Link>
-                    <Text>Give as a gift</Text>
-                </Flex>
+                {/*<Flex fontWeight={600} alignItems={`center`} gap={5}>*/}
+                {/*    <Link*/}
+                {/*        state={{*/}
+                {/*            product: {*/}
+                {/*                link: `http://localhost:4200/${product?.title}`,*/}
+                {/*                data: product,*/}
+                {/*            },*/}
+                {/*        }}*/}
+                {/*        to={`/dashboard/products/new#share`}*/}
+                {/*    >*/}
+                {/*        Share*/}
+                {/*    </Link>*/}
+                {/*    <Text>Give as a gift</Text>*/}
+                {/*</Flex>*/}
             </CardBody>
         </Card>
     );

@@ -200,7 +200,7 @@ export const SetNewProductForm = () => {
                 </FormControl>
                 {/* row 2 */ }
                 <Box mt={ `5rem` } mb={ 8 }>
-                    <Flex flexDir={ { base:`column`, lg:`row` } } alignItems={ `flex-end` } justifyContent={ `space-between` } gap={ 5 }>
+                    <Flex flexDir={ { base:`column`, lg:`row` } } alignItems={ `flex-start` } justifyContent={ `space-between` } gap={ 5 }>
                         <Box>
                             <Text color={ `purple.300` } fontWeight={ 600 }>
                                 Product
@@ -276,7 +276,7 @@ export const SetNewProductForm = () => {
                 </Box>
                 {/* row 3 */ }
                 <Box my={ 8 }>
-                    <Flex flexDir={ { base:`column`, lg:`row` } } alignItems={ `flex-end` } justifyContent={ `space-between` } gap={ 5 }>
+                    <Flex flexDir={ { base:`column`, lg:`row` } } alignItems={ `flex-start` } justifyContent={ `space-between` } gap={ 5 }>
                         <Box>
                             <Text color={ `purple.300` } fontWeight={ 600 }>
                                 Cover photo

@@ -108,7 +108,7 @@ const ProductSideNav = ( { status } ) => {
     }, [ product?.price ] )
 
     return (
-        <Card variant={ `outline` } maxW="sm">
+        <Card variant={ `outline` }>
             <Skeleton isLoaded={ !status.isLoading } borderRadius={ 8 }>
                 <CardBody>
                     <Flex bg={ `purple.100` } justifyContent={ `space-between` } p={ 2 } borderRadius={ `4px` }>

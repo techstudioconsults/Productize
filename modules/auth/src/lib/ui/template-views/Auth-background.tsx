@@ -1,5 +1,5 @@
-import { Box, Center } from "@chakra-ui/react";
-import { ReactNode } from "react";
+import {Box, Center, Flex} from "@chakra-ui/react";
+import {ReactNode} from "react";
 
 /* eslint-disable-next-line */
 export interface AuthBackgroundProps {
@@ -7,12 +7,10 @@ export interface AuthBackgroundProps {
     isLogin: boolean;
 }
 
-export function AuthBackground({ children, isLogin }: AuthBackgroundProps) {
+export function AuthBackground({children, isLogin}: AuthBackgroundProps) {
     return (
         <Center
             pos={`relative`}
-            // zIndex={-1}
-            padding={`1rem`}
             width={`100%`}
             height={`100vh`}
             overflow={`auto`}
@@ -26,7 +24,8 @@ export function AuthBackground({ children, isLogin }: AuthBackgroundProps) {
             bgPosition={isLogin ? `` : `center`}
             bgSize={isLogin ? `cover` : ``}
         >
-            <Box pos={`relative`} zIndex={1}>
+            <Box pos={`relative`}
+                 height={`100%`} zIndex={1}>
                 {children}
             </Box>
         </Center>

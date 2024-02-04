@@ -1,6 +1,7 @@
-import { LoginForm } from "../../forms/LogininForm";
-import { AuthBackground } from "../../template-views/Auth-background";
-import { AuthFormTemplateLogin } from "../../template-views/Auth-form-template";
+import {LoginForm} from "../../forms/LogininForm";
+import {AuthBackground} from "../../template-views/Auth-background";
+import {AuthFormTemplateLogin} from "../../template-views/Auth-form-template";
+import {Box} from "@chakra-ui/react";
 
 export const Login = () => {
     return (
@@ -10,7 +11,7 @@ export const Login = () => {
                 subTitle="Enter your email and password to continue monetizing your
             ideas"
             >
-                <LoginForm />
+                <LoginForm/>
             </AuthFormTemplateLogin>
         </AuthBackground>
     );

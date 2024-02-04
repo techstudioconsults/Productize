@@ -1,4 +1,4 @@
-import {Card, CardBody, CardHeader, Center, Link, Text} from "@chakra-ui/react";
+import {Box, Card, CardBody, CardHeader, Center, Link, Text} from "@chakra-ui/react";
 import React, {ReactNode, useState} from "react";
 import {Link as RouterLink} from "react-router-dom";
 
@@ -10,8 +10,8 @@ interface AuthFormTamplateProps {
 
 export const AuthFormTemplateSignup = ({children}: AuthFormTamplateProps) => {
     return (
-        <Card mt={40} py={8} maxW={`547px`} w={`100%`}>
-            <CardHeader px={{lg: 12}}>
+        <Card p={{base: 5, sm: 8}} maxW={`548px`} w={`100%`} h={`fit-content`}>
+            <CardHeader>
                 <Center>
                     <Link as={RouterLink} to={`/`}>
                         <img src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png`}
@@ -22,15 +22,15 @@ export const AuthFormTemplateSignup = ({children}: AuthFormTamplateProps) => {
                     Join creators today to sell your product and upskill your community.
                 </Text>
             </CardHeader>
-            <CardBody px={{lg: 12}}>{children}</CardBody>
+            <CardBody borderRadius={`8px`} bgColor={`white`}>{children}</CardBody>
         </Card>
     );
 };
 
 export const AuthFormTemplateLogin = ({children, title, subTitle}: AuthFormTamplateProps) => {
     return (
-        <Card bgColor={`transparent`} py={8} maxW={`444px`} w={`100%`}>
-            <CardHeader p={12}>
+        <Card bgColor={{base: `white`, sm: `transparent`}} maxW={`444px`} w={`100%`} py={{sm: `5rem`}} h={{base: `100vh`, sm: `fit-content`}}>
+            <CardHeader>
                 <Center>
                     <Link as={RouterLink} to={`/`}>
                         <img src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png`}
@@ -38,8 +38,8 @@ export const AuthFormTemplateLogin = ({children, title, subTitle}: AuthFormTampl
                     </Link>
                 </Center>
             </CardHeader>
-            <CardBody borderRadius={`8px`} bgColor={`white`} px={{lg: 12}}>
-                <CardHeader color={`grey.600`} px={0}>
+            <CardBody borderRadius={`8px`} bgColor={`white`}  p={{base: 8, sm: 12}}>
+                <CardHeader color={`grey.600`} p={0} mb={5}>
                     <Text as={`h4`}>{title}</Text>
                     <Text mt={4}>{subTitle}</Text>
                 </CardHeader>

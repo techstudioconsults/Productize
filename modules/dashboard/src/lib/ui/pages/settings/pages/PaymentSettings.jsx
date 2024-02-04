@@ -44,7 +44,7 @@ export const PaymentSettings = () => {
             <GridItem colSpan={{ base: 12, md: 7 }}>
                 {/* paystack modal */}
                 <Text fontWeight={600} textAlign={{ base: `center`, md: `initial` }} color={`purple.300`} my={2}>
-                    Gateway
+                    Accounts
                 </Text>
                 <Stack>
                     <Card
@@ -61,7 +61,7 @@ export const PaymentSettings = () => {
                     >
                         <Icon fontSize={`1.2rem`} icon={`ei:plus`} />
                         <Text color={`purple.200`} fontWeight={600}>
-                            Add Gateway
+                            Add Account
                         </Text>
                         <ModalComp modalSize={`lg`} openModal={isOpen} closeModal={onClose}>
                             <Box>

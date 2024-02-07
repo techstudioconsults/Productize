@@ -1,6 +1,6 @@
-import { Button } from "@chakra-ui/react";
-import { Icon } from "@iconify/react";
-import { LegacyRef, MutableRefObject, ReactNode, useRef } from "react";
+import {Button} from "@chakra-ui/react";
+import {Icon} from "@iconify/react";
+import {LegacyRef, MutableRefObject, ReactNode, useRef} from "react";
 
 export interface BtnExtras {
     border?: string;
@@ -16,7 +16,11 @@ export interface BtnExtras {
     disabled?: boolean;
     onClick?: () => void;
     onClickAsync?: () => Promise<void>;
+    hover?: object | any;
+    active?: object | any;
+    focus?: object | any;
 }
+
 export interface ButtonProps {
     text: string;
     width: string | object;
@@ -28,15 +32,15 @@ export interface ButtonProps {
     btnExtras?: BtnExtras;
 }
 
-export function SharedButton({ text, width, height, bgColor, textColor, borderRadius, fontSize, btnExtras }: ButtonProps) {
+export function SharedButton({text, width, height, bgColor, textColor, borderRadius, fontSize, btnExtras}: ButtonProps) {
     useRef();
     return (
         <Button
             onClick={btnExtras?.onClick || btnExtras?.onClickAsync}
             loadingText={btnExtras?.loadingText}
             isLoading={btnExtras?.isLoading}
-            leftIcon={<Icon fontSize={`1rem`} icon={btnExtras?.leftIcon} />}
-            rightIcon={<Icon fontSize={`1rem`} icon={btnExtras?.rightIcon} />}
+            leftIcon={<Icon fontSize={`1rem`} icon={btnExtras?.leftIcon}/>}
+            rightIcon={<Icon fontSize={`1rem`} icon={btnExtras?.rightIcon}/>}
             fontWeight={500}
             fontSize={fontSize}
             w={width}
@@ -47,6 +51,18 @@ export function SharedButton({ text, width, height, bgColor, textColor, borderRa
             border={btnExtras?.border}
             type={btnExtras?.type}
             isDisabled={btnExtras?.disabled}
+            // reaction style
+            // _hover={btnExtras?.hover || {filter: `brightness(115%)`, boxShadow: `0px 2px 5px 1px #00000050`}}
+            // _active={btnExtras?.active || {
+            //     filter: `brightness(70%)`,
+            //     boxShadow: `0px 1px 5px 1px #00000060`
+            // }}
+            _hover={{filter: `brightness(115%)`, boxShadow: `0px 2px 5px 1px #00000050`}}
+            _active={btnExtras?.border == null ? btnExtras?.active || {
+                filter: `brightness(70%)`,
+                boxShadow: `0px 1px 5px 1px #00000060`
+            } : btnExtras?.active}
+            // _focus={btnExtras?.focus || { filter: `brightness(70%)`, boxShadow: `0px 1px 5px 1px #00000060` }}
         >
             {text}
         </Button>

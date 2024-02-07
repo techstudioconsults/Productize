@@ -305,7 +305,7 @@ export const NewProductTab = () => {
                 <Flex display={{ lg: `none` }} my={5}>
                     {productCallsToAction}
                 </Flex>
-                <TabList overflowX={`scroll`} overflowY={`hidden`} justifyContent={`space-between`} color={`grey.400`}>
+                <TabList overflowX={`scroll`} overflowY={`hidden`} className={`hide_scrollbar`} justifyContent={`space-between`} color={`grey.400`}>
                     <Flex>
                         <Tab
                             // onClick={() => handleTabClick('#product-details')}

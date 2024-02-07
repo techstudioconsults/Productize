@@ -130,7 +130,7 @@ export function LoginForm() {
                         text={"Continue with Google"}
                         width={`100%`}
                         height={"48px"}
-                        bgColor={"white"}
+                        bgColor={"transparent"}
                         textColor={"purple.200"}
                         borderRadius={"4px"}
                         fontSize={{ base: `sm`, lg: `md` }}

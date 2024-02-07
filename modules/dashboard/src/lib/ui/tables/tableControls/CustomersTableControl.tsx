@@ -1,14 +1,14 @@
-import { Box, Flex, IconButton } from "@chakra-ui/react";
+import {Box, Flex, IconButton} from "@chakra-ui/react";
 import DateRangePicker from "rsuite/esm/DateRangePicker";
 import SelectPicker from "rsuite/esm/SelectPicker";
-import { DropdownAction } from "../../DropdownAction";
+import {DropdownAction} from "../../DropdownAction";
 import axios from "axios";
-import { useSelector } from "react-redux";
-import { useState } from "react";
-import { Icon } from "@iconify/react";
-import { useDateRangeFormat } from "@productize-v1.0.0/modules/shared/hooks";
-import { selectCurrentToken, useGetAllCustomersMutation, useGetAllProductsMutation } from "@productize-v1.0.0/modules/shared/redux";
-import { SpinnerComponentSmall, SharedButton, useToastAction, ToastFeedback } from "@productize-v1.0.0/modules/shared/ui";
+import {useSelector} from "react-redux";
+import {useState} from "react";
+import {Icon} from "@iconify/react";
+import {useDateRangeFormat} from "@productize-v1.0.0/modules/shared/hooks";
+import {selectCurrentToken, useGetAllCustomersMutation, useGetAllProductsMutation} from "@productize-v1.0.0/modules/shared/redux";
+import {SpinnerComponentSmall, SharedButton, useToastAction, ToastFeedback} from "@productize-v1.0.0/modules/shared/ui";
 import download from "downloadjs";
 import errorImg from "@icons/error.svg";
 
@@ -18,9 +18,9 @@ interface controlsProp {
     showRefreshBtn?: boolean;
 }
 
-export const CustomersTableControl = ({ showRefreshBtn }: controlsProp) => {
+export const CustomersTableControl = ({showRefreshBtn}: controlsProp) => {
     const [exportLoading, setExportLoading] = useState(false);
-    const { toast, toastIdRef, close } = useToastAction();
+    const {toast, toastIdRef, close} = useToastAction();
     const token = useSelector(selectCurrentToken);
     const [startDate, setStartDate] = useState(``);
     const [endDate, setEndDate] = useState(``);
@@ -107,23 +107,26 @@ export const CustomersTableControl = ({ showRefreshBtn }: controlsProp) => {
     };
 
     return (
-        <Flex alignItems={{ md: `center` }} justifyContent={`space-between`} gap={4}>
-            <Flex w={{ base: `100%`, md: `fit-content` }} flexDir={{ base: `column`, md: `row` }} gap={4} alignItems={{ base: `flex-start`, md: `center` }}>
-                <Box w={`100%`}>
+        <Flex alignItems={{md: `center`}} justifyContent={`space-between`}>
+            <Flex w={{base: `100%`, md: `fit-content`}} flexDir={{base: `column`, md: `row`}} gap={4} alignItems={{base: `flex-start`, md: `center`}}>
+                <Flex w={{base: `100%`, md: `fit-content`}} gap={4} alignItems={{base: `flex-start`, md: `center`}}>
                     <DateRangePicker
                         onChange={handleDateRangeChange}
                         placeholder={`15 Feb, 2023 - 22 Feb, 2023`}
                         size="lg"
                         character="-"
-                        style={{ width: `100%` }}
+                        style={{width: `100%`}}
                     />
-                </Box>
-                <Flex w={{ base: `100%`, md: `fit-content` }} gap={4} alignItems={{ base: `flex-start`, md: `center` }}>
+                    <Box display={{md: `none`}}>
+                        <DropdownAction handleExport={handleExport} icon={`zondicons:dots-horizontal-triple`}/>
+                    </Box>
+                </Flex>
+                <Flex w={{base: `100%`, md: `fit-content`}} gap={4} alignItems={{base: `flex-start`, md: `center`}}>
                     <SelectPicker
                         disabled
                         searchable={false}
                         onSelect={handleStatusChange}
-                        style={{ width: `100%` }}
+                        style={{width: `100%`}}
                         placeholder={`Status`}
                         size="lg"
                         data={data}
@@ -133,18 +136,18 @@ export const CustomersTableControl = ({ showRefreshBtn }: controlsProp) => {
                         color={`purple.200`}
                         bgColor={`purple.100`}
                         isLoading={getAllCustomersStatus.isLoading}
-                        spinner={<SpinnerComponentSmall size="sm" />}
+                        spinner={<SpinnerComponentSmall size="sm"/>}
                         onClick={filterTable}
                         fontSize={`xl`}
                         // variant={`outline`}
                         aria-label="Filter table"
-                        icon={<Icon icon={`system-uicons:filtering`} />}
+                        icon={<Icon icon={`system-uicons:filtering`}/>}
                     />
                 </Flex>
             </Flex>
             {/* dots and buttons */}
             <Box>
-                <Flex display={{ base: `none`, md: `flex` }} gap={4} alignItems={`center`}>
+                <Flex display={{base: `none`, md: `flex`}} gap={4} alignItems={`center`}>
                     <Box hidden={showRefreshBtn ? false : true}>
                         <SharedButton
                             text={"Refresh"}
@@ -153,7 +156,7 @@ export const CustomersTableControl = ({ showRefreshBtn }: controlsProp) => {
                             bgColor={"transparent"}
                             textColor={"purple.200"}
                             borderRadius={"4px"}
-                            fontSize={{ base: `sm`, md: `md` }}
+                            fontSize={{base: `sm`, md: `md`}}
                             btnExtras={{
                                 border: `1px solid #6D5DD3`,
                                 leftIcon: `basil:refresh-outline`,
@@ -169,7 +172,7 @@ export const CustomersTableControl = ({ showRefreshBtn }: controlsProp) => {
                             bgColor={"transparent"}
                             textColor={"purple.200"}
                             borderRadius={"4px"}
-                            fontSize={{ base: `sm`, md: `md` }}
+                            fontSize={{base: `sm`, md: `md`}}
                             btnExtras={{
                                 disabled: true,
                                 border: `1px solid #6D5DD3`,
@@ -181,9 +184,6 @@ export const CustomersTableControl = ({ showRefreshBtn }: controlsProp) => {
                         />
                     </Box>
                 </Flex>
-                <Box display={{ md: `none` }}>
-                    <DropdownAction handleExport={handleExport} icon={`zondicons:dots-horizontal-triple`} />
-                </Box>
             </Box>
         </Flex>
     );

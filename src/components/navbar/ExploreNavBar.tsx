@@ -13,7 +13,7 @@ interface navProps {
 
 export const ExploreNavBar = ({ isAuth }: navProps) => {
     return (
-        <Box background={`coral.200`} py={4}>
+        <Box pos={`sticky`} top={0} background={`coral.200`} py={4}>
             <Container px={{ base: 4, sm: 8, xl: 0 }} maxW={`70rem`}>
                 <Flex justifyContent={`space-between`} flexDir={{ base: `column`, lg: `row` }} as="nav" gap={4}>
                     <Flex justifyContent={`space-between`} alignItems={`center`}>
@@ -28,8 +28,8 @@ export const ExploreNavBar = ({ isAuth }: navProps) => {
                             <AvatarComp />
                         </Box>
                     </Flex>
-                    <Flex justifyContent={`space-between`} gap={10} alignItems={`center`}>
-                        <Box>
+                    <Flex justifyContent={`space-between`} gap={5} alignItems={`center`}>
+                        <Box w={{base:`100%`, lg:`initial`}}>
                             <SearchComp size="lg" color={`coral.100`} />
                         </Box>
                         <Box fontSize={`1.5rem`}>

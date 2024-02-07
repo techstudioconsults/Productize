@@ -1,16 +1,16 @@
-import { Box, Center, Container, Flex, Image, Link } from "@chakra-ui/react";
-import { SearchComp, AvatarComp, SharedButton, Sidenav, Cart } from "@productize-v1.0.0/modules/shared/ui";
-import { Link as RouterLink } from "react-router-dom";
+import {Box, Center, Container, Flex, Image, Link} from "@chakra-ui/react";
+import {SearchComp, AvatarComp, SharedButton, Sidenav, Cart} from "@productize-v1.0.0/modules/shared/ui";
+import {Link as RouterLink} from "react-router-dom";
 import Links from "../../../../components/navbar/NavigationLinks";
 
-const ProductNavbar = ({ isAuth }: any) => {
+const ProductNavbar = ({isAuth}: any) => {
     return (
-        <Box bg={`grey.100`} py={5} borderBottom={`1px solid grey.300`}>
+        <Box pos={`sticky`} top={0} bg={`grey.100`} py={5} borderBottom={`1px solid grey.300`} zIndex={999}>
             <Container maxW={`70rem`}>
                 <Box as="nav" display="flex" justifyContent="space-between" alignItems="center">
                     <Center gap={4}>
                         <Box>
-                            <Sidenav links={<Links isMobile={true} />} />
+                            <Sidenav links={<Links isMobile={true}/>}/>
                         </Box>
                         <Link as={RouterLink} to={`/`}>
                             <Image
@@ -19,17 +19,16 @@ const ProductNavbar = ({ isAuth }: any) => {
                             />
                         </Link>
                     </Center>
-
-                    <Flex justify={{ lg: "center" }} alignItems={"center"} gap="1.5rem">
-                        <Box display={{ base: `none`, md: `block` }}>
-                            <SearchComp size="lg" width={`25rem`} color={`grey.200`} />
+                    <Flex justify={{lg: "center"}} alignItems={"center"} gap="1.5rem">
+                        <Box display={{base: `none`, md: `block`}}>
+                            <SearchComp size="lg" width={`25rem`} color={`grey.200`}/>
                         </Box>
                         <Box>
-                            <Cart />
+                            <Cart/>
                         </Box>
-                        <Box display={{ base: `none`, lg: `initial` }}>
+                        <Box display={{base: `none`, lg: `initial`}}>
                             {isAuth ? (
-                                <AvatarComp />
+                                <AvatarComp/>
                             ) : (
                                 <Link as={RouterLink} to={`/auth`}>
                                     <SharedButton
@@ -39,13 +38,13 @@ const ProductNavbar = ({ isAuth }: any) => {
                                         bgColor={"yellow.200"}
                                         textColor={"white"}
                                         borderRadius={"4px"}
-                                        fontSize={{ base: `sm`, xl: `md` }}
+                                        fontSize={{base: `sm`, xl: `md`}}
                                     />
                                 </Link>
                             )}
                         </Box>
-                        <Box display={{ lg: `none` }}>
-                            <AvatarComp />
+                        <Box display={{lg: `none`}}>
+                            <AvatarComp/>
                         </Box>
                     </Flex>
                 </Box>

@@ -158,7 +158,7 @@ export const SetNewProductForm = () => {
             <RadioCards />
             {/* grid 3 */}
             <SimpleGrid my={8}>
-                <FormControl mb={8} h={`20rem`}>
+                <FormControl >
                     <>
                         <FormLabel color={`purple.300`} fontWeight={600}>
                             Description

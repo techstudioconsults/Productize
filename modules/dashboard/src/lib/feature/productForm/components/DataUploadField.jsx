@@ -3,13 +3,16 @@ import { Box, Card, Flex, FormHelperText, Image, Input, SimpleGrid, Text } from 
 import { UploadExternalFiles } from "../../../ui/UploadExternalFiles";
 import { SharedButton } from "@productize-v1.0.0/modules/shared/ui";
 import { Controller, useFormContext } from "react-hook-form";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 export const DataUploadField = ({ showFiles }) => {
     const { state } = useLocation();
-    const { control } = useFormContext();
-    const [documents, setDocuments] = useState();
+    const {
+        control,
+        formState: { errors },
+    } = useFormContext();
+    const [documents, setDocuments] = useState([]);
     const [showPreview, setShowPreview] = useState(false);
     const fileInputRef = useRef(null);
 
@@ -20,17 +23,14 @@ export const DataUploadField = ({ showFiles }) => {
             setShowPreview(true);
         } else {
             setShowPreview(false);
-            setDocuments(null);
-            isModifiedData();
+            setDocuments([]);
         }
     };
 
-    const isModifiedData = useCallback(() => {
-        if (state) {
+    useEffect(() => {
+        if (state && showFiles) {
             setDocuments(showFiles);
             setShowPreview(true);
-        } else {
-            return;
         }
     }, [showFiles, state]);
 
@@ -38,17 +38,13 @@ export const DataUploadField = ({ showFiles }) => {
         fileInputRef.current.click();
     };
 
-    useEffect(() => {
-        isModifiedData();
-    }, [isModifiedData, state]);
-
     return (
         <div>
-            <Heading action={handleInput} />
+            <Heading action={handleInput} errors={errors} />
             <Controller
                 name="data"
                 control={control}
-                defaultValue={``}
+                defaultValue={[]}
                 render={({ field: { onChange, ...field } }) => (
                     <Input
                         display={`none`}
@@ -72,16 +68,16 @@ export const DataUploadField = ({ showFiles }) => {
                 />
             </Box>
             <SimpleGrid display={showPreview ? `grid` : `none`} my={4} columns={{ base: 1, md: 2 }} gap={4}>
-                {documents?.map((file, index) => {
-                    return <ProductContentDisplay key={index} file={file} />;
-                })}
+                {documents.map((file, index) => (
+                    <ProductContentDisplay key={index} file={file} />
+                ))}
             </SimpleGrid>
         </div>
     );
 };
 
-const Heading = ({ action }) => {
-    return (
+const Heading = ({ action, errors }) => (
+    <>
         <Flex justifyContent="space-between" alignItems="flex-end">
             <Box>
                 <Text color="purple.300" fontWeight={600}>
@@ -108,21 +104,22 @@ const Heading = ({ action }) => {
                 />
             </Box>
         </Flex>
-    );
-};
+        <Text className={`tiny-text`} color={`red.200`}>
+            {errors?.data?.message}
+        </Text>
+    </>
+);
 
-const ProductContentDisplay = ({ file }) => {
-    return (
-        <Card p={8} borderRadius="5px" bgColor="purple.100" variant="filled">
-            <Flex gap={4} alignItems="center">
-                <Box boxSize="72px">
-                    <Image src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951012/productize/Layer_1_m6pvyg_yz7oz1.png" />
-                </Box>
-                <Box>
-                    <Text fontWeight={600}>{file?.name}</Text>
-                    <Text className="small-text">{`${file?.type}.${Math.floor(file?.size / 1000)}`}kb</Text>
-                </Box>
-            </Flex>
-        </Card>
-    );
-};
+const ProductContentDisplay = ({ file }) => (
+    <Card p={8} borderRadius="5px" bgColor="purple.100" variant="filled">
+        <Flex gap={4} alignItems="center">
+            <Box boxSize="72px">
+                <Image src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951012/productize/Layer_1_m6pvyg_yz7oz1.png" />
+            </Box>
+            <Box>
+                <Text fontWeight={600}>{file?.name}</Text>
+                <Text className="small-text">{`${file?.type}.${Math.floor(file?.size / 1000)}`}kb</Text>
+            </Box>
+        </Flex>
+    </Card>
+);

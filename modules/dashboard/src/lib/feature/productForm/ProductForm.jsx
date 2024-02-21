@@ -84,14 +84,6 @@ export const ProductForm = () => {
         [hash, state]
     );
 
-    const setAndGetFilesInLocalStorageThumbnail = useCallback(
-        async (file) => {
-            const res = await urlToFileInputObject(file);
-            setThumbnailDecompressedFile([res]);
-        },
-        [hash, state]
-    );
-
     useEffect(() => {
         console.log(state, hash);
         if (state && hash === `#product-details`) {
@@ -102,7 +94,7 @@ export const ProductForm = () => {
             setValue(`tags`, state?.product?.tags);
             setAndGetFilesInLocalStorage(state?.product?.data, `product-data`);
             setAndGetFilesInLocalStorage(state?.product?.cover_photos, `cover-photos`);
-            setAndGetFilesInLocalStorageThumbnail(state?.product?.thumbnail, `thumbnail`);
+            setAndGetFilesInLocalStorage(state?.product?.thumbnail, `thumbnail`);
         }
     }, [setAndGetFilesInLocalStorage, hash, setValue, state]);
 
@@ -126,18 +118,13 @@ export const ProductForm = () => {
             </FormControl>
 
             {/* GRID THREE */}
-            <FormControl mb={8} h={`20rem`}>
-                {/* product description */}
-                <Field label="Description" error={errors.description}>
-                    <RichTextField />
-                </Field>
+            <FormControl h={`21rem`} overflow={`hidden`}>
+                <RichTextField />
             </FormControl>
 
             {/* GRID FOUR */}
             <FormControl my={8} gap={4}>
-                <Field error={errors.data}>
-                    <DataUploadField showFiles={ProductDecompressedFiles} />
-                </Field>
+                <DataUploadField showFiles={ProductDecompressedFiles} />
             </FormControl>
 
             {/* GRID FIVE */}
@@ -156,7 +143,7 @@ export const ProductForm = () => {
 
             {/* GRID SEVEN */}
             <FormControl as={SimpleGrid} my={8} gap={4} columns={{ base: 1, sm: 2 }}>
-                <Field error={errors.highlights}>
+                <Field>
                     <HighLightField />
                 </Field>
             </FormControl>

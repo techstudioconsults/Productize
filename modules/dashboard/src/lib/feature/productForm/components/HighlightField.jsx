@@ -1,11 +1,14 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import React, { useState } from "react";
+import { useState } from "react";
 import { Box, Flex, FormHelperText, Input, InputGroup, Stack, Text } from "@chakra-ui/react";
 import { SharedButton } from "@productize-v1.0.0/modules/shared/ui";
 import { useFormContext } from "react-hook-form";
 
 export const HighLightField = () => {
-    const { register } = useFormContext();
+    const {
+        register,
+        formState: { errors },
+    } = useFormContext();
     const [highlights, setHighlights] = useState([""]); // State to store highlights
 
     const addHighlight = () => {
@@ -18,16 +21,22 @@ export const HighLightField = () => {
             <InputGroup size="lg">
                 <Stack w={`100%`} mt={4} gap={4}>
                     {highlights.map((highlight, index) => (
-                        <Input
-                            key={index}
-                            pr="4.5rem"
-                            bgColor={`grey.200`}
-                            _focus={{ bgColor: `grey.200`, color: `grey.800` }}
-                            _placeholder={{ color: `grey.400` }}
-                            placeholder="Enter Information"
-                            variant={`filled`}
-                            {...register(`highlights[${index}]`)} // Register each input field
-                        />
+                        <Box key={index}>
+                            <Input
+                                pr="4.5rem"
+                                bgColor={`grey.200`}
+                                _focus={{ bgColor: `grey.200`, color: `grey.800` }}
+                                _placeholder={{ color: `grey.400` }}
+                                placeholder="Enter Information"
+                                variant={`filled`}
+                                {...register(`highlights[${index}]`)} // Register each input field
+                            />
+                            {errors.highlights && errors.highlights?.[index] && (
+                                <Text className={`tiny-text`} color={`red.200`}>
+                                    {errors.highlights?.[index].message}
+                                </Text>
+                            )}
+                        </Box>
                     ))}
                 </Stack>
             </InputGroup>

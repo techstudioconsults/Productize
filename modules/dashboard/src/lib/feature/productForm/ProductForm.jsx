@@ -37,66 +37,108 @@ export const ProductForm = () => {
     } = useFormContext(); // retrieve all hook methods
 
     // Function to convert a remote URL to a File input object
-    async function urlToFileInputObject(url) {
-        try {
-            const response = await fetch(url);
-            const blob = await response.blob();
-            const filename = url.substring(url.lastIndexOf("/") + 1);
-            const file = new File([blob], filename, { type: blob.type });
-            return file;
-        } catch (error) {
-            console.error("Error:", error);
-            return null;
+    // async function urlToFileInputObject(url) {
+    //     try {
+    //         const response = await fetch(url);
+    //         const blob = await response.blob();
+    //         const filename = url.substring(url.lastIndexOf("/") + 1);
+    //         const file = new File([blob], filename, { type: blob.type });
+    //         return file;
+    //     } catch (error) {
+    //         console.error("Error:", error);
+    //         return null;
+    //     }
+    // }
+
+    // const setAndGetFilesInLocalStorage = useCallback(
+    //     async (file, filename) => {
+    //         let urlBlobList;
+    //         switch (filename) {
+    //             case `product-data`:
+    //                 urlBlobList = await Promise.all(
+    //                     file?.map(async (url) => {
+    //                         const res = await urlToFileInputObject(url);
+    //                         return res;
+    //                     })
+    //                 );
+    //                 setProductDecompressedFiles(urlBlobList);
+    //                 break;
+    //             case `cover-photos`:
+    //                 urlBlobList = await Promise.all(
+    //                     file?.map(async (url) => {
+    //                         const res = await urlToFileInputObject(url);
+    //                         return res;
+    //                     })
+    //                 );
+    //                 setCoverPhotosDecompressedFiles(urlBlobList);
+    //                 break;
+    //             case `thumbnail`:
+    //                 urlBlobList = await urlToFileInputObject(file);
+    //                 setThumbnailDecompressedFile([urlBlobList]);
+    //                 break;
+
+    //             default:
+    //                 return;
+    //         }
+    //     },
+    //     [hash, state]
+    // );
+
+    // useEffect(() => {
+    //     // console.log(state, hash);
+    //     if (state && hash === `#product-details`) {
+    //         setValue(`title`, state?.product?.title);
+    //         setValue(`price`, state?.product?.price);
+    //         setValue(`product_type`, state?.product?.product_type);
+    //         setValue(`description`, state?.product?.description);
+    //         setValue(`tags`, state?.product?.tags);
+    //         setAndGetFilesInLocalStorage(state?.product?.data, `product-data`);
+    //         setAndGetFilesInLocalStorage(state?.product?.cover_photos, `cover-photos`);
+    //         setAndGetFilesInLocalStorage(state?.product?.thumbnail, `thumbnail`);
+    //     }
+    // }, [setAndGetFilesInLocalStorage, hash, setValue, state]);
+    async function urlToBlob(url) {
+        const response = await fetch(url);
+        const blob = await response.blob();
+        return blob;
+    }
+
+    async function setFilesInLocalStorage(files, filename) {
+        const blobPromises = files.map(async (url) => {
+            const blob = await urlToBlob(url);
+            return new File([blob], url.substring(url.lastIndexOf("/") + 1), { type: blob.type });
+        });
+
+        const blobFiles = await Promise.all(blobPromises);
+
+        switch (filename) {
+            case "product-data":
+                setProductDecompressedFiles(blobFiles);
+                break;
+            case "cover-photos":
+                setCoverPhotosDecompressedFiles(blobFiles);
+                break;
+            case "thumbnail":
+                setThumbnailDecompressedFile(blobFiles);
+                break;
+            default:
+                break;
         }
     }
 
-    const setAndGetFilesInLocalStorage = useCallback(
-        async (file, filename) => {
-            let urlBlobList;
-            switch (filename) {
-                case `product-data`:
-                    urlBlobList = await Promise.all(
-                        file?.map(async (url) => {
-                            const res = await urlToFileInputObject(url);
-                            return res;
-                        })
-                    );
-                    setProductDecompressedFiles(urlBlobList);
-                    break;
-                case `cover-photos`:
-                    urlBlobList = await Promise.all(
-                        file?.map(async (url) => {
-                            const res = await urlToFileInputObject(url);
-                            return res;
-                        })
-                    );
-                    setCoverPhotosDecompressedFiles(urlBlobList);
-                    break;
-                case `thumbnail`:
-                    urlBlobList = await urlToFileInputObject(file);
-                    setThumbnailDecompressedFile([urlBlobList]);
-                    break;
-
-                default:
-                    return;
-            }
-        },
-        [hash, state]
-    );
-
     useEffect(() => {
-        // console.log(state, hash);
-        if (state && hash === `#product-details`) {
-            setValue(`title`, state?.product?.title);
-            setValue(`price`, state?.product?.price);
-            setValue(`product_type`, state?.product?.product_type);
-            setValue(`description`, state?.product?.description);
-            setValue(`tags`, state?.product?.tags);
-            // setAndGetFilesInLocalStorage(state?.product?.data, `product-data`);
-            // setAndGetFilesInLocalStorage(state?.product?.cover_photos, `cover-photos`);
-            // setAndGetFilesInLocalStorage(state?.product?.thumbnail, `thumbnail`);
+        if (state && hash === "#product-details") {
+            setValue("title", state?.product?.title);
+            setValue("price", state?.product?.price);
+            setValue("product_type", state?.product?.product_type);
+            setValue("description", state?.product?.description);
+            setValue("tags", state?.product?.tags);
+
+            setFilesInLocalStorage(state?.product?.data || [], "product-data");
+            setFilesInLocalStorage(state?.product?.cover_photos || [], "cover-photos");
+            setFilesInLocalStorage(state?.product?.thumbnail ? [state.product.thumbnail] : [], "thumbnail");
         }
-    }, [setAndGetFilesInLocalStorage, hash, setValue, state]);
+    }, [hash, setValue, state]);
 
     return (
         <FormControl>

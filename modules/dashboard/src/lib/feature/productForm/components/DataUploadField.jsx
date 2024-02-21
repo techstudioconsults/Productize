@@ -58,7 +58,7 @@ export const DataUploadField = ({ showFiles }) => {
                     />
                 )}
             />
-            <Box display={showPreview ? `none` : `block`}>
+            {/* <Box display={showPreview ? `none` : `block`}>
                 <UploadExternalFiles
                     icon="ri:file-upload-line"
                     fileType="all"
@@ -68,7 +68,12 @@ export const DataUploadField = ({ showFiles }) => {
                 />
             </Box>
             <SimpleGrid display={showPreview ? `grid` : `none`} my={4} columns={{ base: 1, md: 2 }} gap={4}>
-                {documents.map((file, index) => (
+                {documents?.map((file, index) => (
+                    <ProductContentDisplay key={index} file={file} />
+                ))}
+            </SimpleGrid> */}
+            <SimpleGrid my={4} columns={{ base: 1, md: 2 }} gap={4}>
+                {documents?.map((file, index) => (
                     <ProductContentDisplay key={index} file={file} />
                 ))}
             </SimpleGrid>

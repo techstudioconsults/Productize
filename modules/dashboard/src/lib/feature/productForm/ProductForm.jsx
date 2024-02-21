@@ -11,7 +11,7 @@ import RichTextField from "./components/RichTextField";
 import { ThumbnailUploadField } from "./components/ThumbnailUploadField";
 import { HighLightField } from "./components/HighlightField";
 import TagsField from "./components/TagsField";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 const globalFieldStyle = {
@@ -104,7 +104,7 @@ export const ProductForm = () => {
     }
 
     async function setFilesInLocalStorage(files, filename) {
-        const blobPromises = files.map(async (url) => {
+        const blobPromises = files?.map(async (url) => {
             const blob = await urlToBlob(url);
             return new File([blob], url.substring(url.lastIndexOf("/") + 1), { type: blob.type });
         });

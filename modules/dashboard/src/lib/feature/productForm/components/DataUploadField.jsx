@@ -3,7 +3,7 @@ import { Box, Card, Flex, FormHelperText, Image, Input, SimpleGrid, Text } from 
 import { UploadExternalFiles } from "../../../ui/UploadExternalFiles";
 import { SharedButton } from "@productize-v1.0.0/modules/shared/ui";
 import { Controller, useFormContext } from "react-hook-form";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 export const DataUploadField = ({ showFiles }) => {
@@ -23,7 +23,8 @@ export const DataUploadField = ({ showFiles }) => {
             setShowPreview(true);
         } else {
             setShowPreview(false);
-            setDocuments([]);
+            setDocuments(null);
+            isModifiedData();
         }
     };
 
@@ -34,9 +35,22 @@ export const DataUploadField = ({ showFiles }) => {
         }
     }, [showFiles, state]);
 
+    const isModifiedData = useCallback(() => {
+        if (state) {
+            setDocuments(showFiles);
+            setShowPreview(true);
+        } else {
+            return;
+        }
+    }, [showFiles, state]);
+
     const handleInput = () => {
         fileInputRef.current.click();
     };
+
+    useEffect(() => {
+        isModifiedData();
+    }, [isModifiedData, state]);
 
     return (
         <div>
@@ -58,7 +72,8 @@ export const DataUploadField = ({ showFiles }) => {
                     />
                 )}
             />
-            {/* <Box display={showPreview ? `none` : `block`}>
+            <Box>
+                {/* display={showPreview ? `none` : `block`} */}
                 <UploadExternalFiles
                     icon="ri:file-upload-line"
                     fileType="all"
@@ -67,15 +82,11 @@ export const DataUploadField = ({ showFiles }) => {
                     showFiles={handleInput}
                 />
             </Box>
-            <SimpleGrid display={showPreview ? `grid` : `none`} my={4} columns={{ base: 1, md: 2 }} gap={4}>
-                {documents?.map((file, index) => (
-                    <ProductContentDisplay key={index} file={file} />
-                ))}
-            </SimpleGrid> */}
             <SimpleGrid my={4} columns={{ base: 1, md: 2 }} gap={4}>
-                {documents?.map((file, index) => (
-                    <ProductContentDisplay key={index} file={file} />
-                ))}
+                {/* display={showPreview ? `grid` : `none`} */}
+                {documents?.map((file, index) => {
+                    return <ProductContentDisplay key={index} file={file} />;
+                })}
             </SimpleGrid>
         </div>
     );

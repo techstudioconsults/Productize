@@ -92,9 +92,9 @@ export const ProductForm = () => {
             setValue(`product_type`, state?.product?.product_type);
             setValue(`description`, state?.product?.description);
             setValue(`tags`, state?.product?.tags);
-            setAndGetFilesInLocalStorage(state?.product?.data, `product-data`);
-            setAndGetFilesInLocalStorage(state?.product?.cover_photos, `cover-photos`);
-            setAndGetFilesInLocalStorage(state?.product?.thumbnail, `thumbnail`);
+            // setAndGetFilesInLocalStorage(state?.product?.data, `product-data`);
+            // setAndGetFilesInLocalStorage(state?.product?.cover_photos, `cover-photos`);
+            // setAndGetFilesInLocalStorage(state?.product?.thumbnail, `thumbnail`);
         }
     }, [setAndGetFilesInLocalStorage, hash, setValue, state]);
 

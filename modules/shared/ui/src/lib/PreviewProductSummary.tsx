@@ -41,7 +41,6 @@ interface productProp {
 
 export const PreviewProductSummary = () => {
     const {state} = useLocation();
-    console.log(state);
 
     return (
         <Container mt={`5rem`} maxW={`70rem`}>

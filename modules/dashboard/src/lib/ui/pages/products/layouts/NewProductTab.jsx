@@ -3,12 +3,11 @@ import ShareLayout from "./ShareLayout";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FormProvider, useForm } from "react-hook-form";
-// eslint-disable-next-line @nx/enforce-module-boundaries
-import { useAxiosInstance } from "@productize-v1.0.0/modules/shared/hooks";
+import { useAxiosInstance, useCompressedFile } from "@productize-v1.0.0/modules/shared/hooks";
 import { useUpdateProductStatusMutation } from "@productize-v1.0.0/modules/shared/redux";
 import { ToastFeedback, SharedButton, PreviewProductSummary, useToastAction } from "@productize-v1.0.0/modules/shared/ui";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { productFormSchema } from "@productize-v1.0.0/dashboard";
+import { ProductForm, productFormSchema } from "@productize-v1.0.0/dashboard";
 import { SetNewProductForm } from "@productize-v1.0.0/dashboard";
 import { ContentDeliveryForm } from "@productize-v1.0.0/dashboard";
 import errorImg from "@icons/error.svg";
@@ -24,8 +23,8 @@ const disabledStateStyle = {
 const tabNames = ["product-details", "content-delivery", "preview", "share"];
 
 export const NewProductTab = () => {
+    // const { compressAndStoreFiles } = useCompressedFile();
     const { query, isLoading } = useAxiosInstance({ MIME_TYPE: "multipart/form-data" });
-    // const { query, isLoading } = useAxiosInstance({ MIME_TYPE: "application/json" });
     const [updateProductStatus, updateProductStatusStatus] = useUpdateProductStatusMutation();
 
     const { toast, toastIdRef, close } = useToastAction();
@@ -40,9 +39,6 @@ export const NewProductTab = () => {
 
     const getHashIndex = tabNames.findIndex((tab) => hash === `#${tab}`);
     const [tabIndex, setTabIndex] = useState(getHashIndex);
-    // const handleTabClick = (tabId) => {
-    // 	navigate(tabId);
-    // };
 
     useEffect(() => {
         setTabIndex(getHashIndex);
@@ -54,30 +50,14 @@ export const NewProductTab = () => {
             const formData = {
                 title: data.title,
                 price: data.price,
-                // product_type: data.productType,
                 description: data.description,
                 data: [...data.data],
                 cover_photos: [...data.cover_photos],
-                thumbnail: data.thumbnail,
-                highlights: [data?.highlight_1, data?.highlight_2, data?.highlight_3],
+                thumbnail: data.thumbnail[0],
+                highlights: data.highlights,
                 tags: data.tags,
-                // stock_count: data.stock_count,
-                // choose_quantity: data.choose_quantity,
-                // show_sales_count: data.show_sales_count,
             };
-            // const formData = new FormData();
 
-            // formData.append("title", data.title);
-            // formData.append("price", data.price);
-            // formData.append("description", data.description);
-            // formData.append("thumbnail", data.thumbnail);
-            // formData.append("tags", data.tags);
-            // formData.append("stock_count", data.stock_count);
-            // formData.append("choose_quantity", data.choose_quantity);
-            // formData.append("show_sales_count", data.show_sales_count);
-            // formData.append("data", JSON.stringify([...data.data]));
-            // formData.append("cover_photos", JSON.stringify([...data.cover_photos]));
-            // formData.append("highlights", JSON.stringify([data?.highlight_1, data?.highlight_2, data?.highlight_3]));
             try {
                 const res = await query(`post`, `/products/${state?.product?.id}?_method=PUT`, formData);
 
@@ -124,28 +104,12 @@ export const NewProductTab = () => {
                 data: [...data.data],
                 cover_photos: [...data.cover_photos],
                 thumbnail: data.thumbnail,
-                highlights: [data?.highlight_1, data?.highlight_2, data?.highlight_3],
+                highlights: data.highlights,
                 tags: data.tags,
-                // stock_count: data.stock_count,
-                // choose_quantity: data.choose_quantity,
-                // show_sales_count: data.show_sales_count,
             };
-            // const formData = new FormData();
 
-            // formData.append("title", data.title);
-            // formData.append("price", data.price);
-            // formData.append("product_type", data.productType);
-            // formData.append("description", data.description);
-            // formData.append("thumbnail", data.thumbnail);
-            // formData.append("tags[]", data.tags);
-            // formData.append("stock_count", data.stock_count);
-            // formData.append("choose_quantity", data.choose_quantity);
-            // formData.append("show_sales_count", data.show_sales_count);
-            // formData.append("data[]", [...data.data]);
-            // formData.append("cover_photos[]", [...data.cover_photos]);
-            // formData.append("highlights[]", [data?.highlight_1, data?.highlight_2, data?.highlight_3]);
             try {
-                const res = await query(`post`, `/products`, formData);
+                // const res = await query(`post`, `/products`, formData);
                 if (res.status === 201) {
                     toastIdRef.current = toast({
                         position: "top",
@@ -357,7 +321,8 @@ export const NewProductTab = () => {
 
                 <TabPanels>
                     <TabPanel px={0}>
-                        <SetNewProductForm />
+                        {/* <SetNewProductForm /> */}
+                        <ProductForm />
                     </TabPanel>
                     <TabPanel px={0}>
                         <ContentDeliveryForm />

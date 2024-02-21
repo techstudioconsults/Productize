@@ -1,5 +1,6 @@
 export * from "./lib/feature/checkUserProfileValidity";
 export * from "./lib/feature/productForm/SetNewProductForm";
+export * from "./lib/feature/productForm/ProductForm";
 export * from "./lib/feature/ContentDeliveryForm";
 export * from "./lib/feature/formValidationSchema/form-schemas";
 export * from "./lib/feature/settingsForm/SetupPaymentForm";

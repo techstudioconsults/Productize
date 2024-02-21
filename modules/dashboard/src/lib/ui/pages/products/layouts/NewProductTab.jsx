@@ -103,13 +103,13 @@ export const NewProductTab = () => {
                 description: data.description,
                 data: [...data.data],
                 cover_photos: [...data.cover_photos],
-                thumbnail: data.thumbnail,
+                thumbnail: data.thumbnail[0],
                 highlights: data.highlights,
                 tags: data.tags,
             };
 
             try {
-                // const res = await query(`post`, `/products`, formData);
+                const res = await query(`post`, `/products`, formData);
                 if (res.status === 201) {
                     toastIdRef.current = toast({
                         position: "top",

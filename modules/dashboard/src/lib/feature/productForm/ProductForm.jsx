@@ -85,7 +85,7 @@ export const ProductForm = () => {
     );
 
     useEffect(() => {
-        console.log(state, hash);
+        // console.log(state, hash);
         if (state && hash === `#product-details`) {
             setValue(`title`, state?.product?.title);
             setValue(`price`, state?.product?.price);

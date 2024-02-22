@@ -5,6 +5,7 @@ import { SharedButton } from "@productize-v1.0.0/modules/shared/ui";
 import { Controller, useFormContext } from "react-hook-form";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
+import axios from "axios";
 
 export const DataUploadField = ({ showFiles }) => {
     const { state, hash } = useLocation();
@@ -32,8 +33,8 @@ export const DataUploadField = ({ showFiles }) => {
     };
 
     async function urlToBlob(url) {
-        const response = await fetch(url);
-        const blob = await response.blob();
+        const response = await axios.get(url);
+        const blob = await response.data;
         return blob;
     }
 
@@ -58,12 +59,10 @@ export const DataUploadField = ({ showFiles }) => {
     useEffect(() => {
         if (state && hash === "#product-details") {
             const fetchData = async () => {
-                setDocuments(state?.product?.data)
+                const fileObject = await convertToFileObject(state?.product?.data);
+                console.log(fileObject);
+                setDocuments(fileObject);
                 setShowPreview(true);
-                // const fileObject = await convertToFileObject(state?.product?.data);
-                // console.log(fileObject);
-                // setShowPreview(true);
-                // setDocuments([...fileObject]);
             };
 
             fetchData();

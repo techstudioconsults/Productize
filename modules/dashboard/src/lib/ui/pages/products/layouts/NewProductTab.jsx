@@ -41,29 +41,38 @@ export const NewProductTab = () => {
     const getHashIndex = tabNames.findIndex((tab) => hash === `#${tab}`);
     const [tabIndex, setTabIndex] = useState(getHashIndex);
 
+    // Function to handle setting data
+    const handleSetData = async () => {
+        try {
+            const fileObjects = await convertToFile(state?.product?.data);
+            console.log(fileObjects);
+            methods.setValue(`data`, fileObjects);
+        } catch (error) {
+            console.error("Error converting data to file objects:", error);
+        }
+    };
+
+    // Call the function to handle setting data
+    handleSetData();
+
     useEffect(() => {
         setTabIndex(getHashIndex);
 
-        const addFiles = async () => {
-            if (state && hash === "#product-details") {
-                console.log(state);
-                methods.setValue("title", state?.product?.title);
-                methods.setValue("price", state?.product?.price);
-                methods.setValue("product_type", state?.product?.product_type);
-                methods.setValue("description", state?.product?.description);
-                methods.setValue("tags", state?.product?.tags);
+        if (state && hash === "#product-details") {
+            console.log(state);
+            methods.setValue("title", state?.product?.title);
+            methods.setValue("price", state?.product?.price);
+            methods.setValue("product_type", state?.product?.product_type);
+            methods.setValue("description", state?.product?.description);
+            methods.setValue("tags", state?.product?.tags);
 
-                const fileObjects = await convertToFile(state?.product?.data);
-                console.log(fileObjects);
-                methods.setValue(`data`, fileObjects);
+            handleSetData();
 
-                // setHighlights(state?.product?.highlights);
-                // state?.product?.highlights?.forEach((highlight, index) => {
-                //     setValue(`highlights[${index}]`, highlight);
-                // });
-            }
-        };
-        addFiles();
+            // setHighlights(state?.product?.highlights);
+            // state?.product?.highlights?.forEach((highlight, index) => {
+            //     setValue(`highlights[${index}]`, highlight);
+            // });
+        }
     }, [getHashIndex, state]);
 
     const onSubmit = async (data) => {

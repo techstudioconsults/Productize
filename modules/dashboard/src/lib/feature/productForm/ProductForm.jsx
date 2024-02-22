@@ -135,31 +135,38 @@ export const ProductForm = () => {
         }
     }
 
-    useEffect(() => {
-        if (state && hash === "#product-details") {
-            console.log(state);
-            setValue("title", state?.product?.title);
-            setValue("price", state?.product?.price);
-            setValue("product_type", state?.product?.product_type);
-            setValue("description", state?.product?.description);
-            setValue("tags", state?.product?.tags);
+   useEffect(() => {
+       const fetchData = async () => {
+           if (state && hash === "#product-details") {
+               console.log(state);
+               setValue("title", state?.product?.title);
+               setValue("price", state?.product?.price);
+               setValue("product_type", state?.product?.product_type);
+               setValue("description", state?.product?.description);
+               setValue("tags", state?.product?.tags);
 
-            setProductDecompressedFiles(state?.product?.data);
-            // state?.product?.data?.forEach((datum, index) => {
-            //     console.log(datum);
-            //     setValue(`data[${index}]`, datum);
-            // });
+               const fileList = await Promise.all(
+                   state?.product?.data?.map(async (datum, index) => {
+                       console.log(datum);
+                       const blob = await urlToBlob(datum);
+                       const file = new File([blob], datum.substring(datum.lastIndexOf("/") + 1), { type: blob.type });
+                       console.log(file);
+                       return file;
+                   })
+               );
 
-            setHighlights(state?.product?.highlights);
-            state?.product?.highlights?.forEach((highlight, index) => {
-                setValue(`highlights[${index}]`, highlight);
-            });
+               console.log(fileList);
+               setProductDecompressedFiles(fileList);
 
-            convertToFileObject(state?.product?.data || [], "product-data");
-            convertToFileObject(state?.product?.cover_photos || [], "cover-photos");
-            convertToFileObject(state?.product?.thumbnail ? [state?.product?.thumbnail] : [], "thumbnail");
-        }
-    }, [hash, setValue, state]);
+               setHighlights(state?.product?.highlights);
+               state?.product?.highlights?.forEach((highlight, index) => {
+                   setValue(`highlights[${index}]`, highlight);
+               });
+           }
+       };
+
+       fetchData();
+   }, [hash, setValue, state]);
 
     return (
         <FormControl>

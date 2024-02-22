@@ -122,22 +122,18 @@ const ProductContentDisplay = ({ file }) => {
     const convertToFile = useUrlToBlobConverter();
     const [fileObject, setFileObject] = useState({});
 
-    console.log("file:", file); // Add this line
-
     useEffect(() => {
-        const fetchFileObject = async () => {
-            if (state && file) {
-                if (typeof file === "string") {
-                    const fileObjects = await convertToFile(file);
-                    console.log(fileObjects);
-                    setFileObject({ name: fileObjects[0].name, type: fileObjects[0].type, size: fileObjects[0].size });
-                } else {
-                    setFileObject({ name: file.name, type: file.type, size: file.size });
-                }
+        if (state && file) {
+            if (typeof file === "string") {
+                // const fileObjects = await convertToFile(file);
+                const filename = file.substring(file.lastIndexOf("/") + 1);
+                const filetype = file.substring(file.lastIndexOf(".") + 1);
+                // setFileObject({ name: fileObjects[0].name, type: fileObjects[0].type, size: fileObjects[0].size });
+                setFileObject({ name: filename, type: `document/${filetype}`, size: file?.size });
+            } else {
+                setFileObject({ name: file.name, type: file.type, size: file.size });
             }
-        };
-
-        fetchFileObject();
+        }
     }, [convertToFile, file, state]);
 
     return (
@@ -149,7 +145,7 @@ const ProductContentDisplay = ({ file }) => {
                 {state ? (
                     <Box>
                         <Text fontWeight={600}>{fileObject?.name}</Text>
-                        <Text className="small-text">{`${fileObject?.type}.${Math.floor(fileObject?.size / 1000)}`}kb</Text>
+                        <Text className="small-text">{`${fileObject?.type}${fileObject?.size ? `.${Math.floor(fileObject?.size / 1000)}kb` : ``}`}</Text>
                     </Box>
                 ) : (
                     <Box>

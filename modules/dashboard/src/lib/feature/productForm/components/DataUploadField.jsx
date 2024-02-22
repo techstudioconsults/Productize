@@ -38,13 +38,13 @@ export const DataUploadField = () => {
     const isModifiedData = useCallback(async () => {
         if (state && hash) {
             // Assuming convertToFile returns an array of files for consistency
-            const fileObjects = await convertToFile(state?.product?.data);
-            console.log(fileObjects);
-            setValue(`data`, fileObjects);
+            // const fileObjects = await convertToFile(state?.product?.data);
+            // console.log(fileObjects);
+            // setValue(`data`, fileObjects);
             setDocuments(state?.product?.data);
             setShowPreview(true);
         }
-    }, [convertToFile, hash, setValue, state]);
+    }, [hash, state]);
 
     useEffect(() => {
         isModifiedData();

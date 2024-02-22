@@ -3,12 +3,11 @@ import ShareLayout from "./ShareLayout";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FormProvider, useForm } from "react-hook-form";
-import { useAxiosInstance, useCompressedFile } from "@productize-v1.0.0/modules/shared/hooks";
+import { useAxiosInstance, useUrlToBlobConverter } from "@productize-v1.0.0/modules/shared/hooks";
 import { useUpdateProductStatusMutation } from "@productize-v1.0.0/modules/shared/redux";
 import { ToastFeedback, SharedButton, PreviewProductSummary, useToastAction } from "@productize-v1.0.0/modules/shared/ui";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ProductForm, productFormSchema } from "@productize-v1.0.0/dashboard";
-import { SetNewProductForm } from "@productize-v1.0.0/dashboard";
 import { ContentDeliveryForm } from "@productize-v1.0.0/dashboard";
 import errorImg from "@icons/error.svg";
 
@@ -23,9 +22,11 @@ const disabledStateStyle = {
 const tabNames = ["product-details", "content-delivery", "preview", "share"];
 
 export const NewProductTab = () => {
-    // const { compressAndStoreFiles } = useCompressedFile();
+    // const [highlight, setHighlights] = useState([]);
+    const convertToFile = useUrlToBlobConverter();
     const { query, isLoading } = useAxiosInstance({ MIME_TYPE: "multipart/form-data" });
     const [updateProductStatus, updateProductStatusStatus] = useUpdateProductStatusMutation();
+    // const [product, setProduct] = useState([]);
 
     const { toast, toastIdRef, close } = useToastAction();
     const methods = useForm({
@@ -42,6 +43,27 @@ export const NewProductTab = () => {
 
     useEffect(() => {
         setTabIndex(getHashIndex);
+
+        const addFiles = async () => {
+            if (state && hash === "#product-details") {
+                console.log(state);
+                methods.setValue("title", state?.product?.title);
+                methods.setValue("price", state?.product?.price);
+                methods.setValue("product_type", state?.product?.product_type);
+                methods.setValue("description", state?.product?.description);
+                methods.setValue("tags", state?.product?.tags);
+
+                const fileObjects = await convertToFile(state?.product?.data);
+                console.log(fileObjects);
+                methods.setValue(`data`, fileObjects);
+
+                // setHighlights(state?.product?.highlights);
+                // state?.product?.highlights?.forEach((highlight, index) => {
+                //     setValue(`highlights[${index}]`, highlight);
+                // });
+            }
+        };
+        addFiles();
     }, [getHashIndex, state]);
 
     const onSubmit = async (data) => {
@@ -57,6 +79,7 @@ export const NewProductTab = () => {
                 highlights: data.highlights,
                 tags: data.tags,
             };
+            console.log(formData);
 
             try {
                 const res = await query(`post`, `/products/${state?.product?.id}?_method=PUT`, formData);

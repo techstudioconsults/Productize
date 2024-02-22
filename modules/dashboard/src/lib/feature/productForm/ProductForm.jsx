@@ -145,14 +145,14 @@ export const ProductForm = () => {
             setValue("tags", state?.product?.tags);
             // setValue("data", state?.product?.data);
 
-            // setProductDecompressedFiles(state?.product?.data);
+            setProductDecompressedFiles(state?.product?.data);
 
             setHighlights(state?.product?.highlights);
             state?.product?.highlights?.forEach((highlight, index) => {
                 setValue(`highlights[${index}]`, highlight);
             });
 
-            convertToFileObject(state?.product?.data || [], "product-data");
+            // convertToFileObject(state?.product?.data || [], "product-data");
             // convertToFileObject(state?.product?.cover_photos || [], "cover-photos");
             // convertToFileObject(state?.product?.thumbnail ? [state?.product?.thumbnail] : [], "thumbnail");
         }

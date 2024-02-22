@@ -37,8 +37,9 @@ export const DataUploadField = ({ showFiles }) => {
             setDocuments(showFiles);
             setShowPreview(true);
             console.log("showFiles:", showFiles); // Add this line
+            console.log("documents:", documents); // Add this line
         }
-    }, [showFiles, state]);
+    }, [documents, showFiles, state]);
 
     useEffect(() => {
         isModifiedData();
@@ -74,8 +75,8 @@ export const DataUploadField = ({ showFiles }) => {
             </Box>
             <SimpleGrid display={showPreview ? `grid` : `none`} my={4} columns={{ base: 1, md: 2 }} gap={4}>
                 {documents?.map((file, index) => {
-                    return <Text key={index}>{toString(file)}</Text>;
-                    // return <ProductContentDisplay key={index} file={file} />;
+                    // return <Text key={index}>{toString(file)}</Text>;
+                    return <ProductContentDisplay key={index} file={file} />;
                 })}
             </SimpleGrid>
         </div>

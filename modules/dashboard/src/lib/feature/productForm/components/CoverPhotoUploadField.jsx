@@ -13,6 +13,10 @@ export const CoverPhotoUploadField = ({ showFiles }) => {
     const [showPreview, setShowPreview] = useState(false);
     const fileInputRef = useRef(null);
 
+    const handleInput = () => {
+        fileInputRef.current.click();
+    };
+
     const handleFileChange = (files) => {
         if (files?.length) {
             const fileAsArray = Array.from(files);
@@ -33,10 +37,6 @@ export const CoverPhotoUploadField = ({ showFiles }) => {
             return;
         }
     }, [showFiles, state]);
-
-    const handleInput = () => {
-        fileInputRef.current.click();
-    };
 
     useEffect(() => {
         isModifiedData();

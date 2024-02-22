@@ -143,6 +143,7 @@ export const ProductForm = () => {
             setValue("product_type", state?.product?.product_type);
             setValue("description", state?.product?.description);
             setValue("tags", state?.product?.tags);
+            setValue("data", state?.product?.data);
 
             setHighlights(state?.product?.highlights);
             state?.product?.highlights?.forEach((highlight, index) => {

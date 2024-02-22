@@ -33,20 +33,13 @@ export const DataUploadField = ({ showFiles }) => {
     };
 
     const isModifiedData = useCallback(() => {
-        if (state) {
+        if (showFiles) {
             setDocuments(showFiles);
             setShowPreview(true);
         } else {
             return;
         }
-    }, [showFiles, state]);
-
-    useEffect(() => {
-        if (state) {
-            setDocuments(showFiles);
-            setShowPreview(true);
-        }
-    }, [showFiles, state]);
+    }, [showFiles]);
 
     useEffect(() => {
         isModifiedData();
@@ -58,7 +51,6 @@ export const DataUploadField = ({ showFiles }) => {
             <Controller
                 name="data"
                 control={control}
-                defaultValue={[]}
                 render={({ field: { onChange, ...field } }) => (
                     <Input
                         display={`none`}

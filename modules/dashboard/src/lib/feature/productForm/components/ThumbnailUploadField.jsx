@@ -11,6 +11,10 @@ export const ThumbnailUploadField = ({ showFiles }) => {
     const [thumbnail, setThumbnail] = useState([]);
     const fileInputRef = useRef(null);
 
+    const handleInput = () => {
+        fileInputRef.current.click();
+    };
+
     const handleFileChange = (files) => {
         if (files?.length) {
             const fileAsArray = Array.from(files);
@@ -29,9 +33,6 @@ export const ThumbnailUploadField = ({ showFiles }) => {
         }
     }, [showFiles, state]);
 
-    const handleInput = () => {
-        fileInputRef.current.click();
-    };
 
     useEffect(() => {
         isModifiedData();

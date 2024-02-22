@@ -60,13 +60,17 @@ export const DataUploadField = ({ showFiles }) => {
             const fetchData = async () => {
                 const fileObject = await convertToFileObject(state?.product?.data);
                 console.log(fileObject);
-                setDocuments(fileObject);
                 setShowPreview(true);
+                setDocuments([...fileObject]);
             };
 
             fetchData();
         }
     }, [convertToFileObject, hash, state]);
+
+    const documentList = documents?.map((file, index) => {
+        return <ProductContentDisplay key={index} file={file} />;
+    });
 
     return (
         <div>
@@ -97,9 +101,7 @@ export const DataUploadField = ({ showFiles }) => {
                 />
             </Box>
             <SimpleGrid display={showPreview ? `grid` : `none`} my={4} columns={{ base: 1, md: 2 }} gap={4}>
-                {documents?.map((file, index) => {
-                    return <ProductContentDisplay key={index} file={file} />;
-                })}
+                {documentList}
             </SimpleGrid>
         </div>
     );

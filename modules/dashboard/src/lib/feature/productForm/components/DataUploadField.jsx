@@ -7,12 +7,12 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 export const DataUploadField = ({ showFiles }) => {
-    const { state } = useLocation();
+    const { state, hash } = useLocation();
     const {
         control,
         formState: { errors },
     } = useFormContext();
-    const [documents, setDocuments] = useState(null);
+    const [documents, setDocuments] = useState([]);
     const [showPreview, setShowPreview] = useState(false);
     const fileInputRef = useRef(null);
 
@@ -27,23 +27,46 @@ export const DataUploadField = ({ showFiles }) => {
             setShowPreview(true);
         } else {
             setShowPreview(false);
-            setDocuments(null);
-            isModifiedData();
+            setDocuments([]);
         }
     };
 
-    const isModifiedData = useCallback(() => {
-        if (state && showFiles) {
-            setDocuments(showFiles);
-            setShowPreview(true);
-            console.log("showFiles:", showFiles); // Add this line
-            console.log("documents:", documents); // Add this line
-        }
-    }, [documents, showFiles, state]);
+    async function urlToBlob(url) {
+        const response = await fetch(url);
+        const blob = await response.blob();
+        return blob;
+    }
+
+    // function arrayToFileList(files) {
+    //     const dataTransfer = new DataTransfer();
+    //     files.forEach((file) => {
+    //         dataTransfer.items.add(file);
+    //     });
+    //     return dataTransfer.files;
+    // }
+
+    const convertToFileObject = useCallback(async (files, filename) => {
+        const blobPromises = files?.map(async (url) => {
+            const blob = await urlToBlob(url);
+            return new File([blob], url.substring(url.lastIndexOf("/") + 1), { type: blob.type });
+        });
+
+        const blobFiles = await Promise.all(blobPromises);
+        return blobFiles;
+    }, []);
 
     useEffect(() => {
-        isModifiedData();
-    }, [isModifiedData, state]);
+        if (state && hash === "#product-details") {
+            const fetchData = async () => {
+                const fileObject = await convertToFileObject(state?.product?.data);
+                console.log(fileObject);
+                setDocuments(fileObject);
+                setShowPreview(true);
+            };
+
+            fetchData();
+        }
+    }, [convertToFileObject, hash, state]);
 
     return (
         <div>
@@ -75,7 +98,6 @@ export const DataUploadField = ({ showFiles }) => {
             </Box>
             <SimpleGrid display={showPreview ? `grid` : `none`} my={4} columns={{ base: 1, md: 2 }} gap={4}>
                 {documents?.map((file, index) => {
-                    // return <Text key={index}>{toString(file)}</Text>;
                     return <ProductContentDisplay key={index} file={file} />;
                 })}
             </SimpleGrid>

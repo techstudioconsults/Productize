@@ -144,7 +144,7 @@ export const ProductForm = () => {
             setValue("description", state?.product?.description);
             setValue("tags", state?.product?.tags);
 
-            // setProductDecompressedFiles(state?.product?.data);
+            setProductDecompressedFiles(state?.product?.data);
             // state?.product?.data?.forEach((datum, index) => {
             //     console.log(datum);
             //     setValue(`data[${index}]`, datum);

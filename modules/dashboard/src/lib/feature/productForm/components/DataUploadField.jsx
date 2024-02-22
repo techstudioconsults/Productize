@@ -33,13 +33,11 @@ export const DataUploadField = ({ showFiles }) => {
     };
 
     const isModifiedData = useCallback(() => {
-        if (showFiles) {
+        if (state && showFiles) {
             setDocuments(showFiles);
             setShowPreview(true);
-        } else {
-            return;
         }
-    }, [showFiles]);
+    }, [showFiles, state]);
 
     useEffect(() => {
         isModifiedData();

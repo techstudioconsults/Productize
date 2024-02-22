@@ -143,16 +143,21 @@ export const ProductForm = () => {
             setValue("product_type", state?.product?.product_type);
             setValue("description", state?.product?.description);
             setValue("tags", state?.product?.tags);
-            setValue("data", state?.product?.data);
+
+            setProductDecompressedFiles(state?.product?.data);
+            state?.product?.data?.forEach((datum, index) => {
+                console.log(datum);
+                setValue(`data[${index}]`, datum);
+            });
 
             setHighlights(state?.product?.highlights);
             state?.product?.highlights?.forEach((highlight, index) => {
                 setValue(`highlights[${index}]`, highlight);
             });
 
-            convertToFileObject(state?.product?.data || [], "product-data");
-            convertToFileObject(state?.product?.cover_photos || [], "cover-photos");
-            convertToFileObject(state?.product?.thumbnail ? [state?.product?.thumbnail] : [], "thumbnail");
+            // convertToFileObject(state?.product?.data || [], "product-data");
+            // convertToFileObject(state?.product?.cover_photos || [], "cover-photos");
+            // convertToFileObject(state?.product?.thumbnail ? [state?.product?.thumbnail] : [], "thumbnail");
         }
     }, [hash, setValue, state]);
 

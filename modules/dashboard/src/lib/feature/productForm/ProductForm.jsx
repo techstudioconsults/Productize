@@ -145,15 +145,15 @@ export const ProductForm = () => {
                setValue("description", state?.product?.description);
                setValue("tags", state?.product?.tags);
 
-               const fileList = await Promise.all(
-                   state?.product?.data?.map(async (datum, index) => {
-                       console.log(datum);
-                       const blob = await urlToBlob(datum);
-                       const file = new File([blob], datum.substring(datum.lastIndexOf("/") + 1), { type: blob.type });
-                       console.log(file);
-                       return file;
-                   })
-               );
+               const fileList = [];
+               for (let i = 0; i < state?.product?.data?.length; i++) {
+                   const datum = state.product.data[i];
+                   console.log(datum);
+                   const blob = await urlToBlob(datum);
+                   const file = new File([blob], datum.substring(datum.lastIndexOf("/") + 1), { type: blob.type });
+                   console.log(file);
+                   fileList.push(file);
+               }
 
                console.log(fileList);
                setProductDecompressedFiles(fileList);
@@ -167,6 +167,7 @@ export const ProductForm = () => {
 
        fetchData();
    }, [hash, setValue, state]);
+
 
     return (
         <FormControl>

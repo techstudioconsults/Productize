@@ -3,7 +3,7 @@ import { Box, Card, Flex, FormHelperText, Image, Input, SimpleGrid, Text } from 
 import { UploadExternalFiles } from "../../../ui/UploadExternalFiles";
 import { SharedButton } from "@productize-v1.0.0/modules/shared/ui";
 import { Controller, useFormContext } from "react-hook-form";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useUrlToBlobConverter } from "@productize-v1.0.0/modules/shared/hooks";
 
@@ -28,16 +28,21 @@ export const DataUploadField = ({ showFiles }) => {
             setShowPreview(true);
         } else {
             setShowPreview(false);
-            setDocuments([]);
+            setDocuments(null);
+            isModifiedData();
         }
     };
 
-    useEffect(() => {
-        if (state && hash === "#product-details") {
+    const isModifiedData = useCallback(() => {
+        if (state && hash) {
             setDocuments(state?.product?.data);
             setShowPreview(true);
         }
     }, [hash, state]);
+
+    useEffect(() => {
+        isModifiedData();
+    }, [isModifiedData, state]);
 
     const documentList = documents?.map((file, index) => {
         return <ProductContentDisplay key={index} file={file} />;
@@ -113,11 +118,27 @@ const Heading = ({ action, errors, showPreview }) => (
 );
 
 const ProductContentDisplay = ({ file }) => {
-    const { state, hash } = useLocation();
-    const converToFile = useUrlToBlobConverter();
+    const { state } = useLocation();
+    const convertToFile = useUrlToBlobConverter();
+    const [fileObject, setFileObject] = useState({});
 
     console.log("file:", file); // Add this line
-    const fileDetails = file?.substring(file?.lastIndexOf("/") + 1);
+
+    useEffect(() => {
+        const fetchFileObject = async () => {
+            if (state && file) {
+                if (typeof file === "string") {
+                    const fileObjects = await convertToFile(file);
+                    console.log(fileObjects);
+                    setFileObject({ name: fileObjects[0].name, type: fileObjects[0].type, size: fileObjects[0].size });
+                } else {
+                    setFileObject({ name: file.name, type: file.type, size: file.size });
+                }
+            }
+        };
+
+        fetchFileObject();
+    }, [convertToFile, file, state]);
 
     return (
         <Card p={8} borderRadius="5px" bgColor="purple.100" variant="filled">
@@ -125,14 +146,17 @@ const ProductContentDisplay = ({ file }) => {
                 <Box boxSize="72px">
                     <Image src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951012/productize/Layer_1_m6pvyg_yz7oz1.png" />
                 </Box>
-                <Box>
-                    <Text fontWeight={600}>{fileDetails}</Text>
-                    <Text className="small-text">{`${file?.type}.${Math.floor(file?.size / 1000)}`}kb</Text>
-                </Box>
-                {/* <Box>
-                    <Text fontWeight={600}>{file?.name}</Text>
-                    <Text className="small-text">{`${file?.type}.${Math.floor(file?.size / 1000)}`}kb</Text>
-                </Box> */}
+                {state ? (
+                    <Box>
+                        <Text fontWeight={600}>{fileObject?.name}</Text>
+                        <Text className="small-text">{`${fileObject?.type}.${Math.floor(fileObject?.size / 1000)}`}kb</Text>
+                    </Box>
+                ) : (
+                    <Box>
+                        <Text fontWeight={600}>{file?.name}</Text>
+                        <Text className="small-text">{`${file?.type}.${Math.floor(file?.size / 1000)}`}kb</Text>
+                    </Box>
+                )}
             </Flex>
         </Card>
     );

@@ -8,15 +8,22 @@ export const useUrlToBlobConverter = () => {
     };
 
     const convertToFiles = useCallback(async (urls) => {
-        if (!urls || !Array.isArray(urls)) return [];
-
-        const blobPromises = urls.map(async (url) => {
+        const convertUrlToFile = async (url) => {
             const blob = await urlToBlob(url);
             return new File([blob], url.substring(url.lastIndexOf("/") + 1), { type: blob.type });
-        });
+        };
 
-        const blobFiles = await Promise.all(blobPromises);
-        return blobFiles;
+        if (!urls) return [];
+        if (typeof urls === "string") {
+            const file = await convertUrlToFile(urls);
+            return [file];
+        } else if (Array.isArray(urls)) {
+            const blobPromises = urls.map(convertUrlToFile);
+            const blobFiles = await Promise.all(blobPromises);
+            return blobFiles;
+        } else {
+            throw new Error("Invalid argument: urls must be a string or an array of strings.");
+        }
     }, []);
 
     return convertToFiles;

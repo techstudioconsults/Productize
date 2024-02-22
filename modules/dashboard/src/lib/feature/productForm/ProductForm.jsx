@@ -47,10 +47,6 @@ export const ProductForm = () => {
             state?.product?.highlights?.forEach((highlight, index) => {
                 setValue(`highlights[${index}]`, highlight);
             });
-
-            // convertToFileObject(state?.product?.data || [], "product-data");
-            // convertToFileObject(state?.product?.cover_photos || [], "cover-photos");
-            // convertToFileObject(state?.product?.thumbnail ? [state?.product?.thumbnail] : [], "thumbnail");
         }
     }, [hash, setValue, state]);
 

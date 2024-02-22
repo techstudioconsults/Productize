@@ -45,7 +45,7 @@ export const DataUploadField = ({ showFiles }) => {
     //     return dataTransfer.files;
     // }
 
-    const convertToFileObject = useCallback(async (files, filename) => {
+    const convertToFileObject = useCallback(async (files) => {
         const blobPromises = files?.map(async (url) => {
             const blob = await urlToBlob(url);
             return new File([blob], url.substring(url.lastIndexOf("/") + 1), { type: blob.type });
@@ -58,10 +58,12 @@ export const DataUploadField = ({ showFiles }) => {
     useEffect(() => {
         if (state && hash === "#product-details") {
             const fetchData = async () => {
-                const fileObject = await convertToFileObject(state?.product?.data);
-                console.log(fileObject);
+                setDocuments(state?.product?.data)
                 setShowPreview(true);
-                setDocuments([...fileObject]);
+                // const fileObject = await convertToFileObject(state?.product?.data);
+                // console.log(fileObject);
+                // setShowPreview(true);
+                // setDocuments([...fileObject]);
             };
 
             fetchData();

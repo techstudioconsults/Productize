@@ -7,10 +7,12 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useUrlToBlobConverter } from "@productize-v1.0.0/modules/shared/hooks";
 
-export const DataUploadField = ({ showFiles }) => {
+export const DataUploadField = () => {
     const { state, hash } = useLocation();
+    const convertToFile = useUrlToBlobConverter();
     const {
         control,
+        setValue,
         formState: { errors },
     } = useFormContext();
     const [documents, setDocuments] = useState([]);
@@ -33,20 +35,20 @@ export const DataUploadField = ({ showFiles }) => {
         }
     };
 
-    const isModifiedData = useCallback(() => {
+    const isModifiedData = useCallback(async () => {
         if (state && hash) {
-            setDocuments(state?.product?.data);
+            // Assuming convertToFile returns an array of files for consistency
+            const fileObjects = await convertToFile(state?.product?.data);
+            console.log(fileObjects);
+            // Assuming you want to set the converted files to documents state
+            setDocuments(fileObjects);
             setShowPreview(true);
         }
-    }, [hash, state]);
+    }, [convertToFile, hash, state]);
 
     useEffect(() => {
         isModifiedData();
     }, [isModifiedData, state]);
-
-    const documentList = documents?.map((file, index) => {
-        return <ProductContentDisplay key={index} file={file} />;
-    });
 
     return (
         <div>
@@ -77,7 +79,9 @@ export const DataUploadField = ({ showFiles }) => {
                 />
             </Box>
             <SimpleGrid display={showPreview ? `grid` : `none`} my={4} columns={{ base: 1, md: 2 }} gap={4}>
-                {documentList}
+                {documents?.map((file, index) => {
+                    return <ProductContentDisplay key={index} file={file} />;
+                })}
             </SimpleGrid>
         </div>
     );
@@ -119,22 +123,20 @@ const Heading = ({ action, errors, showPreview }) => (
 
 const ProductContentDisplay = ({ file }) => {
     const { state } = useLocation();
-    const convertToFile = useUrlToBlobConverter();
+
     const [fileObject, setFileObject] = useState({});
 
     useEffect(() => {
         if (state && file) {
             if (typeof file === "string") {
-                // const fileObjects = await convertToFile(file);
                 const filename = file.substring(file.lastIndexOf("/") + 1);
                 const filetype = file.substring(file.lastIndexOf(".") + 1);
-                // setFileObject({ name: fileObjects[0].name, type: fileObjects[0].type, size: fileObjects[0].size });
                 setFileObject({ name: filename, type: `document/${filetype}`, size: file?.size });
             } else {
                 setFileObject({ name: file.name, type: file.type, size: file.size });
             }
         }
-    }, [convertToFile, file, state]);
+    }, [file, state]);
 
     return (
         <Card p={8} borderRadius="5px" bgColor="purple.100" variant="filled">

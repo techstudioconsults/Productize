@@ -13,6 +13,7 @@ import { HighLightField } from "./components/HighlightField";
 import TagsField from "./components/TagsField";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useUrlToBlobConverter } from "@productize-v1.0.0/modules/shared/hooks";
 
 const globalFieldStyle = {
     bgColor: `grey.200`,
@@ -26,6 +27,7 @@ const globalFieldStyle = {
 };
 
 export const ProductForm = () => {
+    const convertToFile = useUrlToBlobConverter();
     const [highlight, setHighlights] = useState([]);
     const { state, hash } = useLocation();
     const {
@@ -35,19 +37,27 @@ export const ProductForm = () => {
     } = useFormContext(); // retrieve all hook methods
 
     useEffect(() => {
-        if (state && hash === "#product-details") {
-            console.log(state);
-            setValue("title", state?.product?.title);
-            setValue("price", state?.product?.price);
-            setValue("product_type", state?.product?.product_type);
-            setValue("description", state?.product?.description);
-            setValue("tags", state?.product?.tags);
+        const fetchData = async () => {
+            if (state && hash === "#product-details") {
+                console.log(state);
+                setValue("title", state?.product?.title);
+                setValue("price", state?.product?.price);
+                setValue("product_type", state?.product?.product_type);
+                setValue("description", state?.product?.description);
+                setValue("tags", state?.product?.tags);
 
-            setHighlights(state?.product?.highlights);
-            state?.product?.highlights?.forEach((highlight, index) => {
-                setValue(`highlights[${index}]`, highlight);
-            });
-        }
+                // Assuming convertToFile returns an array of files for consistency
+                const fileObjects = await convertToFile(state?.product?.data);
+                console.log(fileObjects);
+                setValue(`data`, fileObjects);
+
+                setHighlights(state?.product?.highlights);
+                state?.product?.highlights?.forEach((highlight, index) => {
+                    setValue(`highlights[${index}]`, highlight);
+                });
+            }
+        };
+        fetchData();
     }, [hash, setValue, state]);
 
     return (

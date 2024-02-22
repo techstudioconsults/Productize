@@ -29,6 +29,7 @@ export const ProductForm = () => {
     const [ProductDecompressedFiles, setProductDecompressedFiles] = useState([]);
     const [CoverPhotosDecompressedFiles, setCoverPhotosDecompressedFiles] = useState([]);
     const [thumbnailDecompressedFile, setThumbnailDecompressedFile] = useState([]);
+    const [highlight, setHighlights] = useState([]);
     const { state, hash } = useLocation();
     const {
         register,
@@ -103,7 +104,15 @@ export const ProductForm = () => {
         return blob;
     }
 
-    async function setFilesInLocalStorage(files, filename) {
+    // function arrayToFileList(files) {
+    //     const dataTransfer = new DataTransfer();
+    //     files.forEach((file) => {
+    //         dataTransfer.items.add(file);
+    //     });
+    //     return dataTransfer.files;
+    // }
+
+    async function convertToFileObject(files, filename) {
         const blobPromises = files?.map(async (url) => {
             const blob = await urlToBlob(url);
             return new File([blob], url.substring(url.lastIndexOf("/") + 1), { type: blob.type });
@@ -128,15 +137,21 @@ export const ProductForm = () => {
 
     useEffect(() => {
         if (state && hash === "#product-details") {
+            console.log(state);
             setValue("title", state?.product?.title);
             setValue("price", state?.product?.price);
             setValue("product_type", state?.product?.product_type);
             setValue("description", state?.product?.description);
             setValue("tags", state?.product?.tags);
 
-            setFilesInLocalStorage(state?.product?.data || [], "product-data");
-            setFilesInLocalStorage(state?.product?.cover_photos || [], "cover-photos");
-            setFilesInLocalStorage(state?.product?.thumbnail ? [state.product.thumbnail] : [], "thumbnail");
+            setHighlights(state?.product?.highlights);
+            state?.product?.highlights?.forEach((highlight, index) => {
+                setValue(`highlights[${index}]`, highlight);
+            });
+
+            convertToFileObject(state?.product?.data || [], "product-data");
+            convertToFileObject(state?.product?.cover_photos || [], "cover-photos");
+            convertToFileObject(state?.product?.thumbnail ? [state?.product?.thumbnail] : [], "thumbnail");
         }
     }, [hash, setValue, state]);
 
@@ -186,7 +201,7 @@ export const ProductForm = () => {
             {/* GRID SEVEN */}
             <FormControl as={SimpleGrid} my={8} gap={4} columns={{ base: 1, sm: 2 }}>
                 <Field>
-                    <HighLightField />
+                    <HighLightField showFiles={highlight} />
                 </Field>
             </FormControl>
 

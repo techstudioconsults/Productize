@@ -16,6 +16,10 @@ export const DataUploadField = ({ showFiles }) => {
     const [showPreview, setShowPreview] = useState(false);
     const fileInputRef = useRef(null);
 
+    const handleInput = () => {
+        fileInputRef.current.click();
+    };
+
     const handleFileChange = (files) => {
         if (files?.length) {
             const fileAsArray = Array.from(files);
@@ -28,13 +32,6 @@ export const DataUploadField = ({ showFiles }) => {
         }
     };
 
-    useEffect(() => {
-        if (state && showFiles) {
-            setDocuments(showFiles);
-            setShowPreview(true);
-        }
-    }, [showFiles, state]);
-
     const isModifiedData = useCallback(() => {
         if (state) {
             setDocuments(showFiles);
@@ -44,9 +41,12 @@ export const DataUploadField = ({ showFiles }) => {
         }
     }, [showFiles, state]);
 
-    const handleInput = () => {
-        fileInputRef.current.click();
-    };
+    useEffect(() => {
+        if (state) {
+            setDocuments(showFiles);
+            setShowPreview(true);
+        }
+    }, [showFiles, state]);
 
     useEffect(() => {
         isModifiedData();
@@ -54,7 +54,7 @@ export const DataUploadField = ({ showFiles }) => {
 
     return (
         <div>
-            <Heading action={handleInput} errors={errors} />
+            <Heading action={handleInput} errors={errors} showPreview={showPreview} />
             <Controller
                 name="data"
                 control={control}
@@ -72,8 +72,7 @@ export const DataUploadField = ({ showFiles }) => {
                     />
                 )}
             />
-            <Box>
-                {/* display={showPreview ? `none` : `block`} */}
+            <Box display={showPreview ? `none` : `block`}>
                 <UploadExternalFiles
                     icon="ri:file-upload-line"
                     fileType="all"
@@ -82,8 +81,7 @@ export const DataUploadField = ({ showFiles }) => {
                     showFiles={handleInput}
                 />
             </Box>
-            <SimpleGrid my={4} columns={{ base: 1, md: 2 }} gap={4}>
-                {/* display={showPreview ? `grid` : `none`} */}
+            <SimpleGrid display={showPreview ? `grid` : `none`} my={4} columns={{ base: 1, md: 2 }} gap={4}>
                 {documents?.map((file, index) => {
                     return <ProductContentDisplay key={index} file={file} />;
                 })}
@@ -92,7 +90,7 @@ export const DataUploadField = ({ showFiles }) => {
     );
 };
 
-const Heading = ({ action, errors }) => (
+const Heading = ({ action, errors, showPreview }) => (
     <>
         <Flex justifyContent="space-between" alignItems="flex-end">
             <Box>
@@ -103,7 +101,7 @@ const Heading = ({ action, errors }) => (
                     Upload the actual product you want to sell. Upload the product file
                 </FormHelperText>
             </Box>
-            <Box>
+            <Box display={showPreview ? `block` : `none`}>
                 <SharedButton
                     btnExtras={{
                         leftIcon: "ri:file-upload-line",

@@ -1,19 +1,33 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Box, Flex, FormHelperText, Input, InputGroup, Stack, Text } from "@chakra-ui/react";
 import { SharedButton } from "@productize-v1.0.0/modules/shared/ui";
 import { useFormContext } from "react-hook-form";
+import { useLocation } from "react-router-dom";
 
-export const HighLightField = () => {
+export const HighLightField = ({ showFiles }) => {
+    const { state } = useLocation();
     const {
         register,
         formState: { errors },
     } = useFormContext();
-    const [highlights, setHighlights] = useState([""]); // State to store highlights
+    const [highlights, setHighlights] = useState([1, 2, 3]); // State to store highlights
 
     const addHighlight = () => {
         setHighlights([...highlights, ""]); // Add an empty highlight input field
     };
+
+    const isModifiedData = useCallback(() => {
+        if (state) {
+            setHighlights(showFiles);
+        } else {
+            return;
+        }
+    }, [showFiles, state]);
+
+    useEffect(() => {
+        isModifiedData();
+    }, [isModifiedData, state]);
 
     return (
         <div>

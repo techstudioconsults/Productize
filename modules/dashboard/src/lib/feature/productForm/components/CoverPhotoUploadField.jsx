@@ -38,13 +38,13 @@ export const CoverPhotoUploadField = ({ showFiles }) => {
         fileInputRef.current.click();
     };
 
-     useEffect(() => {
-         isModifiedData();
-     }, [isModifiedData, state]);
+    useEffect(() => {
+        isModifiedData();
+    }, [isModifiedData, state]);
 
     return (
         <div>
-            <Heading action={handleInput} />
+            <Heading action={handleInput} showPreview={showPreview} />
             <Controller
                 name="cover_photos"
                 control={control}
@@ -80,7 +80,7 @@ export const CoverPhotoUploadField = ({ showFiles }) => {
     );
 };
 
-const Heading = ({ action }) => {
+const Heading = ({ action, showPreview }) => {
     return (
         <Flex justifyContent={`space-between`} alignItems={`flex-end`}>
             <Box>
@@ -92,7 +92,7 @@ const Heading = ({ action }) => {
                     inch)
                 </FormHelperText>
             </Box>
-            <Box>
+            <Box display={showPreview ? `block` : `none`}>
                 <SharedButton
                     btnExtras={{
                         leftIcon: `ri:file-upload-line`,

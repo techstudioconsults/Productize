@@ -11,7 +11,7 @@ export const HighLightField = ({ showFiles }) => {
         register,
         formState: { errors },
     } = useFormContext();
-    const [highlights, setHighlights] = useState([1, 2, 3]); // State to store highlights
+    const [highlights, setHighlights] = useState([]); // State to store highlights
 
     const addHighlight = () => {
         setHighlights([...highlights, ""]); // Add an empty highlight input field

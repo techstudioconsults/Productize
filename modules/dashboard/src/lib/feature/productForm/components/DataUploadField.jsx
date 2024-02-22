@@ -40,11 +40,11 @@ export const DataUploadField = () => {
             // Assuming convertToFile returns an array of files for consistency
             const fileObjects = await convertToFile(state?.product?.data);
             console.log(fileObjects);
-            // Assuming you want to set the converted files to documents state
-            setDocuments(fileObjects);
+            setValue(`data`, fileObjects);
+            setDocuments(state?.product?.data);
             setShowPreview(true);
         }
-    }, [convertToFile, hash, state]);
+    }, [convertToFile, hash, setValue, state]);
 
     useEffect(() => {
         isModifiedData();

@@ -5,7 +5,6 @@ import { SharedButton } from "@productize-v1.0.0/modules/shared/ui";
 import { Controller, useFormContext } from "react-hook-form";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { useUrlToBlobConverter } from "@productize-v1.0.0/modules/shared/hooks";
 
 export const DataUploadField = () => {
     const { state, hash } = useLocation();
@@ -35,8 +34,6 @@ export const DataUploadField = () => {
 
     const isModifiedData = useCallback(async () => {
         if (state && hash) {
-            // const convertedFile = await convertToFile(state?.product?.data);
-            // setDocuments(convertedFile);
             setDocuments(state?.product?.data);
             setShowPreview(true);
         }
@@ -120,33 +117,34 @@ const Heading = ({ action, errors, showPreview }) => (
 const ProductContentDisplay = ({ file }) => {
     const { state } = useLocation();
     const [fileObject, setFileObject] = useState({});
-    const convertToFile = useUrlToBlobConverter();
+    // const convertToFile = useUrlToBlobConverter();
+
+    // useEffect(() => {
+    //     const getData = async () => {
+    //         if (state && file) {
+    //             if (typeof file === "string") {
+    //                 const file_MOD = await convertToFile(file);
+    //                 console.log(file_MOD[0]);
+    //                 setFileObject(file_MOD[0]);
+    //             } else {
+    //                 setFileObject({ name: file.name, type: file.type, size: file.size });
+    //             }
+    //         }
+    //     };
+    //     getData();
+    // }, [convertToFile, file, state]);
 
     useEffect(() => {
-        const getData = async () => {
-            if (state && file) {
-                if (typeof file === "string") {
-                    const file_MOD = await convertToFile(file);
-                    console.log(file_MOD[0]);
-                    setFileObject(file_MOD[0]);
-                } else {
-                    setFileObject({ name: file.name, type: file.type, size: file.size });
-                }
+        if (state && file) {
+            if (typeof file === "string") {
+                const filename = file.substring(file.lastIndexOf("/") + 1);
+                const filetype = file.substring(file.lastIndexOf(".") + 1);
+                setFileObject({ name: filename, type: `document/${filetype}`, size: file?.size });
+            } else {
+                setFileObject({ name: file.name, type: file.type, size: file.size });
             }
-        };
-        getData();
-    }, [convertToFile, file, state]);
-    // useEffect(() => {
-    //     if (state && file) {
-    //         if (typeof file === "string") {
-    //             const filename = file.substring(file.lastIndexOf("/") + 1);
-    //             const filetype = file.substring(file.lastIndexOf(".") + 1);
-    //             setFileObject({ name: filename, type: `document/${filetype}`, size: file?.size });
-    //         } else {
-    //             setFileObject({ name: file.name, type: file.type, size: file.size });
-    //         }
-    //     }
-    // }, [file, state]);
+        }
+    }, [file, state]);
 
     return (
         <Card p={8} borderRadius="5px" bgColor="purple.100" variant="filled">

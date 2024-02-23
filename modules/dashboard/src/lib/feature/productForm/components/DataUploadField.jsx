@@ -5,17 +5,18 @@ import { SharedButton } from "@productize-v1.0.0/modules/shared/ui";
 import { Controller, useFormContext } from "react-hook-form";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useUrlToBlobConverter } from "@productize-v1.0.0/modules/shared/hooks";
 
 export const DataUploadField = () => {
     const { state, hash } = useLocation();
-    const {
-        control,
-        setValue,
-        formState: { errors },
-    } = useFormContext();
+    const convertToFile = useUrlToBlobConverter();
     const [documents, setDocuments] = useState([]);
     const [showPreview, setShowPreview] = useState(false);
     const fileInputRef = useRef(null);
+    const {
+        control,
+        formState: { errors },
+    } = useFormContext();
 
     const handleInput = () => {
         fileInputRef.current.click();
@@ -35,12 +36,12 @@ export const DataUploadField = () => {
 
     const isModifiedData = useCallback(async () => {
         if (state && hash) {
-            // console.log(state.product.data);
-            // //convert data to array of File
-            setDocuments(state?.product?.data);
+            const convertedFile = await convertToFile(state?.product?.data);
+            setDocuments(convertedFile);
+            // setDocuments(state?.product?.data);
             setShowPreview(true);
         }
-    }, [hash, state]);
+    }, [convertToFile, hash, state]);
 
     useEffect(() => {
         isModifiedData();

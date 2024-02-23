@@ -22,7 +22,6 @@ const disabledStateStyle = {
 const tabNames = ["product-details", "content-delivery", "preview", "share"];
 
 export const NewProductTab = () => {
-    const convertToFile = useUrlToBlobConverter();
     const { query, isLoading } = useAxiosInstance({ MIME_TYPE: "multipart/form-data" });
     const [updateProductStatus, updateProductStatusStatus] = useUpdateProductStatusMutation();
     const { toast, toastIdRef, close } = useToastAction();
@@ -36,16 +35,6 @@ export const NewProductTab = () => {
         resolver: yupResolver(productFormSchema),
     });
 
-    const checkIfProductHasChanged = (data) => {
-        if (data && data instanceof FileList) {
-            [...data].forEach((datum) => {
-                console.log(datum);
-            });
-        } else {
-            return; // Ignore data that is not a FileList
-        }
-    };
-
     useEffect(() => {
         setTabIndex(getHashIndex);
         if (state && hash === "#product-details") {
@@ -58,10 +47,7 @@ export const NewProductTab = () => {
     }, [getHashIndex, state]);
 
     const onSubmit = async (data) => {
-        console.log(data);
         if (state && hash) {
-            console.log(state.product);
-            // checkIfProductHasChanged(data.data);
             const formData = {
                 title: data.title,
                 price: data.price,
@@ -72,7 +58,6 @@ export const NewProductTab = () => {
                 highlights: data.highlights,
                 tags: data.tags,
             };
-            // console.log(formData);
 
             try {
                 const res = await query(`post`, `/products/${state?.product?.id}?_method=PUT`, formData);

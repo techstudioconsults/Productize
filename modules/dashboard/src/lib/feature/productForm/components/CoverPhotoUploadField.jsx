@@ -6,9 +6,12 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { useLocation } from "react-router-dom";
 
-export const CoverPhotoUploadField = ({ showFiles }) => {
+export const CoverPhotoUploadField = () => {
     const { state } = useLocation();
-    const { control } = useFormContext();
+    const {
+        control,
+        formState: { errors },
+    } = useFormContext();
     const [coverPhotos, setCoverPhotos] = useState([]);
     const [showPreview, setShowPreview] = useState(false);
     const fileInputRef = useRef(null);
@@ -31,12 +34,10 @@ export const CoverPhotoUploadField = ({ showFiles }) => {
 
     const isModifiedData = useCallback(() => {
         if (state) {
-            setCoverPhotos(showFiles);
+            setCoverPhotos(state.product.cover_photos);
             setShowPreview(true);
-        } else {
-            return;
         }
-    }, [showFiles, state]);
+    }, [state]);
 
     useEffect(() => {
         isModifiedData();
@@ -44,7 +45,7 @@ export const CoverPhotoUploadField = ({ showFiles }) => {
 
     return (
         <div>
-            <Heading action={handleInput} showPreview={showPreview} />
+            <Heading action={handleInput} errors={errors} showPreview={showPreview} />
             <Controller
                 name="cover_photos"
                 control={control}
@@ -113,9 +114,28 @@ const Heading = ({ action, showPreview }) => {
 };
 
 const CoverPhotoThumbnailActiveContent = ({ file }) => {
+    const { state, hash } = useLocation();
+    const [imgPreview, setImgPreview] = useState(``);
+
+    const getImagePreview = useCallback(() => {
+        if (state && hash) {
+            if (typeof file === `string`) {
+                setImgPreview(file);
+            } else {
+                setImgPreview(URL.createObjectURL(file));
+            }
+        } else {
+            setImgPreview(URL.createObjectURL(file));
+        }
+    }, [file, hash, state]);
+
+    useEffect(() => {
+        getImagePreview();
+    }, [getImagePreview]);
+
     return (
         <Card maxW={`368px`} w={`100%`} h={`200px`} borderRadius={`5px`} variant={`outline`} border={`5px solid #F3F2FB`} overflow={`hidden`}>
-            <Image w={`100%`} h={`100%`} objectFit={`contain`} src={URL.createObjectURL(file)} alt={`img`} />
+            <Image w={`100%`} h={`100%`} objectFit={`contain`} src={imgPreview} alt={`img`} />
         </Card>
     );
 };

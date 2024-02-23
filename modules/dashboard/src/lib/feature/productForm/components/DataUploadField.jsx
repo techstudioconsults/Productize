@@ -8,13 +8,13 @@ import { useLocation } from "react-router-dom";
 
 export const DataUploadField = () => {
     const { state, hash } = useLocation();
+    const [documents, setDocuments] = useState([]);
+    const [showPreview, setShowPreview] = useState(false);
+    const fileInputRef = useRef(null);
     const {
         control,
         formState: { errors },
     } = useFormContext();
-    const [documents, setDocuments] = useState([]);
-    const [showPreview, setShowPreview] = useState(false);
-    const fileInputRef = useRef(null);
 
     const handleInput = () => {
         fileInputRef.current.click();
@@ -116,8 +116,23 @@ const Heading = ({ action, errors, showPreview }) => (
 
 const ProductContentDisplay = ({ file }) => {
     const { state } = useLocation();
-
     const [fileObject, setFileObject] = useState({});
+    // const convertToFile = useUrlToBlobConverter();
+
+    // useEffect(() => {
+    //     const getData = async () => {
+    //         if (state && file) {
+    //             if (typeof file === "string") {
+    //                 const file_MOD = await convertToFile(file);
+    //                 console.log(file_MOD[0]);
+    //                 setFileObject(file_MOD[0]);
+    //             } else {
+    //                 setFileObject({ name: file.name, type: file.type, size: file.size });
+    //             }
+    //         }
+    //     };
+    //     getData();
+    // }, [convertToFile, file, state]);
 
     useEffect(() => {
         if (state && file) {
@@ -140,7 +155,7 @@ const ProductContentDisplay = ({ file }) => {
                 {state ? (
                     <Box>
                         <Text fontWeight={600}>{fileObject?.name}</Text>
-                        <Text className="small-text">{`${fileObject?.type}${fileObject?.size ? `.${Math.floor(fileObject?.size / 1000)}kb` : ``}`}</Text>
+                        <Text className="small-text">{`${fileObject?.type}`}</Text>
                     </Box>
                 ) : (
                     <Box>

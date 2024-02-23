@@ -5,3 +5,6 @@ export * from "./lib/useAxiosInstance";
 export * from "./lib/useCurrency";
 export * from "./lib/useDateTimeConverter";
 export * from "./lib/useStepGuide";
+export * from "./lib/useCompressedFile";
+export * from "./lib/UseUrlToBlobConverter";
+

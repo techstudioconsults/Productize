@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { Flex, FormControl, Text } from "@chakra-ui/react";
 import { Icon } from "@iconify/react";
 import { SharedButton } from "@productize-v1.0.0/modules/shared/ui";

@@ -114,10 +114,28 @@ const Heading = ({ action, showPreview }) => {
 };
 
 const CoverPhotoThumbnailActiveContent = ({ file }) => {
-    const { state } = useLocation();
+    const { state, hash } = useLocation();
+    const [imgPreview, setImgPreview] = useState(``);
+
+    const getImagePreview = useCallback(() => {
+        if (state && hash) {
+            if (typeof file === `string`) {
+                setImgPreview(file);
+            } else {
+                setImgPreview(URL.createObjectURL(file));
+            }
+        } else {
+            setImgPreview(URL.createObjectURL(file));
+        }
+    }, [file, hash, state]);
+
+    useEffect(() => {
+        getImagePreview();
+    }, [getImagePreview]);
+
     return (
         <Card maxW={`368px`} w={`100%`} h={`200px`} borderRadius={`5px`} variant={`outline`} border={`5px solid #F3F2FB`} overflow={`hidden`}>
-            <Image w={`100%`} h={`100%`} objectFit={`contain`} src={state ? file : URL.createObjectURL(file)} alt={`img`} />
+            <Image w={`100%`} h={`100%`} objectFit={`contain`} src={imgPreview} alt={`img`} />
         </Card>
     );
 };

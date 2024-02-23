@@ -5,52 +5,40 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { useLocation } from "react-router-dom";
 
-export const ThumbnailUploadField = ({ showFiles }) => {
-    const { state } = useLocation();
+export const ThumbnailUploadField = () => {
+    const { state, hash } = useLocation();
     const { control } = useFormContext();
-    const [thumbnail, setThumbnail] = useState([]);
+    const [thumbnail, setThumbnail] = useState(``);
     const fileInputRef = useRef(null);
 
     const handleInput = () => {
         fileInputRef.current.click();
     };
 
-    const handleFileChange = (files) => {
-        if (files?.length) {
-            const fileAsArray = Array.from(files);
-            setThumbnail(fileAsArray);
+    const handleFileChange = (file) => {
+        if (file) {
+            // const fileAsArray = Array.from(files);
+            setThumbnail(URL.createObjectURL(file));
         } else {
-            setThumbnail(null);
+            setThumbnail(``);
             isModifiedData();
         }
     };
 
     const isModifiedData = useCallback(() => {
-        if (state) {
-            setThumbnail(showFiles);
-        } else {
-            return;
+        if (state && hash) {
+            setThumbnail(state.product.thumbnail);
         }
-    }, [showFiles, state]);
-
+    }, [hash, state]);
 
     useEffect(() => {
         isModifiedData();
     }, [isModifiedData, state]);
 
-
     return (
         <div>
             <Heading />
-            <Center
-                mt={4}
-                bgColor={`purple.100`}
-                bgImg={thumbnail?.map((thumbnail) => URL.createObjectURL(thumbnail))}
-                bgPosition={`center`}
-                bgSize={`contain`}
-                bgRepeat={`no-repeat`}
-                boxSize={`200px`}
-            >
+            <Center mt={4} bgColor={`purple.100`} bgImg={thumbnail} bgPosition={`center`} bgSize={`contain`} bgRepeat={`no-repeat`} boxSize={`200px`}>
                 <Controller
                     name="thumbnail"
                     control={control}
@@ -60,8 +48,8 @@ export const ThumbnailUploadField = ({ showFiles }) => {
                             display={`none`}
                             type="file"
                             onChange={(e) => {
-                                onChange(e.target.files);
-                                handleFileChange(e.target.files);
+                                onChange(e.target.files[0]);
+                                handleFileChange(e.target.files[0]);
                             }}
                             ref={fileInputRef}
                         />

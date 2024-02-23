@@ -10,6 +10,7 @@ export const DataUploadField = () => {
     const { state, hash } = useLocation();
     const {
         control,
+        setValue,
         formState: { errors },
     } = useFormContext();
     const [documents, setDocuments] = useState([]);
@@ -34,6 +35,8 @@ export const DataUploadField = () => {
 
     const isModifiedData = useCallback(async () => {
         if (state && hash) {
+            // console.log(state.product.data);
+            // //convert data to array of File
             setDocuments(state?.product?.data);
             setShowPreview(true);
         }
@@ -115,21 +118,21 @@ const Heading = ({ action, errors, showPreview }) => (
 );
 
 const ProductContentDisplay = ({ file }) => {
-    const { state } = useLocation();
+    // const { state } = useLocation();
 
-    const [fileObject, setFileObject] = useState({});
+    // const [fileObject, setFileObject] = useState({});
 
-    useEffect(() => {
-        if (state && file) {
-            if (typeof file === "string") {
-                const filename = file.substring(file.lastIndexOf("/") + 1);
-                const filetype = file.substring(file.lastIndexOf(".") + 1);
-                setFileObject({ name: filename, type: `document/${filetype}`, size: file?.size });
-            } else {
-                setFileObject({ name: file.name, type: file.type, size: file.size });
-            }
-        }
-    }, [file, state]);
+    // useEffect(() => {
+    //     if (state && file) {
+    //         if (typeof file === "string") {
+    //             const filename = file.substring(file.lastIndexOf("/") + 1);
+    //             const filetype = file.substring(file.lastIndexOf(".") + 1);
+    //             setFileObject({ name: filename, type: `document/${filetype}`, size: file?.size });
+    //         } else {
+    //             setFileObject({ name: file.name, type: file.type, size: file.size });
+    //         }
+    //     }
+    // }, [file, state]);
 
     return (
         <Card p={8} borderRadius="5px" bgColor="purple.100" variant="filled">
@@ -137,17 +140,11 @@ const ProductContentDisplay = ({ file }) => {
                 <Box boxSize="72px">
                     <Image src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951012/productize/Layer_1_m6pvyg_yz7oz1.png" />
                 </Box>
-                {state ? (
-                    <Box>
-                        <Text fontWeight={600}>{fileObject?.name}</Text>
-                        <Text className="small-text">{`${fileObject?.type}${fileObject?.size ? `.${Math.floor(fileObject?.size / 1000)}kb` : ``}`}</Text>
-                    </Box>
-                ) : (
-                    <Box>
-                        <Text fontWeight={600}>{file?.name}</Text>
-                        <Text className="small-text">{`${file?.type}.${Math.floor(file?.size / 1000)}`}kb</Text>
-                    </Box>
-                )}
+
+                <Box>
+                    <Text fontWeight={600}>{file?.name}</Text>
+                    <Text className="small-text">{`${file?.type}.${Math.floor(file?.size / 1000)}`}kb</Text>
+                </Box>
             </Flex>
         </Card>
     );

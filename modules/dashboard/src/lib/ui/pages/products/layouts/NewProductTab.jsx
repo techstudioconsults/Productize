@@ -22,77 +22,60 @@ const disabledStateStyle = {
 const tabNames = ["product-details", "content-delivery", "preview", "share"];
 
 export const NewProductTab = () => {
-    // const [highlight, setHighlights] = useState([]);
     const convertToFile = useUrlToBlobConverter();
     const { query, isLoading } = useAxiosInstance({ MIME_TYPE: "multipart/form-data" });
     const [updateProductStatus, updateProductStatusStatus] = useUpdateProductStatusMutation();
-    // const [product, setProduct] = useState([]);
-
     const { toast, toastIdRef, close } = useToastAction();
+    const { state, hash } = useLocation();
+    const navigate = useNavigate();
+    const getHashIndex = tabNames.findIndex((tab) => hash === `#${tab}`);
+    const [tabIndex, setTabIndex] = useState(getHashIndex);
     const methods = useForm({
         criteriaMode: "all",
         mode: "onChange",
         resolver: yupResolver(productFormSchema),
     });
 
-    const { state, hash } = useLocation();
-    const navigate = useNavigate();
-
-    const getHashIndex = tabNames.findIndex((tab) => hash === `#${tab}`);
-    const [tabIndex, setTabIndex] = useState(getHashIndex);
-
-    // Function to handle setting data
-    const handleSetData = async () => {
-        try {
-            const fileObjects = await convertToFile(state?.product?.data);
-            console.log(fileObjects);
-            methods.setValue(`data`, fileObjects);
-        } catch (error) {
-            console.error("Error converting data to file objects:", error);
+    const checkIfProductHasChanged = (data) => {
+        if (data && data instanceof FileList) {
+            [...data].forEach((datum) => {
+                console.log(datum);
+            });
+        } else {
+            return; // Ignore data that is not a FileList
         }
     };
 
-    // Call the function to handle setting data
-    handleSetData();
-
     useEffect(() => {
         setTabIndex(getHashIndex);
-
         if (state && hash === "#product-details") {
-            console.log(state);
             methods.setValue("title", state?.product?.title);
             methods.setValue("price", state?.product?.price);
             methods.setValue("product_type", state?.product?.product_type);
             methods.setValue("description", state?.product?.description);
             methods.setValue("tags", state?.product?.tags);
-
-            handleSetData();
-
-            // setHighlights(state?.product?.highlights);
-            // state?.product?.highlights?.forEach((highlight, index) => {
-            //     setValue(`highlights[${index}]`, highlight);
-            // });
         }
     }, [getHashIndex, state]);
 
     const onSubmit = async (data) => {
         console.log(data);
-        if (state) {
+        if (state && hash) {
+            console.log(state.product);
+            // checkIfProductHasChanged(data.data);
             const formData = {
                 title: data.title,
                 price: data.price,
                 description: data.description,
-                data: [...data.data],
-                cover_photos: [...data.cover_photos],
+                data: data.data,
+                cover_photos: data.cover_photos,
                 thumbnail: data.thumbnail[0],
                 highlights: data.highlights,
                 tags: data.tags,
             };
-            console.log(formData);
+            // console.log(formData);
 
             try {
                 const res = await query(`post`, `/products/${state?.product?.id}?_method=PUT`, formData);
-
                 if (res.status === 200) {
                     toastIdRef.current = toast({
                         position: "top",
@@ -129,15 +112,15 @@ export const NewProductTab = () => {
             }
         } else {
             const formData = {
-                title: data.title,
-                price: data.price,
-                product_type: data.productType,
-                description: data.description,
-                data: [...data.data],
-                cover_photos: [...data.cover_photos],
+                ...data,
+                // title: data.title,
+                // price: data.price,
+                // description: data.description,
+                // data: [...data.data],
+                // cover_photos: [...data.cover_photos],
                 thumbnail: data.thumbnail[0],
-                highlights: data.highlights,
-                tags: data.tags,
+                // highlights: data.highlights,
+                // tags: data.tags,
             };
 
             try {

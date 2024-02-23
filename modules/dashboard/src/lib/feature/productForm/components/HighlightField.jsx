@@ -1,36 +1,33 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Flex, FormHelperText, Input, InputGroup, Stack, Text } from "@chakra-ui/react";
 import { SharedButton } from "@productize-v1.0.0/modules/shared/ui";
-import { useFormContext } from "react-hook-form";
+import { useFormContext } from "react-hook-form"; // Import useForm
 import { useLocation } from "react-router-dom";
 
-export const HighLightField = ({ showFiles }) => {
+export const HighLightField = () => {
     const { state } = useLocation();
     const {
         register,
+        setValue,
         formState: { errors },
-    } = useFormContext();
-    const [highlights, setHighlights] = useState([]); // State to store highlights
-
-    const addHighlight = () => {
-        setHighlights([...highlights, ""]); // Add an empty highlight input field
-    };
-
-    const isModifiedData = useCallback(() => {
-        if (state) {
-            setHighlights(showFiles);
-        } else {
-            return;
-        }
-    }, [showFiles, state]);
+    } = useFormContext(); // Use useForm
+    const [highlights, setHighlights] = useState([""]);
 
     useEffect(() => {
-        isModifiedData();
-    }, [isModifiedData, state]);
+        if (state) {
+            setValue("highlights", state?.product?.highlights);
+            setHighlights(state.product.highlights
+                .map((highlight) => highlight.text));
+        }
+    }, [setValue, state]);
+
+    const addHighlight = () => {
+        setHighlights([...highlights, ""]);
+    };
 
     return (
-        <div>
+        <>
             <Heading />
             <InputGroup size="lg">
                 <Stack w={`100%`} mt={4} gap={4}>
@@ -43,11 +40,12 @@ export const HighLightField = ({ showFiles }) => {
                                 _placeholder={{ color: `grey.400` }}
                                 placeholder="Enter Information"
                                 variant={`filled`}
-                                {...register(`highlights[${index}]`)} // Register each input field
+                                defaultValue={highlight} // Set default value from state
+                                {...register(`highlights.${index}`)} // Use dot notation for array fields
                             />
-                            {errors.highlights && errors.highlights?.[index] && (
+                            {errors.highlights && errors.highlights[index] && (
                                 <Text className={`tiny-text`} color={`red.200`}>
-                                    {errors.highlights?.[index].message}
+                                    {errors.highlights[index].message}
                                 </Text>
                             )}
                         </Box>
@@ -57,6 +55,7 @@ export const HighLightField = ({ showFiles }) => {
             <Box mt={5}>
                 <SharedButton
                     text={"Add more highlight "}
+                    type="button" // Set type to "button"
                     width={"100%"}
                     height={"48px"}
                     bgColor={"transparent"}
@@ -65,11 +64,12 @@ export const HighLightField = ({ showFiles }) => {
                     fontSize={{ base: `sm`, md: `md` }}
                     btnExtras={{
                         border: `1px solid #6D5DD3`,
-                        onClick: addHighlight, // Call addHighlight function on button click
+                        onClick: addHighlight,
                     }}
                 />
             </Box>
-        </div>
+            <input type="submit" style={{ display: "none" }} /> {/* Hidden submit button */}
+        </>
     );
 };
 

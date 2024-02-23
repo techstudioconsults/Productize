@@ -11,9 +11,6 @@ import RichTextField from "./components/RichTextField";
 import { ThumbnailUploadField } from "./components/ThumbnailUploadField";
 import { HighLightField } from "./components/HighlightField";
 import TagsField from "./components/TagsField";
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { useUrlToBlobConverter } from "@productize-v1.0.0/modules/shared/hooks";
 
 const globalFieldStyle = {
     bgColor: `grey.200`,
@@ -37,11 +34,11 @@ export const ProductForm = () => {
             {/* GRID ONE*/}
             <FormControl as={SimpleGrid} my={8} gap={4} columns={{ base: 1, sm: 2 }}>
                 {/* product title */}
-                <Field label="Product Title" error={errors.title}>
+                <Field label="Product Title">
                     <Input placeholder="Name of product" variant={`filled`} size={`lg`} sx={globalFieldStyle} {...register(`title`)} type="text" id="title" />
                 </Field>
                 {/* product price */}
-                <Field label="Price" error={errors.price}>
+                <Field label="Price">
                     <Input placeholder="0" variant={`filled`} size={`lg`} sx={globalFieldStyle} {...register(`price`)} type="number" id="price" />
                 </Field>
             </FormControl>
@@ -63,14 +60,14 @@ export const ProductForm = () => {
 
             {/* GRID FIVE */}
             <FormControl my={8} gap={4}>
-                <Field error={errors.cover_photos}>
+                <Field>
                     <CoverPhotoUploadField />
                 </Field>
             </FormControl>
 
             {/* GRID SIX */}
             <FormControl my={8} gap={4}>
-                <Field error={errors.thumbnail}>
+                <Field>
                     <ThumbnailUploadField />
                 </Field>
             </FormControl>
@@ -78,13 +75,13 @@ export const ProductForm = () => {
             {/* GRID SEVEN */}
             <FormControl as={SimpleGrid} my={8} gap={4} columns={{ base: 1, sm: 2 }}>
                 <Field>
-                    <HighLightField showFiles={[]} />
+                    <HighLightField />
                 </Field>
             </FormControl>
 
             {/* GRID EIGHT */}
             <FormControl as={SimpleGrid} my={8} gap={4} columns={{ base: 1, sm: 2 }}>
-                <Field error={errors.tags}>
+                <Field>
                     <TagsField />
                 </Field>
             </FormControl>

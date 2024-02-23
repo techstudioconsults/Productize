@@ -6,7 +6,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { useLocation } from "react-router-dom";
 
-export const CoverPhotoUploadField = ({ showFiles }) => {
+export const CoverPhotoUploadField = () => {
     const { state } = useLocation();
     const { control } = useFormContext();
     const [coverPhotos, setCoverPhotos] = useState([]);
@@ -31,12 +31,13 @@ export const CoverPhotoUploadField = ({ showFiles }) => {
 
     const isModifiedData = useCallback(() => {
         if (state) {
-            setCoverPhotos(showFiles);
+            console.log(state.product.cover_photos);
+            setCoverPhotos(state.product.cover_photos);
             setShowPreview(true);
         } else {
             return;
         }
-    }, [showFiles, state]);
+    }, [state]);
 
     useEffect(() => {
         isModifiedData();
@@ -115,7 +116,7 @@ const Heading = ({ action, showPreview }) => {
 const CoverPhotoThumbnailActiveContent = ({ file }) => {
     return (
         <Card maxW={`368px`} w={`100%`} h={`200px`} borderRadius={`5px`} variant={`outline`} border={`5px solid #F3F2FB`} overflow={`hidden`}>
-            <Image w={`100%`} h={`100%`} objectFit={`contain`} src={URL.createObjectURL(file)} alt={`img`} />
+            {/* <Image w={`100%`} h={`100%`} objectFit={`contain`} src={URL.createObjectURL(file)} alt={`img`} /> */}
         </Card>
     );
 };

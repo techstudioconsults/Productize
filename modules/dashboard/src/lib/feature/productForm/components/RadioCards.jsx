@@ -17,7 +17,7 @@ const RadioCards = () => {
     return (
         <RadioGroup as={SimpleGrid} my={8} gap={4} columns={{ base: 1, md: 2, lg: 3, xl: 4 }} onChange={setProductTypeValue} value={productTypeValue}>
             {/* <SimpleGrid my={8} gap={4} columns={{ base: 1, md: 2, lg: 3, xl: 4 }}> */}
-            <Radio {...register(`productType`)} display={`block`} hidden spacing={0} value="digital_product">
+            <Radio {...register(`product_type`)} display={`block`} hidden spacing={0} value="digital_product">
                 <ProductTypeCard
                     img={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951006/productize/Image_1_wc3l2p_a7lovq.png`}
                     title={"Digital Product"}
@@ -27,7 +27,7 @@ const RadioCards = () => {
             </Radio>
             <Radio
                 // isDisabled
-                {...register(`productType`)}
+                {...register(`product_type`)}
                 display={`block`}
                 hidden
                 spacing={0}
@@ -58,7 +58,7 @@ const RadioCards = () => {
             </Radio>
             {/* </SimpleGrid> */}
             <Text className={`tiny-text`} color={`red.200`}>
-                {errors?.productType?.message}
+                {errors?.product_type?.message}
             </Text>
         </RadioGroup>
     );

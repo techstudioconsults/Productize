@@ -46,6 +46,8 @@ export const NewProductTab = () => {
         }
     }, [getHashIndex, state]);
 
+    console.log(state.product);
+
     const onSubmit = async (data) => {
         console.log(data);
         if (state && hash) {
@@ -55,7 +57,7 @@ export const NewProductTab = () => {
                 description: data.description,
                 data: data.data,
                 cover_photos: data.cover_photos,
-                thumbnail: data.thumbnail,
+                thumbnail: data.thumbnail[0],
                 highlights: data.highlights,
                 tags: data.tags,
             };
@@ -106,7 +108,7 @@ export const NewProductTab = () => {
                 // description: data.description,
                 // data: [...data.data],
                 // cover_photos: [...data.cover_photos],
-                thumbnail: data.thumbnail,
+                thumbnail: data.thumbnail[0],
                 // highlights: data.highlights,
                 // tags: data.tags,
             };

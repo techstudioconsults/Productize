@@ -17,7 +17,6 @@ export const ThumbnailUploadField = () => {
 
     const handleFileChange = (file) => {
         if (file) {
-            // const fileAsArray = Array.from(files);
             setThumbnail(URL.createObjectURL(file));
         } else {
             setThumbnail(``);
@@ -48,7 +47,7 @@ export const ThumbnailUploadField = () => {
                             display={`none`}
                             type="file"
                             onChange={(e) => {
-                                onChange(e.target.files[0]);
+                                onChange(e.target.files);
                                 handleFileChange(e.target.files[0]);
                             }}
                             ref={fileInputRef}

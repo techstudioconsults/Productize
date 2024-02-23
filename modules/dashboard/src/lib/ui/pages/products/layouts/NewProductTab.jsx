@@ -46,10 +46,7 @@ export const NewProductTab = () => {
         }
     }, [getHashIndex, state]);
 
-    console.log(state.product);
-
     const onSubmit = async (data) => {
-        console.log(data);
         if (state && hash) {
             const formData = {
                 title: data.title,
@@ -61,8 +58,6 @@ export const NewProductTab = () => {
                 highlights: data.highlights,
                 tags: data.tags,
             };
-
-            console.log(formData);
 
             try {
                 const res = await query(`post`, `/products/${state?.product?.id}?_method=PUT`, formData);
@@ -103,14 +98,7 @@ export const NewProductTab = () => {
         } else {
             const formData = {
                 ...data,
-                // title: data.title,
-                // price: data.price,
-                // description: data.description,
-                // data: [...data.data],
-                // cover_photos: [...data.cover_photos],
                 thumbnail: data.thumbnail[0],
-                // highlights: data.highlights,
-                // tags: data.tags,
             };
 
             try {

@@ -26,7 +26,7 @@ export const ThumbnailUploadField = () => {
 
     const isModifiedData = useCallback(() => {
         if (state && hash) {
-            setThumbnail(state.product.thumbnail);
+            setThumbnail(state?.product?.thumbnail);
         }
     }, [hash, state]);
 

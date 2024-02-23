@@ -34,7 +34,7 @@ export const CoverPhotoUploadField = () => {
 
     const isModifiedData = useCallback(() => {
         if (state) {
-            setCoverPhotos(state.product.cover_photos);
+            setCoverPhotos(state?.product?.cover_photos);
             setShowPreview(true);
         }
     }, [state]);

@@ -24,10 +24,7 @@ const globalFieldStyle = {
 };
 
 export const ProductForm = () => {
-    const {
-        register,
-        formState: { errors },
-    } = useFormContext(); // retrieve all hook methods
+    const { register } = useFormContext(); // retrieve all hook methods
 
     return (
         <FormControl>

@@ -9,7 +9,6 @@ import { useUrlToBlobConverter } from "@productize-v1.0.0/modules/shared/hooks";
 
 export const DataUploadField = () => {
     const { state, hash } = useLocation();
-    const convertToFile = useUrlToBlobConverter();
     const [documents, setDocuments] = useState([]);
     const [showPreview, setShowPreview] = useState(false);
     const fileInputRef = useRef(null);
@@ -121,18 +120,33 @@ const Heading = ({ action, errors, showPreview }) => (
 const ProductContentDisplay = ({ file }) => {
     const { state } = useLocation();
     const [fileObject, setFileObject] = useState({});
+    const convertToFile = useUrlToBlobConverter();
 
     useEffect(() => {
-        if (state && file) {
-            if (typeof file === "string") {
-                const filename = file.substring(file.lastIndexOf("/") + 1);
-                const filetype = file.substring(file.lastIndexOf(".") + 1);
-                setFileObject({ name: filename, type: `document/${filetype}`, size: file?.size });
-            } else {
-                setFileObject({ name: file.name, type: file.type, size: file.size });
+        const getData = async () => {
+            if (state && file) {
+                if (typeof file === "string") {
+                    const file_MOD = await convertToFile(file);
+                    console.log(file_MOD[0]);
+                    setFileObject(file_MOD[0]);
+                } else {
+                    setFileObject({ name: file.name, type: file.type, size: file.size });
+                }
             }
-        }
-    }, [file, state]);
+        };
+        getData();
+    }, [convertToFile, file, state]);
+    // useEffect(() => {
+    //     if (state && file) {
+    //         if (typeof file === "string") {
+    //             const filename = file.substring(file.lastIndexOf("/") + 1);
+    //             const filetype = file.substring(file.lastIndexOf(".") + 1);
+    //             setFileObject({ name: filename, type: `document/${filetype}`, size: file?.size });
+    //         } else {
+    //             setFileObject({ name: file.name, type: file.type, size: file.size });
+    //         }
+    //     }
+    // }, [file, state]);
 
     return (
         <Card p={8} borderRadius="5px" bgColor="purple.100" variant="filled">

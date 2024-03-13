@@ -1,0 +1,32 @@
+// @use '@/scss/global/colors' as colors;
+// @use '@/scss/utils/functions' as fn;
+// @import '@/scss/utils/breakpoints';
+// @import '@/scss/utils/mixins';
+
+.graphCard {
+    // background-color: grey;
+    // padding: 20px;
+    border-radius: 4px;
+    height: 100%;
+
+    .header {
+        // @include flex;
+        // @include flex_align;
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 20px;
+
+        .title {
+            font-size: 14px;
+            span {
+                font-size: 24px;
+                font-weight: 700;
+            }
+        }
+    }
+
+    .imgWrapper {
+        width: 100%;
+        height: 300px;
+    }
+}

@@ -1,0 +1,33 @@
+18. analytics revenue overview chart data need to come from the backend (optional for now)
+
+22. email notification switch on the setting page is buggy
+19. check download page on mobile if the content works (IMG, videos, and pdfs/docs)
+26. number of days left in setting(plans) is not functional
+28. finish the cart system
+
+4. sharelink of the published product is missing(done)
+6. no sharelink value in product details response in dashboard (created a hack)(done)
+8. the thumbnail for orders on the orders table is not available in the response (done)
+9. product sharelink is missing in order details (done)
+10. viewed does not exist on the response for order details (i took the view out) (done)
+15. payout stats (total earnings, withdrawn earnings, pending, available earnings)(done)
+17. intiate Withdrawal throws a 500 error, looking for recipient paystack id (done)
+5. this http://localhost:4200/explore/product/details/officia-omnis-ad instead of this http://localhost:4200/product/officia-omnis-ad (share view) (done)
+24. activate paystack account and deactivate paystack account from the paystack acc card (done)
+27. expired plan needs a message on the billing history (done)
+3. no cancel icon on the highlight field (done)
+2. delete permanently action is working but its not the right response (done)
+11. the order filter is missing a dropdown parameter (done)
+20. remove scroll bar on desktop view in downloads (done)
+21. make tags clickable and functional in explore feature external page (done)
+25. plan route in setting is buggy (done)
+
+
+1. the `make first sale` radio button is  not wworking (done)
+7. pagination link in product live, draft, deleted should be https://productize-api.techstudio.academy/api/products/users?status={status}&page={any-page} where status is either `published`, `draft`, `deleted` (done)
+12. orders download functionality not working (needs api endpoint) (done)
+14. download functionality for customers not available (done)
+13. latest purchase title and thumbnail is missing in the response (in customers details) (done)
+23. disable account and delete acc on the setting page has no functionality (done)
+16. payout exports/download functionality(done)
+alternate email did not update with key auth_email like you

@@ -1,0 +1,45 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": [
+      "es2020",
+      "dom"
+    ],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@productize/auth": [
+        "modules/auth/src/index.ts"
+      ],
+      "@productize/dashboard": [
+        "modules/dashboard/src/index.ts"
+      ],
+      "@productize/hooks": [
+        "modules/shared/hooks/src/index.ts"
+      ],
+      "@productize/redux": [
+        "modules/shared/redux/src/index.ts"
+      ],
+      "@productize/ui": [
+        "modules/shared/ui/src/index.ts"
+      ]
+    }
+  },
+  "include": [
+    "./test/testSetup.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "dashboard",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "modules/dashboard/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+      "test": {
+          "executor": "@nx/vite:test",
+          "outputs": ["{options.reportsDirectory}"],
+          "options": {
+              "passWithNoTests": true,
+              "reportsDirectory": "coverage/productize"
+          }
+      }
+  }
+}

@@ -1,0 +1,105 @@
+@use '../utils' as utils;
+@use './colors' as colors;
+@use '../utils/functions' as fn;
+
+html {
+    box-sizing: border-box;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -webkit-text-stroke-width: 0.1px;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+
+    @media screen and (min-width: 1024px) {
+        // display: initial;
+    }
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+    font-optical-sizing: auto;
+    font-family: utils.$base-font;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-style: normal;
+    background-color: colors.$base-bg;
+    color: colors.$text-dark;
+}
+
+a,
+button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none !important;
+}
+
+// a {
+//   color: #000 !important;
+// }
+
+a,
+a:visited,
+a:active {
+    cursor: pointer;
+    letter-spacing: fn.rem(0.2);
+    text-decoration: none;
+}
+
+button {
+    height: fn.rem(40);
+    outline: none;
+    border: none;
+}
+
+ul,
+ol {
+    list-style: none;
+    color: inherit;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    letter-spacing: 0.5;
+    list-style: none;
+}
+
+label {
+    font-size: fn.rem(14);
+}
+
+input,
+textarea,
+select {
+    height: fn.rem(40);
+    font-size: fn.rem(14) !important;
+
+    &::placeholder {
+        font-size: fn.rem(14);
+    }
+}
+
+.cc-container {
+    width: 100%;
+    max-width: fn.rem(1120);
+    margin: 0 auto;
+}
+
+.hide_scrollbar {
+    &::-webkit-scrollbar {
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        display: none !important;
+        /* Hide scrollbar for IE, Edge and Firefox */
+        -ms-overflow-style: none !important;
+        /* IE and Edge */
+        scrollbar-width: none !important;
+        /* Firefox */
+    }
+}

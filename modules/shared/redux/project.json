@@ -1,0 +1,8 @@
+{
+  "name": "redux",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "modules/shared/redux/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {}
+}

@@ -67,6 +67,9 @@ export const NewProductTab = () => {
             try {
                 const res = await query(`post`, `/products/${state?.product?.id}?_method=PUT`, formData);
                 if (res.status === 200) {
+                    navigate(`/dashboard/products/new#preview`, {
+                        state: { product: res.data },
+                    });
                     toastIdRef.current = toast({
                         position: 'top',
                         render: () => (
@@ -79,9 +82,6 @@ export const NewProductTab = () => {
                                 handleClose={close}
                             />
                         ),
-                    });
-                    navigate(`/dashboard/products/new#preview`, {
-                        state: { product: res.data },
                     });
                 }
             } catch (err) {
@@ -113,7 +113,6 @@ export const NewProductTab = () => {
                         position: 'top',
                         render: () => <ToastFeedback btnColor={`purple.200`} message={`Product Created Successfully!`} handleClose={close} />,
                     });
-
                     navigate(`/dashboard/products/new#preview`, {
                         state: { product: res.data },
                     });
@@ -138,7 +137,8 @@ export const NewProductTab = () => {
     };
 
     const handlePublishAction = async () => {
-        const productID = hash === `#share` ? state?.product?.data?.id : state?.product?.id;
+        // const productID = hash === `#share` ? state?.product?.id : state?.product?.id;
+        const productID = state?.product?.id;
         if (user?.account_type === `free` && state?.product?.status !== `draft`) {
             onOpen();
         } else {
@@ -146,22 +146,23 @@ export const NewProductTab = () => {
                 const res = await updateProductStatus({
                     productID: productID,
                 }).unwrap();
+                console.log(res);
 
-                if (res?.data?.status === `published`) {
+                if (res?.status === `published`) {
+                    navigate(`/dashboard/products/new#share`, {
+                        state: { product: res },
+                    });
                     toastIdRef.current = toast({
                         position: 'top',
                         render: () => <ToastFeedback btnColor={`purple.200`} message={`Product	published Successfully!`} handleClose={close} />,
                     });
-                    navigate(`/dashboard/products/new#share`, {
+                } else {
+                    navigate(`/dashboard/products/new#preview`, {
                         state: { product: res },
                     });
-                } else {
                     toastIdRef.current = toast({
                         position: 'top',
                         render: () => <ToastFeedback btnColor={`purple.200`} message={`Product	sent to draft Successfully!`} handleClose={close} />,
-                    });
-                    navigate(`/dashboard/products/new#preview`, {
-                        state: { product: res?.data },
                     });
                 }
             } catch (error) {

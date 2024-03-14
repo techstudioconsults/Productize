@@ -61,7 +61,7 @@ const ShareLayout = () => {
                         </Box>
                         <Stack mt={4} alignItems={`center`}>
                             <Text fontWeight={600}></Text>
-                            <Text fontWeight={600}>{formatCurrency(state?.product?.data?.price)}</Text>
+                            <Text fontWeight={600}>{formatCurrency(state?.product?.price)}</Text>
                         </Stack>
                     </Card>
                     <Stack alignItems={`center`} mt={`4rem`}>

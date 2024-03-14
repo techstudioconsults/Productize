@@ -1,6 +1,16 @@
 import { apiSlice } from '../apiSlice';
 import { setAccountList, setBillingHistory, setPayoutStats, setPayouts, setUser } from './userSlice';
 
+const checkCredentials = (credentials, filteredLink) => {
+    if (credentials && !credentials?.link) {
+        return filteredLink;
+    } else if (credentials?.link) {
+        return credentials?.link;
+    } else {
+        return `/payments/payouts`;
+    }
+};
+
 export const userApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         getUser: builder.mutation({
@@ -123,9 +133,13 @@ export const userApiSlice = apiSlice.injectEndpoints({
 
         getPayouts: builder.mutation({
             query: (credentials) => ({
-                url: `/payments/payouts?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}`,
+                url: checkCredentials(
+                    credentials,
+                    `/payments/payouts?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}`
+                ),
                 method: 'GET',
             }),
+
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;

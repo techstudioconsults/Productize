@@ -243,6 +243,8 @@ export const NewProductTab = () => {
                     btnExtras={{
                         border: `1px solid #6D5DD3`,
                         onClick: handlePublishAction,
+                        isLoading: updateProductStatusStatus.isLoading,
+                        loadingText: `Unpublishing product...`,
                     }}
                     text={'Unpublished'}
                     width={{ base: `100%`, lg: `fit-content` }}

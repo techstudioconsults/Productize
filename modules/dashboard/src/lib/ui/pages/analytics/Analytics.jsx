@@ -106,7 +106,7 @@ export const Analytics = () => {
                                 </Flex>
                             </div>
                             <div className={style.imgWrapper}>
-                                {/* <LineChart /> */}
+                                <LineChart />
                             </div>
                             <Box my={10}>
                                 <Text as={`h6`} my={5}>

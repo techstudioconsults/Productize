@@ -1,5 +1,5 @@
-import { Box, Checkbox, Divider, Flex, FormControl, FormLabel, Grid, GridItem, Input, Radio, Switch, Text } from '@chakra-ui/react';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { Box, Checkbox, Divider, Flex, FormControl, FormLabel, Grid, GridItem, Input, InputGroup, InputRightElement, Switch, Text } from '@chakra-ui/react';
+// import { yupResolver } from '@hookform/resolvers/yup';
 
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -9,6 +9,7 @@ import toastImg from '@icons/star-notice.png';
 import { SharedButton, ToastFeedback, useToastAction } from '@productize/ui';
 import { selectCurrentUser, useChangePasswordMutation, useGetUserMutation } from '@productize/redux';
 import { useAxiosInstance } from '@productize/hooks';
+import { Icon } from '@iconify/react';
 
 export const AccountSettings = () => {
     const user = useSelector(selectCurrentUser);
@@ -19,6 +20,11 @@ export const AccountSettings = () => {
     const [changePassword, changePasswordStatus] = useChangePasswordMutation();
     const { toast, toastIdRef, close } = useToastAction();
     const [email, setEmail] = useState('');
+    const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+    const [showNewPassword, setShowNewPassword] = useState(false);
+
+    const handleClickCurrentPassword = () => setShowCurrentPassword(!showCurrentPassword);
+    const handleClickNewPassword = () => setShowNewPassword(!showNewPassword);
 
     const handleInputChange = (event) => {
         setEmail(event.target.value);
@@ -254,16 +260,25 @@ export const AccountSettings = () => {
                                     <FormLabel color={`purple.300`} fontWeight={600}>
                                         Current Password
                                     </FormLabel>
-                                    <Input
-                                        type={`password`}
-                                        bgColor={`grey.200`}
-                                        _focus={{ bgColor: `grey.300`, color: `grey.800` }}
-                                        _placeholder={{ color: `grey.400` }}
-                                        placeholder="Enter current password"
-                                        variant={`filled`}
-                                        size={`lg`}
-                                        {...register('password')}
-                                    />
+                                    <InputGroup size={`lg`}>
+                                        <Input
+                                            type={showCurrentPassword ? `text` : `password`}
+                                            bgColor={`grey.200`}
+                                            _focus={{ bgColor: `grey.300`, color: `grey.800` }}
+                                            _placeholder={{ color: `grey.400` }}
+                                            placeholder="Enter current password"
+                                            variant={`filled`}
+                                            size={`lg`}
+                                            {...register('password')}
+                                        />
+                                        <InputRightElement onClick={handleClickCurrentPassword} width="2.5rem">
+                                            {!showCurrentPassword ? (
+                                                <Icon icon={`ant-design:eye-twotone`} />
+                                            ) : (
+                                                <Icon icon={`ant-design:eye-invisible-twotone`} />
+                                            )}
+                                        </InputRightElement>
+                                    </InputGroup>
                                     <Text className={`tiny-text`} color={`red.200`}>
                                         {errors?.password?.message}
                                     </Text>
@@ -272,16 +287,21 @@ export const AccountSettings = () => {
                                     <FormLabel color={`purple.300`} fontWeight={600}>
                                         New Password
                                     </FormLabel>
-                                    <Input
-                                        type={`password`}
-                                        bgColor={`grey.200`}
-                                        _focus={{ bgColor: `grey.300`, color: `grey.800` }}
-                                        _placeholder={{ color: `grey.400` }}
-                                        placeholder="Enter current password"
-                                        variant={`filled`}
-                                        size={`lg`}
-                                        {...register('new_password')}
-                                    />
+                                    <InputGroup size={`lg`}>
+                                        <Input
+                                            type={showNewPassword ? `text` : `password`}
+                                            bgColor={`grey.200`}
+                                            _focus={{ bgColor: `grey.300`, color: `grey.800` }}
+                                            _placeholder={{ color: `grey.400` }}
+                                            placeholder="Enter current password"
+                                            variant={`filled`}
+                                            size={`lg`}
+                                            {...register('new_password')}
+                                        />
+                                        <InputRightElement onClick={handleClickNewPassword} width="2.5rem">
+                                            {!showNewPassword ? <Icon icon={`ant-design:eye-twotone`} /> : <Icon icon={`ant-design:eye-invisible-twotone`} />}
+                                        </InputRightElement>
+                                    </InputGroup>
                                     <Text className={`tiny-text`} color={`red.200`}>
                                         {errors?.new_password?.message}
                                     </Text>
@@ -290,16 +310,21 @@ export const AccountSettings = () => {
                                     <FormLabel color={`purple.300`} fontWeight={600}>
                                         Confirm New Password
                                     </FormLabel>
-                                    <Input
-                                        type={`password`}
-                                        bgColor={`grey.200`}
-                                        _focus={{ bgColor: `grey.300`, color: `grey.800` }}
-                                        _placeholder={{ color: `grey.400` }}
-                                        placeholder="Enter current password"
-                                        variant={`filled`}
-                                        size={`lg`}
-                                        {...register('new_password_confirmation')}
-                                    />
+                                    <InputGroup size={`lg`}>
+                                        <Input
+                                            type={showNewPassword ? `text` : `password`}
+                                            bgColor={`grey.200`}
+                                            _focus={{ bgColor: `grey.300`, color: `grey.800` }}
+                                            _placeholder={{ color: `grey.400` }}
+                                            placeholder="Enter current password"
+                                            variant={`filled`}
+                                            size={`lg`}
+                                            {...register('new_password_confirmation')}
+                                        />
+                                        <InputRightElement onClick={handleClickNewPassword} width="2.5rem">
+                                            {!showNewPassword ? <Icon icon={`ant-design:eye-twotone`} /> : <Icon icon={`ant-design:eye-invisible-twotone`} />}
+                                        </InputRightElement>
+                                    </InputGroup>
                                     <Text className={`tiny-text`} color={`red.200`}>
                                         {errors?.new_password_confirmation?.message}
                                     </Text>

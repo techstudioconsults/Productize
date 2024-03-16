@@ -1,4 +1,4 @@
-import { Box, Flex, Image, SimpleGrid, Skeleton, Stack, Tag, Text, useDisclosure } from '@chakra-ui/react';
+import { Box, Flex, Image, SimpleGrid, Skeleton, SkeletonText, Stack, Tag, Text, useDisclosure } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
 
 import { useCallback, useEffect, useState } from 'react';
@@ -14,6 +14,7 @@ import {
     selectCurrentUser,
     selectSingleProduct,
     useDeleteProductSoftlyMutation,
+    useGetCustomersOfSingleProductMutation,
     useGetSingleProductDetailsMutation,
     useUpdateProductStatusMutation,
 } from '@productize/redux';
@@ -25,6 +26,7 @@ export const ProductDetails = () => {
     const navigate = useNavigate();
     const { toast, toastIdRef, close } = useToastAction();
     const [getSingleProduct, singleProductStatus] = useGetSingleProductDetailsMutation();
+    const [getSingleProductCustomers, singleProductCustomersStatus] = useGetCustomersOfSingleProductMutation();
     const [deleteProductSoftly, deleteStatus] = useDeleteProductSoftlyMutation();
     const [updateProductStatus, updateProductStatusStatus] = useUpdateProductStatusMutation();
     const product = useSelector(selectSingleProduct);
@@ -74,10 +76,11 @@ export const ProductDetails = () => {
     const showSingleProduct = useCallback(async () => {
         try {
             await getSingleProduct({ productID }).unwrap();
+            await getSingleProductCustomers({ productID }).unwrap();
         } catch (error) {
             return error;
         }
-    }, [getSingleProduct, productID]);
+    }, [getSingleProduct, getSingleProductCustomers, productID]);
 
     useEffect(() => {
         showSingleProduct();
@@ -254,7 +257,9 @@ export const ProductDetails = () => {
             </Flex>
             {/* row 2 */}
             <Box mt={8} mb={4} color={`purple.300`}>
-                <Text as={`h6`}>{product?.title}</Text>
+                <SkeletonText width={`30%`} isLoaded={!singleProductStatus.isLoading} noOfLines={1}>
+                    <Text as={`h6`}>{product?.title}</Text>
+                </SkeletonText>
                 <Flex
                     flexDir={{ base: `column`, sm: `row` }}
                     borderBlock={`1px solid #EFEFEF`}
@@ -266,17 +271,19 @@ export const ProductDetails = () => {
                 >
                     <Stack gap={2}>
                         <Text fontWeight={600}>Publish Date</Text>
-                        {singleProductStatus.isLoading ? <SpinnerComponentSmall size="sm" /> : <Text>{formatDate(product?.created_at)}</Text>}
+                        <SkeletonText isLoaded={!singleProductStatus.isLoading} noOfLines={1}>
+                            <Text>{formatDate(product?.created_at)}</Text>
+                        </SkeletonText>
                     </Stack>
                     <Stack gap={2}>
                         <Text fontWeight={600}>Price</Text>
-                        {singleProductStatus.isLoading ? <SpinnerComponentSmall size="sm" /> : <Text>{formatCurrency(product?.price)}</Text>}
+                        <SkeletonText isLoaded={!singleProductStatus.isLoading} noOfLines={1}>
+                            <Text>{formatCurrency(product?.price)}</Text>
+                        </SkeletonText>
                     </Stack>
                     <Stack gap={2}>
                         <Text fontWeight={600}>Product link</Text>
-                        {singleProductStatus.isLoading ? (
-                            <SpinnerComponentSmall size="sm" />
-                        ) : (
+                        <SkeletonText isLoaded={!singleProductStatus.isLoading} noOfLines={1}>
                             <Flex gap={2} alignItems={`center`}>
                                 <Link target="_blank" to={product?.link}>
                                     <Text>{product?.link?.slice(0, 20)}...</Text>
@@ -285,17 +292,15 @@ export const ProductDetails = () => {
                                     <Icon cursor={`pointer`} onClick={copyTextToClipBoard} color="grey" icon={`ph:copy-simple-light`} />
                                 </Box>
                             </Flex>
-                        )}
+                        </SkeletonText>
                     </Stack>
                     <Stack gap={2}>
                         <Text fontWeight={600}>Status</Text>
-                        {singleProductStatus.isLoading ? (
-                            <SpinnerComponentSmall size="sm" />
-                        ) : (
+                        <SkeletonText isLoaded={!singleProductStatus.isLoading} noOfLines={1}>
                             <Tag colorScheme={product?.status === `published` ? `green` : `yellow`} size={`lg`}>
                                 {product?.status}
                             </Tag>
-                        )}
+                        </SkeletonText>
                     </Stack>
                 </Flex>
             </Box>
@@ -315,13 +320,12 @@ export const ProductDetails = () => {
                     </Skeleton>
                     <Skeleton borderRadius={8} isLoaded={!singleProductStatus.isLoading}>
                         <Box>
-                            <DataWidgetCard showIcon={false} title={'Total Sales'} value={product.total_sales} />
+                            <DataWidgetCard showIcon={false} title={'Total Sales'} value={product?.total_sales} />
                         </Box>
                     </Skeleton>
                 </SimpleGrid>
                 <Box mt={8}>
-                    {/* <DashboardTable /> */}
-                    <ProductCustomerTable />
+                    <ProductCustomerTable status={singleProductCustomersStatus} />
                 </Box>
             </Box>
         </Box>

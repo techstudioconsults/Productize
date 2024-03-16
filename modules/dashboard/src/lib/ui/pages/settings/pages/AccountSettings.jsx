@@ -1,7 +1,7 @@
 import { Box, Checkbox, Divider, Flex, FormControl, FormLabel, Grid, GridItem, Input, InputGroup, InputRightElement, Switch, Text } from '@chakra-ui/react';
 // import { yupResolver } from '@hookform/resolvers/yup';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import errorImg from '@icons/error.svg';
@@ -166,6 +166,10 @@ export const AccountSettings = () => {
             console.log(error);
         }
     };
+
+    useEffect(() => {
+        setEmail(user?.alt_email);
+    }, [user?.alt_email]);
 
     return (
         <div>
@@ -407,7 +411,7 @@ export const AccountSettings = () => {
                                         <Input
                                             id="alt-email"
                                             type="email"
-                                            value={email}
+                                            value={email ? email : ``}
                                             onChange={handleInputChange}
                                             bgColor="gray.200"
                                             _focus={{ bgColor: 'gray.300', color: 'gray.800' }}
@@ -416,7 +420,7 @@ export const AccountSettings = () => {
                                             variant="filled"
                                             size="lg"
                                         />
-                                        <Checkbox colorScheme={`purple`} onChange={handleAlternativeEmail} size="lg" />
+                                        <Checkbox colorScheme={`purple`} isChecked={user?.alt_email} onChange={handleAlternativeEmail} size="lg" />
                                     </Flex>
                                 </FormControl>
                             </Box>

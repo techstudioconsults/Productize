@@ -1,6 +1,5 @@
 import { Box, Flex, IconButton } from '@chakra-ui/react';
 import DateRangePicker from 'rsuite/esm/DateRangePicker';
-import SelectPicker from 'rsuite/esm/SelectPicker';
 import { DropdownAction } from '../../DropdownAction';
 import { useState } from 'react';
 import { Icon } from '@iconify/react';
@@ -48,24 +47,58 @@ export const CustomersTableControl = ({ showRefreshBtn }: controlsProp) => {
     const handleExport = async () => {
         try {
             setExportLoading(true);
-            const res = await axios.get(`${BASE_URL}/customers/download?format=csv`, headersCredentials);
+            const res = await axios.get(
+                `${BASE_URL}/customers/download?status=${status}&format=csv`,
+                // `${BASE_URL}products/download?start_date=${startDate}&end_date=${endDate}&format=csv`,
+                headersCredentials
+            );
             if (res.status === 200) {
                 setExportLoading(false);
                 const blob = new Blob([res.data], { type: 'text/csv' });
-                download(blob, `Customers.csv`);
+                download(blob, `Products.csv`);
+                toastIdRef.current = toast({
+                    position: 'top',
+                    render: () => (
+                        <ToastFeedback
+                            btnColor={`purple.200`}
+                            message={`Check your download folder for Customers file`}
+                            title="Downloaded successfully"
+                            icon={undefined}
+                            bgColor={undefined}
+                            color={undefined}
+                            handleClose={close}
+                        />
+                    ),
+                });
             }
         } catch (error) {
             setExportLoading(false);
-            console.log(error);
+            toastIdRef.current = toast({
+                position: 'top',
+                render: () => (
+                    <ToastFeedback
+                        message={`Something went wrong, please try again later.`}
+                        title="Download Error!"
+                        icon={errorImg}
+                        color={`red.600`}
+                        btnColor={`red.600`}
+                        bgColor={undefined}
+                        handleClose={close}
+                    />
+                ),
+            });
         }
     };
 
-    const handleStatusChange = (value: string) => {
-        setStatus(value.toLowerCase());
-    };
-    const handleDateRangeChange = (value: any | null) => {
-        setStartDate(formatDateRange(value?.[0]));
-        setEndDate(formatDateRange(value?.[1]));
+    const handleDateRangeChange = async (value: any | null) => {
+        if (value) {
+            setStartDate(formatDateRange(value?.[0]));
+            setEndDate(formatDateRange(value?.[1]));
+        } else {
+            setStartDate(``);
+            setEndDate(``);
+            await getAllCustomers(null).unwrap();
+        }
     };
 
     const filterTable = async () => {

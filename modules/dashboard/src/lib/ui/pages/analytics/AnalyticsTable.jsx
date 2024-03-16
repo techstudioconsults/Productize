@@ -36,10 +36,10 @@ export const AnalyticsTable = () => {
                     <Flex>{formatCurrency(content?.price)}</Flex>
                 </Td>
                 <Td>
-                    <Flex>{content?.total_order}</Flex>
+                    <Flex>{content?.total_sales}</Flex>
                 </Td>
                 <Td>
-                    <Flex>{formatCurrency(content?.total_sales)}</Flex>
+                    <Flex>{formatCurrency(content?.price * content?.total_sales)}</Flex>
                 </Td>
             </Tr>
         );

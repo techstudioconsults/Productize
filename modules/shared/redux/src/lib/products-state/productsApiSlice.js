@@ -1,6 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { apiSlice } from '../apiSlice';
-import { setAllProduct, setDeletedProduct, setDraftProduct, setLiveProduct, setProductsAnalytics, setSingleProduct } from './productsSlice';
+import {
+    setAllProduct,
+    setDeletedProduct,
+    setDraftProduct,
+    setLiveProduct,
+    setProductsAnalytics,
+    setSingleProduct,
+    setSingleProductCustomers,
+} from './productsSlice';
 
 const checkCredentials = (credentials, filteredLink, status) => {
     if (credentials && !credentials?.link) {
@@ -148,6 +156,25 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                 }
             },
         }),
+        getCustomersOfSingleProduct: builder.mutation({
+            query: (credentials) => ({
+                url: `/orders/products/${credentials.productID}`,
+                method: 'GET',
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+
+                    dispatch(
+                        setSingleProductCustomers({
+                            customers: data.data,
+                        })
+                    );
+                } catch (error) {
+                    return error;
+                }
+            },
+        }),
         updateProductStatus: builder.mutation({
             query: (credentials) => ({
                 url: `/products/${credentials.productID}/publish`,
@@ -200,4 +227,5 @@ export const {
     useRestoreSoftDeletedProductMutation,
     useDownloadProductsListMutation,
     useDownloadedProductsMutation,
+    useGetCustomersOfSingleProductMutation,
 } = productsApiSlice;

@@ -88,9 +88,15 @@ export const ProductsTableControl = ({ showRefreshBtn }: controlsProp) => {
     const handleStatusChange = (value: string) => {
         setStatus(value.toLowerCase());
     };
-    const handleDateRangeChange = (value: any | null) => {
-        setStartDate(formatDateRange(value?.[0]));
-        setEndDate(formatDateRange(value?.[1]));
+    const handleDateRangeChange = async (value: any | null) => {
+        if (value) {
+            setStartDate(formatDateRange(value?.[0]));
+            setEndDate(formatDateRange(value?.[1]));
+        } else {
+            setStartDate(``);
+            setEndDate(``);
+            await getAllProducts(null).unwrap();
+        }
     };
 
     const filterTable = async () => {

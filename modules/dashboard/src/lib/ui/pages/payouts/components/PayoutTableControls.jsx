@@ -1,4 +1,4 @@
-import { Box, Flex, IconButton, Link } from '@chakra-ui/react';
+import { Box, Flex, IconButton } from '@chakra-ui/react';
 import DateRangePicker from 'rsuite/esm/DateRangePicker';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
@@ -6,14 +6,16 @@ import { useState } from 'react';
 import download from 'downloadjs';
 import { DropdownAction } from '../../../DropdownAction';
 import { selectCurrentToken, useGetPayoutsMutation } from '@productize/redux';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDateRangeFormat } from '@productize/hooks';
-import { SharedButton, SpinnerComponentSmall } from '@productize/ui';
+import { SharedButton, SpinnerComponentSmall, ToastFeedback, useToastAction } from '@productize/ui';
 import { Icon } from '@iconify/react';
+import errorImg from '@icons/error.svg';
 
 const BASE_URL = import.meta.env['VITE_BASE_URL'];
 
 export const PayoutTableControl = ({ showRefreshBtn, balance }) => {
+    const { toast, toastIdRef, close } = useToastAction();
     const [getPayouts, getPayoutsStatus] = useGetPayoutsMutation();
     const [exportLoading, setExportLoading] = useState(false);
     const token = useSelector(selectCurrentToken);
@@ -41,27 +43,53 @@ export const PayoutTableControl = ({ showRefreshBtn, balance }) => {
             if (res.status === 200) {
                 setExportLoading(false);
                 const blob = new Blob([res.data], { type: 'text/csv' });
-                download(blob, `Products.csv`);
+                download(blob, `Payout.csv`);
+                toastIdRef.current = toast({
+                    position: 'top',
+                    render: () => (
+                        <ToastFeedback
+                            btnColor={`purple.200`}
+                            message={`Check your download folder for payout file`}
+                            title="Downloaded successfully"
+                            icon={undefined}
+                            bgColor={undefined}
+                            color={undefined}
+                            handleClose={close}
+                        />
+                    ),
+                });
             }
         } catch (error) {
             setExportLoading(false);
-            console.log(error);
+            toastIdRef.current = toast({
+                position: 'top',
+                render: () => (
+                    <ToastFeedback
+                        message={`Something went wrong, please try again later.`}
+                        title="Download Error!"
+                        icon={errorImg}
+                        color={`red.600`}
+                        btnColor={`red.600`}
+                        bgColor={undefined}
+                        handleClose={close}
+                    />
+                ),
+            });
         }
     };
 
-    const handleDateRangeChange = (value) => {
-        setStartDate(formatDateRange(value?.[0]));
-        setEndDate(formatDateRange(value?.[1]));
+    const handleDateRangeChange = async (value) => {
+        if (value) {
+            setStartDate(formatDateRange(value?.[0]));
+            setEndDate(formatDateRange(value?.[1]));
+        } else {
+            setStartDate(``);
+            setEndDate(``);
+            await getPayouts(null).unwrap();
+        }
     };
 
     const filterTable = async () => {
-        // if (status === `all`) {
-        //     try {
-        //         await getPayouts(null).unwrap();
-        //     } catch (error) {
-        //         console.log(error);
-        //     }
-        // } else {
         try {
             await getPayouts({
                 page: null,
@@ -70,9 +98,8 @@ export const PayoutTableControl = ({ showRefreshBtn, balance }) => {
                 status,
             }).unwrap();
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
-        // }
     };
 
     return (

@@ -1,5 +1,5 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box, Container, Flex, Stack, Text } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -58,6 +58,13 @@ const OnBoardingPage = () => {
             });
         }
     };
+
+    useEffect(() => {
+        const getCUser = async () => {
+            await getUser(null).unwrap();
+        };
+        getCUser();
+    }, [getUser]);
 
     return (
         <Container p={0} my={8} maxW={`47rem`}>

@@ -118,9 +118,8 @@ const FirstSalePage = () => {
                                 bmt={4}
                                 showIcon
                                 bgImg="https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951020/productize/Data_widget_1_bqcsji_dvrrm5.png"
-                                title={'Total Sales'}
-                                // value={formatCurrency(productAnaysis.total_sales)}
-                                value={productAnaysis.total_sales}
+                                title={'New Order Revenue'}
+                                value={formatCurrency(productAnaysis.new_orders_revenue)}
                             />
                         </Box>
                     </Skeleton>
@@ -145,7 +144,7 @@ const FirstSalePage = () => {
                     </Skeleton>
                     <Skeleton isLoaded={!getProductAnaysisStatus.isLoading}>
                         <Box>
-                            <DataWidgetCard showIcon={false} title={'New Order Revenue'} value={formatCurrency(productAnaysis.new_orders_revenue)} />
+                            <DataWidgetCard title={'Total Sales'} showIcon={false} value={productAnaysis.total_sales} />
                         </Box>
                     </Skeleton>
                     <Skeleton isLoaded={!getProductAnaysisStatus.isLoading}>

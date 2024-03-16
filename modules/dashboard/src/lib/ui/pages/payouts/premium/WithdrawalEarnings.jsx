@@ -59,12 +59,26 @@ export const WithdrawalEarnings = () => {
     }, [retrivePayoutAcc]);
 
     const setMaxAmount = () => {
-        console.log(`click max`);
         setValue(`amount`, 5000);
     };
 
     const handleWithdrawalForm = async (data) => {
-        console.log(data);
+        if (data.amount > payouts?.available_earnings) {
+            toastIdRef.current = toast({
+                position: 'top',
+                render: () => (
+                    <ToastFeedback
+                        message={`Insuficient Balance.`}
+                        title="Download Error!"
+                        icon={errorImg}
+                        color={`red.600`}
+                        btnColor={`red.600`}
+                        bgColor={undefined}
+                        handleClose={close}
+                    />
+                ),
+            });
+        }
         try {
             const res = await initiateWithdrawal(data).unwrap();
             if (res.data) {
@@ -84,13 +98,12 @@ export const WithdrawalEarnings = () => {
                 });
             }
         } catch (error) {
-            console.log(error);
             if (error?.status !== 400) {
                 toastIdRef.current = toast({
                     position: 'top',
                     render: () => (
                         <ToastFeedback
-                            message={error.data.message}
+                            message={error?.data?.message}
                             title="Withdraw error"
                             icon={errorImg}
                             color={`red.600`}

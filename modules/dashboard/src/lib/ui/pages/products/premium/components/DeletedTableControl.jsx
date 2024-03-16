@@ -1,19 +1,20 @@
 import { Box, Flex, IconButton } from '@chakra-ui/react';
 import DateRangePicker from 'rsuite/esm/DateRangePicker';
-import SelectPicker from 'rsuite/esm/SelectPicker';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { Icon } from '@iconify/react';
 import download from 'downloadjs';
 import { DropdownAction } from '../../../../DropdownAction';
+import errorImg from '@icons/error.svg';
 import { selectCurrentToken, useGetDeletedProductsMutation } from '@productize/redux';
 import { useDateRangeFormat } from '@productize/hooks';
-import { SharedButton, SpinnerComponentSmall } from '@productize/ui';
+import { SharedButton, SpinnerComponentSmall, ToastFeedback, useToastAction } from '@productize/ui';
 
 const BASE_URL = import.meta.env['VITE_BASE_URL'];
 
 export const DeletedTableControl = ({ showRefreshBtn }) => {
+    const { toast, toastIdRef, close } = useToastAction();
     const [exportLoading, setExportLoading] = useState(false);
     const token = useSelector(selectCurrentToken);
     const [startDate, setStartDate] = useState(``);
@@ -44,20 +45,50 @@ export const DeletedTableControl = ({ showRefreshBtn }) => {
             if (res.status === 200) {
                 setExportLoading(false);
                 const blob = new Blob([res.data], { type: 'text/csv' });
-                download(blob, `Deleted Products.csv`);
+                download(blob, `Products.csv`);
+                toastIdRef.current = toast({
+                    position: 'top',
+                    render: () => (
+                        <ToastFeedback
+                            btnColor={`purple.200`}
+                            message={`Check your download folder for Order file`}
+                            title="Downloaded successfully"
+                            icon={undefined}
+                            bgColor={undefined}
+                            color={undefined}
+                            handleClose={close}
+                        />
+                    ),
+                });
             }
         } catch (error) {
             setExportLoading(false);
-            console.log(error);
+            toastIdRef.current = toast({
+                position: 'top',
+                render: () => (
+                    <ToastFeedback
+                        message={`Something went wrong, please try again later.`}
+                        title="Download Error!"
+                        icon={errorImg}
+                        color={`red.600`}
+                        btnColor={`red.600`}
+                        bgColor={undefined}
+                        handleClose={close}
+                    />
+                ),
+            });
         }
     };
 
-    const handleStatusChange = (value) => {
-        setStatus(value.toLowerCase());
-    };
-    const handleDateRangeChange = (value) => {
-        setStartDate(formatDateRange(value?.[0]));
-        setEndDate(formatDateRange(value?.[1]));
+    const handleDateRangeChange = async (value) => {
+        if (value) {
+            setStartDate(formatDateRange(value?.[0]));
+            setEndDate(formatDateRange(value?.[1]));
+        } else {
+            setStartDate(``);
+            setEndDate(``);
+            await getDeletedProducts(null).unwrap();
+        }
     };
 
     const filterTable = async () => {
@@ -90,15 +121,6 @@ export const DeletedTableControl = ({ showRefreshBtn }) => {
                     </Box>
                 </Flex>
                 <Flex w={{ base: `100%`, md: `fit-content` }} gap={4} alignItems={{ base: `flex-start`, md: `center` }}>
-                    <SelectPicker
-                        disabled
-                        searchable={false}
-                        onSelect={handleStatusChange}
-                        style={{ width: `100%` }}
-                        placeholder={`Status`}
-                        size="lg"
-                        data={data}
-                    />
                     <IconButton
                         color={`purple.200`}
                         bgColor={`purple.100`}

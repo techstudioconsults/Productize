@@ -6,8 +6,6 @@ import { OnBoardingLoader } from '@productize/ui';
 // USE REDUX TO FETCH THE DATA -- DANIEL
 
 export const DashboardTable = ({ data, status }) => {
-    console.log(data);
-
     const formatCurrrency = useCurrency();
     const formatDate = useDate();
     const formatTime = useTime();
@@ -24,7 +22,7 @@ export const DashboardTable = ({ data, status }) => {
             <Tr key={content.id}>
                 <Td>
                     <Flex gap={2} alignItems={`center`}>
-                        <Avatar zIndex={-1} bgColor={`yellow.100`} src={content.product_thumbnail} borderRadius={`4px`} boxSize={`44px`} />
+                        <Avatar zIndex={-1} bgColor={`yellow.100`} src={content?.product_thumbnail} borderRadius={`4px`} boxSize={`44px`} />
                         <Text>{content?.product_title}</Text>
                     </Flex>
                 </Td>

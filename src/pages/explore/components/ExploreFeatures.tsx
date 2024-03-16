@@ -6,7 +6,8 @@ import { useSelector } from 'react-redux';
 
 import Card from './cards/Card';
 import { useGetAllProducts_EXTERNALMutation, selectAllProducts_EXTERNAL } from '@productize/redux';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { PreLoader } from '@productize/ui';
 
 export interface slideProps {
     title: string;
@@ -34,9 +35,14 @@ export const ExploreFeatures = ({ title }: slideProps) => {
 
     // Render product cards
     const renderCards = products?.map((product: any) => (
-        <Skeleton isLoaded={!getAllProducts_EXTERNALStatus.isLoading} key={product?.slug}>
-            <Card productID={product?.slug} image={product?.thumbnail} heading={product?.title} price={product.price} publisher={product?.publisher} />
-        </Skeleton>
+        <Card
+            key={product?.slug}
+            productID={product?.slug}
+            image={product?.thumbnail}
+            heading={product?.title}
+            price={product.price}
+            publisher={product?.publisher}
+        />
     ));
 
     return (
@@ -50,11 +56,11 @@ export const ExploreFeatures = ({ title }: slideProps) => {
                 </Flex>
 
                 {/* Conditional rendering based on error state */}
-                {error ? (
+                {getAllProducts_EXTERNALStatus.isError ? (
                     <Box>Error: {error}</Box>
                 ) : (
                     <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 4 }} justifyContent={`space-between`} gap={`1.64rem`}>
-                        {renderCards}
+                        {getAllProducts_EXTERNALStatus.isLoading ? <PreLoader /> : renderCards}
                     </SimpleGrid>
                 )}
             </Container>

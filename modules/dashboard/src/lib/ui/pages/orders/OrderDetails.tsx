@@ -60,7 +60,7 @@ export const OrderDetails = () => {
                 >
                     <GridItem colSpan={{ base: 12, md: 3 }} mb="16px">
                         <Stack spacing="10px" direction="column" color="purple.300" lineHeight="24px" fontWeight="400" fontSize="16px">
-                            <Text>Publish Date</Text>
+                            <Text fontWeight={`bold`}>Publish Date</Text>
                             <SkeletonText isLoaded={!getAllOrdersStatus.isLoading} noOfLines={1} w={`10rem`}>
                                 <Text>{formatDate(singleOrder?.product_publish_date)}</Text>
                             </SkeletonText>
@@ -68,7 +68,7 @@ export const OrderDetails = () => {
                     </GridItem>
                     <GridItem colSpan={{ base: 12, md: 3 }} mb="16px">
                         <Stack spacing="10px" direction="column" color="purple.300" lineHeight="24px" fontWeight="400" fontSize="16px">
-                            <Text>Price</Text>
+                            <Text fontWeight={`bold`}>Price</Text>
                             <SkeletonText isLoaded={!getAllOrdersStatus.isLoading} noOfLines={1} w={`10rem`}>
                                 <Text>{formatCurrency(singleOrder?.product_price)}</Text>
                             </SkeletonText>
@@ -76,7 +76,7 @@ export const OrderDetails = () => {
                     </GridItem>
                     <GridItem colSpan={{ base: 12, md: 6 }} mb="16px">
                         <Stack spacing="10px" direction="column" color="purple.300" lineHeight="24px" fontWeight="400" fontSize="16px">
-                            <Text>Product Link</Text>
+                            <Text fontWeight={`bold`}>Product Link</Text>
                             <SkeletonText isLoaded={!getAllOrdersStatus.isLoading} noOfLines={1} w={``}>
                                 <Flex gap={3} alignItems={`center`}>
                                     <Link w={`fit-content`} as={RouterLink} to={singleOrder?.link}>

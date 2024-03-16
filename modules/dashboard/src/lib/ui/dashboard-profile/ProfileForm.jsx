@@ -47,23 +47,26 @@ export const ProfileForm = () => {
     });
 
     const onSubmit = async (data) => {
-        // console.log(data);
+        console.log(data);
         // let formData = {};
         // if (data.facebook_account && data.youtube_account && data.twitter_account) {
         //     formData = {
         //         full_name: data.full_name,
         //         username: data.username,
         //         phone_number: data.phone_number,
+        //         logo: data.logo,
         //         bio: data.bio,
-        //         twitter_account: data.twitter_account,
-        //         facebook_account: data.facebook_account,
-        //         youtube_account: data.youtube_account,
+        //         // twitter_account: data.twitter_account,
+        //         // facebook_account: data.facebook_account,
+        //         // youtube_account: data.youtube_account,
         //     };
-        // } else if (data.facebook_account) {
+        // } else if (data._account) {
+        //     console.log(`cant reach here ever`);
         //     formData = {
         //         full_name: data.full_name,
         //         username: data.username,
         //         phone_number: data.phone_number,
+        //         logo: data.logo,
         //         bio: data.bio,
         //         facebook_account: data.facebook_account,
         //     };
@@ -72,6 +75,7 @@ export const ProfileForm = () => {
         //         full_name: data.full_name,
         //         username: data.username,
         //         phone_number: data.phone_number,
+        //         logo: data.logo,
         //         bio: data.bio,
         //         youtube_account: data.youtube_account,
         //     };
@@ -80,6 +84,7 @@ export const ProfileForm = () => {
         //         full_name: data.full_name,
         //         username: data.username,
         //         phone_number: data.phone_number,
+        //         logo: data.logo,
         //         bio: data.bio,
         //         twitter_account: data.twitter_account,
         //     };
@@ -87,6 +92,7 @@ export const ProfileForm = () => {
         // if (isPremium) {
         try {
             const res = await query(`post`, `/users/me`, data);
+            console.log(data);
             if (res?.status === 200) {
                 toastIdRef.current = toast({
                     position: 'top',
@@ -109,7 +115,7 @@ export const ProfileForm = () => {
                 position: 'top',
                 render: () => (
                     <ToastFeedback
-                        message={error.response.data.message}
+                        message={error?.response?.data?.message}
                         title="Profile update"
                         icon={errorImg}
                         color={`red.600`}

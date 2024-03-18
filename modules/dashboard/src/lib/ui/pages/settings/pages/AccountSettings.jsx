@@ -187,7 +187,7 @@ export const AccountSettings = () => {
                                 <FormLabel className="small-text">
                                     <Text fontWeight={600}>Purchase</Text>
                                     <Text color={`grey.400`} fontSize={`sm`}>
-                                        Lorem ipsum dolor sit amet.
+                                        Receive notifications for every purchase
                                     </Text>
                                 </FormLabel>
                                 <Switch onChange={handlePurchaseNotice} size="lg" colorScheme="green" isChecked={user?.purchase_notification} />
@@ -199,7 +199,7 @@ export const AccountSettings = () => {
                                 <FormLabel className="small-text">
                                     <Text fontWeight={600}>News & Updates</Text>
                                     <Text color={`grey.400`} fontSize={`sm`}>
-                                        Lorem ipsum dolor sit amet.
+                                        Receive notifications on Productize news and updates
                                     </Text>
                                 </FormLabel>
                                 <Switch onChange={handleNewsAndUpdateNotice} size="lg" colorScheme="green" isChecked={user?.news_and_update_notification} />
@@ -211,7 +211,7 @@ export const AccountSettings = () => {
                                 <FormLabel className="small-text">
                                     <Text fontWeight={600}>Product Creation</Text>
                                     <Text color={`grey.400`} fontSize={`sm`}>
-                                        Lorem ipsum dolor sit amet.
+                                        Get notified on new product creation
                                     </Text>
                                 </FormLabel>
                                 <Switch onChange={handleProductCreationNotice} size="lg" colorScheme="green" isChecked={user?.product_creation_notification} />
@@ -223,7 +223,7 @@ export const AccountSettings = () => {
                                 <FormLabel className="small-text">
                                     <Text fontWeight={600}>Payout</Text>
                                     <Text color={`grey.400`} fontSize={`sm`}>
-                                        Lorem ipsum dolor sit amet.
+                                        Get notified on payouts
                                     </Text>
                                 </FormLabel>
                                 <Switch onChange={handlePayoutNotice} isChecked={user?.payout_notification} size="lg" colorScheme="green" />

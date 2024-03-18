@@ -52,7 +52,7 @@ const DropdownLink = ({ isScroll, link, linkColor }: DropdownLinkProps) => {
                 as={Button}
                 variant={`link`}
                 rightIcon={
-                    <Center display={{ base: `none`, lg: `initial` }}>
+                    <Center>
                         <Icon icon={`mdi:chevron-down`} />
                     </Center>
                 }

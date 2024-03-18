@@ -24,8 +24,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import errorImg from '@icons/error.svg';
 import toastImg from '@icons/star-notice.png';
 import { selectCurrentUser, useGetUserMutation } from '@productize/redux';
-import { PaywallUnpublishWarning, PaywallUpgrade, SharedButton, ToastFeedback, UpgradePlanModal, useToastAction } from '@productize/ui';
-import { useAxiosInstance, useSetPaymentPlan } from '@productize/hooks';
+import { SharedButton, ToastFeedback, useToastAction } from '@productize/ui';
+import { useAxiosInstance } from '@productize/hooks';
 
 export const ProfileForm = () => {
     const user = useSelector(selectCurrentUser);
@@ -47,49 +47,6 @@ export const ProfileForm = () => {
     });
 
     const onSubmit = async (data) => {
-        console.log(data);
-        // let formData = {};
-        // if (data.facebook_account && data.youtube_account && data.twitter_account) {
-        //     formData = {
-        //         full_name: data.full_name,
-        //         username: data.username,
-        //         phone_number: data.phone_number,
-        //         logo: data.logo,
-        //         bio: data.bio,
-        //         // twitter_account: data.twitter_account,
-        //         // facebook_account: data.facebook_account,
-        //         // youtube_account: data.youtube_account,
-        //     };
-        // } else if (data._account) {
-        //     console.log(`cant reach here ever`);
-        //     formData = {
-        //         full_name: data.full_name,
-        //         username: data.username,
-        //         phone_number: data.phone_number,
-        //         logo: data.logo,
-        //         bio: data.bio,
-        //         facebook_account: data.facebook_account,
-        //     };
-        // } else if (data.youtube_account) {
-        //     formData = {
-        //         full_name: data.full_name,
-        //         username: data.username,
-        //         phone_number: data.phone_number,
-        //         logo: data.logo,
-        //         bio: data.bio,
-        //         youtube_account: data.youtube_account,
-        //     };
-        // } else if (data.twitter_account) {
-        //     formData = {
-        //         full_name: data.full_name,
-        //         username: data.username,
-        //         phone_number: data.phone_number,
-        //         logo: data.logo,
-        //         bio: data.bio,
-        //         twitter_account: data.twitter_account,
-        //     };
-        // }
-        // if (isPremium) {
         try {
             const res = await query(`post`, `/users/me`, data);
             console.log(data);
@@ -109,6 +66,7 @@ export const ProfileForm = () => {
                     ),
                 });
                 await getUser(null).unwrap();
+                navigate(`/dashboard/home`)
             }
         } catch (error) {
             toastIdRef.current = toast({
@@ -126,9 +84,6 @@ export const ProfileForm = () => {
                 ),
             });
         }
-        // } else {
-        //     onOpen();
-        // }
     };
 
     const previewImg = (files) => {

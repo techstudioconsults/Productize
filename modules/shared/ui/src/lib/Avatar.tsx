@@ -45,12 +45,12 @@ export const AvatarComp = ({ isScroll, linkColor }: avatarProp) => {
                 </Center>
             </MenuButton>
             <MenuList zIndex={999} textAlign={`start`}>
-                <MenuItem justifyContent={`flex-start`} color={`grey.400`}>
-                    <Link to={`/dashboard/home`}>
+                <Link to={`/dashboard/home`}>
+                    <MenuItem justifyContent={`flex-start`} color={`grey.400`}>
                         <Icon icon={`ph:squares-four-fill`} />
                         <Text ml={3}>Dashboard</Text>
-                    </Link>
-                </MenuItem>
+                    </MenuItem>
+                </Link>
                 <MenuItem justifyContent={`flex-start`} color={`red.200`} onClick={logOut}>
                     <Icon fontSize={`1.3rem`} icon={`basil:logout-solid`} />
                     <Text ml={3}>Log out</Text>

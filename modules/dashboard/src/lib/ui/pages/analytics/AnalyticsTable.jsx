@@ -54,7 +54,6 @@ export const AnalyticsTable = () => {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-            console.log(res.data);
             if (res.status === 200) {
                 setData(res.data);
                 setLoading(false);

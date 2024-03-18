@@ -73,7 +73,7 @@ export const Pricing = () => {
                             <Text as={`h5`} fontWeight={100} my={`2rem`}>
                                 Haven’t found what you’re looking for? Try the
                                 <Text as={`span`} fontSize={`2xl`} color={`purple.200`} textDecoration={`underline`}>
-                                    <CLink as={Link} to={'/help-and-support'} w={`fit-content`}>
+                                    <CLink as={Link} to={'/dashboard/help#contact-support'} w={`fit-content`}>
                                         Productize Help Center or Contact us
                                     </CLink>
                                 </Text>

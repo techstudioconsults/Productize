@@ -55,9 +55,8 @@ const ProductSideNav = ({ status }) => {
 
         try {
             const res = await addToCart(checkout).unwrap();
-            console.log(res);
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     };
 
@@ -114,7 +113,7 @@ const ProductSideNav = ({ status }) => {
                                     disabled: disableVendor,
                                 }}
                             />
-                            <Link to={`/explore/product/cart`}>
+                            <Link hidden={!cart.totalProductQuantity} to={`/explore/product/cart`}>
                                 <SharedButton
                                     btnExtras={{
                                         border: '1px solid #6D5DD3',

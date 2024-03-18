@@ -7,7 +7,6 @@ import { useSelector } from 'react-redux';
 import { AnalyticsTable } from './AnalyticsTable';
 import { DataWidgetCard } from '../../DataWidgetCard';
 import { DashboardEmptyState } from '../../empty-states/DashboardEmptyState';
-import { HomeFilterController } from '../home/premium/components/HomeFilterController';
 import { selectProductAnalytics, useGetProductAnalyticsMutation } from '@productize/redux';
 import { useCurrency } from '@productize/hooks';
 

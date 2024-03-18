@@ -96,6 +96,7 @@ export const WithdrawalEarnings = () => {
                         />
                     ),
                 });
+                navigate(`/dashboard/payouts`);
             }
         } catch (error) {
             if (error?.status !== 400) {

@@ -120,7 +120,7 @@ export const OrderDetails = () => {
                         <Skeleton isLoaded={!getAllOrdersStatus.isLoading}>
                             <Stack h={`98px`} spacing="10px" direction="column" color="purple.300" p="16px">
                                 <Text fontSize="16px" lineHeight="24px" fontWeight="400">
-                                    Total Sales
+                                    Total Quantity
                                 </Text>
                                 <Text fontWeight="600" fontSize="24px" lineHeight="32px">
                                     {singleOrder?.total_sales}

@@ -13,17 +13,17 @@ import {
     Input,
     Text,
     Textarea,
-} from "@chakra-ui/react";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import errorImg from "@icons/error.svg";
-import toastImg from "@icons/star-notice.png";
-import { useSendHelpMessageMutation } from "@productize/redux";
-import { ErrorText, SharedButton, ToastFeedback, useToastAction } from "@productize/ui";
+} from '@chakra-ui/react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import errorImg from '@icons/error.svg';
+import toastImg from '@icons/star-notice.png';
+import { useSendHelpMessageMutation } from '@productize/redux';
+import { ErrorText, SharedButton, ToastFeedback, useToastAction } from '@productize/ui';
 
 export const Help = () => {
-    const [error, setError] = useState("");
+    const [error, setError] = useState('');
     const [sendHelpMessage, sendHelpMessageStatus] = useSendHelpMessageMutation();
     const { toast, toastIdRef, close } = useToastAction();
 
@@ -33,8 +33,8 @@ export const Help = () => {
         formState: { errors },
         reset,
     } = useForm({
-        criteriaMode: "all",
-        mode: "onChange",
+        criteriaMode: 'all',
+        mode: 'onChange',
         // resolver: yupResolver(helpSchema),
     });
 
@@ -45,7 +45,7 @@ export const Help = () => {
             console.log(res);
             if (res.message) {
                 toastIdRef.current = toast({
-                    position: "top",
+                    position: 'top',
                     render: () => (
                         <ToastFeedback
                             btnColor={`purple.200`}
@@ -62,7 +62,7 @@ export const Help = () => {
         } catch (error) {
             setError(error.data.message);
             toastIdRef.current = toast({
-                position: "top",
+                position: 'top',
                 render: () => (
                     <ToastFeedback
                         message={error?.data?.message}
@@ -120,7 +120,7 @@ export const Help = () => {
                 {/* grid two*/}
                 <Grid mt={20} templateColumns="repeat(12, 1fr)" gap={6}>
                     <GridItem colSpan={{ base: 12, md: 5 }}>
-                        <Text textAlign={{ base: `center`, md: `initial` }} color={`purple.300`} as={`h5`}>
+                        <Text id={`contact-support`} textAlign={{ base: `center`, md: `initial` }} color={`purple.300`} as={`h5`}>
                             Contact Support
                         </Text>
                     </GridItem>
@@ -158,7 +158,7 @@ export const Help = () => {
                                         placeholder="Type a subject for your message"
                                         variant={`filled`}
                                         size={`lg`}
-                                        {...register("subject")}
+                                        {...register('subject')}
                                     />
                                     <Text className={`tiny-text`} color={`red.200`}>
                                         {errors?.subject?.message}
@@ -177,7 +177,7 @@ export const Help = () => {
                                         _placeholder={{ color: `grey.400` }}
                                         variant={`filled`}
                                         placeholder="Type your message"
-                                        {...register("message")}
+                                        {...register('message')}
                                     />
                                     <Text className={`tiny-text`} color={`red.200`}>
                                         {errors?.message?.message}
@@ -187,15 +187,15 @@ export const Help = () => {
                             <Flex gap={4} mt={6}>
                                 <SharedButton
                                     btnExtras={{
-                                        border: "1px solid #6D5DD3",
+                                        border: '1px solid #6D5DD3',
                                         onClick: () => reset(),
                                     }}
-                                    text={"Cancel"}
-                                    width={"fit-content"}
-                                    height={"40px"}
-                                    bgColor={"transparent"}
-                                    textColor={"purple.200"}
-                                    borderRadius={"4px"}
+                                    text={'Cancel'}
+                                    width={'fit-content'}
+                                    height={'40px'}
+                                    bgColor={'transparent'}
+                                    textColor={'purple.200'}
+                                    borderRadius={'4px'}
                                     fontSize={{ base: `sm`, md: `md` }}
                                 />
                                 <SharedButton
@@ -204,12 +204,12 @@ export const Help = () => {
                                         loadingText: `Sending message...`,
                                         type: `submit`,
                                     }}
-                                    text={"Send Message"}
-                                    width={"fit-content"}
-                                    height={"40px"}
-                                    bgColor={"purple.200"}
-                                    textColor={"grey.100"}
-                                    borderRadius={"4px"}
+                                    text={'Send Message'}
+                                    width={'fit-content'}
+                                    height={'40px'}
+                                    bgColor={'purple.200'}
+                                    textColor={'grey.100'}
+                                    borderRadius={'4px'}
                                     fontSize={{ base: `sm`, md: `md` }}
                                 />
                             </Flex>

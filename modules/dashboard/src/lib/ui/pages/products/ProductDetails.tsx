@@ -320,7 +320,7 @@ export const ProductDetails = () => {
                     </Skeleton>
                     <Skeleton borderRadius={8} isLoaded={!singleProductStatus.isLoading}>
                         <Box>
-                            <DataWidgetCard showIcon={false} title={'Total Sales'} value={product?.total_sales} />
+                            <DataWidgetCard showIcon={false} title={'Total Quantity'} value={product?.total_sales} />
                         </Box>
                     </Skeleton>
                 </SimpleGrid>

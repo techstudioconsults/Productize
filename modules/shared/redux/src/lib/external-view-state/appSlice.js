@@ -26,9 +26,32 @@ const appSlice = createSlice({
         },
 
         setCart: (state, action) => {
-            state.cart.checkoutProducts = action.payload.product.products;
-            state.cart.totalProductPrice = action.payload.product.total_amount;
+            // state.cart.checkoutProducts = action.payload.product.products;
+            // state.cart.totalProductPrice = action.payload.product.total_amount;
+            // state.cart.totalProductQuantity = action.payload.product.total_amount;
+            // Function to calculate the total accumulated price considering quantity
+            function calculateTotalPrice(products) {
+                let totalPrice = 0;
+                products.forEach((product) => {
+                    totalPrice += product.product_price * product.quantity;
+                });
+                return totalPrice;
+            }
+
+            // Function to calculate the total quantity of products
+            function calculateTotalQuantity(products) {
+                let totalQuantity = 0;
+                products.forEach((product) => {
+                    totalQuantity += product.quantity;
+                });
+                return totalQuantity;
+            }
+
+            state.cart.checkoutProducts = action.payload.product;
+            state.cart.totalProductPrice = calculateTotalPrice(action.payload.product);
+            state.cart.totalProductQuantity = calculateTotalQuantity(action.payload.product);
         },
+
         setTags: (state, action) => {
             const { tags } = action.payload;
             state.tags = tags;

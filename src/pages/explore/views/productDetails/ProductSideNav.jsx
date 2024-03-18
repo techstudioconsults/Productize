@@ -16,7 +16,7 @@ import {
 } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
 import { useCurrency } from '@productize/hooks';
-import { selectCart, selectCurrentUser, selectSingleProduct_EXTERNAL, useAddToCartMutation } from '@productize/redux';
+import { selectCart, selectCurrentUser, selectSingleProduct_EXTERNAL, useAddToCartMutation, useGetFromCartMutation } from '@productize/redux';
 import { SharedButton } from '@productize/ui';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -25,7 +25,8 @@ import { Link } from 'react-router-dom';
 const ProductSideNav = ({ status }) => {
     const cart = useSelector(selectCart);
     const user = useSelector(selectCurrentUser);
-    const [addToCart] = useAddToCartMutation();
+    const [addToCart, addToCartStatus] = useAddToCartMutation();
+    const [getFromCart] = useGetFromCartMutation();
     const product = useSelector(selectSingleProduct_EXTERNAL);
     const [totalPrice, setTotalPrice] = useState(0);
     const [productQuantity, setProductQuantity] = useState(1);
@@ -39,34 +40,46 @@ const ProductSideNav = ({ status }) => {
         setProductQuantity(parseInt(quantity));
     };
 
-    const saveToCartMemo = async () => {
-        const checkoutProductFormat = cart?.checkoutProducts?.map((product) => {
-            return {
-                product_slug: product.slug,
-                quantity: product.quantity,
-            };
-        });
+    // const saveToCartMemo = async () => {
+    //     const checkoutProductFormat = cart?.checkoutProducts?.map((product) => {
+    //         return {
+    //             product_slug: product.slug,
+    //             quantity: product.quantity,
+    //         };
+    //     });
 
-        const checkout = {
-            // paystack uses kobo for amounts
-            total_amount: cart.totalProductPrice,
-            products: checkoutProductFormat,
+    //     const checkout = {
+    //         // paystack uses kobo for amounts
+    //         total_amount: cart.totalProductPrice,
+    //         products: checkoutProductFormat,
+    //     };
+
+    //     try {
+    //         const res = await addToCart(checkout).unwrap();
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // };
+
+    const sendToCart = async () => {
+        const modifiedProduct = {
+            product_slug: product.slug,
+            quantity: productQuantity,
         };
-
-        try {
-            const res = await addToCart(checkout).unwrap();
-        } catch (error) {
-            console.error(error);
+        console.log(modifiedProduct);
+        const res = await addToCart(modifiedProduct).unwrap();
+        if (res) {
+            await getFromCart(null).unwrap();
         }
     };
 
-    const sendToCart = () => {
-        const modifiedProduct = {
-            ...product,
-            quantity: productQuantity,
-        };
-        dispatch({ type: `App/updateCart`, payload: { product: modifiedProduct, totalPrice } });
-    };
+    // const sendToCart = () => {
+    //     const modifiedProduct = {
+    //         ...product,
+    //         quantity: productQuantity,
+    //     };
+    //     dispatch({ type: `App/updateCart`, payload: { product: modifiedProduct, totalPrice } });
+    // };
 
     useEffect(() => {
         setTotalPrice(product?.price);
@@ -111,13 +124,14 @@ const ProductSideNav = ({ status }) => {
                                 btnExtras={{
                                     onClick: sendToCart,
                                     disabled: disableVendor,
+                                    isLoading: addToCartStatus.isLoading,
+                                    loadingText: `adding to cart...`,
                                 }}
                             />
                             <Link hidden={!cart.totalProductQuantity} to={`/explore/product/cart`}>
                                 <SharedButton
                                     btnExtras={{
                                         border: '1px solid #6D5DD3',
-                                        onClick: saveToCartMemo,
                                         disabled: disableVendor,
                                     }}
                                     text={'Buy Now'}

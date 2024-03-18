@@ -17,19 +17,25 @@ export const ProductCard = ({ product }) => {
     return (
         <Card direction={{ base: 'column', sm: 'row' }} alignItems={`center`} overflow="hidden" variant="none">
             <Box height={`8.5rem`}>
-                <Image objectFit="cover" height={{ base: '100%' }} width={{ base: '100%', sm: '200px' }} src={product?.thumbnail} alt="Caffe Latte" />
+                <Image
+                    objectFit="cover"
+                    height={{ base: '100%' }}
+                    width={{ base: '100%', sm: '200px' }}
+                    src={product?.thumbnail || product?.product_thumbnail}
+                    alt="Caffe Latte"
+                />
             </Box>
 
             <Stack w={`100%`}>
                 <CardBody>
                     <Flex justifyContent={`space-between`} fontWeight={600}>
-                        <Text size="md">{product?.title}</Text>
-                        <Text>{formatCurrency(product?.price)}</Text>
+                        <Text size="md">{product?.title || product?.product_title}</Text>
+                        <Text>{formatCurrency(product?.price || product?.product_price)}</Text>
                     </Flex>
-                    <Flex mt={3} gap={2} alignItems={`center`}>
+                    {/* <Flex mt={3} gap={2} alignItems={`center`}>
                         <Avatar size={`sm`} bg={`grey.300`} name={product?.publisher} src={product?.publisher_logo} />
                         <Text fontWeight={`500`}>{product?.publisher}</Text>
-                    </Flex>
+                    </Flex> */}
                 </CardBody>
 
                 <CardFooter py={0} justifyContent={`space-between`}>
@@ -45,6 +51,7 @@ export const ProductCards = () => {
     const cart = useSelector(selectCart);
     const formatCurrency = useCurrency();
 
+    console.log(cart);
     const [purchaseProduct, { isLoading }] = usePurchaseProductMutation();
 
     const checkoutProductList = cart?.checkoutProducts?.map((product) => {
@@ -61,7 +68,7 @@ export const ProductCards = () => {
     const handlePurchaseProduct = async () => {
         const checkoutProductFormat = cart?.checkoutProducts?.map((product) => {
             return {
-                product_slug: product.slug,
+                product_slug: product.slug || product.product_slug,
                 quantity: product.quantity,
             };
         });
@@ -72,16 +79,18 @@ export const ProductCards = () => {
             products: checkoutProductFormat,
         };
 
-         try {
-             const res = await purchaseProduct(checkout).unwrap();
-             if (res && res.data.authorization_url) {
-                 window.location.href = res.data.authorization_url;
-             } else {
-                 console.error('Invalid response from purchaseProduct');
-             }
-         } catch (error) {
-             console.error('Error during purchase:', error);
-         }
+        console.log(checkout);
+
+        try {
+            const res = await purchaseProduct(checkout).unwrap();
+            if (res && res.data.authorization_url) {
+                window.location.href = res.data.authorization_url;
+            } else {
+                console.error('Invalid response from purchaseProduct');
+            }
+        } catch (error) {
+            console.error('Error during purchase:', error);
+        }
     };
 
     return (

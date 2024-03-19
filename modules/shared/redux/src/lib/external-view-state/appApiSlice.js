@@ -80,6 +80,26 @@ export const appApiSlice = apiSlice.injectEndpoints({
                 }
             },
         }),
+        updateCart: builder.mutation({
+            query: (credentials) => ({
+                // generate a random token value instead of using a hardcoded string
+                url: `/carts/{${credentials.cart_id}}`,
+                method: 'PATCH',
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    console.log(data);
+                    // dispatch(
+                    //     setCart({
+                    //         product: data.data,
+                    //     })
+                    // );
+                } catch (error) {
+                    return error;
+                }
+            },
+        }),
         getProductTags: builder.mutation({
             query: (credentials) => ({
                 url: `/products/tags`,
@@ -130,4 +150,5 @@ export const {
     useAddToCartMutation,
     useGetFromCartMutation,
     useGetProductTagsMutation,
+    useUpdateCartMutation
 } = appApiSlice;

@@ -107,7 +107,7 @@ export const ProfileForm = () => {
                         <Flex mb={5} color={`grey.400`} alignItems={`center`} gap={1}>
                             <Icon color={`green`} fontSize={`14px`} icon={`ep:info-filled`} />
                             <Text fontStyle={`italic`} fontSize={`12px`}>
-                                To Complete your profile to start getting your products published, Fill all profile field and upload an image.
+                                To Complete your profile, fill all profile fields and upload an image.
                             </Text>
                         </Flex>
                         <FormControl>

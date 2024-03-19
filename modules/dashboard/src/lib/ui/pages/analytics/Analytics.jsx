@@ -95,7 +95,7 @@ export const Analytics = () => {
                                         </Select>
                                     </Flex>
                                     <Flex>
-                                        <Select placeholder="View By Digital Product">
+                                        <Select disabled placeholder="View By Digital Product">
                                             <option value="digital-product">Digital Product</option>
                                             <option value="print-on-demand">Print on demand</option>
                                             <option value="video-stream">Video streaming</option>

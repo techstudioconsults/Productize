@@ -115,6 +115,24 @@ export const PayoutTableControl = ({ showRefreshBtn, balance }) => {
                     />
                 </Box>
                 <Flex alignItems={`center`} gap={4}>
+                    <Box display={{ base: `flex`, md: `none` }}>
+                        <SharedButton
+                            text={'Withdraw Earnings'}
+                            width={'fit-content'}
+                            height={'48px'}
+                            bgColor={'purple.200'}
+                            textColor={'grey.100'}
+                            borderRadius={'4px'}
+                            fontSize={{ base: `sm`, md: `md` }}
+                            btnExtras={{
+                                disabled: !balance,
+                                border: `1px solid #6D5DD3`,
+                                leftIcon: `ei:plus`,
+                                onClick: () => navigate(`/dashboard/payouts/${`38y23862938`}/withdraw-earnings`),
+                            }}
+                        />
+                    </Box>
+
                     <IconButton
                         color={`purple.200`}
                         bgColor={`purple.100`}
@@ -165,9 +183,9 @@ export const PayoutTableControl = ({ showRefreshBtn, balance }) => {
                         />
                     </Box>
                 </Flex>
-                <Box display={{ md: `none` }}>
+                {/* <Box display={{ md: `none` }}>
                     <DropdownAction handleExport={handleExport} icon={`zondicons:dots-horizontal-triple`} />
-                </Box>
+                </Box> */}
             </Box>
         </Flex>
     );

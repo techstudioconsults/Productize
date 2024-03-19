@@ -54,9 +54,9 @@ export const ProductCards = () => {
     console.log(cart);
     const [purchaseProduct, { isLoading }] = usePurchaseProductMutation();
 
-    const checkoutProductList = cart?.checkoutProducts?.map((product) => {
+    const checkoutProductList = cart?.checkoutProducts?.map((product, index) => {
         return (
-            <Skeleton key={product.slug} borderRadius={8} isLoaded={!isLoading}>
+            <Skeleton key={index} borderRadius={8} isLoaded={!isLoading}>
                 <Box>
                     <ProductCard product={product} />
                     <Divider my={4} />

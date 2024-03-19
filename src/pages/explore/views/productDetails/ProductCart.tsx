@@ -1,16 +1,19 @@
+import { EmptyState } from '@productize/dashboard';
 import { ProductCards } from './ProductCard';
 import ProductNavbar from './ProductNavbar';
 import { Box, Container, Flex, Image, Text } from '@chakra-ui/react';
 import arrowLeft from '@icons/Property_2_Arrow-left_kafkjg.svg';
 import { useTokenExists } from '@productize/hooks';
-import { useGetFromCartMutation } from '@productize/redux';
+import { selectCart, useGetFromCartMutation } from '@productize/redux';
 import { SpinnerComponent } from '@productize/ui';
 import { useCallback, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 import { useNavigate } from 'react-router-dom';
 
 export const ProductCart = () => {
     const navigate = useNavigate();
+    const cart = useSelector(selectCart);
     const [getFromCart, getFromCartStatus] = useGetFromCartMutation();
 
     const getCartProduct = useCallback(async () => {
@@ -35,7 +38,19 @@ export const ProductCart = () => {
                     </Box>
                     <Text as={`h6`}>Back to product page</Text>
                 </Flex>
-                <ProductCards />
+                {cart.totalProductQuantity ? (
+                    <ProductCards />
+                ) : (
+                    <EmptyState
+                        content={{
+                            title: 'Cart is empty',
+                            desc: 'Click the add to cart button to add to product to cart.',
+                            img: undefined,
+                        }}
+                        textAlign={{ base: `center` }}
+                        showImage={false}
+                    />
+                )}
             </Container>
         </>
     );

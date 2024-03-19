@@ -16,16 +16,26 @@ import {
 } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
 import { useCurrency } from '@productize/hooks';
-import { selectCart, selectCurrentUser, selectSingleProduct_EXTERNAL, useAddToCartMutation, useGetFromCartMutation } from '@productize/redux';
-import { SharedButton } from '@productize/ui';
+import {
+    selectCart,
+    selectCurrentUser,
+    selectSingleProduct_EXTERNAL,
+    useAddToCartMutation,
+    useGetFromCartMutation,
+    useUpdateCartMutation,
+} from '@productize/redux';
+import { SharedButton, ToastFeedback, useToastAction } from '@productize/ui';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import errorImg from '@icons/error.svg';
 
 const ProductSideNav = ({ status }) => {
     const cart = useSelector(selectCart);
     const user = useSelector(selectCurrentUser);
+    const { toast, toastIdRef, close } = useToastAction();
     const [addToCart, addToCartStatus] = useAddToCartMutation();
+    const [updateCart] = useUpdateCartMutation();
     const [getFromCart] = useGetFromCartMutation();
     const product = useSelector(selectSingleProduct_EXTERNAL);
     const [totalPrice, setTotalPrice] = useState(0);
@@ -62,14 +72,68 @@ const ProductSideNav = ({ status }) => {
     // };
 
     const sendToCart = async () => {
-        const modifiedProduct = {
-            product_slug: product.slug,
-            quantity: productQuantity,
-        };
-        console.log(modifiedProduct);
-        const res = await addToCart(modifiedProduct).unwrap();
-        if (res) {
-            await getFromCart(null).unwrap();
+        // const result = cart.checkoutProducts.filter((item) => {
+        //     return item.id === product?.id;
+        // });
+
+        // console.log(result, cart);
+
+        // const modifiedProduct = {
+        //     product_slug: product.slug,
+        //     quantity: productQuantity,
+        // };
+        // console.log(modifiedProduct);
+        // const res = await addToCart(modifiedProduct).unwrap();
+        // if (res) {
+        //     await getFromCart(null).unwrap();
+        // }
+
+        try {
+            const res = await getFromCart(null).unwrap();
+            if (res.data.length) {
+                res.data.forEach(async (item) => {
+                    console.log(item, product);
+                    if (item.product_slug === product?.slug) {
+                        toastIdRef.current = toast({
+                            position: 'top',
+                            render: () => (
+                                <ToastFeedback
+                                    message={`cant update prdouct at the moment, try again later`}
+                                    title="Product update"
+                                    icon={errorImg}
+                                    color={`red.600`}
+                                    btnColor={`red.600`}
+                                    bgColor={undefined}
+                                    handleClose={close}
+                                />
+                            ),
+                        });
+                        await updateCart({ cart_id: item.id, body: { quantity: productQuantity } }).unwrap();
+                    } else {
+                        const modifiedProduct = {
+                            product_slug: product.slug,
+                            quantity: productQuantity,
+                        };
+                        console.log(modifiedProduct);
+                        const res = await addToCart(modifiedProduct).unwrap();
+                        if (res) {
+                            await getFromCart(null).unwrap();
+                        }
+                    }
+                });
+            } else {
+                const modifiedProduct = {
+                    product_slug: product.slug,
+                    quantity: productQuantity,
+                };
+                console.log(modifiedProduct);
+                const res = await addToCart(modifiedProduct).unwrap();
+                if (res) {
+                    await getFromCart(null).unwrap();
+                }
+            }
+        } catch (err) {
+            console.error(err);
         }
     };
 

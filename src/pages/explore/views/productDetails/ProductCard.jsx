@@ -1,17 +1,36 @@
-import { Avatar, Box, Card, CardBody, CardFooter, Divider, Flex, IconButton, Image, Skeleton, Stack, Text } from '@chakra-ui/react';
+import { Box, Card, CardBody, CardFooter, Divider, Flex, Image, Skeleton, Stack, Text } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
 import { useCurrency } from '@productize/hooks';
-import { selectCart, usePurchaseProductMutation } from '@productize/redux';
-import { SharedButton } from '@productize/ui';
-
-import { useDispatch, useSelector } from 'react-redux';
+import { selectCart, useDeleteCartMutation, useGetFromCartMutation, usePurchaseProductMutation } from '@productize/redux';
+import { SharedButton, SpinnerComponentSmall, ToastFeedback, useToastAction } from '@productize/ui';
+import toastImg from '@icons/star-notice.png';
+import { useSelector } from 'react-redux';
 
 export const ProductCard = ({ product }) => {
+    const { toast, toastIdRef, close } = useToastAction();
     const formatCurrency = useCurrency();
-    const dispatch = useDispatch();
+    const [getFromCart] = useGetFromCartMutation();
+    const [deleteCart, deleteCartStatus] = useDeleteCartMutation();
 
-    const deleteProduct = () => {
-        dispatch({ type: `App/deleteProductFromCart`, payload: { productSlug: product.slug } });
+    const deleteProduct = async () => {
+        const res = await deleteCart({ cart_id: product.id }).unwrap();
+        if (res) {
+            toastIdRef.current = toast({
+                position: 'top',
+                render: () => (
+                    <ToastFeedback
+                        message={`${product?.title || product?.product_title} removed successfully`}
+                        title="Product update"
+                        icon={toastImg}
+                        btnColor={`purple.200`}
+                        bgColor={undefined}
+                        color={undefined}
+                        handleClose={close}
+                    />
+                ),
+            });
+            await getFromCart(null).unwrap();
+        }
     };
 
     return (
@@ -38,9 +57,13 @@ export const ProductCard = ({ product }) => {
                     </Flex> */}
                 </CardBody>
 
-                <CardFooter py={0} justifyContent={`space-between`}>
+                <CardFooter py={0} justifyContent={`space-between`} alignItems={`center`}>
                     <Text>Qty: {product?.quantity}</Text>
-                    <IconButton onClick={deleteProduct} bgColor={`transparent`} color={`red.200`} icon={<Icon icon={`mdi:trash`} />} aria-label={'delete'} />
+                    {deleteCartStatus.isLoading ? (
+                        <SpinnerComponentSmall size={`sm`} />
+                    ) : (
+                        <Icon cursor={`pointer`} color={`#DB3E3E`} fontSize={`1.3rem`} onClick={deleteProduct} icon={`mdi:trash`} />
+                    )}
                 </CardFooter>
             </Stack>
         </Card>
@@ -56,12 +79,10 @@ export const ProductCards = () => {
 
     const checkoutProductList = cart?.checkoutProducts?.map((product, index) => {
         return (
-            <Skeleton key={index} borderRadius={8} isLoaded={!isLoading}>
-                <Box>
-                    <ProductCard product={product} />
-                    <Divider my={4} />
-                </Box>
-            </Skeleton>
+            <Box key={index}>
+                <ProductCard product={product} />
+                <Divider my={4} />
+            </Box>
         );
     });
 
@@ -98,9 +119,7 @@ export const ProductCards = () => {
             {checkoutProductList}
             <Flex fontWeight={600} justifyContent={`space-between`}>
                 <Text>Total</Text>
-                <Skeleton borderRadius={8} isLoaded={!isLoading}>
-                    <Text px={5}>{formatCurrency(cart.totalProductPrice)}</Text>
-                </Skeleton>
+                <Text px={5}>{formatCurrency(cart.totalProductPrice)}</Text>
             </Flex>
             <Divider my={4} />
             <Stack gap={4}>

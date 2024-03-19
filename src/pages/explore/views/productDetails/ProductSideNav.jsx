@@ -26,9 +26,9 @@ import {
 } from '@productize/redux';
 import { SharedButton, ToastFeedback, useToastAction } from '@productize/ui';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import errorImg from '@icons/error.svg';
+import toastImg from '@icons/star-notice.png';
 
 const ProductSideNav = ({ status }) => {
     const cart = useSelector(selectCart);
@@ -40,7 +40,6 @@ const ProductSideNav = ({ status }) => {
     const product = useSelector(selectSingleProduct_EXTERNAL);
     const [totalPrice, setTotalPrice] = useState(0);
     const [productQuantity, setProductQuantity] = useState(1);
-    const dispatch = useDispatch();
     const formatCurrency = useCurrency();
 
     const disableVendor = user?.name === product?.publisher;
@@ -50,65 +49,31 @@ const ProductSideNav = ({ status }) => {
         setProductQuantity(parseInt(quantity));
     };
 
-    // const saveToCartMemo = async () => {
-    //     const checkoutProductFormat = cart?.checkoutProducts?.map((product) => {
-    //         return {
-    //             product_slug: product.slug,
-    //             quantity: product.quantity,
-    //         };
-    //     });
-
-    //     const checkout = {
-    //         // paystack uses kobo for amounts
-    //         total_amount: cart.totalProductPrice,
-    //         products: checkoutProductFormat,
-    //     };
-
-    //     try {
-    //         const res = await addToCart(checkout).unwrap();
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    // };
-
     const sendToCart = async () => {
-        // const result = cart.checkoutProducts.filter((item) => {
-        //     return item.id === product?.id;
-        // });
-
-        // console.log(result, cart);
-
-        // const modifiedProduct = {
-        //     product_slug: product.slug,
-        //     quantity: productQuantity,
-        // };
-        // console.log(modifiedProduct);
-        // const res = await addToCart(modifiedProduct).unwrap();
-        // if (res) {
-        //     await getFromCart(null).unwrap();
-        // }
-
         try {
             const res = await getFromCart(null).unwrap();
             if (res.data.length) {
                 res.data.forEach(async (item) => {
                     console.log(item, product);
                     if (item.product_slug === product?.slug) {
-                        toastIdRef.current = toast({
-                            position: 'top',
-                            render: () => (
-                                <ToastFeedback
-                                    message={`cant update prdouct at the moment, try again later`}
-                                    title="Product update"
-                                    icon={errorImg}
-                                    color={`red.600`}
-                                    btnColor={`red.600`}
-                                    bgColor={undefined}
-                                    handleClose={close}
-                                />
-                            ),
-                        });
-                        await updateCart({ cart_id: item.id, body: { quantity: productQuantity } }).unwrap();
+                        const res = await updateCart({ cart_id: item.id, body: { quantity: productQuantity } }).unwrap();
+                        if (res) {
+                            await getFromCart(null).unwrap();
+                            toastIdRef.current = toast({
+                                position: 'top',
+                                render: () => (
+                                    <ToastFeedback
+                                        message={`${product?.title || product?.product_title} updated successfully`}
+                                        title="Product update"
+                                        icon={toastImg}
+                                        btnColor={`purple.200`}
+                                        bgColor={undefined}
+                                        color={undefined}
+                                        handleClose={close}
+                                    />
+                                ),
+                            });
+                        }
                     } else {
                         const modifiedProduct = {
                             product_slug: product.slug,
@@ -136,14 +101,6 @@ const ProductSideNav = ({ status }) => {
             console.error(err);
         }
     };
-
-    // const sendToCart = () => {
-    //     const modifiedProduct = {
-    //         ...product,
-    //         quantity: productQuantity,
-    //     };
-    //     dispatch({ type: `App/updateCart`, payload: { product: modifiedProduct, totalPrice } });
-    // };
 
     useEffect(() => {
         setTotalPrice(product?.price);

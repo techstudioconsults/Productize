@@ -52,13 +52,6 @@ export const appApiSlice = apiSlice.injectEndpoints({
                 method: 'POST',
                 body: { ...credentials },
             }),
-            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-                try {
-                    const { data } = await queryFulfilled;
-                } catch (error) {
-                    return error;
-                }
-            },
         }),
         getFromCart: builder.mutation({
             query: (credentials) => ({
@@ -83,18 +76,21 @@ export const appApiSlice = apiSlice.injectEndpoints({
         updateCart: builder.mutation({
             query: (credentials) => ({
                 // generate a random token value instead of using a hardcoded string
-                url: `/carts/{${credentials.cart_id}}`,
+                url: `/carts/${credentials.cart_id}`,
                 method: 'PATCH',
+                body: { ...credentials.body },
+            }),
+        }),
+        deleteCart: builder.mutation({
+            query: (credentials) => ({
+                // generate a random token value instead of using a hardcoded string
+                url: `/carts/${credentials.cart_id}`,
+                method: 'DELETE',
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
                     console.log(data);
-                    // dispatch(
-                    //     setCart({
-                    //         product: data.data,
-                    //     })
-                    // );
                 } catch (error) {
                     return error;
                 }
@@ -150,5 +146,6 @@ export const {
     useAddToCartMutation,
     useGetFromCartMutation,
     useGetProductTagsMutation,
-    useUpdateCartMutation
+    useUpdateCartMutation,
+    useDeleteCartMutation,
 } = appApiSlice;

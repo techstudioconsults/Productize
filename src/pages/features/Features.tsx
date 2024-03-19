@@ -14,9 +14,11 @@ export const Features = () => {
                 <Stack gap={10}>
                     <Container zIndex={3} color={`yellow.300`} mt={`10rem`} textAlign={`center`} maxW={`70rem`}>
                         <Text lineHeight={`shorter`} as={`h1`}>
-                            <Highlight query="product." styles={{ color: 'purple.200' }}>
-                                You customize your product.
-                            </Highlight>
+                            You customize your
+                            <Text as={`h1`} color={`purple.200`}>
+                                {' '}
+                                product.
+                            </Text>
                         </Text>
                         <Text as={`h5`} maxW={`35rem`} margin={`auto`} mt={3} fontWeight={100}>
                             The opportunity to share knowledge with individuals and businesses of same passion.

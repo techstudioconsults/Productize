@@ -4,21 +4,20 @@ import { Box, SimpleGrid, Skeleton } from '@chakra-ui/react';
 import { PayoutTableControl } from '../components/PayoutTableControls';
 import { DataWidgetCard } from '../../../DataWidgetCard';
 import { useCurrency } from '@productize/hooks';
-import { selectPayoutStats, selectPayouts, useGetPayoutStatsMutation, useGetPayoutsMutation } from '@productize/redux';
+import { selectPayoutStats, selectPayouts, useGetPayoutStatsMutation } from '@productize/redux';
 import { useSelector } from 'react-redux';
 import { useCallback, useEffect } from 'react';
 import { OnBoardingLoader } from '@productize/ui';
 
 const PremiumLayout = () => {
     const [getPayoutStats, getPayoutsStatus] = useGetPayoutStatsMutation();
-    const payoutsTableData = useSelector(selectPayouts);
     const payouts = useSelector(selectPayoutStats);
     const formatCurrency = useCurrency();
 
-    const getPendingAmount = (totalEarning, pendingPayments) => {
-        const totalPayout = pendingPayments.reduce((acc, payment) => acc + payment.amount, 0);
-        return Math.min(totalPayout, totalEarning);
-    };
+    // const getPendingAmount = (totalEarning, pendingPayments) => {
+    //     const totalPayout = pendingPayments.reduce((acc, payment) => acc + payment.amount, 0);
+    //     return Math.min(totalPayout, totalEarning);
+    // };
 
     const showAllOrders = useCallback(async () => {
         try {
@@ -62,16 +61,12 @@ const PremiumLayout = () => {
                         </Skeleton>
                         <Skeleton isLoaded={true}>
                             <Box>
-                                <DataWidgetCard
-                                    showIcon={false}
-                                    title={'Pending'}
-                                    value={formatCurrency(getPendingAmount(payouts?.total_earnings, payoutsTableData))}
-                                />
+                                <DataWidgetCard showIcon={false} title={'Pending'} value={formatCurrency(payouts?.pending)} />
                             </Box>
                         </Skeleton>
                         <Skeleton isLoaded={true}>
                             <Box>
-                                <DataWidgetCard showIcon={false} title={'Avialable Earnings'} value={formatCurrency(payouts?.available_earnings)} />
+                                <DataWidgetCard showIcon={false} title={'Available Earnings'} value={formatCurrency(payouts?.available_earnings)} />
                             </Box>
                         </Skeleton>
                     </SimpleGrid>

@@ -107,6 +107,7 @@ export const PayoutTableControl = ({ showRefreshBtn, balance }) => {
             <Flex w={{ base: `100%`, md: `fit-content` }} flexDir={{ base: `column`, md: `row` }} gap={4} alignItems={{ base: `flex-start`, md: `center` }}>
                 <Box w={`100%`}>
                     <DateRangePicker
+                        disabled
                         onChange={handleDateRangeChange}
                         placeholder={`15 Feb, 2023 - 22 Feb, 2023`}
                         size="lg"
@@ -135,6 +136,7 @@ export const PayoutTableControl = ({ showRefreshBtn, balance }) => {
 
                     <IconButton
                         color={`purple.200`}
+                        isDisabled
                         bgColor={`purple.100`}
                         isLoading={getPayoutsStatus.isLoading}
                         spinner={<SpinnerComponentSmall size="sm" />}

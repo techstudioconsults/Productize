@@ -21,7 +21,7 @@ export const DataWidgetCard = ({ title, value, bgImg, showIcon, bmt, tmy }: card
                 </Box>
                 <Box mt={bmt}>
                     <Text>{title}</Text>
-                    <Text my={tmy} as={`h5`}>
+                    <Text my={tmy} as={`h5`} color={title === `Available Earnings` ? `green.200` : ``}>
                         {value}
                     </Text>
                 </Box>

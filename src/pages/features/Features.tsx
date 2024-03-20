@@ -1,5 +1,5 @@
 import DefaultLayout from '../../layouts/Layout';
-import { Box, Container, Image, Stack, Text, Highlight, Flex } from '@chakra-ui/react';
+import { Box, Container, Image, Stack, Text, Flex } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { Hero } from '../../components/Hero';
 import { SectionLayout } from '../../components/section-layout/SectionLayout';
@@ -13,15 +13,16 @@ export const Features = () => {
             <Hero height={{ base: `35rem`, xl: `39rem` }} bgImg={''} bgColor={'green.100'}>
                 <Stack gap={10}>
                     <Container zIndex={3} color={`yellow.300`} mt={`10rem`} textAlign={`center`} maxW={`70rem`}>
-                        <Text lineHeight={`shorter`} as={`h1`}>
-                            You customize your
-                            <Text as={`h1`} color={`purple.200`}>
-                                {' '}
+                        <Box>
+                            <Text lineHeight={`shorter`} as={`h1`}>
+                                You customize your
+                            </Text>
+                            <Text lineHeight={`shorter`} as={`h1`} color={`purple.200`}>
                                 product.
                             </Text>
-                        </Text>
-                        <Text as={`h5`} maxW={`35rem`} margin={`auto`} mt={3} fontWeight={100}>
-                            The opportunity to share knowledge with individuals and businesses of same passion.
+                        </Box>
+                        <Text as={`h5`} fontWeight={300} maxW={`70rem`} margin={`auto`} mt={3}>
+                            It is entirely up to you to determine how you want your products to look like to visitors, we only help you show it to them.
                         </Text>
                     </Container>
                     <Container display={{ xl: `none` }} w={`fit-content`}>
@@ -50,9 +51,9 @@ export const Features = () => {
                     <Text as={`h1`} lineHeight={`shorter`}>
                         Grab visitors attention with detailed products.
                     </Text>
-                    <Text maxW={`50rem`} m={`auto`} as={`h5`} my={5} fontWeight={100}>
-                        Explore our massive suite of design features and rich libraries of free visual content. They’re all customizable to make your site look
-                        just right.
+                    <Text fontWeight={300} maxW={`50rem`} m={`auto`} as={`h5`} my={5}>
+                        Create a detailed product description that allows visitors learn more about what you’re offering and get to know the process behind that
+                        product.
                     </Text>
                 </Container>
             </SectionLayout>
@@ -72,7 +73,7 @@ export const Features = () => {
                             shouldShowButton={true}
                             iconColor={`#F6C21C`}
                             title={'Create products with ease'}
-                            subTitle={'Receive money from anywhere, blah blah blah blah blah.'}
+                            subTitle={'Products can be easily created on our platform without stress no matter what it is and how tech savvy or not you are.'}
                             listItems={[`Receive money from anywhere, blah blah blah blah blah.`, `Receive money from anywhere, blah blah blah blah blah.`]}
                         />
                     </Container>
@@ -83,7 +84,7 @@ export const Features = () => {
                     <Text as={`h1`} lineHeight={`shorter`}>
                         Share your products.
                     </Text>
-                    <Text as={`h5`} fontWeight={100} maxW={`50rem`} m={`auto`} my={5}>
+                    <Text as={`h5`} fontWeight={400} maxW={`50rem`} m={`auto`} my={5}>
                         Explore our massive suite of design features and rich libraries of free visual content. They’re all customizable to make your site look
                         just right.
                     </Text>

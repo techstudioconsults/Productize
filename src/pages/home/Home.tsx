@@ -20,7 +20,7 @@ export const Home = () => {
                         <Text lineHeight={`shorter`} as={`h1`}>
                             Monetize your skills with ease
                         </Text>
-                        <Text fontWeight={100} as={`h5`} color={`purple.100`} mt={3}>
+                        <Text fontWeight={300} as={`h5`} color={`purple.100`} mt={3}>
                             With Productize, selling your products online is hassle-free. You can showcase your work and let us handle the backend tasks,
                             allowing you to concentrate on what you do best.
                         </Text>
@@ -58,9 +58,9 @@ export const Home = () => {
                             <Text as={`h1`} lineHeight={`shorter`} textAlign={{ base: `center`, xl: `initial` }}>
                                 You can monetize everything
                             </Text>
-                            <Text as={`h5`} my={`2rem`} fontWeight={100} textAlign={{ base: `center`, xl: `initial` }}>
-                                Productize offers you an opportunity to monetize your passion by providing a platform that allows you to showcase and sell your
-                                work online.
+                            <Text fontWeight={300} as={`h5`} my={`2rem`} textAlign={{ base: `center`, xl: `initial` }}>
+                                Are you a digital artist, designer, writer, or developer looking to share your creations with the world and earn from your
+                                passion? Look no further! Productize is the ultimate platform for creators like you.
                             </Text>
                             <Box display={{ base: `none`, xl: `block` }}>
                                 <Link as={RouterLink} to={`/auth`}>
@@ -162,7 +162,7 @@ export const Home = () => {
                         <Text as={`h1`} lineHeight={`shorter`}>
                             Everyone can Buy & Sell on Productize
                         </Text>
-                        <Text as={`h5`} fontWeight={100} pr={{ xl: 20 }} mt={5}>
+                        <Text fontWeight={300} as={`h5`} pr={{ xl: 20 }} mt={5}>
                             Not really tech-savvy or just looking for a way to share that knowledge you think will be valuable to others, Productize is here to
                             cater to whatever your needs may be.
                         </Text>
@@ -174,7 +174,7 @@ export const Home = () => {
                     <Text lineHeight={`shorter`} mb={4} as={`h1`}>
                         Start monetizing in 4 simple steps
                     </Text>
-                    <Text as={`h5`} fontWeight={`100`}>
+                    <Text as={`h5`} fontWeight={`200`}>
                         You can easily reach a broader audience, increase your sales, and build your brand. Monetize everything with Productize and unleash your
                         full potential!
                     </Text>

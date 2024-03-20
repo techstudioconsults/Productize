@@ -104,6 +104,7 @@ const Links = ({ isScroll, isMobile, linkColor }: NavbarProps) => {
             flexDir={isMobile ? `column` : `row`}
             color={isMobile || isScroll ? `black` : linkColor}
             gap={{ base: 20, lg: 10 }}
+            alignItems={`center`}
         >
             {navLinks}
         </OrderedList>

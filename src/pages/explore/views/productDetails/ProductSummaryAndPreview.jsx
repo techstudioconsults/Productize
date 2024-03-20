@@ -35,7 +35,7 @@ const ProductSummaryAndPreview = ({ status }) => {
     const features = product?.highlights?.map((highlight, index) => {
         return (
             <ListItem key={index} display={`flex`} alignItems={`flex-start`} gap={2}>
-                <Icon fontSize={`1.5rem`} icon={`gg:check`} />
+                <Icon color={`#6D5DD3`} fontSize={`1.5rem`} icon={`gg:check`} />
                 <Text>{highlight}</Text>
             </ListItem>
         );
@@ -118,8 +118,8 @@ const ProductSummaryAndPreview = ({ status }) => {
                             <Box height={expand ? `fit-content` : `20rem`} overflow={`hidden`}>
                                 <Text dangerouslySetInnerHTML={{ __html: product?.description }} />
                             </Box>
-                            <Box onClick={expandDetails} w={`fit-content`} my={4}>
-                                <Text>{expand ? `See less...` : `See more...`}</Text>
+                            <Box cursor={`pointer`} onClick={expandDetails} w={`fit-content`} my={4}>
+                                <Text color={`purple.200`}>{expand ? `See less...` : `See more...`}</Text>
                             </Box>
                         </Box>
                     </Box>

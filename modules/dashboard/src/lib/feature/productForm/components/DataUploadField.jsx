@@ -117,21 +117,26 @@ const Heading = ({ action, errors, showPreview }) => (
 const ProductContentDisplay = ({ file }) => {
     const { state } = useLocation();
     const [fileObject, setFileObject] = useState({});
-    // const convertToFile = useUrlToBlobConverter();
 
-    // useEffect(() => {
-    //     const getData = async () => {
-    //         if (state && file) {
-    //             if (typeof file === "string") {
-    //                 const file_MOD = await convertToFile(file);
-    //                 setFileObject(file_MOD[0]);
-    //             } else {
-    //                 setFileObject({ name: file.name, type: file.type, size: file.size });
-    //             }
-    //         }
-    //     };
-    //     getData();
-    // }, [convertToFile, file, state]);
+    const sliceImageName = (originalName, maxLength) => {
+        // Check if originalName is defined
+        if (!originalName || typeof originalName !== 'string') {
+            console.error('Invalid originalName provided');
+            return originalName;
+        }
+        // Extract the extension
+        const extensionIndex = originalName.lastIndexOf('.');
+        if (extensionIndex === -1) {
+            console.error('Invalid image name format. Extension not found.');
+            return originalName;
+        }
+        const extension = originalName.slice(extensionIndex);
+        // Calculate the maximum length of the name without extension
+        const maxNameLength = maxLength - extension.length - 1; // Accounting for the dot before the extension
+        // Slice the name accordingly
+        const slicedName = originalName.length > maxLength ? originalName.slice(0, maxNameLength) + '...' + extension : originalName;
+        return slicedName;
+    };
 
     useEffect(() => {
         if (state && file) {
@@ -153,7 +158,7 @@ const ProductContentDisplay = ({ file }) => {
                 </Box>
                 {state ? (
                     <Box>
-                        <Text fontWeight={600}>{fileObject?.name}</Text>
+                        <Text fontWeight={600}>{sliceImageName(fileObject?.name, 30)}</Text>
                         <Text className="small-text">{`${fileObject?.type}`}</Text>
                     </Box>
                 ) : (

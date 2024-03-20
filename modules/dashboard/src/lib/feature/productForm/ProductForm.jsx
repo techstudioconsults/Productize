@@ -32,7 +32,16 @@ export const ProductForm = () => {
             <FormControl as={SimpleGrid} my={8} gap={4} columns={{ base: 1, sm: 2 }}>
                 {/* product title */}
                 <Field label="Product Title">
-                    <Input placeholder="Name of product" variant={`filled`} size={`lg`} sx={globalFieldStyle} {...register(`title`)} type="text" id="title" />
+                    <Input
+                        maxLength={30}
+                        placeholder="Name of product"
+                        variant={`filled`}
+                        size={`lg`}
+                        sx={globalFieldStyle}
+                        {...register(`title`)}
+                        type="text"
+                        id="title"
+                    />
                 </Field>
                 {/* product price */}
                 <Field label="Price">

@@ -7,7 +7,6 @@ import { DualSectionLayout } from '../../components/section-layout/DualSectionLa
 import { SharedSection } from '../../components/section-layout/SharedSection';
 import { CardLayout, SharedButton } from '@productize/ui';
 
-
 export const Home = () => {
     return (
         <DefaultLayout>
@@ -56,10 +55,10 @@ export const Home = () => {
                 >
                     <Flex gap={{ sm: 20 }} flexDir={{ base: `column`, xl: `row` }}>
                         <Box flex={1} color={`yellow.300`}>
-                            <Text as={`h1`} lineHeight={`shorter`}>
+                            <Text as={`h1`} lineHeight={`shorter`} textAlign={{ base: `center`, xl: `initial` }}>
                                 You can monetize everything
                             </Text>
-                            <Text as={`h5`} my={`2rem`} fontWeight={100}>
+                            <Text as={`h5`} my={`2rem`} fontWeight={100} textAlign={{ base: `center`, xl: `initial` }}>
                                 Productize offers you an opportunity to monetize your passion by providing a platform that allows you to showcase and sell your
                                 work online.
                             </Text>

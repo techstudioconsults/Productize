@@ -83,13 +83,13 @@ const Links = ({ isScroll, isMobile, linkColor }: NavbarProps) => {
     const navLinks = links.map((link) => {
         if (link.type === `dropdown`) {
             return (
-                <Flex key={link.id} my={5} py={5} justifyContent={`center`}>
+                <Flex key={link.id}>
                     <DropdownLink linkColor={linkColor} isScroll={isScroll} link={link} />
                 </Flex>
             );
         } else {
             return (
-                <Flex color={linkColor} key={link.id} my={5} py={5} justifyContent={`center`}>
+                <Flex color={linkColor} key={link.id}>
                     <NavLink to={link.path} className={({ isActive }) => (isActive ? style['active'] : style['inactive'])}>
                         <ListItem fontWeight={600}>{link.name}</ListItem>
                     </NavLink>
@@ -99,11 +99,11 @@ const Links = ({ isScroll, isMobile, linkColor }: NavbarProps) => {
     });
     return (
         <OrderedList
-            m={0}
+            m={20}
             display={{ base: isMobile ? `flex` : `none`, lg: `flex` }}
             flexDir={isMobile ? `column` : `row`}
             color={isMobile || isScroll ? `black` : linkColor}
-            gap={{ base: 0, lg: 10 }}
+            gap={{ base: 20, lg: 10 }}
         >
             {navLinks}
         </OrderedList>

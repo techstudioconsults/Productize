@@ -14,7 +14,7 @@ export const SharedSection = ({ title, desc, btnText }: prop) => {
         <SectionLayout height={''} bgColor={'purple.200'} bgImg={''}>
             <Container maxW={`70rem`} textAlign={`center`} py={20} color={`purple.100`}>
                 <Text as={`h3`}>{title}</Text>
-                <Text as={`h5`} fontWeight={100} maxW={`35rem`} m={`auto`} my={5}>
+                <Text as={`h5`} fontWeight={200} maxW={`45rem`} m={`auto`} my={5}>
                     {desc}
                 </Text>
                 <Link as={RouterLink} to={`/auth`} w={`fit-content`} m={`auto`}>

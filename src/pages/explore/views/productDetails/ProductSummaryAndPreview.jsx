@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -20,6 +20,7 @@ import { ModalComp, SharedButton } from '@productize/ui';
 const ProductSummaryAndPreview = ({ status }) => {
     const { onOpen, onClose, isOpen } = useDisclosure();
     const product = useSelector(selectSingleProduct_EXTERNAL);
+    const [expand, setExpand] = useState(false);
 
     const coverPhoto = product?.cover_photos?.map((photo, index) => {
         return (
@@ -40,6 +41,10 @@ const ProductSummaryAndPreview = ({ status }) => {
         );
     });
 
+    const expandDetails = () => {
+        setExpand(!expand);
+    };
+
     return (
         <>
             <Swiper
@@ -54,7 +59,7 @@ const ProductSummaryAndPreview = ({ status }) => {
             </Swiper>
             {/* =================================================== */}
             <Skeleton isLoaded={!status?.isLoading} borderRadius={8}>
-                <Flex alignItems={`flex-end`} w={`100%`} justifyContent={`space-between`} borderRadius={`8px`} border={`1px solid #CFCFD0`} p={5} my={4}>
+                <Flex alignItems={`flex-end`} w={`100%`} justifyContent={`space-between`} borderRadius={`8px`} border={`1px solid #CFCFD070`} p={5} my={4}>
                     <Box>
                         <Text as={`h4`} fontWeight={600} color={`grey.800`}>
                             {product?.title}
@@ -92,7 +97,7 @@ const ProductSummaryAndPreview = ({ status }) => {
             </Skeleton>
             {/* =================================================== */}
             <Skeleton isLoaded={!status?.isLoading} borderRadius={8}>
-                <Box borderRadius={`8px`} border={`1px solid #CFCFD0`} p={5} my={4}>
+                <Box borderRadius={`8px`} border={`1px solid #CFCFD070`} p={5} my={4}>
                     <Box my={10}>
                         <Text fontWeight={600}>Features</Text>
                         <Box my={5}>
@@ -110,7 +115,12 @@ const ProductSummaryAndPreview = ({ status }) => {
                             <Divider />
                         </Box>
                         <Box>
-                            <Text dangerouslySetInnerHTML={{ __html: product?.description }} />
+                            <Box height={expand ? `fit-content` : `20rem`} overflow={`hidden`}>
+                                <Text dangerouslySetInnerHTML={{ __html: product?.description }} />
+                            </Box>
+                            <Box onClick={expandDetails} w={`fit-content`} my={4}>
+                                <Text>{expand ? `See less...` : `See more...`}</Text>
+                            </Box>
                         </Box>
                     </Box>
                 </Box>

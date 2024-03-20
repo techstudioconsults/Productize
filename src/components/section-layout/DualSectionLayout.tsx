@@ -1,7 +1,7 @@
 import { Box, Flex, Image, List, ListItem, Text } from '@chakra-ui/react';
 import React from 'react';
 import { Icon } from '@iconify/react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { SharedButton } from '@productize/ui';
 
 export interface DualSectionLayoutProps {
@@ -54,6 +54,7 @@ export interface DualSectionLayoutListProps {
 }
 
 export const DualSectionLayoutList = ({ title, subTitle, listItems, iconColor, shouldShowButton }: DualSectionLayoutListProps) => {
+    const navigate = useNavigate();
     const lists = listItems?.map((list, index) => {
         return (
             <ListItem key={index} display={`flex`} alignItems={`flex-start`} gap={2}>
@@ -67,22 +68,23 @@ export const DualSectionLayoutList = ({ title, subTitle, listItems, iconColor, s
             <Text as={`h1`} fontWeight={700} lineHeight={`shorter`}>
                 {title}
             </Text>
-            <Text as={`h5`} fontWeight={100} my={10}>
+            <Text as={`h5`} fontWeight={300} my={10}>
                 {subTitle}
             </Text>
             <List spacing={3}>{lists}</List>
             <Box mt={10} display={shouldShowButton ? `block` : `none`}>
-                <Link to={`/auth`}>
-                    <SharedButton
-                        text={'Get Started'}
-                        width={{ base: `100%`, xl: '22.5rem' }}
-                        height={'48px'}
-                        bgColor={'yellow.200'}
-                        textColor={'white'}
-                        borderRadius={'4px'}
-                        fontSize={{ base: `sm`, md: `md` }}
-                    />
-                </Link>
+                <SharedButton
+                    text={'Get Started'}
+                    width={{ base: `100%`, xl: '22.5rem' }}
+                    height={'48px'}
+                    bgColor={'yellow.200'}
+                    textColor={'white'}
+                    borderRadius={'4px'}
+                    fontSize={{ base: `sm`, md: `md` }}
+                    btnExtras={{
+                        onClick: () => navigate(`/auth`),
+                    }}
+                />
             </Box>
         </Box>
     );

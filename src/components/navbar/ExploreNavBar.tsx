@@ -10,7 +10,7 @@ interface navProps {
 
 export const ExploreNavBar = ({ isAuth }: navProps) => {
     return (
-        <Box pos={`sticky`} top={0} background={`coral.200`} py={4}>
+        <Box background={`coral.200`} py={4}>
             <Container px={{ base: 4, sm: 8, xl: 0 }} maxW={`70rem`}>
                 <Flex justifyContent={`space-between`} flexDir={{ base: `column`, lg: `row` }} as="nav" gap={4}>
                     <Flex justifyContent={`space-between`} alignItems={`center`}>

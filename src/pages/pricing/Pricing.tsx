@@ -14,7 +14,7 @@ export const Pricing = () => {
         <DefaultLayout>
             <Hero height={{ base: `fit-content`, xl: '60rem' }} bgImg={lines} bgColor={'yellow.100'}>
                 <Stack gap={10}>
-                    <Container pos={`relative`} color={`yellow.300`} mt={`8rem`} textAlign={`center`} maxW={`46.3rem`}>
+                    <Container pos={`relative`} color={`yellow.300`} mt={`8rem`} textAlign={`center`} maxW={`70rem`}>
                         <Image pos={`absolute`} top={`12rem`} left={`-8rem`} src={diamond} />
                         <Text lineHeight={`shorter`} as={`h1`}>
                             Access All Features With Our{' '}
@@ -22,11 +22,11 @@ export const Pricing = () => {
                         <Text as={`h1`} color={`purple.200`}>
                             30 Days Free Trial
                         </Text>
-                        <Text fontWeight={100} as={`h5`} mt={3}>
+                        <Text fontWeight={300} as={`h5`} mt={3} px={{ lg: 36 }}>
                             Productize looks out for a better life with a money making system, no monthly charges. Just for you
                         </Text>
                     </Container>
-                    <Flex flexDir={{ base: `column`, lg: `row` }} p={5} gap={10} mt={`0`} alignItems={`center`}>
+                    <Flex flexDir={{ base: `column`, lg: `row` }} p={5} gap={10} mt={0} alignItems={`center`} w={{ base: `100%`, lg: `46.3rem` }} m={`auto`}>
                         {/* SUBSCRIPTION PLAN CARD */}
                         <PricingCard
                             cardProps={{
@@ -65,13 +65,13 @@ export const Pricing = () => {
                 </Stack>
             </Hero>
             <SectionLayout height={'fit-content'} bgColor={'white'} bgImg={''}>
-                <Container maxW={`70rem`} pt={{ base: `5rem`, xl: `15rem` }} pb={{ base: `5rem`, xl: `15rem` }} px={{ base: 4, xl: 0 }}>
+                <Container maxW={`70rem`} pt={{ base: `5rem`, xl: `15rem` }} pb={{ base: `5rem`, xl: `5rem` }} px={{ base: 4, xl: 0 }}>
                     <Flex gap={20} flexDir={{ base: `column`, xl: `row` }} alignItems={{ base: `center`, xl: `flex-start` }}>
                         <Box textAlign={{ base: `center`, xl: `initial` }} flex={1}>
                             <Text as={`h2`} lineHeight={`shorter`}>
                                 Frequently asked questions
                             </Text>
-                            <Text as={`h5`} fontWeight={100} my={`2rem`}>
+                            <Text as={`h5`} my={`2rem`}>
                                 Haven’t found what you’re looking for? Try the
                                 <Text as={`span`} fontSize={`2xl`} color={`purple.200`} textDecoration={`underline`}>
                                     <CLink as={Link} to={'/dashboard/help#contact-support'} w={`fit-content`}>

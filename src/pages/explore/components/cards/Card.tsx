@@ -30,15 +30,15 @@ const Card: React.FC<CardProps> = ({ image, heading, rate, count, price, publish
             _hover={{ boxShadow: '5px 5px 5px #000', transform: 'scale(1.01)' }}
         >
             <Box display="flex" w={`100%`} justifyContent={'center'} alignItems="center" alignSelf={'center'} mb=".75rem">
-                <Image src={image} alt={heading} w={'100%'} h={'12.063rem'} objectFit={'contain'} />
+                <Image src={image} alt={heading} w={'100%'} h={'12.063rem'} objectFit={'cover'} />
             </Box>
             <Heading fontSize="sm" fontWeight={'bold'} lineHeight={5} color="hsla(248, 11%, 7%, 1)" textAlign={'start'}>
-                {heading}
+                {heading.slice(0, 30)}
             </Heading>
 
             <Box mt=".625rem">
                 <Text as="span" fontSize={'xs'} lineHeight={4} pr=".625rem" textAlign={'left'}>
-                    By {publisher}
+                    By {publisher.slice(0, 25)}
                 </Text>
                 <Text as="span" fontSize={'xs'} lineHeight={4} ml="0.5rem" pr=".625rem">
                     {rate}

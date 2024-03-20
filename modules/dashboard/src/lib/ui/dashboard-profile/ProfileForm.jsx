@@ -24,8 +24,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import errorImg from '@icons/error.svg';
 import toastImg from '@icons/star-notice.png';
 import { selectCurrentUser, useGetUserMutation } from '@productize/redux';
-import { PaywallUnpublishWarning, PaywallUpgrade, SharedButton, ToastFeedback, UpgradePlanModal, useToastAction } from '@productize/ui';
-import { useAxiosInstance, useSetPaymentPlan } from '@productize/hooks';
+import { SharedButton, ToastFeedback, useToastAction } from '@productize/ui';
+import { useAxiosInstance } from '@productize/hooks';
 
 export const ProfileForm = () => {
     const user = useSelector(selectCurrentUser);
@@ -47,46 +47,9 @@ export const ProfileForm = () => {
     });
 
     const onSubmit = async (data) => {
-        // console.log(data);
-        // let formData = {};
-        // if (data.facebook_account && data.youtube_account && data.twitter_account) {
-        //     formData = {
-        //         full_name: data.full_name,
-        //         username: data.username,
-        //         phone_number: data.phone_number,
-        //         bio: data.bio,
-        //         twitter_account: data.twitter_account,
-        //         facebook_account: data.facebook_account,
-        //         youtube_account: data.youtube_account,
-        //     };
-        // } else if (data.facebook_account) {
-        //     formData = {
-        //         full_name: data.full_name,
-        //         username: data.username,
-        //         phone_number: data.phone_number,
-        //         bio: data.bio,
-        //         facebook_account: data.facebook_account,
-        //     };
-        // } else if (data.youtube_account) {
-        //     formData = {
-        //         full_name: data.full_name,
-        //         username: data.username,
-        //         phone_number: data.phone_number,
-        //         bio: data.bio,
-        //         youtube_account: data.youtube_account,
-        //     };
-        // } else if (data.twitter_account) {
-        //     formData = {
-        //         full_name: data.full_name,
-        //         username: data.username,
-        //         phone_number: data.phone_number,
-        //         bio: data.bio,
-        //         twitter_account: data.twitter_account,
-        //     };
-        // }
-        // if (isPremium) {
         try {
             const res = await query(`post`, `/users/me`, data);
+            console.log(data);
             if (res?.status === 200) {
                 toastIdRef.current = toast({
                     position: 'top',
@@ -103,13 +66,14 @@ export const ProfileForm = () => {
                     ),
                 });
                 await getUser(null).unwrap();
+                navigate(`/dashboard/home`)
             }
         } catch (error) {
             toastIdRef.current = toast({
                 position: 'top',
                 render: () => (
                     <ToastFeedback
-                        message={error.response.data.message}
+                        message={error?.response?.data?.message}
                         title="Profile update"
                         icon={errorImg}
                         color={`red.600`}
@@ -120,9 +84,6 @@ export const ProfileForm = () => {
                 ),
             });
         }
-        // } else {
-        //     onOpen();
-        // }
     };
 
     const previewImg = (files) => {
@@ -146,7 +107,7 @@ export const ProfileForm = () => {
                         <Flex mb={5} color={`grey.400`} alignItems={`center`} gap={1}>
                             <Icon color={`green`} fontSize={`14px`} icon={`ep:info-filled`} />
                             <Text fontStyle={`italic`} fontSize={`12px`}>
-                                To Complete your profile to start getting your products published, Fill all profile field and upload an image.
+                                To Complete your profile, fill all profile fields and upload an image.
                             </Text>
                         </Flex>
                         <FormControl>

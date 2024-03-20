@@ -1,4 +1,4 @@
-import { Box, Flex, IconButton, Link } from '@chakra-ui/react';
+import { Box, Flex, IconButton } from '@chakra-ui/react';
 import DateRangePicker from 'rsuite/esm/DateRangePicker';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
@@ -6,14 +6,16 @@ import { useState } from 'react';
 import download from 'downloadjs';
 import { DropdownAction } from '../../../DropdownAction';
 import { selectCurrentToken, useGetPayoutsMutation } from '@productize/redux';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDateRangeFormat } from '@productize/hooks';
-import { SharedButton, SpinnerComponentSmall } from '@productize/ui';
+import { SharedButton, SpinnerComponentSmall, ToastFeedback, useToastAction } from '@productize/ui';
 import { Icon } from '@iconify/react';
+import errorImg from '@icons/error.svg';
 
 const BASE_URL = import.meta.env['VITE_BASE_URL'];
 
 export const PayoutTableControl = ({ showRefreshBtn, balance }) => {
+    const { toast, toastIdRef, close } = useToastAction();
     const [getPayouts, getPayoutsStatus] = useGetPayoutsMutation();
     const [exportLoading, setExportLoading] = useState(false);
     const token = useSelector(selectCurrentToken);
@@ -41,27 +43,53 @@ export const PayoutTableControl = ({ showRefreshBtn, balance }) => {
             if (res.status === 200) {
                 setExportLoading(false);
                 const blob = new Blob([res.data], { type: 'text/csv' });
-                download(blob, `Products.csv`);
+                download(blob, `Payout.csv`);
+                toastIdRef.current = toast({
+                    position: 'top',
+                    render: () => (
+                        <ToastFeedback
+                            btnColor={`purple.200`}
+                            message={`Check your download folder for payout file`}
+                            title="Downloaded successfully"
+                            icon={undefined}
+                            bgColor={undefined}
+                            color={undefined}
+                            handleClose={close}
+                        />
+                    ),
+                });
             }
         } catch (error) {
             setExportLoading(false);
-            console.log(error);
+            toastIdRef.current = toast({
+                position: 'top',
+                render: () => (
+                    <ToastFeedback
+                        message={`Something went wrong, please try again later.`}
+                        title="Download Error!"
+                        icon={errorImg}
+                        color={`red.600`}
+                        btnColor={`red.600`}
+                        bgColor={undefined}
+                        handleClose={close}
+                    />
+                ),
+            });
         }
     };
 
-    const handleDateRangeChange = (value) => {
-        setStartDate(formatDateRange(value?.[0]));
-        setEndDate(formatDateRange(value?.[1]));
+    const handleDateRangeChange = async (value) => {
+        if (value) {
+            setStartDate(formatDateRange(value?.[0]));
+            setEndDate(formatDateRange(value?.[1]));
+        } else {
+            setStartDate(``);
+            setEndDate(``);
+            await getPayouts(null).unwrap();
+        }
     };
 
     const filterTable = async () => {
-        // if (status === `all`) {
-        //     try {
-        //         await getPayouts(null).unwrap();
-        //     } catch (error) {
-        //         console.log(error);
-        //     }
-        // } else {
         try {
             await getPayouts({
                 page: null,
@@ -70,9 +98,8 @@ export const PayoutTableControl = ({ showRefreshBtn, balance }) => {
                 status,
             }).unwrap();
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
-        // }
     };
 
     return (
@@ -80,6 +107,7 @@ export const PayoutTableControl = ({ showRefreshBtn, balance }) => {
             <Flex w={{ base: `100%`, md: `fit-content` }} flexDir={{ base: `column`, md: `row` }} gap={4} alignItems={{ base: `flex-start`, md: `center` }}>
                 <Box w={`100%`}>
                     <DateRangePicker
+                        disabled
                         onChange={handleDateRangeChange}
                         placeholder={`15 Feb, 2023 - 22 Feb, 2023`}
                         size="lg"
@@ -88,8 +116,27 @@ export const PayoutTableControl = ({ showRefreshBtn, balance }) => {
                     />
                 </Box>
                 <Flex alignItems={`center`} gap={4}>
+                    <Box display={{ base: `flex`, md: `none` }}>
+                        <SharedButton
+                            text={'Withdraw Earnings'}
+                            width={'fit-content'}
+                            height={'48px'}
+                            bgColor={'purple.200'}
+                            textColor={'grey.100'}
+                            borderRadius={'4px'}
+                            fontSize={{ base: `sm`, md: `md` }}
+                            btnExtras={{
+                                disabled: !balance,
+                                border: `1px solid #6D5DD3`,
+                                leftIcon: `ei:plus`,
+                                onClick: () => navigate(`/dashboard/payouts/${`38y23862938`}/withdraw-earnings`),
+                            }}
+                        />
+                    </Box>
+
                     <IconButton
                         color={`purple.200`}
+                        isDisabled
                         bgColor={`purple.100`}
                         isLoading={getPayoutsStatus.isLoading}
                         spinner={<SpinnerComponentSmall size="sm" />}
@@ -138,9 +185,9 @@ export const PayoutTableControl = ({ showRefreshBtn, balance }) => {
                         />
                     </Box>
                 </Flex>
-                <Box display={{ md: `none` }}>
+                {/* <Box display={{ md: `none` }}>
                     <DropdownAction handleExport={handleExport} icon={`zondicons:dots-horizontal-triple`} />
-                </Box>
+                </Box> */}
             </Box>
         </Flex>
     );

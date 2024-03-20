@@ -26,31 +26,19 @@ export const Pricing = () => {
                             Productize looks out for a better life with a money making system, no monthly charges. Just for you
                         </Text>
                     </Container>
-                    <Container display={{ xl: `none` }} w={`fit-content`}>
-                        <Link to={`/auth`}>
-                            <SharedButton
-                                fontSize={{ base: `sm`, md: `md` }}
-                                text={'Get Started'}
-                                width={'160px'}
-                                height={'48px'}
-                                bgColor={'purple.200'}
-                                textColor={'white'}
-                                borderRadius={'4px'}
-                            />
-                        </Link>
-                    </Container>
-                    <Flex display={{ base: `none`, lg: `flex` }} flexDir={{ base: `column`, lg: `row` }} p={5} gap={10} mt={`0`} alignItems={`center`}>
+                    <Flex flexDir={{ base: `column`, lg: `row` }} p={5} gap={10} mt={`0`} alignItems={`center`}>
                         {/* SUBSCRIPTION PLAN CARD */}
                         <PricingCard
                             cardProps={{
                                 bgColor: `purple.100`,
                                 width: { base: `100%`, xl: `25rem` },
-                                height: `540px`,
+                                height: `100%`,
                                 borderRadius: `8px`,
                             }}
                             listItems={[
                                 `Instantly accept payments`,
-                                `Access to existing features + future releases each year`,
+                                `Access to existing features`,
+                                `future releases each year`,
                                 `When can I withdraw from my wallet`,
                                 `When can I withdraw from my wallet`,
                                 `When can I withdraw from my wallet`,
@@ -60,6 +48,19 @@ export const Pricing = () => {
                             textColor={'yellow.300'}
                             btnText={'Start Creating'}
                         />
+                        <Container display={{ lg: `none` }} w={`fit-content`}>
+                            <Link to={`/auth`}>
+                                <SharedButton
+                                    fontSize={{ base: `sm`, md: `md` }}
+                                    text={'Get Started'}
+                                    width={'160px'}
+                                    height={'48px'}
+                                    bgColor={'purple.200'}
+                                    textColor={'white'}
+                                    borderRadius={'4px'}
+                                />
+                            </Link>
+                        </Container>
                     </Flex>
                 </Stack>
             </Hero>
@@ -73,7 +74,7 @@ export const Pricing = () => {
                             <Text as={`h5`} fontWeight={100} my={`2rem`}>
                                 Haven’t found what you’re looking for? Try the
                                 <Text as={`span`} fontSize={`2xl`} color={`purple.200`} textDecoration={`underline`}>
-                                    <CLink as={Link} to={''} w={`fit-content`}>
+                                    <CLink as={Link} to={'/dashboard/help#contact-support'} w={`fit-content`}>
                                         Productize Help Center or Contact us
                                     </CLink>
                                 </Text>

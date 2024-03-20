@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     profile: null,
+    analyticsGraphData: null,
     billingHistory: null,
     accountList: [],
     payouts: [],
@@ -43,6 +44,11 @@ const userSlice = createSlice({
             state.accountList = accounts;
         },
 
+        setAnalyticsGraphData: (state, action) => {
+            const { data } = action.payload;
+            state.analyticsGraphData = data;
+        },
+
         resetUserStore: (state) => {
             Object.assign(state, initialState);
         },
@@ -55,7 +61,7 @@ const userSlice = createSlice({
     },
 });
 
-export const { setUser, setBillingHistory, setPayouts, setAccountList, resetUserStore, setPayoutStats } = userSlice.actions;
+export const { setUser, setBillingHistory, setPayouts, setAccountList, resetUserStore, setPayoutStats, setAnalyticsGraphData } = userSlice.actions;
 
 export default userSlice.reducer;
 
@@ -65,4 +71,5 @@ export const selectAccountList = (state) => state.User.accountList;
 export const selectPayouts = (state) => state.User.payouts;
 export const selectPayoutStats = (state) => state.User.payoutStats;
 export const selectPlanStatus = (state) => state.User.planStatus;
+export const selectAnalyticsGraphData = (state) => state.User.analyticsGraphData;
 // export const selectTaskCompletedCount = (state) => state.User.guideTaskCompleted;

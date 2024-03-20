@@ -1,4 +1,4 @@
-import { Box, Card, Flex, Image, SimpleGrid, Skeleton, Text } from '@chakra-ui/react';
+import { Box, Card, Flex, Image, SimpleGrid, Skeleton, SkeletonText, Text } from '@chakra-ui/react';
 import arrowLeft from '@icons/Property_2_Arrow-left_kafkjg.svg';
 import { Link, useNavigate } from 'react-router-dom';
 import { BillingCycleTable } from './BillingCycleTable';
@@ -7,13 +7,14 @@ import { useSelector } from 'react-redux';
 import { useCurrency, useDate } from '@productize/hooks';
 import { selectBillingHistory, useBillingHistoryMutation, useManageSubscriptionMutation } from '@productize/redux';
 import { OnBoardingLoader, PricingModal } from '@productize/ui';
+import { Icon } from '@iconify/react';
 
 export const BillingCycle = () => {
     const navigate = useNavigate();
     const formatCurrency = useCurrency();
     const formatDate = useDate();
     const [billingHistory, billingHistoryStatus] = useBillingHistoryMutation();
-    const [manageSubscription] = useManageSubscriptionMutation();
+    const [manageSubscription, manageSubscriptionStatus] = useManageSubscriptionMutation();
     const billingHistoryData = useSelector(selectBillingHistory);
 
     const showBillingHistory = useCallback(async () => {
@@ -60,9 +61,11 @@ export const BillingCycle = () => {
                                         // `1 Sep, 2023`
                                     }
                                 </Text>
-                                <Text cursor={`pointer`} onClick={handlePlanDeactivation} color={`red.200`}>
-                                    Deactivate Plan
-                                </Text>
+                                <SkeletonText noOfLines={1} isLoaded={!manageSubscriptionStatus.isLoading}>
+                                    <Text cursor={`pointer`} onClick={handlePlanDeactivation} color={`red.200`}>
+                                        Deactivate Plan
+                                    </Text>
+                                </SkeletonText>
                             </Flex>
                         </Card>
                     </Box>

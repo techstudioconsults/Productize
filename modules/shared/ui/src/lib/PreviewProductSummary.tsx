@@ -16,6 +16,8 @@ import { SharedButton } from './SharedButton';
 import { ModalComp } from './Modal';
 import React from 'react';
 import { useCurrency } from '@productize/hooks';
+import { useSelector } from 'react-redux';
+import { selectCurrentUser, userApiSlice } from '@productize/redux';
 
 interface productProp {
     product: any;
@@ -23,6 +25,7 @@ interface productProp {
 
 export const PreviewProductSummary = () => {
     const { state } = useLocation();
+    console.log(state);
 
     return (
         <Container mt={`5rem`} maxW={`70rem`}>
@@ -62,6 +65,7 @@ export const TwoColumnLayout = ({ C1, C2 }: TwoColumnLayoutProps) => {
 };
 
 const ProductSummaryAndPreview = ({ product }: productProp) => {
+    const user = useSelector(selectCurrentUser);
     const { onOpen, onClose, isOpen } = useDisclosure();
     const coverPhoto = product?.cover_photos?.map((photo: string, index: number) => {
         return (
@@ -107,8 +111,8 @@ const ProductSummaryAndPreview = ({ product }: productProp) => {
                     gap={{ base: 5, xl: 10 }}
                 >
                     <Flex gap={2} alignItems={`center`}>
-                        <Avatar size={`sm`} name={product?.publisher} src={product?.publisher_avatar} />
-                        <Text fontWeight={`500`}>{product?.publisher}</Text>
+                        <Avatar size={`sm`} name={user?.logo} src={user?.logo} />
+                        <Text fontWeight={`500`}>{user?.name}</Text>
                     </Flex>
                     <Box display={{ md: `none` }}>
                         <SharedButton
@@ -132,10 +136,10 @@ const ProductSummaryAndPreview = ({ product }: productProp) => {
                             </Container>
                         </ModalComp>
                     </Box>
-                    {/*<Flex alignItems={`baseline`} gap={2}>*/}
-                    {/*    <StarRatings rating={3} starDimension="22px" starRatedColor="#F6C21C" numberOfStars={5} starSpacing="3px" name="rating"/>*/}
-                    {/*    <Text fontWeight={`500`}>24 ratings</Text>*/}
-                    {/*</Flex>*/}
+                    {/* <Flex alignItems={`baseline`} gap={2}>
+                        <StarRatings rating={3} starDimension="22px" starRatedColor="#F6C21C" numberOfStars={5} starSpacing="3px" name="rating"/>
+                        <Text fontWeight={`500`}>24 ratings</Text>
+                    </Flex> */}
                 </Flex>
             </Box>
             {/* =================================================== */}
@@ -183,7 +187,7 @@ const ProductSideNav = ({ product }: productProp) => {
             <CardBody>
                 <Flex bg={`purple.100`} justifyContent={`space-between`} p={2} borderRadius={`4px`}>
                     <Text fontWeight={500}>Sold</Text>
-                    <Text>20</Text>
+                    <Text>0</Text>
                 </Flex>
                 <Box my={4}>
                     <Text color={`grey.800`} fontSize={`22px`} fontWeight={600}>
@@ -235,7 +239,7 @@ const ProductSideNav = ({ product }: productProp) => {
                         </Flex>
                         <Flex color={`grey.500`} fontSize={`sm`} alignItems={`center`} justifyContent={`space-between`}>
                             <Text>Articles</Text>
-                            <Text>7</Text>
+                            <Text>0</Text>
                         </Flex>
                         <Flex color={`grey.500`} fontSize={`sm`} alignItems={`center`} justifyContent={`space-between`}>
                             <Text>Downloadable recourses</Text>

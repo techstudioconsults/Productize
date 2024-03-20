@@ -13,11 +13,4 @@ export const Home = () => {
     } else {
         return <ActiveUserPage />;
     }
-    return (
-        <>
-            <OnBoardingPage />
-            <FirstSalePage />
-            <ActiveUserPage />
-        </>
-    );
 };

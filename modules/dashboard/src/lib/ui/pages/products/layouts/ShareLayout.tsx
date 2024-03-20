@@ -57,11 +57,11 @@ const ShareLayout = () => {
                 <>
                     <Card variant={`unstyled`} border={`1px solid #CFCFD0`} p={2}>
                         <Box h={`197px`}>
-                            <Image objectFit={`cover`} w={`100%`} h={`100%`} src={state?.product?.data?.cover_photos?.[0]} alt="img" />
+                            <Image objectFit={`cover`} w={`100%`} h={`100%`} src={state?.product?.cover_photos?.[0]} alt="img" />
                         </Box>
                         <Stack mt={4} alignItems={`center`}>
                             <Text fontWeight={600}></Text>
-                            <Text fontWeight={600}>{formatCurrency(state?.product?.data?.price)}</Text>
+                            <Text fontWeight={600}>{formatCurrency(state?.product?.price)}</Text>
                         </Stack>
                     </Card>
                     <Stack alignItems={`center`} mt={`4rem`}>

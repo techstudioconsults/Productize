@@ -27,7 +27,8 @@ import { ModalComp, SharedButton, ToastFeedback, useToastAction } from '@product
 import { SetupPaymentForm } from '@productize/dashboard';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-// import errorImg from '@icons/error.svg';
+import errorImg from '@icons/error.svg';
+import { useNavigate } from 'react-router-dom';
 
 export const WithdrawalEarnings = () => {
     const { toast, toastIdRef, close } = useToastAction();
@@ -38,6 +39,7 @@ export const WithdrawalEarnings = () => {
     const [initiateWithdrawal, initiateWithdrawalStatus] = useInitiateWithdrawalMutation();
     const { register, handleSubmit, setValue } = useForm();
     const payouts = useSelector(selectPayoutStats);
+    const navigate = useNavigate();
 
     const retrivePayoutAcc = useCallback(async () => {
         try {
@@ -57,12 +59,26 @@ export const WithdrawalEarnings = () => {
     }, [retrivePayoutAcc]);
 
     const setMaxAmount = () => {
-        console.log(`click max`);
         setValue(`amount`, 5000);
     };
 
     const handleWithdrawalForm = async (data) => {
-        console.log(data);
+        if (data.amount > payouts?.available_earnings) {
+            toastIdRef.current = toast({
+                position: 'top',
+                render: () => (
+                    <ToastFeedback
+                        message={`Insuficient Balance.`}
+                        title="Download Error!"
+                        icon={errorImg}
+                        color={`red.600`}
+                        btnColor={`red.600`}
+                        bgColor={undefined}
+                        handleClose={close}
+                    />
+                ),
+            });
+        }
         try {
             const res = await initiateWithdrawal(data).unwrap();
             if (res.data) {
@@ -80,22 +96,25 @@ export const WithdrawalEarnings = () => {
                         />
                     ),
                 });
+                navigate(`/dashboard/payouts`);
             }
         } catch (error) {
-            toastIdRef.current = toast({
-                position: 'top',
-                render: () => (
-                    <ToastFeedback
-                        message={error.data.message}
-                        title="Withdraw error"
-                        icon={errorImg}
-                        color={`red.600`}
-                        btnColor={`red.600`}
-                        bgColor={undefined}
-                        handleClose={close}
-                    />
-                ),
-            });
+            if (error?.status !== 400) {
+                toastIdRef.current = toast({
+                    position: 'top',
+                    render: () => (
+                        <ToastFeedback
+                            message={error?.data?.message}
+                            title="Withdraw error"
+                            icon={errorImg}
+                            color={`red.600`}
+                            btnColor={`red.600`}
+                            bgColor={undefined}
+                            handleClose={close}
+                        />
+                    ),
+                });
+            }
         }
     };
 
@@ -106,7 +125,7 @@ export const WithdrawalEarnings = () => {
                 <SharedButton
                     btnExtras={{
                         border: `1px solid red`,
-                        onClick: null,
+                        onClick: () => navigate(-1),
                     }}
                     text={'Cancel'}
                     width={'fit-content'}

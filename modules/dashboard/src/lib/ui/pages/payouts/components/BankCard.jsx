@@ -52,13 +52,13 @@ const BankCard = ({ account, src, width }) => {
                         variant="outlined"
                     />
                     <MenuList zIndex={999}>
-                        <MenuItem justifyContent={`flex-start`}>Edit</MenuItem>
+                        {/* <MenuItem justifyContent={`flex-start`}>Edit</MenuItem> */}
                         <MenuItem onClick={toggleAccountActivation} justifyContent={`flex-start`}>
                             {account?.active ? `Disable` : `Enable`}
                         </MenuItem>
-                        <MenuItem color={`red.200`} justifyContent={`flex-start`}>
+                        {/* <MenuItem color={`red.200`} justifyContent={`flex-start`}>
                             Delete Card
-                        </MenuItem>
+                        </MenuItem> */}
                     </MenuList>
                 </Menu>
             </Flex>

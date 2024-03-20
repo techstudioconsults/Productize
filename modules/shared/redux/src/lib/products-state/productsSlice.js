@@ -6,7 +6,10 @@ const initialState = {
     liveProducts: null,
     draftProducts: null,
     deletedProducts: null,
-    singleProduct: {},
+    singleProduct: {
+        product: null,
+        customers: null,
+    },
     paginationMetaData: null,
 };
 
@@ -37,7 +40,11 @@ const productSlice = createSlice({
         },
         setSingleProduct: (state, action) => {
             const { product } = action.payload;
-            state.singleProduct = product;
+            state.singleProduct.product = product;
+        },
+        setSingleProductCustomers: (state, action) => {
+            const { customers } = action.payload;
+            state.singleProduct.customers = customers;
         },
 
         setProductsAnalytics: (state, action) => {
@@ -51,8 +58,16 @@ const productSlice = createSlice({
     },
 });
 
-export const { setAllProduct, setLiveProduct, setDraftProduct, setDeletedProduct, setSingleProduct, setProductsAnalytics, resetProductStore } =
-    productSlice.actions;
+export const {
+    setAllProduct,
+    setLiveProduct,
+    setDraftProduct,
+    setDeletedProduct,
+    setSingleProduct,
+    setSingleProductCustomers,
+    setProductsAnalytics,
+    resetProductStore,
+} = productSlice.actions;
 export default productSlice.reducer;
 
 export const selectAllProducts = (state) => state.Products.allProducts;
@@ -60,5 +75,6 @@ export const selectPaginationMetaData = (state) => state.Products.paginationMeta
 export const selectDraftProducts = (state) => state.Products.draftProducts;
 export const selectLiveProducts = (state) => state.Products.liveProducts;
 export const selectDeletedProducts = (state) => state.Products.deletedProducts;
-export const selectSingleProduct = (state) => state.Products.singleProduct;
+export const selectSingleProduct = (state) => state.Products.singleProduct.product;
+export const selectSingleProductCustomers = (state) => state.Products.singleProduct.customers;
 export const selectProductAnalytics = (state) => state.Products.productsAnalytics;

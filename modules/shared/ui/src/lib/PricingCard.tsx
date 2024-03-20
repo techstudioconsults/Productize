@@ -21,14 +21,16 @@ export const PricingCard = ({ cardProps, listItems, iconColor, amount, btnText, 
         return (
             <ListItem key={index} display={`flex`} alignItems={`flex-start`} gap={2}>
                 <Icon fontSize={`1.5rem`} color={iconColor} icon={`gg:check`} />
-                <Text color={textColor}>{list}</Text>
+                <Text fontSize={{ base: `xs`, md: `md` }} color={textColor}>
+                    {list}
+                </Text>
             </ListItem>
         );
     });
 
     return (
         <CardLayout bgColor={cardProps.bgColor} width={cardProps.width} height={cardProps.height} borderRadius={cardProps.borderRadius}>
-            <Flex flexDir={`column`} justifyContent={`space-between`} height={`100%`} p={`36px`}>
+            <Flex flexDir={`column`} justifyContent={`space-between`} height={`100%`} py={10} px={{ base: 5, md: `36px` }}>
                 <Box>
                     <Stack alignItems={`center`}>
                         <Text fontSize={`lg`} color={`coral.200`}>

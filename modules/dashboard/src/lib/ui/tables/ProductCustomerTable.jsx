@@ -1,19 +1,14 @@
 import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Text } from '@chakra-ui/react';
 import { useDate, useTime } from '@productize/hooks';
-import { selectCurrentToken } from '@productize/redux';
-import axios from 'axios';
-import { useCallback, useEffect, useState } from 'react';
+import { selectSingleProductCustomers } from '@productize/redux';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
 
 // USE REDUX TO FETCH THE DATA -- DANIEL
 
-export const ProductCustomerTable = () => {
-    const [data, setData] = useState([]);
-    const token = useSelector(selectCurrentToken);
+export const ProductCustomerTable = ({ status }) => {
+    const customers = useSelector(selectSingleProductCustomers);
     const formatDate = useDate();
     const formatTime = useTime();
-    const { productID } = useParams();
 
     const tableHeader = [`Customer name`, `Customer Email`, `Quantity`, `Date`].map((title) => {
         return (
@@ -22,7 +17,7 @@ export const ProductCustomerTable = () => {
             </Th>
         );
     });
-    const tableContent = data?.map((content) => {
+    const tableContent = customers?.map((content) => {
         return (
             <Tr key={content.id}>
                 <Td>
@@ -38,37 +33,13 @@ export const ProductCustomerTable = () => {
                 </Td>
                 <Td>
                     <Flex>{`
-                    ${formatDate(content?.date)}
-                    ${formatTime(content?.date)}
+                    ${formatDate(content?.created_at)}
+                    ${formatTime(content?.created_at)}
                     `}</Flex>
                 </Td>
             </Tr>
         );
     });
-
-    const getTableData = useCallback(async () => {
-        try {
-            const res = await axios.get(`https://productize-api.techstudio.academy/api/orders`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
-
-            if (res.status === 200) {
-                const filteredCustomer = res.data.data.filter((customer) => {
-                    return customer.product_id === productID;
-                });
-                setData(filteredCustomer);
-            }
-        } catch (error) {
-            console.error(error);
-        }
-    }, [productID, token]);
-
-    useEffect(() => {
-        getTableData();
-    }, [getTableData]);
 
     return (
         <TableContainer maxH={`25rem`} overflowY={`auto`}>

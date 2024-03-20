@@ -1,6 +1,6 @@
 import { Box, Flex, IconButton } from '@chakra-ui/react';
 import DateRangePicker from 'rsuite/esm/DateRangePicker';
-import SelectPicker from 'rsuite/esm/SelectPicker';
+import errorImg from '@icons/error.svg';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
@@ -9,11 +9,12 @@ import download from 'downloadjs';
 import { DropdownAction } from '../../../../DropdownAction';
 import { selectCurrentToken, useGetLiveProductsMutation } from '@productize/redux';
 import { useDateRangeFormat } from '@productize/hooks';
-import { SharedButton, SpinnerComponentSmall } from '@productize/ui';
+import { SharedButton, SpinnerComponentSmall, ToastFeedback, useToastAction } from '@productize/ui';
 
 const BASE_URL = import.meta.env['VITE_BASE_URL'];
 
 export const LivetableControl = ({ showRefreshBtn }) => {
+    const { toast, toastIdRef, close } = useToastAction();
     const [exportLoading, setExportLoading] = useState(false);
     const token = useSelector(selectCurrentToken);
     const [startDate, setStartDate] = useState(``);
@@ -33,6 +34,7 @@ export const LivetableControl = ({ showRefreshBtn }) => {
         value: item,
     }));
 
+    // `${BASE_URL}products/download?start_date=${startDate}&end_date=${endDate}&format=csv`,
     const handleExport = async () => {
         try {
             setExportLoading(true);
@@ -44,20 +46,50 @@ export const LivetableControl = ({ showRefreshBtn }) => {
             if (res.status === 200) {
                 setExportLoading(false);
                 const blob = new Blob([res.data], { type: 'text/csv' });
-                download(blob, `Published Products.csv`);
+                download(blob, `Products.csv`);
+                toastIdRef.current = toast({
+                    position: 'top',
+                    render: () => (
+                        <ToastFeedback
+                            btnColor={`purple.200`}
+                            message={`Check your download folder for product file`}
+                            title="Downloaded successfully"
+                            icon={undefined}
+                            bgColor={undefined}
+                            color={undefined}
+                            handleClose={close}
+                        />
+                    ),
+                });
             }
         } catch (error) {
             setExportLoading(false);
-            console.log(error);
+            toastIdRef.current = toast({
+                position: 'top',
+                render: () => (
+                    <ToastFeedback
+                        message={`Something went wrong, please try again later.`}
+                        title="Download Error!"
+                        icon={errorImg}
+                        color={`red.600`}
+                        btnColor={`red.600`}
+                        bgColor={undefined}
+                        handleClose={close}
+                    />
+                ),
+            });
         }
     };
 
-    const handleStatusChange = (value) => {
-        setStatus(value.toLowerCase());
-    };
-    const handleDateRangeChange = (value) => {
-        setStartDate(formatDateRange(value?.[0]));
-        setEndDate(formatDateRange(value?.[1]));
+    const handleDateRangeChange = async (value) => {
+        if (value) {
+            setStartDate(formatDateRange(value?.[0]));
+            setEndDate(formatDateRange(value?.[1]));
+        } else {
+            setStartDate(``);
+            setEndDate(``);
+            await getLiveProducts(null).unwrap();
+        }
     };
 
     const filterTable = async () => {

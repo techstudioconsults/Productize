@@ -7,7 +7,6 @@ import { useSelector } from 'react-redux';
 import { AnalyticsTable } from './AnalyticsTable';
 import { DataWidgetCard } from '../../DataWidgetCard';
 import { DashboardEmptyState } from '../../empty-states/DashboardEmptyState';
-import { HomeFilterController } from '../home/premium/components/HomeFilterController';
 import { selectProductAnalytics, useGetProductAnalyticsMutation } from '@productize/redux';
 import { useCurrency } from '@productize/hooks';
 
@@ -37,7 +36,7 @@ export const Analytics = () => {
     const activeDisplay = (
         <Box my={8}>
             {/* dropdown filters and buttons Controls */}
-            <HomeFilterController />
+            {/* <HomeFilterController /> */}
             {/* grid cards */}
             <Box>
                 <SimpleGrid gap={4} my={4} columns={{ base: 1, sm: 2, md: 3 }}>
@@ -96,7 +95,7 @@ export const Analytics = () => {
                                         </Select>
                                     </Flex>
                                     <Flex>
-                                        <Select placeholder="View By Digital Product">
+                                        <Select disabled placeholder="View By Digital Product">
                                             <option value="digital-product">Digital Product</option>
                                             <option value="print-on-demand">Print on demand</option>
                                             <option value="video-stream">Video streaming</option>
@@ -106,7 +105,7 @@ export const Analytics = () => {
                                 </Flex>
                             </div>
                             <div className={style.imgWrapper}>
-                                {/* <LineChart /> */}
+                                <LineChart />
                             </div>
                             <Box my={10}>
                                 <Text as={`h6`} my={5}>

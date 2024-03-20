@@ -44,9 +44,9 @@ const ActiveUserPage = () => {
                                 bmt={4}
                                 showIcon
                                 bgImg="https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951020/productize/Data_widget_1_bqcsji_dvrrm5.png"
-                                title={'Total Sales'}
                                 // value={formatCurrency(productAnaysis.total_sales)}
-                                value={productAnaysis.total_sales}
+                                title={'New Order Revenue'}
+                                value={formatCurrency(productAnaysis.new_orders_revenue) || formatCurrency(0)}
                             />
                         </Box>
                     </Skeleton>
@@ -58,7 +58,7 @@ const ActiveUserPage = () => {
                                 showIcon
                                 bgImg="https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951021/productize/Data_widget_2_fwd9pa_nhxqwd.png"
                                 title={'Total Revenue'}
-                                value={formatCurrency(productAnaysis.total_revenues)}
+                                value={formatCurrency(productAnaysis.total_revenues) || formatCurrency(0)}
                             />
                         </Box>
                     </Skeleton>
@@ -66,17 +66,17 @@ const ActiveUserPage = () => {
                 <SimpleGrid gap={4} my={4} columns={{ base: 1, md: 3 }}>
                     <Skeleton isLoaded={!getProductAnaysisStatus.isLoading}>
                         <Box>
-                            <DataWidgetCard showIcon={false} title={'New Order'} value={productAnaysis.new_orders} />
+                            <DataWidgetCard showIcon={false} title={'New Order'} value={productAnaysis.new_orders || 0} />
                         </Box>
                     </Skeleton>
                     <Skeleton isLoaded={!getProductAnaysisStatus.isLoading}>
                         <Box>
-                            <DataWidgetCard showIcon={false} title={'New Order Revenue'} value={formatCurrency(productAnaysis.new_orders_revenue)} />
+                            <DataWidgetCard showIcon={false} title={'Total Sales'} value={productAnaysis.total_sales || 0} />
                         </Box>
                     </Skeleton>
                     <Skeleton isLoaded={!getProductAnaysisStatus.isLoading}>
                         <Box>
-                            <DataWidgetCard showIcon={false} title={'Total Products'} value={productAnaysis.total_products} />
+                            <DataWidgetCard showIcon={false} title={'Total Products'} value={productAnaysis.total_products || 0} />
                         </Box>
                     </Skeleton>
                 </SimpleGrid>

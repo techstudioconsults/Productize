@@ -8,7 +8,6 @@ import { ForgotPassword, Login, Signup } from '@productize/auth';
 import {
     Analytics,
     BillingCycle,
-    ChangePlans,
     Customers,
     CustomersDetails,
     DashboardLayout,
@@ -25,11 +24,9 @@ import {
     ProductDetails as DashboardProductDetails,
     Home as DashboardHome,
     OrderDetails as DashboardOrderDetails,
-    PayoutDetails,
     WithdrawalEarnings,
     AccountSettings,
     PaymentSettings,
-    SettingsTab,
 } from '@productize/dashboard';
 
 // using suspense and lazy loading

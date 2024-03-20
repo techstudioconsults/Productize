@@ -1,4 +1,4 @@
-import { Tabs, TabList, TabPanels, Tab, TabPanel, Flex, Box, useDisclosure } from '@chakra-ui/react';
+import { Tabs, TabList, TabPanels, Tab, TabPanel, Flex, Box, useDisclosure, SimpleGrid, FormControl } from '@chakra-ui/react';
 import ShareLayout from './ShareLayout';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -67,6 +67,9 @@ export const NewProductTab = () => {
             try {
                 const res = await query(`post`, `/products/${state?.product?.id}?_method=PUT`, formData);
                 if (res.status === 200) {
+                    navigate(`/dashboard/products/new#preview`, {
+                        state: { product: res.data },
+                    });
                     toastIdRef.current = toast({
                         position: 'top',
                         render: () => (
@@ -79,9 +82,6 @@ export const NewProductTab = () => {
                                 handleClose={close}
                             />
                         ),
-                    });
-                    navigate(`/dashboard/products/new#preview`, {
-                        state: { product: res.data },
                     });
                 }
             } catch (err) {
@@ -113,7 +113,6 @@ export const NewProductTab = () => {
                         position: 'top',
                         render: () => <ToastFeedback btnColor={`purple.200`} message={`Product Created Successfully!`} handleClose={close} />,
                     });
-
                     navigate(`/dashboard/products/new#preview`, {
                         state: { product: res.data },
                     });
@@ -138,7 +137,8 @@ export const NewProductTab = () => {
     };
 
     const handlePublishAction = async () => {
-        const productID = hash === `#share` ? state?.product?.data?.id : state?.product?.id;
+        // const productID = hash === `#share` ? state?.product?.id : state?.product?.id;
+        const productID = state?.product?.id;
         if (user?.account_type === `free` && state?.product?.status !== `draft`) {
             onOpen();
         } else {
@@ -146,22 +146,23 @@ export const NewProductTab = () => {
                 const res = await updateProductStatus({
                     productID: productID,
                 }).unwrap();
+                console.log(res);
 
-                if (res?.data?.status === `published`) {
+                if (res?.status === `published`) {
+                    navigate(`/dashboard/products/new#share`, {
+                        state: { product: res },
+                    });
                     toastIdRef.current = toast({
                         position: 'top',
                         render: () => <ToastFeedback btnColor={`purple.200`} message={`Product	published Successfully!`} handleClose={close} />,
                     });
-                    navigate(`/dashboard/products/new#share`, {
+                } else {
+                    navigate(`/dashboard/products/new#preview`, {
                         state: { product: res },
                     });
-                } else {
                     toastIdRef.current = toast({
                         position: 'top',
                         render: () => <ToastFeedback btnColor={`purple.200`} message={`Product	sent to draft Successfully!`} handleClose={close} />,
-                    });
-                    navigate(`/dashboard/products/new#preview`, {
-                        state: { product: res?.data },
                     });
                 }
             } catch (error) {
@@ -242,6 +243,8 @@ export const NewProductTab = () => {
                     btnExtras={{
                         border: `1px solid #6D5DD3`,
                         onClick: handlePublishAction,
+                        isLoading: updateProductStatusStatus.isLoading,
+                        loadingText: `Unpublishing product...`,
                     }}
                     text={'Unpublished'}
                     width={{ base: `100%`, lg: `fit-content` }}
@@ -331,6 +334,38 @@ export const NewProductTab = () => {
                     <TabPanel px={0}>
                         {/* <SetNewProductForm /> */}
                         <ProductForm />
+                        {/* <FormControl as={SimpleGrid} my={8} gap={4} columns={{ base: 1, sm: 2 }}> */}
+                        <Flex alignItems={`center`} w={{ base: `100%`, lg: `49%` }} gap={5}>
+                            <SharedButton
+                                btnExtras={{
+                                    border: `1px solid red`,
+                                    onClick: () => navigate(`/dashboard/products#all-products`),
+                                }}
+                                text={'Cancel'}
+                                width={{ base: `100%`, lg: `50%` }}
+                                height={'40px'}
+                                bgColor={'transparent'}
+                                textColor={'red'}
+                                borderRadius={'4px'}
+                                fontSize={{ base: `sm`, md: `sm` }}
+                            />
+
+                            <SharedButton
+                                text={'Save & Continue'}
+                                height={'40px'}
+                                width={{ base: `100%`, lg: `50%` }}
+                                bgColor={'purple.200'}
+                                textColor={'white'}
+                                borderRadius={'4px'}
+                                fontSize={{ base: `sm`, md: `sm` }}
+                                btnExtras={{
+                                    onClickAsync: methods.handleSubmit(onSubmit),
+                                    isLoading: isLoading,
+                                    loadingText: `Creating product...`,
+                                }}
+                            />
+                        </Flex>
+                        {/* </FormControl> */}
                     </TabPanel>
                     <TabPanel px={0}>
                         <ContentDeliveryForm />

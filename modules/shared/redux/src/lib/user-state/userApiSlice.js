@@ -1,5 +1,15 @@
 import { apiSlice } from '../apiSlice';
-import { setAccountList, setBillingHistory, setPayoutStats, setPayouts, setUser } from './userSlice';
+import { setAccountList, setAnalyticsGraphData, setBillingHistory, setPayoutStats, setPayouts, setUser } from './userSlice';
+
+const checkCredentials = (credentials, filteredLink) => {
+    if (credentials && !credentials?.link) {
+        return filteredLink;
+    } else if (credentials?.link) {
+        return credentials?.link;
+    } else {
+        return `/payments/payouts`;
+    }
+};
 
 export const userApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
@@ -17,7 +27,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
                         })
                     );
                 } catch (err) {
-                    console.log(err);
+                    console.error(err);
                 }
             },
         }),
@@ -27,14 +37,6 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 url: `/auth/email/resend`,
                 method: 'GET',
             }),
-            // async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-            //     try {
-            //         const { data } = await queryFulfilled;
-            //         console.log(data);
-            //     } catch (err) {
-            //         console.log(err);
-            //     }
-            // },
         }),
 
         upgradePlan: builder.mutation({
@@ -42,14 +44,6 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 url: `/payments/subscription`,
                 method: 'POST',
             }),
-            // async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-            //     try {
-            //         const { data } = await queryFulfilled;
-            //         console.log(data);
-            //     } catch (err) {
-            //         console.log(err);
-            //     }
-            // },
         }),
 
         enableSubscription: builder.mutation({
@@ -57,14 +51,6 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 url: `/payments/subscription/enable`,
                 method: 'GET',
             }),
-            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-                try {
-                    const { data } = await queryFulfilled;
-                    console.log(data);
-                } catch (err) {
-                    console.log(err);
-                }
-            },
         }),
 
         manageSubscription: builder.mutation({
@@ -72,14 +58,6 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 url: `payments/subscription/manage`,
                 method: 'GET',
             }),
-            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-                try {
-                    const { data } = await queryFulfilled;
-                    console.log(data);
-                } catch (err) {
-                    console.log(err);
-                }
-            },
         }),
         billingHistory: builder.mutation({
             query: (credentials) => ({
@@ -89,14 +67,13 @@ export const userApiSlice = apiSlice.injectEndpoints({
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
-                    console.log(data);
                     dispatch(
                         setBillingHistory({
                             billingHistory: data,
                         })
                     );
                 } catch (err) {
-                    console.log(err);
+                    console.error(err);
                 }
             },
         }),
@@ -109,27 +86,29 @@ export const userApiSlice = apiSlice.injectEndpoints({
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
-                    console.log(data);
                     dispatch(
                         setPayoutStats({
                             payoutStats: data.data,
                         })
                     );
                 } catch (err) {
-                    console.log(err);
+                    console.error(err);
                 }
             },
         }),
 
         getPayouts: builder.mutation({
             query: (credentials) => ({
-                url: `/payments/payouts?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}`,
+                url: checkCredentials(
+                    credentials,
+                    `/payments/payouts?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}`
+                ),
                 method: 'GET',
             }),
+
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
-                    console.log(data);
                     dispatch(
                         setPayouts({
                             payouts: data.data,
@@ -137,7 +116,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
                         })
                     );
                 } catch (err) {
-                    console.log(err);
+                    console.error(err);
                 }
             },
         }),
@@ -147,23 +126,18 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 url: `/users/me`,
                 method: 'POST',
                 body: { ...credentials },
-                // headers: {
-                //   'Content-Type': 'multipart/form-data',
-                // },
             }),
 
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-                console.log(arg);
                 try {
                     const { data } = await queryFulfilled;
-                    console.log(data);
                     dispatch(
                         setUser({
                             user: data.data,
                         })
                     );
                 } catch (err) {
-                    console.log(err);
+                    console.error(err);
                 }
             },
         }),
@@ -174,14 +148,6 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 method: 'POST',
                 body: { ...credentials },
             }),
-            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-                try {
-                    const { data } = await queryFulfilled;
-                    console.log(data);
-                } catch (err) {
-                    console.log(err);
-                }
-            },
         }),
 
         initiateWithdrawal: builder.mutation({
@@ -190,14 +156,6 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 method: 'POST',
                 body: { ...credentials },
             }),
-            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-                try {
-                    const { data } = await queryFulfilled;
-                    console.log(data);
-                } catch (err) {
-                    console.log(err);
-                }
-            },
         }),
 
         getBankList: builder.mutation({
@@ -205,13 +163,6 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 url: `/payments/bank-list`,
                 method: 'GET',
             }),
-            // async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-            //     try {
-            //         const { data } = await queryFulfilled;
-            //     } catch (err) {
-            //         console.log(err);
-            //     }
-            // },
         }),
 
         changePassword: builder.mutation({
@@ -220,14 +171,6 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 method: 'POST',
                 body: { ...credentials },
             }),
-            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-                try {
-                    const { data } = await queryFulfilled;
-                    console.log(data);
-                } catch (err) {
-                    console.log(err);
-                }
-            },
         }),
 
         sendHelpMessage: builder.mutation({
@@ -236,14 +179,6 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 method: 'POST',
                 body: { ...credentials },
             }),
-            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-                try {
-                    const { data } = await queryFulfilled;
-                    console.log(data);
-                } catch (err) {
-                    console.log(err);
-                }
-            },
         }),
 
         retrieveAllPayoutAccount: builder.mutation({
@@ -260,7 +195,26 @@ export const userApiSlice = apiSlice.injectEndpoints({
                         })
                     );
                 } catch (err) {
-                    console.log(err);
+                    console.error(err);
+                }
+            },
+        }),
+
+        showAnalyticsChartData: builder.mutation({
+            query: (credentials) => ({
+                url: `/products/revenues`,
+                method: 'GET',
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    dispatch(
+                        setAnalyticsGraphData({
+                            data: data.data,
+                        })
+                    );
+                } catch (err) {
+                    console.error(err);
                 }
             },
         }),
@@ -274,14 +228,13 @@ export const userApiSlice = apiSlice.injectEndpoints({
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
-                    console.log(data);
                     // dispatch(
                     //     setAccountList({
                     //         accounts: data.data,
                     //     })
                     // );
                 } catch (err) {
-                    console.log(err);
+                    console.error(err);
                 }
             },
         }),
@@ -305,4 +258,5 @@ export const {
     useInitiateWithdrawalMutation,
     useGetPayoutStatsMutation,
     useTogglePaystackAccountActivationMutation,
+    useShowAnalyticsChartDataMutation,
 } = userApiSlice;

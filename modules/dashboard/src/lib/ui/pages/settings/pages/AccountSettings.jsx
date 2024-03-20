@@ -1,7 +1,7 @@
-import { Box, Checkbox, Divider, Flex, FormControl, FormLabel, Grid, GridItem, Input, Radio, Switch, Text } from '@chakra-ui/react';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { Box, Checkbox, Divider, Flex, FormControl, FormLabel, Grid, GridItem, Input, InputGroup, InputRightElement, Switch, Text } from '@chakra-ui/react';
+// import { yupResolver } from '@hookform/resolvers/yup';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import errorImg from '@icons/error.svg';
@@ -9,6 +9,7 @@ import toastImg from '@icons/star-notice.png';
 import { SharedButton, ToastFeedback, useToastAction } from '@productize/ui';
 import { selectCurrentUser, useChangePasswordMutation, useGetUserMutation } from '@productize/redux';
 import { useAxiosInstance } from '@productize/hooks';
+import { Icon } from '@iconify/react';
 
 export const AccountSettings = () => {
     const user = useSelector(selectCurrentUser);
@@ -19,6 +20,11 @@ export const AccountSettings = () => {
     const [changePassword, changePasswordStatus] = useChangePasswordMutation();
     const { toast, toastIdRef, close } = useToastAction();
     const [email, setEmail] = useState('');
+    const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+    const [showNewPassword, setShowNewPassword] = useState(false);
+
+    const handleClickCurrentPassword = () => setShowCurrentPassword(!showCurrentPassword);
+    const handleClickNewPassword = () => setShowNewPassword(!showNewPassword);
 
     const handleInputChange = (event) => {
         setEmail(event.target.value);
@@ -161,6 +167,10 @@ export const AccountSettings = () => {
         }
     };
 
+    useEffect(() => {
+        setEmail(user?.alt_email);
+    }, [user?.alt_email]);
+
     return (
         <div>
             <FormControl>
@@ -177,7 +187,7 @@ export const AccountSettings = () => {
                                 <FormLabel className="small-text">
                                     <Text fontWeight={600}>Purchase</Text>
                                     <Text color={`grey.400`} fontSize={`sm`}>
-                                        Lorem ipsum dolor sit amet.
+                                        Receive notifications for every purchase
                                     </Text>
                                 </FormLabel>
                                 <Switch onChange={handlePurchaseNotice} size="lg" colorScheme="green" isChecked={user?.purchase_notification} />
@@ -189,7 +199,7 @@ export const AccountSettings = () => {
                                 <FormLabel className="small-text">
                                     <Text fontWeight={600}>News & Updates</Text>
                                     <Text color={`grey.400`} fontSize={`sm`}>
-                                        Lorem ipsum dolor sit amet.
+                                        Receive notifications on Productize news and updates
                                     </Text>
                                 </FormLabel>
                                 <Switch onChange={handleNewsAndUpdateNotice} size="lg" colorScheme="green" isChecked={user?.news_and_update_notification} />
@@ -201,7 +211,7 @@ export const AccountSettings = () => {
                                 <FormLabel className="small-text">
                                     <Text fontWeight={600}>Product Creation</Text>
                                     <Text color={`grey.400`} fontSize={`sm`}>
-                                        Lorem ipsum dolor sit amet.
+                                        Get notified on new product creation
                                     </Text>
                                 </FormLabel>
                                 <Switch onChange={handleProductCreationNotice} size="lg" colorScheme="green" isChecked={user?.product_creation_notification} />
@@ -213,7 +223,7 @@ export const AccountSettings = () => {
                                 <FormLabel className="small-text">
                                     <Text fontWeight={600}>Payout</Text>
                                     <Text color={`grey.400`} fontSize={`sm`}>
-                                        Lorem ipsum dolor sit amet.
+                                        Get notified on payouts
                                     </Text>
                                 </FormLabel>
                                 <Switch onChange={handlePayoutNotice} isChecked={user?.payout_notification} size="lg" colorScheme="green" />
@@ -254,16 +264,25 @@ export const AccountSettings = () => {
                                     <FormLabel color={`purple.300`} fontWeight={600}>
                                         Current Password
                                     </FormLabel>
-                                    <Input
-                                        type={`password`}
-                                        bgColor={`grey.200`}
-                                        _focus={{ bgColor: `grey.300`, color: `grey.800` }}
-                                        _placeholder={{ color: `grey.400` }}
-                                        placeholder="Enter current password"
-                                        variant={`filled`}
-                                        size={`lg`}
-                                        {...register('password')}
-                                    />
+                                    <InputGroup size={`lg`}>
+                                        <Input
+                                            type={showCurrentPassword ? `text` : `password`}
+                                            bgColor={`grey.200`}
+                                            _focus={{ bgColor: `grey.300`, color: `grey.800` }}
+                                            _placeholder={{ color: `grey.400` }}
+                                            placeholder="Enter current password"
+                                            variant={`filled`}
+                                            size={`lg`}
+                                            {...register('password')}
+                                        />
+                                        <InputRightElement onClick={handleClickCurrentPassword} width="2.5rem">
+                                            {!showCurrentPassword ? (
+                                                <Icon icon={`ant-design:eye-twotone`} />
+                                            ) : (
+                                                <Icon icon={`ant-design:eye-invisible-twotone`} />
+                                            )}
+                                        </InputRightElement>
+                                    </InputGroup>
                                     <Text className={`tiny-text`} color={`red.200`}>
                                         {errors?.password?.message}
                                     </Text>
@@ -272,16 +291,21 @@ export const AccountSettings = () => {
                                     <FormLabel color={`purple.300`} fontWeight={600}>
                                         New Password
                                     </FormLabel>
-                                    <Input
-                                        type={`password`}
-                                        bgColor={`grey.200`}
-                                        _focus={{ bgColor: `grey.300`, color: `grey.800` }}
-                                        _placeholder={{ color: `grey.400` }}
-                                        placeholder="Enter current password"
-                                        variant={`filled`}
-                                        size={`lg`}
-                                        {...register('new_password')}
-                                    />
+                                    <InputGroup size={`lg`}>
+                                        <Input
+                                            type={showNewPassword ? `text` : `password`}
+                                            bgColor={`grey.200`}
+                                            _focus={{ bgColor: `grey.300`, color: `grey.800` }}
+                                            _placeholder={{ color: `grey.400` }}
+                                            placeholder="Enter current password"
+                                            variant={`filled`}
+                                            size={`lg`}
+                                            {...register('new_password')}
+                                        />
+                                        <InputRightElement onClick={handleClickNewPassword} width="2.5rem">
+                                            {!showNewPassword ? <Icon icon={`ant-design:eye-twotone`} /> : <Icon icon={`ant-design:eye-invisible-twotone`} />}
+                                        </InputRightElement>
+                                    </InputGroup>
                                     <Text className={`tiny-text`} color={`red.200`}>
                                         {errors?.new_password?.message}
                                     </Text>
@@ -290,16 +314,21 @@ export const AccountSettings = () => {
                                     <FormLabel color={`purple.300`} fontWeight={600}>
                                         Confirm New Password
                                     </FormLabel>
-                                    <Input
-                                        type={`password`}
-                                        bgColor={`grey.200`}
-                                        _focus={{ bgColor: `grey.300`, color: `grey.800` }}
-                                        _placeholder={{ color: `grey.400` }}
-                                        placeholder="Enter current password"
-                                        variant={`filled`}
-                                        size={`lg`}
-                                        {...register('new_password_confirmation')}
-                                    />
+                                    <InputGroup size={`lg`}>
+                                        <Input
+                                            type={showNewPassword ? `text` : `password`}
+                                            bgColor={`grey.200`}
+                                            _focus={{ bgColor: `grey.300`, color: `grey.800` }}
+                                            _placeholder={{ color: `grey.400` }}
+                                            placeholder="Enter current password"
+                                            variant={`filled`}
+                                            size={`lg`}
+                                            {...register('new_password_confirmation')}
+                                        />
+                                        <InputRightElement onClick={handleClickNewPassword} width="2.5rem">
+                                            {!showNewPassword ? <Icon icon={`ant-design:eye-twotone`} /> : <Icon icon={`ant-design:eye-invisible-twotone`} />}
+                                        </InputRightElement>
+                                    </InputGroup>
                                     <Text className={`tiny-text`} color={`red.200`}>
                                         {errors?.new_password_confirmation?.message}
                                     </Text>
@@ -382,7 +411,7 @@ export const AccountSettings = () => {
                                         <Input
                                             id="alt-email"
                                             type="email"
-                                            value={email}
+                                            value={email ? email : ``}
                                             onChange={handleInputChange}
                                             bgColor="gray.200"
                                             _focus={{ bgColor: 'gray.300', color: 'gray.800' }}
@@ -391,7 +420,7 @@ export const AccountSettings = () => {
                                             variant="filled"
                                             size="lg"
                                         />
-                                        <Checkbox colorScheme={`purple`} onChange={handleAlternativeEmail} size="lg" />
+                                        <Checkbox colorScheme={`purple`} isChecked={user?.alt_email} onChange={handleAlternativeEmail} size="lg" />
                                     </Flex>
                                 </FormControl>
                             </Box>

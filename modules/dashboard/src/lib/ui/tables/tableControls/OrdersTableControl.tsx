@@ -44,51 +44,51 @@ export const OrdersTableControl = ({ showRefreshBtn }: controlsProp) => {
         value: item,
     }));
 
-     const handleExport = async () => {
-         try {
-             setExportLoading(true);
-             const res = await axios.get(
-                 `${BASE_URL}/orders/download?status=${status}&format=csv`,
-                 // `${BASE_URL}products/download?start_date=${startDate}&end_date=${endDate}&format=csv`,
-                 headersCredentials
-             );
-             if (res.status === 200) {
-                 setExportLoading(false);
-                 const blob = new Blob([res.data], { type: 'text/csv' });
-                 download(blob, `Products.csv`);
-                 toastIdRef.current = toast({
-                     position: 'top',
-                     render: () => (
-                         <ToastFeedback
-                             btnColor={`purple.200`}
-                             message={`Check your download folder for Order file`}
-                             title="Downloaded successfully"
-                             icon={undefined}
-                             bgColor={undefined}
-                             color={undefined}
-                             handleClose={close}
-                         />
-                     ),
-                 });
-             }
-         } catch (error) {
-             setExportLoading(false);
-             toastIdRef.current = toast({
-                 position: 'top',
-                 render: () => (
-                     <ToastFeedback
-                         message={`Something went wrong, please try again later.`}
-                         title="Download Error!"
-                         icon={errorImg}
-                         color={`red.600`}
-                         btnColor={`red.600`}
-                         bgColor={undefined}
-                         handleClose={close}
-                     />
-                 ),
-             });
-         }
-     };
+    const handleExport = async () => {
+        try {
+            setExportLoading(true);
+            const res = await axios.get(
+                `${BASE_URL}/orders/download?status=${status}&format=csv`,
+                // `${BASE_URL}products/download?start_date=${startDate}&end_date=${endDate}&format=csv`,
+                headersCredentials
+            );
+            if (res.status === 200) {
+                setExportLoading(false);
+                const blob = new Blob([res.data], { type: 'text/csv' });
+                download(blob, `Products.csv`);
+                toastIdRef.current = toast({
+                    position: 'top',
+                    render: () => (
+                        <ToastFeedback
+                            btnColor={`purple.200`}
+                            message={`Check your download folder for Order file`}
+                            title="Downloaded successfully"
+                            icon={undefined}
+                            bgColor={undefined}
+                            color={undefined}
+                            handleClose={close}
+                        />
+                    ),
+                });
+            }
+        } catch (error) {
+            setExportLoading(false);
+            toastIdRef.current = toast({
+                position: 'top',
+                render: () => (
+                    <ToastFeedback
+                        message={`Something went wrong, please try again later.`}
+                        title="Download Error!"
+                        icon={errorImg}
+                        color={`red.600`}
+                        btnColor={`red.600`}
+                        bgColor={undefined}
+                        handleClose={close}
+                    />
+                ),
+            });
+        }
+    };
 
     // const handleStatusChange = (value: string) => {
     //     setStatus(value.toLowerCase());
@@ -143,6 +143,18 @@ export const OrdersTableControl = ({ showRefreshBtn }: controlsProp) => {
                         character="-"
                         style={{ width: `100%` }}
                     />
+                    <IconButton
+                        // isDisabled
+                        color={`purple.200`}
+                        bgColor={`purple.100`}
+                        isLoading={getAllOrdersStatus.isLoading}
+                        spinner={<SpinnerComponentSmall size="sm" />}
+                        onClick={filterTable}
+                        fontSize={`xl`}
+                        // variant={`outline`}
+                        aria-label="Filter table"
+                        icon={<Icon icon={`system-uicons:filtering`} />}
+                    />
                     <Box display={{ md: `none` }}>
                         <DropdownAction handleExport={handleExport} icon={`zondicons:dots-horizontal-triple`} />
                     </Box>
@@ -157,18 +169,6 @@ export const OrdersTableControl = ({ showRefreshBtn }: controlsProp) => {
                         size="lg"
                         data={data}
                     /> */}
-                    <IconButton
-                        // isDisabled
-                        color={`purple.200`}
-                        bgColor={`purple.100`}
-                        isLoading={getAllOrdersStatus.isLoading}
-                        spinner={<SpinnerComponentSmall size="sm" />}
-                        onClick={filterTable}
-                        fontSize={`xl`}
-                        // variant={`outline`}
-                        aria-label="Filter table"
-                        icon={<Icon icon={`system-uicons:filtering`} />}
-                    />
                     {/* <SearchComp color={`grey.200`} /> */}
                 </Flex>
             </Flex>

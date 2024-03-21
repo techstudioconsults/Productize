@@ -116,11 +116,6 @@ export const DeletedTableControl = ({ showRefreshBtn }) => {
                         character="-"
                         style={{ width: `100%` }}
                     />
-                    <Box display={{ md: `none` }}>
-                        <DropdownAction handleExport={handleExport} icon={`zondicons:dots-horizontal-triple`} />
-                    </Box>
-                </Flex>
-                <Flex w={{ base: `100%`, md: `fit-content` }} gap={4} alignItems={{ base: `flex-start`, md: `center` }}>
                     <IconButton
                         color={`purple.200`}
                         bgColor={`purple.100`}
@@ -132,7 +127,11 @@ export const DeletedTableControl = ({ showRefreshBtn }) => {
                         aria-label="Filter table"
                         icon={<Icon icon={`system-uicons:filtering`} />}
                     />
+                    <Box display={{ md: `none` }}>
+                        <DropdownAction handleExport={handleExport} icon={`zondicons:dots-horizontal-triple`} />
+                    </Box>
                 </Flex>
+                {/* <Flex w={{ base: `100%`, md: `fit-content` }} gap={4} alignItems={{ base: `flex-start`, md: `center` }}></Flex> */}
             </Flex>
             {/* dots and buttons */}
             <Box>

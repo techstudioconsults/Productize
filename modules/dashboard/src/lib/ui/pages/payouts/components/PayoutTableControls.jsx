@@ -4,7 +4,6 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import download from 'downloadjs';
-import { DropdownAction } from '../../../DropdownAction';
 import { selectCurrentToken, useGetPayoutsMutation } from '@productize/redux';
 import { useNavigate } from 'react-router-dom';
 import { useDateRangeFormat } from '@productize/hooks';
@@ -105,22 +104,33 @@ export const PayoutTableControl = ({ showRefreshBtn, balance }) => {
     return (
         <Flex alignItems={{ md: `center` }} justifyContent={`space-between`} gap={4}>
             <Flex w={{ base: `100%`, md: `fit-content` }} flexDir={{ base: `column`, md: `row` }} gap={4} alignItems={{ base: `flex-start`, md: `center` }}>
-                <Box w={`100%`}>
+                <Flex gap={2} alignItems={`center`} w={`100%`}>
                     <DateRangePicker
-                        disabled
+                        // disabled
                         onChange={handleDateRangeChange}
                         placeholder={`15 Feb, 2023 - 22 Feb, 2023`}
                         size="lg"
                         character="-"
                         style={{ width: `100%` }}
                     />
-                </Box>
+                    <IconButton
+                        color={`purple.200`}
+                        // isDisabled
+                        bgColor={`purple.100`}
+                        isLoading={getPayoutsStatus.isLoading}
+                        spinner={<SpinnerComponentSmall size="sm" />}
+                        onClick={filterTable}
+                        fontSize={`xl`}
+                        aria-label="Filter table"
+                        icon={<Icon icon={`system-uicons:filtering`} />}
+                    />
+                </Flex>
                 <Flex alignItems={`center`} gap={4}>
                     <Box display={{ base: `flex`, md: `none` }}>
                         <SharedButton
                             text={'Withdraw Earnings'}
                             width={'fit-content'}
-                            height={'48px'}
+                            height={'40px'}
                             bgColor={'purple.200'}
                             textColor={'grey.100'}
                             borderRadius={'4px'}
@@ -134,17 +144,6 @@ export const PayoutTableControl = ({ showRefreshBtn, balance }) => {
                         />
                     </Box>
 
-                    <IconButton
-                        color={`purple.200`}
-                        isDisabled
-                        bgColor={`purple.100`}
-                        isLoading={getPayoutsStatus.isLoading}
-                        spinner={<SpinnerComponentSmall size="sm" />}
-                        onClick={filterTable}
-                        fontSize={`xl`}
-                        aria-label="Filter table"
-                        icon={<Icon icon={`system-uicons:filtering`} />}
-                    />
                     <SharedButton
                         text={'Export'}
                         width={'fit-content'}

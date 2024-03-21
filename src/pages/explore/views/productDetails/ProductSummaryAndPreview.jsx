@@ -119,7 +119,7 @@ const ProductSummaryAndPreview = ({ status }) => {
                                 <Text dangerouslySetInnerHTML={{ __html: product?.description }} />
                             </Box>
                             <Box cursor={`pointer`} onClick={expandDetails} w={`fit-content`} my={4}>
-                                <Text display={product?.description.length <= 500 ? `none` : `initial`} color={`purple.200`}>
+                                <Text display={product?.description?.length <= 500 ? `none` : `initial`} color={`purple.200`}>
                                     {expand ? `See less...` : `See more...`}
                                 </Text>
                             </Box>

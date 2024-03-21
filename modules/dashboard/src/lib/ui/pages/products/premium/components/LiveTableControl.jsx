@@ -116,6 +116,16 @@ export const LivetableControl = ({ showRefreshBtn }) => {
                         character="-"
                         style={{ width: `100%` }}
                     />
+                    <IconButton
+                        color={`purple.200`}
+                        bgColor={`purple.100`}
+                        isLoading={getLiveProductsStatus.isLoading}
+                        spinner={<SpinnerComponentSmall size="sm" />}
+                        onClick={filterTable}
+                        fontSize={`xl`}
+                        aria-label="Filter table"
+                        icon={<Icon icon={`system-uicons:filtering`} />}
+                    />
                     <Box display={{ md: `none` }}>
                         <DropdownAction handleExport={handleExport} icon={`zondicons:dots-horizontal-triple`} />
                     </Box>
@@ -130,16 +140,6 @@ export const LivetableControl = ({ showRefreshBtn }) => {
                         size="lg"
                         data={data}
                     /> */}
-                    <IconButton
-                        color={`purple.200`}
-                        bgColor={`purple.100`}
-                        isLoading={getLiveProductsStatus.isLoading}
-                        spinner={<SpinnerComponentSmall size="sm" />}
-                        onClick={filterTable}
-                        fontSize={`xl`}
-                        aria-label="Filter table"
-                        icon={<Icon icon={`system-uicons:filtering`} />}
-                    />
                 </Flex>
             </Flex>
             {/* dots and buttons */}

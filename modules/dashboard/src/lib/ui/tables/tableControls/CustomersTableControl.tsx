@@ -161,6 +161,18 @@ export const CustomersTableControl = ({ showRefreshBtn }: controlsProp) => {
                         character="-"
                         style={{ width: `100%` }}
                     />
+                    <IconButton
+                        // isDisabled
+                        color={`purple.200`}
+                        bgColor={`purple.100`}
+                        isLoading={getAllCustomersStatus.isLoading}
+                        spinner={<SpinnerComponentSmall size="sm" />}
+                        onClick={filterTable}
+                        fontSize={`xl`}
+                        // variant={`outline`}
+                        aria-label="Filter table"
+                        icon={<Icon icon={`system-uicons:filtering`} />}
+                    />
                     <Box display={{ md: `none` }}>
                         <DropdownAction handleExport={handleExport} icon={`zondicons:dots-horizontal-triple`} />
                     </Box>
@@ -175,18 +187,6 @@ export const CustomersTableControl = ({ showRefreshBtn }: controlsProp) => {
                         size="lg"
                         data={data}
                     /> */}
-                    <IconButton
-                        // isDisabled
-                        color={`purple.200`}
-                        bgColor={`purple.100`}
-                        isLoading={getAllCustomersStatus.isLoading}
-                        spinner={<SpinnerComponentSmall size="sm" />}
-                        onClick={filterTable}
-                        fontSize={`xl`}
-                        // variant={`outline`}
-                        aria-label="Filter table"
-                        icon={<Icon icon={`system-uicons:filtering`} />}
-                    />
                     {/* <SearchComp color={`grey.200`} /> */}
                 </Flex>
             </Flex>

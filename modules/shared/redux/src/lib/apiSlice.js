@@ -18,7 +18,9 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
     let result = await baseQuery(args, api, extraOptions);
 
     if (result?.error?.status === 401) {
-        window.location.href = '/auth/login';
+        if (result.meta.request.url !== `https://productize-api.techstudio.academy/api/carts`) {
+            window.location.href = '/auth/login';
+        }
     } else if (result?.error?.status === 403 || result?.error?.data?.message === `User is not subscribed`) {
         store.dispatch({
             type: 'User/FREE_PLAN_OVER_RESPONSE',

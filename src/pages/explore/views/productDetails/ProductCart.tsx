@@ -17,7 +17,13 @@ export const ProductCart = () => {
     const [getFromCart, getFromCartStatus] = useGetFromCartMutation();
 
     const getCartProduct = useCallback(async () => {
-        await getFromCart(null).unwrap();
+        try {
+            await getFromCart(null).unwrap();
+        } catch (err: any) {
+            if (err.status === 401) {
+                window.location.href = '/auth/login';
+            }
+        }
     }, [getFromCart]);
 
     useEffect(() => {

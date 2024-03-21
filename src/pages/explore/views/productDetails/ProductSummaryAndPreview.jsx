@@ -85,10 +85,10 @@ const ProductSummaryAndPreview = ({ status }) => {
                             fontSize={{ base: `sm`, md: `md` }}
                         />
                         <ModalComp modalSize={`lg`} openModal={isOpen} closeModal={onClose}>
-                            <Flex justifyContent={`flex-end`} pb={5} fontSize={`2rem`} color={`purple.200`}>
+                            {/* <Flex justifyContent={`flex-end`} pb={5} fontSize={`2rem`} color={`purple.200`}>
                                 <Icon icon={`material-symbols:cancel`} onClick={onClose} />
-                            </Flex>
-                            <Container p={0} maxW={`500px`}>
+                            </Flex> */}
+                            <Container p={0} mt={10} maxW={`500px`}>
                                 <ProductSideNav status={status} />
                             </Container>
                         </ModalComp>
@@ -119,7 +119,9 @@ const ProductSummaryAndPreview = ({ status }) => {
                                 <Text dangerouslySetInnerHTML={{ __html: product?.description }} />
                             </Box>
                             <Box cursor={`pointer`} onClick={expandDetails} w={`fit-content`} my={4}>
-                                <Text color={`purple.200`}>{expand ? `See less...` : `See more...`}</Text>
+                                <Text display={product?.description.length <= 500 ? `none` : `initial`} color={`purple.200`}>
+                                    {expand ? `See less...` : `See more...`}
+                                </Text>
                             </Box>
                         </Box>
                     </Box>

@@ -62,7 +62,7 @@ export function SignupForm() {
             {(signupStatus.isError || googleSiginStatus.isError) && <ErrorText error={error} />}
             <FormControl mb={6}>
                 <FormLabel fontWeight={600} className="btn-text">
-                    First Name
+                    Full Name
                 </FormLabel>
                 <Input
                     size={`lg`}

@@ -14,12 +14,15 @@ export const ExploreBanner: React.FC = () => {
             backgroundPosition={`right bottom`}
             h={`164px`}
             borderRadius={`9px`}
-            padding={10}
+            padding={{ base: 5, lg: 10 }}
         >
             <Text as={`h4`} textAlign={'start'} color={'#0E0A2D'} fontWeight={'bold'} lineHeight={10} maxW={`35rem`}>
                 Unlock your potential with creator’s curated course.
             </Text>
-            <Image src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1706092414/productize/Frame_40353_wiryex.png`} />
+            <Image
+                display={{ base: `none`, lg: `initial` }}
+                src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1706092414/productize/Frame_40353_wiryex.png`}
+            />
         </Flex>
     );
 };

@@ -18,8 +18,8 @@ export const ExploreLayout = (props: ExploreProps) => {
             {props.children}
             <Box bgColor={`purple.100`} py={5}>
                 <Container maxW={`70rem`}>
-                    <Flex justifyContent={`space-between`} alignItems={`center`}>
-                        <Box>
+                    <Flex flexDir={{ base: `column`, lg: `row` }} gap={5} justifyContent={`space-between`} alignItems={`center`}>
+                        <Box textAlign={{ base: `center`, lg: `initial` }}>
                             <Text as={`h5`} color={`grey.800`}>
                                 Share knowledge online
                             </Text>

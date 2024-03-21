@@ -119,8 +119,14 @@ const ProductSideNav = ({ status }) => {
                             {formatCurrency(totalPrice)}
                         </Text>
                         <Box mt={4}>
-                            <NumberInput onChange={handleProductQuantity} defaultValue="1" size={`lg`} min={1}>
-                                <NumberInputField />
+                            <NumberInput
+                                onChange={handleProductQuantity}
+                                defaultValue="1"
+                                size={`lg`}
+                                min={1}
+                                max={product?.product_type === `digital_product` ? 1 : 10}
+                            >
+                                <NumberInputField readOnly />
                                 <NumberInputStepper flexDir={`row`} width={`30%`}>
                                     <NumberIncrementStepper>
                                         <Icon icon={`ic:baseline-plus`} />

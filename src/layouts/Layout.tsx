@@ -7,9 +7,10 @@ import { Footer } from '@productize/ui';
 
 interface LayoutProps {
     children: React.ReactNode;
+    removeFooter?: boolean;
 }
 
-const DefaultLayout = ({ children }: LayoutProps) => {
+const DefaultLayout = ({ children, removeFooter }: LayoutProps) => {
     const isAuth = useTokenExists();
     return (
         <>
@@ -17,7 +18,7 @@ const DefaultLayout = ({ children }: LayoutProps) => {
                 <Navbar isAuth={isAuth} />
             </Box>
             {children}
-            <Box borderTop={`3px solid white`}>
+            <Box display={removeFooter ? `none` : `block`} borderTop={`3px solid white`}>
                 <Footer />
             </Box>
         </>

@@ -41,7 +41,7 @@ export const Navbar = ({ isAuth }: any) => {
     return (
         <Flex className="cc-container" justifyContent={`space-between`} alignItems={`center`} height={`5rem`} paddingInline={{ base: 4, xl: 0 }}>
             <Center>
-                <Link as={RouterLink} to={`/`}>
+                <Link as={RouterLink} to={`/seller`}>
                     <Image alt="logo" src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png`} />
                 </Link>
             </Center>

@@ -12,7 +12,7 @@ const ProductNavbar = ({ isAuth }: any) => {
                         <Box>
                             <Sidenav links={<Links isMobile={true} />} />
                         </Box>
-                        <Link as={RouterLink} to={`/`}>
+                        <Link as={RouterLink} to={`/seller`}>
                             <Image
                                 alt="logo"
                                 src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png`}

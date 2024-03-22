@@ -1,5 +1,5 @@
 import { OrderedList, ListItem, Menu, MenuButton, Button, MenuList, MenuItem, Text, Flex, Center } from '@chakra-ui/react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import style from './scss/navbar.module.scss';
 import { links } from './utils/links';
 import { Icon } from '@iconify/react';
@@ -80,16 +80,18 @@ type NavbarProps = {
 };
 
 const Links = ({ isScroll, isMobile, linkColor }: NavbarProps) => {
+    const location = useLocation();
+
     const navLinks = links.map((link) => {
         if (link.type === `dropdown`) {
             return (
                 <Flex key={link.id}>
-                    <DropdownLink linkColor={linkColor} isScroll={isScroll} link={link} />
+                    <DropdownLink linkColor={isMobile && location.pathname.includes(`seller`) ? `grey.100` : linkColor} isScroll={isScroll} link={link} />
                 </Flex>
             );
         } else {
             return (
-                <Flex color={linkColor} key={link.id}>
+                <Flex color={isMobile && location.pathname.includes(`seller`) ? `grey.100` : linkColor} key={link.id}>
                     <NavLink to={link.path} className={({ isActive }) => (isActive ? style['active'] : style['inactive'])}>
                         <ListItem fontWeight={600}>{link.name}</ListItem>
                     </NavLink>
@@ -104,7 +106,7 @@ const Links = ({ isScroll, isMobile, linkColor }: NavbarProps) => {
             flexDir={isMobile ? `column` : `row`}
             color={isMobile || isScroll ? `black` : linkColor}
             gap={{ base: 20, lg: 10 }}
-            alignItems={`center`}
+            alignItems={`flex-start`}
         >
             {navLinks}
         </OrderedList>

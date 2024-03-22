@@ -22,7 +22,7 @@ export const DashboardDrawer = ({ links }) => {
                 <DrawerContent px={5}>
                     <DrawerHeader p={0} py={5}>
                         <Flex flexDir={`column`} justifyContent={`center`} alignItems={`center`} gap={2} minH={`40px`}>
-                            <Link as={RouterLink} to={`/`}>
+                            <Link as={RouterLink} to={`/seller`}>
                                 <Image
                                     alt="logo"
                                     src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png`}

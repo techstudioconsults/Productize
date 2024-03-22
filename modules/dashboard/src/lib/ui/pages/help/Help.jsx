@@ -187,14 +187,14 @@ export const Help = () => {
                             <Flex gap={4} mt={6}>
                                 <SharedButton
                                     btnExtras={{
-                                        border: '1px solid #6D5DD3',
+                                        border: '1px solid #DB3E3E',
                                         onClick: () => reset(),
                                     }}
                                     text={'Cancel'}
                                     width={'fit-content'}
                                     height={'40px'}
                                     bgColor={'transparent'}
-                                    textColor={'purple.200'}
+                                    textColor={'red.200'}
                                     borderRadius={'4px'}
                                     fontSize={{ base: `sm`, md: `md` }}
                                 />

@@ -42,9 +42,10 @@ export const CoverPage = () => {
             <Box my={10}>
                 <Flex px={{ lg: 0 }} flexDir={{ base: `column`, lg: `row` }} gap={10} as={Container} maxW={`70rem`}>
                     <CoverPageCard
-                        img={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1711095666/productize/Frame_1171275923_aaduhl.png`}
+                        img={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1711120709/productize/Frame_1171275922_dnfgdc.png`}
                         desc={`Are you a digital artist, designer, writer, or developer looking to share your creations with the world and earn from your passion ?`}
                         buttonText={`Explore as Seller`}
+                        title={`Seller`}
                     />
                     <Box position="relative" padding="10">
                         <Divider h={isMobileView ? `.1rem` : `100%`} width={isMobileView ? `100%` : `.1rem`} bgColor={`purple.200`} />
@@ -56,16 +57,17 @@ export const CoverPage = () => {
                                 borderRadius={`100%`}
                                 p={4}
                             >
-                                <Text fontSize={`3xl`} fontWeight={`bold`}>
+                                <Text as={`h3`} fontSize={`2xl`} fontWeight={`bolder`}>
                                     Or
                                 </Text>
                             </Center>
                         </AbsoluteCenter>
                     </Box>
                     <CoverPageCard
-                        img={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1711095668/productize/Frame_1171275923_1_alpd8o.png`}
+                        img={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1711120709/productize/Frame_1171275923_2_tq3d1u.png`}
                         desc={`Are you in search of unique digital creations from talented artists, designers, writers, or developers? Your quest ends here!`}
                         buttonText={`Explore as Buyer`}
+                        title={`Buyer`}
                     />
                 </Flex>
             </Box>

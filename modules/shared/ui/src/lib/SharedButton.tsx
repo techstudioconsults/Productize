@@ -53,7 +53,13 @@ export function SharedButton({ TEST_ID, text, width, height, bgColor, textColor,
             border={btnExtras?.border}
             type={btnExtras?.type}
             isDisabled={btnExtras?.disabled}
-            _hover={{ filter: `brightness(115%)`, boxShadow: `0px 2px 5px 1px #00000050` }}
+            _hover={
+                bgColor === `transparent` && textColor === `purple.200`
+                    ? { filter: `brightness(115%)`, boxShadow: `0px 2px 5px 1px #00000050`, bgColor: `purple.200`, color: `grey.100` }
+                    : textColor === `red.200` && bgColor === `transparent`
+                    ? { filter: `brightness(115%)`, boxShadow: `0px 2px 5px 1px #00000050`, bgColor: `red.200`, color: `grey.100` }
+                    : { filter: `brightness(115%)`, boxShadow: `0px 2px 5px 1px #00000050` }
+            }
             _active={
                 btnExtras?.border == null
                     ? btnExtras?.active || {

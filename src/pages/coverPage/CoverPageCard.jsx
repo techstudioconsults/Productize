@@ -2,13 +2,16 @@ import { Box, Card, Flex, Image, Link, Text } from '@chakra-ui/react';
 import { SharedButton } from '@productize/ui';
 import { Link as RouterLink } from 'react-router-dom';
 
-const CoverPageCard = ({ desc, buttonText, img }) => {
+const CoverPageCard = ({ desc, buttonText, img, title }) => {
     return (
         <Card variant={`plain`}>
             <Flex flexDir={`column`} alignItems={`center`}>
                 <Box>
                     <Image src={img} />
                 </Box>
+                <Text as={`h2`} mt={8} color={`coral.300`}>
+                    {title}
+                </Text>
                 <Text textAlign={`center`} fontSize={{ base: `lg`, md: `2xl` }} mt={7}>
                     {desc}
                 </Text>

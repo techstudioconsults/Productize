@@ -34,6 +34,10 @@ export const Sidenav = ({ links }: sidebarProps) => {
     const switchMenuColor = useCallback(() => {
         switch (pathname) {
             case `/`:
+                setMenuColor(`grey.500`);
+                setBgColor(`grey.100`);
+                break;
+            case `/seller`:
                 setMenuColor(`grey.100`);
                 setBgColor(`purple.200`);
                 break;
@@ -72,7 +76,7 @@ export const Sidenav = ({ links }: sidebarProps) => {
                 >
                     {/* <DrawerCloseButton my={2} /> */}
                     <DrawerHeader p={0} py={5}>
-                        <Link as={RouterLink} to={`/`}>
+                        <Link as={RouterLink} to={`/seller`}>
                             <Image
                                 w={`60%`}
                                 cursor={`pointer`}
@@ -93,7 +97,7 @@ export const Sidenav = ({ links }: sidebarProps) => {
                                             width={'100%'}
                                             height={'48px'}
                                             bgColor={'transparent'}
-                                            textColor={'black'}
+                                            textColor={isOpen && location.pathname.includes(`seller`) ? `grey.100` : 'black'}
                                             borderRadius={'4px'}
                                         />
                                     </Link>
@@ -104,7 +108,7 @@ export const Sidenav = ({ links }: sidebarProps) => {
                                             width={'100%'}
                                             height={'48px'}
                                             bgColor={'yellow.200'}
-                                            textColor={'black'}
+                                            textColor={isOpen && location.pathname.includes(`seller`) ? `grey.200` : 'black'}
                                             borderRadius={'4px'}
                                         />
                                     </Link>

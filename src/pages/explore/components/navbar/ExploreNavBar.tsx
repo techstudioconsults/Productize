@@ -16,7 +16,7 @@ export const ExploreNavBar = ({ isAuth }: navProps) => {
             <Container px={{ base: 4, lg: 0 }} maxW={`70rem`}>
                 <Flex justifyContent={`space-between`} flexDir={{ base: `column`, lg: `row` }} as="nav" gap={4}>
                     <Flex justifyContent={`space-between`} alignItems={`center`}>
-                        <Link as={RouterLink} to={`/`}>
+                        <Link as={RouterLink} to={`/seller`}>
                             <img
                                 src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png`}
                                 alt="Website logo"

@@ -56,7 +56,7 @@ export const Navbar = ({ isAuth, btnColor }: any) => {
             <Flex className="cc-container" justifyContent={`space-between`} alignItems={`center`} height={`5rem`} paddingInline={{ base: 4, xl: 0 }}>
                 <Center gap={4}>
                     <Sidenav links={<Links linkColor={linkColor} isMobile={true} />} />
-                    <Link as={RouterLink} to={`/`} role={'link'}>
+                    <Link as={RouterLink} to={`/seller`} role={'link'}>
                         <Image
                             alt="logo"
                             src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png`}

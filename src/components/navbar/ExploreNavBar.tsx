@@ -15,14 +15,33 @@ export const ExploreNavBar = ({ isAuth }: navProps) => {
                 <Flex justifyContent={`space-between`} flexDir={{ base: `column`, lg: `row` }} as="nav" gap={4}>
                     <Flex justifyContent={`space-between`} alignItems={`center`}>
                         <Sidenav links={<Links isMobile={true} />} />
-                        <Link as={RouterLink} to={`/`}>
+                        <Link as={RouterLink} to={`/seller`}>
                             <img
                                 src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png`}
                                 alt="Website logo"
                             />
                         </Link>
                         <Box display={{ lg: `none` }}>
-                            <AvatarComp />
+                            {isAuth ? (
+                                <AvatarComp
+                                // linkColor={linkColor}
+                                // isScroll={isScroll}
+                                />
+                            ) : (
+                                <Link as={RouterLink} to={`/auth/login`}>
+                                    <SharedButton
+                                        fontSize={{ base: `sm`, md: `md` }}
+                                        text={'Login'}
+                                        width={'fit-content'}
+                                        height={'48px'}
+                                        // bgColor={linkColor === `grey.100` ? `grey:100` : `purple.200`}
+                                        // textColor={bgColor === `purple.200` ? `purple.200` : `grey.100`}
+                                        borderRadius={'4px'}
+                                        bgColor={''}
+                                        textColor={''}
+                                    />
+                                </Link>
+                            )}
                         </Box>
                     </Flex>
                     <Flex justifyContent={`space-between`} gap={5} alignItems={`center`}>

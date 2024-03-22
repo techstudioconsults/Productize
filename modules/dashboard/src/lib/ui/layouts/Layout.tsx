@@ -122,7 +122,7 @@ export const DashboardLayout = () => {
                 className="hide_scrollbar"
             >
                 <Flex justifyContent={`center`} flexDir={`column`} alignItems={`center`} gap={2} minH={`40px`}>
-                    <Link as={ReactLink} to={`/`}>
+                    <Link as={ReactLink} to={`/seller`}>
                         <Image
                             alt="logo"
                             src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png`}

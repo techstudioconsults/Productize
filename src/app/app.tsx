@@ -28,6 +28,7 @@ import {
     AccountSettings,
     PaymentSettings,
 } from '@productize/dashboard';
+import { CoverPage } from '../pages/coverPage/CoverPage';
 
 // using suspense and lazy loading
 const Home = React.lazy(() =>
@@ -87,7 +88,8 @@ function App() {
                 <Route path="/auth/fetching-data/:provider" element={<PreLoader />} />
                 <Route path="/auth/forgot-password" element={<ForgotPassword />} />
                 {/* external pages */}
-                <Route index element={<Home />} />
+                <Route index element={<CoverPage />} />
+                <Route path="/seller" element={<Home />} />
                 <Route path="/features" element={<Features />} />
                 <Route path="/pricing" element={<Pricing />} />
                 <Route path={`/explore`} element={<Explore />} />

@@ -23,10 +23,7 @@ export const ExploreNavBar = ({ isAuth }: navProps) => {
                         </Link>
                         <Box display={{ lg: `none` }}>
                             {isAuth ? (
-                                <AvatarComp
-                                // linkColor={linkColor}
-                                // isScroll={isScroll}
-                                />
+                                <AvatarComp />
                             ) : (
                                 <Link as={RouterLink} to={`/auth/login`}>
                                     <SharedButton
@@ -34,8 +31,6 @@ export const ExploreNavBar = ({ isAuth }: navProps) => {
                                         text={'Login'}
                                         width={'fit-content'}
                                         height={'48px'}
-                                        // bgColor={linkColor === `grey.100` ? `grey:100` : `purple.200`}
-                                        // textColor={bgColor === `purple.200` ? `purple.200` : `grey.100`}
                                         borderRadius={'4px'}
                                         bgColor={''}
                                         textColor={''}

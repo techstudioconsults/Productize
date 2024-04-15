@@ -103,6 +103,7 @@ export const LiveTable = ({ draft, live, deleted, tableData }: tableProps) => {
             console.log(error);
         }
     };
+    
     const handleNextButton = async () => {
         try {
             await getLiveProducts({ link: paginate?.links?.next }).unwrap();

@@ -37,7 +37,7 @@ export const ThumbnailUploadField = () => {
     return (
         <div>
             <Heading />
-            <Center mt={4} bgColor={`purple.100`} bgImg={thumbnail} bgPosition={`center`} bgSize={`contain`} bgRepeat={`no-repeat`} boxSize={`200px`}>
+            <Center mt={4} bgColor={`purple.100`} bgImg={thumbnail} bgPosition={`center`} bgSize={`cover`} bgRepeat={`no-repeat`} boxSize={`200px`}>
                 <Controller
                     name="thumbnail"
                     control={control}

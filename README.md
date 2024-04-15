@@ -1,4 +1,4 @@
-# Productize
+<!-- # Productize
 
 <a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
 
@@ -59,4 +59,4 @@ It will show tasks that you can run with Nx.
 
 - [Join the community](https://nx.dev/community)
 - [Subscribe to the Nx Youtube Channel](https://www.youtube.com/@nxdevtools)
-- [Follow us on Twitter](https://twitter.com/nxdevtools)
+- [Follow us on Twitter](https://twitter.com/nxdevtools) -->

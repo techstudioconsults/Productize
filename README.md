@@ -71,13 +71,13 @@ git pull origin main
 Install all dependencies and dev depenencies using Yarn or npm
 
 ```
-yarn install or npm install or npm i
+yarn install || npm install || npm i
 ```
 
 Hopefully no no errors encountered, now run
 
 ```
-yarn start or npm start
+yarn start || npm start
 ```
 you should be greeted with a url http:localhost:4200 with this view
 <p>

@@ -120,15 +120,15 @@ Digital Ocean is used for the Main (main branch) production Deployment and hosti
 ## ⛏️ Built Using <a name = "built_using"></a>
 
 -   [NX](https://nx.dev/) - Build System
--   [Javascript](https://www.javascript.com/) - Web Language
--   [Typescript](https://www.typescriptlang.org/) - web Language
+-   [Javascript](https://www.javascript.com/) -  Programming Language
+-   [Typescript](https://www.typescriptlang.org/) - Programming Language
 -   [React](https://react.dev/) - Web Framework
 -   [PHP](https://www.php.net/) - Server Environment
 
 ## ✍️ Authors <a name = "authors"></a>
 
 -   [@kingsleySolomon](https://github.com/kinxlo) - Frontend and Folder structure
--   [@C](https://github.com/kinxlo, https://github.com/ceenobi) - Frontend and Folder structure
+-   [@Charles](https://github.com/ceenobi) - Frontend and Folder structure
 
 See also the list of [contributors](https://github.com/techstudioconsults/Productize/graphs/contributors) who participated in this project.
 

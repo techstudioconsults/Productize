@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="" rel="noopener">
+  <a href="tsa-productize.vercel.app" rel="noopener">
  <img width=300px height=70px src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png" alt="Project logo"></a>
 <h3 align="center">Productize</h3>
 <div align="center">
@@ -16,9 +16,7 @@
 ---
 
 <p align="center"> 
-  Introducing Productize, your ultimate solution for effortlessly monetizing your skills and products online. With Productize, the tedious backend tasks of selling your creations are a thing of the past.
-  Our platform empowers you to showcase your work beautifully while we handle the complexities behind the scenes. Say goodbye to the headaches of managing inventory, processing payments, and handling customer inquiries.
-  Whether you're an artist, a designer, a writer, or an entrepreneur, Productize streamlines the process, allowing you to focus on what you do best - creating and innovating.
+  Introducing Productize, your ultimate solution for effortlessly monetizing your skills and products online.
   <br> 
 </p>
 
@@ -34,34 +32,58 @@
 - [Acknowledgments](#acknowledgement)
 
 ## 🧐 About <a name = "about"></a>
-Write about 1-2 paragraphs describing the purpose of your project.
+With Productize, the tedious backend tasks of selling your creations are a thing of the past.
+Our platform empowers you to showcase your work beautifully while we handle the complexities behind the scenes. Say goodbye to the headaches of managing inventory, processing payments, and handling customer inquiries.
+Whether you're an artist, a designer, a writer, or an entrepreneur, Productize streamlines the process, allowing you to focus on what you do best - creating and innovating.
+Join Productize today and unlock the full potential of your talents, without the hassle. It's time to turn your passion into profit, effortlessly.
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
 
 ### Prerequisites
-What things you need to install the software and how to install them.
+Make sure you have nodejs installed by running the following command:
 
-```
-Give examples
+```bash
+node -v
 ```
 
 ### Installing
-A step by step series of examples that tell you how to get a development env running.
+Follow this steps to install productize locally
 
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
+Clone the repository 
 
 ```
-until finished
+git clone https://github.com/techstudioconsults/Productize.git
 ```
 
-End with an example of getting some data out of the system or using it for a little demo.
+Change branch to Development branch
+
+```
+git checkout -b development
+```
+
+Pull Updated source code from the Main branch (default branch)
+
+```
+git pull origin main
+```
+
+Install all dependencies and dev depenencies using Yarn or npm
+
+```
+yarn install or npm install or npm i
+```
+
+Hopefully no no errors encountered, now run
+
+```
+yarn start or npm start
+```
+you should be greeted with a url http:localhost:4200 with this view
+<p>
+  <img width="1440px" height="600px" src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1713173810/productize/Screenshot_2024-04-15_103114_t4sk4s.png" alt="Project logo">
+</p>
+
 
 ## 🔧 Running the tests <a name = "tests"></a>
 Explain how to run the automated tests for this system.

@@ -1,23 +1,20 @@
 import { Box, Center, Flex, Text } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 export const DownloadedContent = () => {
-    const [modUrl, setModUrl] = useState();
     const { state } = useLocation();
     const navigate = useNavigate();
     const url = state?.data?.[0];
 
-    useState(() => {
-        if (url.includes(`.pdf`)) {
-            console.log(`this is a pdf file`);
+    useEffect(() => {
+        const isMobileView = window.innerWidth <= 768;
+        if (isMobileView && url && url.includes(`.pdf`)) {
             const pdfUrl = 'http://docs.google.com/gview?url=' + url + '&embedded=true';
-            setModUrl(pdfUrl);
-            console.log(`this is a pdf file`, pdfUrl);
+            window.open(pdfUrl, '_blank');
         }
-        setModUrl(url);
-    }, []);
+    }, [url]);
 
     return (
         <Box my={10}>
@@ -38,7 +35,7 @@ export const DownloadedContent = () => {
                 as={`iframe`}
                 bgColor={`grey.200`}
                 title="Downloaded Content"
-                src={modUrl}
+                src={url}
                 width="100%"
                 height="570px"
                 frameBorder="0"
@@ -47,5 +44,6 @@ export const DownloadedContent = () => {
         </Box>
     );
 };
+
 
 export default DownloadedContent;

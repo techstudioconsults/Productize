@@ -2,12 +2,21 @@
 import { apiSlice } from '../apiSlice';
 import { setAllProduct_EXTERNAL, setCart, setSingleProduct_EXTERNAL, setTags } from './appSlice';
 
+const checkCredentials = (credentials) => {
+    if (credentials?.link) {
+        return credentials?.link;
+    } else {
+        return `/products`;
+    }
+};
+
 //productize-api.techstudio.academy/api/products
 export const appApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         getAllProducts_EXTERNAL: builder.mutation({
             query: (credentials) => ({
-                url: `/products`,
+                url: checkCredentials(credentials),
+                // url: `/products?page=${credentials?.page}`,
                 method: 'GET',
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
@@ -20,7 +29,7 @@ export const appApiSlice = apiSlice.injectEndpoints({
                             return product.tags.map((tag) => tag.toLowerCase()).includes(tagToMatch);
                         });
                     }
-                    dispatch(setAllProduct_EXTERNAL({ products: filteredProduct, tag: arg }));
+                    dispatch(setAllProduct_EXTERNAL({ products: filteredProduct, productsMetaData: { meta: data.meta, links: data.links } }));
                 } catch (error) {
                     return error;
                 }

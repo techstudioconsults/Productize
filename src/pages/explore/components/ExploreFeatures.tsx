@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Box, Center, Container, Flex, SimpleGrid, Text } from '@chakra-ui/react';
-import React, { useState, useEffect, useCallback } from 'react';
+import { Box, Center, Container, Flex, SimpleGrid, Stack, Text } from '@chakra-ui/react';
+import { useState, useEffect, useCallback } from 'react';
 
 import { useSelector } from 'react-redux';
-
 import Card from './cards/Card';
 import { useGetAllProducts_EXTERNALMutation, selectAllProducts_EXTERNAL, selectTags } from '@productize/redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { SpinnerComponentSmall } from '@productize/ui';
+import { SharedButton, SpinnerComponentSmall } from '@productize/ui';
 import { SelectPicker } from 'rsuite';
 import { EmptyState } from '@productize/dashboard';
 
@@ -52,7 +51,7 @@ export const ExploreFeatures = ({ title }: slideProps) => {
     }, [fetchData]);
 
     // Render product cards
-    const renderCards = products?.map((product: any) => (
+    const renderCards = products.products?.map((product: any) => (
         <Card
             key={product?.slug}
             productID={product?.slug}
@@ -62,6 +61,22 @@ export const ExploreFeatures = ({ title }: slideProps) => {
             publisher={product?.publisher}
         />
     ));
+
+    const handlePrevButton = async () => {
+        try {
+            await getAllProducts_EXTERNAL({ link: products.productsMetaData?.links?.prev }).unwrap();
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const handleNextButton = async () => {
+        try {
+            await getAllProducts_EXTERNAL({ link: products.productsMetaData?.links?.next }).unwrap();
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
         <Flex>
@@ -74,7 +89,7 @@ export const ExploreFeatures = ({ title }: slideProps) => {
                 </Flex>
 
                 <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 4 }} justifyContent={`space-between`} gap={`1.64rem`}>
-                    {getAllProducts_EXTERNALStatus.isLoading ? (
+                    {getAllProducts_EXTERNALStatus?.isLoading ? (
                         <Center p={10}>
                             <SpinnerComponentSmall />
                         </Center>
@@ -82,7 +97,7 @@ export const ExploreFeatures = ({ title }: slideProps) => {
                         renderCards
                     )}
                 </SimpleGrid>
-                {!products?.length && !getAllProducts_EXTERNALStatus.isLoading && (
+                {!products.products?.length && !getAllProducts_EXTERNALStatus?.isLoading && (
                     <EmptyState
                         content={{
                             title: `No content in ${tag} tag`,
@@ -93,6 +108,44 @@ export const ExploreFeatures = ({ title }: slideProps) => {
                         showImage={false}
                     />
                 )}
+                {/* TABLE PAGINATION */}
+                <Flex mt={4} gap={5} color={`grey.400`} alignItems={`center`} justifyContent={`center`} flexDir={{ base: `column-reverse`, lg: `row` }}>
+                    <Stack my={10} w={{ base: `100%`, lg: `initial` }} justifyContent={`space-between`} alignItems={`center`} direction={`row`} gap={5}>
+                        <SharedButton
+                            btnExtras={{
+                                leftIcon: `material-symbols:chevron-left`,
+                                border: `1px solid #CFCFD0`,
+                                onClick: handlePrevButton,
+                                disabled: !products.productsMetaData?.links?.prev,
+                            }}
+                            text={'Previous'}
+                            width={'137px'}
+                            height={'40px'}
+                            bgColor={'transparent'}
+                            textColor={'grey.400'}
+                            borderRadius={'4px'}
+                            fontSize={{ base: `sm`, md: `md` }}
+                        />
+                        <Text fontSize={`xs`}>
+                            Page {products.productsMetaData?.meta?.current_page} of {products.productsMetaData?.meta?.last_page}
+                        </Text>
+                        <SharedButton
+                            btnExtras={{
+                                leftIcon: `material-symbols:chevron-right`,
+                                border: `1px solid #CFCFD0`,
+                                onClick: handleNextButton,
+                                disabled: !products.productsMetaData?.links?.next,
+                            }}
+                            text={'Next'}
+                            width={'137px'}
+                            height={'40px'}
+                            bgColor={'transparent'}
+                            textColor={'grey.400'}
+                            borderRadius={'4px'}
+                            fontSize={{ base: `sm`, md: `md` }}
+                        />
+                    </Stack>
+                </Flex>
             </Container>
         </Flex>
     );

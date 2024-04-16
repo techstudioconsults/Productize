@@ -1,33 +1,151 @@
-18. analytics revenue overview chart data need to come from the backend (optional for now)
+import React, { useState, useEffect, useCallback } from 'react';
+import axios from 'axios';
+import { Box, Center, Container, Flex, SimpleGrid, Stack, Text } from '@chakra-ui/react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { SelectPicker } from 'rsuite';
+import { EmptyState } from '@productize/dashboard';
+import Card from './cards/Card';
+import { SharedButton } from '@productize/ui';
+import { useSelector } from 'react-redux';
+import { selectTags } from '@productize/redux';
 
-22. email notification switch on the setting page is buggy
-19. check download page on mobile if the content works (IMG, videos, and pdfs/docs)
-26. number of days left in setting(plans) is not functional
-28. finish the cart system
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-4. sharelink of the published product is missing(done)
-6. no sharelink value in product details response in dashboard (created a hack)(done)
-8. the thumbnail for orders on the orders table is not available in the response (done)
-9. product sharelink is missing in order details (done)
-10. viewed does not exist on the response for order details (i took the view out) (done)
-15. payout stats (total earnings, withdrawn earnings, pending, available earnings)(done)
-17. intiate Withdrawal throws a 500 error, looking for recipient paystack id (done)
-5. this http://localhost:4200/explore/product/details/officia-omnis-ad instead of this http://localhost:4200/product/officia-omnis-ad (share view) (done)
-24. activate paystack account and deactivate paystack account from the paystack acc card (done)
-27. expired plan needs a message on the billing history (done)
-3. no cancel icon on the highlight field (done)
-2. delete permanently action is working but its not the right response (done)
-11. the order filter is missing a dropdown parameter (done)
-20. remove scroll bar on desktop view in downloads (done)
-21. make tags clickable and functional in explore feature external page (done)
-25. plan route in setting is buggy (done)
+export interface slideProps {
+    title: string;
+}
 
+export const ExploreFeatures = ({ title }: slideProps) => {
+    const tags = useSelector(selectTags);
+    const [products, setProducts] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const location = useLocation();
+    const navigate = useNavigate();
+    const queryParams = new URLSearchParams(location.search);
+    const tag = queryParams.get('tag');
 
-1. the `make first sale` radio button is  not wworking (done)
-7. pagination link in product live, draft, deleted should be https://productize-api.techstudio.academy/api/products/users?status={status}&page={any-page} where status is either `published`, `draft`, `deleted` (done)
-12. orders download functionality not working (needs api endpoint) (done)
-14. download functionality for customers not available (done)
-13. latest purchase title and thumbnail is missing in the response (in customers details) (done)
-23. disable account and delete acc on the setting page has no functionality (done)
-16. payout exports/download functionality(done)
-alternate email did not update with key auth_email like you
+    const tagData = [`All`, ...tags]?.map((item: string) => ({
+        label: item,
+        value: item,
+    }));
+
+    const fetchData = useCallback(async () => {
+        setIsLoading(true);
+        try {
+            const res = await axios.get(`${BASE_URL}/products?page=${currentPage}`);
+            setProducts(res.data.data);
+            setTotalPages(res.data.meta.last_page);
+            setIsLoading(false);
+        } catch (error: any) {
+            setError(error);
+            setIsLoading(false);
+        }
+    }, [currentPage]);
+
+     const handleTagFilter = (tag: string) => {
+         if (tag === `All`) {
+             navigate(`/explore`);
+         } else {
+             navigate(`/explore?tag=${tag.toLowerCase()}`);
+         }
+         console.log(tag);
+     };
+
+    useEffect(() => {
+        fetchData();
+    }, [fetchData]);
+
+    const handlePrevButton = () => {
+        setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+    };
+
+    const handleNextButton = () => {
+        setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
+    };
+
+    const renderCards = products.map((product: any) => (
+        <Card
+            key={product.slug}
+            productID={product.slug}
+            image={product.thumbnail}
+            heading={product.title}
+            price={product.price}
+            publisher={product.publisher}
+        />
+    ));
+
+    return (
+        <Flex>
+            <Container p={0} maxW={`70rem`}>
+                <Flex mb={5} justifyContent={`space-between`} alignItems={`center`}>
+                    <Text as={`h4`}>{title}</Text>
+                    <Box display={{ lg: `none` }}>
+                        <SelectPicker searchable={false} onSelect={handleTagFilter} style={{ width: `100%` }} placeholder={`Tags`} size="sm" data={tagData} />
+                    </Box>
+                </Flex>
+
+                <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 4 }} justifyContent={`space-between`} gap={`1.64rem`}>
+                    {isLoading ? <Center p={10}>{/* Loading spinner */}</Center> : renderCards}
+                </SimpleGrid>
+                {!products.length && (
+                    <EmptyState
+                        content={{
+                            title: `No content in ${tag} tag`,
+                            desc: '',
+                            img: undefined,
+                        }}
+                        textAlign={{ base: `center` }}
+                        showImage={false}
+                    />
+                )}
+                <Flex mt={4} gap={5} color={`grey.400`} alignItems={`center`} justifyContent={`space-between`} flexDir={{ base: `column-reverse`, lg: `row` }}>
+                    <Flex alignItems={`center`} justifyContent={`space-between`} flexDir={{ base: `column`, lg: `row` }} gap={{ lg: 60 }}>
+                        <Box>
+                            <Text>10 Entries per page </Text>
+                        </Box>
+                        <Box>
+                            <Text>
+                                Page {currentPage} of {totalPages}
+                            </Text>
+                        </Box>
+                    </Flex>
+                    <Stack w={{ base: `100%`, lg: `initial` }} justifyContent={`space-between`} direction={`row`}>
+                        <SharedButton
+                            btnExtras={{
+                                leftIcon: `material-symbols:chevron-left`,
+                                border: `1px solid #CFCFD0`,
+                                onClick: handlePrevButton,
+                                disabled: currentPage === 1,
+                            }}
+                            text={'Previous'}
+                            width={'137px'}
+                            height={'40px'}
+                            bgColor={'transparent'}
+                            textColor={'grey.400'}
+                            borderRadius={'4px'}
+                            fontSize={{ base: `sm`, md: `md` }}
+                        />
+                        <SharedButton
+                            btnExtras={{
+                                leftIcon: `material-symbols:chevron-right`,
+                                border: `1px solid #CFCFD0`,
+                                onClick: handleNextButton,
+                                disabled: currentPage === totalPages,
+                            }}
+                            text={'Next'}
+                            width={'137px'}
+                            height={'40px'}
+                            bgColor={'transparent'}
+                            textColor={'grey.400'}
+                            borderRadius={'4px'}
+                            fontSize={{ base: `sm`, md: `md` }}
+                        />
+                    </Stack>
+                </Flex>
+            </Container>
+        </Flex>
+    );
+};

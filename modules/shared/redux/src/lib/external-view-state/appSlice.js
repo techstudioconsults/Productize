@@ -1,7 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    allProducts_EXTERNAL: [],
+    allProducts_EXTERNAL: {
+        products: [],
+        productsMetaData: null,
+    },
     singleProduct_EXTERNAL: {},
     tags: [],
     cart: {
@@ -16,8 +19,9 @@ const appSlice = createSlice({
     initialState,
     reducers: {
         setAllProduct_EXTERNAL: (state, action) => {
-            const { products } = action.payload;
-            state.allProducts_EXTERNAL = products;
+            const { products, productsMetaData } = action.payload;
+            state.allProducts_EXTERNAL.products = products;
+            state.allProducts_EXTERNAL.productsMetaData = productsMetaData;
         },
 
         setSingleProduct_EXTERNAL: (state, action) => {

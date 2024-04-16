@@ -1,11 +1,18 @@
-import { Box, Center, Flex, Text } from "@chakra-ui/react";
-import { Icon } from "@iconify/react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Box, Center, Flex, Text } from '@chakra-ui/react';
+import { Icon } from '@iconify/react';
+import { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const DownloadedContent = () => {
     const { state } = useLocation();
     const navigate = useNavigate();
     const url = state?.data?.[0];
+
+    useEffect(() => {
+        document.getElementById(`downloadIframe`).contentWindow.onload = function () {
+            this.document.getElementsByTagName('img')[0].style.width = '100%';
+        };
+    }, []);
 
     return (
         <Box my={10}>
@@ -21,7 +28,7 @@ export const DownloadedContent = () => {
                 </Box>
             </Flex>
             {/* Use the iframe to display the content from the specified URL */}
-            <Center as={`iframe`} bgColor={`grey.200`} title="Downloaded Content" src={url} width="100%" height="570px" frameBorder="0" allowFullScreen />
+            <Center id={`downloadIframe`} as={`iframe`} bgColor={`grey.200`} title="Downloaded Content" src={url} width="100%" height="570px" frameBorder="0" allowFullScreen />
         </Box>
     );
 };

@@ -17,7 +17,7 @@ import { ModalComp } from './Modal';
 import React from 'react';
 import { useCurrency } from '@productize/hooks';
 import { useSelector } from 'react-redux';
-import { selectCurrentUser, userApiSlice } from '@productize/redux';
+import { selectCurrentUser } from '@productize/redux';
 
 interface productProp {
     product: any;
@@ -39,6 +39,7 @@ export const PreviewProductSummary = () => {
 };
 
 export interface TwoColumnLayoutProps {
+    staticProducts?: [];
     C1: React.ReactNode;
     C2: React.ReactNode;
 }

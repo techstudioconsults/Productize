@@ -4,6 +4,7 @@ import { ExploreBanner } from '../components/ExploreBanner';
 import { ExploreFeatures } from '../components/ExploreFeatures';
 import { ExploreLayout } from '../../../layouts/ExploreLayout';
 import { useGetFromCartMutation } from '@productize/redux';
+import { ExploreTrending } from '../components/ExploreTrending';
 
 export const Explore = () => {
      const [getFromCart] = useGetFromCartMutation();
@@ -20,6 +21,9 @@ export const Explore = () => {
             <Container px={{ base: 4, sm: 8, xl: 0 }} maxW={`70rem`} my={{ base: `3rem`, lg: `7rem` }}>
                 <ExploreBanner />
             </Container>
+            {/* <Container my={{ base: `3rem`, lg: `7rem` }} px={{ base: 4, sm: 8, xl: 0 }} maxW={`70rem`}>
+                <ExploreTrending title={`Trending`} />
+            </Container> */}
             <Container my={{ base: `3rem`, lg: `7rem` }} px={{ base: 4, sm: 8, xl: 0 }} maxW={`70rem`}>
                 <ExploreFeatures title={`Featured`} />
             </Container>

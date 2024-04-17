@@ -57,7 +57,7 @@ export const ExploreFeatures = ({ title }: slideProps) => {
             productID={product?.slug}
             image={product?.thumbnail}
             heading={product?.title}
-            price={product.price}
+            price={product?.price}
             publisher={product?.publisher}
         />
     ));
@@ -118,8 +118,8 @@ export const ExploreFeatures = ({ title }: slideProps) => {
                                 onClick: handlePrevButton,
                                 disabled: !products.productsMetaData?.links?.prev,
                             }}
-                            text={'Previous'}
-                            width={'137px'}
+                            text={''}
+                            width={'fit-content'}
                             height={'40px'}
                             bgColor={'transparent'}
                             textColor={'grey.400'}
@@ -136,8 +136,8 @@ export const ExploreFeatures = ({ title }: slideProps) => {
                                 onClick: handleNextButton,
                                 disabled: !products.productsMetaData?.links?.next,
                             }}
-                            text={'Next'}
-                            width={'137px'}
+                            text={''}
+                            width={'fit-content'}
                             height={'40px'}
                             bgColor={'transparent'}
                             textColor={'grey.400'}

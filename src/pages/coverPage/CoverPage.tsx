@@ -1,7 +1,7 @@
-import { AbsoluteCenter, Box, Center, Container, Divider, Flex, Image, Stack, Text } from '@chakra-ui/react';
-import DefaultLayout from '../../layouts/Layout';
+import { AbsoluteCenter, Box, Center, Container, Divider, Flex, Image, Link, Stack, Text } from '@chakra-ui/react';
 import CoverPageCard from './CoverPageCard';
 import { useEffect, useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 
 export const CoverPage = () => {
     const [isMobileView, setMobileView] = useState(false);
@@ -26,9 +26,23 @@ export const CoverPage = () => {
     }, []);
 
     return (
-        <DefaultLayout removeFooter>
+        // <DefaultLayout removeFooter>
+        <>
+            {/* <Center> */}
+            <Center gap={4} mt={10}>
+                {/* <Sidenav links={<Links linkColor={linkColor} isMobile={true} />} /> */}
+                <Link as={RouterLink} to={`/seller`} role={'link'}>
+                    <Image
+                        width={`18rem`}
+                        // width={`10rem`}
+                        alt="logo"
+                        src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png`}
+                    />
+                </Link>
+            </Center>
+            {/* </Center> */}
             <Stack gap={10}>
-                <Container pos={`relative`} color={`grey.800`} mt={`8rem`} textAlign={`center`} maxW={`898px`}>
+                <Container pos={`relative`} color={`grey.800`} mt={`2rem`} textAlign={`center`} maxW={`898px`}>
                     <Image pos={`absolute`} top={`12rem`} left={`-8rem`} src={``} />
                     <Text lineHeight={`shorter`} as={`h1`}>
                         Welcome to Productize!
@@ -71,6 +85,7 @@ export const CoverPage = () => {
                     />
                 </Flex>
             </Box>
-        </DefaultLayout>
+        </>
+        // </DefaultLayout>
     );
 };

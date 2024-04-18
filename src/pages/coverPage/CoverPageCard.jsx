@@ -7,9 +7,9 @@ const CoverPageCard = ({ desc, buttonText, img, title }) => {
         <Card variant={`plain`}>
             <Flex flexDir={`column`} alignItems={`center`}>
                 <Box>
-                    <Image src={img} />
+                    <Image width={`20rem`} src={img} />
                 </Box>
-                <Text as={`h2`} mt={8} color={`coral.300`}>
+                <Text as={`h3`} mt={8} color={`coral.300`}>
                     {title}
                 </Text>
                 <Text textAlign={`center`} fontSize={{ base: `lg`, md: `2xl` }} mt={7}>

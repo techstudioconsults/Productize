@@ -3,8 +3,8 @@ import { NavLink, useLocation } from 'react-router-dom';
 import style from './scss/navbar.module.scss';
 import { links } from './utils/links';
 import { Icon } from '@iconify/react';
-import { useSelector } from 'react-redux';
-import { selectTags } from '@productize/redux';
+// import { useSelector } from 'react-redux';
+// import { selectTags } from '@productize/redux';
 
 // testing links
 
@@ -29,7 +29,8 @@ type DropdownLinkProps = {
 };
 
 const DropdownLink = ({ isScroll, link, linkColor }: DropdownLinkProps) => {
-    const tags = useSelector(selectTags);
+    // const tags = useSelector(selectTags);
+    const tags = ['Digital Products', 'print on Demand', 'Skill Selling', 'Template Hub'];
 
     const navLinks = tags?.map((tag: string) => {
         return (

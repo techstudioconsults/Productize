@@ -77,7 +77,7 @@ export const CategoryPageDetails = () => {
                         whiteSpace={`nowrap`} // Prevents text wrapping
                     >
                         <Text py={2} px={3} border={`1px solid lightgrey`} borderRadius={4} display="inline-block">
-                            Learning (2395)
+                            Learning more (2395)
                         </Text>
                         <Text py={2} px={3} border={`1px solid lightgrey`} borderRadius={4} display="inline-block">
                             Learning (2395)

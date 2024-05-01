@@ -1,4 +1,4 @@
-import { Tabs, TabList, TabPanels, Tab, TabPanel, Flex, Box, useDisclosure, SimpleGrid, FormControl } from '@chakra-ui/react';
+ import { Tabs, TabList, TabPanels, Tab, TabPanel, Flex, Box, useDisclosure,} from '@chakra-ui/react';
 import ShareLayout from './ShareLayout';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';

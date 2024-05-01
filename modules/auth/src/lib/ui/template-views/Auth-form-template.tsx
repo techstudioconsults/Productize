@@ -10,19 +10,20 @@ interface AuthFormTamplateProps {
 
 export const AuthFormTemplateSignup = ({children}: AuthFormTamplateProps) => {
     return (
-        <Card p={{base: 5, sm: 8}} maxW={`548px`} w={`100%`} h={`fit-content`}>
+        <Card p={{ base: 5, sm: 8 }} maxW={`548px`} w={`100%`} h={`fit-content`}>
             <CardHeader>
                 <Center>
                     <Link as={RouterLink} to={`/`}>
-                        <img src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png`}
-                             alt="logo"/>
+                        <img src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png`} alt="logo" />
                     </Link>
                 </Center>
                 <Text as={`h5`} textAlign={`left`} my={5}>
-                    Join creators today to sell your product and upskill your community.
+                    Discover a world of creativity and innovation on Productize.
                 </Text>
             </CardHeader>
-            <CardBody borderRadius={`8px`} bgColor={`white`}>{children}</CardBody>
+            <CardBody borderRadius={`8px`} bgColor={`white`}>
+                {children}
+            </CardBody>
         </Card>
     );
 };

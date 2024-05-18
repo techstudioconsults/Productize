@@ -27,6 +27,7 @@ import {
     WithdrawalEarnings,
     AccountSettings,
     PaymentSettings,
+    KycSettings,
 } from '@productize/dashboard';
 import { CoverPage } from '../pages/coverPage/CoverPage';
 
@@ -122,6 +123,7 @@ function App() {
                     <Route path="settings" element={<Settings />}>
                         <Route path="account" element={<AccountSettings />} />
                         <Route path="payment" element={<PaymentSettings />} />
+                        <Route path="kyc" element={<KycSettings />} />
                         <Route path="plans" element={<PlanSettings />} />
                         <Route path="plans/billing-cycle" element={<BillingCycle />} />
                     </Route>

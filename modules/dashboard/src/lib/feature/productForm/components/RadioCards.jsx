@@ -20,7 +20,6 @@ const RadioCards = ({ listenForChange }) => {
     };
     return (
         <RadioGroup as={SimpleGrid} my={8} gap={4} columns={{ base: 1, md: 2, lg: 3, xl: 4 }} onChange={handleProductTypeChange} value={productTypeValue}>
-            {/* <SimpleGrid my={8} gap={4} columns={{ base: 1, md: 2, lg: 3, xl: 4 }}> */}
             <Radio {...register(`product_type`)} display={`block`} hidden spacing={0} value="digital_product">
                 <ProductTypeCard
                     img={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951006/productize/Image_1_wc3l2p_a7lovq.png`}
@@ -44,12 +43,12 @@ const RadioCards = ({ listenForChange }) => {
                     style={productTypeValue === `skill_selling` ? activeCardStyle : {}}
                 />
             </Radio>
-            <Radio isDisabled display={`block`} hidden spacing={0} value="video_streaming">
+            <Radio {...register(`product_type`)} display={`block`} hidden spacing={0} value="template_hub">
                 <ProductTypeCard
                     img={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951008/productize/Image_3_l61xsx_qdgenv.png`}
                     title={'Template Hub'}
                     desc={'Any set of files to download or stream.'}
-                    style={{}}
+                    style={productTypeValue === `template_hub` ? activeCardStyle : {}}
                 />
             </Radio>
             <Radio isDisabled display={`block`} hidden spacing={0} value="subscription">

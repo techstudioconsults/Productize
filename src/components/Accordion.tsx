@@ -1,6 +1,34 @@
-import { Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Box } from '@chakra-ui/react';
+import { Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Box, Center } from '@chakra-ui/react';
+import { useGetFAQMutation } from '@productize/redux';
+import { SpinnerComponentSmall } from '@productize/ui';
+import { useCallback, useEffect, useState } from 'react';
 
 export const AccordionComponent = () => {
+    const [getFAQ] = useGetFAQMutation();
+    const [FAQ, setFAQ] = useState();
+    const [FAQLoading, setFAQLoading] = useState(true);
+
+    const getData = useCallback(async () => {
+        const res = await getFAQ(null).unwrap();
+
+        if (res.data) {
+            setFAQ(res.data);
+            setFAQLoading(false);
+        }
+    }, [getFAQ]);
+
+    useEffect(() => {
+        getData();
+    }, [getData]);
+
+    if (FAQLoading) {
+        return (
+            <Center>
+                <SpinnerComponentSmall />
+            </Center>
+        );
+    }
+
     return (
         // <Box border={`1px solid red`}>
         <Accordion allowMultiple>

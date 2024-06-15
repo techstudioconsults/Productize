@@ -12,8 +12,6 @@ const ShareLayout = () => {
     const { state } = useLocation();
     const formatCurrency = useCurrency();
 
-    console.log(state);
-
     const copyTextToClipBoard = () => {
         navigator.clipboard
             .writeText(state?.product?.link)

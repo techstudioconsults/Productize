@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Box, Container, Flex, Text } from '@chakra-ui/react';
+import { Box, Center, Container, Flex, Text } from '@chakra-ui/react';
 import Card from './cards/Card';
 import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
@@ -7,9 +7,12 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules';
 import { useEffect, useState } from 'react';
+import { SpinnerComponent, SpinnerComponentSmall } from '@productize/ui';
 
 export interface slideProps {
     title: string;
+    products: [];
+    loading: boolean;
 }
 
 export const staticProducts = [
@@ -92,7 +95,7 @@ export const staticProducts = [
     },
 ];
 
-export const ExploreTrending = ({ title }: slideProps) => {
+export const ExploreTrending = ({ title, products, loading }: slideProps) => {
     // const swiper = useSwiper();
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768); // Assuming mobile screen size width is less than 768px
 
@@ -100,16 +103,14 @@ export const ExploreTrending = ({ title }: slideProps) => {
         const handleResize = () => {
             setIsMobile(window.innerWidth < 768); // Update isMobile state based on window width
         };
-
         window.addEventListener('resize', handleResize); // Listen for window resize events
-
         return () => {
             window.removeEventListener('resize', handleResize); // Cleanup the event listener
         };
     }, []); // Empty dependency array to run effect only once on component mount
 
     // Render product cards
-    const renderStaticCards = staticProducts?.map((product: any) => (
+    const renderStaticCards = products?.map((product: any) => (
         <SwiperSlide key={product?.slug}>
             <Card
                 // key={product?.slug}
@@ -123,6 +124,22 @@ export const ExploreTrending = ({ title }: slideProps) => {
             />
         </SwiperSlide>
     ));
+
+    if (loading) {
+        return (
+            <Center>
+                <SpinnerComponentSmall />
+            </Center>
+        );
+    }
+
+    if (products?.length === 0) {
+        return (
+            <Center>
+                <Text>No Product Available</Text>
+            </Center>
+        );
+    }
 
     return (
         <Flex>

@@ -29,7 +29,6 @@ const RadioCards = ({ listenForChange }) => {
                 />
             </Radio>
             <Radio
-                // isDisabled
                 {...register(`product_type`)}
                 display={`block`}
                 hidden
@@ -54,8 +53,8 @@ const RadioCards = ({ listenForChange }) => {
             <Radio isDisabled display={`block`} hidden spacing={0} value="subscription">
                 <ProductTypeCard
                     img={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951009/productize/Image_4_hksvcm_ulhhl3.png`}
-                    title={'Print On Demand'}
-                    desc={'Any set of files to download or stream.'}
+                    title={'Coming Soon...'}
+                    desc={'Exciting new features'}
                     style={{}}
                 />
             </Radio>

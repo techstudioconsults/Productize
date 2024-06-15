@@ -128,6 +128,7 @@ function App() {
                         <Route path="plans/billing-cycle" element={<BillingCycle />} />
                     </Route>
                 </Route>
+                {/* admin  dashboard */}
                 <Route path="*" element={<PageNotFound />} />
             </Routes>
         </Suspense>

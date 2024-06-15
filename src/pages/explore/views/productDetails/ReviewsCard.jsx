@@ -1,7 +1,7 @@
 import { Card, Divider, Flex, Stack, Text } from '@chakra-ui/react';
 import ReviewTemplate from './ReviewTemplate';
 
-const ReviewsCard = () => {
+const ReviewsCard = ({ reviews }) => {
     return (
         <Card height={`30rem`} mb={4} shadow={`none`} variant={`outline`} p={4}>
             <Flex justifyContent={`space-between`} alignItems={`center`}>

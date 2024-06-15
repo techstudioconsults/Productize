@@ -1,5 +1,5 @@
-import { Heading } from "@chakra-ui/react";
-import React, { ErrorInfo, ReactNode } from "react";
+import { Heading } from '@chakra-ui/react';
+import React, { ErrorInfo, ReactNode } from 'react';
 
 interface ErrorBoundaryProps {
     children: ReactNode;
@@ -9,7 +9,7 @@ interface ErrorBoundaryState {
     hasError: boolean;
 }
 
-export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
     constructor(props: ErrorBoundaryProps) {
         super(props);
         this.state = { hasError: false };
@@ -19,14 +19,17 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
         return { hasError: true };
     }
 
-    override componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-        console.error(error, errorInfo);
+    componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
+        console.error('ErrorBoundary caught an error', error, errorInfo);
     }
 
-    override render(): React.ReactNode {
+    render(): ReactNode {
         if (this.state.hasError) {
             return <Heading>Something went wrong!</Heading>;
         }
+
         return this.props.children;
     }
 }
+
+export default ErrorBoundary;

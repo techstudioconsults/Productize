@@ -1,29 +1,38 @@
 // import ExploreLayout from 'apps/explore/src/libs/layouts/ExploreLayout';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import ProductSummaryAndPreview from './ProductSummaryAndPreview';
 import ProductSideNav from './ProductSideNav';
 import ProductNavbar from './ProductNavbar';
-import { Box, Container, Flex, Image, Stack, Text } from '@chakra-ui/react';
+import { Box, Center, Container, Flex, Image, Stack, Text } from '@chakra-ui/react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useGetSingleProduct_EXTERNALMutation } from '@productize/redux';
+import { useGetSingleProductReviewsMutation, useGetSingleProduct_EXTERNALMutation } from '@productize/redux';
 import { useTokenExists } from '@productize/hooks';
-import { TwoColumnLayout } from '@productize/ui';
+import { SpinnerComponentSmall, TwoColumnLayout } from '@productize/ui';
 import arrowLeft from '@icons/Property_2_Arrow-left_kafkjg.svg';
 import ReviewsCard from './ReviewsCard';
 
 export const ProductDetails = () => {
     const [getSingleProducts_EXTERNAL, getAllProducts_EXTERNALStatus] = useGetSingleProduct_EXTERNALMutation();
+    const [getSingleProductReviews] = useGetSingleProductReviewsMutation();
+    const [productReviews, setProductReviews] = useState();
+    const [isLoading, setLoading] = useState(true);
     const { productID } = useParams();
     const navigate = useNavigate();
 
     const fetchData = useCallback(async () => {
         try {
             await getSingleProducts_EXTERNAL({ productID }).unwrap();
+            const res = await getSingleProductReviews({ productID }).unwrap();
+            if (res.data) {
+                console.log(res);
+                setProductReviews(res.data);
+                setLoading(false);
+            }
         } catch (error) {
             console.error(error);
         }
-    }, [getSingleProducts_EXTERNAL, productID]);
+    }, [getSingleProductReviews, getSingleProducts_EXTERNAL, productID]);
 
     useEffect(() => {
         fetchData();
@@ -44,7 +53,13 @@ export const ProductDetails = () => {
                     C2={
                         <Stack pos={`sticky`} top={`20rem`} gap={4}>
                             <ProductSideNav status={getAllProducts_EXTERNALStatus} />
-                            <ReviewsCard />
+                            {isLoading ? (
+                                <Center p={10}>
+                                    <SpinnerComponentSmall />
+                                </Center>
+                            ) : (
+                                <ReviewsCard reviews={productReviews} />
+                            )}
                         </Stack>
                     }
                 />

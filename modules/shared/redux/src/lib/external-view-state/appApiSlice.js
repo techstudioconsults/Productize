@@ -2,21 +2,16 @@
 import { apiSlice } from '../apiSlice';
 import { setAllProduct_EXTERNAL, setCart, setSingleProduct_EXTERNAL, setTags } from './appSlice';
 
-const checkCredentials = (credentials) => {
-    if (credentials?.link) {
-        return credentials?.link;
-    } else {
-        return `/products`;
-    }
+// Function to determine URL based on credentials
+const determineURL = (credentials) => {
+    return credentials?.link || '/products';
 };
 
-//productize-api.techstudio.academy/api/products
 export const appApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         getAllProducts_EXTERNAL: builder.mutation({
             query: (credentials) => ({
-                url: checkCredentials(credentials),
-                // url: `/products?page=${credentials?.page}`,
+                url: determineURL(credentials),
                 method: 'GET',
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
@@ -24,21 +19,24 @@ export const appApiSlice = apiSlice.injectEndpoints({
                     const { data } = await queryFulfilled;
                     let filteredProduct = data.data;
                     if (arg.tag) {
-                        const tagToMatch = arg.tag.toLowerCase(); // Convert arg.tag to lowercase
-                        filteredProduct = data.data?.filter((product) => {
-                            return product.tags.map((tag) => tag.toLowerCase()).includes(tagToMatch);
-                        });
+                        const tagToMatch = arg.tag.toLowerCase();
+                        filteredProduct = data.data?.filter((product) => product.tags.map((tag) => tag.toLowerCase()).includes(tagToMatch));
                     }
-                    dispatch(setAllProduct_EXTERNAL({ products: filteredProduct, productsMetaData: { meta: data.meta, links: data.links } }));
+                    dispatch(
+                        setAllProduct_EXTERNAL({
+                            products: filteredProduct,
+                            productsMetaData: { meta: data.meta, links: data.links },
+                        })
+                    );
                 } catch (error) {
                     return error;
                 }
             },
         }),
+
         getSingleProduct_EXTERNAL: builder.mutation({
             query: (credentials) => ({
-                // generate a random token value instead of using a hardcoded string
-                url: `/products/${credentials.productID}/oiuu8989b9u9`,
+                url: `/products/${credentials?.productID}/iueritujngvifv`,
                 method: 'GET',
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
@@ -54,24 +52,22 @@ export const appApiSlice = apiSlice.injectEndpoints({
                 }
             },
         }),
+
         addToCart: builder.mutation({
-            query: (credentials) => ({
-                // generate a random token value instead of using a hardcoded string
+            query: () => ({
                 url: `/carts`,
                 method: 'POST',
-                body: { ...credentials },
             }),
         }),
+
         getFromCart: builder.mutation({
-            query: (credentials) => ({
-                // generate a random token value instead of using a hardcoded string
+            query: () => ({
                 url: `/carts`,
                 method: 'GET',
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
-                    console.log(data);
                     dispatch(
                         setCart({
                             product: data.data,
@@ -82,17 +78,17 @@ export const appApiSlice = apiSlice.injectEndpoints({
                 }
             },
         }),
+
         updateCart: builder.mutation({
             query: (credentials) => ({
-                // generate a random token value instead of using a hardcoded string
                 url: `/carts/${credentials.cart_id}`,
                 method: 'PATCH',
-                body: { ...credentials.body },
+                body: credentials.body,
             }),
         }),
+
         deleteCart: builder.mutation({
             query: (credentials) => ({
-                // generate a random token value instead of using a hardcoded string
                 url: `/carts/${credentials.cart_id}`,
                 method: 'DELETE',
             }),
@@ -105,15 +101,15 @@ export const appApiSlice = apiSlice.injectEndpoints({
                 }
             },
         }),
+
         getProductTags: builder.mutation({
-            query: (credentials) => ({
+            query: () => ({
                 url: `/products/tags`,
                 method: 'GET',
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
-
                     dispatch(
                         setTags({
                             tags: data.data,
@@ -124,26 +120,40 @@ export const appApiSlice = apiSlice.injectEndpoints({
                 }
             },
         }),
+
         purchaseProduct: builder.mutation({
-            query: (credentials) => ({
-                // generate a random token value instead of using a hardcoded string
+            query: () => ({
                 url: `/payments/purchase`,
                 method: 'POST',
-                body: { ...credentials },
             }),
-            // async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-            //     try {
-            //         const { data } = await queryFulfilled;
+        }),
 
-            //         // dispatch(
-            //         //     setSingleProduct_EXTERNAL({
-            //         //         product: data,
-            //         //     })
-            //         // );
-            //     } catch (error) {
-            //         return error;
-            //     }
-            // },
+        getSingleProductReviews: builder.mutation({
+            query: (credentials) => ({
+                url: `/reviews/products/${credentials.productID}`,
+                method: 'GET',
+            }),
+        }),
+
+        getTopProducts: builder.mutation({
+            query: () => ({
+                url: `/products/top-products`,
+                method: 'GET',
+            }),
+        }),
+
+        getProductsBasedOnSearch: builder.mutation({
+            query: () => ({
+                url: `/products/search`,
+                method: 'GET',
+            }),
+        }),
+
+        getFAQ: builder.mutation({
+            query: () => ({
+                url: `/faqs`,
+                method: 'GET',
+            }),
         }),
     }),
 });
@@ -151,10 +161,14 @@ export const appApiSlice = apiSlice.injectEndpoints({
 export const {
     useGetAllProducts_EXTERNALMutation,
     useGetSingleProduct_EXTERNALMutation,
+    useGetSingleProductReviewsMutation,
     usePurchaseProductMutation,
     useAddToCartMutation,
     useGetFromCartMutation,
     useGetProductTagsMutation,
     useUpdateCartMutation,
     useDeleteCartMutation,
+    useGetTopProductsMutation,
+    useGetProductsBasedOnSearchMutation,
+    useGetFAQMutation,
 } = appApiSlice;

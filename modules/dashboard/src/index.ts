@@ -9,7 +9,7 @@ export * from './lib/feature/settingsForm/SetupPaymentForm';
 export * from './lib/ui/layouts/Layout';
 export * from './lib/ui/pages/home';
 export * from './lib/ui/pages/products';
-export * from './lib/ui/pages/products/ProductDetails';
+export * from './lib/ui/pages/products/premium/productDetails/ProductDetails';
 export * from './lib/ui/pages/products/NewProduct';
 export * from './lib/ui/pages/orders';
 export * from './lib/ui/pages/orders/OrderDetails';

@@ -2,14 +2,14 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Avatar, Text, Stack, Checkbox, Box, Tag, Skeleton } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
-import { DropdownActionDelete, DropdownActionDraft, DropdownActionLive } from '../DropdownAction';
+import { DropdownActionDelete, DropdownActionDraft, DropdownActionLive } from '../../DropdownAction';
 import { useNavigate } from 'react-router-dom';
-import {  useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useCallback, useEffect } from 'react';
-import { ProductsTableControl } from './tableControls/ProductsTableControl';
-import { DashboardEmptyState } from '../empty-states/DashboardEmptyState';
+import { ProductsTableControl } from './ProductsTableControl';
+import { DashboardEmptyState } from '../../empty-states/DashboardEmptyState';
 import { useCurrency, useDate, useTime } from '@productize/hooks';
-import { useGetAllProductsMutation, selectAllProducts, selectCurrentToken, selectPaginationMetaData } from '@productize/redux';
+import { useGetAllProductsMutation, selectAllProducts, selectPaginationMetaData } from '@productize/redux';
 import { OnBoardingLoader, SharedButton } from '@productize/ui';
 
 interface tableProps {

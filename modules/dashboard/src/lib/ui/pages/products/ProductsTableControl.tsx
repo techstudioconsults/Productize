@@ -1,15 +1,17 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box, Flex, IconButton } from '@chakra-ui/react';
 import DateRangePicker from 'rsuite/esm/DateRangePicker';
+import SelectPicker from 'rsuite/esm/SelectPicker';
 import { DropdownAction } from '../../DropdownAction';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { Icon } from '@iconify/react';
 import errorImg from '@icons/error.svg';
-import download from 'downloadjs';
 import { useDateRangeFormat } from '@productize/hooks';
-import { selectCurrentToken, useGetAllCustomersMutation } from '@productize/redux';
-import { useToastAction, ToastFeedback, SpinnerComponentSmall, SharedButton, SearchComp } from '@productize/ui';
-import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { selectCurrentToken, useGetAllProductsMutation } from '@productize/redux';
+import { useToastAction, ToastFeedback, SpinnerComponentSmall, SharedButton } from '@productize/ui';
+import download from 'downloadjs';
 
 const BASE_URL = import.meta.env['VITE_BASE_URL'];
 
@@ -17,15 +19,15 @@ interface controlsProp {
     showRefreshBtn?: boolean;
 }
 
-export const CustomersTableControl = ({ showRefreshBtn }: controlsProp) => {
+export const ProductsTableControl = ({ showRefreshBtn }: controlsProp) => {
     const [exportLoading, setExportLoading] = useState(false);
-    const { toast, toastIdRef, close } = useToastAction();
+    const token = useSelector(selectCurrentToken);
     const [startDate, setStartDate] = useState(``);
     const [endDate, setEndDate] = useState(``);
     const [status, setStatus] = useState(``);
-    const [getAllCustomers, getAllCustomersStatus] = useGetAllCustomersMutation();
+    const [getAllProducts, getAllProductsStatus] = useGetAllProductsMutation();
     const formatDateRange = useDateRangeFormat();
-    const token = useSelector(selectCurrentToken);
+    const { toast, toastIdRef, close } = useToastAction();
 
     const headersCredentials = {
         headers: {
@@ -33,13 +35,7 @@ export const CustomersTableControl = ({ showRefreshBtn }: controlsProp) => {
         },
     };
 
-    const data = [
-        `All Products`,
-        `UX Design Fundamentals`,
-        `Practical UI - User interface design book`,
-        `The Future of Design Systems Conference 2023`,
-        `Graphics Guide to Residential Design`,
-    ].map((item) => ({
+    const data = [`All`, `Draft`, `Published`].map((item) => ({
         label: item,
         value: item,
     }));
@@ -48,7 +44,7 @@ export const CustomersTableControl = ({ showRefreshBtn }: controlsProp) => {
         try {
             setExportLoading(true);
             const res = await axios.get(
-                `${BASE_URL}/customers/download?status=${status}&format=csv`,
+                `${BASE_URL}/products/download?status=${status}&format=csv`,
                 // `${BASE_URL}products/download?start_date=${startDate}&end_date=${endDate}&format=csv`,
                 headersCredentials
             );
@@ -61,7 +57,7 @@ export const CustomersTableControl = ({ showRefreshBtn }: controlsProp) => {
                     render: () => (
                         <ToastFeedback
                             btnColor={`purple.200`}
-                            message={`Check your download folder for Customers file`}
+                            message={`Check your download folder for product file`}
                             title="Downloaded successfully"
                             icon={undefined}
                             bgColor={undefined}
@@ -90,6 +86,9 @@ export const CustomersTableControl = ({ showRefreshBtn }: controlsProp) => {
         }
     };
 
+    const handleStatusChange = (value: string) => {
+        setStatus(value.toLowerCase());
+    };
     const handleDateRangeChange = async (value: any | null) => {
         if (value) {
             setStartDate(formatDateRange(value?.[0]));
@@ -97,55 +96,27 @@ export const CustomersTableControl = ({ showRefreshBtn }: controlsProp) => {
         } else {
             setStartDate(``);
             setEndDate(``);
-            await getAllCustomers(null).unwrap();
+            await getAllProducts(null).unwrap();
         }
     };
 
     const filterTable = async () => {
         if (status === `all`) {
             try {
-                await getAllCustomers(null).unwrap();
-            } catch (error: any) {
-                toastIdRef.current = toast({
-                    position: 'top',
-                    render: () => (
-                        <ToastFeedback
-                            message={error?.data?.message}
-                            title="Error!"
-                            icon={errorImg}
-                            color={`red.600`}
-                            btnColor={`red.600`}
-                            bgColor={undefined}
-                            handleClose={close}
-                        />
-                    ),
-                });
+                await getAllProducts(null).unwrap();
+            } catch (error) {
+                console.error(error);
             }
         } else {
             try {
-                await getAllCustomers({
+                await getAllProducts({
                     page: null,
                     startDate,
                     endDate,
                     status,
                 }).unwrap();
-            } catch (error: any) {
-                console.log(error);
-
-                toastIdRef.current = toast({
-                    position: 'top',
-                    render: () => (
-                        <ToastFeedback
-                            message={error?.data?.message}
-                            title="Error!"
-                            icon={errorImg}
-                            color={`red.600`}
-                            btnColor={`red.600`}
-                            bgColor={undefined}
-                            handleClose={close}
-                        />
-                    ),
-                });
+            } catch (error) {
+                console.error(error);
             }
         }
     };
@@ -161,11 +132,16 @@ export const CustomersTableControl = ({ showRefreshBtn }: controlsProp) => {
                         character="-"
                         style={{ width: `100%` }}
                     />
+                    <Box display={{ md: `none` }}>
+                        <DropdownAction handleExport={handleExport} icon={`zondicons:dots-horizontal-triple`} />
+                    </Box>
+                </Flex>
+                <Flex w={{ base: `100%`, md: `fit-content` }} gap={4} alignItems={{ base: `flex-start`, md: `center` }}>
+                    <SelectPicker searchable={false} onSelect={handleStatusChange} style={{ width: `100%` }} placeholder={`Status`} size="lg" data={data} />
                     <IconButton
-                        // isDisabled
                         color={`purple.200`}
                         bgColor={`purple.100`}
-                        isLoading={getAllCustomersStatus.isLoading}
+                        isLoading={getAllProductsStatus.isLoading}
                         spinner={<SpinnerComponentSmall size="sm" />}
                         onClick={filterTable}
                         fontSize={`xl`}
@@ -173,21 +149,6 @@ export const CustomersTableControl = ({ showRefreshBtn }: controlsProp) => {
                         aria-label="Filter table"
                         icon={<Icon icon={`system-uicons:filtering`} />}
                     />
-                    <Box display={{ md: `none` }}>
-                        <DropdownAction handleExport={handleExport} icon={`zondicons:dots-horizontal-triple`} />
-                    </Box>
-                </Flex>
-                <Flex w={{ base: `100%`, md: `fit-content` }} gap={4} alignItems={{ base: `flex-start`, md: `center` }}>
-                    {/* <SelectPicker
-                        disabled
-                        searchable={false}
-                        onSelect={handleStatusChange}
-                        style={{ width: `100%` }}
-                        placeholder={`Status`}
-                        size="lg"
-                        data={data}
-                    /> */}
-                    {/* <SearchComp color={`grey.200`} /> */}
                 </Flex>
             </Flex>
             {/* dots and buttons */}
@@ -205,6 +166,7 @@ export const CustomersTableControl = ({ showRefreshBtn }: controlsProp) => {
                             btnExtras={{
                                 border: `1px solid #6D5DD3`,
                                 leftIcon: `basil:refresh-outline`,
+                                // onClick: () => setEmptyState((prevState) => !prevState),
                             }}
                         />
                     </Box>
@@ -218,7 +180,6 @@ export const CustomersTableControl = ({ showRefreshBtn }: controlsProp) => {
                             borderRadius={'4px'}
                             fontSize={{ base: `sm`, md: `md` }}
                             btnExtras={{
-                                // disabled: true,
                                 border: `1px solid #6D5DD3`,
                                 leftIcon: `solar:export-line-duotone`,
                                 onClick: handleExport,

@@ -21,7 +21,7 @@ export * from './lib/ui/pages/help/Help';
 export * from './lib/ui/pages/Download/Download';
 export * from './lib/ui/pages/Download/active-state/DownloadedContent';
 export * from './lib/ui/UploadExternalFiles';
-export * from './lib/ui/pages/customers/premium/CustomerDetails';
+export * from './lib/ui/pages/customers/customerDetails/CustomerDetails';
 export * from './lib/ui/UploadExternalFiles';
 export * from './lib/ui/pages/payouts/premium/PayoutDetails';
 export * from './lib/ui/pages/payouts/premium/WithdrawalEarnings';

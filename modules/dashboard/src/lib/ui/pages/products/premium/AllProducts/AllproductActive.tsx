@@ -5,7 +5,7 @@ import { ProductCards } from '../../../../ProductCards';
 import { EmptyState } from '../../../../empty-states/EmptyState';
 import { SharedButton } from '@productize/ui';
 import { DataWidgetCard } from '../../../../DataWidgetCard';
-import { ProductTable } from '../../../../tables/ProductTable';
+import { ProductTable } from '../../ProductTable';
 import { useAllProducts } from './service';
 
 const AllproductActive = () => {

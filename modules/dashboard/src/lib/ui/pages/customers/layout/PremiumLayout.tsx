@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import Customers from '../premium/CustomersActive';
+import Customers from '../customerDetails/CustomersActive';
 import { DashboardEmptyState } from '../../../empty-states/DashboardEmptyState';
 import { selectAllProducts, useGetAllProductsMutation } from '@productize/redux';
 

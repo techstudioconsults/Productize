@@ -3,7 +3,7 @@ import { Box, SimpleGrid, Skeleton, Text } from '@chakra-ui/react';
 import { useCurrency } from '@productize/hooks';
 import { DataWidgetCard } from '../../../DataWidgetCard';
 import { DashboardTable } from '../../../tables/DashboardTable';
-import { OrdersTableControl } from '../../../tables/tableControls/OrdersTableControl';
+import { OrdersTableControl } from '../../orders/OrdersTableControl';
 import { useOrders, useProductAnalytics } from '../services/services';
 
 const ActiveUserPage: React.FC = () => {

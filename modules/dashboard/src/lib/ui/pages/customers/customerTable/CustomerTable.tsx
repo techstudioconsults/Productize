@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Text, Stack, Box } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -13,7 +14,7 @@ interface tableProps {
 }
 
 export const CustomerTable = ({ draft, live, deleted, tableData }: tableProps) => {
-    const [getAllCustomers, getAllCustomersStatus] = useGetAllCustomersMutation();
+    const [getAllCustomers] = useGetAllCustomersMutation();
     const navigate = useNavigate();
     const formatCurrency = useCurrency();
     const formatDate = useDate();

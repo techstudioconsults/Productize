@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Icon } from './Icon';
+import { Icon as Iconify } from '@iconify/react';
 import search from '@icons/Property_2_Search_vjopxj.svg';
 import React, { useState, useEffect, useCallback } from 'react';
 import {
@@ -21,14 +22,15 @@ import {
     Tab,
     TabPanel,
     InputRightElement,
-    Spinner,
     Text,
     Image,
     Flex,
     Stack,
+    Center,
 } from '@chakra-ui/react';
 import { useSearchProductsMutation } from '@productize/redux';
 import { Link } from 'react-router-dom';
+import { SpinnerComponentSmall } from './SpinnerComponent';
 
 // interface SearchProps {
 //     color?: string;
@@ -133,9 +135,9 @@ export const SearchComp = ({ color, width, size }) => {
 
                             <TabPanels>
                                 <TabPanel>
-                                    {isLoading && <Spinner />}
+                                    {isLoading && <Spin />}
                                     {isError && <Text color="red.500">Error fetching search results</Text>}
-                                    {!isLoading && searchResults.length === 0 && <Text>No results found</Text>}
+                                    {!isLoading && searchResults.length === 0 && <NotFound />}
                                     {!isLoading && searchResults.length > 0 && (
                                         <Stack gap={4}>
                                             {searchResults.map((product) => (
@@ -146,9 +148,9 @@ export const SearchComp = ({ color, width, size }) => {
                                 </TabPanel>
                                 <TabPanel>
                                     {isLoading ? (
-                                        <Spinner />
+                                        <Spin />
                                     ) : searchResults.length === 0 ? (
-                                        <Text>No results found</Text>
+                                        <NotFound />
                                     ) : (
                                         searchResults?.map((project) => (
                                             <Box key={project.id} p={2} borderBottom="1px solid #ccc">
@@ -159,9 +161,9 @@ export const SearchComp = ({ color, width, size }) => {
                                 </TabPanel>
                                 <TabPanel>
                                     {isLoading ? (
-                                        <Spinner />
+                                        <Spin />
                                     ) : searchResults.length === 0 ? (
-                                        <Text>No results found</Text>
+                                        <NotFound />
                                     ) : (
                                         searchResults?.map((file) => (
                                             <Box key={file.id} p={2} borderBottom="1px solid #ccc">
@@ -172,9 +174,9 @@ export const SearchComp = ({ color, width, size }) => {
                                 </TabPanel>
                                 <TabPanel>
                                     {isLoading ? (
-                                        <Spinner />
+                                        <Spin />
                                     ) : searchResults.length === 0 ? (
-                                        <Text>No results found</Text>
+                                        <NotFound />
                                     ) : (
                                         searchResults?.map((user) => (
                                             <Box key={user.id} p={2} borderBottom="1px solid #ccc">
@@ -231,3 +233,29 @@ const SearchResultTemplate = ({ result }) => {
         </Flex>
     );
 };
+
+const NotFound = () => {
+    return (
+        <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" p={4} textAlign="center">
+            <Center mb={2} color="gray.400" fontSize={`4xl`}>
+                <Iconify icon="nonicons:not-found-16" />
+            </Center>
+            <Text fontSize="xl" fontWeight="bold" color="gray.600" mb={2}>
+                No Results Found
+            </Text>
+            <Text color="gray.500" mb={4}>
+                Try adjusting your search or filter to find what you're looking for.
+            </Text>
+        </Box>
+    );
+};
+
+
+const Spin = () => {
+  return (
+      <Center p={10} gap={2}>
+          <SpinnerComponentSmall size={`sm`} />
+          <Text>Searching...</Text>
+      </Center>
+  );
+}

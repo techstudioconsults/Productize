@@ -8,8 +8,8 @@ import globalTheme from '../scss/globalTheme';
 import 'rsuite/dist/rsuite-no-reset.min.css';
 import { store } from '@productize/redux';
 import { PaywallUpgrade } from '@productize/ui';
-import App from './app/app';
 import ScrollToTop from './utils/ScrollToTop';
+import App from './app/app';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(

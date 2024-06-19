@@ -1,4 +1,4 @@
-import LiveTabActive from '../premium/LiveTabActive';
+import LiveTabActive from '../premium/liveTab/LiveTabActive';
 
 const LiveTabLayout = () => {
     return <LiveTabActive />;

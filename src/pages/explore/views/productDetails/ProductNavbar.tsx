@@ -6,7 +6,7 @@ import { AvatarComp, Cart, SearchComp, SharedButton, Sidenav } from '@productize
 const ProductNavbar = ({ isAuth }: any) => {
     return (
         <Box pos={`sticky`} top={0} bg={`grey.100`} py={5} borderBottom={`1px solid grey.300`} zIndex={999}>
-            <Container maxW={`70rem`}>
+            <Container px={{ base: 4, sm: 8, xl: 0 }} maxW={`70rem`}>
                 <Box as="nav" display="flex" justifyContent="space-between" alignItems="center">
                     <Center gap={4}>
                         <Box>

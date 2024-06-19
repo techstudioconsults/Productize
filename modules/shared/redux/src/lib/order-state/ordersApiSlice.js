@@ -2,22 +2,24 @@
 import { apiSlice } from '../apiSlice';
 import { setAllOrders, setSingleOrder } from './ordersSlice';
 
-const checkCredentials = (credentials, filteredLink) => {
-    if (credentials && !credentials?.link) {
-        return filteredLink;
-    } else if (credentials?.link) {
-        return credentials?.link;
+const constructURL = (credentials) => {
+    if (!credentials) {
+        return '/orders';
+    }
+
+    const { page, startDate, endDate, link } = credentials;
+    if (!link) {
+        return `/orders?page=${page}&start_date=${startDate}&end_date=${endDate}`;
     } else {
-        return `/orders`;
+        return link;
     }
 };
 
-//productize-api.techstudio.academy/api/Orders
 export const OrdersApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         getAllOrders: builder.mutation({
             query: (credentials) => ({
-                url: checkCredentials(credentials, `/orders?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}`),
+                url: constructURL(credentials),
                 method: 'GET',
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {

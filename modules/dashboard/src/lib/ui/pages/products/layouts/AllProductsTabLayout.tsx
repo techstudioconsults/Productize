@@ -1,4 +1,4 @@
-import AllproductActive from '../premium/AllproductActive';
+import AllproductActive from '../premium/AllProducts/AllproductActive';
 
 const AllProductsTabLayout = () => {
     return <AllproductActive />;

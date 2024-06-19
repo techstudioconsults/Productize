@@ -3,7 +3,7 @@ import { Box } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { OrderTable } from './component/OrderTable';
 import { DashboardEmptyState } from '../../../empty-states/DashboardEmptyState';
-import { OrdersTableControl } from '../../../tables/tableControls/OrdersTableControl';
+import { OrdersTableControl } from '../OrdersTableControl';
 import { useGetAllOrdersMutation, selectAllOrders } from '@productize/redux';
 import { OnBoardingLoader } from '@productize/ui';
 

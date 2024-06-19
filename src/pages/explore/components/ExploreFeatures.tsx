@@ -78,6 +78,14 @@ export const ExploreFeatures = ({ title }: slideProps) => {
         }
     };
 
+    if (getAllProducts_EXTERNALStatus?.isLoading) {
+        return (
+            <Center p={10}>
+                <SpinnerComponentSmall />
+            </Center>
+        );
+    }
+
     return (
         <Flex>
             <Container p={0} maxW={`70rem`}>
@@ -89,13 +97,7 @@ export const ExploreFeatures = ({ title }: slideProps) => {
                 </Flex>
 
                 <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 4 }} justifyContent={`space-between`} gap={`1.64rem`}>
-                    {getAllProducts_EXTERNALStatus?.isLoading ? (
-                        <Center p={10}>
-                            <SpinnerComponentSmall />
-                        </Center>
-                    ) : (
-                        renderCards
-                    )}
+                    {renderCards}
                 </SimpleGrid>
                 {!products.products?.length && !getAllProducts_EXTERNALStatus?.isLoading && (
                     <EmptyState

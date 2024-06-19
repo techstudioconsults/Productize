@@ -1,4 +1,4 @@
-import DeleteTabActive from '../premium/DeleteTabActive';
+import DeleteTabActive from '../premium/deleteTab/DeleteTabActive';
 
 const DeleteTabLayout = () => {
     return <DeleteTabActive />;

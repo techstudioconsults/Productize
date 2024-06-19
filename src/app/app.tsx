@@ -27,8 +27,12 @@ import {
     WithdrawalEarnings,
     AccountSettings,
     PaymentSettings,
+    KycSettings,
 } from '@productize/dashboard';
 import { CoverPage } from '../pages/coverPage/CoverPage';
+
+// doesn't feel right
+import { Admin } from '../../modules/admin-dashboard/src/lib/Admin';
 
 // using suspense and lazy loading
 const Home = React.lazy(() =>
@@ -49,6 +53,11 @@ const Pricing = React.lazy(() =>
 const Explore = React.lazy(() =>
     import('../pages/explore/views').then((module) => ({
         default: module.Explore,
+    }))
+);
+const CategoryPageDetails = React.lazy(() =>
+    import('../pages/explore/views/productDetails/CategoryPageDetails').then((module) => ({
+        default: module.CategoryPageDetails,
     }))
 );
 const ProductDetails = React.lazy(() =>
@@ -93,6 +102,7 @@ function App() {
                 <Route path="/features" element={<Features />} />
                 <Route path="/pricing" element={<Pricing />} />
                 <Route path={`/explore`} element={<Explore />} />
+                <Route path={`/explore/category/:mainCategory`} element={<CategoryPageDetails />} />
                 <Route path="/products/:productID" element={<ProductDetails />} />
                 <Route path="/explore/product/cart" element={<ProductCart />} />
                 {/* dashboard */}
@@ -116,10 +126,14 @@ function App() {
                     <Route path="settings" element={<Settings />}>
                         <Route path="account" element={<AccountSettings />} />
                         <Route path="payment" element={<PaymentSettings />} />
+                        <Route path="kyc" element={<KycSettings />} />
                         <Route path="plans" element={<PlanSettings />} />
                         <Route path="plans/billing-cycle" element={<BillingCycle />} />
                     </Route>
                 </Route>
+                {/* admin  dashboard */}
+                <Route path="/admin" element={<Admin />} />
+                {/* not found */}
                 <Route path="*" element={<PageNotFound />} />
             </Routes>
         </Suspense>

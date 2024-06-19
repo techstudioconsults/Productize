@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
+import StarRatings from 'react-star-ratings';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -65,8 +66,11 @@ const ProductSummaryAndPreview = ({ status }) => {
                             {product?.title}
                         </Text>
                         <Flex alignItems={{ base: `flex-start`, xl: `center` }} flexDir={{ base: `column`, xl: `row` }} gap={{ base: 5, xl: 10 }}>
-                            <Flex gap={2} alignItems={`center`}>
+                            <Flex gap={5} alignItems={`center`}>
                                 <Avatar size={`sm`} bg={`grey.300`} name={product?.publisher} src={product?.publisher_logo} />
+                                <Box>
+                                    <StarRatings rating={3} starDimension="20px" starSpacing="1px" starRatedColor={`orange`} />
+                                </Box>
                                 <Text fontWeight={`500`}>By {product?.publisher}</Text>
                             </Flex>
                         </Flex>

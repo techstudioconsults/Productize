@@ -1,4 +1,4 @@
-import CustomersActive from './premium/CustomersActive';
+import CustomersActive from './customerDetails/CustomersActive';
 
 export const Customers = () => {
     return <CustomersActive />;

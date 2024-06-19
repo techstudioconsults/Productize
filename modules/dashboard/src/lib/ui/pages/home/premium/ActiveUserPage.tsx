@@ -1,92 +1,73 @@
+import React from 'react';
 import { Box, SimpleGrid, Skeleton, Text } from '@chakra-ui/react';
-
-import { useCallback, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useCurrency } from '@productize/hooks';
 import { DataWidgetCard } from '../../../DataWidgetCard';
 import { DashboardTable } from '../../../tables/DashboardTable';
-import { OrdersTableControl } from '../../../tables/tableControls/OrdersTableControl';
-import { selectAllOrders, selectProductAnalytics, useGetAllOrdersMutation, useGetProductAnalyticsMutation } from '@productize/redux';
-import { useCurrency } from '@productize/hooks';
+import { OrdersTableControl } from '../../orders/OrdersTableControl';
+import { useOrders, useProductAnalytics } from '../services/services';
 
-const ActiveUserPage = () => {
-    const [getProductAnaysis, getProductAnaysisStatus] = useGetProductAnalyticsMutation();
-    const [getAllOrders, getLiveProductsStatus] = useGetAllOrdersMutation();
+const ActiveUserPage: React.FC = () => {
     const formatCurrency = useCurrency();
-    const productAnaysis = useSelector(selectProductAnalytics);
-    const orders = useSelector(selectAllOrders);
-
-    const showAllOrders = useCallback(async () => {
-        try {
-            await getAllOrders(null).unwrap();
-            await getProductAnaysis(null).unwrap();
-        } catch (error) {
-            return error;
-        }
-    }, [getAllOrders, getProductAnaysis]);
-
-    useEffect(() => {
-        showAllOrders();
-    }, [getProductAnaysis, showAllOrders]);
+    const { productAnalytics, isLoading } = useProductAnalytics();
+    const { orders, getLiveProductsStatus } = useOrders();
 
     return (
         <Box my={8}>
-            {/* dropdown filters and buttons Controls */}
+            {/* Dropdown filters and buttons Controls */}
             <Box>
                 <OrdersTableControl />
             </Box>
-            {/* grid cards */}
+            {/* Grid cards */}
             <Box>
                 <SimpleGrid gap={4} my={4} columns={{ base: 1, md: 2 }}>
-                    <Skeleton isLoaded={!getProductAnaysisStatus.isLoading}>
+                    <Skeleton isLoaded={!isLoading}>
                         <Box>
                             <DataWidgetCard
                                 tmy={2}
                                 bmt={4}
                                 showIcon
                                 bgImg="https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951020/productize/Data_widget_1_bqcsji_dvrrm5.png"
-                                // value={formatCurrency(productAnaysis.total_sales)}
-                                title={'New Order Revenue'}
-                                value={formatCurrency(productAnaysis.new_orders_revenue) || formatCurrency(0)}
+                                title="New Order Revenue"
+                                value={formatCurrency(productAnalytics.new_orders_revenue) || formatCurrency(0)}
                             />
                         </Box>
                     </Skeleton>
-                    <Skeleton isLoaded={!getProductAnaysisStatus.isLoading}>
+                    <Skeleton isLoaded={!isLoading}>
                         <Box>
                             <DataWidgetCard
                                 tmy={2}
                                 bmt={4}
                                 showIcon
                                 bgImg="https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951021/productize/Data_widget_2_fwd9pa_nhxqwd.png"
-                                title={'Total Revenue'}
-                                value={formatCurrency(productAnaysis.total_revenues) || formatCurrency(0)}
+                                title="Total Revenue"
+                                value={formatCurrency(productAnalytics.total_revenues) || formatCurrency(0)}
                             />
                         </Box>
                     </Skeleton>
                 </SimpleGrid>
                 <SimpleGrid gap={4} my={4} columns={{ base: 1, md: 3 }}>
-                    <Skeleton isLoaded={!getProductAnaysisStatus.isLoading}>
+                    <Skeleton isLoaded={!isLoading}>
                         <Box>
-                            <DataWidgetCard showIcon={false} title={'New Order'} value={productAnaysis.new_orders || 0} />
+                            <DataWidgetCard showIcon={false} title="New Order" value={productAnalytics.new_orders || 0} />
                         </Box>
                     </Skeleton>
-                    <Skeleton isLoaded={!getProductAnaysisStatus.isLoading}>
+                    <Skeleton isLoaded={!isLoading}>
                         <Box>
-                            <DataWidgetCard showIcon={false} title={'Total Sales'} value={productAnaysis.total_sales || 0} />
+                            <DataWidgetCard showIcon={false} title="Total Sales" value={productAnalytics.total_sales || 0} />
                         </Box>
                     </Skeleton>
-                    <Skeleton isLoaded={!getProductAnaysisStatus.isLoading}>
+                    <Skeleton isLoaded={!isLoading}>
                         <Box>
-                            <DataWidgetCard showIcon={false} title={'Total Products'} value={productAnaysis.total_products || 0} />
+                            <DataWidgetCard showIcon={false} title="Total Products" value={productAnalytics.total_products || 0} />
                         </Box>
                     </Skeleton>
                 </SimpleGrid>
             </Box>
-            {/* empty state */}
+            {/* Empty state */}
             <Box my={10}>
-                <Text as={`h6`}>Sales</Text>
+                <Text as="h6">Sales</Text>
                 <Box mt={4}>
                     <DashboardTable data={orders} status={getLiveProductsStatus} />
-                    {/* )} */}
                 </Box>
             </Box>
         </Box>

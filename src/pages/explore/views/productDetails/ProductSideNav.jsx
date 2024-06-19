@@ -117,6 +117,9 @@ const ProductSideNav = ({ status }) => {
                     <Box my={4}>
                         <Text color={`grey.800`} fontSize={`22px`} fontWeight={600}>
                             {formatCurrency(totalPrice)}
+                            <Text textDecor={`line-through`} ml={2} color={`red`} fontSize={`22px`} fontWeight={600} as={`span`}>
+                                {formatCurrency(totalPrice)}
+                            </Text>
                         </Text>
                         <Box mt={4}>
                             <NumberInput

@@ -1,151 +1,1017 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
-import { Box, Center, Container, Flex, SimpleGrid, Stack, Text } from '@chakra-ui/react';
+================================================================================
+new product tab
+================================================================================
+ import { Tabs, TabList, TabPanels, Tab, TabPanel, Flex, Box, useDisclosure,} from '@chakra-ui/react';
+import ShareLayout from './ShareLayout';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { SelectPicker } from 'rsuite';
-import { EmptyState } from '@productize/dashboard';
-import Card from './cards/Card';
-import { SharedButton } from '@productize/ui';
+import { FormProvider, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import errorImg from '@icons/error.svg';
+import { useAxiosInstance } from '@productize/hooks';
+import { selectCurrentUser, useUpdateProductStatusMutation } from '@productize/redux';
+import { PaywallUnpublishWarning, PreviewProductSummary, SharedButton, ToastFeedback, useToastAction } from '@productize/ui';
+import { productFormSchema } from '@productize/dashboard';
+import { ProductForm } from '@productize/dashboard';
+import { ContentDeliveryForm } from '@productize/dashboard';
 import { useSelector } from 'react-redux';
-import { selectTags } from '@productize/redux';
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+const activeStateStyle = {
+    borderBottom: `2px solid #6D5DD3`,
+    fontWeight: 600,
+    color: `grey.800`,
+};
+const disabledStateStyle = {
+    color: `grey.800`,
+};
+const tabNames = ['product-details', 'content-delivery', 'preview', 'share'];
 
-export interface slideProps {
-    title: string;
-}
-
-export const ExploreFeatures = ({ title }: slideProps) => {
-    const tags = useSelector(selectTags);
-    const [products, setProducts] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(null);
-    const location = useLocation();
+export const NewProductTab = () => {
+    const { onClose, isOpen, onOpen } = useDisclosure();
+    const user = useSelector(selectCurrentUser);
+    const { query, isLoading } = useAxiosInstance({ MIME_TYPE: 'multipart/form-data' });
+    const [updateProductStatus, updateProductStatusStatus] = useUpdateProductStatusMutation();
+    const { toast, toastIdRef, close } = useToastAction();
+    const { state, hash } = useLocation();
     const navigate = useNavigate();
-    const queryParams = new URLSearchParams(location.search);
-    const tag = queryParams.get('tag');
-
-    const tagData = [`All`, ...tags]?.map((item: string) => ({
-        label: item,
-        value: item,
-    }));
-
-    const fetchData = useCallback(async () => {
-        setIsLoading(true);
-        try {
-            const res = await axios.get(`${BASE_URL}/products?page=${currentPage}`);
-            setProducts(res.data.data);
-            setTotalPages(res.data.meta.last_page);
-            setIsLoading(false);
-        } catch (error: any) {
-            setError(error);
-            setIsLoading(false);
-        }
-    }, [currentPage]);
-
-     const handleTagFilter = (tag: string) => {
-         if (tag === `All`) {
-             navigate(`/explore`);
-         } else {
-             navigate(`/explore?tag=${tag.toLowerCase()}`);
-         }
-         console.log(tag);
-     };
+    const getHashIndex = tabNames.findIndex((tab) => hash === `#${tab}`);
+    const [tabIndex, setTabIndex] = useState(getHashIndex);
+    const methods = useForm({
+        criteriaMode: 'all',
+        mode: 'onChange',
+        resolver: yupResolver(productFormSchema),
+    });
 
     useEffect(() => {
-        fetchData();
-    }, [fetchData]);
+        setTabIndex(getHashIndex);
+        if (state && hash === '#product-details') {
+            methods.setValue('title', state?.product?.title);
+            methods.setValue('price', state?.product?.price);
+            methods.setValue('product_type', state?.product?.product_type);
+            methods.setValue('description', state?.product?.description);
+            methods.setValue('tags', state?.product?.tags);
+        }
+    }, [getHashIndex, hash, methods, state]);
 
-    const handlePrevButton = () => {
-        setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+    const onSubmit = async (data) => {
+        if (state && hash) {
+            const formData = {
+                title: data.title,
+                price: data.price,
+                description: data.description,
+                data: data.data,
+                cover_photos: data.cover_photos,
+                thumbnail: data.thumbnail[0],
+                highlights: data.highlights,
+                tags: data.tags,
+            };
+
+            try {
+                const res = await query(`post`, `/products/${state?.product?.id}?_method=PUT`, formData);
+                if (res.status === 200) {
+                    navigate(`/dashboard/products/new#preview`, {
+                        state: { product: res.data },
+                    });
+                    toastIdRef.current = toast({
+                        position: 'top',
+                        render: () => (
+                            <ToastFeedback
+                                btnColor={`purple.200`}
+                                message={`Product updated Successfully!`}
+                                icon={undefined}
+                                bgColor={undefined}
+                                color={undefined}
+                                handleClose={close}
+                            />
+                        ),
+                    });
+                }
+            } catch (err) {
+                toastIdRef.current = toast({
+                    position: 'top',
+                    render: () => (
+                        <ToastFeedback
+                            message={err.response.data.message || `something went wrong`}
+                            title="Error!"
+                            icon={errorImg}
+                            color={`red.600`}
+                            btnColor={`red.600`}
+                            bgColor={undefined}
+                            handleClose={close}
+                        />
+                    ),
+                });
+            }
+        } else {
+            const formData = {
+                ...data,
+                thumbnail: data.thumbnail[0],
+            };
+
+            try {
+                const res = await query(`post`, `/products`, formData);
+                if (res.status === 201) {
+                    toastIdRef.current = toast({
+                        position: 'top',
+                        render: () => <ToastFeedback btnColor={`purple.200`} message={`Product Created Successfully!`} handleClose={close} />,
+                    });
+                    navigate(`/dashboard/products/new#preview`, {
+                        state: { product: res.data },
+                    });
+                }
+            } catch (err) {
+                toastIdRef.current = toast({
+                    position: 'top',
+                    render: () => (
+                        <ToastFeedback
+                            message={err?.response?.data?.message || `something went wrong`}
+                            title="Error!"
+                            icon={errorImg}
+                            color={`red.600`}
+                            btnColor={`red.600`}
+                            bgColor={undefined}
+                            handleClose={close}
+                        />
+                    ),
+                });
+            }
+        }
     };
 
-    const handleNextButton = () => {
-        setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
+    const handlePublishAction = async () => {
+        // const productID = hash === `#share` ? state?.product?.id : state?.product?.id;
+        const productID = state?.product?.id;
+        if (user?.account_type === `free` && state?.product?.status !== `draft`) {
+            onOpen();
+        } else {
+            try {
+                const res = await updateProductStatus({
+                    productID: productID,
+                }).unwrap();
+                console.log(res);
+
+                if (res?.status === `published`) {
+                    navigate(`/dashboard/products/new#share`, {
+                        state: { product: res },
+                    });
+                    toastIdRef.current = toast({
+                        position: 'top',
+                        render: () => <ToastFeedback btnColor={`purple.200`} message={`Product	published Successfully!`} handleClose={close} />,
+                    });
+                } else {
+                    navigate(`/dashboard/products/new#preview`, {
+                        state: { product: res },
+                    });
+                    toastIdRef.current = toast({
+                        position: 'top',
+                        render: () => <ToastFeedback btnColor={`purple.200`} message={`Product	sent to draft Successfully!`} handleClose={close} />,
+                    });
+                }
+            } catch (error) {
+                console.log(error);
+                if (error.status !== 403) {
+                    toastIdRef.current = toast({
+                        position: 'top',
+                        render: () => (
+                            <ToastFeedback
+                                message={error?.message || `Something went wrong`}
+                                title={`Paystack Setup`}
+                                icon={errorImg}
+                                color={`red.600`}
+                                btnColor={`red.600`}
+                                bgColor={undefined}
+                                handleClose={close}
+                            />
+                        ),
+                    });
+                }
+            }
+        }
     };
 
-    const renderCards = products.map((product: any) => (
-        <Card
-            key={product.slug}
-            productID={product.slug}
-            image={product.thumbnail}
-            heading={product.title}
-            price={product.price}
-            publisher={product.publisher}
-        />
-    ));
+    const productCallsToAction =
+        state?.product?.status === `draft` || hash === `#product-details` ? (
+            <Flex w={`100%`} display={hash !== `#share` ? `flex` : `none`} gap={4}>
+                <SharedButton
+                    btnExtras={{
+                        border: `1px solid red`,
+                        onClick: () => navigate(`/dashboard/products#all-products`),
+                    }}
+                    text={'Cancel'}
+                    width={{ base: `100%`, lg: `fit-content` }}
+                    height={'40px'}
+                    bgColor={'transparent'}
+                    textColor={'red'}
+                    borderRadius={'4px'}
+                    fontSize={{ base: `sm`, md: `sm` }}
+                />
+                <Box width={{ base: `100%`, lg: `fit-content` }} display={hash !== `#preview` ? `block` : `none`}>
+                    <SharedButton
+                        text={'Save & Continue'}
+                        height={'40px'}
+                        width={{ base: `100%`, lg: `fit-content` }}
+                        bgColor={'purple.200'}
+                        textColor={'white'}
+                        borderRadius={'4px'}
+                        fontSize={{ base: `sm`, md: `sm` }}
+                        btnExtras={{
+                            onClickAsync: methods.handleSubmit(onSubmit),
+                            isLoading: isLoading,
+                            loadingText: `Creating product...`,
+                        }}
+                    />
+                </Box>
+                <Box width={{ base: `100%`, lg: `fit-content` }} display={hash === `#preview` ? `block` : `none`}>
+                    <SharedButton
+                        text={'Publish & Continue'}
+                        width={{ base: `100%`, lg: `fit-content` }}
+                        height={'40px'}
+                        bgColor={'purple.200'}
+                        textColor={'white'}
+                        borderRadius={'4px'}
+                        fontSize={{ base: `sm`, md: `sm` }}
+                        btnExtras={{
+                            onClick: handlePublishAction,
+                            isLoading: updateProductStatusStatus.isLoading,
+                            loadingText: `Publishing product...`,
+                            disabled: state?.product?.deleted_at,
+                        }}
+                    />
+                </Box>
+            </Flex>
+        ) : (
+            <Flex gap={4}>
+                <SharedButton
+                    btnExtras={{
+                        border: `1px solid #6D5DD3`,
+                        onClick: handlePublishAction,
+                        isLoading: updateProductStatusStatus.isLoading,
+                        loadingText: `Unpublishing product...`,
+                    }}
+                    text={'Unpublished'}
+                    width={{ base: `100%`, lg: `fit-content` }}
+                    height={'40px'}
+                    bgColor={'transparent'}
+                    textColor={'purple.200'}
+                    borderRadius={'4px'}
+                    fontSize={{ base: `sm`, md: `sm` }}
+                />
+                <Box width={{ base: `100%`, lg: `fit-content` }}>
+                    <SharedButton
+                        text={'Close'}
+                        width={{ base: `100%`, lg: `fit-content` }}
+                        height={'40px'}
+                        bgColor={'purple.200'}
+                        textColor={'white'}
+                        borderRadius={'4px'}
+                        fontSize={{ base: `sm`, md: `sm` }}
+                        btnExtras={{
+                            onClick: () => navigate(`/dashboard/products#all-products`),
+                        }}
+                    />
+                </Box>
+            </Flex>
+        );
 
     return (
-        <Flex>
-            <Container p={0} maxW={`70rem`}>
-                <Flex mb={5} justifyContent={`space-between`} alignItems={`center`}>
-                    <Text as={`h4`}>{title}</Text>
-                    <Box display={{ lg: `none` }}>
-                        <SelectPicker searchable={false} onSelect={handleTagFilter} style={{ width: `100%` }} placeholder={`Tags`} size="sm" data={tagData} />
-                    </Box>
+        <FormProvider {...methods}>
+            <Tabs index={tabIndex} onChange={(index) => setTabIndex(index)} size={`sm`}>
+                <Flex display={{ lg: `none` }} my={5}>
+                    {productCallsToAction}
                 </Flex>
-
-                <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 4 }} justifyContent={`space-between`} gap={`1.64rem`}>
-                    {isLoading ? <Center p={10}>{/* Loading spinner */}</Center> : renderCards}
-                </SimpleGrid>
-                {!products.length && (
-                    <EmptyState
-                        content={{
-                            title: `No content in ${tag} tag`,
-                            desc: '',
-                            img: undefined,
-                        }}
-                        textAlign={{ base: `center` }}
-                        showImage={false}
-                    />
-                )}
-                <Flex mt={4} gap={5} color={`grey.400`} alignItems={`center`} justifyContent={`space-between`} flexDir={{ base: `column-reverse`, lg: `row` }}>
-                    <Flex alignItems={`center`} justifyContent={`space-between`} flexDir={{ base: `column`, lg: `row` }} gap={{ lg: 60 }}>
-                        <Box>
-                            <Text>10 Entries per page </Text>
-                        </Box>
-                        <Box>
-                            <Text>
-                                Page {currentPage} of {totalPages}
-                            </Text>
-                        </Box>
+                <TabList overflowX={`scroll`} overflowY={`hidden`} className={`hide_scrollbar`} justifyContent={`space-between`} color={`grey.400`}>
+                    <Flex>
+                        <Tab
+                            // onClick={() => handleTabClick('#product-details')}
+                            isDisabled
+                            id="product-details"
+                            _disabled={disabledStateStyle}
+                            _selected={activeStateStyle}
+                            py={6}
+                            w={{ base: `10rem`, sm: `initial` }}
+                        >
+                            Product Details
+                        </Tab>
+                        <Tab
+                            // onClick={() => handleTabClick('#content-delivery')}
+                            isDisabled
+                            id="content-delivery"
+                            _disabled={disabledStateStyle}
+                            _selected={activeStateStyle}
+                            py={6}
+                            w={{ base: `10rem`, sm: `initial` }}
+                        >
+                            Content Delivery
+                        </Tab>
+                        <Tab
+                            // onClick={() => handleTabClick('#preview')}
+                            isDisabled
+                            id="preview"
+                            _disabled={disabledStateStyle}
+                            _selected={activeStateStyle}
+                            py={6}
+                            w={{ base: `10rem`, sm: `initial` }}
+                        >
+                            Preview
+                        </Tab>
+                        <Tab
+                            // onClick={() => handleTabClick('#share')}
+                            isDisabled
+                            id="share"
+                            _disabled={disabledStateStyle}
+                            _selected={activeStateStyle}
+                            py={6}
+                            w={{ base: `10rem`, sm: `initial` }}
+                        >
+                            Share
+                        </Tab>
                     </Flex>
-                    <Stack w={{ base: `100%`, lg: `initial` }} justifyContent={`space-between`} direction={`row`}>
-                        <SharedButton
-                            btnExtras={{
-                                leftIcon: `material-symbols:chevron-left`,
-                                border: `1px solid #CFCFD0`,
-                                onClick: handlePrevButton,
-                                disabled: currentPage === 1,
-                            }}
-                            text={'Previous'}
-                            width={'137px'}
-                            height={'40px'}
-                            bgColor={'transparent'}
-                            textColor={'grey.400'}
-                            borderRadius={'4px'}
-                            fontSize={{ base: `sm`, md: `md` }}
-                        />
-                        <SharedButton
-                            btnExtras={{
-                                leftIcon: `material-symbols:chevron-right`,
-                                border: `1px solid #CFCFD0`,
-                                onClick: handleNextButton,
-                                disabled: currentPage === totalPages,
-                            }}
-                            text={'Next'}
-                            width={'137px'}
-                            height={'40px'}
-                            bgColor={'transparent'}
-                            textColor={'grey.400'}
-                            borderRadius={'4px'}
-                            fontSize={{ base: `sm`, md: `md` }}
-                        />
-                    </Stack>
-                </Flex>
-            </Container>
-        </Flex>
+                    <Flex display={{ base: `none`, lg: `initial` }}>
+                        <PaywallUnpublishWarning onClose={onClose} isOpen={isOpen} productID={state?.product?.data?.id} />
+                        {productCallsToAction}
+                    </Flex>
+                </TabList>
+
+                <TabPanels>
+                    <TabPanel px={0}>
+                        {/* <SetNewProductForm /> */}
+                        <ProductForm />
+                        {/* <FormControl as={SimpleGrid} my={8} gap={4} columns={{ base: 1, sm: 2 }}> */}
+                        <Flex alignItems={`center`} w={{ base: `100%`, lg: `49%` }} gap={5}>
+                            <SharedButton
+                                btnExtras={{
+                                    border: `1px solid red`,
+                                    onClick: () => navigate(`/dashboard/products#all-products`),
+                                }}
+                                text={'Cancel'}
+                                width={{ base: `100%`, lg: `50%` }}
+                                height={'40px'}
+                                bgColor={'transparent'}
+                                textColor={'red'}
+                                borderRadius={'4px'}
+                                fontSize={{ base: `sm`, md: `sm` }}
+                            />
+
+                            <SharedButton
+                                text={'Save & Continue'}
+                                height={'40px'}
+                                width={{ base: `100%`, lg: `50%` }}
+                                bgColor={'purple.200'}
+                                textColor={'white'}
+                                borderRadius={'4px'}
+                                fontSize={{ base: `sm`, md: `sm` }}
+                                btnExtras={{
+                                    onClickAsync: methods.handleSubmit(onSubmit),
+                                    isLoading: isLoading,
+                                    loadingText: `Creating product...`,
+                                }}
+                            />
+                        </Flex>
+                        {/* </FormControl> */}
+                    </TabPanel>
+                    <TabPanel px={0}>
+                        <ContentDeliveryForm />
+                    </TabPanel>
+                    <TabPanel px={0}>
+                        <PreviewProductSummary />
+                    </TabPanel>
+                    <TabPanel px={0}>
+                        <ShareLayout />
+                    </TabPanel>
+                </TabPanels>
+            </Tabs>
+        </FormProvider>
     );
 };
+
+
+================================================================================
+product form
+================================================================================
+
+
+
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @nx/enforce-module-boundaries */
+import {
+    Box,
+    Button,
+    Flex,
+    FormControl,
+    FormLabel,
+    Grid,
+    GridItem,
+    Input,
+    InputGroup,
+    InputLeftElement,
+    Progress,
+    Select,
+    SimpleGrid,
+    Stack,
+    Tab,
+    TabList,
+    Tabs,
+    Text,
+} from '@chakra-ui/react';
+import { Field } from './components/FormFields';
+import { useFormContext } from 'react-hook-form';
+import RadioCards from './components/RadioCards';
+
+import { DataUploadField } from './components/DataUploadField';
+import { CoverPhotoUploadField } from './components/CoverPhotoUploadField';
+import RichTextField from './components/RichTextField';
+import { ThumbnailUploadField } from './components/ThumbnailUploadField';
+import { HighLightField } from './components/HighlightField';
+import TagsField from './components/TagsField';
+import { Icon } from '@iconify/react';
+import { useState } from 'react';
+
+const globalFieldStyle = {
+    bgColor: `grey.200`,
+    _focus: {
+        bgColor: `grey.300`,
+        color: `grey.800`,
+    },
+    _placeholder: {
+        color: `grey.400`,
+    },
+};
+
+export const ProductForm = () => {
+    const [isProgressCompleted, setProgressCompleted] = useState(false);
+    const { register } = useFormContext();
+    const [selectedProductType, setSelectedProductType] = useState('digital_product');
+
+    const listen = (value) => {
+        setSelectedProductType(value);
+        setProgressCompleted(false);
+    };
+
+    const handleNext = (e) => {
+        if (e.target.innerText === `Next`) {
+            setProgressCompleted(true);
+        } else {
+            setProgressCompleted(false);
+        }
+    };
+
+    return (
+        <FormControl>
+            {/* GRID ONE*/}
+            <FormControl>
+                <RadioCards listenForChange={listen} />
+            </FormControl>
+
+            {/* GRID TWO */}
+            {/* Digital Products sub form */}
+            <Box display={selectedProductType === `digital_product` ? `block` : `none`}>
+                <Field label="Category">
+                    <Tabs borderRadius={`5px`} p={3} variant={`solid-rounded`} colorScheme="purple" bg={`purple.100`}>
+                        <TabList>
+                            <Tab w={`15rem`} borderRadius={5}>
+                                Learning
+                            </Tab>
+                            <Tab w={`15rem`} borderRadius={5}>
+                                Entertainment
+                            </Tab>
+                            <Tab w={`15rem`} borderRadius={5}>
+                                Art
+                            </Tab>
+                        </TabList>
+                    </Tabs>
+                </Field>
+                <FormControl as={Grid} templateRows="repeat(1, 1fr)" templateColumns="repeat(12, 1fr)" gap={4} my={8}>
+                    <GridItem colSpan={{ base: 12, md: 6 }}>
+                        {/* product title */}
+                        <Field label="Product Title">
+                            <Input
+                                maxLength={30}
+                                placeholder="Name of product"
+                                variant={`filled`}
+                                size={`lg`}
+                                sx={globalFieldStyle}
+                                {...register(`title`)}
+                                type="text"
+                                id="title"
+                            />
+                        </Field>
+                    </GridItem>
+                    <GridItem colSpan={{ base: 12, md: 3 }}>
+                        {/* product price */}
+                        <Field label="Price">
+                            <InputGroup>
+                                <InputLeftElement mt={1} pointerEvents="none">
+                                    <Icon fontSize={`1.2rem`} icon="mdi:naira" />
+                                </InputLeftElement>
+                                <Input placeholder="0" variant={`filled`} size={`lg`} sx={globalFieldStyle} {...register(`price`)} type="number" id="price" />
+                            </InputGroup>
+                        </Field>
+                    </GridItem>
+                    <GridItem colSpan={{ base: 12, md: 3 }}>
+                        {/* discount price */}
+                        <Field label="Discounted Price (optional)">
+                            <InputGroup>
+                                <InputLeftElement mt={1} pointerEvents="none">
+                                    <Icon fontSize={`1.2rem`} icon="mdi:naira" />
+                                </InputLeftElement>
+                                <Input
+                                    placeholder="0"
+                                    variant={`filled`}
+                                    size={`lg`}
+                                    sx={globalFieldStyle}
+                                    {...register(`price`)}
+                                    type="number"
+                                    id="discount_price"
+                                />
+                            </InputGroup>
+                        </Field>
+                    </GridItem>
+                </FormControl>
+                <Stack>
+                    {/* GRID THREE */}
+                    <FormControl h={`21rem`} overflow={`hidden`}>
+                        <RichTextField />
+                    </FormControl>
+
+                    {/* GRID FOUR */}
+                    <FormControl my={8} gap={4}>
+                        <DataUploadField />
+                    </FormControl>
+
+                    {/* GRID FIVE */}
+                    <FormControl my={8} gap={4}>
+                        <Field>
+                            <CoverPhotoUploadField />
+                        </Field>
+                    </FormControl>
+
+                    {/* GRID SIX */}
+                    <FormControl my={8} gap={4}>
+                        <Field>
+                            <ThumbnailUploadField />
+                        </Field>
+                    </FormControl>
+
+                    {/* GRID SEVEN */}
+                    <FormControl as={SimpleGrid} my={8} gap={4} columns={{ base: 1, sm: 2 }}>
+                        <Field>
+                            <HighLightField />
+                        </Field>
+                    </FormControl>
+
+                    {/* GRID EIGHT */}
+                    <FormControl as={SimpleGrid} my={8} gap={4} columns={{ base: 1, sm: 2 }}>
+                        <Field>
+                            <TagsField />
+                        </Field>
+                    </FormControl>
+                </Stack>
+            </Box>
+
+            {/* skill selling sub form */}
+            <Box display={selectedProductType === `skill_selling` ? `block` : `none`}>
+                <Box>
+                    <Text fontSize={`sm`} fontWeight={`semibold`}>
+                        Step {isProgressCompleted ? 2 : 1} of 2
+                    </Text>
+                    <Progress size={`xs`} borderRadius={5} value={isProgressCompleted ? 100 : 50} colorScheme={`purple`} />
+                </Box>
+                <Stack display={isProgressCompleted ? `none` : `block`}>
+                    <FormControl as={Grid} templateRows="repeat(1, 1fr)" templateColumns="repeat(12, 1fr)" gap={10} my={8}>
+                        <GridItem colSpan={{ base: 12, md: 6 }}>
+                            {/* product title */}
+                            <Field label="Title">
+                                <Input
+                                    maxLength={30}
+                                    placeholder="Name of product"
+                                    variant={`filled`}
+                                    size={`lg`}
+                                    sx={globalFieldStyle}
+                                    {...register(`title`)}
+                                    type="text"
+                                    id="title"
+                                />
+                            </Field>
+                        </GridItem>
+                        <GridItem colSpan={{ base: 12, md: 6 }}>
+                            {/* product price */}
+                            <Field label="Skill">
+                                <Select sx={globalFieldStyle} variant={`filled`} size={`lg`} placeholder="Select option">
+                                    <option value="option1">Option 1</option>
+                                    <option value="option2">Option 2</option>
+                                    <option value="option3">Option 3</option>
+                                </Select>
+                            </Field>
+                        </GridItem>
+                        <GridItem colSpan={{ base: 12, md: 6 }}>
+                            {/* discount price */}
+                            <Field label="Skill Level">
+                                <Select sx={globalFieldStyle} variant={`filled`} size={`lg`} placeholder="Select option">
+                                    <option value="option1">Option 1</option>
+                                    <option value="option2">Option 2</option>
+                                    <option value="option3">Option 3</option>
+                                </Select>
+                            </Field>
+                        </GridItem>
+                        <GridItem colSpan={{ base: 12, md: 6 }}>
+                            {/* discount price */}
+                            <Field label="Rates">
+                                <Select sx={globalFieldStyle} variant={`filled`} size={`lg`} placeholder="Select option">
+                                    <option value="option1">Option 1</option>
+                                    <option value="option2">Option 2</option>
+                                    <option value="option3">Option 3</option>
+                                </Select>
+                            </Field>
+                        </GridItem>
+                        <GridItem colSpan={{ base: 12, md: 6 }}>
+                            {/* discount price */}
+                            <Field label="Availability">
+                                <Select sx={globalFieldStyle} variant={`filled`} size={`lg`} placeholder="Select option">
+                                    <option value="option1">Option 1</option>
+                                    <option value="option2">Option 2</option>
+                                    <option value="option3">Option 3</option>
+                                </Select>
+                            </Field>
+                        </GridItem>
+                        <GridItem colSpan={{ base: 12, md: 6 }}>
+                            {/* discount price */}
+                            <Field label="Portfolio Link">
+                                <Input
+                                    maxLength={30}
+                                    placeholder="Name of product"
+                                    variant={`filled`}
+                                    size={`lg`}
+                                    sx={globalFieldStyle}
+                                    {...register(`title`)}
+                                    type="text"
+                                    id="title"
+                                />
+                            </Field>
+                        </GridItem>
+                    </FormControl>
+
+                    {/* GRID THREE */}
+                    <FormControl h={`21rem`} overflow={`hidden`}>
+                        <RichTextField />
+                    </FormControl>
+                </Stack>
+
+                <Stack display={isProgressCompleted ? `block` : `none`}>
+                    {/* GRID FOUR */}
+                    <FormControl my={8} gap={4}>
+                        <DataUploadField />
+                    </FormControl>
+
+                    {/* GRID FIVE */}
+                    <FormControl my={8} gap={4}>
+                        <Field>
+                            <CoverPhotoUploadField />
+                        </Field>
+                    </FormControl>
+
+                    {/* GRID SIX */}
+                    <FormControl my={8} gap={4}>
+                        <Field>
+                            <ThumbnailUploadField />
+                        </Field>
+                    </FormControl>
+
+                    {/* GRID SEVEN */}
+                    <FormControl as={SimpleGrid} my={8} gap={4} columns={{ base: 1, sm: 2 }}>
+                        <Field>
+                            <HighLightField />
+                        </Field>
+                    </FormControl>
+
+                    {/* GRID EIGHT */}
+                    <FormControl as={SimpleGrid} my={8} gap={4} columns={{ base: 1, sm: 2 }}>
+                        <Field>
+                            <TagsField />
+                        </Field>
+                    </FormControl>
+                </Stack>
+                <Flex gap={4} justifyContent={`flex-end`} mt={2}>
+                    <Button variant={`text`} onClick={handleNext}>
+                        Next
+                    </Button>
+                    <Button variant={`text`} onClick={handleNext}>
+                        Back
+                    </Button>
+                </Flex>
+            </Box>
+
+            {/* template hub sub form */}
+            <Box display={selectedProductType === `template_hub` ? `block` : `none`}>
+                <Box>
+                    <Text fontSize={`sm`} fontWeight={`semibold`}>
+                        Step {isProgressCompleted ? 2 : 1} of 2
+                    </Text>
+                    <Progress size={`xs`} borderRadius={5} value={isProgressCompleted ? 100 : 50} colorScheme={`purple`} />
+                </Box>
+                <Box>
+                    {/* sub form 1 */}
+                    <FormControl display={isProgressCompleted ? `none` : `block`} mt={8}>
+                        <Grid as={Grid} gap={4} templateRows="repeat(1, 1fr)" templateColumns="repeat(12, 1fr)">
+                            <GridItem colSpan={{ base: 12, md: 6 }}>
+                                {/* product title */}
+                                <Field label="Product Title">
+                                    <Input
+                                        maxLength={30}
+                                        placeholder="Name of product"
+                                        variant={`filled`}
+                                        size={`lg`}
+                                        sx={globalFieldStyle}
+                                        {...register(`title`)}
+                                        type="text"
+                                        id="title"
+                                    />
+                                </Field>
+                            </GridItem>
+                            <GridItem colSpan={{ base: 12, md: 3 }}>
+                                {/* product price */}
+                                <Field label="Price">
+                                    <InputGroup>
+                                        <InputLeftElement mt={1} pointerEvents="none">
+                                            <Icon fontSize={`1.2rem`} icon="mdi:naira" />
+                                        </InputLeftElement>
+                                        <Input
+                                            placeholder="0"
+                                            variant={`filled`}
+                                            size={`lg`}
+                                            sx={globalFieldStyle}
+                                            {...register(`price`)}
+                                            type="number"
+                                            id="price"
+                                        />
+                                    </InputGroup>
+                                </Field>
+                            </GridItem>
+                            <GridItem colSpan={{ base: 12, md: 3 }}>
+                                {/* discount price */}
+                                <Field label="Discounted Price">
+                                    <InputGroup>
+                                        <InputLeftElement mt={1} pointerEvents="none">
+                                            <Icon fontSize={`1.2rem`} icon="mdi:naira" />
+                                        </InputLeftElement>
+                                        <Input
+                                            placeholder="0"
+                                            variant={`filled`}
+                                            size={`lg`}
+                                            sx={globalFieldStyle}
+                                            {...register(`price`)}
+                                            type="number"
+                                            id="discount_price"
+                                        />
+                                    </InputGroup>
+                                </Field>
+                            </GridItem>
+                        </Grid>
+                        <Stack mt={8}>
+                            {/* GRID THREE */}
+                            <FormControl h={`21rem`} overflow={`hidden`}>
+                                <RichTextField />
+                            </FormControl>
+
+                            {/* GRID FOUR */}
+                            <FormControl my={8} gap={4}>
+                                <DataUploadField />
+                            </FormControl>
+
+                            {/* GRID FIVE */}
+                            <FormControl my={8} gap={4}>
+                                <Field>
+                                    <CoverPhotoUploadField />
+                                </Field>
+                            </FormControl>
+
+                            {/* GRID SIX */}
+                            <FormControl my={8} gap={4}>
+                                <Field>
+                                    <ThumbnailUploadField />
+                                </Field>
+                            </FormControl>
+
+                            {/* GRID SEVEN */}
+                            <FormControl as={SimpleGrid} my={8} gap={4} columns={{ base: 1, sm: 2 }}>
+                                <Field>
+                                    <HighLightField />
+                                </Field>
+                            </FormControl>
+
+                            {/* GRID EIGHT */}
+                            <FormControl as={SimpleGrid} my={8} gap={4} columns={{ base: 1, sm: 2 }}>
+                                <Field>
+                                    <TagsField />
+                                </Field>
+                            </FormControl>
+                        </Stack>
+                    </FormControl>
+                    {/* sub form 2 */}
+                    <Grid display={isProgressCompleted ? `grid` : `none`} my={10} templateColumns="repeat(12, 1fr)" gap={6}>
+                        <GridItem colSpan={{ base: 12, md: 6 }}>
+                            <FormControl my={5}>
+                                <FormLabel color={`purple.300`} fontWeight={600}>
+                                    Category
+                                </FormLabel>
+                                <Text fontSize={`sm`} color={`grey.400`} mb={2}>
+                                    Select category you want your product to be categorised under.{' '}
+                                </Text>
+                                <Select
+                                    bgColor={`grey.200`}
+                                    _focus={{ bgColor: `grey.300`, color: `grey.800` }}
+                                    _placeholder={{ color: `grey.400` }}
+                                    variant={`filled`}
+                                    size={`lg`}
+                                    placeholder="Select Category"
+                                >
+                                    <option value="option1">Word Press</option>
+                                    <option value="option2">CMS Theme</option>
+                                    <option value="option2">eCommerce</option>
+                                    <option value="option2">Blogging</option>
+                                    <option value="option2">Marketing</option>
+                                    <option value="option2">Muse Template</option>
+                                    <option value="option2">Forum</option>
+                                    <option value="option2">Jamstack</option>
+                                </Select>
+                            </FormControl>
+                            <FormControl my={5}>
+                                <FormLabel color={`purple.300`} fontWeight={600}>
+                                    URL
+                                </FormLabel>
+                                <Flex color={`grey.400`} alignItems={`center`} gap={2} mb={2}>
+                                    <Icon icon={`fluent:info-16-filled`} />
+                                    <Text fontSize={`sm`}>Enter the URL to the template</Text>
+                                </Flex>
+                                <Input
+                                    bgColor={`grey.200`}
+                                    _focus={{ bgColor: `grey.300`, color: `grey.800` }}
+                                    _placeholder={{ color: `grey.400` }}
+                                    variant={`filled`}
+                                    size={`lg`}
+                                    placeholder="Select option"
+                                />
+                            </FormControl>
+                        </GridItem>
+                    </Grid>
+                    <Flex gap={4} justifyContent={`flex-end`} mt={2}>
+                        <Button variant={`text`} onClick={handleNext}>
+                            Next
+                        </Button>
+                        <Button variant={`text`} onClick={handleNext}>
+                            Back
+                        </Button>
+                    </Flex>
+                </Box>
+            </Box>
+        </FormControl>
+    );
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import '../styles.scss';
+
+// import React, { Suspense, useCallback, useEffect } from 'react';
+// import { Route, Routes } from 'react-router-dom';
+// import { useGetProductTagsMutation } from '@productize/redux';
+// import { PageNotFound, PreLoader, SpinnerComponent } from '@productize/ui';
+// import { ForgotPassword, Login, Signup } from '@productize/auth';
+// import {
+//     Analytics,
+//     BillingCycle,
+//     Customers,
+//     CustomersDetails,
+//     DashboardLayout,
+//     Download,
+//     DownloadedContent,
+//     Help,
+//     NewProduct,
+//     Orders,
+//     Payouts,
+//     PlanSettings,
+//     Products,
+//     Profile,
+//     Settings,
+//     ProductDetails as DashboardProductDetails,
+//     Home as DashboardHome,
+//     OrderDetails as DashboardOrderDetails,
+//     WithdrawalEarnings,
+//     AccountSettings,
+//     PaymentSettings,
+// } from '@productize/dashboard';
+// import { CoverPage } from '../pages/coverPage/CoverPage';
+
+// // using suspense and lazy loading
+// const Home = React.lazy(() =>
+//     import('../pages/home/Home').then((module) => ({
+//         default: module.Home,
+//     }))
+// );
+// const Features = React.lazy(() =>
+//     import('../pages/features/Features').then((module) => ({
+//         default: module.Features,
+//     }))
+// );
+// const Pricing = React.lazy(() =>
+//     import('../pages/pricing/Pricing').then((module) => ({
+//         default: module.Pricing,
+//     }))
+// );
+// const Explore = React.lazy(() =>
+//     import('../pages/explore/views').then((module) => ({
+//         default: module.Explore,
+//     }))
+// );
+// const ProductDetails = React.lazy(() =>
+//     import('../pages/explore/views/productDetails/ProductDetails').then((module) => ({
+//         default: module.ProductDetails,
+//     }))
+// );
+// const ProductCart = React.lazy(() =>
+//     import('../pages/explore/views/productDetails/ProductCart').then((module) => ({
+//         default: module.ProductCart,
+//     }))
+// );
+
+// export function App() {
+//     const [getProductTags] = useGetProductTagsMutation();
+
+//     const getTags = useCallback(async () => {
+//         await getProductTags(null).unwrap();
+//     }, [getProductTags]);
+
+//     useEffect(() => {
+//         getTags();
+//     }, [getTags]);
+
+//     return (
+//         <Suspense
+//             fallback={
+//                 <div style={{ width: `100%`, height: `100vh` }} className="d-flex align-items-center justify-content-center">
+//                     <SpinnerComponent />
+//                 </div>
+//             }
+//         >
+//             <Routes>
+//                 {/* authentication */}
+//                 <Route path={`/auth`} element={<Signup />} />
+//                 <Route path="/auth/login" element={<Login />} />
+//                 <Route path="/auth/fetching-data/:provider" element={<PreLoader />} />
+//                 <Route path="/auth/forgot-password" element={<ForgotPassword />} />
+//                 {/* external pages */}
+//                 <Route index element={<CoverPage />} />
+//                 <Route path="/seller" element={<Home />} />
+//                 <Route path="/features" element={<Features />} />
+//                 <Route path="/pricing" element={<Pricing />} />
+//                 <Route path={`/explore`} element={<Explore />} />
+//                 <Route path="/products/:productID" element={<ProductDetails />} />
+//                 <Route path="/explore/product/cart" element={<ProductCart />} />
+//                 {/* dashboard */}
+//                 <Route path="/dashboard" element={<DashboardLayout />}>
+//                     <Route path="home" index element={<DashboardHome />} />
+//                     <Route path="products" element={<Products />} />
+//                     <Route path="products/:productID" element={<DashboardProductDetails />} />
+//                     <Route path="products/new" element={<NewProduct />} />
+//                     <Route path="orders" element={<Orders />} />
+//                     <Route path="orders/:orderID" element={<DashboardOrderDetails />} />
+//                     <Route path="customers" element={<Customers />} />
+//                     <Route path="customers/:customerID" element={<CustomersDetails />} />
+//                     <Route path="payouts" element={<Payouts />} />
+//                     {/* <Route path="payouts/:payoutid" element={<PayoutDetails />} /> */}
+//                     <Route path="payouts/:payoutid/withdraw-earnings" element={<WithdrawalEarnings />} />
+//                     <Route path="analytics" element={<Analytics />} />
+//                     <Route path="profile/:userID" element={<Profile />} />
+//                     <Route path="help" element={<Help />} />
+//                     <Route path="downloads" element={<Download />} />
+//                     <Route path="downloads/:downloadedContentID" element={<DownloadedContent />} />
+//                     <Route path="settings" element={<Settings />}>
+//                         <Route path="account" element={<AccountSettings />} />
+//                         <Route path="payment" element={<PaymentSettings />} />
+//                         <Route path="plans" element={<PlanSettings />} />
+//                         <Route path="plans/billing-cycle" element={<BillingCycle />} />
+//                     </Route>
+//                 </Route>
+//                 <Route path="*" element={<PageNotFound />} />
+//             </Routes>
+//         </Suspense>
+//     );
+// }
+
+// export default App;

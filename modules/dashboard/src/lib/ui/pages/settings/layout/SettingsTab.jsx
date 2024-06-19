@@ -13,7 +13,7 @@ const inactiveTabStyle = {
     color: 'grey.400',
 };
 
-const tabNames = ['account', 'payment', 'plans'];
+const tabNames = ['account', 'payment', 'kyc', 'plans'];
 
 export const SettingsTab = () => {
     const { pathname } = useLocation();
@@ -44,6 +44,11 @@ export const SettingsTab = () => {
                 <NavLink to="/dashboard/settings/payment" onClick={() => handleTabClick('payment')}>
                     <Text fontSize={`sm`} py={3} px={3} style={activeTab === 'payment' ? activeStateStyle : inactiveTabStyle}>
                         Payment
+                    </Text>
+                </NavLink>
+                <NavLink to="/dashboard/settings/kyc" onClick={() => handleTabClick('kyc')}>
+                    <Text fontSize={`sm`} py={3} px={3} style={activeTab === 'kyc' ? activeStateStyle : inactiveTabStyle}>
+                        KYC
                     </Text>
                 </NavLink>
                 <NavLink to="/dashboard/settings/plans" onClick={() => handleTabClick('plans')}>

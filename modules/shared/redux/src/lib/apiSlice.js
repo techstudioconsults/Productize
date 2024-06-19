@@ -5,22 +5,17 @@ const baseQuery = fetchBaseQuery({
     baseUrl: import.meta.env.VITE_BASE_URL,
     prepareHeaders: (headers, { getState }) => {
         const token = getState().Auth.token;
-        // if we have a token, set the auth header value
         if (token) {
             headers.set('Authorization', `Bearer ${token}`);
-            // headers.set('Content-Type', `multipart/form-data`);
         }
         return headers;
     },
+    credentials: 'include',
 });
-
-const baseQueryWithReauth = async (args, api, extraOptions) => {
-    let result = await baseQuery(args, api, extraOptions);
-
-    if (result?.error?.status === 401) {
-        if (result.meta.request.url !== `https://productize-api.techstudio.academy/api/carts`) {
-            window.location.href = '/auth/login';
-        }
+ 
+const handleUnauthorized = (result, api) => {
+    if (result?.error?.status === 401 && result.meta.request.url !== `https://productize-api.techstudio.academy/api/carts`) {
+        window.location.href = '/auth/login';
     } else if (result?.error?.status === 403 || result?.error?.data?.message === `User is not subscribed`) {
         store.dispatch({
             type: 'User/FREE_PLAN_OVER_RESPONSE',
@@ -32,6 +27,11 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
             },
         });
     }
+};
+
+const baseQueryWithReauth = async (args, api, extraOptions) => {
+    const result = await baseQuery(args, api, extraOptions);
+    handleUnauthorized(result, api);
     return result;
 };
 

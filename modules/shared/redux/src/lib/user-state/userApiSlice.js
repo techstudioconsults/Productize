@@ -41,27 +41,27 @@ export const userApiSlice = apiSlice.injectEndpoints({
 
         upgradePlan: builder.mutation({
             query: () => ({
-                url: `/payments/subscription`,
+                url: `/subscriptions`,
                 method: 'POST',
             }),
         }),
 
         enableSubscription: builder.mutation({
             query: () => ({
-                url: `/payments/subscription/enable`,
+                url: `/subscriptions/enable`,
                 method: 'GET',
             }),
         }),
 
         manageSubscription: builder.mutation({
             query: (credentials) => ({
-                url: `payments/subscription/manage`,
+                url: `/subscriptions/manage`,
                 method: 'GET',
             }),
         }),
         billingHistory: builder.mutation({
             query: (credentials) => ({
-                url: `/payments/subscription/billing`,
+                url: `/subscriptions`,
                 method: 'GET',
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {

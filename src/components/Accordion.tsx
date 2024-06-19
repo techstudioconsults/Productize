@@ -11,6 +11,7 @@ export const AccordionComponent = () => {
 
     const getData = useCallback(async () => {
         const res = await getFAQ(null).unwrap();
+        console.log(res);
 
         if (res.data) {
             setFAQ(res.data);

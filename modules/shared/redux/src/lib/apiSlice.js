@@ -10,9 +10,9 @@ const baseQuery = fetchBaseQuery({
         }
         return headers;
     },
-    credentials: 'include',
+    // credentials: 'include',
 });
- 
+
 const handleUnauthorized = (result, api) => {
     if (result?.error?.status === 401 && result.meta.request.url !== `https://productize-api.techstudio.academy/api/carts`) {
         window.location.href = '/auth/login';

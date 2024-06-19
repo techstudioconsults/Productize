@@ -7,7 +7,7 @@ const constructURL = (credentials, filteredLink) => {
     } else if (credentials?.link) {
         return credentials?.link;
     } else {
-        return `/payments/payouts`;
+        return `/payouts`;
     }
 };
 
@@ -41,27 +41,27 @@ export const userApiSlice = apiSlice.injectEndpoints({
 
         upgradePlan: builder.mutation({
             query: () => ({
-                url: `/payments/subscription`,
+                url: `/subscriptions`,
                 method: 'POST',
             }),
         }),
 
         enableSubscription: builder.mutation({
             query: () => ({
-                url: `/payments/subscription/enable`,
+                url: `/subscriptions/enable`,
                 method: 'GET',
             }),
         }),
 
         manageSubscription: builder.mutation({
             query: (credentials) => ({
-                url: `payments/subscription/manage`,
+                url: `/subscriptions/manage`,
                 method: 'GET',
             }),
         }),
         billingHistory: builder.mutation({
             query: (credentials) => ({
-                url: `/payments/subscription/billing`,
+                url: `/subscriptions`,
                 method: 'GET',
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
@@ -80,7 +80,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
 
         getPayoutStats: builder.mutation({
             query: (credentials) => ({
-                url: `/payments`,
+                url: `/payouts`,
                 method: 'GET',
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
@@ -101,7 +101,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
             query: (credentials) => ({
                 url: constructURL(
                     credentials,
-                    `/payments/payouts?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}`
+                    `/payouts?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}`
                 ),
                 method: 'GET',
             }),
@@ -144,7 +144,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
 
         setupPaymentAccount: builder.mutation({
             query: (credentials) => ({
-                url: `/payments/accounts`,
+                url: `/accounts`,
                 method: 'POST',
                 body: { ...credentials },
             }),
@@ -152,7 +152,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
 
         initiateWithdrawal: builder.mutation({
             query: (credentials) => ({
-                url: `/payments/payouts`,
+                url: `/payouts`,
                 method: 'POST',
                 body: { ...credentials },
             }),
@@ -160,7 +160,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
 
         getBankList: builder.mutation({
             query: () => ({
-                url: `/payments/bank-list`,
+                url: `/accounts/bank-list`,
                 method: 'GET',
             }),
         }),
@@ -183,7 +183,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
 
         retrieveAllPayoutAccount: builder.mutation({
             query: (credentials) => ({
-                url: `/payments/accounts`,
+                url: `/accounts`,
                 method: 'GET',
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
@@ -221,7 +221,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
 
         togglePaystackAccountActivation: builder.mutation({
             query: (credentials) => ({
-                url: `/payments/accounts/${credentials.accountID}`,
+                url: `/accounts/${credentials.accountID}`,
                 method: 'PATCH',
                 body: { ...credentials.body },
             }),

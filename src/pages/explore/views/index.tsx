@@ -19,6 +19,7 @@ export const Explore = () => {
         await getFromCart(null).unwrap();
         const res = await getTopProducts(null).unwrap();
         const searchRes = await getProductsBasedOnSearch(null).unwrap();
+        console.log(searchRes);
 
         if (res.data) {
             setTopProducts(res.data);

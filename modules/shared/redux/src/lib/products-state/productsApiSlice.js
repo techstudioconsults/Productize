@@ -8,9 +8,10 @@ import {
     setProductsAnalytics,
     setSingleProduct,
     setSingleProductCustomers,
+    // setSearchedProducts,
 } from './productsSlice';
 
-const checkCredentials = (credentials, filteredLink, status) => {
+const constructURL = (credentials, filteredLink, status) => {
     if (credentials && !credentials?.link) {
         return filteredLink;
     } else if (credentials?.link) {
@@ -20,12 +21,12 @@ const checkCredentials = (credentials, filteredLink, status) => {
     }
 };
 
-//productize-api.techstudio.academy/api/products
+// productize-api.techstudio.academy/api/products
 export const productsApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         getAllProducts: builder.mutation({
             query: (credentials) => ({
-                url: checkCredentials(
+                url: constructURL(
                     credentials,
                     `/products/users?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}&status=${
                         credentials?.status ? credentials?.status : ''
@@ -50,7 +51,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
         }),
         getLiveProducts: builder.mutation({
             query: (credentials) => ({
-                url: checkCredentials(
+                url: constructURL(
                     credentials,
                     `/products/users?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}&status=published`,
                     `published`
@@ -74,7 +75,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
         }),
         getDraftProducts: builder.mutation({
             query: (credentials) => ({
-                url: checkCredentials(
+                url: constructURL(
                     credentials,
                     `/products/users?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}&status=draft`,
                     `draft`
@@ -97,7 +98,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
         }),
         getDeletedProducts: builder.mutation({
             query: (credentials) => ({
-                url: checkCredentials(
+                url: constructURL(
                     credentials,
                     `/products/users?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}&status=deleted`,
                     `deleted`
@@ -211,6 +212,21 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                 method: 'GET',
             }),
         }),
+        searchProducts: builder.mutation({
+            query: (credentials) => ({
+                url: `/products/search`,
+                method: 'POST',
+                body: { ...credentials },
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    // console.log(data);
+                } catch (error) {
+                    return error;
+                }
+            },
+        }),
     }),
 });
 
@@ -228,4 +244,5 @@ export const {
     useDownloadProductsListMutation,
     useDownloadedProductsMutation,
     useGetCustomersOfSingleProductMutation,
+    useSearchProductsMutation,
 } = productsApiSlice;

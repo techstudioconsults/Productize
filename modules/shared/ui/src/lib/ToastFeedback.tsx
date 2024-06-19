@@ -1,8 +1,9 @@
-import { Box, Card, Flex, Image, Text, useToast } from "@chakra-ui/react";
-import successNotice from "@icons/success-notice.png";
-import React, { useRef } from "react";
+import { Box, Card, Flex, Image, Text, useToast } from '@chakra-ui/react';
+import successNotice from '@icons/success-notice.png';
+import React, { useRef } from 'react';
 
-interface toastProps {
+// Define the props interface for ToastFeedback component
+interface ToastProps {
     title?: string;
     message: string;
     bgColor?: string;
@@ -12,35 +13,37 @@ interface toastProps {
     handleClose?: () => void;
 }
 
-export const ToastFeedback = ({ title, message, icon, bgColor, color, btnColor, handleClose }: toastProps) => {
+// ToastFeedback component
+export const ToastFeedback: React.FC<ToastProps> = ({ title, message, icon, bgColor, color, btnColor, handleClose }) => {
     return (
         <Card
-            display={`flex`}
-            flexDir={`row`}
-            justifyContent={`space-between`}
-            alignItems={`flex-end`}
-            w={{ base: `100%`, lg: `702px` }}
+            display="flex"
+            flexDir="row"
+            justifyContent="space-between"
+            alignItems="flex-end"
+            w={{ base: '100%', lg: '702px' }}
             p={1}
-            bg={bgColor || `grey.100`}
+            bg={bgColor || 'grey.100'}
         >
-            <Flex justifyContent={`space-between`} alignItems={`center`}>
-                <Box borderRight={`1px solid grey`} p={2}>
-                    <Image w={`32px`} h={`32px`} objectFit={`cover`} objectPosition={`center`} src={icon || successNotice} alt="img" />
+            <Flex justifyContent="space-between" alignItems="center">
+                <Box borderRight="1px solid grey" p={2}>
+                    <Image w="32px" h="32px" objectFit="cover" objectPosition="center" src={icon || successNotice} alt="img" />
                 </Box>
                 <Box p={2}>
-                    <Text fontWeight={600}>{title || `Congratulations!`}</Text>
-                    <Text className="small-text" color={color || `grey.400`}>
+                    <Text fontWeight={600}>{title || 'Congratulations!'}</Text>
+                    <Text className="small-text" color={color || 'grey.400'}>
                         {message}
                     </Text>
                 </Box>
             </Flex>
-            <Text onClick={handleClose} color={btnColor} size={`sm`} cursor={`pointer`} mr={5} mb={2}>
+            <Text onClick={handleClose} color={btnColor} size="sm" cursor="pointer" mr={5} mb={2}>
                 Close
             </Text>
         </Card>
     );
 };
 
+// Define the return type for useToastAction hook
 interface ToastActionProps {
     toast: ReturnType<typeof useToast>;
     toastIdRef: React.MutableRefObject<string | number | undefined>;
@@ -48,6 +51,7 @@ interface ToastActionProps {
     closeAll: () => void;
 }
 
+// useToastAction hook
 export const useToastAction = (): ToastActionProps => {
     const toast = useToast();
     const toastIdRef = useRef<string | number>();

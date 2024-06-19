@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     token: null,
@@ -9,20 +9,16 @@ const initialState = {
 };
 
 const authSlice = createSlice({
-    name: "Auth",
+    name: 'auth',
     initialState,
     reducers: {
         setCredentials: (state, action) => {
-            const { accessToken } = action.payload;
-            state.token = accessToken;
+            state.token = action.payload.accessToken;
         },
         setFPEmailConfirmation: (state, action) => {
-            // FP - Forgot Password
             state.forgotPasswordEmailConfirmation = action.payload;
         },
-        logOut: (state) => {
-            Object.assign(state, initialState);
-        },
+        logOut: () => initialState,
     },
 });
 

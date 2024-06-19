@@ -1,52 +1,23 @@
+import React from 'react';
 import { Box, Flex, IconButton } from '@chakra-ui/react';
 import DateRangePicker from 'rsuite/esm/DateRangePicker';
 import SelectPicker from 'rsuite/esm/SelectPicker';
-import { useSelector } from 'react-redux';
-import { useState } from 'react';
 import { Icon } from '@iconify/react';
-import download from 'downloadjs';
 import { DropdownAction } from '../../../../DropdownAction';
-import { selectCurrentToken, useGetAllProductsMutation } from '@productize/redux';
-import { useDateRangeFormat } from '@productize/hooks';
 import { SharedButton, SpinnerComponentSmall } from '@productize/ui';
+import { useExport, useFilter, useProducts } from '../../services/services';
 
 const BASE_URL = import.meta.env['VITE_BASE_URL'];
 
 export const HomeFilterController = ({ showRefreshBtn }) => {
-    const [exportLoading, setExportLoading] = useState(false);
-    const token = useSelector(selectCurrentToken);
-    const [startDate, setStartDate] = useState(``);
-    const [endDate, setEndDate] = useState(``);
-    const [status, setStatus] = useState(``);
-    const [getAllProducts, getAllProductsStatus] = useGetAllProductsMutation();
-    const formatDateRange = useDateRangeFormat();
-
-    const headersCredentials = {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    };
+    const { handleExport, exportLoading } = useExport();
+    const { startDate, endDate, handleStatusChange, handleDateRangeChange } = useFilter();
+    const { getAllProductsStatus, filterTable } = useProducts();
 
     const data = [`Digital Products`, `Print on Demand`, `Video Streaming`, `Subscription`].map((item) => ({
         label: item,
         value: item,
     }));
-
-    const handleExport = async () => {
-        console.log(`export funtionality`);
-    };
-
-    const handleStatusChange = (value) => {
-        setStatus(value.toLowerCase());
-    };
-    const handleDateRangeChange = (value) => {
-        setStartDate(formatDateRange(value?.[0]));
-        setEndDate(formatDateRange(value?.[1]));
-    };
-
-    const filterTable = async () => {
-        console.log(`filter funtionality`);
-    };
 
     return (
         <Flex alignItems={{ md: `center` }} justifyContent={`space-between`}>
@@ -82,7 +53,6 @@ export const HomeFilterController = ({ showRefreshBtn }) => {
                         spinner={<SpinnerComponentSmall size="sm" />}
                         onClick={filterTable}
                         fontSize={`xl`}
-                        // variant={`outline`}
                         aria-label="Filter table"
                         icon={<Icon icon={`system-uicons:filtering`} />}
                     />
@@ -112,10 +82,10 @@ export const HomeFilterController = ({ showRefreshBtn }) => {
                         <SharedButton
                             text={'Export'}
                             width={'fit-content'}
-                            height={'40px'}
+                            height={`40px`}
                             bgColor={'transparent'}
-                            textColor={'purple.200'}
-                            borderRadius={'4px'}
+                            textColor={`purple.200`}
+                            borderRadius={`4px`}
                             fontSize={{ base: `sm`, md: `md` }}
                             btnExtras={{
                                 disabled: true,

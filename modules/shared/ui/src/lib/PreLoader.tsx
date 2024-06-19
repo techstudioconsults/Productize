@@ -1,12 +1,11 @@
-import { Center, Image, Text } from '@chakra-ui/react';
+import { Center, Image, Stack, Text } from '@chakra-ui/react';
 import { useGoogleAuthCallbackMutation } from '@productize/redux';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export const PreLoader = () => {
+export const PreLoader: React.FC = () => {
     const [error, setError] = useState<string>('');
     const navigate = useNavigate();
-    // mutation
     const [googleAuthCallback] = useGoogleAuthCallbackMutation();
 
     const googleRedirect = useCallback(
@@ -29,16 +28,10 @@ export const PreLoader = () => {
     );
 
     useEffect(() => {
-        // Get the URL from the browser's address bar
         const url = window.location.href;
-        // Use the URLSearchParams API to parse the query string
         const queryParams = new URLSearchParams(new URL(url).search);
-        // Get the value of the 'code' parameter
         const code = queryParams.get('code');
-        // Check if 'code' parameter exists and has a value
         if (code) {
-            console.log('Code parameter:', code);
-            // setCodeParams(code);
             googleRedirect(code);
         } else {
             console.log('Code parameter not found in the URL.');
@@ -46,11 +39,17 @@ export const PreLoader = () => {
     }, [googleRedirect]);
 
     return (
-        <Center h={`100vh`}>
-            <Center>
-                <Image w="3rem" src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1694900245/hng/Gear-0.2s-200px_1_xye3wd.svg`} alt={`spinner`} />
-                <Text as={`h6`}>Please wait...</Text>
-            </Center>
+        <Center h="100vh">
+            <Stack alignItems={`center`} gap={2}>
+                <Image
+                    w="5rem"
+                    src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png"
+                    alt="spinner"
+                />
+                <Text as="h6">Please wait...</Text>
+            </Stack>
         </Center>
     );
 };
+
+PreLoader.displayName = 'PreLoader';

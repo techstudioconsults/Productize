@@ -1,21 +1,28 @@
-import { Box, Flex, Tag } from '@chakra-ui/react';
-import { NavLink, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { selectTags } from '@productize/redux';
+import { Box, Button, Flex, Menu, MenuButton, MenuItem, MenuList, Tag, Text } from '@chakra-ui/react';
+import { Icon } from '@iconify/react';
+import React from 'react';
+import { Link, NavLink, useLocation } from 'react-router-dom';
+// import { useSelector } from 'react-redux';
+// import { selectTags } from '@productize/redux';
+
+const tags = ['print on Demand', 'Skill Selling', 'Template Hub'];
 
 const ProductTagNav: React.FC = () => {
-    const tags = useSelector(selectTags);
+    // const tags = useSelector(selectTags);
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const tagLabel = queryParams.get('tag');
 
-    const listData = tags?.map((tag: string) => {
+    const listData = tags?.map((tag: string, index: number) => {
         return (
-            <Box key={tag}>
-                <NavLink to={`/explore?tag=${tag.toLowerCase()}`}>
-                    <Tag bg={tagLabel === tag.toLowerCase() ? `grey.100` : `transparent`}>{tag}</Tag>
+            <React.Fragment key={index}>
+                {index === 0 && <CategoryMenu tag={`Digital Products`} />}
+                <NavLink to={`/explore/category?tag=${tag.toLowerCase()}`}>
+                    <Tag fontWeight={`semibold`} fontSize={{ lg: 'md' }} bg={tagLabel === tag.toLowerCase() ? `grey.100` : `transparent`}>
+                        {tag}
+                    </Tag>
                 </NavLink>
-            </Box>
+            </React.Fragment>
         );
     });
 
@@ -23,7 +30,6 @@ const ProductTagNav: React.FC = () => {
         <Flex
             align={{ lg: 'center' }}
             justify={{ lg: 'space-between' }}
-            fontSize={{ lg: 'sm' }}
             fontWeight={{ lg: 'medium' }}
             lineHeight={{ lg: 5 }}
             whiteSpace={'nowrap'}
@@ -33,7 +39,9 @@ const ProductTagNav: React.FC = () => {
         >
             <Box>
                 <NavLink to={`/explore`}>
-                    <Tag bg={tagLabel ? `transparent` : `grey.100`}>All</Tag>
+                    <Tag fontWeight={`semibold`} bg={tagLabel ? `transparent` : `grey.100`}>
+                        All
+                    </Tag>
                 </NavLink>
             </Box>
             {listData}
@@ -42,3 +50,50 @@ const ProductTagNav: React.FC = () => {
 };
 
 export default ProductTagNav;
+
+const CategoryMenu = ({ tag }: any) => {
+    return (
+        <Menu>
+            <MenuButton>
+                <Flex fontWeight={`semibold`} alignItems={`center`} gap={1}>
+                    <Text>{tag}</Text>
+                    <Icon fontSize={`1.2rem`} icon="mdi:chevron-down" />
+                </Flex>
+            </MenuButton>
+            <MenuList>
+                <MenuItem py={3} as={Link} justifyContent={`start`} to={`/explore/category/${`video`}?tag=${tag.toLowerCase()}`} state={{ tags: [] }}>
+                    Video
+                </MenuItem>
+                <MenuItem py={3} as={Link} justifyContent={`start`} to={`/explore/category/${`audio`}?tag=${tag.toLowerCase()}`} state={{ tags: [] }}>
+                    Audio
+                </MenuItem>
+                <MenuItem py={3} as={Link} justifyContent={`start`} to={`/explore/category/${`design`}?tag=${tag.toLowerCase()}`} state={{ tags: [] }}>
+                    Design
+                </MenuItem>
+                <MenuItem py={3} as={Link} justifyContent={`start`} to={`/explore/category/${`printing`}?tag=${tag.toLowerCase()}`} state={{ tags: [] }}>
+                    Printing
+                </MenuItem>
+                <MenuItem py={3} as={Link} justifyContent={`start`} to={`/explore/category/${`education`}?tag=${tag.toLowerCase()}`} state={{ tags: [] }}>
+                    Education
+                </MenuItem>
+                <MenuItem py={3} as={Link} justifyContent={`start`} to={`/explore/category/${`document`}?tag=${tag.toLowerCase()}`} state={{ tags: [] }}>
+                    Document
+                </MenuItem>
+                <MenuItem py={3} as={Link} justifyContent={`start`} to={`/explore/category/${`comics`}?tag=${tag.toLowerCase()}`} state={{ tags: [] }}>
+                    Comics
+                </MenuItem>
+            </MenuList>
+        </Menu>
+    );
+};
+
+// {
+//     /* <NavLink to={`/explore?tag=${tag.toLowerCase()}`}> */
+// }
+// {
+//     /* <NavLink to={`/explore/category?tags=${tag.toLowerCase()}`}>
+//                     <Tag fontSize={{ lg: 'md' }} bg={tagLabel === tag.toLowerCase() ? `grey.100` : `transparent`}>
+//                         {tag}
+//                     </Tag>
+//                 </NavLink> */
+// }

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useCurrency } from '@productize/hooks';
 
 interface CardProps {
+    width?: string;
     image: string;
     heading: string;
     rate?: number;
@@ -13,7 +14,7 @@ interface CardProps {
     productID: string | number;
 }
 
-const Card: React.FC<CardProps> = ({ image, heading, rate, count, price, publisher, productID }) => {
+const Card: React.FC<CardProps> = ({ width, image, heading, rate, count, price, publisher, productID }) => {
     const formatCurrency = useCurrency();
     return (
         <Box
@@ -26,6 +27,7 @@ const Card: React.FC<CardProps> = ({ image, heading, rate, count, price, publish
             border="1px solid #F3F2FB"
             p={'.625rem'}
             h={'19.8125rem'}
+            w={width}
             cursor={'pointer'}
             _hover={{ boxShadow: '5px 5px 5px #000', transform: 'scale(1.01)' }}
         >

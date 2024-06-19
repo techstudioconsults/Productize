@@ -1,153 +1,118 @@
-import { apiSlice } from "../apiSlice";
-import { resetProductStore } from "../products-state/productsSlice";
-import { resetUserStore, setUser } from "../user-state/userSlice";
-import { logOut, setCredentials, setFPEmailConfirmation } from "./authSlice";
+import { apiSlice } from '../apiSlice';
+import { resetProductStore } from '../products-state/productsSlice';
+import { resetUserStore, setUser } from '../user-state/userSlice';
+import { logOut, setCredentials, setFPEmailConfirmation } from './authSlice';
 
 export const authApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         login: builder.mutation({
             query: (credentials) => ({
-                url: "/auth/login",
-                method: "POST",
-                body: { ...credentials },
+                url: '/auth/login',
+                method: 'POST',
+                body: credentials,
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
-                    dispatch(
-                        setCredentials({
-                            accessToken: data.token,
-                        })
-                    );
-                    dispatch(
-                        setUser({
-                            user: data.user,
-                        })
-                    );
+                    dispatch(setCredentials({ accessToken: data.token }));
+                    dispatch(setUser({ user: data.user }));
                 } catch (err) {
-                    console.log(err);
+                    console.error('Login failed', err);
                 }
             },
         }),
 
         signup: builder.mutation({
             query: (credentials) => ({
-                url: "/auth/register",
-                method: "POST",
-                body: { ...credentials },
+                url: '/auth/register',
+                method: 'POST',
+                body: credentials,
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
-                    dispatch(
-                        setCredentials({
-                            accessToken: data.token,
-                        })
-                    );
-                    dispatch(
-                        setUser({
-                            user: data.user,
-                        })
-                    );
+                    dispatch(setCredentials({ accessToken: data.token }));
+                    dispatch(setUser({ user: data.user }));
                 } catch (err) {
-                    console.log(err);
+                    console.error('Signup failed', err);
                 }
             },
         }),
 
         googleAuth: builder.mutation({
             query: () => ({
-                url: `/auth/oauth/redirect?provider=google`,
-                method: "GET",
+                url: '/auth/oauth/redirect?provider=google',
+                method: 'GET',
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
                     if (data.redirect_url) {
-                        // Redirect the user to the obtained OAuth provider URL
                         window.location.href = data.redirect_url;
                     } else {
-                        // Handle error or unsupported provider
-                        console.error(`Failed to obtain redirect URL for google`);
+                        console.error('Failed to obtain redirect URL for Google');
                     }
                 } catch (err) {
-                    console.log(err);
+                    console.error('Google Auth failed', err);
                 }
             },
         }),
+
         googleAuthCallback: builder.mutation({
             query: (credentials) => ({
-                url: `/auth/oauth/callback`,
-                method: "POST",
-                body: { ...credentials },
+                url: '/auth/oauth/callback',
+                method: 'POST',
+                body: credentials,
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
-                    dispatch(
-                        setCredentials({
-                            accessToken: data.token,
-                        })
-                    );
-                    dispatch(
-                        setUser({
-                            user: data.user,
-                        })
-                    );
+                    dispatch(setCredentials({ accessToken: data.token }));
+                    dispatch(setUser({ user: data.user }));
                 } catch (err) {
-                    console.log(err);
+                    console.error('Google Auth Callback failed', err);
                 }
             },
         }),
 
         forgotPassword: builder.mutation({
             query: (credentials) => ({
-                url: "/auth/forgot-password",
-                method: "POST",
-                body: { ...credentials },
+                url: '/auth/forgot-password',
+                method: 'POST',
+                body: credentials,
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
                     console.log(data);
-                    dispatch(
-                        setFPEmailConfirmation({
-                            emailSent: true,
-                            // emailSent: false,
-                            email: arg.email,
-                        })
-                    );
+                    dispatch(setFPEmailConfirmation({ emailSent: true, email: arg.email }));
                 } catch (err) {
-                    console.log(err);
+                    console.error('Forgot Password failed', err);
                 }
             },
         }),
+
         resetPassword: builder.mutation({
             query: (credentials) => ({
-                url: "/auth/reset-password",
-                method: "POST",
-                body: { ...credentials },
+                url: '/auth/reset-password',
+                method: 'POST',
+                body: credentials,
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
                     console.log(data);
-                    dispatch(
-                        setFPEmailConfirmation({
-                            emailSent: false,
-                            email: null,
-                        })
-                    );
+                    dispatch(setFPEmailConfirmation({ emailSent: false, email: null }));
                 } catch (err) {
-                    console.log(err);
+                    console.error('Reset Password failed', err);
                 }
             },
         }),
 
         logout: builder.mutation({
             query: () => ({
-                url: "/auth/logout",
-                method: "POST",
+                url: '/auth/logout',
+                method: 'POST',
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
@@ -157,7 +122,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
                     dispatch(resetUserStore());
                     dispatch(resetProductStore());
                 } catch (err) {
-                    console.log(err);
+                    console.error('Logout failed', err);
                 }
             },
         }),

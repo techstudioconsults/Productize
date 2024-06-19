@@ -106,3 +106,91 @@ export const selectAllProducts_EXTERNAL = (state) => state.App.allProducts_EXTER
 export const selectSingleProduct_EXTERNAL = (state) => state.App.singleProduct_EXTERNAL;
 export const selectCart = (state) => state.App.cart;
 export const selectTags = (state) => state.App.tags;
+
+
+// ====================================================================================
+
+// import { createSlice } from '@reduxjs/toolkit';
+
+// const initialState = {
+//     allProducts_EXTERNAL: {
+//         products: [],
+//         productsMetaData: null,
+//     },
+//     singleProduct_EXTERNAL: {},
+//     tags: [],
+//     cart: {
+//         totalProductQuantity: 0,
+//         totalProductPrice: 0,
+//         checkoutProducts: [],
+//     },
+// };
+
+// const appSlice = createSlice({
+//     name: 'app',
+//     initialState,
+//     reducers: {
+//         setAllProduct_EXTERNAL: (state, action) => {
+//             const { products, productsMetaData } = action.payload;
+//             state.allProducts_EXTERNAL.products = products;
+//             state.allProducts_EXTERNAL.productsMetaData = productsMetaData;
+//         },
+
+//         setSingleProduct_EXTERNAL: (state, action) => {
+//             state.singleProduct_EXTERNAL = action.payload.product;
+//         },
+
+//         setCart: (state, action) => {
+//             const products = action.payload.product;
+//             state.cart.checkoutProducts = products;
+//             state.cart.totalProductQuantity = calculateTotalQuantity(products);
+//             state.cart.totalProductPrice = calculateTotalPrice(products);
+//         },
+
+//         setTags: (state, action) => {
+//             state.tags = action.payload.tags;
+//         },
+
+//         updateCart: (state, action) => {
+//             const { product, totalPrice } = action.payload;
+//             const index = state.cart.checkoutProducts.findIndex((item) => item.slug === product.slug);
+
+//             if (index !== -1) {
+//                 state.cart.checkoutProducts[index].quantity = product.quantity;
+//                 state.cart.checkoutProducts[index].price = totalPrice;
+//             } else {
+//                 state.cart.checkoutProducts.push(product);
+//             }
+//             state.cart.totalProductQuantity = calculateTotalQuantity(state.cart.checkoutProducts);
+//             state.cart.totalProductPrice = calculateTotalPrice(state.cart.checkoutProducts);
+//         },
+
+//         deleteProductFromCart: (state, action) => {
+//             const { productSlug } = action.payload;
+//             state.cart.checkoutProducts = state.cart.checkoutProducts.filter((product) => product.slug !== productSlug);
+//             state.cart.totalProductQuantity = calculateTotalQuantity(state.cart.checkoutProducts);
+//             state.cart.totalProductPrice = calculateTotalPrice(state.cart.checkoutProducts);
+//         },
+
+//         resetAppStore: () => initialState,
+//     },
+// });
+
+// export const { setAllProduct_EXTERNAL, setSingleProduct_EXTERNAL, setCart, setTags, updateCart, deleteProductFromCart, resetAppStore } = appSlice.actions;
+
+// export default appSlice.reducer;
+
+// export const selectAllProducts_EXTERNAL = (state) => state.App.allProducts_EXTERNAL;
+// export const selectSingleProduct_EXTERNAL = (state) => state.App.singleProduct_EXTERNAL;
+// export const selectCart = (state) => state.App.cart;
+// export const selectTags = (state) => state.App.tags;
+
+// // Function to calculate the total accumulated price considering quantity
+// function calculateTotalPrice(products) {
+//     return products.reduce((total, product) => total + product.price * product.quantity, 0);
+// }
+
+// // Function to calculate the total quantity of products
+// function calculateTotalQuantity(products) {
+//     return products.reduce((total, product) => total + product.quantity, 0);
+// }

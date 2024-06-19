@@ -1,7 +1,7 @@
 import { apiSlice } from '../apiSlice';
 import { setAccountList, setAnalyticsGraphData, setBillingHistory, setPayoutStats, setPayouts, setUser } from './userSlice';
 
-const checkCredentials = (credentials, filteredLink) => {
+const constructURL = (credentials, filteredLink) => {
     if (credentials && !credentials?.link) {
         return filteredLink;
     } else if (credentials?.link) {
@@ -99,7 +99,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
 
         getPayouts: builder.mutation({
             query: (credentials) => ({
-                url: checkCredentials(
+                url: constructURL(
                     credentials,
                     `/payments/payouts?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}`
                 ),

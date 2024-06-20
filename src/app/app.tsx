@@ -33,6 +33,7 @@ import { CoverPage } from '../pages/coverPage/CoverPage';
 
 // doesn't feel right
 import { Admin } from '../../modules/admin-dashboard/src/lib/Admin';
+import AdminLayout from 'modules/admin-dashboard/src/lib/ui/layouts/AdminLayout';
 
 // using suspense and lazy loading
 const Home = React.lazy(() =>
@@ -132,7 +133,7 @@ function App() {
                     </Route>
                 </Route>
                 {/* admin  dashboard */}
-                <Route path="/admin" element={<Admin />} />
+                <Route path="/admin" element={<AdminLayout />} />
                 {/* not found */}
                 <Route path="*" element={<PageNotFound />} />
             </Routes>

@@ -1,7 +1,9 @@
 import { Box, Center, Flex, Text } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
+
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { ReviewModal } from '../component/ReviewModal';
 
 export const DownloadedContent = () => {
     const { state } = useLocation();
@@ -18,16 +20,19 @@ export const DownloadedContent = () => {
 
     return (
         <Box my={10}>
-            <Flex alignItems={`center`} gap={5} my={5}>
-                <Icon onClick={() => navigate(-1)} fontSize={`2rem`} icon={`material-symbols:chevron-left`} />
-                <Box>
-                    <Text fontSize={`sm`} fontWeight={600}>
-                        {state?.title}
-                    </Text>
-                    <Text fontSize={`xs`} color={`grey.400`}>
-                        By {state?.publisher}
-                    </Text>
-                </Box>
+            <Flex alignItems={`center`} justifyContent={`space-between`}>
+                <Flex alignItems={`center`} gap={5} my={5}>
+                    <Icon onClick={() => navigate(-1)} fontSize={`2rem`} icon={`material-symbols:chevron-left`} />
+                    <Box>
+                        <Text fontSize={`sm`} fontWeight={600}>
+                            {state?.title}
+                        </Text>
+                        <Text fontSize={`xs`} color={`grey.400`}>
+                            By {state?.publisher}
+                        </Text>
+                    </Box>
+                </Flex>
+                <ReviewModal />
             </Flex>
             {/* Use the iframe to display the content from the specified URL */}
             <Center
@@ -44,6 +49,5 @@ export const DownloadedContent = () => {
         </Box>
     );
 };
-
 
 export default DownloadedContent;

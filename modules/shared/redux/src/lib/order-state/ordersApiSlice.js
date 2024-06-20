@@ -55,7 +55,22 @@ export const OrdersApiSlice = apiSlice.injectEndpoints({
                 }
             },
         }),
+
+        getCountOfUnseenOrders: builder.mutation({
+            query: () => ({
+                url: `/orders/unseen`,
+                method: 'GET',
+            }),
+        }),
+
+        markUnseenOrdersAsSeen: builder.mutation({
+            query: () => ({
+                url: `/orders/seen`,
+                method: 'PATCH',
+            }),
+        }),
     }),
 });
 
-export const { useGetAllOrdersMutation, useGetSingleOrderDetailsMutation } = OrdersApiSlice;
+export const { useGetAllOrdersMutation, useGetSingleOrderDetailsMutation, useGetCountOfUnseenOrdersMutation, useMarkUnseenOrdersAsSeenMutation } =
+    OrdersApiSlice;

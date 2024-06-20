@@ -202,7 +202,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
         }),
         downloadProductsList: builder.mutation({
             query: (credentials) => ({
-                url: `products/download?page=1&format=csv`,
+                url: `/products/download`,
                 method: 'GET',
             }),
         }),
@@ -218,14 +218,6 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                 method: 'POST',
                 body: { ...credentials },
             }),
-            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-                try {
-                    const { data } = await queryFulfilled;
-                    // console.log(data);
-                } catch (error) {
-                    return error;
-                }
-            },
         }),
     }),
 });

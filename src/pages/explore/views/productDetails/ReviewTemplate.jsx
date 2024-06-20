@@ -1,13 +1,10 @@
 import { Avatar, Box, Flex, Text } from '@chakra-ui/react';
 import StarRatings from 'react-star-ratings';
 
-
-const ReviewTemplate = () => {
+const ReviewTemplate = ({ review }) => {
     return (
         <Box>
-            <Text className={`small-text`}>
-                "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Omnis minima odit hic sed voluptas dolores quo. Fugiat odio id"
-            </Text>
+            <Text className={`small-text`}>{review.comment}</Text>
             <Flex my={2} alignItems={`center`} justifyContent={`space-between`}>
                 <Flex alignItems={`center`} gap={2}>
                     <Avatar size={`xs`} src={``} name={`Kinglsey Solomon`} />
@@ -19,7 +16,7 @@ const ReviewTemplate = () => {
                     </Box>
                 </Flex>
                 <Box>
-                    <StarRatings rating={3} starDimension="12px" starSpacing="1px" starRatedColor={`orange`} />
+                    <StarRatings rating={review.rating} starDimension="12px" starSpacing="1px" starRatedColor={`orange`} />
                 </Box>
             </Flex>
         </Box>

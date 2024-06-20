@@ -104,6 +104,7 @@ export const ProductCards = () => {
 
         try {
             const res = await purchaseProduct(checkout).unwrap();
+            console.log(res);
             if (res && res.data.authorization_url) {
                 window.location.href = res.data.authorization_url;
             } else {

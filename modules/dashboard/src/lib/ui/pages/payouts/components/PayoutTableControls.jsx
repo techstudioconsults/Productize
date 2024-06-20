@@ -38,7 +38,7 @@ export const PayoutTableControl = ({ showRefreshBtn, balance }) => {
     const handleExport = async () => {
         try {
             setExportLoading(true);
-            const res = await axios.get(`${BASE_URL}/payments/payouts/download?format=csv`, headersCredentials);
+            const res = await axios.get(`${BASE_URL}/payouts/download?format=csv`, headersCredentials);
             if (res.status === 200) {
                 setExportLoading(false);
                 const blob = new Blob([res.data], { type: 'text/csv' });

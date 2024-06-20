@@ -96,19 +96,19 @@ export const useLinks = () => {
                 analysis: null,
             },
             {
+                id: 6,
+                name: `Revenue`,
+                path: `revenue`,
+                type: `free`,
+                icon: analysis,
+                analysis: null,
+            },
+            {
                 id: 5,
                 name: `Payouts`,
                 path: `payouts`,
                 type: `free`,
                 icon: payment,
-                analysis: null,
-            },
-            {
-                id: 6,
-                name: `Revenues`,
-                path: `revenues`,
-                type: `free`,
-                icon: analysis,
                 analysis: null,
             },
         ]);

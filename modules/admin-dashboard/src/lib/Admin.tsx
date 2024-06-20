@@ -1,5 +1,5 @@
-// import AdminLayout from './ui/layouts/AdminLayout';
+import AdminLayout from './ui/layouts/AdminLayout';
 
 export const Admin = () => {
-    return <div>{/* <AdminLayout /> */}</div>;
+    return <div>{ <AdminLayout /> }</div>;
 };

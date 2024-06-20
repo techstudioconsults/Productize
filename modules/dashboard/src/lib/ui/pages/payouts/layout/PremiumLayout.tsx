@@ -4,7 +4,7 @@ import { Box, SimpleGrid, Skeleton } from '@chakra-ui/react';
 import { PayoutTableControl } from '../components/PayoutTableControls';
 import { DataWidgetCard } from '../../../DataWidgetCard';
 import { useCurrency } from '@productize/hooks';
-import { selectPayoutStats, selectPayouts, useGetPayoutStatsMutation } from '@productize/redux';
+import { selectPayoutStats, useGetPayoutStatsMutation } from '@productize/redux';
 import { useSelector } from 'react-redux';
 import { useCallback, useEffect } from 'react';
 import { OnBoardingLoader } from '@productize/ui';
@@ -21,7 +21,8 @@ const PremiumLayout = () => {
 
     const showAllOrders = useCallback(async () => {
         try {
-            await getPayoutStats(null).unwrap();
+            const res = await getPayoutStats(null).unwrap();
+            console.log(res);
         } catch (error) {
             return error;
         }

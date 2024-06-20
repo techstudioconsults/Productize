@@ -6,18 +6,16 @@ import {
     Flex,
     FormControl,
     FormLabel,
-    IconButton,
     Input,
     InputGroup,
     InputLeftElement,
     InputRightElement,
     ModalCloseButton,
-    SimpleGrid,
     Stack,
     Text,
     useDisclosure,
 } from '@chakra-ui/react';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import BankCard from '../components/BankCard';
 import { Icon } from '@iconify/react';
 import { DataWidgetCard } from '../../../DataWidgetCard';

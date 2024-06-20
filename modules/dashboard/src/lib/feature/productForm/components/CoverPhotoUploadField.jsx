@@ -67,7 +67,7 @@ export const CoverPhotoUploadField = () => {
                 <UploadExternalFiles
                     icon="ri:file-upload-line"
                     fileType={`all`}
-                    btnTitle={'Upload Photos'}
+                    btnTitle={'Add Photos'}
                     descText={'File can be an image, video, document in various formats (jpg, png, mp4, pdf etc). min: 100mb'}
                     showFiles={handleInput}
                 />

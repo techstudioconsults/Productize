@@ -11,7 +11,7 @@ import analysis from '@icons/Property_2_Chart-pie_bygfly.svg';
 import consumer from '@icons/Property_2_User-folder_n4spfl.svg';
 import payment from '@icons/Property_2_Wallet_3_teopvy.svg';
 import { useSetPaymentPlan } from '@productize/hooks';
-import { selectCurrentUser, selectProductAnalytics } from '@productize/redux';
+import { selectCurrentUser, selectProductAnalytics, useGetCountOfUnseenOrdersMutation } from '@productize/redux';
 
 interface link {
     id: number;
@@ -26,6 +26,8 @@ export const useLinks = () => {
     const isPremium = useSetPaymentPlan();
     const user = useSelector(selectCurrentUser);
     const productAnaysis = useSelector(selectProductAnalytics);
+    const [orderCount, setOrderCount] = useState(0);
+    const [getCountOfUnseenOrders] = useGetCountOfUnseenOrdersMutation();
 
     const [links1, setLinks1] = useState<Array<link>>();
     const [links2] = useState([
@@ -69,6 +71,16 @@ export const useLinks = () => {
     ]);
 
     useEffect(() => {
+        const getUnseenOrders = async () => {
+            const res = await getCountOfUnseenOrders(null).unwrap();
+            console.log(res);
+
+            setOrderCount(res.data.count);
+        };
+        getUnseenOrders();
+    }, [getCountOfUnseenOrders]);
+
+    useEffect(() => {
         setLinks1([
             {
                 id: 2,
@@ -82,7 +94,7 @@ export const useLinks = () => {
                 id: 3,
                 name: `Orders`,
                 path: `orders`,
-                analysis: null,
+                analysis: orderCount,
                 type: `free`,
                 icon: order,
             },
@@ -111,7 +123,7 @@ export const useLinks = () => {
                 analysis: null,
             },
         ]);
-    }, [isPremium, productAnaysis.new_orders, productAnaysis.total_customers, productAnaysis.total_products]);
+    }, [isPremium, orderCount, productAnaysis.new_orders, productAnaysis.total_customers, productAnaysis.total_products]);
 
     return { links1, links2, links3 };
 };

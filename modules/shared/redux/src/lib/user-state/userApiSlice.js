@@ -80,7 +80,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
 
         getPayoutStats: builder.mutation({
             query: (credentials) => ({
-                url: `/payouts`,
+                url: `/earnings`,
                 method: 'GET',
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
@@ -99,10 +99,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
 
         getPayouts: builder.mutation({
             query: (credentials) => ({
-                url: constructURL(
-                    credentials,
-                    `/payouts?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}`
-                ),
+                url: constructURL(credentials, `/payouts?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}`),
                 method: 'GET',
             }),
 
@@ -152,7 +149,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
 
         initiateWithdrawal: builder.mutation({
             query: (credentials) => ({
-                url: `/payouts`,
+                url: `/earnings/withdraw`,
                 method: 'POST',
                 body: { ...credentials },
             }),

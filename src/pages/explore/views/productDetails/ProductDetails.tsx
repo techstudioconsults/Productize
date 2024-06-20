@@ -25,7 +25,6 @@ export const ProductDetails = () => {
             await getSingleProducts_EXTERNAL({ productID }).unwrap();
             const res = await getSingleProductReviews({ productID }).unwrap();
             if (res.data) {
-                console.log(res);
                 setProductReviews(res.data);
                 setLoading(false);
             }

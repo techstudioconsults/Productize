@@ -130,7 +130,22 @@ export const appApiSlice = apiSlice.injectEndpoints({
             }),
         }),
 
+        createProductReview: builder.mutation({
+            query: (credentials) => ({
+                url: `/reviews/products/${credentials.productID}`,
+                method: 'POST',
+                body: { ...credentials.body },
+            }),
+        }),
+
         getSingleProductReviews: builder.mutation({
+            query: (credentials) => ({
+                url: `/reviews/products/${credentials.productID}`,
+                method: 'GET',
+            }),
+        }),
+
+        getProductReviews: builder.mutation({
             query: (credentials) => ({
                 url: `/reviews/products/${credentials.productID}`,
                 method: 'GET',
@@ -173,4 +188,5 @@ export const {
     useGetTopProductsMutation,
     useGetProductsBasedOnSearchMutation,
     useGetFAQMutation,
+    useCreateProductReviewMutation,
 } = appApiSlice;

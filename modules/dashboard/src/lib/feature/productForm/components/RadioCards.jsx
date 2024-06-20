@@ -28,13 +28,7 @@ const RadioCards = ({ listenForChange }) => {
                     style={productTypeValue === `digital_product` ? activeCardStyle : {}}
                 />
             </Radio>
-            <Radio
-                {...register(`product_type`)}
-                display={`block`}
-                hidden
-                spacing={0}
-                value="skill_selling"
-            >
+            <Radio {...register(`product_type`)} display={`block`} hidden spacing={0} value="skill_selling">
                 <ProductTypeCard
                     img={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951007/productize/Image_2_co17c3_xwfjxd.png`}
                     title={'Skill Selling'}
@@ -42,17 +36,17 @@ const RadioCards = ({ listenForChange }) => {
                     style={productTypeValue === `skill_selling` ? activeCardStyle : {}}
                 />
             </Radio>
-            <Radio {...register(`product_type`)} display={`block`} hidden spacing={0} value="template_hub">
+            <Radio isDisabled display={`block`} hidden spacing={0} value="template_hub">
                 <ProductTypeCard
-                    img={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951008/productize/Image_3_l61xsx_qdgenv.png`}
-                    title={'Template Hub'}
-                    desc={'Any set of files to download or stream.'}
-                    style={productTypeValue === `template_hub` ? activeCardStyle : {}}
+                    img={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1718726461/productize/krurpewv3oybivuqrapz.png`}
+                    title={'Coming Soon...'}
+                    desc={'Exciting new features'}
+                    style={{}}
                 />
             </Radio>
             <Radio isDisabled display={`block`} hidden spacing={0} value="subscription">
                 <ProductTypeCard
-                    img={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951009/productize/Image_4_hksvcm_ulhhl3.png`}
+                    img={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1718726461/productize/krurpewv3oybivuqrapz.png`}
                     title={'Coming Soon...'}
                     desc={'Exciting new features'}
                     style={{}}

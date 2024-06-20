@@ -39,7 +39,7 @@ export const DashboardLayout = () => {
                             color={`grey.100`}
                             bg={`red.200`}
                         >
-                            {link?.analysis}
+                            {link?.analysis || 10}
                         </Center>
                     </Flex>
                     <Box display={link.type ? `none` : `block`}>

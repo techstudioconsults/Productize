@@ -54,9 +54,10 @@ export const appApiSlice = apiSlice.injectEndpoints({
         }),
 
         addToCart: builder.mutation({
-            query: () => ({
+            query: (credentials) => ({
                 url: `/carts`,
                 method: 'POST',
+                body: { ...credentials },
             }),
         }),
 
@@ -122,13 +123,29 @@ export const appApiSlice = apiSlice.injectEndpoints({
         }),
 
         purchaseProduct: builder.mutation({
-            query: () => ({
-                url: `/payments/purchase`,
+            query: (credentials) => ({
+                url: `/carts/clear`,
                 method: 'POST',
+                body: { ...credentials },
+            }),
+        }),
+
+        createProductReview: builder.mutation({
+            query: (credentials) => ({
+                url: `/reviews/products/${credentials.productID}`,
+                method: 'POST',
+                body: { ...credentials.body },
             }),
         }),
 
         getSingleProductReviews: builder.mutation({
+            query: (credentials) => ({
+                url: `/reviews/products/${credentials.productID}`,
+                method: 'GET',
+            }),
+        }),
+
+        getProductReviews: builder.mutation({
             query: (credentials) => ({
                 url: `/reviews/products/${credentials.productID}`,
                 method: 'GET',
@@ -171,4 +188,5 @@ export const {
     useGetTopProductsMutation,
     useGetProductsBasedOnSearchMutation,
     useGetFAQMutation,
+    useCreateProductReviewMutation,
 } = appApiSlice;

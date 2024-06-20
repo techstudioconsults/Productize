@@ -30,9 +30,9 @@ import {
     KycSettings,
 } from '@productize/dashboard';
 import { CoverPage } from '../pages/coverPage/CoverPage';
+import { Admin } from '@productize/admin-dashboard';
 
 // doesn't feel right
-import { Admin } from '../../modules/admin-dashboard/src/lib/Admin';
 
 // using suspense and lazy loading
 const Home = React.lazy(() =>

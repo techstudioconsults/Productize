@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { Flex, Box, Text, Heading, Grid, GridItem, Stack, SkeletonText, Skeleton, Link } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
 import { useCallback, useEffect } from 'react';

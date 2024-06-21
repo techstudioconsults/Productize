@@ -1,15 +1,10 @@
-import { Card, Divider, Flex, Stack, Text } from '@chakra-ui/react';
+import { Card, Divider, Flex, Stack, Text, Box } from '@chakra-ui/react';
 import ReviewTemplate from './ReviewTemplate';
 
 const ReviewsCard = ({ reviews }) => {
-    const productReviews = reviews?.map((review) => {
-        return (
-            <Stack key={review?.user}>
-                <ReviewTemplate review={review} />
-                <Divider my={2} color={`lightgray`} />
-            </Stack>
-        );
-    });
+    const hasReviews = reviews && reviews.length > 0;
+
+    console.log(reviews);
 
     return (
         <Card height={`30rem`} mb={4} shadow={`none`} variant={`outline`} p={4}>
@@ -22,10 +17,22 @@ const ReviewsCard = ({ reviews }) => {
                 </Text>
             </Flex>
             <Divider mt={2} color={`lightgray`} />
-            <Stack pt={2} className={`hide_scrollbar`} overflowY={`scroll`}>
-                {productReviews}
+            <Stack pt={2} className={`hide_scrollbar`} overflowY={`scroll`} height="100%">
+                {hasReviews ? (
+                    reviews?.map((review) => (
+                        <Stack key={review?.user}>
+                            <ReviewTemplate review={review} />
+                            <Divider my={2} color={`lightgray`} />
+                        </Stack>
+                    ))
+                ) : (
+                    <Box textAlign="center" color="gray.500" mt={4}>
+                        <Text>No reviews available.</Text>
+                    </Box>
+                )}
             </Stack>
         </Card>
     );
 };
+
 export default ReviewsCard;

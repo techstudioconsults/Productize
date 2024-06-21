@@ -1,16 +1,16 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { useCallback, useEffect } from 'react';
 import { Box } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { OrderTable } from './component/OrderTable';
 import { DashboardEmptyState } from '../../../empty-states/DashboardEmptyState';
 import { OrdersTableControl } from '../OrdersTableControl';
-import { useGetAllOrdersMutation, selectAllOrders, useMarkUnseenOrdersAsSeenMutation } from '@productize/redux';
+import { useGetAllOrdersMutation, selectAllOrders } from '@productize/redux';
 import { OnBoardingLoader } from '@productize/ui';
 
 const OrderActive = () => {
     const [getAllOrders, getLiveProductsStatus] = useGetAllOrdersMutation();
     const orders = useSelector(selectAllOrders);
-    const [markUnseenOrdersAsSeen] = useMarkUnseenOrdersAsSeenMutation();
 
     const showAllOrders = useCallback(async () => {
         try {
@@ -20,18 +20,9 @@ const OrderActive = () => {
         }
     }, [getAllOrders]);
 
-    const makeunseenOrderSeen = useCallback(async () => {
-        try {
-            await markUnseenOrdersAsSeen(null).unwrap();
-        } catch (error) {
-            return error;
-        }
-    }, [markUnseenOrdersAsSeen]);
-
     useEffect(() => {
         showAllOrders();
-        makeunseenOrderSeen();
-    }, [makeunseenOrderSeen, showAllOrders]);
+    }, [showAllOrders]);
 
     if (getLiveProductsStatus.isLoading) {
         return <OnBoardingLoader />;

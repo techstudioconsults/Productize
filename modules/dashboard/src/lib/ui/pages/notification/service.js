@@ -3,6 +3,7 @@ import Pusher from 'pusher-js';
 import { useGetCountOfUnseenOrdersMutation } from '@productize/redux';
 import { useSelector } from 'react-redux';
 import { selectCurrentToken, selectCurrentUser } from '@productize/redux';
+import { useToast } from '@chakra-ui/react';
 
 const APP_KEY = 'bb5f2a5342d24c39106c';
 const APP_CLUSTER = 'mt1';
@@ -13,6 +14,7 @@ export const useNotifications = () => {
     const user = useSelector(selectCurrentUser);
     const [newOrder, setNewOrder] = useState([]);
     const [count, setCount] = useState(0);
+    const toast = useToast();
 
     const fetchUnseenCount = useCallback(async () => {
         try {
@@ -69,12 +71,20 @@ export const useNotifications = () => {
                 localStorage.setItem('newOrder', JSON.stringify(updatedOrders));
                 return updatedOrders;
             });
+            toast({
+                title: 'Order created.',
+                description: `You have ${count} notification available`,
+                status: 'success',
+                duration: 5000,
+                isClosable: true,
+                position: `bottom-right`
+            });
         });
 
         return () => {
             pusher.unsubscribe(`private-order-created.${user?.id}`);
         };
-    }, [fetchUnseenCount, token, user?.id]);
+    }, [count, fetchUnseenCount, toast, token, user?.id]);
 
     return { count, newOrder, fetchUnseenCount, markOrdersAsSeen };
 };

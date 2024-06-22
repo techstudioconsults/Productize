@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -7,7 +8,24 @@ import 'swiper/css/pagination';
 
 // import required modules
 import { Pagination } from 'swiper/modules';
-import { Avatar, Box, Card, CardBody, Container, Divider, Flex, Grid, GridItem, Image, List, ListItem, Stack, Text, useDisclosure } from '@chakra-ui/react';
+import {
+    Avatar,
+    Box,
+    Card,
+    CardBody,
+    Center,
+    Container,
+    Divider,
+    Flex,
+    Grid,
+    GridItem,
+    Image,
+    List,
+    ListItem,
+    Stack,
+    Text,
+    useDisclosure,
+} from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
 import { Link, useLocation } from 'react-router-dom';
 import { SharedButton } from './SharedButton';
@@ -16,6 +34,7 @@ import React from 'react';
 import { useCurrency } from '@productize/hooks';
 import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '@productize/redux';
+import ReviewsCard from './review/ReviewsCard';
 
 interface ProductProp {
     product: any;
@@ -27,7 +46,15 @@ export const PreviewProductSummary: React.FC = () => {
     return (
         <Container mt="5rem" maxW="70rem">
             {state ? (
-                <TwoColumnLayout C1={<ProductSummaryAndPreview product={state?.product} />} C2={<ProductSideNav product={state?.product} />} />
+                <TwoColumnLayout
+                    C1={<ProductSummaryAndPreview product={state?.product} />}
+                    C2={
+                        <Stack pos={`sticky`} top={`20rem`} gap={4}>
+                            <ProductSideNav product={state?.product} />
+                            <ReviewsCard reviews={[]} />
+                        </Stack>
+                    }
+                />
             ) : (
                 <h1>No product</h1>
             )}

@@ -22,3 +22,5 @@ export * from './lib/dashboardDrawer/DashboardDrawer';
 export * from './lib/PaywallUpgrade';
 export * from './lib/PaywallUnpublishWarning';
 export * from './lib/PricingModal';
+export * from './lib/review/ReviewsCard';
+export * from './lib/review/ReviewTemplate';

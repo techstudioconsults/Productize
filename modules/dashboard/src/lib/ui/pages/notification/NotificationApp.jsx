@@ -5,16 +5,18 @@ import { Icon } from '@productize/ui';
 import { Box, Center, IconButton, Popover, PopoverContent, PopoverTrigger, Text, VStack, HStack } from '@chakra-ui/react';
 import { useNotifications } from './service';
 import { Link } from 'react-router-dom';
+import { Icon as Iconify } from '@iconify/react';
 
 export function NotificationApp() {
     const { count, newOrder, markOrdersAsSeen } = useNotifications();
+    
 
     const handleMarkAsSeen = () => {
         markOrdersAsSeen();
     };
 
     return (
-        <Popover>
+        <Popover placement={`top-start`}>
             <PopoverTrigger>
                 <Center position="relative">
                     <IconButton size="sm" bg="transparent" _focus="transparent" icon={<Icon icon={notification} name="notification" />} />
@@ -42,7 +44,10 @@ export function NotificationApp() {
                     </VStack>
                 ) : (
                     <Box p={4} textAlign="center">
-                        <Text>No new orders</Text>
+                        <Center mb={2} color="gray.400" fontSize={`2xl`}>
+                            <Iconify icon="nonicons:not-found-16" />
+                        </Center>
+                        <Text fontWeight={`bold`}>No new orders</Text>
                     </Box>
                 )}
             </PopoverContent>

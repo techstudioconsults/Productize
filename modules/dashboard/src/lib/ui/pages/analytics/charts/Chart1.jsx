@@ -20,12 +20,13 @@ const LineChart = () => {
             graphData?.revForTwoWeeksAgo || 1300,
             graphData?.revForThreeWeeksAgo || 3989,
         ];
-        const myChartRef = chartRef.current.getContext('2d');
 
         // Destroy the previous chart instance before creating a new one
         if (chartInstance.current) {
             chartInstance.current.destroy();
         }
+
+        const myChartRef = chartRef.current.getContext('2d');
 
         chartInstance.current = new Chart(myChartRef, {
             type: 'line',
@@ -77,7 +78,7 @@ const LineChart = () => {
                 chartInstance.current.destroy();
             }
         };
-    }, [graphData]);
+    }, [graphData?.revForLastWeek, graphData?.revForThisWeek, graphData?.revForThreeWeeksAgo, graphData?.revForTwoWeeksAgo]);
 
     return <canvas ref={chartRef} />;
 };

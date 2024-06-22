@@ -1,8 +1,9 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { Avatar, Box, Flex, Text } from '@chakra-ui/react';
 import { useDate } from '@productize/hooks';
 import StarRatings from 'react-star-ratings';
 
-const ReviewTemplate = ({ review }) => {
+export const ReviewTemplate = ({ review }) => {
     const formatDate = useDate();
     // const formatTime = useTime();
     return (

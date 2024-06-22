@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { Box, Flex, Image, SimpleGrid, Skeleton, SkeletonText, Stack, Tag, Text, useDisclosure } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
 import { useNavigate, Link } from 'react-router-dom';

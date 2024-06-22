@@ -1,7 +1,7 @@
 import { Card, Divider, Flex, Stack, Text, Box } from '@chakra-ui/react';
 import ReviewTemplate from './ReviewTemplate';
 
-const ReviewsCard = ({ reviews }) => {
+export const ReviewsCard = ({ reviews }) => {
     const hasReviews = reviews && reviews.length > 0;
 
     console.log(reviews);

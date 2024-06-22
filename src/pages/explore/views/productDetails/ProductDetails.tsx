@@ -8,9 +8,8 @@ import { Box, Center, Container, Flex, Image, Stack, Text } from '@chakra-ui/rea
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetSingleProductReviewsMutation, useGetSingleProduct_EXTERNALMutation } from '@productize/redux';
 import { useTokenExists } from '@productize/hooks';
-import { SpinnerComponentSmall, TwoColumnLayout } from '@productize/ui';
+import { ReviewsCard, SpinnerComponentSmall, TwoColumnLayout } from '@productize/ui';
 import arrowLeft from '@icons/Property_2_Arrow-left_kafkjg.svg';
-import ReviewsCard from './ReviewsCard';
 
 export const ProductDetails = () => {
     const [getSingleProducts_EXTERNAL, getAllProducts_EXTERNALStatus] = useGetSingleProduct_EXTERNALMutation();

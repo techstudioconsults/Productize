@@ -40,7 +40,9 @@ export const useNotifications = () => {
     }, []);
 
     useEffect(() => {
-        fetchUnseenCount();
+        if (user?.email_verified) {
+            fetchUnseenCount();
+        }
 
         const pusher = new Pusher(APP_KEY, {
             cluster: APP_CLUSTER,
@@ -77,14 +79,14 @@ export const useNotifications = () => {
                 status: 'success',
                 duration: 5000,
                 isClosable: true,
-                position: `bottom-right`
+                position: `bottom-right`,
             });
         });
 
         return () => {
             pusher.unsubscribe(`private-order-created.${user?.id}`);
         };
-    }, [count, fetchUnseenCount, toast, token, user?.id]);
+    }, [count, fetchUnseenCount, toast, token, user?.email_verified, user?.id]);
 
     return { count, newOrder, fetchUnseenCount, markOrdersAsSeen };
 };

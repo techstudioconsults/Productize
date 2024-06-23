@@ -79,6 +79,7 @@ export const SearchComp = ({ color, width, size }) => {
                     <Icon icon={search} name="search" />
                 </InputLeftElement>
                 <Input
+                    type={`text`}
                     value={searchTerm}
                     onChange={handleInputChange}
                     border="none"
@@ -250,12 +251,11 @@ const NotFound = () => {
     );
 };
 
-
 const Spin = () => {
-  return (
-      <Center p={10} gap={2}>
-          <SpinnerComponentSmall size={`sm`} />
-          <Text>Searching...</Text>
-      </Center>
-  );
-}
+    return (
+        <Center p={10} gap={2}>
+            <SpinnerComponentSmall size={`sm`} />
+            <Text>Searching...</Text>
+        </Center>
+    );
+};

@@ -1,18 +1,24 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useGetProductAnalyticsMutation, selectProductAnalytics } from '@productize/redux';
 import { useCurrency } from '@productize/hooks';
 
 export const useAllProducts = () => {
-    const [getProductsAnalytics, getProductsAnalyticsStatus] = useGetProductAnalyticsMutation();
+    const [isLoading, setLoading] = useState(true);
+    const [getProductsAnalytics] = useGetProductAnalyticsMutation();
     const productsAnalytics = useSelector(selectProductAnalytics);
     const formatCurrency = useCurrency();
 
     const fetchAllProducts = useCallback(async () => {
         try {
-            await getProductsAnalytics(null).unwrap();
+            const res = await getProductsAnalytics(null).unwrap();
+
+            if (res.data) {
+                setLoading(false);
+            }
         } catch (error) {
             console.error(error);
+            setLoading(false);
         }
     }, [getProductsAnalytics]);
 
@@ -22,7 +28,7 @@ export const useAllProducts = () => {
 
     return {
         productsAnalytics,
-        getProductsAnalyticsStatus,
         formatCurrency,
+        isLoading,
     };
 };

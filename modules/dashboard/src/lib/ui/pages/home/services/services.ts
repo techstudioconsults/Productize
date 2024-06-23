@@ -54,12 +54,17 @@ export const useProductAnalytics = () => {
 };
 
 export const useOrders = () => {
-    const [getAllOrders, getLiveProductsStatus] = useGetAllOrdersMutation();
+    const [isLoading, setLoading] = useState(true);
+    const [getAllOrders] = useGetAllOrdersMutation();
     const orders = useSelector(selectAllOrders);
 
     const fetchAllOrders = useCallback(async () => {
         try {
-            await getAllOrders(null).unwrap();
+            const res = await getAllOrders(null).unwrap();
+
+            if (res.data) {
+                setLoading(false);
+            }
         } catch (error) {
             console.error('Error fetching orders:', error);
         }
@@ -69,7 +74,7 @@ export const useOrders = () => {
         fetchAllOrders();
     }, [fetchAllOrders]);
 
-    return { orders, getLiveProductsStatus, fetchAllOrders };
+    return { orders, isLoading, fetchAllOrders };
 };
 
 export const useExport = () => {

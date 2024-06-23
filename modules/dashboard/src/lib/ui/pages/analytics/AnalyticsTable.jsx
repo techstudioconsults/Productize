@@ -21,7 +21,6 @@ export const AnalyticsTable = () => {
             const res = await axios.get('https://productize-api.techstudio.academy/api/products/users/top-products', {
                 headers: {
                     Authorization: `Bearer ${token}`,
-                    'Content-Type': 'multipart/form-data',
                 },
             });
             if (res.status === 200) {

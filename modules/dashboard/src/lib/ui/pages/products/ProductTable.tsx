@@ -10,7 +10,7 @@ import { ProductsTableControl } from './ProductsTableControl';
 import { DashboardEmptyState } from '../../empty-states/DashboardEmptyState';
 import { useCurrency, useDate, useTime } from '@productize/hooks';
 import { useGetAllProductsMutation, selectAllProducts, selectPaginationMetaData } from '@productize/redux';
-import { OnBoardingLoader, SharedButton } from '@productize/ui';
+import {  SharedButton } from '@productize/ui';
 
 interface tableProps {
     draft?: boolean;
@@ -130,9 +130,8 @@ export const ProductTable = ({ deleted }: tableProps) => {
 
     return (
         <>
-            <Skeleton isLoaded={!getAllProductsStatus.isLoading}>
-                <ProductsTableControl />
-            </Skeleton>
+            <ProductsTableControl />
+
             <TableContainer
                 display={`flex`}
                 flexDir={`column`}
@@ -140,20 +139,17 @@ export const ProductTable = ({ deleted }: tableProps) => {
                 justifyContent={`space-between`}
                 overflowY={`auto`}
             >
-                {getAllProductsStatus.isLoading ? (
-                    <OnBoardingLoader />
-                ) : (
-                    <Table size={`sm`} variant="simple">
-                        {/* head */}
-                        <Thead zIndex={1} pos={`sticky`} top={0}>
-                            <Tr bgColor={`purple.100`} color={`grey.300`}>
-                                {tableHeader}
-                            </Tr>
-                        </Thead>
-                        {/* body */}
-                        <Tbody color={`purple.300`}>{tableproduct}</Tbody>
-                    </Table>
-                )}
+                <Table size={`sm`} variant="simple">
+                    {/* head */}
+                    <Thead zIndex={1} pos={`sticky`} top={0}>
+                        <Tr bgColor={`purple.100`} color={`grey.300`}>
+                            {tableHeader}
+                        </Tr>
+                    </Thead>
+                    {/* body */}
+                    <Tbody color={`purple.300`}>{tableproduct}</Tbody>
+                </Table>
+
                 {!allProducts?.length && !getAllProductsStatus.isLoading && (
                     <Box my={10}>
                         <DashboardEmptyState

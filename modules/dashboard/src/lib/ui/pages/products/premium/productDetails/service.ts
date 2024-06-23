@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import {
@@ -11,9 +11,10 @@ import {
 } from '@productize/redux';
 
 export const useProductDetails = () => {
+    const [isLoading, setLoading] = useState(true);
     const { productID } = useParams();
-    const [getSingleProduct, singleProductStatus] = useGetSingleProductDetailsMutation();
-    const [getSingleProductCustomers, singleProductCustomersStatus] = useGetCustomersOfSingleProductMutation();
+    const [getSingleProduct] = useGetSingleProductDetailsMutation();
+    const [getSingleProductCustomers] = useGetCustomersOfSingleProductMutation();
     const [deleteProductSoftly, deleteStatus] = useDeleteProductSoftlyMutation();
     const [updateProductStatus, updateProductStatusStatus] = useUpdateProductStatusMutation();
     const product = useSelector(selectSingleProduct);
@@ -21,10 +22,15 @@ export const useProductDetails = () => {
 
     const fetchProductDetails = useCallback(async () => {
         try {
-            await getSingleProduct({ productID }).unwrap();
-            await getSingleProductCustomers({ productID }).unwrap();
+            const res = await getSingleProduct({ productID }).unwrap();
+            const resCus = await getSingleProductCustomers({ productID }).unwrap();
+
+            if (res && resCus) {
+                setLoading(false);
+            }
         } catch (error) {
             console.error(error);
+            setLoading(false);
         }
     }, [getSingleProduct, getSingleProductCustomers, productID]);
 
@@ -35,8 +41,7 @@ export const useProductDetails = () => {
     return {
         product,
         user,
-        singleProductStatus,
-        singleProductCustomersStatus,
+        isLoading,
         deleteProductSoftly,
         deleteStatus,
         updateProductStatus,

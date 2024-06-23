@@ -1,16 +1,15 @@
-import { Box } from '@chakra-ui/react';
+import { Box, Flex, HStack, Skeleton, VStack } from '@chakra-ui/react';
 import { ProductCards } from '../../../../ProductCards';
 import { EmptyState } from '../../../../empty-states/EmptyState';
-import { OnBoardingLoader } from '@productize/ui';
 import DeletedTableControl from './deleteTableControl/DeletedTableControl';
 import { useDeletedProducts } from './service';
 import { DeletedTable } from './DeletedTable';
 
 const DeleteTabActive = () => {
-    const { deletedProducts, getDeletedProductsStatus } = useDeletedProducts();
+    const { deletedProducts, isLoading } = useDeletedProducts();
 
-    if (getDeletedProductsStatus.isLoading) {
-        return <OnBoardingLoader />;
+    if (isLoading) {
+        return <DeleteSkeleton />;
     }
 
     return (
@@ -44,3 +43,29 @@ const DeleteTabActive = () => {
 };
 
 export default DeleteTabActive;
+
+
+export const DeleteSkeleton = () => {
+    return (
+        <Box p={5}>
+            <Flex justify="space-between" mb={6}>
+                <HStack spacing={4}>
+                    <Skeleton height="40px" width="240px" />
+                    <Skeleton height="40px" width="120px" />
+                    <Skeleton height="40px" width="40px" />
+                </HStack>
+                <HStack spacing={4}>
+                    <Skeleton height="40px" width="120px" />
+                </HStack>
+            </Flex>
+            <VStack>
+                <Skeleton height="40px" width="100%" />
+                <Skeleton height="40px" width="100%" />
+                <Skeleton height="40px" width="100%" />
+                <Skeleton height="40px" width="100%" />
+                <Skeleton height="40px" width="100%" />
+                <Skeleton height="40px" width="100%" />
+            </VStack>
+        </Box>
+    );
+};

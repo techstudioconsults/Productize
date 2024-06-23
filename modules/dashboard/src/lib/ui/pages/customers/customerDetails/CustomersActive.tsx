@@ -1,5 +1,5 @@
-import { Box, Text } from '@chakra-ui/react';
-import { useCallback, useEffect } from 'react';
+import { Box, Flex, HStack, Skeleton, Text, VStack } from '@chakra-ui/react';
+import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { CustomersTableControl } from '../customerTable/CustomersTableControl';
 import { CustomerTable } from '../customerTable/CustomerTable';
@@ -8,12 +8,16 @@ import { selectAllCustomers, useGetAllCustomersMutation } from '@productize/redu
 import { OnBoardingLoader } from '@productize/ui';
 
 const CustomersActive = () => {
-    const [getAllCustomers, getAllCustomersStatus] = useGetAllCustomersMutation();
+    const [isLoading, setLoading] = useState(true);
+    const [getAllCustomers] = useGetAllCustomersMutation();
     const allCustomers = useSelector(selectAllCustomers);
 
     const showAllCustomers = useCallback(async () => {
         try {
-            await getAllCustomers(null).unwrap();
+            const res = await getAllCustomers(null).unwrap();
+            if (res.data) {
+                setLoading(false);
+            }
         } catch (error) {
             return error;
         }
@@ -23,8 +27,8 @@ const CustomersActive = () => {
         showAllCustomers();
     }, [showAllCustomers]);
 
-    if (getAllCustomersStatus.isLoading) {
-        return <OnBoardingLoader />;
+    if (isLoading) {
+        return <CustomersSkeleton />;
     }
 
     if (!allCustomers?.length) {
@@ -60,3 +64,25 @@ const CustomersActive = () => {
 };
 
 export default CustomersActive;
+
+const CustomersSkeleton = () => {
+    return (
+        <Box mt={10}>
+            <Flex justify="space-between" mb={6}>
+                <HStack spacing={4}>
+                    <Skeleton height="40px" width="240px" />
+                    <Skeleton height="40px" width="40px" />
+                </HStack>
+                <HStack spacing={4}>
+                    <Skeleton height="40px" width="120px" />
+                </HStack>
+            </Flex>
+            <VStack>
+                <Skeleton height="40px" width="100%" />
+                <Skeleton height="40px" width="100%" />
+                <Skeleton height="40px" width="100%" />
+                <Skeleton height="40px" width="100%" />
+            </VStack>
+        </Box>
+    );
+};

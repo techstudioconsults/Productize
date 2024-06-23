@@ -1,5 +1,6 @@
 import React from 'react';
-import { Box, Flex, SimpleGrid, Skeleton, Stack } from '@chakra-ui/react';
+import { Box, Flex, Grid, HStack, Skeleton, SkeletonText, VStack } from '@chakra-ui/react';
+import { SimpleGrid, Stack } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { ProductCards } from '../../../../ProductCards';
 import { EmptyState } from '../../../../empty-states/EmptyState';
@@ -9,7 +10,7 @@ import { ProductTable } from '../../ProductTable';
 import { useAllProducts } from './service';
 
 const AllproductActive = () => {
-    const { productsAnalytics, getProductsAnalyticsStatus, formatCurrency } = useAllProducts();
+    const { productsAnalytics, isLoading, formatCurrency } = useAllProducts();
 
     const emptyProductDisplay = (
         <>
@@ -60,26 +61,21 @@ const AllproductActive = () => {
     const containsProductDisplay = (
         <Box my={8}>
             <SimpleGrid gap={4} my={4} columns={{ base: 1, sm: 2, lg: 4 }}>
-                <Skeleton isLoaded={!getProductsAnalyticsStatus.isLoading}>
-                    <Box>
-                        <DataWidgetCard showIcon={false} title="Total Products" value={productsAnalytics?.total_products} />
-                    </Box>
-                </Skeleton>
-                <Skeleton isLoaded={!getProductsAnalyticsStatus.isLoading}>
-                    <Box>
-                        <DataWidgetCard showIcon={false} title="Total Sales" value={productsAnalytics?.total_sales} />
-                    </Box>
-                </Skeleton>
-                <Skeleton isLoaded={!getProductsAnalyticsStatus.isLoading}>
-                    <Box>
-                        <DataWidgetCard showIcon={false} title="Customers" value={productsAnalytics?.total_customers} />
-                    </Box>
-                </Skeleton>
-                <Skeleton isLoaded={!getProductsAnalyticsStatus.isLoading}>
-                    <Box>
-                        <DataWidgetCard showIcon={false} title="Total Revenue" value={formatCurrency(productsAnalytics?.total_revenues)} />
-                    </Box>
-                </Skeleton>
+                <Box>
+                    <DataWidgetCard showIcon={false} title="Total Products" value={productsAnalytics?.total_products} />
+                </Box>
+
+                <Box>
+                    <DataWidgetCard showIcon={false} title="Total Sales" value={productsAnalytics?.total_sales} />
+                </Box>
+
+                <Box>
+                    <DataWidgetCard showIcon={false} title="Customers" value={productsAnalytics?.total_customers} />
+                </Box>
+
+                <Box>
+                    <DataWidgetCard showIcon={false} title="Total Revenue" value={formatCurrency(productsAnalytics?.total_revenues)} />
+                </Box>
             </SimpleGrid>
             <Stack mt={12} gap={4}>
                 <ProductTable />
@@ -87,9 +83,45 @@ const AllproductActive = () => {
         </Box>
     );
 
+    if (isLoading) {
+        return <DashboardSkeleton />;
+    }
+
     const display = productsAnalytics?.total_products ? containsProductDisplay : emptyProductDisplay;
 
     return display;
 };
 
 export default AllproductActive;
+
+export const DashboardSkeleton = () => {
+    return (
+        <Box p={5}>
+            <Grid templateColumns="repeat(4, 1fr)" gap={6} mb={6}>
+                <Skeleton p={5} height={`7rem`} borderWidth="1px" />
+                <Skeleton p={5} height={`7rem`} borderWidth="1px" />
+                <Skeleton p={5} height={`7rem`} borderWidth="1px" />
+                <Skeleton p={5} height={`7rem`} borderWidth="1px" />
+            </Grid>
+
+            <Flex mt={20} justify="space-between" mb={6}>
+                <HStack spacing={4}>
+                    <Skeleton height="40px" width="240px" />
+                    <Skeleton height="40px" width="120px" />
+                    <Skeleton height="40px" width="40px" />
+                </HStack>
+                <HStack spacing={4}>
+                    <Skeleton height="40px" width="120px" />
+                </HStack>
+            </Flex>
+            <VStack>
+                <Skeleton height="40px" width="100%" />
+                <Skeleton height="40px" width="100%" />
+                <Skeleton height="40px" width="100%" />
+                <Skeleton height="40px" width="100%" />
+                <Skeleton height="40px" width="100%" />
+                <Skeleton height="40px" width="100%" />
+            </VStack>
+        </Box>
+    );
+};

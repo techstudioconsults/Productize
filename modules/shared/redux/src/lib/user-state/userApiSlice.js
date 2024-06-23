@@ -7,7 +7,7 @@ const constructURL = (credentials, filteredLink) => {
     } else if (credentials?.link) {
         return credentials?.link;
     } else {
-        return `/payouts`;
+        return `/payouts/user`;
     }
 };
 
@@ -21,6 +21,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
+                    // console.log(data);
                     dispatch(
                         setUser({
                             user: data.data,
@@ -61,7 +62,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
         }),
         billingHistory: builder.mutation({
             query: (credentials) => ({
-                url: `/subscriptions`,
+                url: `/subscriptions/billing`,
                 method: 'GET',
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
@@ -86,6 +87,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
+                    console.log(data);
                     dispatch(
                         setPayoutStats({
                             payoutStats: data.data,

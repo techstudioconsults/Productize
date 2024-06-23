@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 export const PlanSettings = () => {
-    const [billingHistory, billingHistoryStatus] = useBillingHistoryMutation();
+    const [billingHistory] = useBillingHistoryMutation();
     const [renewalDate, setRenewalDate] = useState();
     const billingHistoryData = useSelector(selectBillingHistory);
 

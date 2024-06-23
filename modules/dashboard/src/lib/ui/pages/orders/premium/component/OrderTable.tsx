@@ -11,19 +11,13 @@ interface tableProps {
 }
 
 export const OrderTable = ({ tableData }: tableProps) => {
-    const [getAllOrders, getLiveProductsStatus] = useGetAllOrdersMutation();
+    const [getAllOrders] = useGetAllOrdersMutation();
     const token = useSelector(selectCurrentToken);
     const navigate = useNavigate();
     const formatCurrency = useCurrency();
     const formatDate = useDate();
     const formatTime = useTime();
     const paginate = useSelector(selectOrdersMetaData);
-    const dispatch = useDispatch();
-    const headersCredentials = {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    };
 
     const tableHeader = [`Product`, `Price`, `Customer's Email`, `Date`].map((title) => {
         return (
@@ -37,9 +31,9 @@ export const OrderTable = ({ tableData }: tableProps) => {
             <Tr _hover={{ bgColor: `purple.100`, cursor: `pointer` }} onClick={() => navigate(`/dashboard/orders/${order.id}`)} key={order.id}>
                 <Td>
                     <Flex gap={2} alignItems={`center`}>
-                        <Avatar bgColor={`yellow.100`} src={order?.product_thumbnail} borderRadius={`8px`} w={`100px`} h={`64px`} />
+                        <Avatar bgColor={`yellow.100`} src={order?.product?.thumbnail} borderRadius={`8px`} w={`100px`} h={`64px`} />
                         <Stack>
-                            <Text>{order?.product_title}</Text>
+                            <Text>{order?.product?.title}</Text>
                             <Flex alignItems={`center`} color={`grey.400`}>
                                 <Text className="tiny-text">{}</Text>
                             </Flex>
@@ -47,12 +41,12 @@ export const OrderTable = ({ tableData }: tableProps) => {
                     </Flex>
                 </Td>
                 <Td>
-                    <Flex>{formatCurrency(order.product_price)}</Flex>
+                    <Flex>{formatCurrency(order.product?.price)}</Flex>
                 </Td>
                 <Td>
                     {/* if show sale count is true */}
                     <Flex flexDir={`column`} gap={2} py={2}>
-                        <Text>{order?.customer_email}</Text>
+                        <Text>{order?.customer?.email}</Text>
                     </Flex>
                 </Td>
                 <Td>

@@ -1,21 +1,25 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import { useCallback, useEffect } from 'react';
-import { Box } from '@chakra-ui/react';
+import { useCallback, useEffect, useState } from 'react';
+import { Box, Flex, HStack, Skeleton, VStack } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { OrderTable } from './component/OrderTable';
 import { DashboardEmptyState } from '../../../empty-states/DashboardEmptyState';
 import { OrdersTableControl } from '../OrdersTableControl';
 import { useGetAllOrdersMutation, selectAllOrders } from '@productize/redux';
-import { OnBoardingLoader } from '@productize/ui';
 
 const OrderActive = () => {
-    const [getAllOrders, getLiveProductsStatus] = useGetAllOrdersMutation();
+    const [isLoading, setLoading] = useState(true);
+    const [getAllOrders] = useGetAllOrdersMutation();
     const orders = useSelector(selectAllOrders);
 
     const showAllOrders = useCallback(async () => {
         try {
-            await getAllOrders(null).unwrap();
+            const res = await getAllOrders(null).unwrap();
+            if (res.data) {
+                setLoading(false);
+            }
         } catch (error) {
+            setLoading(false);
             return error;
         }
     }, [getAllOrders]);
@@ -24,8 +28,8 @@ const OrderActive = () => {
         showAllOrders();
     }, [showAllOrders]);
 
-    if (getLiveProductsStatus.isLoading) {
-        return <OnBoardingLoader />;
+    if (isLoading) {
+        return <OrdersSkeleton />;
     }
 
     if (!orders?.length) {
@@ -58,3 +62,25 @@ const OrderActive = () => {
 };
 
 export default OrderActive;
+
+const OrdersSkeleton = () => {
+    return (
+        <Box mt={10}>
+            <Flex justify="space-between" mb={6}>
+                <HStack spacing={4}>
+                    <Skeleton height="40px" width="240px" />
+                    <Skeleton height="40px" width="40px" />
+                </HStack>
+                <HStack spacing={4}>
+                    <Skeleton height="40px" width="120px" />
+                </HStack>
+            </Flex>
+            <VStack>
+                <Skeleton height="40px" width="100%" />
+                <Skeleton height="40px" width="100%" />
+                <Skeleton height="40px" width="100%" />
+                <Skeleton height="40px" width="100%" />
+            </VStack>
+        </Box>
+    );
+};

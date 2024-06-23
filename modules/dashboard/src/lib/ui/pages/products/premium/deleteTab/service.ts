@@ -1,16 +1,21 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useGetDeletedProductsMutation, selectDeletedProducts } from '@productize/redux';
 
 export const useDeletedProducts = () => {
+    const [isLoading, setLoading] = useState(true);
     const [getDeletedProducts, getDeletedProductsStatus] = useGetDeletedProductsMutation();
     const deletedProducts = useSelector(selectDeletedProducts);
 
     const fetchDeletedProducts = useCallback(async () => {
         try {
-            await getDeletedProducts(null).unwrap();
+            const res = await getDeletedProducts(null).unwrap();
+            if (res.data) {
+                setLoading(false);
+            }
         } catch (error) {
             console.error(error);
+            setLoading(false);
         }
     }, [getDeletedProducts]);
 
@@ -21,5 +26,6 @@ export const useDeletedProducts = () => {
     return {
         deletedProducts,
         getDeletedProductsStatus,
+        isLoading,
     };
 };

@@ -10,6 +10,8 @@ export const ProductCustomerTable = ({ status }) => {
     const formatDate = useDate();
     const formatTime = useTime();
 
+    console.log(customers);
+
     const tableHeader = [`Customer name`, `Customer Email`, `Quantity`, `Date`].map((title) => {
         return (
             <Th py={3} key={title}>
@@ -22,11 +24,11 @@ export const ProductCustomerTable = ({ status }) => {
             <Tr key={content.id}>
                 <Td>
                     <Flex gap={2} alignItems={`center`}>
-                        <Text>{content?.customer_name}</Text>
+                        <Text>{content?.customer?.name}</Text>
                     </Flex>
                 </Td>
                 <Td>
-                    <Flex my={5}>{content?.customer_email}</Flex>
+                    <Flex my={5}>{content?.customer?.email}</Flex>
                 </Td>
                 <Td>
                     <Flex>{content?.quantity}</Flex>

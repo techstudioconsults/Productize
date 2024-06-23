@@ -11,6 +11,7 @@ export interface bannerProps {
     showImage: boolean;
     children?: React.ReactNode;
     hasBorder?: boolean;
+    hideCta?: boolean;
 }
 
 export const EmptyState = ({ content, textAlign, maxW, showImage, children, hasBorder }: bannerProps) => {

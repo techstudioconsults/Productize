@@ -1,16 +1,16 @@
 import { DashboardBanner } from '../../../DashboardBanner';
 import PayoutPremiumView from '../premium/PayoutPremiumView';
-import { Box, SimpleGrid, Skeleton } from '@chakra-ui/react';
+import { Box, Flex, Grid, HStack, SimpleGrid, Skeleton, VStack } from '@chakra-ui/react';
 import { PayoutTableControl } from '../components/PayoutTableControls';
 import { DataWidgetCard } from '../../../DataWidgetCard';
 import { useCurrency } from '@productize/hooks';
 import { selectPayoutStats, useGetPayoutStatsMutation } from '@productize/redux';
 import { useSelector } from 'react-redux';
-import { useCallback, useEffect } from 'react';
-import { OnBoardingLoader } from '@productize/ui';
+import { useCallback, useEffect, useState } from 'react';
 
 const PremiumLayout = () => {
-    const [getPayoutStats, getPayoutsStatus] = useGetPayoutStatsMutation();
+    const [isLoading, setLoading] = useState(true);
+    const [getPayoutStats] = useGetPayoutStatsMutation();
     const payouts = useSelector(selectPayoutStats);
     const formatCurrency = useCurrency();
 
@@ -19,21 +19,23 @@ const PremiumLayout = () => {
     //     return Math.min(totalPayout, totalEarning);
     // };
 
-    const showAllOrders = useCallback(async () => {
+    const showAllPayouts = useCallback(async () => {
         try {
             const res = await getPayoutStats(null).unwrap();
-            console.log(res);
+            if (res.data) {
+                setLoading(false);
+            }
         } catch (error) {
             return error;
         }
     }, [getPayoutStats]);
 
     useEffect(() => {
-        showAllOrders();
-    }, [showAllOrders]);
+        showAllPayouts();
+    }, [showAllPayouts]);
 
-    if (getPayoutsStatus.isLoading) {
-        return <OnBoardingLoader />;
+    if (isLoading) {
+        return <PayoutSkeleton />;
     }
 
     return (
@@ -79,3 +81,34 @@ const PremiumLayout = () => {
 };
 
 export default PremiumLayout;
+
+export const PayoutSkeleton = () => {
+    return (
+        <Box p={5}>
+            <Skeleton height="10rem" width="100%" />
+            <Flex mt={10} justify="space-between" mb={6}>
+                <HStack spacing={4}>
+                    <Skeleton height="40px" width="240px" />
+                    <Skeleton height="40px" width="120px" />
+                    <Skeleton height="40px" width="40px" />
+                </HStack>
+                <HStack spacing={4}>
+                    <Skeleton height="40px" width="120px" />
+                </HStack>
+            </Flex>
+            <Grid templateColumns="repeat(4, 1fr)" gap={6} mb={6}>
+                <Skeleton p={5} height={`6rem`} borderWidth="1px" />
+                <Skeleton p={5} height={`6rem`} borderWidth="1px" />
+                <Skeleton p={5} height={`6rem`} borderWidth="1px" />
+                <Skeleton p={5} height={`6rem`} borderWidth="1px" />
+            </Grid>
+            <VStack>
+                <Skeleton height="40px" width="100%" />
+                <Skeleton height="40px" width="100%" />
+                <Skeleton height="40px" width="100%" />
+                <Skeleton height="40px" width="100%" />
+                <Skeleton height="40px" width="100%" />
+            </VStack>
+        </Box>
+    );
+};

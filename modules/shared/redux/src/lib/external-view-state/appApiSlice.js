@@ -4,7 +4,7 @@ import { setAllProduct_EXTERNAL, setCart, setSingleProduct_EXTERNAL, setTags } f
 
 // Function to determine URL based on credentials
 const determineURL = (credentials) => {
-    return credentials?.link || '/products';
+    return credentials?.link || '/products/external';
 };
 
 export const appApiSlice = apiSlice.injectEndpoints({

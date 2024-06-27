@@ -252,7 +252,7 @@ export const ProductDetails = () => {
 const ProductDetailsSkeleton = () => {
     return (
         <Box>
-            <Flex justify="space-between" mb={6}>
+            <Flex display={{ base: `none`, sm: `flex` }} justify="space-between" mb={6}>
                 <HStack spacing={4}>
                     <Skeleton height="40px" width="240px" />
                 </HStack>

@@ -30,7 +30,9 @@ type DropdownLinkProps = {
 
 const DropdownLink = ({ isScroll, link, linkColor }: DropdownLinkProps) => {
     // const tags = useSelector(selectTags);
-    const tags = ['Digital Products', 'print on Demand', 'Skill Selling', 'Template Hub'];
+    const tags = ['Digital Products', 'Skill Selling'];
+    // // const tags = useSelector(selectTags);
+    // const tags = ['Digital Products', 'print on Demand', 'Skill Selling', 'Template Hub'];
 
     const navLinks = tags?.map((tag: string) => {
         return (

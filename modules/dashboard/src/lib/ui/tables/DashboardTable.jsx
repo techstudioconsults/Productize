@@ -77,10 +77,10 @@ export const TableSkeleton = () => {
     return (
         <Box>
             <VStack>
-                <Skeleton height="40px" width="100%" />
-                <Skeleton height="40px" width="100%" />
-                <Skeleton height="40px" width="100%" />
-                <Skeleton height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
             </VStack>
         </Box>
     );

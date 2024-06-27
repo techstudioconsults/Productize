@@ -21,10 +21,10 @@ const SkillSellingSubForm = () => {
                 <GridItem colSpan={{ base: 12, md: 6 }}>
                     {/* discount price */}
                     <Field label="Skill Level">
-                        <Select sx={globalFieldStyle} variant={`filled`} size={`lg`} placeholder="Select option">
-                            <option value="option1">Option 1</option>
-                            <option value="option2">Option 2</option>
-                            <option value="option3">Option 3</option>
+                        <Select {...register(`level`)} sx={globalFieldStyle} variant={`filled`} size={`lg`} placeholder="Select option">
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
                         </Select>
                     </Field>
                 </GridItem>
@@ -32,10 +32,9 @@ const SkillSellingSubForm = () => {
                 <GridItem colSpan={{ base: 12, md: 6 }}>
                     {/* discount price */}
                     <Field label="Availability">
-                        <Select sx={globalFieldStyle} variant={`filled`} size={`lg`} placeholder="Select option">
-                            <option value="option1">Option 1</option>
-                            <option value="option2">Option 2</option>
-                            <option value="option3">Option 3</option>
+                        <Select {...register(`availability`)} sx={globalFieldStyle} variant={`filled`} size={`lg`} placeholder="Select option">
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
                         </Select>
                     </Field>
                 </GridItem>

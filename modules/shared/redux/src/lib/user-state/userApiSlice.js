@@ -101,7 +101,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
 
         getPayouts: builder.mutation({
             query: (credentials) => ({
-                url: constructURL(credentials, `/payouts?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}`),
+                url: constructURL(credentials, `/payouts/user?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}`),
                 method: 'GET',
             }),
 

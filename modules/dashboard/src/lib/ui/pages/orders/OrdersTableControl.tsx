@@ -107,9 +107,12 @@ export const OrdersTableControl = ({ showRefreshBtn }: controlsProp) => {
     const filterTable = async () => {
         try {
             await getAllOrders({
-                page: null,
-                startDate,
-                endDate,
+                link: {
+                    page: null,
+                    startDate,
+                    endDate,
+                },
+                isFilter: true,
             }).unwrap();
         } catch (error: any) {
             console.error(error);

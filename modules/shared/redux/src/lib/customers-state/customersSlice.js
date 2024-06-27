@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
+    isFilter: false,
     allCustomers: null,
     singleCustomer: {},
     singleCustomerOrders: [],
@@ -12,9 +13,10 @@ const customerSlice = createSlice({
     initialState,
     reducers: {
         setAllCustomers: (state, action) => {
-            const { customers, customersMetaData } = action.payload;
+            const { customers, customersMetaData, isFilter } = action.payload;
             state.allCustomers = customers;
             state.customersMetaData = customersMetaData;
+            state.isFilter = isFilter;
         },
 
         setSingleCustomer: (state, action) => {
@@ -37,3 +39,4 @@ export const selectAllCustomers = (state) => state.Customers.allCustomers;
 export const selectCustomersMetaData = (state) => state.Customers.customersMetaData;
 export const selectSingleCustomer = (state) => state.Customers.singleCustomer;
 export const selectSingleCustomerOrders = (state) => state.Customers.singleCustomerOrders;
+export const selectIsCustomerFilter = (state) => state.Customers.isFilter;

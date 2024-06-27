@@ -47,6 +47,7 @@ export const NewProductTabLayout = () => {
             methods.setValue('product_type', state?.product?.product_type);
             methods.setValue('description', state?.product?.description);
             methods.setValue('tags', state?.product?.tags);
+            methods.setValue('category', state?.product?.category);
         }
     }, [getHashIndex, hash, methods, state]);
 
@@ -68,9 +69,9 @@ export const NewProductTabLayout = () => {
                     productID: productID,
                 }).unwrap();
 
-                if (res?.status === `published`) {
+                if (res.data?.status === `published`) {
                     navigate(`/dashboard/products/new#share`, {
-                        state: { product: res },
+                        state: { product: res.data },
                     });
                     toastIdRef.current = toast({
                         position: 'top',
@@ -78,7 +79,7 @@ export const NewProductTabLayout = () => {
                     });
                 } else {
                     navigate(`/dashboard/products/new#preview`, {
-                        state: { product: res },
+                        state: { product: res.data },
                     });
                     toastIdRef.current = toast({
                         position: 'top',

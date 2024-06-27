@@ -1,19 +1,21 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
+    isFilter: false,
     allOrders: null,
     singleOrder: {},
     ordersMetaData: null,
 };
 
 const OrderSlice = createSlice({
-    name: "Orders",
+    name: 'Orders',
     initialState,
     reducers: {
         setAllOrders: (state, action) => {
-            const { orders, ordersMetaData } = action.payload;
+            const { orders, ordersMetaData, isFilter } = action.payload;
             state.allOrders = orders;
             state.ordersMetaData = ordersMetaData;
+            state.isFilter = isFilter;
         },
 
         setSingleOrder: (state, action) => {
@@ -33,3 +35,4 @@ export default OrderSlice.reducer;
 export const selectAllOrders = (state) => state.Orders.allOrders;
 export const selectOrdersMetaData = (state) => state.Orders.ordersMetaData;
 export const selectSingleOrder = (state) => state.Orders.singleOrder;
+export const selectIsOrderfilter = (state) => state.Orders.isFilter;

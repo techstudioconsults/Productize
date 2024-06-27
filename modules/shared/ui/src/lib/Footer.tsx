@@ -1,4 +1,4 @@
-import { Box, Container, Flex, SimpleGrid, Text, Link as ChakraLink } from '@chakra-ui/react';
+import { Box, Container, Flex, SimpleGrid, Text } from '@chakra-ui/react';
 import React, { memo } from 'react';
 import { Icon } from '@iconify/react';
 import { Link as RouterLink } from 'react-router-dom';
@@ -9,7 +9,7 @@ interface FooterLinkProps {
 }
 
 const FooterLink: React.FC<FooterLinkProps> = ({ to, children }) => (
-    <Text as={RouterLink} fontWeight={600} to={to}>
+    <Text  as={RouterLink} fontWeight={600} to={to}>
         {children}
     </Text>
 );
@@ -40,7 +40,7 @@ export const Footer: React.FC = memo(() => {
                         <FooterLink to="/explore">Explore</FooterLink>
                         <FooterLink to="/pricing">Pricing</FooterLink>
                         <FooterLink to="/features">Features</FooterLink>
-                        <FooterLink to="/creator">Become a creator</FooterLink>
+                        <FooterLink to="/auth">Become a creator</FooterLink>
                     </Flex>
                     <Flex
                         flexDir="column"

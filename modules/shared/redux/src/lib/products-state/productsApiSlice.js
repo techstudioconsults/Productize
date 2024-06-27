@@ -148,7 +148,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
 
                     dispatch(
                         setSingleProduct({
-                            product: data,
+                            product: data.data,
                         })
                     );
                 } catch (error) {

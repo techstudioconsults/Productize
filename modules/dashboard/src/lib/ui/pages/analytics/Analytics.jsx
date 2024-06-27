@@ -112,24 +112,24 @@ export default Analytics;
 const AnalyticsSkeleton = () => {
     return (
         <Box p={5}>
-            <Grid templateColumns="repeat(3, 1fr)" gap={6} mb={6}>
-                <Skeleton p={5} height={`7rem`} borderWidth="1px" />
-                <Skeleton p={5} height={`7rem`} borderWidth="1px" />
-                <Skeleton p={5} height={`7rem`} borderWidth="1px" />
-                <Skeleton p={5} height={`7rem`} borderWidth="1px" />
-                <Skeleton p={5} height={`7rem`} borderWidth="1px" />
-                <Skeleton p={5} height={`7rem`} borderWidth="1px" />
-            </Grid>
+            <SimpleGrid columns={{ sm: 2, md: 3 }} gap={6} mb={6}>
+                <Skeleton borderRadius={8} p={5} height={`7rem`} borderWidth="1px" />
+                <Skeleton borderRadius={8} p={5} height={`7rem`} borderWidth="1px" />
+                <Skeleton borderRadius={8} p={5} height={`7rem`} borderWidth="1px" />
+                <Skeleton borderRadius={8} p={5} height={`7rem`} borderWidth="1px" />
+                <Skeleton borderRadius={8} p={5} height={`7rem`} borderWidth="1px" />
+                <Skeleton borderRadius={8} p={5} height={`7rem`} borderWidth="1px" />
+            </SimpleGrid>
 
             <Flex mt={20} justify="space-between" mb={6} gap={6}>
-                <Skeleton height="40px" width="100%" />
-                <Skeleton height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
             </Flex>
-            <Skeleton height="10rem" width="100%" />
+            <Skeleton borderRadius={8} height="10rem" width="100%" />
             <VStack mt={5}>
-                <Skeleton height="40px" width="100%" />
-                <Skeleton height="40px" width="100%" />
-                <Skeleton height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
             </VStack>
         </Box>
     );

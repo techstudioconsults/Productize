@@ -90,7 +90,7 @@ export const SearchComp = ({ color, width, size }) => {
                 />
             </InputGroup>
 
-            <Modal isOpen={isOpen} onClose={onClose} size="4xl">
+            <Modal isOpen={isOpen} onClose={onClose} size={{ base: `full`, md: `3xl`, lg: `4xl` }}>
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader pb={0}>
@@ -105,7 +105,7 @@ export const SearchComp = ({ color, width, size }) => {
                                 placeholder="Search"
                                 _placeholder={{ color: '#01010140' }}
                                 bgColor="transparent"
-                                _focus={{ boxShadow: 'none', outline: 'none' }}
+                                // _focus={{ boxShadow: 'none', outline: 'none' }}
                             />
                             <InputRightElement>
                                 <ModalCloseButton zIndex={999} />
@@ -117,20 +117,20 @@ export const SearchComp = ({ color, width, size }) => {
                         <Tabs>
                             <TabList>
                                 <Tab disabled py={8} gap={2}>
-                                    <Text>All results</Text>
-                                    <Text>{searchResults?.length}</Text>
+                                    <Text fontSize={{ base: `xs`, md: `md` }}>All</Text>
+                                    <Text fontSize={{ base: `xs`, md: `md` }}>{searchResults?.length}</Text>
                                 </Tab>
                                 <Tab disabled py={8} gap={2}>
-                                    <Text>Projects</Text>
-                                    <Text>0</Text>
+                                    <Text fontSize={{ base: `xs`, md: `md` }}>Projects</Text>
+                                    <Text fontSize={{ base: `xs`, md: `md` }}>0</Text>
                                 </Tab>
                                 <Tab disabled py={8} gap={2}>
-                                    <Text>Files</Text>
-                                    <Text>0</Text>
+                                    <Text fontSize={{ base: `xs`, md: `md` }}>Files</Text>
+                                    <Text fontSize={{ base: `xs`, md: `md` }}>0</Text>
                                 </Tab>
                                 <Tab disabled py={8} gap={2}>
-                                    <Text>Users</Text>
-                                    <Text>0</Text>
+                                    <Text fontSize={{ base: `xs`, md: `md` }}>Users</Text>
+                                    <Text fontSize={{ base: `xs`, md: `md` }}>0</Text>
                                 </Tab>
                             </TabList>
 

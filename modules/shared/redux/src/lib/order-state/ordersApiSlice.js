@@ -7,7 +7,7 @@ const constructURL = (credentials) => {
         return '/orders/user';
     }
 
-    const { page, startDate, endDate, link } = credentials;
+    const { page, startDate, endDate, link } = credentials.link;
     if (!link) {
         return `/orders/user?page=${page}&start_date=${startDate}&end_date=${endDate}`;
     } else {
@@ -27,6 +27,7 @@ export const OrdersApiSlice = apiSlice.injectEndpoints({
                     const { data } = await queryFulfilled;
                     dispatch(
                         setAllOrders({
+                            isFilter: arg?.isFilter || false,
                             orders: data.data,
                             ordersMetaData: { links: data.links, meta: data.meta },
                         })

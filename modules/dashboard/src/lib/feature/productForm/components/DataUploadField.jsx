@@ -34,7 +34,7 @@ export const DataUploadField = () => {
 
     const isModifiedData = useCallback(async () => {
         if (state && hash === `#product-details`) {
-            setDocuments(state?.product?.data);
+            setDocuments(state?.product?.resources);
             setShowPreview(true);
         }
     }, [hash, state]);
@@ -80,73 +80,79 @@ export const DataUploadField = () => {
     );
 };
 
-const Heading = ({ action, errors, showPreview }) => (
-    <>
-        <Flex justifyContent="space-between" alignItems="flex-end">
-            <Box>
-                <Text color="purple.300" fontWeight={600}>
-                    Product
-                </Text>
-                <FormHelperText fontSize={{ base: 'xs', md: 'sm' }} color="grey.400">
-                    Upload the actual product you want to sell. Upload the product file
-                </FormHelperText>
-            </Box>
-            <Box display={showPreview ? `block` : `none`}>
-                <SharedButton
-                    btnExtras={{
-                        leftIcon: 'ri:file-upload-line',
-                        border: '1px solid #6D5DD3',
-                        onClick: action, // Handle file input click
-                    }}
-                    text="Upload File"
-                    width="fit-content"
-                    height="48px"
-                    bgColor="transparent"
-                    textColor="purple.200"
-                    borderRadius="4px"
-                    fontSize={{ base: 'sm', md: 'md' }}
-                />
-            </Box>
-        </Flex>
-        <Text className={`tiny-text`} color={`red.200`}>
-            {errors?.data?.message}
-        </Text>
-    </>
-);
+const Heading = ({ action, errors, showPreview }) => {
+    const { state } = useLocation();
+    return (
+        <>
+            <Flex justifyContent="space-between" alignItems="flex-end">
+                <Box>
+                    <Text color="purple.300" fontWeight={600}>
+                        Product
+                    </Text>
+                    <FormHelperText fontSize={{ base: 'xs', md: 'sm' }} color="grey.400">
+                        Upload the actual product you want to sell. Upload the product file
+                    </FormHelperText>
+                </Box>
+                <Box display={showPreview ? `block` : `none`}>
+                    <SharedButton
+                        btnExtras={{
+                            leftIcon: 'ri:file-upload-line',
+                            border: '1px solid #6D5DD3',
+                            onClick: action, // Handle file input click
+                            disabled: state?.product,
+                        }}
+                        text="Upload File"
+                        width="fit-content"
+                        height="48px"
+                        bgColor="transparent"
+                        textColor="purple.200"
+                        borderRadius="4px"
+                        fontSize={{ base: 'sm', md: 'md' }}
+                    />
+                </Box>
+            </Flex>
+            <Text className={`tiny-text`} color={`red.200`}>
+                {errors?.data?.message}
+            </Text>
+        </>
+    );
+};
 
 const ProductContentDisplay = ({ file }) => {
     const { state } = useLocation();
     const [fileObject, setFileObject] = useState({});
 
-    const sliceImageName = (originalName, maxLength) => {
-        // Check if originalName is defined
-        if (!originalName || typeof originalName !== 'string') {
-            console.error('Invalid originalName provided');
-            return originalName;
-        }
-        // Extract the extension
-        const extensionIndex = originalName.lastIndexOf('.');
-        if (extensionIndex === -1) {
-            console.error('Invalid image name format. Extension not found.');
-            return originalName;
-        }
-        const extension = originalName.slice(extensionIndex);
-        // Calculate the maximum length of the name without extension
-        const maxNameLength = maxLength - extension.length - 1; // Accounting for the dot before the extension
-        // Slice the name accordingly
-        const slicedName = originalName.length > maxLength ? originalName.slice(0, maxNameLength) + '...' + extension : originalName;
-        return slicedName;
-    };
+    // const sliceImageName = (originalName, maxLength) => {
+    //     // Check if originalName is defined
+    //     if (!originalName || typeof originalName !== 'string') {
+    //         console.error('Invalid originalName provided');
+    //         return originalName;
+    //     }
+    //     // Extract the extension
+    //     const extensionIndex = originalName.lastIndexOf('.');
+    //     if (extensionIndex === -1) {
+    //         console.error('Invalid image name format. Extension not found.');
+    //         return originalName;
+    //     }
+    //     const extension = originalName.slice(extensionIndex);
+    //     // Calculate the maximum length of the name without extension
+    //     const maxNameLength = maxLength - extension.length - 1; // Accounting for the dot before the extension
+    //     // Slice the name accordingly
+    //     const slicedName = originalName.length > maxLength ? originalName.slice(0, maxNameLength) + '...' + extension : originalName;
+    //     return slicedName;
+    // };
 
     useEffect(() => {
         if (state && file) {
-            if (typeof file === 'string') {
-                const filename = file.substring(file.lastIndexOf('/') + 1);
-                const filetype = file.substring(file.lastIndexOf('.') + 1);
-                setFileObject({ name: filename, type: `document/${filetype}`, size: file?.size });
-            } else {
-                setFileObject({ name: file.name, type: file.type, size: file.size });
+            if (typeof file === 'object') {
+                console.log(file);
+                // const filename = file.substring(file.lastIndexOf('/') + 1);
+                // const filetype = file.substring(file.lastIndexOf('.') + 1);
+                setFileObject({ name: file?.name, type: file?.mime_type || file?.type, size: file?.size });
             }
+            //  else {
+            //     setFileObject({ name: file.name, type: file.type, size: file.size });
+            // }
         }
     }, [file, state]);
 
@@ -158,8 +164,8 @@ const ProductContentDisplay = ({ file }) => {
                 </Box>
                 {state ? (
                     <Box>
-                        <Text fontWeight={600}>{sliceImageName(fileObject?.name, 30)}</Text>
-                        <Text className="small-text">{`${fileObject?.type}`}</Text>
+                        <Text fontWeight={600}>{fileObject?.name}</Text>
+                        <Text className="small-text">{`${fileObject?.type} ${fileObject.size}`}</Text>
                     </Box>
                 ) : (
                     <Box>

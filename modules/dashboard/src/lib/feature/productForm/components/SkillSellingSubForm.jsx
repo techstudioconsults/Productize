@@ -1,4 +1,4 @@
-import { FormControl, Grid, GridItem, Input, Select, Stack } from '@chakra-ui/react';
+import { Box, FormControl, Grid, GridItem, Input, Select, SimpleGrid, Stack } from '@chakra-ui/react';
 import { Field } from './FormFields';
 import { useFormContext } from 'react-hook-form';
 
@@ -16,9 +16,9 @@ const globalFieldStyle = {
 const SkillSellingSubForm = () => {
     const { register } = useFormContext();
     return (
-        <Stack>
-            <FormControl as={Grid} templateRows="repeat(1, 1fr)" templateColumns="repeat(12, 1fr)" gap={10} my={8}>
-                <GridItem colSpan={{ base: 12, md: 6 }}>
+        <SimpleGrid columns={{ base: 1, sm: 2 }}>
+            <Stack gap={10} my={8}>
+                <Box>
                     {/* discount price */}
                     <Field label="Skill Level">
                         <Select {...register(`level`)} sx={globalFieldStyle} variant={`filled`} size={`lg`} placeholder="Select option">
@@ -27,9 +27,9 @@ const SkillSellingSubForm = () => {
                             <option value="high">High</option>
                         </Select>
                     </Field>
-                </GridItem>
+                </Box>
 
-                <GridItem colSpan={{ base: 12, md: 6 }}>
+                <Box>
                     {/* discount price */}
                     <Field label="Availability">
                         <Select {...register(`availability`)} sx={globalFieldStyle} variant={`filled`} size={`lg`} placeholder="Select option">
@@ -37,8 +37,8 @@ const SkillSellingSubForm = () => {
                             <option value="no">No</option>
                         </Select>
                     </Field>
-                </GridItem>
-                <GridItem colSpan={{ base: 12, md: 6 }}>
+                </Box>
+                <Box>
                     {/* discount price */}
                     <Field label="Portfolio Link">
                         <Input
@@ -52,9 +52,9 @@ const SkillSellingSubForm = () => {
                             id="portfolio-link"
                         />
                     </Field>
-                </GridItem>
-            </FormControl>
-        </Stack>
+                </Box>
+            </Stack>
+        </SimpleGrid>
     );
 };
 export default SkillSellingSubForm;

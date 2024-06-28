@@ -4,12 +4,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Tabs, TabList, Tab, TabPanels, TabPanel, Flex, Box, useDisclosure } from '@chakra-ui/react';
-import { ProductForm, ContentDeliveryForm, productFormSchema } from '@productize/dashboard';
+import { ProductForm, ContentDeliveryForm, SSFormSchema, DPFormSchema, productFormSchema } from '@productize/dashboard';
 import { PaywallUnpublishWarning, PreviewProductSummary, SharedButton, ToastFeedback, useToastAction } from '@productize/ui';
 import ShareLayout from '../ShareLayout';
 import { selectCurrentUser, useUpdateProductStatusMutation } from '@productize/redux';
-import { useProductActions } from './service';
 import errorImg from '@icons/error.svg';
+import { useProductActions } from './service';
 
 const activeStateStyle = {
     borderBottom: `2px solid #6D5DD3`,
@@ -30,18 +30,48 @@ export const NewProductTabLayout = () => {
     const { state, hash } = useLocation();
     const navigate = useNavigate();
     const [tabIndex, setTabIndex] = useState(tabNames.findIndex((tab) => hash === `#${tab}`));
+    const [schema, setSchema] = useState(productFormSchema);
+
     const methods = useForm({
         criteriaMode: 'all',
         mode: 'onChange',
-        resolver: yupResolver(productFormSchema),
+        resolver: yupResolver(schema),
     });
+
     const { updateProduct, createProduct, isLoading } = useProductActions();
     const [updateProductStatus, updateProductStatusStatus] = useUpdateProductStatusMutation();
     const { isValid } = methods.formState;
 
     useEffect(() => {
-        setTabIndex(tabNames.findIndex((tab) => hash === `#${tab}`));
-    }, [hash]);
+        const currentTabIndex = tabNames.findIndex((tab) => hash === `#${tab}`);
+        setTabIndex(currentTabIndex);
+        // const productType = methods.getValues().product_type;
+        // console.log(productType);
+        // if (productType === 'skill_selling') {
+        //     setSchema(SSFormSchema);
+        // } else if (productType === 'digital_product') {
+        //     setSchema(DPFormSchema);
+        // }
+    }, [hash, methods]);
+
+    // useEffect(() => {
+    //     methods.reset(methods.getValues()); // reset form to apply new schema
+    //     methods.register('product_type'); // ensure product_type is registered for validation
+    // }, [schema]);
+
+    useEffect(() => {
+        console.log(state);
+        if (state && hash === '#product-details') {
+            methods.setValue('title', state?.product?.title);
+            methods.setValue('price', state?.product?.price);
+            methods.setValue('product_type', state?.product?.product_type);
+            methods.setValue('description', state?.product?.description);
+            methods.setValue('tags', state?.product?.tags);
+            methods.setValue('level', state?.product?.level);
+            methods.setValue('availability', state?.product?.availability);
+            methods.setValue('portfolio_link', state?.product?.link);
+        }
+    }, [schema]);
 
     const onSubmit = async (data) => {
         const action = state && hash ? updateProduct : createProduct;
@@ -50,25 +80,25 @@ export const NewProductTabLayout = () => {
 
     const handlePublishAction = async () => {
         const productID = state?.product?.id || state?.product?.data?.id;
-        if (user?.account_type === `free_trial` && state?.product?.status !== `draft`) {
+        if (user?.account_type === 'free_trial' && state?.product?.status !== 'draft') {
             onOpen();
         } else {
             try {
                 const res = await updateProductStatus({ productID }).unwrap();
-                const publishMessage = res.data?.status === `published` ? `Product published Successfully!` : `Product sent to draft Successfully!`;
+                const publishMessage = res.data?.status === 'published' ? 'Product published Successfully!' : 'Product sent to draft Successfully!';
 
-                navigate(`/dashboard/products/new#${res.data?.status === `published` ? 'share' : 'preview'}`, { state: { product: res.data } });
+                navigate(`/dashboard/products/new#${res.data?.status === 'published' ? 'share' : 'preview'}`, { state: { product: res.data } });
                 toastIdRef.current = toast({
                     position: 'top',
-                    render: () => <ToastFeedback btnColor={`purple.200`} message={publishMessage} handleClose={close} />,
+                    render: () => <ToastFeedback btnColor="purple.200" message={publishMessage} handleClose={close} />,
                 });
             } catch (error) {
-                const errorMessage = error.status !== 403 ? error?.message || `Something went wrong` : `Paystack Setup`;
+                const errorMessage = error.status !== 403 ? error?.message || 'Something went wrong' : 'Paystack Setup';
 
                 toastIdRef.current = toast({
                     position: 'top',
                     render: () => (
-                        <ToastFeedback message={errorMessage} title={errorMessage} icon={errorImg} color={`red.600`} btnColor={`red.600`} handleClose={close} />
+                        <ToastFeedback message={errorMessage} title={errorMessage} icon={errorImg} color="red.600" btnColor="red.600" handleClose={close} />
                     ),
                 });
             }

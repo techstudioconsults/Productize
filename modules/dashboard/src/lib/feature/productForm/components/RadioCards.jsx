@@ -15,7 +15,7 @@ const RadioCards = ({ listenForChange }) => {
         register,
         formState: { errors },
     } = useFormContext();
-    const [productTypeValue, setProductTypeValue] = useState(state?.product?.product_type);
+    const [productTypeValue, setProductTypeValue] = useState(state?.product?.product_type || `digital_product`);
     const handleProductTypeChange = (value) => {
         setProductTypeValue(value);
         listenForChange(value); // Call the callback function with the selected value

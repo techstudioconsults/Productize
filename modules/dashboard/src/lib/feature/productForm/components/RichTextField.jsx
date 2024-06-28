@@ -1,6 +1,6 @@
 import { Controller, useFormContext } from 'react-hook-form';
 import { quillModulesSchema } from '../../formValidationSchema/form-schemas';
-import { Box, FormLabel, Text } from '@chakra-ui/react';
+import { Box, FormControl, FormLabel, Text } from '@chakra-ui/react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
@@ -11,7 +11,7 @@ const RichTextField = () => {
     } = useFormContext(); // retrieve all hook methods
 
     return (
-        <Box>
+        <FormControl>
             <>
                 <FormLabel color={`purple.300`} fontWeight={600}>
                     Description
@@ -34,7 +34,7 @@ const RichTextField = () => {
                     />
                 )}
             />
-        </Box>
+        </FormControl>
     );
 };
 

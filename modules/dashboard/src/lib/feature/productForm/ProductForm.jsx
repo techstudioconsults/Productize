@@ -1,4 +1,4 @@
-import { FormControl, SimpleGrid, Stack } from '@chakra-ui/react';
+import { Box, FormControl, SimpleGrid, Stack } from '@chakra-ui/react';
 import RadioCards from './components/RadioCards';
 import { useEffect, useState } from 'react';
 import { Field } from './components/FormFields';
@@ -49,56 +49,40 @@ export const ProductForm = () => {
                 <Progress size={`xs`} borderRadius={5} value={isProgressCompleted ? 100 : 50} colorScheme={`purple`} />
             </Box> */}
             <Stack hidden={isProgressCompleted}>
-                <MajorInputFields />
+                <Box>
+                    <MajorInputFields />
+                </Box>
                 {/* GRID THREE */}
-                <FormControl h={`21rem`} overflow={`hidden`}>
+                <Box h={`21rem`} overflow={`hidden`}>
                     <RichTextField />
-                </FormControl>
+                </Box>
                 {/* GRID FIVE */}
-                <FormControl my={8} gap={4}>
-                    <Field>
-                        <CoverPhotoUploadField />
-                    </Field>
-                </FormControl>
+                <Box my={8} gap={4}>
+                    <CoverPhotoUploadField />
+                </Box>
                 {/* GRID SIX */}
-                <FormControl my={8} gap={4}>
-                    <Field>
-                        <ThumbnailUploadField />
-                    </Field>
-                </FormControl>
+                <Box>
+                    <ThumbnailUploadField />
+                </Box>
                 {/* GRID SEVEN */}
-                <FormControl as={SimpleGrid} my={8} gap={4} columns={{ base: 1, sm: 2 }}>
-                    <Field>
-                        <HighLightField />
-                    </Field>
-                </FormControl>
+                <Box as={SimpleGrid} my={8} gap={4} columns={{ base: 1, sm: 2 }}>
+                    <HighLightField />
+                </Box>
                 {/* GRID EIGHT */}
-                <FormControl as={SimpleGrid} my={8} gap={4} columns={{ base: 1, sm: 2 }}>
-                    <Field>
-                        <TagsField />
-                    </Field>
-                </FormControl>
+                <Box as={SimpleGrid} my={8} gap={4} columns={{ base: 1, sm: 2 }}>
+                    <TagsField />
+                </Box>
             </Stack>
             {/* switch */}
             {/* <Stack hidden={!isProgressCompleted}> */}
             {/* GRID FOUR */}
-            <FormControl hidden={selectedProductType === `digital_product` ? false : true}>
+            <Box hidden={selectedProductType === `digital_product` ? false : true}>
                 <DataUploadField />
-            </FormControl>
+            </Box>
 
-            <FormControl hidden={selectedProductType === `digital_product` ? true : false}>
+            <Box hidden={selectedProductType === `digital_product` ? true : false}>
                 <SkillSellingSubForm />
-            </FormControl>
-
-            {/* </Stack> */}
-            {/* <Flex gap={4} justifyContent={`flex-end`} mt={2}>
-                <Button variant={`text`} onClick={handleNext}>
-                    Back
-                </Button>
-                <Button variant={`text`} onClick={handleNext}>
-                    Next
-                </Button>
-            </Flex> */}
+            </Box>
         </div>
     );
 };

@@ -1,5 +1,5 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import { Box, Card, Flex, FormHelperText, Image, Input, SimpleGrid, Text } from '@chakra-ui/react';
+import { Box, Card, Flex, FormControl, FormHelperText, Image, Input, SimpleGrid, Text } from '@chakra-ui/react';
 import { UploadExternalFiles } from '../../../ui/UploadExternalFiles';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
@@ -44,7 +44,7 @@ export const CoverPhotoUploadField = () => {
     }, [isModifiedData, state]);
 
     return (
-        <div>
+        <FormControl>
             <Heading action={handleInput} errors={errors} showPreview={showPreview} />
             <Controller
                 name="cover_photos"
@@ -77,7 +77,7 @@ export const CoverPhotoUploadField = () => {
                     return <CoverPhotoThumbnailActiveContent key={index} file={photo} />;
                 })}
             </SimpleGrid>
-        </div>
+        </FormControl>
     );
 };
 

@@ -1,4 +1,4 @@
-import { Box, FormControl, Grid, GridItem, Input, Select, SimpleGrid, Stack } from '@chakra-ui/react';
+import { Box, FormControl, Input, Select, SimpleGrid, Stack } from '@chakra-ui/react';
 import { Field } from './FormFields';
 import { useFormContext } from 'react-hook-form';
 
@@ -16,7 +16,7 @@ const globalFieldStyle = {
 const SkillSellingSubForm = () => {
     const { register } = useFormContext();
     return (
-        <SimpleGrid columns={{ base: 1, sm: 2 }}>
+        <FormControl as={SimpleGrid} columns={{ base: 1, sm: 2 }}>
             <Stack gap={10} my={8}>
                 <Box>
                     {/* discount price */}
@@ -54,7 +54,7 @@ const SkillSellingSubForm = () => {
                     </Field>
                 </Box>
             </Stack>
-        </SimpleGrid>
+        </FormControl>
     );
 };
 export default SkillSellingSubForm;

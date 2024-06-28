@@ -55,9 +55,11 @@ const RadioCards = ({ listenForChange }) => {
                 />
             </Radio>
             {/* </SimpleGrid> */}
-            <Text className={`tiny-text`} color={`red.200`}>
-                {errors?.product_type?.message}
-            </Text>
+            {errors.product_type && errors.product_type && (
+                <Text className="tiny-text" color="red.200">
+                    {errors.product_type.message}
+                </Text>
+            )}
         </RadioGroup>
     );
 };

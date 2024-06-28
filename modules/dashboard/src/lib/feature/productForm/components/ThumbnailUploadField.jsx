@@ -1,5 +1,5 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import { Box, Center, Flex, FormHelperText, Input, Text } from "@chakra-ui/react";
+import { Box, Center, Flex, FormControl, FormHelperText, Input, Text } from "@chakra-ui/react";
 import { SharedButton } from "@productize/ui";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
@@ -35,7 +35,7 @@ export const ThumbnailUploadField = () => {
     }, [isModifiedData, state]);
 
     return (
-        <div>
+        <FormControl>
             <Heading />
             <Center mt={4} bgColor={`purple.100`} bgImg={thumbnail} bgPosition={`center`} bgSize={`cover`} bgRepeat={`no-repeat`} boxSize={`200px`}>
                 <Controller
@@ -70,7 +70,7 @@ export const ThumbnailUploadField = () => {
                     fontSize={{ base: `sm`, md: `md` }}
                 />
             </Center>
-        </div>
+        </FormControl>
     );
 };
 

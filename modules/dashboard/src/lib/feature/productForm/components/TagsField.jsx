@@ -1,4 +1,4 @@
-import { Box, Flex, FormHelperText, Text } from '@chakra-ui/react';
+import { Box, Flex, FormControl, FormHelperText, Text } from '@chakra-ui/react';
 import { selectTags } from '@productize/redux';
 import { Controller, useFormContext } from 'react-hook-form';
 import { useSelector } from 'react-redux';
@@ -10,7 +10,7 @@ const TagsField = () => {
     const tagData = tags.map((item) => ({ label: item, value: item }));
 
     return (
-        <div>
+        <FormControl>
             <Heading />
             <Controller
                 name="tags"
@@ -27,7 +27,7 @@ const TagsField = () => {
                     />
                 )}
             />
-        </div>
+        </FormControl>
     );
 };
 

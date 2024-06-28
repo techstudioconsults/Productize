@@ -1,33 +1,40 @@
-import { FormControl, Grid, GridItem, Input, InputGroup, InputLeftElement, Select } from '@chakra-ui/react';
+import { FormControl, Grid, GridItem, Input, InputGroup, InputLeftElement, Select, Text } from '@chakra-ui/react';
 import { Field } from './FormFields';
 import { Icon } from '@iconify/react';
 import { useFormContext } from 'react-hook-form';
 
 const globalFieldStyle = {
-    bgColor: `grey.200`,
+    bgColor: 'gray.200',
     _focus: {
-        bgColor: `grey.300`,
-        color: `grey.800`,
+        bgColor: 'gray.300',
+        color: 'gray.800',
     },
     _placeholder: {
-        color: `grey.400`,
+        color: 'gray.400',
     },
 };
 
 const MajorInputFields = () => {
-    const { register } = useFormContext();
+    const {
+        register,
+        formState: { errors },
+    } = useFormContext();
+
     return (
         <FormControl as={Grid} templateRows="repeat(1, 1fr)" templateColumns="repeat(12, 1fr)" gap={8} my={8}>
             <GridItem colSpan={{ base: 12, md: 6 }}>
-                {/* product title */}
-                <Field label="Title">
+                {/* Product title */}
+                <Field label="Title" error={errors.title}>
                     <Input
                         maxLength={30}
                         placeholder="Name of product"
-                        variant={`filled`}
-                        size={`lg`}
+                        variant="filled"
+                        size="lg"
                         sx={globalFieldStyle}
-                        {...register(`title`)}
+                        {...register('title', {
+                            required: 'Title is required',
+                            maxLength: { value: 30, message: 'Title cannot exceed 30 characters' },
+                        })}
                         type="text"
                         id="title"
                     />
@@ -35,44 +42,52 @@ const MajorInputFields = () => {
             </GridItem>
             <GridItem colSpan={{ base: 12, md: 6 }}>
                 {/* Category */}
-                <Field label="Category">
+                <Field label="Category" error={errors.category}>
                     <Select
-                        {...register(`category`)}
+                        id="category"
+                        {...register('category')}
                         sx={globalFieldStyle}
-                        variant={`filled`}
-                        size={`lg`}
-                        // placeholder="Select a category"
-                        defaultValue={`Product`}
+                        variant="filled"
+                        size="lg"
+                        defaultValue="Product"
                     >
                         <option value="Product">Product</option>
                     </Select>
                 </Field>
             </GridItem>
             <GridItem colSpan={{ base: 12, md: 6 }}>
-                {/* product price */}
-                <Field label="Price">
+                {/* Product price */}
+                <Field label="Price" error={errors.price}>
                     <InputGroup>
                         <InputLeftElement mt={1} pointerEvents="none">
-                            <Icon fontSize={`1.2rem`} icon="mdi:naira" />
+                            <Icon fontSize="1.2rem" icon="mdi:naira" />
                         </InputLeftElement>
-                        <Input placeholder="0" variant={`filled`} size={`lg`} sx={globalFieldStyle} {...register(`price`)} type="number" id="price" />
+                        <Input placeholder="0" variant="filled" size="lg" sx={globalFieldStyle} {...register('price')} type="number" id="price" />
+                        {/* {errors.price && errors.price && (
+                            <Text className="tiny-text" color="red.200">
+                                {errors.price.message}
+                            </Text>
+                        )} */}
                     </InputGroup>
                 </Field>
             </GridItem>
             <GridItem colSpan={{ base: 12, md: 6 }}>
-                {/* discount price */}
-                <Field label="Discounted Price (optional)">
+                {/* Discount price */}
+                <Field label="Discounted Price (optional)" error={errors.discount_price}>
                     <InputGroup>
                         <InputLeftElement mt={1} pointerEvents="none">
-                            <Icon fontSize={`1.2rem`} icon="mdi:naira" />
+                            <Icon fontSize="1.2rem" icon="mdi:naira" />
                         </InputLeftElement>
                         <Input
                             disabled
                             placeholder="0.00"
-                            variant={`filled`}
-                            size={`lg`}
+                            variant="filled"
+                            size="lg"
                             sx={globalFieldStyle}
-                            {...register(`discount_price`)}
+                            {...register('discount_price', {
+                                valueAsNumber: true,
+                                min: { value: 0, message: 'Discount price must be at least 0' },
+                            })}
                             type="number"
                             id="discount_price"
                         />
@@ -82,4 +97,5 @@ const MajorInputFields = () => {
         </FormControl>
     );
 };
+
 export default MajorInputFields;

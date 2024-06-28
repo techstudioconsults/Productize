@@ -1,5 +1,5 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import { Box, Card, Flex, FormHelperText, Image, Input, SimpleGrid, Text } from '@chakra-ui/react';
+import { Box, Card, Flex, FormControl, FormHelperText, Image, Input, SimpleGrid, Text } from '@chakra-ui/react';
 import { UploadExternalFiles } from '../../../ui/UploadExternalFiles';
 import { Controller, useFormContext } from 'react-hook-form';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -44,7 +44,7 @@ export const DataUploadField = () => {
     }, [isModifiedData, state]);
 
     return (
-        <div>
+        <FormControl>
             <Heading action={handleInput} errors={errors} showPreview={showPreview} />
             <Controller
                 name="data"
@@ -76,7 +76,7 @@ export const DataUploadField = () => {
                     return <ProductContentDisplay key={index} file={file} />;
                 })}
             </SimpleGrid>
-        </div>
+        </FormControl>
     );
 };
 

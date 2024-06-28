@@ -1,5 +1,6 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { useEffect, useState } from 'react';
-import { Box, Flex, FormHelperText, Input, InputGroup, InputRightElement, Stack, Text } from '@chakra-ui/react';
+import { Box, Flex, FormControl, FormHelperText, Input, InputGroup, InputRightElement, Stack, Text } from '@chakra-ui/react';
 import { useFormContext } from 'react-hook-form';
 import { useLocation } from 'react-router-dom';
 import { SharedButton } from '@productize/ui';
@@ -33,7 +34,7 @@ export const HighLightField = () => {
     };
 
     return (
-        <>
+        <FormControl>
             <Heading />
             <InputGroup size="lg">
                 <Stack w="100%" mt={4} gap={4}>
@@ -88,7 +89,7 @@ export const HighLightField = () => {
                 />
             </Box>
             <input type="submit" style={{ display: 'none' }} />
-        </>
+        </FormControl>
     );
 };
 

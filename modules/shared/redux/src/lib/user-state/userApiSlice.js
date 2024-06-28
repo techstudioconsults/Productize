@@ -174,7 +174,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
 
         sendHelpMessage: builder.mutation({
             query: (credentials) => ({
-                url: `/users/request-help`,
+                url: `/complaints`,
                 method: 'POST',
                 body: { ...credentials },
             }),
@@ -226,7 +226,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
-                    const { data } = await queryFulfilled;
+                    // const { data } = await queryFulfilled;
                     // dispatch(
                     //     setAccountList({
                     //         accounts: data.data,

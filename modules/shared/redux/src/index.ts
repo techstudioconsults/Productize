@@ -1,5 +1,3 @@
-export * from './lib/redux';
-
 export * from './lib/store';
 
 export * from './lib/external-view-state/appApiSlice';

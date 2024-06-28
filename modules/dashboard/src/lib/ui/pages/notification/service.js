@@ -55,13 +55,13 @@ export const useNotifications = () => {
             },
         });
 
-        pusher.connection.bind('error', (err) => {
-            console.log('Pusher connection error:', err);
-        });
+        // pusher.connection.bind('error', (err) => {
+        //     console.log('Pusher connection error:', err);
+        // });
 
-        pusher.connection.bind('connected', () => {
-            console.log('Pusher connected!');
-        });
+        // pusher.connection.bind('connected', () => {
+        //     console.log('Pusher connected!');
+        // });
 
         const channel = pusher.subscribe(`private-order-created.${user?.id}`);
 

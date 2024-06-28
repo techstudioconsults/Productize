@@ -7,7 +7,7 @@ import { useCurrency } from '@productize/hooks';
 import { selectCurrentToken } from '@productize/redux';
 import { OnBoardingLoader } from '@productize/ui';
 
-const tableHeaders = ['Latest Purchase', 'View', 'Price', 'Purchases', 'Revenue'];
+const tableHeaders = ['Product', 'View', 'Price', 'Purchases', 'Revenue'];
 
 export const AnalyticsTable = () => {
     const [data, setData] = useState([]);

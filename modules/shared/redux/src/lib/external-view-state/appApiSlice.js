@@ -173,6 +173,14 @@ export const appApiSlice = apiSlice.injectEndpoints({
                 method: 'GET',
             }),
         }),
+
+        // submitKYCForm: builder.mutation({
+        //     query: (credentials) => ({
+        //         url: `/users/kyc`,
+        //         method: 'POST',
+        //         body: { ...credentials },
+        //     }),
+        // }),
     }),
 });
 
@@ -190,4 +198,5 @@ export const {
     useGetProductsBasedOnSearchMutation,
     useGetFAQMutation,
     useCreateProductReviewMutation,
+    // useSubmitKYCFormMutation
 } = appApiSlice;

@@ -1,4 +1,5 @@
-import { Center, Flex, FormControl, ModalBody, ModalFooter, Stack, Text, Textarea, useDisclosure } from '@chakra-ui/react';
+/* eslint-disable @nx/enforce-module-boundaries */
+import { Box, Center, Flex, FormControl, ModalBody, ModalFooter, Stack, Text, Textarea, useDisclosure } from '@chakra-ui/react';
 import { useCreateProductReviewMutation } from '@productize/redux';
 import { ModalComp, SharedButton, ToastFeedback, useToastAction } from '@productize/ui';
 import { useState } from 'react';
@@ -74,17 +75,22 @@ export const ReviewModal = ({ handleClose }) => {
             />
 
             <ModalComp modalSize="4xl" openModal={isOpen} closeModal={close}>
-                <ModalBody>
+                <ModalBody p={{base:0, md: `initial`}}>
                     <Flex justifyContent="center" mb={4}>
                         <Stack alignItems="center" gap={5}>
-                            <Text fontSize="2xl" fontWeight="bold">
+                            <Text fontSize={{ base: `md`, sm: `2xl` }} fontWeight="bold">
                                 How was the product?
                             </Text>
-                            <StarRatings rating={rating} starRatedColor="orange" starDimension="50px" starSpacing="15px" changeRating={handleRating} />
+                            <Box display={{ base: `none`, sm: `block` }}>
+                                <StarRatings rating={rating} starRatedColor="orange" starDimension="50px" starSpacing="15px" changeRating={handleRating} />
+                            </Box>
+                            <Box display={{ sm: `none` }}>
+                                <StarRatings rating={rating} starRatedColor="orange" starDimension="30px" starSpacing="10px" changeRating={handleRating} />
+                            </Box>
                         </Stack>
                     </Flex>
                     <FormControl>
-                        <Text mb={5} textAlign="center" fontSize="2xl" fontWeight="bold">
+                        <Text mb={5} textAlign="center" fontSize={{ base: `md`, sm: `2xl` }} fontWeight="bold">
                             What's your opinion about the product? <span>(Optional)</span>
                         </Text>
                         <Textarea h="15rem" placeholder="Drop a review for the creator..." value={review} onChange={(e) => setReview(e.target.value)} />

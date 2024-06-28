@@ -14,12 +14,7 @@ const LineChart = () => {
     }, [showAnalyticsChartData]);
 
     useEffect(() => {
-        const data = [
-            graphData?.revForThisWeek || 2000,
-            graphData?.revForLastWeek || 5000,
-            graphData?.revForTwoWeeksAgo || 1300,
-            graphData?.revForThreeWeeksAgo || 3989,
-        ];
+        const data = [graphData?.revForThisWeek, graphData?.revForLastWeek, graphData?.revForTwoWeeksAgo, graphData?.revForThreeWeeksAgo];
 
         // Destroy the previous chart instance before creating a new one
         if (chartInstance.current) {

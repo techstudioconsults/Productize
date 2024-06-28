@@ -1,14 +1,25 @@
-import { Box, Flex, FormControl, FormLabel, Grid, GridItem, Input, Select, Stack, Text, useDisclosure } from '@chakra-ui/react';
+/* eslint-disable @nx/enforce-module-boundaries */
+import { Box, Flex, FormControl, FormLabel, Grid, GridItem, Select, Stack, Text, useDisclosure, Input } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
 import { ModalComp, SharedButton } from '@productize/ui';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { DashboardEmptyState } from '../../../../empty-states/DashboardEmptyState';
+import { useForm } from 'react-hook-form';
+import { useAxiosInstance } from '@productize/hooks';
 
 export const KycSettings = () => {
     const { isOpen, onClose, onOpen } = useDisclosure();
     const [countries, setCountries] = useState([]);
     const [isFormCompleted, setFormCompleted] = useState(false);
+    const { query, isLoading } = useAxiosInstance({ MIME_TYPE: 'multipart/form-data' });
+
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm();
 
     const getCountry = async () => {
         const res = await axios.get('https://valid.layercode.workers.dev/list/countries?format=select&flags=true&value=code');
@@ -18,6 +29,22 @@ export const KycSettings = () => {
     useEffect(() => {
         getCountry();
     }, []);
+
+    const onSubmit = async (data) => {
+        console.log(data);
+        const formData = {
+            ...data,
+            document_image: data.document_image[0],
+        };
+        try {
+            const res = await query('post', `/users/kyc`, formData);
+            if (res.status === 200) {
+                setFormCompleted(true);
+            }
+        } catch (error) {
+            console.error('Error submitting KYC form', error);
+        }
+    };
 
     if (isFormCompleted) {
         return (
@@ -30,6 +57,7 @@ export const KycSettings = () => {
             />
         );
     }
+
     return (
         <Grid my={10} templateColumns="repeat(12, 1fr)" gap={6}>
             <GridItem colSpan={{ base: 12, md: 5 }}>
@@ -41,10 +69,9 @@ export const KycSettings = () => {
                 </Text>
             </GridItem>
             <GridItem colSpan={{ base: 12, md: 7 }}>
-                <FormControl as={`form`} maxW={500} mt={4}>
+                <FormControl as={`form`} maxW={500} mt={4} onSubmit={handleSubmit(onSubmit)}>
                     <Box>
-                        {/* {changePasswordStatus.isError && <ErrorText error={error} />} */}
-                        <FormControl>
+                        <FormControl isInvalid={errors.country}>
                             <FormLabel color={`purple.300`} fontWeight={600}>
                                 Country
                             </FormLabel>
@@ -55,17 +82,18 @@ export const KycSettings = () => {
                                 variant={`filled`}
                                 size={`lg`}
                                 placeholder="Select option"
+                                {...register('country', { required: 'Country is required' })}
                             >
-                                {countries?.map((country) => {
-                                    return (
-                                        <option key={country?.value} value={country?.label}>
-                                            {country?.label}
-                                        </option>
-                                    );
-                                })}
+                                {countries?.map((country) => (
+                                    <option key={country?.value} value={country?.value}>
+                                        {country?.label}
+                                    </option>
+                                ))}
                             </Select>
+                            {errors.country && <Text color="red.500">{errors.country.message}</Text>}
                         </FormControl>
-                        <FormControl my={5}>
+
+                        <FormControl my={5} isInvalid={errors.documentType}>
                             <FormLabel color={`purple.300`} fontWeight={600}>
                                 Document Type
                             </FormLabel>
@@ -75,14 +103,17 @@ export const KycSettings = () => {
                                 _placeholder={{ color: `grey.400` }}
                                 variant={`filled`}
                                 size={`lg`}
-                                placeholder="Select option"
+                                placeholder="Select document type"
+                                {...register('document_type', { required: 'Document type is required' })}
                             >
-                                <option value="option1">Option 1</option>
-                                <option value="option2">Option 2</option>
-                                <option value="option3">Option 3</option>
+                                <option value="Driver License">Driver’s License</option>
+                                <option value="National ID">National Id Card</option>
+                                <option value="National Passport">National Passport</option>
                             </Select>
+                            {errors.documentType && <Text color="red.500">{errors.documentType.message}</Text>}
                         </FormControl>
-                        <FormControl>
+
+                        <FormControl isInvalid={errors.documentImage}>
                             <FormLabel color={`purple.300`} fontWeight={600}>
                                 Document Image
                             </FormLabel>
@@ -98,14 +129,11 @@ export const KycSettings = () => {
                                 color={`purple.200`}
                             >
                                 <Icon icon="akar-icons:cloud-upload" />
-                                <Text color={`initial`} fontSize={`sm`}>
-                                    Drag and drop here or{' '}
-                                    <Text fontSize={`sm`} color={`purple.200`} as={`span`}>
-                                        browse files here
-                                    </Text>
-                                </Text>
+                                <Input type="file" accept="image/*" {...register('document_image', { required: 'Document image is required' })} />
+                                {errors.documentImage && <Text color="red.500">{errors.documentImage.message}</Text>}
                             </Flex>
                         </FormControl>
+
                         <Flex my={5} gap={2}>
                             <SharedButton
                                 btnExtras={{
@@ -118,10 +146,11 @@ export const KycSettings = () => {
                                 textColor={'purple.200'}
                                 borderRadius={'4px'}
                                 fontSize={{ base: `sm`, md: `md` }}
+                                onClick={() => reset()}
                             />
                             <SharedButton
                                 btnExtras={{
-                                    onClick: onOpen,
+                                    onClick: handleSubmit(onSubmit),
                                 }}
                                 text={'Submit'}
                                 width={'fit-content'}
@@ -130,6 +159,7 @@ export const KycSettings = () => {
                                 textColor={'grey.200'}
                                 borderRadius={'4px'}
                                 fontSize={{ base: `sm`, md: `md` }}
+                                type="submit"
                             />
                         </Flex>
                     </Box>
@@ -144,17 +174,18 @@ export const KycSettings = () => {
                         <Text color={`purple.300`} as={`h5`}>
                             Successfully Submitted
                         </Text>
-
                         <Text color={`grey.400`} fontSize={`sm`} mt={3}>
                             Your KYC information has been successfully submitted. Our team will review your submission and verify your details shortly. Thank
                             you for completing the KYC process.
                         </Text>
                     </Box>
-
                     <SharedButton
                         btnExtras={{
+                            type: `submit`,
                             border: '1px solid #6D5DD3',
                             onClick: onClose,
+                            isLoading: isLoading,
+                            loadingText: `processing KYC...`,
                         }}
                         text={'Go Back'}
                         width={'50%'}

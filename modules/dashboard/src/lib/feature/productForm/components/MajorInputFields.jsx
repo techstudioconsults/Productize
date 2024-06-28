@@ -36,10 +36,15 @@ const MajorInputFields = () => {
             <GridItem colSpan={{ base: 12, md: 6 }}>
                 {/* Category */}
                 <Field label="Category">
-                    <Select {...register(`category`)} sx={globalFieldStyle} variant={`filled`} size={`lg`} placeholder="Select option">
-                        <option value="option1">Option 1</option>
-                        <option value="option2">Option 2</option>
-                        <option value="option3">Option 3</option>
+                    <Select
+                        {...register(`category`)}
+                        sx={globalFieldStyle}
+                        variant={`filled`}
+                        size={`lg`}
+                        // placeholder="Select a category"
+                        defaultValue={`Product`}
+                    >
+                        <option value="Product">Product</option>
                     </Select>
                 </Field>
             </GridItem>
@@ -62,6 +67,7 @@ const MajorInputFields = () => {
                             <Icon fontSize={`1.2rem`} icon="mdi:naira" />
                         </InputLeftElement>
                         <Input
+                            disabled
                             placeholder="0.00"
                             variant={`filled`}
                             size={`lg`}

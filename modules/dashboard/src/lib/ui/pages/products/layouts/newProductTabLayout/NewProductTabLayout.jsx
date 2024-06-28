@@ -1,25 +1,26 @@
-import { Tabs, TabList, TabPanels, Tab, TabPanel, Flex, useDisclosure, Box } from '@chakra-ui/react';
-import { FormProvider, useForm } from 'react-hook-form';
-
+import { useState, useEffect } from 'react';
+import { useForm, FormProvider } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Tabs, TabList, Tab, TabPanels, TabPanel, Flex, Box, useDisclosure } from '@chakra-ui/react';
 import { ProductForm, ContentDeliveryForm, productFormSchema } from '@productize/dashboard';
 import { PaywallUnpublishWarning, PreviewProductSummary, SharedButton, ToastFeedback, useToastAction } from '@productize/ui';
 import ShareLayout from '../ShareLayout';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useSelector } from 'react-redux';
 import { selectCurrentUser, useUpdateProductStatusMutation } from '@productize/redux';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import errorImg from '@icons/error.svg';
 import { useProductActions } from './service';
+import errorImg from '@icons/error.svg';
 
 const activeStateStyle = {
     borderBottom: `2px solid #6D5DD3`,
     fontWeight: 600,
-    color: `grey.800`,
+    color: `#6D5DD3`,
 };
+
 const disabledStateStyle = {
     color: `grey.800`,
 };
+
 const tabNames = ['product-details', 'content-delivery', 'preview', 'share'];
 
 export const NewProductTabLayout = () => {
@@ -28,193 +29,272 @@ export const NewProductTabLayout = () => {
     const user = useSelector(selectCurrentUser);
     const { state, hash } = useLocation();
     const navigate = useNavigate();
-    const getHashIndex = tabNames.findIndex((tab) => hash === `#${tab}`);
-    const [tabIndex, setTabIndex] = useState(getHashIndex);
+    const [tabIndex, setTabIndex] = useState(tabNames.findIndex((tab) => hash === `#${tab}`));
     const methods = useForm({
         criteriaMode: 'all',
         mode: 'onChange',
         resolver: yupResolver(productFormSchema),
     });
-
     const { updateProduct, createProduct, isLoading } = useProductActions();
     const [updateProductStatus, updateProductStatusStatus] = useUpdateProductStatusMutation();
+    const { isValid } = methods.formState;
 
     useEffect(() => {
-        setTabIndex(getHashIndex);
-        if (state && hash === '#product-details') {
-            methods.setValue('title', state?.product?.title);
-            methods.setValue('price', state?.product?.price);
-            methods.setValue('product_type', state?.product?.product_type);
-            methods.setValue('description', state?.product?.description);
-            methods.setValue('tags', state?.product?.tags);
-            methods.setValue('category', state?.product?.category);
-        }
-    }, [getHashIndex, hash, methods, state]);
+        setTabIndex(tabNames.findIndex((tab) => hash === `#${tab}`));
+    }, [hash]);
 
     const onSubmit = async (data) => {
-        if (state && hash) {
-            await updateProduct(data);
-        } else {
-            await createProduct(data);
-        }
+        const action = state && hash ? updateProduct : createProduct;
+        await action(data);
     };
 
     const handlePublishAction = async () => {
-        const productID = state?.product?.id;
-        if (user?.account_type === `free` && state?.product?.status !== `draft`) {
+        const productID = state?.product?.id || state?.product?.data?.id;
+        if (user?.account_type === `free_trial` && state?.product?.status !== `draft`) {
             onOpen();
         } else {
             try {
-                const res = await updateProductStatus({
-                    productID: productID,
-                }).unwrap();
+                const res = await updateProductStatus({ productID }).unwrap();
+                const publishMessage = res.data?.status === `published` ? `Product published Successfully!` : `Product sent to draft Successfully!`;
 
-                if (res.data?.status === `published`) {
-                    navigate(`/dashboard/products/new#share`, {
-                        state: { product: res.data },
-                    });
-                    toastIdRef.current = toast({
-                        position: 'top',
-                        render: () => <ToastFeedback btnColor={`purple.200`} message={`Product published Successfully!`} handleClose={close} />,
-                    });
-                } else {
-                    navigate(`/dashboard/products/new#preview`, {
-                        state: { product: res.data },
-                    });
-                    toastIdRef.current = toast({
-                        position: 'top',
-                        render: () => <ToastFeedback btnColor={`purple.200`} message={`Product sent to draft Successfully!`} handleClose={close} />,
-                    });
-                }
+                navigate(`/dashboard/products/new#${res.data?.status === `published` ? 'share' : 'preview'}`, { state: { product: res.data } });
+                toastIdRef.current = toast({
+                    position: 'top',
+                    render: () => <ToastFeedback btnColor={`purple.200`} message={publishMessage} handleClose={close} />,
+                });
             } catch (error) {
-                if (error.status !== 403) {
-                    toastIdRef.current = toast({
-                        position: 'top',
-                        render: () => (
-                            <ToastFeedback
-                                message={error?.message || `Something went wrong`}
-                                title={`Paystack Setup`}
-                                icon={errorImg}
-                                color={`red.600`}
-                                btnColor={`red.600`}
-                                bgColor={undefined}
-                                handleClose={close}
-                            />
-                        ),
-                    });
-                }
+                const errorMessage = error.status !== 403 ? error?.message || `Something went wrong` : `Paystack Setup`;
+
+                toastIdRef.current = toast({
+                    position: 'top',
+                    render: () => (
+                        <ToastFeedback message={errorMessage} title={errorMessage} icon={errorImg} color={`red.600`} btnColor={`red.600`} handleClose={close} />
+                    ),
+                });
             }
         }
     };
 
-    const productCallsToAction =
-        state?.product?.status === `draft` || hash === `#product-details` ? (
-            <Flex w={`100%`} display={hash !== `#share` ? `flex` : `none`} gap={4}>
-                <SharedButton
-                    btnExtras={{
-                        border: `1px solid red`,
-                        onClick: () => navigate(`/dashboard/products#all-products`),
-                    }}
-                    text={'Cancel'}
-                    width={{ base: `100%`, lg: `fit-content` }}
-                    height={'40px'}
-                    bgColor={'transparent'}
-                    textColor={'red'}
-                    borderRadius={'4px'}
-                    fontSize={{ base: `sm`, md: `sm` }}
-                />
-                <Box width={{ base: `100%`, lg: `fit-content` }} display={hash !== `#preview` ? `block` : `none`}>
-                    <SharedButton
-                        text={'Save & Continue'}
-                        height={'40px'}
-                        width={{ base: `100%`, lg: `fit-content` }}
-                        bgColor={'purple.200'}
-                        textColor={'white'}
-                        borderRadius={'4px'}
-                        fontSize={{ base: `sm`, md: `sm` }}
-                        btnExtras={{
-                            onClickAsync: methods.handleSubmit(onSubmit),
-                            isLoading: isLoading,
-                            loadingText: `Creating product...`,
-                        }}
-                    />
-                </Box>
-                <Box width={{ base: `100%`, lg: `fit-content` }} display={hash === `#preview` ? `block` : `none`}>
-                    <SharedButton
-                        text={'Publish & Continue'}
-                        width={{ base: `100%`, lg: `fit-content` }}
-                        height={'40px'}
-                        bgColor={'purple.200'}
-                        textColor={'white'}
-                        borderRadius={'4px'}
-                        fontSize={{ base: `sm`, md: `sm` }}
-                        btnExtras={{
-                            onClick: handlePublishAction,
-                            isLoading: updateProductStatusStatus.isLoading,
-                            loadingText: `Publishing product...`,
-                            disabled: state?.product?.deleted_at,
-                        }}
-                    />
-                </Box>
-            </Flex>
-        ) : (
-            <Flex gap={4}>
-                <SharedButton
-                    btnExtras={{
-                        border: `1px solid #6D5DD3`,
-                        onClick: handlePublishAction,
-                        isLoading: updateProductStatusStatus.isLoading,
-                        loadingText: `Unpublishing product...`,
-                    }}
-                    text={'Unpublished'}
-                    width={{ base: `100%`, lg: `fit-content` }}
-                    height={'40px'}
-                    bgColor={'transparent'}
-                    textColor={'purple.200'}
-                    borderRadius={'4px'}
-                    fontSize={{ base: `sm`, md: `sm` }}
-                />
-                <Box width={{ base: `100%`, lg: `fit-content` }}>
-                    <SharedButton
-                        text={'Close'}
-                        width={{ base: `100%`, lg: `fit-content` }}
-                        height={'40px'}
-                        bgColor={'purple.200'}
-                        textColor={'white'}
-                        borderRadius={'4px'}
-                        fontSize={{ base: `sm`, md: `sm` }}
-                        btnExtras={{
-                            onClick: () => navigate(`/dashboard/products#all-products`),
-                        }}
-                    />
-                </Box>
-            </Flex>
-        );
-
     return (
         <FormProvider {...methods}>
             <Tabs index={tabIndex} onChange={(index) => setTabIndex(index)} size={`sm`}>
-                <Flex display={{ lg: `none` }} my={5}>
-                    {productCallsToAction}
+                <Flex zIndex={999} bgColor={`#ffffff`} pos={`sticky`} top={`75px`} display={{ lg: `none` }} my={5}>
+                    {state?.product?.data?.status === `draft` || hash === `#product-details` ? (
+                        <Flex w={`100%`} display={hash !== `#share` ? `flex` : `none`} gap={4}>
+                            <SharedButton
+                                btnExtras={{
+                                    border: `1px solid red`,
+                                    onClick: () => navigate(`/dashboard/products#all-products`),
+                                }}
+                                text={'Cancel'}
+                                width={{ base: `100%`, lg: `fit-content` }}
+                                height={'40px'}
+                                bgColor={'transparent'}
+                                textColor={'red'}
+                                borderRadius={'4px'}
+                                fontSize={{ base: `sm`, md: `sm` }}
+                            />
+                            <Box width={{ base: `100%`, lg: `fit-content` }} display={hash !== `#preview` ? `block` : `none`}>
+                                <SharedButton
+                                    text={'Save & Continue'}
+                                    height={'40px'}
+                                    width={{ base: `100%`, lg: `fit-content` }}
+                                    bgColor={'purple.200'}
+                                    textColor={'white'}
+                                    borderRadius={'4px'}
+                                    fontSize={{ base: `sm`, md: `sm` }}
+                                    btnExtras={{
+                                        onClickAsync: methods.handleSubmit(onSubmit),
+                                        isLoading: isLoading,
+                                        loadingText: `Creating product...`,
+                                        disabled: !isValid,
+                                    }}
+                                />
+                            </Box>
+                            <Box width={{ base: `100%`, lg: `fit-content` }} display={hash === `#preview` ? `block` : `none`}>
+                                <SharedButton
+                                    text={'Publish & Continue'}
+                                    width={{ base: `100%`, lg: `fit-content` }}
+                                    height={'40px'}
+                                    bgColor={'purple.200'}
+                                    textColor={'white'}
+                                    borderRadius={'4px'}
+                                    fontSize={{ base: `sm`, md: `sm` }}
+                                    btnExtras={{
+                                        onClick: handlePublishAction,
+                                        isLoading: updateProductStatusStatus.isLoading,
+                                        loadingText: `Publishing product...`,
+                                        disabled: state?.product?.deleted_at,
+                                    }}
+                                />
+                            </Box>
+                        </Flex>
+                    ) : (
+                        <Flex gap={4}>
+                            <SharedButton
+                                btnExtras={{
+                                    border: `1px solid #6D5DD3`,
+                                    onClick: handlePublishAction,
+                                    isLoading: updateProductStatusStatus.isLoading,
+                                    loadingText: `Unpublishing product...`,
+                                }}
+                                text={'Unpublished'}
+                                width={{ base: `100%`, lg: `fit-content` }}
+                                height={'40px'}
+                                bgColor={'transparent'}
+                                textColor={'purple.200'}
+                                borderRadius={'4px'}
+                                fontSize={{ base: `sm`, md: `sm` }}
+                            />
+                            <Box width={{ base: `100%`, lg: `fit-content` }}>
+                                <SharedButton
+                                    text={'Close'}
+                                    width={{ base: `100%`, lg: `fit-content` }}
+                                    height={'40px'}
+                                    bgColor={'purple.200'}
+                                    textColor={'white'}
+                                    borderRadius={'4px'}
+                                    fontSize={{ base: `sm`, md: `sm` }}
+                                    btnExtras={{
+                                        onClick: () => navigate(`/dashboard/products#all-products`),
+                                    }}
+                                />
+                            </Box>
+                        </Flex>
+                    )}
                 </Flex>
-                <TabList overflowX="scroll" overflowY="hidden" className="hide_scrollbar" justifyContent="space-between" color="grey.400">
+
+                <TabList
+                    pos={{ lg: `sticky` }}
+                    top={{ lg: `75px` }}
+                    overflowX="scroll"
+                    overflowY="hidden"
+                    className="hide_scrollbar"
+                    justifyContent="space-between"
+                    color="grey.400"
+                    zIndex={999}
+                    bgColor={`#ffffff`}
+                >
                     <Flex>
-                        <Tab id="product-details" py={6} w={{ base: '10rem', sm: 'initial' }}>
+                        <Tab
+                            id="product-details"
+                            py={6}
+                            mb={0}
+                            w={{ base: '10rem', sm: 'initial' }}
+                            isDisabled
+                            _disabled={disabledStateStyle}
+                            _selected={activeStateStyle}
+                        >
                             Product Details
                         </Tab>
-                        <Tab id="content-delivery" py={6} w={{ base: '10rem', sm: 'initial' }}>
-                            Content Delivery
-                        </Tab>
-                        <Tab id="preview" py={6} w={{ base: '10rem', sm: 'initial' }}>
+                        <Tab
+                            id="preview"
+                            py={6}
+                            mb={0}
+                            w={{ base: '10rem', sm: 'initial' }}
+                            isDisabled
+                            _disabled={disabledStateStyle}
+                            _selected={activeStateStyle}
+                        >
                             Preview
                         </Tab>
-                        <Tab id="share" py={6} w={{ base: '10rem', sm: 'initial' }}>
+                        <Tab
+                            id="share"
+                            py={6}
+                            mb={0}
+                            w={{ base: '10rem', sm: 'initial' }}
+                            isDisabled
+                            _disabled={disabledStateStyle}
+                            _selected={activeStateStyle}
+                        >
                             Share
                         </Tab>
                     </Flex>
                     <Flex display={{ base: `none`, lg: `initial` }}>
                         <PaywallUnpublishWarning onClose={onClose} isOpen={isOpen} productID={state?.product?.data?.id} />
-                        {productCallsToAction}
+                        {state?.product?.data?.status === `draft` || hash === `#product-details` ? (
+                            <Flex w={`100%`} display={hash !== `#share` ? `flex` : `none`} gap={4}>
+                                <SharedButton
+                                    btnExtras={{
+                                        border: `1px solid red`,
+                                        onClick: () => navigate(`/dashboard/products#all-products`),
+                                    }}
+                                    text={'Cancel'}
+                                    width={{ base: `100%`, lg: `fit-content` }}
+                                    height={'40px'}
+                                    bgColor={'transparent'}
+                                    textColor={'red'}
+                                    borderRadius={'4px'}
+                                    fontSize={{ base: `sm`, md: `sm` }}
+                                />
+                                <Box width={{ base: `100%`, lg: `fit-content` }} display={hash !== `#preview` ? `block` : `none`}>
+                                    <SharedButton
+                                        text={'Save & Continue'}
+                                        height={'40px'}
+                                        width={{ base: `100%`, lg: `fit-content` }}
+                                        bgColor={'purple.200'}
+                                        textColor={'white'}
+                                        borderRadius={'4px'}
+                                        fontSize={{ base: `sm`, md: `sm` }}
+                                        btnExtras={{
+                                            onClickAsync: methods.handleSubmit(onSubmit),
+                                            isLoading: isLoading,
+                                            loadingText: `Creating product...`,
+                                            disabled: !isValid,
+                                        }}
+                                    />
+                                </Box>
+                                <Box width={{ base: `100%`, lg: `fit-content` }} display={hash === `#preview` ? `block` : `none`}>
+                                    <SharedButton
+                                        text={'Publish & Continue'}
+                                        width={{ base: `100%`, lg: `fit-content` }}
+                                        height={'40px'}
+                                        bgColor={'purple.200'}
+                                        textColor={'white'}
+                                        borderRadius={'4px'}
+                                        fontSize={{ base: `sm`, md: `sm` }}
+                                        btnExtras={{
+                                            onClick: handlePublishAction,
+                                            isLoading: updateProductStatusStatus.isLoading,
+                                            loadingText: `Publishing product...`,
+                                            disabled: state?.product?.deleted_at,
+                                        }}
+                                    />
+                                </Box>
+                            </Flex>
+                        ) : (
+                            <Flex gap={4}>
+                                <SharedButton
+                                    btnExtras={{
+                                        border: `1px solid #6D5DD3`,
+                                        onClick: handlePublishAction,
+                                        isLoading: updateProductStatusStatus.isLoading,
+                                        loadingText: `Unpublishing product...`,
+                                    }}
+                                    text={'Unpublished'}
+                                    width={{ base: `100%`, lg: `fit-content` }}
+                                    height={'40px'}
+                                    bgColor={'transparent'}
+                                    textColor={'purple.200'}
+                                    borderRadius={'4px'}
+                                    fontSize={{ base: `sm`, md: `sm` }}
+                                />
+                                <Box width={{ base: `100%`, lg: `fit-content` }}>
+                                    <SharedButton
+                                        text={'Close'}
+                                        width={{ base: `100%`, lg: `fit-content` }}
+                                        height={'40px'}
+                                        bgColor={'purple.200'}
+                                        textColor={'white'}
+                                        borderRadius={'4px'}
+                                        fontSize={{ base: `sm`, md: `sm` }}
+                                        btnExtras={{
+                                            onClick: () => navigate(`/dashboard/products#all-products`),
+                                        }}
+                                    />
+                                </Box>
+                            </Flex>
+                        )}
                     </Flex>
                 </TabList>
 
@@ -236,3 +316,5 @@ export const NewProductTabLayout = () => {
         </FormProvider>
     );
 };
+
+export default NewProductTabLayout;

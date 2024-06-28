@@ -1,6 +1,7 @@
 import { Box, Card, CardBody, Image, Radio, RadioGroup, SimpleGrid, Text } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useLocation } from 'react-router-dom';
 
 const activeCardStyle = {
     color: `#6D5DD3`,
@@ -9,11 +10,12 @@ const activeCardStyle = {
 };
 
 const RadioCards = ({ listenForChange }) => {
+    const { state } = useLocation();
     const {
         register,
         formState: { errors },
     } = useFormContext();
-    const [productTypeValue, setProductTypeValue] = useState('digital_product');
+    const [productTypeValue, setProductTypeValue] = useState(state?.product?.product_type);
     const handleProductTypeChange = (value) => {
         setProductTypeValue(value);
         listenForChange(value); // Call the callback function with the selected value

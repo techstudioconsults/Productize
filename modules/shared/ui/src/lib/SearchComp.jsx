@@ -74,14 +74,14 @@ export const SearchComp = ({ color, width, size }) => {
 
     return (
         <Box>
-            <InputGroup size={size}>
+            <InputGroup onClick={onOpen} size={size}>
                 <InputLeftElement pointerEvents="none" fontSize="1.2em">
                     <Icon icon={search} name="search" />
                 </InputLeftElement>
                 <Input
+                    readOnly
                     type={`text`}
                     value={searchTerm}
-                    onChange={handleInputChange}
                     border="none"
                     placeholder="Search"
                     _placeholder={{ color: '#01010140' }}
@@ -99,16 +99,17 @@ export const SearchComp = ({ color, width, size }) => {
                                 <Icon icon={search} name="search" />
                             </InputLeftElement>
                             <Input
+                                type={`text`}
                                 value={searchTerm}
                                 onChange={handleInputChange}
                                 border="none"
                                 placeholder="Search"
                                 _placeholder={{ color: '#01010140' }}
                                 bgColor="transparent"
-                                // _focus={{ boxShadow: 'none', outline: 'none' }}
+                                _focus={{ boxShadow: 'none', outline: 'none' }}
                             />
-                            <InputRightElement>
-                                <ModalCloseButton zIndex={999} />
+                            <InputRightElement onClick={() => setSearchTerm('')} fontSize={'1.2em'}>
+                                <Iconify icon="material-symbols:close" />
                             </InputRightElement>
                         </InputGroup>
                     </ModalHeader>
@@ -121,7 +122,7 @@ export const SearchComp = ({ color, width, size }) => {
                                     <Text fontSize={{ base: `xs`, md: `md` }}>{searchResults?.length}</Text>
                                 </Tab>
                                 <Tab disabled py={8} gap={2}>
-                                    <Text fontSize={{ base: `xs`, md: `md` }}>Projects</Text>
+                                    <Text fontSize={{ base: `xs`, md: `md` }}>Products</Text>
                                     <Text fontSize={{ base: `xs`, md: `md` }}>0</Text>
                                 </Tab>
                                 <Tab disabled py={8} gap={2}>
@@ -141,8 +142,8 @@ export const SearchComp = ({ color, width, size }) => {
                                     {!isLoading && searchResults.length === 0 && <NotFound />}
                                     {!isLoading && searchResults.length > 0 && (
                                         <Stack gap={4}>
-                                            {searchResults.map((product) => (
-                                                <SearchResultTemplate result={product} />
+                                            {searchResults?.map((product) => (
+                                                <SearchResultTemplate key={product?.id} result={product} />
                                             ))}
                                         </Stack>
                                     )}

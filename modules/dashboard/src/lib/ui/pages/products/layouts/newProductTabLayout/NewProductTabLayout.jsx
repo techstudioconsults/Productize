@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Tabs, TabList, Tab, TabPanels, TabPanel, Flex, Box, useDisclosure } from '@chakra-ui/react';
-import { DPFormSchema, ProductForm, SSFormSchema, productFormSchema } from '@productize/dashboard';
+import { Tabs, TabList, Tab, TabPanels, TabPanel, Flex, Box } from '@chakra-ui/react';
+import { DPFormSchema, ProductForm, SSFormSchema } from '@productize/dashboard';
 import { PreviewProductSummary, SharedButton, ToastFeedback, useToastAction } from '@productize/ui';
 import ShareLayout from '../ShareLayout';
-import { selectCurrentUser, useUpdateProductStatusMutation } from '@productize/redux';
+import { useUpdateProductStatusMutation } from '@productize/redux';
 import errorImg from '@icons/error.svg';
 import { useProductActions } from './service';
 
@@ -38,7 +37,7 @@ export const NewProductTabLayout = () => {
         resolver: yupResolver(schema),
     });
 
-    const { updateProduct, createProduct, getSkillSellingData, isLoading } = useProductActions();
+    const { updateProduct, createProduct, getSkillSellingData, getDigitalProductData, isLoading } = useProductActions();
     const [updateProductStatus, updateProductStatusStatus] = useUpdateProductStatusMutation();
     const { isValid } = methods.formState;
 
@@ -52,21 +51,33 @@ export const NewProductTabLayout = () => {
     }, [hash]);
 
     useEffect(() => {
-        console.log(state);
-        if (state && hash === '#product-details') {
-            changeSchema(state?.product?.product_type);
+        // if (state && hash === '#product-details') {
+        changeSchema(state?.product?.product_type);
+        if (state?.product?.product_type === `skill_selling`) {
             getSkillSellingData(state?.product?.id);
+        } else if (state?.product?.product_type === `digital_product`) {
+            getDigitalProductData(state?.product?.id);
+        } else {
+            return;
+        }
+        // }
+    }, [getDigitalProductData, getSkillSellingData, state?.product?.id, state?.product?.product_type]);
 
+    useEffect(() => {
+        if (state && hash === '#product-details') {
+            // methods.setValue('product_type', state?.product?.product_type);
             methods.setValue('title', state?.product?.title);
             methods.setValue('price', state?.product?.price);
-            methods.setValue('product_type', state?.product?.product_type);
             methods.setValue('description', state?.product?.description);
             methods.setValue('tags', state?.product?.tags);
-            // methods.setValue('level', state?.product?.level);
-            // methods.setValue('availability', state?.product?.availability);
-            // methods.setValue('portfolio_link', state?.product?.link);
+            methods.setValue('cover_photos', state?.product?.cover_photos);
+            methods.setValue('thumbnail', state?.product?.thumbnail);
+            methods.setValue('data', state?.product?.resources);
+            // methods.setValue('level', ssData?.level);
+            // methods.setValue('availability', ssData?.availability);
+            // methods.setValue('portfolio_link', ssData?.link);
         }
-    }, [getSkillSellingData, hash, methods, schema, state]);
+    }, [hash, methods, state]);
 
     const onSubmit = async (data) => {
         const action = state && hash ? updateProduct : createProduct;

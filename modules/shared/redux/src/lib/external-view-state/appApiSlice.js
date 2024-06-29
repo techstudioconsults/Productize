@@ -19,8 +19,10 @@ export const appApiSlice = apiSlice.injectEndpoints({
                     const { data } = await queryFulfilled;
                     let filteredProduct = data.data;
                     if (arg.tag) {
+                        // const tagToMatch = arg.tag.toLowerCase();
+                        // filteredProduct = data.data?.filter((product) => product.tags.map((tag) => tag.toLowerCase()).includes(tagToMatch));
                         const tagToMatch = arg.tag.toLowerCase();
-                        filteredProduct = data.data?.filter((product) => product.tags.map((tag) => tag.toLowerCase()).includes(tagToMatch));
+                        filteredProduct = data.data?.filter((product) => product.product_type.includes(tagToMatch));
                     }
                     dispatch(
                         setAllProduct_EXTERNAL({
@@ -42,9 +44,10 @@ export const appApiSlice = apiSlice.injectEndpoints({
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
+                    console.log(data);
                     dispatch(
                         setSingleProduct_EXTERNAL({
-                            product: data,
+                            product: data.data,
                         })
                     );
                 } catch (error) {
@@ -105,7 +108,8 @@ export const appApiSlice = apiSlice.injectEndpoints({
 
         getProductTags: builder.mutation({
             query: () => ({
-                url: `/products/tags`,
+                url: `/products/types`,
+                // url: `/products/tags`,
                 method: 'GET',
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
@@ -152,6 +156,13 @@ export const appApiSlice = apiSlice.injectEndpoints({
             }),
         }),
 
+        getAggrProductReviews: builder.mutation({
+            query: (credentials) => ({
+                url: `/reviews/productsavg/${credentials.productID}`,
+                method: 'GET',
+            }),
+        }),
+
         getTopProducts: builder.mutation({
             query: () => ({
                 url: `/products/top-products`,
@@ -172,6 +183,14 @@ export const appApiSlice = apiSlice.injectEndpoints({
                 method: 'GET',
             }),
         }),
+
+        // submitKYCForm: builder.mutation({
+        //     query: (credentials) => ({
+        //         url: `/users/kyc`,
+        //         method: 'POST',
+        //         body: { ...credentials },
+        //     }),
+        // }),
     }),
 });
 
@@ -189,4 +208,6 @@ export const {
     useGetProductsBasedOnSearchMutation,
     useGetFAQMutation,
     useCreateProductReviewMutation,
+    useGetAggrProductReviewsMutation,
+    // useSubmitKYCFormMutation
 } = appApiSlice;

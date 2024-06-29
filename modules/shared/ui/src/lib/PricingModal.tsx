@@ -1,7 +1,9 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { Flex, Text, useDisclosure } from '@chakra-ui/react';
 import { ModalComp } from './Modal';
 import { PricingCard } from './PricingCard';
 import { SharedButton } from './SharedButton';
+import { useSetPaymentPlan } from '@productize/hooks';
 
 interface PricingModalProps {
     handleClose?: () => void;
@@ -11,6 +13,7 @@ interface PricingModalProps {
 
 export const PricingModal: React.FC<PricingModalProps> = ({ handleClose, textColor, bgColor }) => {
     const { onClose, onOpen, isOpen } = useDisclosure();
+    const isPremium = useSetPaymentPlan();
 
     const close = () => {
         if (handleClose) {
@@ -30,22 +33,23 @@ export const PricingModal: React.FC<PricingModalProps> = ({ handleClose, textCol
                     width="fit-content"
                     height="40px"
                     fontSize={{ base: 'sm', md: 'md' }}
-                    color={textColor}
+                    color={isPremium ? `green.200` : textColor}
                     bgColor={bgColor}
                 >
-                    Subscribe Now
+                    {isPremium ? `Subscribed` : 'Subscribe Now'}
                 </Text>
             ) : (
                 <SharedButton
                     width="100%"
-                    text="Subscribe Now"
+                    text={isPremium ? `Subscribed` : 'Subscribe Now'}
                     height="40px"
-                    bgColor="purple.200"
                     textColor="grey.100"
                     borderRadius="4px"
                     fontSize={{ base: 'sm', md: 'md' }}
+                    bgColor={isPremium ? `green.200` : 'purple.200'}
                     btnExtras={{
                         onClick: onOpen,
+                        disabled: isPremium,
                     }}
                 />
             )}

@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Divider, IconButton, Menu, MenuButton, MenuItem, MenuList, useDisclosure } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
@@ -115,9 +116,9 @@ export const DropdownActionDraft = ({ icon, product }: dropProp) => {
                 variant="outlined"
             />
             <MenuList zIndex={999}>
-                <MenuItem onClick={(e) => handleTabAction(e, `#product-details`)} justifyContent={`flex-start`}>
+                {/* <MenuItem onClick={(e) => handleTabAction(e, `#product-details`)} justifyContent={`flex-start`}>
                     Edit
-                </MenuItem>
+                </MenuItem> */}
                 <MenuItem onClick={(e) => handleTabAction(e, `#preview`)} justifyContent={`flex-start`}>
                     Preview
                 </MenuItem>
@@ -248,9 +249,9 @@ export const DropdownActionLive = ({ icon, product }: dropProp) => {
                     <PaywallUnpublishWarning onClose={onClose} isOpen={isOpen} productID={product?.id} />
                     Unpublish to drafts
                 </MenuItem>
-                <MenuItem onClick={(e) => handleTabAction(e, `#product-details`)} justifyContent={`flex-start`}>
+                {/* <MenuItem onClick={(e) => handleTabAction(e, `#product-details`)} justifyContent={`flex-start`}>
                     Edit
-                </MenuItem>
+                </MenuItem> */}
                 <MenuItem onClick={(e) => handleTabAction(e, `#preview`)} justifyContent={`flex-start`}>
                     Preview
                 </MenuItem>

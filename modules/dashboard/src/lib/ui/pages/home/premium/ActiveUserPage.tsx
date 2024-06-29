@@ -18,7 +18,7 @@ const ActiveUserPage: React.FC = () => {
             {/* Grid cards */}
             <Box>
                 <SimpleGrid gap={4} my={4} columns={{ base: 1, md: 2 }}>
-                    <Skeleton isLoaded={!isLoading}>
+                    <Skeleton borderRadius={8} isLoaded={!isLoading}>
                         <Box>
                             <DataWidgetCard
                                 tmy={2}
@@ -30,7 +30,7 @@ const ActiveUserPage: React.FC = () => {
                             />
                         </Box>
                     </Skeleton>
-                    <Skeleton isLoaded={!isLoading}>
+                    <Skeleton borderRadius={8} isLoaded={!isLoading}>
                         <Box>
                             <DataWidgetCard
                                 tmy={2}
@@ -44,17 +44,17 @@ const ActiveUserPage: React.FC = () => {
                     </Skeleton>
                 </SimpleGrid>
                 <SimpleGrid gap={4} my={4} columns={{ base: 1, md: 3 }}>
-                    <Skeleton isLoaded={!isLoading}>
+                    <Skeleton borderRadius={8} isLoaded={!isLoading}>
                         <Box>
                             <DataWidgetCard showIcon={false} title="New Order" value={productAnalytics.new_orders || 0} />
                         </Box>
                     </Skeleton>
-                    <Skeleton isLoaded={!isLoading}>
+                    <Skeleton borderRadius={8} isLoaded={!isLoading}>
                         <Box>
                             <DataWidgetCard showIcon={false} title="Total Sales" value={productAnalytics.total_sales || 0} />
                         </Box>
                     </Skeleton>
-                    <Skeleton isLoaded={!isLoading}>
+                    <Skeleton borderRadius={8} isLoaded={!isLoading}>
                         <Box>
                             <DataWidgetCard showIcon={false} title="Total Products" value={productAnalytics.total_products || 0} />
                         </Box>
@@ -78,12 +78,12 @@ export const ControlSkeleton = () => {
     return (
         <Box>
             <Flex justify="space-between" mb={6}>
-                <HStack spacing={4}>
-                    <Skeleton height="40px" width="240px" />
-                    <Skeleton height="40px" width="40px" />
+                <HStack w={{ base: `100%`, sm: `initial` }} justifyContent={`space-between`} spacing={4}>
+                    <Skeleton borderRadius={8} height="40px" width="240px" />
+                    <Skeleton borderRadius={8} height="40px" width="40px" />
                 </HStack>
-                <HStack spacing={4}>
-                    <Skeleton height="40px" width="120px" />
+                <HStack display={{ base: `none`, sm: `block` }} spacing={4}>
+                    <Skeleton borderRadius={8} height="40px" width="120px" />
                 </HStack>
             </Flex>
         </Box>

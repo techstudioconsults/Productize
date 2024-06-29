@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Text, Stack, Box } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';

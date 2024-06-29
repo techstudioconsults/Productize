@@ -16,7 +16,7 @@ const DraftTabActive = () => {
 
     return (
         <>
-            <Box mb={4}>
+            <Box hidden={!draftProducts?.length} mb={4}>
                 <DraftTableControl showRefreshBtn={false} />
             </Box>
             {!draftProducts?.length ? (
@@ -64,23 +64,23 @@ export default DraftTabActive;
 export const DraftSkeleton = () => {
     return (
         <Box p={5}>
-            <Flex justify="space-between" mb={6}>
+            <Flex display={{ base: `none`, sm: `flex` }} justify="space-between" mb={6}>
                 <HStack spacing={4}>
-                    <Skeleton height="40px" width="240px" />
-                    <Skeleton height="40px" width="120px" />
-                    <Skeleton height="40px" width="40px" />
+                    <Skeleton borderRadius={8} height="40px" width="240px" />
+                    <Skeleton borderRadius={8} height="40px" width="120px" />
+                    <Skeleton borderRadius={8} height="40px" width="40px" />
                 </HStack>
                 <HStack spacing={4}>
-                    <Skeleton height="40px" width="120px" />
+                    <Skeleton borderRadius={8} height="40px" width="120px" />
                 </HStack>
             </Flex>
             <VStack>
-                <Skeleton height="40px" width="100%" />
-                <Skeleton height="40px" width="100%" />
-                <Skeleton height="40px" width="100%" />
-                <Skeleton height="40px" width="100%" />
-                <Skeleton height="40px" width="100%" />
-                <Skeleton height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
             </VStack>
         </Box>
     );

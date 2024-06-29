@@ -144,23 +144,23 @@ const CustomerDetailsSkeleton = () => {
                 <Flex justify="space-between" mb={6}>
                     <HStack spacing={4}>
                         {/* <SkeletonText width="140px" noOfLines={1} /> */}
-                        <Skeleton height="20px" width="200px" />
+                        <Skeleton borderRadius={8} height="20px" width="200px" />
                     </HStack>
                 </Flex>
-                <Skeleton height="8rem" width="100%" />
+                <Skeleton borderRadius={8} height="8rem" width="100%" />
                 <SimpleGrid mt={5} gap={4} columns={{ base: 1, sm: 2, md: 3 }}>
-                    <Skeleton height="5rem" width="100%" />
-                    <Skeleton height="5rem" width="100%" />
-                    <Skeleton height="5rem" width="100%" />
+                    <Skeleton borderRadius={8} height="5rem" width="100%" />
+                    <Skeleton borderRadius={8} height="5rem" width="100%" />
+                    <Skeleton borderRadius={8} height="5rem" width="100%" />
                 </SimpleGrid>
             </Box>
-            <VStack gap={0} justifyContent={`space-between`}>
-                <Skeleton height="40px" width="100%" />
-                <Skeleton height="40px" width="100%" />
-                <Skeleton height="40px" width="100%" />
-                <Skeleton height="40px" width="100%" />
-                <Skeleton height="40px" width="100%" />
-                <Skeleton height="40px" width="100%" />
+            <VStack gap={2} justifyContent={`space-between`}>
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
             </VStack>
         </SimpleGrid>
     );

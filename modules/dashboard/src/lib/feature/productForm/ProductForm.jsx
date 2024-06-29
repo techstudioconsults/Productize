@@ -1,6 +1,6 @@
-import { Box, Button, Flex, FormControl, Progress, SimpleGrid, Stack, Text } from '@chakra-ui/react';
+import { Box, FormControl, SimpleGrid, Stack } from '@chakra-ui/react';
 import RadioCards from './components/RadioCards';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Field } from './components/FormFields';
 import RichTextField from './components/RichTextField';
 import { CoverPhotoUploadField } from './components/CoverPhotoUploadField';
@@ -10,87 +10,58 @@ import TagsField from './components/TagsField';
 import { DataUploadField } from './components/DataUploadField';
 import MajorInputFields from './components/MajorInputFields';
 import SkillSellingSubForm from './components/SkillSellingSubForm';
+import { useLocation } from 'react-router-dom';
 
-export const ProductForm = () => {
-    const [isProgressCompleted, setProgressCompleted] = useState(false);
+export const ProductForm = ({ listenForSchemaChange }) => {
+    const { state, hash } = useLocation();
+    // const [selectedProductType, setSelectedProductType] = useState();
     const [selectedProductType, setSelectedProductType] = useState('digital_product');
 
     const listen = (value) => {
         setSelectedProductType(value);
-        setProgressCompleted(false);
+        listenForSchemaChange(value);
     };
 
-    const handleNext = (e) => {
-        if (e.target.innerText === `Next`) {
-            setProgressCompleted(true);
-        } else {
-            setProgressCompleted(false);
+    useEffect(() => {
+        if (state && hash === '#product-details') {
+            setSelectedProductType(state?.product?.product_type);
         }
-    };
+    }, [hash, state]);
 
     return (
-        <div>
+        <Stack>
             {/* GRID ONE*/}
-            <FormControl>
+            <Box my={8}>
                 <RadioCards listenForChange={listen} />
-            </FormControl>
-            <Box>
-                <Text fontSize={`sm`} fontWeight={`semibold`}>
-                    Step {isProgressCompleted ? 2 : 1} of 2
-                </Text>
-                <Progress size={`xs`} borderRadius={5} value={isProgressCompleted ? 100 : 50} colorScheme={`purple`} />
             </Box>
-            <Stack hidden={isProgressCompleted}>
+            {/* GRID TWO*/}
+            <Box my={8}>
                 <MajorInputFields />
-                {/* GRID THREE */}
-                <FormControl h={`21rem`} overflow={`hidden`}>
-                    <RichTextField />
-                </FormControl>
-                {/* GRID FIVE */}
-                <FormControl my={8} gap={4}>
-                    <Field>
-                        <CoverPhotoUploadField />
-                    </Field>
-                </FormControl>
-                {/* GRID SIX */}
-                <FormControl my={8} gap={4}>
-                    <Field>
-                        <ThumbnailUploadField />
-                    </Field>
-                </FormControl>
-                {/* GRID SEVEN */}
-                <FormControl as={SimpleGrid} my={8} gap={4} columns={{ base: 1, sm: 2 }}>
-                    <Field>
-                        <HighLightField />
-                    </Field>
-                </FormControl>
-                {/* GRID EIGHT */}
-                <FormControl as={SimpleGrid} my={8} gap={4} columns={{ base: 1, sm: 2 }}>
-                    <Field>
-                        <TagsField />
-                    </Field>
-                </FormControl>
-            </Stack>
-            {/* switch */}
-            <Stack hidden={!isProgressCompleted}>
-                {/* GRID FOUR */}
-                <Stack hidden={selectedProductType === `digital_product` ? false : true}>
-                    <FormControl my={8} gap={4}>
-                        <DataUploadField />
-                    </FormControl>
-                </Stack>
-                <Stack hidden={selectedProductType === `digital_product` ? true : false}>
+            </Box>
+            {/* GRID THREE */}
+            <Box my={8} h={`21rem`} overflow={`hidden`}>
+                <RichTextField />
+            </Box>
+            {/* GRID FOUR */}
+            <Box my={8} hidden={selectedProductType === `digital_product` ? false : true}>
+                <DataUploadField />
+            </Box>
+            {/* GRID FIVE */}
+            <Box my={8} gap={4}>
+                <CoverPhotoUploadField />
+            </Box>
+            {/* GRID SIX */}
+            <Box my={8} as={SimpleGrid} gap={8} columns={{ base: 1, sm: 2 }}>
+                <HighLightField />
+                <ThumbnailUploadField />
+            </Box>
+            {/* GRID EIGHT */}
+            <Box my={8} as={SimpleGrid} gap={8} columns={{ base: 1, sm: 2 }}>
+                <Box hidden={selectedProductType === `skill_selling` ? false : true}>
                     <SkillSellingSubForm />
-                </Stack>
-            </Stack>
-            <Flex gap={4} justifyContent={`flex-end`} mt={2}>
-                <Button variant={`text`} onClick={handleNext}>
-                    Back
-                </Button>
-                <Button variant={`text`} onClick={handleNext}>
-                    Next
-                </Button>
-            </Flex>
-        </div>
+                </Box>
+                <TagsField />
+            </Box>
+        </Stack>
     );
 };

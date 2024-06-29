@@ -6,13 +6,14 @@ import { Box, Center, IconButton, Popover, PopoverContent, PopoverTrigger, Text,
 import { useNotifications } from './service';
 import { Link } from 'react-router-dom';
 import { Icon as Iconify } from '@iconify/react';
+import { useLinks } from '../../utils/links';
 
 export function NotificationApp() {
-    const { count, newOrder, markOrdersAsSeen } = useNotifications();
-    
+    const { newOrder } = useNotifications();
+    const { count, makeunseenOrderSeen } = useLinks();
 
     const handleMarkAsSeen = () => {
-        markOrdersAsSeen();
+        makeunseenOrderSeen();
     };
 
     return (
@@ -24,7 +25,7 @@ export function NotificationApp() {
                 </Center>
             </PopoverTrigger>
 
-            <PopoverContent width="320px" boxShadow="lg" borderRadius="md" p={4}>
+            {/* <PopoverContent width="320px" boxShadow="lg" borderRadius="md" p={4}>
                 {newOrder.length > 0 ? (
                     <VStack spacing={4}>
                         {newOrder.map((order, index) => (
@@ -50,7 +51,7 @@ export function NotificationApp() {
                         <Text fontWeight={`bold`}>No new orders</Text>
                     </Box>
                 )}
-            </PopoverContent>
+            </PopoverContent> */}
         </Popover>
     );
 }

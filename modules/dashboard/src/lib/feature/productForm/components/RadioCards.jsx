@@ -1,6 +1,7 @@
 import { Box, Card, CardBody, Image, Radio, RadioGroup, SimpleGrid, Text } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useLocation } from 'react-router-dom';
 
 const activeCardStyle = {
     color: `#6D5DD3`,
@@ -9,18 +10,27 @@ const activeCardStyle = {
 };
 
 const RadioCards = ({ listenForChange }) => {
+    const { state } = useLocation();
     const {
         register,
         formState: { errors },
     } = useFormContext();
-    const [productTypeValue, setProductTypeValue] = useState('digital_product');
+    // const [productTypeValue, setProductTypeValue] = useState(state?.product?.product_type);
+    const [productTypeValue, setProductTypeValue] = useState(state?.product?.product_type || `digital_product`);
     const handleProductTypeChange = (value) => {
         setProductTypeValue(value);
         listenForChange(value); // Call the callback function with the selected value
     };
     return (
-        <RadioGroup as={SimpleGrid} my={8} gap={4} columns={{ base: 1, md: 2, lg: 3, xl: 4 }} onChange={handleProductTypeChange} value={productTypeValue}>
-            <Radio {...register(`product_type`)} display={`block`} hidden spacing={0} value="digital_product">
+        <RadioGroup as={SimpleGrid} gap={4} columns={{ base: 1, md: 2, lg: 3, xl: 4 }} onChange={handleProductTypeChange} value={productTypeValue}>
+            <Radio
+                isDisabled={state?.product?.product_type !== `digital_product` && state?.product}
+                {...register(`product_type`)}
+                display={`block`}
+                hidden
+                spacing={0}
+                value="digital_product"
+            >
                 <ProductTypeCard
                     img={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951006/productize/Image_1_wc3l2p_a7lovq.png`}
                     title={'Digital Product'}
@@ -28,7 +38,14 @@ const RadioCards = ({ listenForChange }) => {
                     style={productTypeValue === `digital_product` ? activeCardStyle : {}}
                 />
             </Radio>
-            <Radio {...register(`product_type`)} display={`block`} hidden spacing={0} value="skill_selling">
+            <Radio
+                isDisabled={state?.product?.product_type !== `skill_selling` && state?.product}
+                {...register(`product_type`)}
+                display={`block`}
+                hidden
+                spacing={0}
+                value="skill_selling"
+            >
                 <ProductTypeCard
                     img={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951007/productize/Image_2_co17c3_xwfjxd.png`}
                     title={'Skill Selling'}
@@ -53,9 +70,11 @@ const RadioCards = ({ listenForChange }) => {
                 />
             </Radio>
             {/* </SimpleGrid> */}
-            <Text className={`tiny-text`} color={`red.200`}>
-                {errors?.product_type?.message}
-            </Text>
+            {errors.product_type && errors.product_type && (
+                <Text className="tiny-text" color="red.200">
+                    {errors.product_type.message}
+                </Text>
+            )}
         </RadioGroup>
     );
 };

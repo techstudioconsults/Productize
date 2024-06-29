@@ -130,5 +130,5 @@ export const useLinks = () => {
         ]);
     }, [count, makeunseenOrderSeen, pathname]);
 
-    return { links1, links2, links3 };
+    return { links1, links2, links3, count, makeunseenOrderSeen };
 };

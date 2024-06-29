@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { Box, Checkbox, Divider, Flex, FormControl, FormLabel, Grid, GridItem, Input, InputGroup, InputRightElement, Switch, Text } from '@chakra-ui/react';
 // import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -16,7 +17,7 @@ export const AccountSettings = () => {
     const { query } = useAxiosInstance({ MIME_TYPE: 'application/json' });
     const [getUser] = useGetUserMutation();
     const [showResetPasswordView, setShowResetPassword] = useState();
-    const [error, setError] = useState('');
+    // const [error, setError] = useState('');
     const [changePassword, changePasswordStatus] = useChangePasswordMutation();
     const { toast, toastIdRef, close } = useToastAction();
     const [email, setEmail] = useState('');
@@ -70,7 +71,7 @@ export const AccountSettings = () => {
                 });
             }
         } catch (error) {
-            setError(error.data.message);
+            // setError(error.data.message);
             toastIdRef.current = toast({
                 position: 'top',
                 render: () => (

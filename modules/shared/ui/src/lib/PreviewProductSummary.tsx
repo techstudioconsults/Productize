@@ -47,11 +47,11 @@ export const PreviewProductSummary: React.FC = () => {
         <Container mt="5rem" maxW="70rem">
             {state ? (
                 <TwoColumnLayout
-                    C1={<ProductSummaryAndPreview product={state?.product} />}
+                    C1={<ProductSummaryAndPreview product={state?.product?.data || state?.product} />}
                     C2={
                         <Stack pos={`sticky`} top={`20rem`} gap={4}>
-                            <ProductSideNav product={state?.product} />
-                            <ReviewsCard reviews={[]} />
+                            <ProductSideNav product={state?.product?.data || state?.product} />
+                            <ReviewsCard />
                         </Stack>
                     }
                 />

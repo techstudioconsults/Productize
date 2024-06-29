@@ -55,7 +55,7 @@ export const BillingCycle = () => {
             </Flex>
             {/* billing summary */}
             <SimpleGrid columns={{ base: 1, sm: 2, lg: 3 }} spacing={5} my={5}>
-                <Skeleton isLoaded={!isLoading}>
+                <Skeleton borderRadius={8} isLoaded={!isLoading}>
                     <Box>
                         <Card variant={`outline`} p={5} gap={3}>
                             <Text>Renewal Date</Text>
@@ -66,16 +66,15 @@ export const BillingCycle = () => {
                                         // `1 Sep, 2023`
                                     }
                                 </Text>
-                                <SkeletonText noOfLines={1} isLoaded={!manageSubscriptionStatus.isLoading}>
-                                    <Text cursor={`pointer`} onClick={handlePlanDeactivation} color={`red.200`}>
-                                        Deactivate Plan
-                                    </Text>
-                                </SkeletonText>
+
+                                <Text cursor={`pointer`} onClick={handlePlanDeactivation} color={`red.200`}>
+                                    Deactivate Plan
+                                </Text>
                             </Flex>
                         </Card>
                     </Box>
                 </Skeleton>
-                <Skeleton isLoaded={!isLoading}>
+                <Skeleton borderRadius={8} isLoaded={!isLoading}>
                     <Box>
                         <Card variant={`outline`} p={5} gap={3}>
                             <Text>Currently</Text>
@@ -91,7 +90,7 @@ export const BillingCycle = () => {
                         </Card>
                     </Box>
                 </Skeleton>
-                <Skeleton isLoaded={!isLoading}>
+                <Skeleton borderRadius={8} isLoaded={!isLoading}>
                     <Box>
                         <Card variant={`outline`} p={5} gap={3}>
                             <Text>Billing Total</Text>
@@ -107,8 +106,8 @@ export const BillingCycle = () => {
             <Box my={10}>
                 {isLoading ? (
                     <VStack gap={4}>
-                        <Skeleton height={`40px`} width={`100%`} />
-                        <Skeleton height={`40px`} width={`100%`} />
+                        <Skeleton borderRadius={8} height={`40px`} width={`100%`} />
+                        <Skeleton borderRadius={8} height={`40px`} width={`100%`} />
                     </VStack>
                 ) : (
                     <BillingCycleTable tableData={billingHistoryData?.plans} />

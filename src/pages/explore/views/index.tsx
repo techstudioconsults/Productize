@@ -5,8 +5,10 @@ import { ExploreFeatures } from '../components/ExploreFeatures';
 import { ExploreLayout } from '../../../layouts/ExploreLayout';
 import { useGetFromCartMutation, useGetProductsBasedOnSearchMutation, useGetTopProductsMutation } from '@productize/redux';
 import { ExploreTrending } from '../components/ExploreTrending';
+import { useLocation } from 'react-router-dom';
 
 export const Explore = () => {
+    const { pathname } = useLocation();
     const [getFromCart] = useGetFromCartMutation();
     const [getTopProducts] = useGetTopProductsMutation();
     const [getProductsBasedOnSearch] = useGetProductsBasedOnSearchMutation();
@@ -16,20 +18,21 @@ export const Explore = () => {
     const [isSearchProductLoading, setSearchProuctLoading] = useState(true);
 
     const getExploreData = useCallback(async () => {
-        await getFromCart(null).unwrap();
-        const res = await getTopProducts(null).unwrap();
-        const searchRes = await getProductsBasedOnSearch(null).unwrap();
-        console.log(searchRes);
-
-        if (res.data) {
-            setTopProducts(res.data);
-            setTopProuctLoading(false);
+        if (pathname === `/explore`) {
+            const res = await getTopProducts(null).unwrap();
+            const searchRes = await getProductsBasedOnSearch(null).unwrap();
+            if (res.data) {
+                setTopProducts(res.data);
+                setTopProuctLoading(false);
+            }
+            if (searchRes.data) {
+                setSearchedProducts(searchRes.data);
+                setSearchProuctLoading(false);
+            }
+        } else {
+            await getFromCart(null).unwrap();
         }
-        if (searchRes.data) {
-            setSearchedProducts(searchRes.data);
-            setSearchProuctLoading(false);
-        }
-    }, [getFromCart, getProductsBasedOnSearch, getTopProducts]);
+    }, [getFromCart, getProductsBasedOnSearch, getTopProducts, pathname]);
 
     useEffect(() => {
         getExploreData();

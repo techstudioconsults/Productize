@@ -1,8 +1,11 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { Box, Flex, List, ListItem, Stack, Text } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
 import { SharedButton } from './SharedButton';
 import { CardLayout, CardProps } from './layouts/CardLayout';
-import { usePlanUpgrade } from '@productize/hooks';
+import { usePlanUpgrade, useSetPaymentPlan } from '@productize/hooks';
+import { useEffect } from 'react';
+import { useGetUserMutation } from '@productize/redux';
 
 export interface PricingCardProps {
     cardProps: CardProps;
@@ -15,7 +18,13 @@ export interface PricingCardProps {
 }
 
 export const PricingCard: React.FC<PricingCardProps> = ({ cardProps, listItems, iconColor, amount, btnText, textColor, showButton }) => {
+    const [getUser] = useGetUserMutation();
     const { upgrade, upgradeStatus } = usePlanUpgrade();
+    const isPremium = useSetPaymentPlan();
+
+    useEffect(() => {
+        getUser(null).unwrap();
+    }, [getUser]);
 
     const lists = listItems?.map((list, index) => (
         <ListItem key={index} display="flex" alignItems="flex-start" gap={2}>
@@ -49,16 +58,17 @@ export const PricingCard: React.FC<PricingCardProps> = ({ cardProps, listItems, 
                 </Box>
                 <Stack gap={3}>
                     <SharedButton
-                        text={btnText}
+                        text={isPremium ? `Subscribed!` : btnText}
                         width="100%"
                         height="56px"
-                        bgColor="purple.200"
+                        bgColor={isPremium ? `green.200` : 'purple.200'}
                         textColor="white"
                         borderRadius="4px"
                         fontSize={{ base: '16px', md: '24px' }}
                         btnExtras={{
                             isLoading: upgradeStatus.isLoading,
                             onClick: () => upgrade(),
+                            disabled: isPremium,
                         }}
                     />
                 </Stack>

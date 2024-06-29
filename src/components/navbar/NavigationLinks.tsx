@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { OrderedList, ListItem, Menu, MenuButton, Button, MenuList, MenuItem, Text, Flex, Center } from '@chakra-ui/react';
 import { NavLink, useLocation } from 'react-router-dom';
 import style from './scss/navbar.module.scss';
 import { links } from './utils/links';
 import { Icon } from '@iconify/react';
+import { selectTags } from '@productize/redux';
+import { useSelector } from 'react-redux';
 // import { useSelector } from 'react-redux';
 // import { selectTags } from '@productize/redux';
 
@@ -29,14 +32,13 @@ type DropdownLinkProps = {
 };
 
 const DropdownLink = ({ isScroll, link, linkColor }: DropdownLinkProps) => {
-    // const tags = useSelector(selectTags);
-    const tags = ['Digital Products', 'print on Demand', 'Skill Selling', 'Template Hub'];
-
-    const navLinks = tags?.map((tag: string) => {
+    const tags = useSelector(selectTags);
+    // const tags = ['Digital Products', 'Skill Selling'];
+    const navLinks = tags?.map((tag: any) => {
         return (
-            <NavLink key={tag} to={`/explore?tag=${tag.toLowerCase()}`}>
+            <NavLink key={tag?.name} to={`/explore?tag=${tag?.name?.toLowerCase()}`}>
                 <MenuItem justifyContent={`start`} fontSize={`sm`} fontWeight={500}>
-                    {tag}
+                    {tag?.name}
                 </MenuItem>
             </NavLink>
         );

@@ -3,7 +3,6 @@ import Pusher from 'pusher-js';
 import { useGetCountOfUnseenOrdersMutation } from '@productize/redux';
 import { useSelector } from 'react-redux';
 import { selectCurrentToken, selectCurrentUser } from '@productize/redux';
-import { useToast } from '@chakra-ui/react';
 
 const APP_KEY = 'bb5f2a5342d24c39106c';
 const APP_CLUSTER = 'mt1';
@@ -14,30 +13,16 @@ export const useNotifications = () => {
     const user = useSelector(selectCurrentUser);
     const [newOrder, setNewOrder] = useState([]);
     const [count, setCount] = useState(0);
-    const toast = useToast();
+    // const toast = useToast();
 
     const fetchUnseenCount = useCallback(async () => {
         try {
             const res = await getCountOfUnseenOrders(null).unwrap();
             setCount(res?.data?.count);
-
-            if (res?.data?.count > 0) {
-                const storedOrders = localStorage.getItem('newOrder');
-                if (storedOrders) {
-                    setNewOrder(JSON.parse(storedOrders));
-                }
-            } else {
-                setNewOrder([]);
-            }
         } catch (error) {
             console.error('Error fetching unseen orders count:', error);
         }
     }, [getCountOfUnseenOrders]);
-
-    const markOrdersAsSeen = useCallback(() => {
-        localStorage.removeItem('newOrder');
-        setNewOrder([]);
-    }, []);
 
     useEffect(() => {
         if (user?.email_verified) {
@@ -68,25 +53,21 @@ export const useNotifications = () => {
         channel.bind('order-created', (data) => {
             console.log(data);
             setCount((prev) => prev + 1);
-            setNewOrder((prev) => {
-                const updatedOrders = [data, ...prev];
-                localStorage.setItem('newOrder', JSON.stringify(updatedOrders));
-                return updatedOrders;
-            });
-            toast({
-                title: 'Order created.',
-                description: `You have ${count} notification available`,
-                status: 'success',
-                duration: 5000,
-                isClosable: true,
-                position: `bottom-right`,
-            });
+            setNewOrder((prev) => [data, ...prev]);
+            // toast({
+            //     title: 'Order created.',
+            //     description: `You have ${count + 1} notifications available`, // Increment the count here
+            //     status: 'success',
+            //     duration: 5000,
+            //     isClosable: true,
+            //     position: `bottom-right`,
+            // });
         });
 
         return () => {
             pusher.unsubscribe(`private-order-created.${user?.id}`);
         };
-    }, [count, fetchUnseenCount, toast, token, user?.email_verified, user?.id]);
+    }, [fetchUnseenCount, token, user?.email_verified, user?.id]);
 
-    return { count, newOrder, fetchUnseenCount, markOrdersAsSeen };
+    return { newOrder, fetchUnseenCount, count };
 };

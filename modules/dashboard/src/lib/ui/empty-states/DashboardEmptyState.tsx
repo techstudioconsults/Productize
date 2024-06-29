@@ -14,7 +14,7 @@ export const DashboardEmptyState = ({ hideCta, maxW, content, showImage, textAli
                     <Text fontWeight={400} color={`purple.200`}>
                         {content.title}
                     </Text>
-                    <Text as={`h6`} my={4} color={`purple.300`}>
+                    <Text textAlign={`center`} as={`h6`} my={4} color={`purple.300`}>
                         {content.desc}
                     </Text>
                 </Box>

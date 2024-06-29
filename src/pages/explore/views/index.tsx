@@ -49,9 +49,9 @@ export const Explore = () => {
                 <ExploreFeatures title={`Featured`} />
             </Container>
             {/* base on search */}
-            <Container my={{ base: `3rem`, lg: `7rem` }} px={{ base: 4, sm: 8, xl: 0 }} maxW={`70rem`}>
+            {/* <Container my={{ base: `3rem`, lg: `7rem` }} px={{ base: 4, sm: 8, xl: 0 }} maxW={`70rem`}>
                 <ExploreTrending loading={isSearchProductLoading} products={searchedProducts} title={`Based on your recent search`} />
-            </Container>
+            </Container> */}
         </ExploreLayout>
     );
 };

@@ -20,8 +20,8 @@ const ProductTagNav: React.FC = () => {
                 {/* {index === 0 && <CategoryMenu tag={`Digital Products`} />} */}
                 {/* <NavLink to={`/explore/category?tag=${tag?.name?.toLowerCase()}`}> */}
                 <NavLink to={`/explore?tag=${tag?.name?.toLowerCase()}`}>
-                    <Tag fontWeight={`semibold`} fontSize={{ lg: 'md' }} bg={tagLabel === tag?.name?.toLowerCase() ? `grey.100` : `transparent`}>
-                        {tag?.name}
+                    <Tag py={2} px={4} fontWeight={`semibold`} fontSize={{ lg: 'lg' }} bg={tagLabel === tag?.name?.toLowerCase() ? `grey.100` : `transparent`}>
+                        {tag.name.replace('_', ' ')}
                     </Tag>
                 </NavLink>
             </React.Fragment>
@@ -41,7 +41,7 @@ const ProductTagNav: React.FC = () => {
         >
             <Box>
                 <NavLink to={`/explore`}>
-                    <Tag fontWeight={`semibold`} bg={tagLabel ? `transparent` : `grey.100`}>
+                    <Tag py={2} px={4} fontWeight={`semibold`} fontSize={{ lg: 'lg' }} bg={tagLabel ? `transparent` : `grey.100`}>
                         All
                     </Tag>
                 </NavLink>

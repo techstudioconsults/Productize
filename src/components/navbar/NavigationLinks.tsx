@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import React from 'react';
 import { OrderedList, ListItem, Menu, MenuButton, Button, MenuList, MenuItem, Text, Flex, Center } from '@chakra-ui/react';
 import { NavLink, useLocation } from 'react-router-dom';
 import style from './scss/navbar.module.scss';
@@ -6,11 +6,8 @@ import { links } from './utils/links';
 import { Icon } from '@iconify/react';
 import { selectTags } from '@productize/redux';
 import { useSelector } from 'react-redux';
-// import { useSelector } from 'react-redux';
-// import { selectTags } from '@productize/redux';
 
-// testing links
-
+// Define the types for the links
 type SubLink = {
     id: number;
     name: string;
@@ -33,40 +30,38 @@ type DropdownLinkProps = {
 
 const DropdownLink = ({ isScroll, link, linkColor }: DropdownLinkProps) => {
     const tags = useSelector(selectTags);
-    // const tags = ['Digital Products', 'Skill Selling'];
-    const navLinks = tags?.map((tag: any) => {
-        return (
-            <NavLink key={tag?.name} to={`/explore?tag=${tag?.name?.toLowerCase()}`}>
-                <MenuItem justifyContent={`start`} fontSize={`sm`} fontWeight={500}>
-                    {tag?.name}
-                </MenuItem>
-            </NavLink>
-        );
-    });
+
+    const navLinks = tags?.map((tag: { name: string }) => (
+        <NavLink key={tag.name} to={`/explore?tag=${tag.name.toLowerCase()}`}>
+            <MenuItem justifyContent="start" fontSize="sm" fontWeight={500}>
+                {tag.name.replace('_', ' ')}
+            </MenuItem>
+        </NavLink>
+    ));
 
     return (
         <Menu>
             <MenuButton
                 p={0}
-                _hover={{ color: `red.100`, bg: `transparent` }} //change the hover color to that of the theme...DONT FORGET!!!
-                color={{ base: linkColor, xl: isScroll ? `black` : linkColor }}
-                fontWeight={`thin`}
-                bg={`transparent`}
+                _hover={{ color: 'red.100', bg: 'transparent' }}
+                color={{ base: linkColor, xl: isScroll ? 'black' : linkColor }}
+                fontWeight="thin"
+                bg="transparent"
                 as={Button}
-                variant={`link`}
+                variant="link"
                 rightIcon={
                     <Center>
-                        <Icon icon={`mdi:chevron-down`} />
+                        <Icon icon="mdi:chevron-down" />
                     </Center>
                 }
             >
-                <Text fontSize={`16px`} fontWeight={600}>
+                <Text fontSize="16px" fontWeight={600}>
                     {link.name}
                 </Text>
             </MenuButton>
-            <MenuList ml={-14} color={`black`}>
-                <NavLink to={`/explore`}>
-                    <MenuItem justifyContent={`start`} fontSize={`sm`} fontWeight={500}>
+            <MenuList ml={-14} color="black">
+                <NavLink to="/explore">
+                    <MenuItem justifyContent="start" fontSize="sm" fontWeight={500}>
                         All
                     </MenuItem>
                 </NavLink>
@@ -86,30 +81,33 @@ const Links = ({ isScroll, isMobile, linkColor }: NavbarProps) => {
     const location = useLocation();
 
     const navLinks = links.map((link) => {
-        if (link.type === `dropdown`) {
+        const linkStyleColor = isMobile && location.pathname.includes('seller') ? 'grey.100' : linkColor;
+
+        if (link.type === 'dropdown') {
             return (
                 <Flex key={link.id}>
-                    <DropdownLink linkColor={isMobile && location.pathname.includes(`seller`) ? `grey.100` : linkColor} isScroll={isScroll} link={link} />
+                    <DropdownLink linkColor={linkStyleColor} isScroll={isScroll} link={link} />
                 </Flex>
             );
         } else {
             return (
-                <Flex color={isMobile && location.pathname.includes(`seller`) ? `grey.100` : linkColor} key={link.id}>
-                    <NavLink to={link.path} className={({ isActive }) => (isActive ? style['active'] : style['inactive'])}>
+                <Flex color={linkStyleColor} key={link.id}>
+                    <NavLink to={link.path} className={({ isActive }) => (isActive ? style.active : style.inactive)}>
                         <ListItem fontWeight={600}>{link.name}</ListItem>
                     </NavLink>
                 </Flex>
             );
         }
     });
+
     return (
         <OrderedList
             m={20}
-            display={{ base: isMobile ? `flex` : `none`, lg: `flex` }}
-            flexDir={isMobile ? `column` : `row`}
-            color={isMobile || isScroll ? `black` : linkColor}
+            display={{ base: isMobile ? 'flex' : 'none', lg: 'flex' }}
+            flexDir={isMobile ? 'column' : 'row'}
+            color={isMobile || isScroll ? 'black' : linkColor}
             gap={{ base: 20, lg: 10 }}
-            alignItems={`flex-start`}
+            alignItems="flex-start"
         >
             {navLinks}
         </OrderedList>

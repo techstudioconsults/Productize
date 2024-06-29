@@ -14,7 +14,6 @@ import {
     ModalOverlay,
     ModalContent,
     ModalHeader,
-    ModalCloseButton,
     ModalBody,
     Tabs,
     TabList,
@@ -42,7 +41,7 @@ import { SpinnerComponentSmall } from './SpinnerComponent';
 //     result?: object;
 // }
 
-export const SearchComp = ({ color, width, size }) => {
+export const SearchComp = ({ color, width, size = `lg` }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
@@ -70,6 +69,11 @@ export const SearchComp = ({ color, width, size }) => {
 
     const handleInputChange = (event) => {
         setSearchTerm(event.target.value);
+    };
+
+    const handleClose = () => {
+        setSearchTerm('');
+        onClose();
     };
 
     return (
@@ -108,7 +112,7 @@ export const SearchComp = ({ color, width, size }) => {
                                 bgColor="transparent"
                                 _focus={{ boxShadow: 'none', outline: 'none' }}
                             />
-                            <InputRightElement onClick={() => setSearchTerm('')} fontSize={'1.2em'}>
+                            <InputRightElement onClick={handleClose} fontSize={'1.2em'}>
                                 <Iconify icon="material-symbols:close" />
                             </InputRightElement>
                         </InputGroup>
@@ -117,19 +121,19 @@ export const SearchComp = ({ color, width, size }) => {
                         <hr />
                         <Tabs>
                             <TabList>
-                                <Tab disabled py={8} gap={2}>
+                                <Tab py={8} gap={2}>
                                     <Text fontSize={{ base: `xs`, md: `md` }}>All</Text>
                                     <Text fontSize={{ base: `xs`, md: `md` }}>{searchResults?.length}</Text>
                                 </Tab>
-                                <Tab disabled py={8} gap={2}>
+                                <Tab isDisabled py={8} gap={2}>
                                     <Text fontSize={{ base: `xs`, md: `md` }}>Products</Text>
                                     <Text fontSize={{ base: `xs`, md: `md` }}>0</Text>
                                 </Tab>
-                                <Tab disabled py={8} gap={2}>
+                                <Tab isDisabled py={8} gap={2}>
                                     <Text fontSize={{ base: `xs`, md: `md` }}>Files</Text>
                                     <Text fontSize={{ base: `xs`, md: `md` }}>0</Text>
                                 </Tab>
-                                <Tab disabled py={8} gap={2}>
+                                <Tab isDisabled py={8} gap={2}>
                                     <Text fontSize={{ base: `xs`, md: `md` }}>Users</Text>
                                     <Text fontSize={{ base: `xs`, md: `md` }}>0</Text>
                                 </Tab>
@@ -221,16 +225,20 @@ const SearchResultTemplate = ({ result }) => {
     return (
         <Flex alignItems={`center`} justifyContent={`space-between`}>
             <Flex alignItems={`flex-end`} gap={2}>
-                <Box w={`3rem`} h={`3rem`} borderRadius={4} overflow={`hidden`}>
+                <Box w={{ base: `1.5rem`, sm: `3rem` }} h={{ base: `1.5rem`, sm: `3rem` }} borderRadius={4} overflow={`hidden`}>
                     <Image w={`100%`} h={`100%`} objectFit={`cover`} src={result?.thumbnail} alt={result?.title} />
                 </Box>
                 <Box>
-                    <Text fontWeight={600}>{result?.title}</Text>
-                    <Text fontSize={`xs`}>{result?.publisher}</Text>
+                    <Text fontSize={{ base: `xs`, sm: `md` }} fontWeight={600}>
+                        {result?.title}
+                    </Text>
+                    <Text fontSize={{ base: `10px`, sm: `xs` }}>{result?.publisher}</Text>
                 </Box>
             </Flex>
-            <Link to={`/products/${result?.slug}`} color={`blue.500`}>
-                <Text>view product</Text>
+            <Link to={`/products/${result?.slug}`}>
+                <Text color={`purple.200`} fontSize={{ base: `xs`, sm: `md` }}>
+                    view product
+                </Text>
             </Link>
         </Flex>
     );

@@ -54,6 +54,13 @@ export const userApiSlice = apiSlice.injectEndpoints({
             }),
         }),
 
+        cancelSubscription: builder.mutation({
+            query: () => ({
+                url: `/subscriptions/cancel`,
+                method: 'GET',
+            }),
+        }),
+
         manageSubscription: builder.mutation({
             query: (credentials) => ({
                 url: `/subscriptions/manage`,
@@ -258,4 +265,5 @@ export const {
     useGetPayoutStatsMutation,
     useTogglePaystackAccountActivationMutation,
     useShowAnalyticsChartDataMutation,
+    useCancelSubscriptionMutation,
 } = userApiSlice;

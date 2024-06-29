@@ -43,8 +43,8 @@ export const DownloadedContent = () => {
 
     return (
         <Box my={10}>
-            <Flex alignItems={`center`} justifyContent={`space-between`}>
-                <Flex alignItems={`center`} gap={5} my={5}>
+            <Flex mb={{ sm: 5 }} flexDir={{ base: `column`, sm: `row` }} alignItems={{ base: `flex-end`, sm: `center` }} justifyContent={`space-between`}>
+                <Flex alignItems={`center`} gap={5}>
                     <Icon onClick={() => navigate(-1)} fontSize={`2rem`} icon={`material-symbols:chevron-left`} />
                     <Box>
                         <Text fontSize={`sm`} fontWeight={600}>
@@ -55,7 +55,9 @@ export const DownloadedContent = () => {
                         </Text>
                     </Box>
                 </Flex>
-                <ReviewModal />
+                <Box my={{ base: 4, sm: `initial` }}>
+                    <ReviewModal />
+                </Box>
             </Flex>
             {/* Use the iframe to display the content from the specified URL */}
             <Center

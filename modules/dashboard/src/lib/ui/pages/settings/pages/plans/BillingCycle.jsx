@@ -67,9 +67,9 @@ export const BillingCycle = () => {
                                     }
                                 </Text>
 
-                                <Text cursor={`pointer`} onClick={handlePlanDeactivation} color={`red.200`}>
+                                {/* <Text cursor={`pointer`} onClick={handlePlanDeactivation} color={`red.200`}>
                                     Deactivate Plan
-                                </Text>
+                                </Text> */}
                             </Flex>
                         </Card>
                     </Box>

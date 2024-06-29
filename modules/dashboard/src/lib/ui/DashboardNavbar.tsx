@@ -43,6 +43,9 @@ export const DashboardNavbar = () => {
                     </Box>
                 </Flex>
             </Box>
+            <Box mt={4} display={{ base: `block`, md: `none` }}>
+                <SearchComp width={`100%`} color={`grey.200`} />
+            </Box>
         </Box>
     );
 };

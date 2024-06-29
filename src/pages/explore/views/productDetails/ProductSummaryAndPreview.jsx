@@ -18,7 +18,7 @@ import { useSelector } from 'react-redux';
 import ProductSideNav from './ProductSideNav';
 import { ModalComp, ReviewsCard, SharedButton } from '@productize/ui';
 
-const ProductSummaryAndPreview = ({ status }) => {
+const ProductSummaryAndPreview = ({ status, ratings }) => {
     const { onOpen, onClose, isOpen } = useDisclosure();
     const product = useSelector(selectSingleProduct_EXTERNAL);
     const [expand, setExpand] = useState(false);
@@ -81,7 +81,7 @@ const ProductSummaryAndPreview = ({ status }) => {
                                     <Avatar size={`sm`} bg={`grey.300`} name={product?.publisher} src={product?.publisher_logo} />
                                     <Text fontWeight={`500`}>By {product?.publisher}</Text>
                                 </Center>
-                                <StarRatings rating={3} starDimension="22px" starSpacing="3px" starRatedColor={`orange`} />
+                                <StarRatings rating={ratings} starDimension="22px" starSpacing="3px" starRatedColor={`orange`} />
                             </Flex>
                         </Flex>
                     </Box>

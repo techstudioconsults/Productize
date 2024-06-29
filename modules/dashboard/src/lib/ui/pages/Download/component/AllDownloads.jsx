@@ -14,7 +14,6 @@ const AllDownloads = () => {
     const getDownloadedProducts = useCallback(async () => {
         try {
             const res = await downloadList(null).unwrap();
-            console.log(res);
             if (res) {
                 setDownloadedProducts(res);
                 setLoading(false);

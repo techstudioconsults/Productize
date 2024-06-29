@@ -1,14 +1,32 @@
 import { Box, Center, Flex, Text } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
 
-import { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useCallback, useEffect } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { ReviewModal } from '../component/ReviewModal';
+import { useSelector } from 'react-redux';
+import { selectCurrentToken } from '@productize/redux';
+import axios from 'axios';
 
 export const DownloadedContent = () => {
+    const baseUrl = import.meta.env.VITE_BASE_URL;
+    const token = useSelector(selectCurrentToken);
+    const { downloadedContentID } = useParams();
     const { state } = useLocation();
     const navigate = useNavigate();
     const url = state?.data?.[0];
+
+    useEffect(() => {
+        const getData = async () => {
+            const res = await axios.get(`${baseUrl}/resources/products/${downloadedContentID}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            console.log(res);
+        };
+        getData();
+    }, [baseUrl, downloadedContentID, token]);
 
     useEffect(() => {
         const isMobileView = window.innerWidth <= 768;

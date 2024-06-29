@@ -153,6 +153,13 @@ export const appApiSlice = apiSlice.injectEndpoints({
             }),
         }),
 
+        getAggrProductReviews: builder.mutation({
+            query: (credentials) => ({
+                url: `/reviews/productsavg/${credentials.productID}`,
+                method: 'GET',
+            }),
+        }),
+
         getTopProducts: builder.mutation({
             query: () => ({
                 url: `/products/top-products`,
@@ -198,5 +205,6 @@ export const {
     useGetProductsBasedOnSearchMutation,
     useGetFAQMutation,
     useCreateProductReviewMutation,
+    useGetAggrProductReviewsMutation
     // useSubmitKYCFormMutation
 } = appApiSlice;

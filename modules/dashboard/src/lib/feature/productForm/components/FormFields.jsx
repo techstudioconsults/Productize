@@ -28,7 +28,8 @@
 //     }
 // };
 
-import { Box, FormLabel, Text } from '@chakra-ui/react';
+import { Box, Flex, FormLabel, Text } from '@chakra-ui/react';
+import { Icon } from '@iconify/react';
 import React from 'react';
 
 export const Field = ({ label, children, htmlFor, error }) => {
@@ -36,9 +37,14 @@ export const Field = ({ label, children, htmlFor, error }) => {
     return (
         <Box>
             {label && (
-                <FormLabel color="purple.300" fontWeight={600} htmlFor={id}>
-                    {label}
-                </FormLabel>
+                <Flex as={FormLabel} alignItems={`flex-start`} htmlFor={id}>
+                    <Text color="purple.300" fontWeight={600}>
+                        {label}
+                    </Text>
+                    <span hidden={label?.includes(`optional`)}>
+                        <Icon fontSize={`8px`} gap={1} color={`red`} icon="mdi:required" />
+                    </span>
+                </Flex>
             )}
             {children}
             {error && (

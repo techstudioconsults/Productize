@@ -21,7 +21,7 @@ const MajorInputFields = () => {
     } = useFormContext();
 
     return (
-        <FormControl as={Grid} templateRows="repeat(1, 1fr)" templateColumns="repeat(12, 1fr)" gap={8} my={8}>
+        <FormControl as={Grid} templateRows="repeat(1, 1fr)" templateColumns="repeat(12, 1fr)" rowGap={8} columnGap={8}>
             <GridItem colSpan={{ base: 12, md: 6 }}>
                 {/* Product title */}
                 <Field label="Title" error={errors.title}>
@@ -43,14 +43,7 @@ const MajorInputFields = () => {
             <GridItem colSpan={{ base: 12, md: 6 }}>
                 {/* Category */}
                 <Field label="Category" error={errors.category}>
-                    <Select
-                        id="category"
-                        {...register('category')}
-                        sx={globalFieldStyle}
-                        variant="filled"
-                        size="lg"
-                        defaultValue="Product"
-                    >
+                    <Select id="category" {...register('category')} sx={globalFieldStyle} variant="filled" size="lg" defaultValue="Product">
                         <option value="Product">Product</option>
                     </Select>
                 </Field>
@@ -63,11 +56,6 @@ const MajorInputFields = () => {
                             <Icon fontSize="1.2rem" icon="mdi:naira" />
                         </InputLeftElement>
                         <Input placeholder="0" variant="filled" size="lg" sx={globalFieldStyle} {...register('price')} type="number" id="price" />
-                        {/* {errors.price && errors.price && (
-                            <Text className="tiny-text" color="red.200">
-                                {errors.price.message}
-                            </Text>
-                        )} */}
                     </InputGroup>
                 </Field>
             </GridItem>

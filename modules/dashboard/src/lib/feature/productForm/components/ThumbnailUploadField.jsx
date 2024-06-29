@@ -1,13 +1,17 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import { Box, Center, Flex, FormControl, FormHelperText, Input, Text } from "@chakra-ui/react";
-import { SharedButton } from "@productize/ui";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { Controller, useFormContext } from "react-hook-form";
-import { useLocation } from "react-router-dom";
+import { Box, Center, Flex, FormControl, FormHelperText, Input, Stack, Text } from '@chakra-ui/react';
+import { Icon } from '@iconify/react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { Controller, useFormContext } from 'react-hook-form';
+import { useLocation } from 'react-router-dom';
+import { Field } from './FormFields';
 
 export const ThumbnailUploadField = () => {
     const { state, hash } = useLocation();
-    const { control } = useFormContext();
+    const {
+        control,
+        formState: { errors },
+    } = useFormContext();
     const [thumbnail, setThumbnail] = useState(``);
     const fileInputRef = useRef(null);
 
@@ -26,7 +30,7 @@ export const ThumbnailUploadField = () => {
 
     const isModifiedData = useCallback(() => {
         if (state && hash) {
-            setThumbnail(state?.product?.thumbnail);
+            setThumbnail(state?.product?.thumbnail || '');
         }
     }, [hash, state]);
 
@@ -35,9 +39,22 @@ export const ThumbnailUploadField = () => {
     }, [isModifiedData, state]);
 
     return (
-        <FormControl>
-            <Heading />
-            <Center mt={4} bgColor={`purple.100`} bgImg={thumbnail} bgPosition={`center`} bgSize={`cover`} bgRepeat={`no-repeat`} boxSize={`200px`}>
+        <FormControl isInvalid={!!errors.thumbnail}>
+            <Heading errors={errors} />
+            {errors.thumbnail && (
+                <Text className="tiny-text" color="red.500">
+                    {errors.thumbnail.message}
+                </Text>
+            )}
+            <Center
+                bgColor={`purple.100`}
+                bgImg={thumbnail}
+                bgPosition={`center`}
+                bgSize={`cover`}
+                bgRepeat={`no-repeat`}
+                boxSize={`200px`}
+                position="relative"
+            >
                 <Controller
                     name="thumbnail"
                     control={control}
@@ -47,7 +64,7 @@ export const ThumbnailUploadField = () => {
                             display={`none`}
                             type="file"
                             onChange={(e) => {
-                                onChange(e.target.files);
+                                onChange(e.target.files[0]);
                                 handleFileChange(e.target.files[0]);
                             }}
                             ref={fileInputRef}
@@ -55,6 +72,11 @@ export const ThumbnailUploadField = () => {
                     )}
                 />
 
+                <Center color={`purple.200`} onClick={handleInput} fontSize={`2xl`} bgColor={`#00000020`} borderRadius={`100%`} boxSize={`3rem`}>
+                    <Icon cursor="pointer" position="absolute" icon="solar:camera-bold" />
+                </Center>
+            </Center>
+            {/* <Center mt={4} display={thumbnail ? 'block' : 'none'}>
                 <SharedButton
                     btnExtras={{
                         leftIcon: `ri:file-upload-line`,
@@ -62,29 +84,26 @@ export const ThumbnailUploadField = () => {
                         onClick: handleInput,
                     }}
                     text={`Upload Photos`}
-                    width={"fit-content"}
-                    height={"48px"}
-                    bgColor={"white"}
-                    textColor={"purple.200"}
-                    borderRadius={"4px"}
+                    width={'fit-content'}
+                    height={'48px'}
+                    bgColor={'white'}
+                    textColor={'purple.200'}
+                    borderRadius={'4px'}
                     fontSize={{ base: `sm`, md: `md` }}
                 />
-            </Center>
+            </Center> */}
         </FormControl>
     );
 };
 
-const Heading = () => {
+const Heading = ({ errors }) => {
     return (
-        <Flex justifyContent={`space-between`} alignItems={`flex-end`}>
-            <Box>
-                <Text color={`purple.300`} fontWeight={600}>
-                    Thumbnail
-                </Text>
-                <FormHelperText color={`grey.400`} fontSize={{ base: `xs`, md: `sm` }}>
+        <Field label={`Thumbnail`}>
+            <Stack mb={4}>
+                <FormHelperText color={`grey.400`} m={0} fontSize={{ base: `xs`, md: `sm` }}>
                     This image will appear in the explore page, upload a square size of 2mb.
                 </FormHelperText>
-            </Box>
-        </Flex>
+            </Stack>
+        </Field>
     );
 };

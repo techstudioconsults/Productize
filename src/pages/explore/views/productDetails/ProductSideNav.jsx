@@ -24,7 +24,7 @@ import {
     useGetFromCartMutation,
     useUpdateCartMutation,
 } from '@productize/redux';
-import { ReviewsCard, SharedButton, ToastFeedback, useToastAction } from '@productize/ui';
+import { SharedButton, ToastFeedback, useToastAction } from '@productize/ui';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -181,20 +181,20 @@ const ProductSideNav = ({ status }) => {
                             <Divider my={3} />
                             <Stack gap={4}>
                                 <Flex color={`grey.500`} fontSize={`sm`} alignItems={`center`} justifyContent={`space-between`}>
-                                    <Text>Format</Text>
-                                    <Text>{product?.resources_info?.[0]?.mime_type}</Text>
+                                    <Text fontWeight={600}>Format</Text>
+                                    <Text>{product?.resources?.[0]?.mime_type}</Text>
                                 </Flex>
                                 <Flex color={`grey.500`} fontSize={`sm`} alignItems={`center`} justifyContent={`space-between`}>
-                                    <Text>File size</Text>
-                                    <Text>{product?.resources_info?.[0]?.size}</Text>
+                                    <Text fontWeight={600}>File size</Text>
+                                    <Text>{product?.resources?.[0]?.size}</Text>
                                 </Flex>
-                                <Flex color={`grey.500`} fontSize={`sm`} alignItems={`center`} justifyContent={`space-between`}>
+                                {/* <Flex color={`grey.500`} fontSize={`sm`} alignItems={`center`} justifyContent={`space-between`}>
                                     <Text>Articles</Text>
                                     <Text>0</Text>
-                                </Flex>
+                                </Flex> */}
                                 <Flex color={`grey.500`} fontSize={`sm`} alignItems={`center`} justifyContent={`space-between`}>
-                                    <Text>Downloadable recourses</Text>
-                                    <Text>{product?.no_of_resources}</Text>
+                                    <Text fontWeight={600}>Downloadable recources</Text>
+                                    <Text>{product?.resources?.length}</Text>
                                 </Flex>
                             </Stack>
                         </Box>

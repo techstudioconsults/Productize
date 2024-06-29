@@ -4,8 +4,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Tabs, TabList, Tab, TabPanels, TabPanel, Flex, Box, useDisclosure } from '@chakra-ui/react';
-import { ProductForm, ContentDeliveryForm, SSFormSchema, DPFormSchema, productFormSchema } from '@productize/dashboard';
-import { PaywallUnpublishWarning, PreviewProductSummary, SharedButton, ToastFeedback, useToastAction } from '@productize/ui';
+import { DPFormSchema, ProductForm, SSFormSchema, productFormSchema } from '@productize/dashboard';
+import { PreviewProductSummary, SharedButton, ToastFeedback, useToastAction } from '@productize/ui';
 import ShareLayout from '../ShareLayout';
 import { selectCurrentUser, useUpdateProductStatusMutation } from '@productize/redux';
 import errorImg from '@icons/error.svg';
@@ -21,16 +21,16 @@ const disabledStateStyle = {
     color: `grey.800`,
 };
 
-const tabNames = ['product-details', 'content-delivery', 'preview', 'share'];
+// const tabNames = ['product-details', 'content-delivery', 'preview', 'share'];
+const tabNames = ['product-details', 'preview', 'share'];
 
 export const NewProductTabLayout = () => {
     const { toast, toastIdRef, close } = useToastAction();
-    const { onClose, isOpen, onOpen } = useDisclosure();
-    const user = useSelector(selectCurrentUser);
+    // const user = useSelector(selectCurrentUser);
     const { state, hash } = useLocation();
     const navigate = useNavigate();
     const [tabIndex, setTabIndex] = useState(tabNames.findIndex((tab) => hash === `#${tab}`));
-    const [schema, setSchema] = useState(productFormSchema);
+    const [schema, setSchema] = useState(DPFormSchema);
 
     const methods = useForm({
         criteriaMode: 'all',
@@ -42,26 +42,19 @@ export const NewProductTabLayout = () => {
     const [updateProductStatus, updateProductStatusStatus] = useUpdateProductStatusMutation();
     const { isValid } = methods.formState;
 
+    const changeSchema = (value) => {
+        value === `digital_product` ? setSchema(DPFormSchema) : setSchema(SSFormSchema);
+    };
+
     useEffect(() => {
         const currentTabIndex = tabNames.findIndex((tab) => hash === `#${tab}`);
         setTabIndex(currentTabIndex);
-        // const productType = methods.getValues().product_type;
-        // console.log(productType);
-        // if (productType === 'skill_selling') {
-        //     setSchema(SSFormSchema);
-        // } else if (productType === 'digital_product') {
-        //     setSchema(DPFormSchema);
-        // }
-    }, [hash, methods]);
-
-    // useEffect(() => {
-    //     methods.reset(methods.getValues()); // reset form to apply new schema
-    //     methods.register('product_type'); // ensure product_type is registered for validation
-    // }, [schema]);
+    }, [hash]);
 
     useEffect(() => {
         console.log(state);
         if (state && hash === '#product-details') {
+            changeSchema(state?.product?.product_type);
             methods.setValue('title', state?.product?.title);
             methods.setValue('price', state?.product?.price);
             methods.setValue('product_type', state?.product?.product_type);
@@ -71,7 +64,7 @@ export const NewProductTabLayout = () => {
             methods.setValue('availability', state?.product?.availability);
             methods.setValue('portfolio_link', state?.product?.link);
         }
-    }, [schema]);
+    }, [hash, methods, schema, state]);
 
     const onSubmit = async (data) => {
         const action = state && hash ? updateProduct : createProduct;
@@ -80,36 +73,37 @@ export const NewProductTabLayout = () => {
 
     const handlePublishAction = async () => {
         const productID = state?.product?.id || state?.product?.data?.id;
-        if (user?.account_type === 'free_trial' && state?.product?.status !== 'draft') {
-            onOpen();
-        } else {
-            try {
-                const res = await updateProductStatus({ productID }).unwrap();
-                const publishMessage = res.data?.status === 'published' ? 'Product published Successfully!' : 'Product sent to draft Successfully!';
+        // if (user?.account_type === 'free_trial' && state?.product?.status !== 'draft') {
+        //     onOpen();
+        // } else {
+        try {
+            const res = await updateProductStatus({ productID }).unwrap();
+            console.log(res);
+            const publishMessage = res.data?.status === 'published' ? 'Product published Successfully!' : 'Product sent to draft Successfully!';
 
-                navigate(`/dashboard/products/new#${res.data?.status === 'published' ? 'share' : 'preview'}`, { state: { product: res.data } });
-                toastIdRef.current = toast({
-                    position: 'top',
-                    render: () => <ToastFeedback btnColor="purple.200" message={publishMessage} handleClose={close} />,
-                });
-            } catch (error) {
-                const errorMessage = error.status !== 403 ? error?.message || 'Something went wrong' : 'Paystack Setup';
+            navigate(`/dashboard/products/new#${res.data?.status === 'published' ? 'share' : 'preview'}`, { state: { product: res.data } });
+            toastIdRef.current = toast({
+                position: 'top',
+                render: () => <ToastFeedback btnColor="purple.200" message={publishMessage} handleClose={close} />,
+            });
+        } catch (error) {
+            const errorMessage = error.status !== 403 ? error?.message || 'Something went wrong' : 'Paystack Setup';
 
-                toastIdRef.current = toast({
-                    position: 'top',
-                    render: () => (
-                        <ToastFeedback message={errorMessage} title={errorMessage} icon={errorImg} color="red.600" btnColor="red.600" handleClose={close} />
-                    ),
-                });
-            }
+            toastIdRef.current = toast({
+                position: 'top',
+                render: () => (
+                    <ToastFeedback message={errorMessage} title={errorMessage} icon={errorImg} color="red.600" btnColor="red.600" handleClose={close} />
+                ),
+            });
         }
+        // }
     };
 
     return (
         <FormProvider {...methods}>
             <Tabs index={tabIndex} onChange={(index) => setTabIndex(index)} size={`sm`}>
                 <Flex zIndex={999} bgColor={`#ffffff`} pos={`sticky`} top={`75px`} display={{ lg: `none` }} my={5}>
-                    {state?.product?.data?.status === `draft` || hash === `#product-details` ? (
+                    {(state?.product?.data?.status || state?.product?.status) === `draft` || hash === `#product-details` ? (
                         <Flex w={`100%`} display={hash !== `#share` ? `flex` : `none`} gap={4}>
                             <SharedButton
                                 btnExtras={{
@@ -228,6 +222,17 @@ export const NewProductTabLayout = () => {
                         >
                             Preview
                         </Tab>
+                        {/* <Tab
+                            id="preview"
+                            py={6}
+                            mb={0}
+                            w={{ base: '10rem', sm: 'initial' }}
+                            isDisabled
+                            _disabled={disabledStateStyle}
+                            _selected={activeStateStyle}
+                        >
+                            Content Delivery
+                        </Tab> */}
                         <Tab
                             id="share"
                             py={6}
@@ -241,8 +246,8 @@ export const NewProductTabLayout = () => {
                         </Tab>
                     </Flex>
                     <Flex display={{ base: `none`, lg: `initial` }}>
-                        <PaywallUnpublishWarning onClose={onClose} isOpen={isOpen} productID={state?.product?.data?.id} />
-                        {state?.product?.data?.status === `draft` || hash === `#product-details` ? (
+                        {/* <PaywallUnpublishWarning onClose={onClose} isOpen={isOpen} productID={state?.product?.data?.id} /> */}
+                        {(state?.product?.data?.status || state?.product?.status) === `draft` || hash === `#product-details` ? (
                             <Flex w={`100%`} display={hash !== `#share` ? `flex` : `none`} gap={4}>
                                 <SharedButton
                                     btnExtras={{
@@ -330,11 +335,11 @@ export const NewProductTabLayout = () => {
 
                 <TabPanels>
                     <TabPanel px={0}>
-                        <ProductForm />
+                        <ProductForm listenForSchemaChange={changeSchema} />
                     </TabPanel>
-                    <TabPanel px={0}>
+                    {/* <TabPanel px={0}>
                         <ContentDeliveryForm />
-                    </TabPanel>
+                    </TabPanel> */}
                     <TabPanel px={0}>
                         <PreviewProductSummary />
                     </TabPanel>

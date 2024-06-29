@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Text, Stack, Box, Avatar } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectCurrentToken, selectOrdersMetaData, useGetAllOrdersMutation } from '@productize/redux';
+import { useSelector } from 'react-redux';
+import { selectOrdersMetaData, useGetAllOrdersMutation } from '@productize/redux';
 import { useCurrency, useDate, useTime } from '@productize/hooks';
 import { SharedButton } from '@productize/ui';
 
@@ -12,7 +12,7 @@ interface tableProps {
 
 export const OrderTable = ({ tableData }: tableProps) => {
     const [getAllOrders] = useGetAllOrdersMutation();
-    const token = useSelector(selectCurrentToken);
+
     const navigate = useNavigate();
     const formatCurrency = useCurrency();
     const formatDate = useDate();

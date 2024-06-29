@@ -25,7 +25,7 @@ export const ReviewsCard = () => {
     }, [getSingleProductReviews, productID]);
 
     useEffect(() => {
-        if (!hash.includes(`preview`)) {
+        if (!hash) {
             fetchData();
         }
     }, [fetchData, hash]);

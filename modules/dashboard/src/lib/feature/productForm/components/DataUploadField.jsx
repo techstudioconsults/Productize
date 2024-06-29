@@ -1,10 +1,11 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import { Box, Card, Flex, FormControl, FormHelperText, Image, Input, SimpleGrid, Text } from '@chakra-ui/react';
 import { UploadExternalFiles } from '../../../ui/UploadExternalFiles';
-import { Controller, useFormContext } from 'react-hook-form';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { SharedButton } from '@productize/ui';
+import { Field } from './FormFields';
 
 export const DataUploadField = () => {
     const { state, hash } = useLocation();
@@ -13,6 +14,7 @@ export const DataUploadField = () => {
     const fileInputRef = useRef(null);
     const {
         control,
+        resetField,
         formState: { errors },
     } = useFormContext();
 
@@ -32,9 +34,9 @@ export const DataUploadField = () => {
         }
     };
 
-    const isModifiedData = useCallback(async () => {
-        if (state && hash === `#product-details`) {
-            setDocuments(state?.product?.resources);
+    const isModifiedData = useCallback(() => {
+        if (state && hash === '#product-details') {
+            setDocuments(state?.product?.resources || []);
             setShowPreview(true);
         }
     }, [hash, state]);
@@ -43,26 +45,42 @@ export const DataUploadField = () => {
         isModifiedData();
     }, [isModifiedData, state]);
 
+    const productType = useWatch({ control, name: 'product_type' });
+
+    useEffect(() => {
+        if (productType !== 'digital_product' && !state?.product) {
+            resetField('data');
+            setDocuments([]);
+            setShowPreview(false);
+        }
+    }, [productType, resetField, state?.product]);
+
     return (
-        <FormControl>
+        <FormControl isInvalid={!!errors.data}>
             <Heading action={handleInput} errors={errors} showPreview={showPreview} />
+            {errors.data && (
+                <Text className="tiny-text" color="red.500">
+                    {errors.data.message}
+                </Text>
+            )}
             <Controller
                 name="data"
                 control={control}
                 render={({ field: { onChange, ...field } }) => (
                     <Input
-                        display={`none`}
+                        display="none"
                         multiple
                         type="file"
                         onChange={(e) => {
-                            onChange(e.target.files);
-                            handleFileChange(e.target.files);
+                            const files = e.target.files;
+                            onChange(files ? Array.from(files) : []);
+                            handleFileChange(files);
                         }}
                         ref={fileInputRef}
                     />
                 )}
             />
-            <Box display={showPreview ? `none` : `block`}>
+            <Box display={showPreview ? 'none' : 'block'}>
                 <UploadExternalFiles
                     icon="ri:file-upload-line"
                     fileType="all"
@@ -71,35 +89,32 @@ export const DataUploadField = () => {
                     showFiles={handleInput}
                 />
             </Box>
-            <SimpleGrid display={showPreview ? `grid` : `none`} my={4} columns={{ base: 1, md: 2 }} gap={4}>
-                {documents?.map((file, index) => {
-                    return <ProductContentDisplay key={index} file={file} />;
-                })}
+            <SimpleGrid display={showPreview ? 'grid' : 'none'} my={4} columns={{ base: 1, md: 2 }} gap={4}>
+                {documents.map((file, index) => (
+                    <ProductContentDisplay key={index} file={file} />
+                ))}
             </SimpleGrid>
         </FormControl>
     );
 };
 
 const Heading = ({ action, errors, showPreview }) => {
-    const { state } = useLocation();
+    // const { state } = useLocation();
     return (
-        <>
-            <Flex justifyContent="space-between" alignItems="flex-end">
+        <Field label="Product">
+            <Flex mb={4} flexDir={{ base: `column`, sm: `row` }} justifyContent="space-between" alignItems="flex-end">
                 <Box>
-                    <Text color="purple.300" fontWeight={600}>
-                        Product
-                    </Text>
-                    <FormHelperText fontSize={{ base: 'xs', md: 'sm' }} color="grey.400">
+                    <FormHelperText my={0} fontSize={{ base: 'xs', md: 'sm' }} color="grey.400">
                         Upload the actual product you want to sell. Upload the product file
                     </FormHelperText>
                 </Box>
-                <Box display={showPreview ? `block` : `none`}>
+                <Box display={showPreview ? 'block' : 'none'}>
                     <SharedButton
                         btnExtras={{
                             leftIcon: 'ri:file-upload-line',
                             border: '1px solid #6D5DD3',
-                            onClick: action, // Handle file input click
-                            disabled: state?.product,
+                            onClick: action,
+                            // disabled: state?.product,
                         }}
                         text="Upload File"
                         width="fit-content"
@@ -111,10 +126,7 @@ const Heading = ({ action, errors, showPreview }) => {
                     />
                 </Box>
             </Flex>
-            <Text className={`tiny-text`} color={`red.200`}>
-                {errors?.data?.message}
-            </Text>
-        </>
+        </Field>
     );
 };
 
@@ -122,37 +134,11 @@ const ProductContentDisplay = ({ file }) => {
     const { state } = useLocation();
     const [fileObject, setFileObject] = useState({});
 
-    // const sliceImageName = (originalName, maxLength) => {
-    //     // Check if originalName is defined
-    //     if (!originalName || typeof originalName !== 'string') {
-    //         console.error('Invalid originalName provided');
-    //         return originalName;
-    //     }
-    //     // Extract the extension
-    //     const extensionIndex = originalName.lastIndexOf('.');
-    //     if (extensionIndex === -1) {
-    //         console.error('Invalid image name format. Extension not found.');
-    //         return originalName;
-    //     }
-    //     const extension = originalName.slice(extensionIndex);
-    //     // Calculate the maximum length of the name without extension
-    //     const maxNameLength = maxLength - extension.length - 1; // Accounting for the dot before the extension
-    //     // Slice the name accordingly
-    //     const slicedName = originalName.length > maxLength ? originalName.slice(0, maxNameLength) + '...' + extension : originalName;
-    //     return slicedName;
-    // };
-
     useEffect(() => {
         if (state && file) {
             if (typeof file === 'object') {
-                console.log(file);
-                // const filename = file.substring(file.lastIndexOf('/') + 1);
-                // const filetype = file.substring(file.lastIndexOf('.') + 1);
                 setFileObject({ name: file?.name, type: file?.mime_type || file?.type, size: file?.size });
             }
-            //  else {
-            //     setFileObject({ name: file.name, type: file.type, size: file.size });
-            // }
         }
     }, [file, state]);
 
@@ -170,7 +156,7 @@ const ProductContentDisplay = ({ file }) => {
                 ) : (
                     <Box>
                         <Text fontWeight={600}>{file?.name}</Text>
-                        <Text className="small-text">{`${file?.type}.${Math.floor(file?.size / 1000)}`}kb</Text>
+                        <Text className="small-text">{`${file?.type}.${Math.floor(file?.size / 1000)}kb`}</Text>
                     </Box>
                 )}
             </Flex>

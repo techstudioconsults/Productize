@@ -9,7 +9,7 @@ const extractFormData = (data) => ({
     price: data.price,
     description: data.description,
     cover_photos: data.cover_photos,
-    thumbnail: data.thumbnail[0],
+    thumbnail: data.thumbnail,
     highlights: data.highlights,
     tags: data.tags,
 });
@@ -18,6 +18,7 @@ export const useProductActions = () => {
     const { state } = useLocation();
     const { query, isLoading } = useAxiosInstance({ MIME_TYPE: 'multipart/form-data' });
     const navigate = useNavigate();
+    // const [schema, setSchema] = useState(productFormSchema);
 
     const updateProduct = async (data) => {
         const formData = extractFormData(data);
@@ -43,6 +44,7 @@ export const useProductActions = () => {
     };
 
     const createProduct = async (data) => {
+        console.log(data);
         const formData = extractFormData(data);
         formData.product_type = data.product_type;
 
@@ -57,6 +59,7 @@ export const useProductActions = () => {
             if (res.status === 201) {
                 const additionalRes = await query('post', productCreationEndpoint, { ...additionalData, product_id: res.data.data.id });
                 if (additionalRes.status === 201) {
+                    console.log(additionalRes);
                     navigate(`/dashboard/products/new#preview`, { state: { product: res.data } });
                 }
             }

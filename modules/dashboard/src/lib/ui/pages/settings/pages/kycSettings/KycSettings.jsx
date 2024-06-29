@@ -1,7 +1,7 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import { Box, Flex, FormControl, FormLabel, Grid, GridItem, Select, Stack, Text, useDisclosure, Input } from '@chakra-ui/react';
+import { Box, Flex, FormControl, FormLabel, Grid, GridItem, Select, Text, Input, Image } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
-import { ModalComp, SharedButton } from '@productize/ui';
+import { SharedButton } from '@productize/ui';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { DashboardEmptyState } from '../../../../empty-states/DashboardEmptyState';
@@ -9,15 +9,18 @@ import { useForm } from 'react-hook-form';
 import { useAxiosInstance } from '@productize/hooks';
 
 export const KycSettings = () => {
-    const { isOpen, onClose, onOpen } = useDisclosure();
     const [countries, setCountries] = useState([]);
     const [isFormCompleted, setFormCompleted] = useState(false);
+    const [selectedFileName, setSelectedFileName] = useState('');
+    const [preview, setPreview] = useState(null);
     const { query, isLoading } = useAxiosInstance({ MIME_TYPE: 'multipart/form-data' });
 
     const {
         register,
         handleSubmit,
         reset,
+        setValue,
+        watch,
         formState: { errors },
     } = useForm();
 
@@ -32,10 +35,11 @@ export const KycSettings = () => {
 
     const onSubmit = async (data) => {
         console.log(data);
-        const formData = {
-            ...data,
-            document_image: data.document_image[0],
-        };
+        const formData = new FormData();
+        formData.append('country', data.country);
+        formData.append('document_type', data.document_type);
+        formData.append('document_image', data.document_image[0]);
+
         try {
             const res = await query('post', `/users/kyc`, formData);
             if (res.status === 200) {
@@ -43,6 +47,19 @@ export const KycSettings = () => {
             }
         } catch (error) {
             console.error('Error submitting KYC form', error);
+        }
+    };
+
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            setSelectedFileName(file.name);
+            setValue('document_image', [file]);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setPreview(reader.result);
+            };
+            reader.readAsDataURL(file);
         }
     };
 
@@ -90,10 +107,14 @@ export const KycSettings = () => {
                                     </option>
                                 ))}
                             </Select>
-                            {errors.country && <Text color="red.500">{errors.country.message}</Text>}
+                            {errors.country && (
+                                <Text color="red.500" fontSize="xs">
+                                    {errors.country.message}
+                                </Text>
+                            )}
                         </FormControl>
 
-                        <FormControl my={5} isInvalid={errors.documentType}>
+                        <FormControl my={5} isInvalid={errors.document_type}>
                             <FormLabel color={`purple.300`} fontWeight={600}>
                                 Document Type
                             </FormLabel>
@@ -110,10 +131,14 @@ export const KycSettings = () => {
                                 <option value="National ID">National Id Card</option>
                                 <option value="National Passport">National Passport</option>
                             </Select>
-                            {errors.documentType && <Text color="red.500">{errors.documentType.message}</Text>}
+                            {errors.document_type && (
+                                <Text color="red.500" fontSize="xs">
+                                    {errors.document_type.message}
+                                </Text>
+                            )}
                         </FormControl>
 
-                        <FormControl isInvalid={errors.documentImage}>
+                        <FormControl isInvalid={errors.document_image}>
                             <FormLabel color={`purple.300`} fontWeight={600}>
                                 Document Image
                             </FormLabel>
@@ -127,12 +152,32 @@ export const KycSettings = () => {
                                 p={3}
                                 borderRadius={5}
                                 color={`purple.200`}
+                                onClick={() => document.getElementById('document-image-input').click()}
+                                cursor="pointer"
                             >
                                 <Icon icon="akar-icons:cloud-upload" />
-                                <Input type="file" accept="image/*" {...register('document_image', { required: 'Document image is required' })} />
-                                {errors.documentImage && <Text color="red.500">{errors.documentImage.message}</Text>}
+                                <Text fontSize={`xs`}>{selectedFileName || 'Drag and drop here or browse files here'}</Text>
+                                <Input
+                                    id="document-image-input"
+                                    display="none"
+                                    type="file"
+                                    accept="image/*"
+                                    {...register('document_image')}
+                                    onChange={handleFileChange}
+                                />
                             </Flex>
+                            {errors.document_image && (
+                                <Text color="red.500" fontSize="xs">
+                                    {errors.document_image.message}
+                                </Text>
+                            )}
                         </FormControl>
+
+                        {preview && (
+                            <Box my={4}>
+                                <Image src={preview} alt="Document Preview" maxW="200px" />
+                            </Box>
+                        )}
 
                         <Flex my={5} gap={2}>
                             <SharedButton
@@ -151,6 +196,8 @@ export const KycSettings = () => {
                             <SharedButton
                                 btnExtras={{
                                     onClick: handleSubmit(onSubmit),
+                                    isLoading: isLoading,
+                                    loadingText: `processing...`,
                                 }}
                                 text={'Submit'}
                                 width={'fit-content'}
@@ -165,38 +212,6 @@ export const KycSettings = () => {
                     </Box>
                 </FormControl>
             </GridItem>
-            <ModalComp modalSize={`2xl`} openModal={isOpen} closeModal={onClose}>
-                <Stack justifyContent={`center`} alignItems={`center`} textAlign={`center`}>
-                    <Box borderRadius={`100%`} p={9} bgColor={`green.100`} fontSize={`7xl`} color={`green.200`}>
-                        <Icon icon="icon-park-solid:check-one" />
-                    </Box>
-                    <Box my={4}>
-                        <Text color={`purple.300`} as={`h5`}>
-                            Successfully Submitted
-                        </Text>
-                        <Text color={`grey.400`} fontSize={`sm`} mt={3}>
-                            Your KYC information has been successfully submitted. Our team will review your submission and verify your details shortly. Thank
-                            you for completing the KYC process.
-                        </Text>
-                    </Box>
-                    <SharedButton
-                        btnExtras={{
-                            type: `submit`,
-                            border: '1px solid #6D5DD3',
-                            onClick: onClose,
-                            isLoading: isLoading,
-                            loadingText: `processing KYC...`,
-                        }}
-                        text={'Go Back'}
-                        width={'50%'}
-                        height={'40px'}
-                        bgColor={'transparent'}
-                        textColor={'purple.200'}
-                        borderRadius={'4px'}
-                        fontSize={{ base: `sm`, md: `md` }}
-                    />
-                </Stack>
-            </ModalComp>
         </Grid>
     );
 };

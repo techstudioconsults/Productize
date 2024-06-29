@@ -24,9 +24,9 @@ export const ExploreFeatures = ({ title }: slideProps) => {
     const queryParams = new URLSearchParams(location.search);
     const tag = queryParams.get('tag');
 
-    const tagData = [`All`, ...tags]?.map((item: string) => ({
-        label: item,
-        value: item,
+    const tagData = [{ name: `All`, category: null }, ...tags]?.map((item: any) => ({
+        label: item?.name,
+        value: item?.name,
     }));
 
     const fetchData = useCallback(async () => {

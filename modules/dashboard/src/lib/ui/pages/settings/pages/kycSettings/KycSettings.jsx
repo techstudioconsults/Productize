@@ -7,8 +7,11 @@ import { useEffect, useState } from 'react';
 import { DashboardEmptyState } from '../../../../empty-states/DashboardEmptyState';
 import { useForm } from 'react-hook-form';
 import { useAxiosInstance } from '@productize/hooks';
+import { useSelector } from 'react-redux';
+import { selectCurrentUser } from '@productize/redux';
 
 export const KycSettings = () => {
+    const user = useSelector(selectCurrentUser);
     const [countries, setCountries] = useState([]);
     const [isFormCompleted, setFormCompleted] = useState(false);
     const [selectedFileName, setSelectedFileName] = useState('');
@@ -20,7 +23,6 @@ export const KycSettings = () => {
         handleSubmit,
         reset,
         setValue,
-        watch,
         formState: { errors },
     } = useForm();
 
@@ -31,7 +33,10 @@ export const KycSettings = () => {
 
     useEffect(() => {
         getCountry();
-    }, []);
+        if (user.kyc_complete) {
+            setFormCompleted(true);
+        }
+    }, [user.kyc_complete]);
 
     const onSubmit = async (data) => {
         console.log(data);

@@ -2,6 +2,7 @@ import { Box, FormControl, Input, Select, Stack, Text } from '@chakra-ui/react';
 import { Field } from './FormFields';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const globalFieldStyle = {
     bgColor: 'grey.200',

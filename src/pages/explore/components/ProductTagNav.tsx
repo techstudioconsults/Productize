@@ -1,24 +1,27 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box, Flex, Tag } from '@chakra-ui/react';
-import { Icon } from '@iconify/react';
+import { selectTags } from '@productize/redux';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { NavLink, useLocation } from 'react-router-dom';
 
-const tags = ['Digital Products', 'Skill Selling'];
+// const tags = ['Digital Products', 'Skill Selling'];
 // const tags = ['print on Demand', 'Skill Selling', 'Template Hub'];
 
 const ProductTagNav: React.FC = () => {
-    // const tags = useSelector(selectTags);
+    const tags = useSelector(selectTags);
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const tagLabel = queryParams.get('tag');
 
-    const listData = tags?.map((tag: string, index: number) => {
+    const listData = tags?.map((tag: any, index: number) => {
         return (
             <React.Fragment key={index}>
                 {/* {index === 0 && <CategoryMenu tag={`Digital Products`} />} */}
-                <NavLink to={`/explore/category?tag=${tag.toLowerCase()}`}>
-                    <Tag fontWeight={`semibold`} fontSize={{ lg: 'md' }} bg={tagLabel === tag.toLowerCase() ? `grey.100` : `transparent`}>
-                        {tag}
+                {/* <NavLink to={`/explore/category?tag=${tag?.name?.toLowerCase()}`}> */}
+                <NavLink to={`/explore?tag=${tag?.name?.toLowerCase()}`}>
+                    <Tag fontWeight={`semibold`} fontSize={{ lg: 'md' }} bg={tagLabel === tag?.name?.toLowerCase() ? `grey.100` : `transparent`}>
+                        {tag?.name}
                     </Tag>
                 </NavLink>
             </React.Fragment>

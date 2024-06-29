@@ -38,7 +38,7 @@ export const NewProductTabLayout = () => {
         resolver: yupResolver(schema),
     });
 
-    const { updateProduct, createProduct, isLoading } = useProductActions();
+    const { updateProduct, createProduct, getSkillSellingData, isLoading } = useProductActions();
     const [updateProductStatus, updateProductStatusStatus] = useUpdateProductStatusMutation();
     const { isValid } = methods.formState;
 
@@ -55,16 +55,18 @@ export const NewProductTabLayout = () => {
         console.log(state);
         if (state && hash === '#product-details') {
             changeSchema(state?.product?.product_type);
+            getSkillSellingData(state?.product?.id);
+
             methods.setValue('title', state?.product?.title);
             methods.setValue('price', state?.product?.price);
             methods.setValue('product_type', state?.product?.product_type);
             methods.setValue('description', state?.product?.description);
             methods.setValue('tags', state?.product?.tags);
-            methods.setValue('level', state?.product?.level);
-            methods.setValue('availability', state?.product?.availability);
-            methods.setValue('portfolio_link', state?.product?.link);
+            // methods.setValue('level', state?.product?.level);
+            // methods.setValue('availability', state?.product?.availability);
+            // methods.setValue('portfolio_link', state?.product?.link);
         }
-    }, [hash, methods, schema, state]);
+    }, [getSkillSellingData, hash, methods, schema, state]);
 
     const onSubmit = async (data) => {
         const action = state && hash ? updateProduct : createProduct;

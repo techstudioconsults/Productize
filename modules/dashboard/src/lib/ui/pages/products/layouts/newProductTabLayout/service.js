@@ -1,6 +1,9 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 // import { ToastFeedback, useToastAction } from '@productize/ui';
 import { useAxiosInstance } from '@productize/hooks';
+import { selectCurrentToken } from '@productize/redux';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
 // import errorImg from '@icons/error.svg';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -15,6 +18,8 @@ const extractFormData = (data) => ({
 });
 
 export const useProductActions = () => {
+    const token = useSelector(selectCurrentToken);
+    const baseUrl = import.meta.env.VITE_BASE_URL;
     const { state } = useLocation();
     const { query, isLoading } = useAxiosInstance({ MIME_TYPE: 'multipart/form-data' });
     const navigate = useNavigate();
@@ -68,5 +73,18 @@ export const useProductActions = () => {
         }
     };
 
-    return { updateProduct, createProduct, isLoading };
+    const getSkillSellingData = async (productID) => {
+        try {
+            const res = await axios.get(`${baseUrl}/skillSellings/${productID}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            console.log(res);
+        } catch (err) {
+            console.error('Error creating product:', err);
+        }
+    };
+
+    return { updateProduct, createProduct, getSkillSellingData, isLoading };
 };

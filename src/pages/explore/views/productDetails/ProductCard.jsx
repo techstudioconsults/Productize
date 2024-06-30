@@ -1,4 +1,4 @@
-import { Box, Card, CardBody, CardFooter, Divider, Flex, Image, Skeleton, Stack, Text } from '@chakra-ui/react';
+import { Box, Card, CardBody, CardFooter, Divider, Flex, Image, Stack, Text } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
 import { useCurrency } from '@productize/hooks';
 import { selectCart, useDeleteCartMutation, useGetFromCartMutation, usePurchaseProductMutation } from '@productize/redux';

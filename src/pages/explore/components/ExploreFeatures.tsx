@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box, Center, Container, Flex, SimpleGrid, Stack, Text } from '@chakra-ui/react';
-import { useState, useEffect, useCallback } from 'react';
+import { useEffect, useCallback } from 'react';
 
 import { useSelector } from 'react-redux';
 import Card from './cards/Card';
@@ -16,7 +16,6 @@ export interface slideProps {
 
 export const ExploreFeatures = ({ title }: slideProps) => {
     const tags = useSelector(selectTags);
-    const [error] = useState<string | null>(null);
     const [getAllProducts_EXTERNAL, getAllProducts_EXTERNALStatus] = useGetAllProducts_EXTERNALMutation();
     const products = useSelector(selectAllProducts_EXTERNAL);
     const location = useLocation();
@@ -31,9 +30,10 @@ export const ExploreFeatures = ({ title }: slideProps) => {
 
     const fetchData = useCallback(async () => {
         try {
-            await getAllProducts_EXTERNAL({ tag }).unwrap();
+            const res = await getAllProducts_EXTERNAL({ tag }).unwrap();
+            console.log(res);
         } catch (error) {
-            console.error(error);
+            return;
         }
     }, [getAllProducts_EXTERNAL, tag]);
 
@@ -51,16 +51,19 @@ export const ExploreFeatures = ({ title }: slideProps) => {
     }, [fetchData]);
 
     // Render product cards
-    const renderCards = products.products?.map((product: any) => (
-        <Card
-            key={product?.slug}
-            productID={product?.slug}
-            image={product?.thumbnail}
-            heading={product?.title}
-            price={product?.price}
-            publisher={product?.publisher}
-        />
-    ));
+    const renderCards = products.products
+        ?.slice() // Create a shallow copy of the products array
+        .sort((a: any, b: any) => new Date(b.created_at || b.createdAt).getTime() - new Date(a.created_at || a.createdAt).getTime()) // Sort by recency
+        .map((product: any) => (
+            <Card
+                key={product?.slug}
+                productID={product?.slug}
+                image={product?.thumbnail}
+                heading={product?.title}
+                price={product?.price}
+                publisher={product?.publisher}
+            />
+        ));
 
     const handlePrevButton = async () => {
         try {

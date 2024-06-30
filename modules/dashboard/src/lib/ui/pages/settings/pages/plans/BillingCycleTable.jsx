@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Text, Tag, IconButton } from '@chakra-ui/react';
 
 import { Icon } from '@iconify/react';
@@ -8,7 +9,8 @@ export const BillingCycleTable = ({ tableData }) => {
     const formatDate = useDate();
     const formatTime = useTime();
 
-    const tableHeader = [`Plan`, `Price`, `Date`, `Status`, `Download`].map((title) => {
+    const tableHeader = [`Plan`, `Price`, `Date`, `Status`].map((title) => {
+    // const tableHeader = [`Plan`, `Price`, `Date`, `Status`, `Download`].map((title) => {
         return (
             <Th py={3} key={title}>
                 {title}
@@ -35,11 +37,11 @@ export const BillingCycleTable = ({ tableData }) => {
                         {bill?.status}
                     </Tag>
                 </Td>
-                <Td>
+                {/* <Td>
                     <IconButton isDisabled size={`sm`}>
                         <Icon fontSize={`1.2rem`} icon={`material-symbols:download`} />
                     </IconButton>
-                </Td>
+                </Td> */}
             </Tr>
         );
     });

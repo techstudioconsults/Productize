@@ -146,14 +146,14 @@ export const SearchComp = ({ color, width, size = `lg` }) => {
                                     {!isLoading && searchResults.length === 0 && <NotFound />}
                                     {!isLoading && searchResults.length > 0 && (
                                         <Stack gap={4}>
-                                            {searchResults?.map((product) => (
+                                            {searchResults?.map((product, index) => (
                                                 <SearchResultTemplate key={product?.id} result={product} />
                                             ))}
                                         </Stack>
                                     )}
                                 </TabPanel>
                                 <TabPanel>
-                                    {isLoading ? (
+                                    {/* {isLoading ? (
                                         <Spin />
                                     ) : searchResults.length === 0 ? (
                                         <NotFound />
@@ -163,10 +163,10 @@ export const SearchComp = ({ color, width, size = `lg` }) => {
                                                 {project.title}
                                             </Box>
                                         ))
-                                    )}
+                                    )} */}
                                 </TabPanel>
                                 <TabPanel>
-                                    {isLoading ? (
+                                    {/* {isLoading ? (
                                         <Spin />
                                     ) : searchResults.length === 0 ? (
                                         <NotFound />
@@ -176,10 +176,10 @@ export const SearchComp = ({ color, width, size = `lg` }) => {
                                                 {file.title}
                                             </Box>
                                         ))
-                                    )}
+                                    )} */}
                                 </TabPanel>
                                 <TabPanel>
-                                    {isLoading ? (
+                                    {/* {isLoading ? (
                                         <Spin />
                                     ) : searchResults.length === 0 ? (
                                         <NotFound />
@@ -189,7 +189,7 @@ export const SearchComp = ({ color, width, size = `lg` }) => {
                                                 {user.title}
                                             </Box>
                                         ))
-                                    )}
+                                    )} */}
                                 </TabPanel>
                             </TabPanels>
                         </Tabs>

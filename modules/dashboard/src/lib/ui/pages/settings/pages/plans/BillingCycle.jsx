@@ -1,13 +1,13 @@
-import { Box, Card, Flex, Image, SimpleGrid, Skeleton, SkeletonText, Text, VStack } from '@chakra-ui/react';
+/* eslint-disable @nx/enforce-module-boundaries */
+import { Box, Card, Flex, Image, SimpleGrid, Skeleton, Text, VStack } from '@chakra-ui/react';
 import arrowLeft from '@icons/Property_2_Arrow-left_kafkjg.svg';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { BillingCycleTable } from './BillingCycleTable';
 import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useCurrency, useDate } from '@productize/hooks';
 import { selectBillingHistory, useBillingHistoryMutation, useManageSubscriptionMutation } from '@productize/redux';
-import { OnBoardingLoader, PricingModal } from '@productize/ui';
-import { Icon } from '@iconify/react';
+import { PricingModal, SpinnerComponentSmall } from '@productize/ui';
 
 export const BillingCycle = () => {
     const navigate = useNavigate();
@@ -17,16 +17,18 @@ export const BillingCycle = () => {
     const [billingHistory] = useBillingHistoryMutation();
     const [manageSubscription, manageSubscriptionStatus] = useManageSubscriptionMutation();
     const billingHistoryData = useSelector(selectBillingHistory);
+    const [subID, setSubID] = useState();
 
     const showBillingHistory = useCallback(async () => {
         try {
             const res = await billingHistory(null).unwrap();
             if (res) {
+                setSubID(res.id);
                 setLoading(false);
             }
         } catch (error) {
             setLoading(false);
-            return error;
+            return;
         }
     }, [billingHistory]);
 
@@ -36,12 +38,12 @@ export const BillingCycle = () => {
 
     const handlePlanDeactivation = async () => {
         try {
-            const res = await manageSubscription(null).unwrap();
+            const res = await manageSubscription({ subID }).unwrap();
             if (res) {
                 window.location.href = res.data.link;
             }
         } catch (error) {
-            return error;
+            return;
         }
     };
 
@@ -67,9 +69,13 @@ export const BillingCycle = () => {
                                     }
                                 </Text>
 
-                                {/* <Text cursor={`pointer`} onClick={handlePlanDeactivation} color={`red.200`}>
-                                    Deactivate Plan
-                                </Text> */}
+                                {manageSubscriptionStatus.isLoading ? (
+                                    <SpinnerComponentSmall />
+                                ) : (
+                                    <Text cursor={`pointer`} onClick={handlePlanDeactivation} color={`red.200`}>
+                                        Deactivate Plan
+                                    </Text>
+                                )}
                             </Flex>
                         </Card>
                     </Box>

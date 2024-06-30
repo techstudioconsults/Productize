@@ -39,7 +39,6 @@ export const KycSettings = () => {
     }, [user.kyc_complete]);
 
     const onSubmit = async (data) => {
-        console.log(data);
         const formData = new FormData();
         formData.append('country', data.country);
         formData.append('document_type', data.document_type);
@@ -132,8 +131,8 @@ export const KycSettings = () => {
                                 placeholder="Select document type"
                                 {...register('document_type', { required: 'Document type is required' })}
                             >
-                                <option value="Driver License">Driver’s License</option>
-                                <option value="National ID">National Id Card</option>
+                                <option value="license">Driver’s License</option>
+                                <option value="National Id card">National Id Card</option>
                                 <option value="National Passport">National Passport</option>
                             </Select>
                             {errors.document_type && (

@@ -1,7 +1,6 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { useCallback } from 'react';
-import errorImg from '@icons/bad-notice.png';
 import { useUpgradePlanMutation } from '@productize/redux';
-import { ToastFeedback, useToastAction } from '@productize/ui';
 
 interface UpgradePlanResponse {
     data?: {
@@ -18,7 +17,6 @@ interface UpgradePlanError {
 
 export const usePlanUpgrade = () => {
     const [upgradePlan, { isLoading, isError, isSuccess, data, error }] = useUpgradePlanMutation<UpgradePlanResponse, UpgradePlanError>();
-    const { toast, toastIdRef, close } = useToastAction();
 
     const upgrade = useCallback(async () => {
         try {
@@ -27,15 +25,16 @@ export const usePlanUpgrade = () => {
                 window.location.href = res.data.authorization_url;
             }
         } catch (err) {
-            const errorMessage = (err as UpgradePlanError)?.data?.message || 'An unexpected error occurred.';
-            toastIdRef.current = toast({
-                position: 'top',
-                render: () => (
-                    <ToastFeedback handleClose={close} btnColor="red.600" message={errorMessage} title="Upgrade Plan failed!" icon={errorImg} color="red.600" />
-                ),
-            });
+            return;
+            // const errorMessage = (err as UpgradePlanError)?.data?.message || 'An unexpected error occurred.';
+            // toastIdRef.current = toast({
+            //     position: 'top',
+            //     render: () => (
+            //         <ToastFeedback handleClose={close} btnColor="red.600" message={errorMessage} title="Upgrade Plan failed!" icon={errorImg} color="red.600" />
+            //     ),
+            // });
         }
-    }, [upgradePlan, toast, toastIdRef, close]);
+    }, [upgradePlan]);
 
     return { upgrade, upgradeStatus: { isLoading, isError, isSuccess, data, error } };
 };

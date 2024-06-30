@@ -29,20 +29,7 @@ export const ReviewModal = ({ handleClose }) => {
                 onFeedbackOpen();
             }
         } catch (error) {
-            toastIdRef.current = toast({
-                position: 'top',
-                render: () => (
-                    <ToastFeedback
-                        btnColor={`purple.200`}
-                        message={error?.data?.message}
-                        title={`Can't submit review`}
-                        icon={undefined}
-                        bgColor={undefined}
-                        color={undefined}
-                        handleClose={close}
-                    />
-                ),
-            });
+            return;
         }
     };
 
@@ -75,7 +62,7 @@ export const ReviewModal = ({ handleClose }) => {
             />
 
             <ModalComp modalSize="4xl" openModal={isOpen} closeModal={close}>
-                <ModalBody p={{base:0, md: `initial`}}>
+                <ModalBody p={{ base: 0, md: `initial` }}>
                     <Flex justifyContent="center" mb={4}>
                         <Stack alignItems="center" gap={5}>
                             <Text fontSize={{ base: `md`, sm: `2xl` }} fontWeight="bold">

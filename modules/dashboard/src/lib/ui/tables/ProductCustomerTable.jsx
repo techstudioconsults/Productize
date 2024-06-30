@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Text } from '@chakra-ui/react';
 import { useDate, useTime } from '@productize/hooks';
 import { selectSingleProductCustomers } from '@productize/redux';
@@ -9,8 +10,6 @@ export const ProductCustomerTable = ({ status }) => {
     const customers = useSelector(selectSingleProductCustomers);
     const formatDate = useDate();
     const formatTime = useTime();
-
-    console.log(customers);
 
     const tableHeader = [`Customer name`, `Customer Email`, `Quantity`, `Date`].map((title) => {
         return (

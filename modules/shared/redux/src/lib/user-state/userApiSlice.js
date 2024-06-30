@@ -21,14 +21,13 @@ export const userApiSlice = apiSlice.injectEndpoints({
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
-                    // console.log(data);
                     dispatch(
                         setUser({
                             user: data.data,
                         })
                     );
                 } catch (err) {
-                    console.error(err);
+                    return;
                 }
             },
         }),
@@ -81,7 +80,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
                         })
                     );
                 } catch (err) {
-                    console.error(err);
+                    return;
                 }
             },
         }),
@@ -101,7 +100,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
                         })
                     );
                 } catch (err) {
-                    console.error(err);
+                    return;
                 }
             },
         }),
@@ -122,7 +121,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
                         })
                     );
                 } catch (err) {
-                    console.error(err);
+                    return;
                 }
             },
         }),
@@ -143,7 +142,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
                         })
                     );
                 } catch (err) {
-                    console.error(err);
+                    return;
                 }
             },
         }),
@@ -201,7 +200,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
                         })
                     );
                 } catch (err) {
-                    console.error(err);
+                    return;
                 }
             },
         }),
@@ -220,7 +219,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
                         })
                     );
                 } catch (err) {
-                    console.error(err);
+                    return;
                 }
             },
         }),
@@ -231,18 +230,6 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 method: 'PATCH',
                 body: { ...credentials.body },
             }),
-            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-                try {
-                    // const { data } = await queryFulfilled;
-                    // dispatch(
-                    //     setAccountList({
-                    //         accounts: data.data,
-                    //     })
-                    // );
-                } catch (err) {
-                    console.error(err);
-                }
-            },
         }),
     }),
 });

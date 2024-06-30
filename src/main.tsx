@@ -11,6 +11,7 @@ import { PaywallUpgrade } from '@productize/ui';
 import ScrollToTop from './utils/ScrollToTop';
 import App from './app/app';
 import '../scss/style.scss';
+import { AppError } from '../modules/shared/ui/src';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
@@ -21,6 +22,7 @@ root.render(
                     <ScrollToTop />
                     <App />
                     <PaywallUpgrade />
+                    <AppError />
                 </ChakraProvider>
             </Provider>
         </ExternalPagesRouter>

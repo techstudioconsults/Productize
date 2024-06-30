@@ -99,7 +99,11 @@ export const DashboardLayout = () => {
     });
 
     const setUser = useCallback(async () => {
-        await getUser(null).unwrap();
+        try {
+            await getUser(null).unwrap();
+        } catch (err: any) {
+            return;
+        }
     }, [getUser]);
 
     useEffect(() => {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { EmptyState } from '@productize/dashboard';
 import { ProductCards } from './ProductCard';
 import ProductNavbar from './ProductNavbar';
@@ -20,9 +21,7 @@ export const ProductCart = () => {
         try {
             await getFromCart(null).unwrap();
         } catch (err: any) {
-            if (err.status === 401) {
-                window.location.href = '/auth/login';
-            }
+            return;
         }
     }, [getFromCart]);
 

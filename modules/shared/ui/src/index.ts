@@ -25,3 +25,4 @@ export * from './lib/PricingModal';
 export * from './lib/review/ReviewsCard';
 export * from './lib/review/ReviewTemplate';
 export * from './lib/Accordion';
+export * from './lib/AppError';

@@ -31,7 +31,7 @@ export const appApiSlice = apiSlice.injectEndpoints({
                         })
                     );
                 } catch (error) {
-                    return error;
+                    return;
                 }
             },
         }),
@@ -51,7 +51,7 @@ export const appApiSlice = apiSlice.injectEndpoints({
                         })
                     );
                 } catch (error) {
-                    return error;
+                    return;
                 }
             },
         }),

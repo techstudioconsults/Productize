@@ -20,9 +20,9 @@ root.render(
             <Provider store={store}>
                 <ChakraProvider theme={globalTheme}>
                     <ScrollToTop />
+                    <AppError />
                     <App />
                     <PaywallUpgrade />
-                    <AppError />
                 </ChakraProvider>
             </Provider>
         </ExternalPagesRouter>

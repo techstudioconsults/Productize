@@ -22,7 +22,7 @@ const RadioCards = ({ listenForChange }) => {
         listenForChange(value); // Call the callback function with the selected value
     };
     return (
-        <RadioGroup as={SimpleGrid} gap={4} columns={{ base: 1, md: 2, lg: 3, xl: 4 }} onChange={handleProductTypeChange} value={productTypeValue}>
+        <RadioGroup as={SimpleGrid} gap={4} columns={{ base: 1, md: 2, lg: 2, xl: 2 }} onChange={handleProductTypeChange} value={productTypeValue}>
             <Radio
                 isDisabled={state?.product?.product_type !== `digital_product` && state?.product}
                 {...register(`product_type`)}
@@ -53,7 +53,7 @@ const RadioCards = ({ listenForChange }) => {
                     style={productTypeValue === `skill_selling` ? activeCardStyle : {}}
                 />
             </Radio>
-            <Radio isDisabled display={`block`} hidden spacing={0} value="template_hub">
+            {/* <Radio isDisabled display={`block`} hidden spacing={0} value="template_hub">
                 <ProductTypeCard
                     img={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1718726461/productize/krurpewv3oybivuqrapz.png`}
                     title={'Coming Soon...'}
@@ -68,7 +68,7 @@ const RadioCards = ({ listenForChange }) => {
                     desc={'Exciting new features'}
                     style={{}}
                 />
-            </Radio>
+            </Radio> */}
             {/* </SimpleGrid> */}
             {errors.product_type && errors.product_type && (
                 <Text className="tiny-text" color="red.200">

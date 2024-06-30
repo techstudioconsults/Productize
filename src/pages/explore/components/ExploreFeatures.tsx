@@ -30,8 +30,7 @@ export const ExploreFeatures = ({ title }: slideProps) => {
 
     const fetchData = useCallback(async () => {
         try {
-            const res = await getAllProducts_EXTERNAL({ tag }).unwrap();
-            console.log(res);
+            await getAllProducts_EXTERNAL({ tag }).unwrap();
         } catch (error) {
             return;
         }
@@ -43,7 +42,6 @@ export const ExploreFeatures = ({ title }: slideProps) => {
         } else {
             navigate(`/explore?tag=${tag.toLowerCase()}`);
         }
-        console.log(tag);
     };
 
     useEffect(() => {
@@ -69,7 +67,7 @@ export const ExploreFeatures = ({ title }: slideProps) => {
         try {
             await getAllProducts_EXTERNAL({ link: products.productsMetaData?.links?.prev }).unwrap();
         } catch (error) {
-            console.log(error);
+            return;
         }
     };
 
@@ -77,7 +75,7 @@ export const ExploreFeatures = ({ title }: slideProps) => {
         try {
             await getAllProducts_EXTERNAL({ link: products.productsMetaData?.links?.next }).unwrap();
         } catch (error) {
-            console.log(error);
+            return;
         }
     };
 

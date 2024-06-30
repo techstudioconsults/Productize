@@ -49,7 +49,7 @@ export const useProductActions = () => {
     };
 
     const createProduct = async (data) => {
-        console.log(data);
+        // console.log(data);
         const formData = extractFormData(data);
         formData.product_type = data.product_type;
 
@@ -64,7 +64,7 @@ export const useProductActions = () => {
             if (res.status === 201) {
                 const additionalRes = await query('post', productCreationEndpoint, { ...additionalData, product_id: res.data.data.id });
                 if (additionalRes.status === 201) {
-                    console.log(additionalRes);
+                    // console.log(additionalRes);
                     navigate(`/dashboard/products/new#preview`, { state: { product: res.data } });
                 }
             }
@@ -80,7 +80,7 @@ export const useProductActions = () => {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            console.log(res);
+            // console.log(res);
         } catch (err) {
             console.error('Error creating product:', err);
         }

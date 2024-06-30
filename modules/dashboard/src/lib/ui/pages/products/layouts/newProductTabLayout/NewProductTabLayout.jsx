@@ -52,7 +52,6 @@ export const NewProductTabLayout = () => {
     }, [hash]);
 
     useEffect(() => {
-        console.log(state);
         if (state && hash === '#product-details') {
             changeSchema(state?.product?.product_type);
             getSkillSellingData(state?.product?.id);
@@ -80,7 +79,6 @@ export const NewProductTabLayout = () => {
         // } else {
         try {
             const res = await updateProductStatus({ productID }).unwrap();
-            console.log(res);
             const publishMessage = res.data?.status === 'published' ? 'Product published Successfully!' : 'Product sent to draft Successfully!';
 
             navigate(`/dashboard/products/new#${res.data?.status === 'published' ? 'share' : 'preview'}`, { state: { product: res.data } });

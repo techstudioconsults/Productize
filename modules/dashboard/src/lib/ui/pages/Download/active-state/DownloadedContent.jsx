@@ -25,7 +25,6 @@ export const DownloadedContent = () => {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            console.log(res);
             if (res.status === 200) {
                 setContent(res.data.data);
             }
@@ -40,6 +39,19 @@ export const DownloadedContent = () => {
             window.open(pdfUrl, '_blank');
         }
     }, [resource?.url]);
+
+    if (content?.length === 0) {
+        return (
+            <Flex h={`50vh`} direction="column" justify="center" align="center" p={4} border="1px solid" borderColor="gray.200" borderRadius="md">
+                <Box color={`purple.200`} fontSize={`9xl`}>
+                    <Icon icon="raphael:package" />
+                </Box>
+                <Text mt={2} fontSize="lg" color="gray.600">
+                    No Content Available
+                </Text>
+            </Flex>
+        );
+    }
 
     return (
         <Box my={10}>

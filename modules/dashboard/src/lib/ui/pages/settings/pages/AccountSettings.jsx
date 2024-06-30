@@ -52,7 +52,6 @@ export const AccountSettings = () => {
 
     const handlePasswordChange = async (data) => {
         try {
-            console.log(data);
             const res = await changePassword(data).unwrap();
             if (res) {
                 toastIdRef.current = toast({
@@ -71,21 +70,7 @@ export const AccountSettings = () => {
                 });
             }
         } catch (error) {
-            // setError(error.data.message);
-            toastIdRef.current = toast({
-                position: 'top',
-                render: () => (
-                    <ToastFeedback
-                        message={error.data.message}
-                        title="Error!"
-                        icon={errorImg}
-                        color={`red.600`}
-                        btnColor={`red.600`}
-                        bgColor={undefined}
-                        handleClose={close}
-                    />
-                ),
-            });
+            return;
         }
     };
 
@@ -95,10 +80,10 @@ export const AccountSettings = () => {
             setPurchaseNotice(!purchaseNotice);
             const res = await query(`post`, `/users/me`, { purchase_notification: purchaseNotice });
             if (res?.status === 200) {
-                await getUser(null).unwrap();
+                getUser(null).unwrap();
             }
         } catch (error) {
-            console.log(error);
+            return;
         }
     };
 
@@ -108,10 +93,10 @@ export const AccountSettings = () => {
             setNewsAndUpdateNotice(!newsAndUpdate);
             const res = await query(`post`, `/users/me`, { news_and_update_notification: newsAndUpdate });
             if (res?.status === 200) {
-                await getUser(null).unwrap();
+                getUser(null).unwrap();
             }
         } catch (error) {
-            console.log(error);
+            return;
         }
     };
 
@@ -121,10 +106,10 @@ export const AccountSettings = () => {
             setProductCreationNotice(!productCreationNotice);
             const res = await query(`post`, `/users/me`, { product_creation_notification: productCreationNotice });
             if (res?.status === 200) {
-                await getUser(null).unwrap();
+                getUser(null).unwrap();
             }
         } catch (error) {
-            console.log(error);
+            return;
         }
     };
 
@@ -134,18 +119,16 @@ export const AccountSettings = () => {
             setPayoutNotice(!payoutNotice);
             const res = await query(`post`, `/users/me`, { payout_notification: payoutNotice });
             if (res?.status === 200) {
-                await getUser(null).unwrap();
+                getUser(null).unwrap();
             }
         } catch (error) {
-            console.log(error);
+            return;
         }
     };
 
     const handleAlternativeEmail = async () => {
-        console.log(email);
         try {
             const res = await query(`post`, `/users/me`, { alt_email: email });
-            console.log(res);
             if (res?.status === 200) {
                 await getUser(null).unwrap();
                 toastIdRef.current = toast({
@@ -164,7 +147,7 @@ export const AccountSettings = () => {
                 });
             }
         } catch (error) {
-            console.log(error);
+            return;
         }
     };
 

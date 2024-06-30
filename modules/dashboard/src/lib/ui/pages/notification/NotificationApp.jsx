@@ -2,25 +2,18 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import notification from '@icons/Property_2_Notifications_1_w4v7g4.svg';
 import { Icon } from '@productize/ui';
-import { Box, Center, IconButton, Popover, PopoverContent, PopoverTrigger, Text, VStack, HStack } from '@chakra-ui/react';
-import { useNotifications } from './service';
-import { Link } from 'react-router-dom';
-import { Icon as Iconify } from '@iconify/react';
+import { Box, Center, IconButton, Popover, PopoverTrigger } from '@chakra-ui/react';
+// import { useNotifications } from './service';
 import { useLinks } from '../../utils/links';
 
 export function NotificationApp() {
-    const { newOrder } = useNotifications();
-    const { count, makeunseenOrderSeen } = useLinks();
-
-    const handleMarkAsSeen = () => {
-        makeunseenOrderSeen();
-    };
+    const { count } = useLinks();
 
     return (
         <Popover placement={`top-start`}>
             <PopoverTrigger>
                 <Center position="relative">
-                    <IconButton size="sm" bg="transparent" _focus="transparent" icon={<Icon icon={notification} name="notification" />} />
+                    <IconButton size="sm" bg="transparent" icon={<Icon icon={notification} name="notification" />} />
                     {count > 0 && <Box border="2px solid #fff" position="absolute" bottom={2} right={1} borderRadius="100%" bg="green.200" boxSize=".7rem" />}
                 </Center>
             </PopoverTrigger>

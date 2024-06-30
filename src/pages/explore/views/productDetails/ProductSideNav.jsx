@@ -54,7 +54,6 @@ const ProductSideNav = ({ status }) => {
             const res = await getFromCart(null).unwrap();
             if (res.data.length) {
                 res.data.forEach(async (item) => {
-                    console.log(item, product);
                     if (item.product_slug === product?.slug) {
                         const res = await updateCart({ cart_id: item.id, body: { quantity: productQuantity } }).unwrap();
                         if (res) {
@@ -79,7 +78,6 @@ const ProductSideNav = ({ status }) => {
                             product_slug: product.slug,
                             quantity: productQuantity,
                         };
-                        console.log(modifiedProduct);
                         const res = await addToCart(modifiedProduct).unwrap();
                         if (res) {
                             await getFromCart(null).unwrap();
@@ -91,14 +89,14 @@ const ProductSideNav = ({ status }) => {
                     product_slug: product.slug,
                     quantity: productQuantity,
                 };
-                console.log(modifiedProduct);
+
                 const res = await addToCart(modifiedProduct).unwrap();
                 if (res) {
                     await getFromCart(null).unwrap();
                 }
             }
         } catch (err) {
-            console.error(err);
+            return;
         }
     };
 

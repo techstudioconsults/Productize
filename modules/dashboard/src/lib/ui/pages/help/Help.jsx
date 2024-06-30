@@ -25,9 +25,8 @@ export const Help = () => {
 
     const onSubmit = async (data) => {
         try {
-            console.log(data);
             const res = await sendHelpMessage(data).unwrap();
-            console.log(res);
+
             if (res.message) {
                 toastIdRef.current = toast({
                     position: 'top',
@@ -44,22 +43,9 @@ export const Help = () => {
                     ),
                 });
             }
+            reset();
         } catch (error) {
-            setError(error.data.message);
-            toastIdRef.current = toast({
-                position: 'top',
-                render: () => (
-                    <ToastFeedback
-                        message={error?.data?.message}
-                        title="Email not sent!"
-                        icon={errorImg}
-                        color={`red.600`}
-                        btnColor={`red.600`}
-                        bgColor={undefined}
-                        handleClose={close}
-                    />
-                ),
-            });
+            return;
         }
     };
 

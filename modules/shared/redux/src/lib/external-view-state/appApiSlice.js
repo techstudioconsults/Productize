@@ -44,7 +44,7 @@ export const appApiSlice = apiSlice.injectEndpoints({
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
-                    console.log(data);
+
                     dispatch(
                         setSingleProduct_EXTERNAL({
                             product: data.data,
@@ -96,14 +96,6 @@ export const appApiSlice = apiSlice.injectEndpoints({
                 url: `/carts/${credentials.cart_id}`,
                 method: 'DELETE',
             }),
-            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-                try {
-                    const { data } = await queryFulfilled;
-                    console.log(data);
-                } catch (error) {
-                    return error;
-                }
-            },
         }),
 
         getProductTags: builder.mutation({

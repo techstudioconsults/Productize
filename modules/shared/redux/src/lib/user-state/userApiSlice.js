@@ -53,16 +53,16 @@ export const userApiSlice = apiSlice.injectEndpoints({
             }),
         }),
 
-        cancelSubscription: builder.mutation({
-            query: () => ({
-                url: `/subscriptions/cancel`,
-                method: 'GET',
-            }),
-        }),
+        // cancelSubscription: builder.mutation({
+        //     query: (credentials) => ({
+        //         url: `/subscriptions/${credentials.subID}/cancel`,
+        //         method: 'GET',
+        //     }),
+        // }),
 
         manageSubscription: builder.mutation({
             query: (credentials) => ({
-                url: `/subscriptions/manage`,
+                url: `/subscriptions/${credentials.subID}/manage`,
                 method: 'GET',
             }),
         }),
@@ -93,7 +93,6 @@ export const userApiSlice = apiSlice.injectEndpoints({
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
-                    console.log(data);
                     dispatch(
                         setPayoutStats({
                             payoutStats: data.data,

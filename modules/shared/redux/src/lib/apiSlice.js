@@ -14,9 +14,10 @@ const baseQuery = fetchBaseQuery({
 });
 
 const handleUnauthorized = (result, api) => {
+    // console.log(result);
     if (result?.error?.status === 401) {
         window.location.href = '/auth/login';
-    } else if (result?.error?.status === 403 || result?.error?.data?.message === `User is not subscribed`) {
+    } else if (result?.error?.status === 403 && result?.error?.data?.message === `User is not subscribed`) {
         store.dispatch({
             type: 'User/FREE_PLAN_OVER_RESPONSE',
             payload: {

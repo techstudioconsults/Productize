@@ -4,8 +4,6 @@ import { Icon } from '@iconify/react';
 import { SharedButton } from './SharedButton';
 import { CardLayout, CardProps } from './layouts/CardLayout';
 import { usePlanUpgrade, useSetPaymentPlan } from '@productize/hooks';
-import { useEffect } from 'react';
-import { useGetUserMutation } from '@productize/redux';
 
 export interface PricingCardProps {
     cardProps: CardProps;
@@ -18,13 +16,8 @@ export interface PricingCardProps {
 }
 
 export const PricingCard: React.FC<PricingCardProps> = ({ cardProps, listItems, iconColor, amount, btnText, textColor, showButton }) => {
-    const [getUser] = useGetUserMutation();
     const { upgrade, upgradeStatus } = usePlanUpgrade();
     const isPremium = useSetPaymentPlan();
-
-    useEffect(() => {
-        getUser(null).unwrap();
-    }, [getUser]);
 
     const lists = listItems?.map((list, index) => (
         <ListItem key={index} display="flex" alignItems="flex-start" gap={2}>

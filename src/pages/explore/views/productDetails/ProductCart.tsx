@@ -5,9 +5,7 @@ import ProductNavbar from './ProductNavbar';
 import { Box, Container, Flex, Image, Text } from '@chakra-ui/react';
 import arrowLeft from '@icons/Property_2_Arrow-left_kafkjg.svg';
 import { useTokenExists } from '@productize/hooks';
-import { selectCart, useGetFromCartMutation } from '@productize/redux';
-import { SpinnerComponent } from '@productize/ui';
-import { useCallback, useEffect } from 'react';
+import { selectCart } from '@productize/redux';
 import { useSelector } from 'react-redux';
 
 import { useNavigate } from 'react-router-dom';
@@ -15,23 +13,6 @@ import { useNavigate } from 'react-router-dom';
 export const ProductCart = () => {
     const navigate = useNavigate();
     const cart = useSelector(selectCart);
-    const [getFromCart, getFromCartStatus] = useGetFromCartMutation();
-
-    const getCartProduct = useCallback(async () => {
-        try {
-            await getFromCart(null).unwrap();
-        } catch (err: any) {
-            return;
-        }
-    }, [getFromCart]);
-
-    useEffect(() => {
-        getCartProduct();
-    }, [getCartProduct]);
-
-    if (getFromCartStatus.isLoading) {
-        <SpinnerComponent />;
-    }
 
     return (
         <>

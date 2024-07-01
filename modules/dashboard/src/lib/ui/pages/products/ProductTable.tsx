@@ -10,7 +10,7 @@ import { ProductsTableControl } from './ProductsTableControl';
 import { DashboardEmptyState } from '../../empty-states/DashboardEmptyState';
 import { useCurrency, useDate, useTime } from '@productize/hooks';
 import { useGetAllProductsMutation, selectAllProducts, selectPaginationMetaData } from '@productize/redux';
-import {  SharedButton } from '@productize/ui';
+import { SharedButton } from '@productize/ui';
 
 interface tableProps {
     draft?: boolean;
@@ -102,26 +102,14 @@ export const ProductTable = ({ deleted }: tableProps) => {
     });
 
     const handlePrevButton = async () => {
-        try {
-            await getAllProducts({ link: paginate?.links?.prev }).unwrap();
-        } catch (error) {
-            console.log(error);
-        }
+        getAllProducts({ link: paginate?.links?.prev }).unwrap();
     };
     const handleNextButton = async () => {
-        try {
-            await getAllProducts({ link: paginate?.links?.next }).unwrap();
-        } catch (error) {
-            console.log(error);
-        }
+        getAllProducts({ link: paginate?.links?.next }).unwrap();
     };
 
     const showAllProducts = useCallback(async () => {
-        try {
-            await getAllProducts(null).unwrap();
-        } catch (error) {
-            return error;
-        }
+        getAllProducts(null).unwrap();
     }, [getAllProducts]);
 
     useEffect(() => {
@@ -165,7 +153,15 @@ export const ProductTable = ({ deleted }: tableProps) => {
                 )}
             </TableContainer>
             {/* TABLE PAGINATION */}
-            <Flex mt={4} gap={5} color={`grey.400`} alignItems={`center`} justifyContent={`space-between`} flexDir={{ base: `column-reverse`, lg: `row` }}>
+            <Flex
+                display={paginate?.meta?.total > 2 ? `flex` : `none`}
+                mt={4}
+                gap={5}
+                color={`grey.400`}
+                alignItems={`center`}
+                justifyContent={`space-between`}
+                flexDir={{ base: `column-reverse`, lg: `row` }}
+            >
                 <Flex alignItems={`center`} justifyContent={`space-between`} flexDir={{ base: `column`, lg: `row` }} gap={{ lg: 60 }}>
                     <Box>
                         <Text>10 Entries per page </Text>

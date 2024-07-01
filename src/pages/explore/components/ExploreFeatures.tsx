@@ -24,16 +24,12 @@ export const ExploreFeatures = ({ title }: slideProps) => {
     const tag = queryParams.get('tag');
 
     const tagData = [{ name: `All`, category: null }, ...tags]?.map((item: any) => ({
-        label: item?.name,
+        label: item?.name.replace('_', ' '),
         value: item?.name,
     }));
 
     const fetchData = useCallback(async () => {
-        try {
-            await getAllProducts_EXTERNAL({ tag }).unwrap();
-        } catch (error) {
-            return;
-        }
+        getAllProducts_EXTERNAL({ tag }).unwrap();
     }, [getAllProducts_EXTERNAL, tag]);
 
     const handleTagFilter = (tag: string) => {
@@ -63,20 +59,12 @@ export const ExploreFeatures = ({ title }: slideProps) => {
             />
         ));
 
-    const handlePrevButton = async () => {
-        try {
-            await getAllProducts_EXTERNAL({ link: products.productsMetaData?.links?.prev }).unwrap();
-        } catch (error) {
-            return;
-        }
+    const handlePrevButton = () => {
+        getAllProducts_EXTERNAL({ link: products.productsMetaData?.links?.prev }).unwrap();
     };
 
-    const handleNextButton = async () => {
-        try {
-            await getAllProducts_EXTERNAL({ link: products.productsMetaData?.links?.next }).unwrap();
-        } catch (error) {
-            return;
-        }
+    const handleNextButton = () => {
+        getAllProducts_EXTERNAL({ link: products.productsMetaData?.links?.next }).unwrap();
     };
 
     if (getAllProducts_EXTERNALStatus?.isLoading) {
@@ -93,7 +81,15 @@ export const ExploreFeatures = ({ title }: slideProps) => {
                 <Flex mb={5} justifyContent={`space-between`} alignItems={`center`}>
                     <Text as={`h4`}>{title}</Text>
                     <Box display={{ lg: `none` }}>
-                        <SelectPicker searchable={false} onSelect={handleTagFilter} style={{ width: `100%` }} placeholder={`Tags`} size="sm" data={tagData} />
+                        <SelectPicker
+                            placement={`auto`}
+                            searchable={false}
+                            onSelect={handleTagFilter}
+                            style={{ width: `100%` }}
+                            placeholder={`Category`}
+                            size="sm"
+                            data={tagData}
+                        />
                     </Box>
                 </Flex>
 
@@ -112,7 +108,15 @@ export const ExploreFeatures = ({ title }: slideProps) => {
                     />
                 )}
                 {/* TABLE PAGINATION */}
-                <Flex mt={4} gap={5} color={`grey.400`} alignItems={`center`} justifyContent={`center`} flexDir={{ base: `column-reverse`, lg: `row` }}>
+                <Flex
+                    display={products.productsMetaData?.meta?.total > 1 ? `flex` : `none`}
+                    mt={4}
+                    gap={5}
+                    color={`grey.400`}
+                    alignItems={`center`}
+                    justifyContent={`center`}
+                    flexDir={{ base: `column-reverse`, lg: `row` }}
+                >
                     <Stack my={10} w={{ base: `100%`, lg: `initial` }} justifyContent={`space-between`} alignItems={`center`} direction={`row`} gap={5}>
                         <SharedButton
                             btnExtras={{

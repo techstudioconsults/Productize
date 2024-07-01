@@ -46,7 +46,15 @@ export const AppError = () => {
             toastIdRef.current = toast({
                 position: 'top',
                 render: () => (
-                    <ToastFeedback btnColor="purple.200" message={message} title="" icon={errorImg} bgColor={undefined} color={undefined} handleClose={close} />
+                    <ToastFeedback
+                        btnColor="purple.200"
+                        message={message || `Something went wrong...please try again`}
+                        title=""
+                        icon={errorImg}
+                        bgColor={undefined}
+                        color={undefined}
+                        handleClose={close}
+                    />
                 ),
             });
         }

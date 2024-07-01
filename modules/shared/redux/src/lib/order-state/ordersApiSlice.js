@@ -33,7 +33,7 @@ export const OrdersApiSlice = apiSlice.injectEndpoints({
                         })
                     );
                 } catch (error) {
-                    return error;
+                    return;
                 }
             },
         }),
@@ -52,7 +52,7 @@ export const OrdersApiSlice = apiSlice.injectEndpoints({
                         })
                     );
                 } catch (error) {
-                    return error;
+                    return;
                 }
             },
         }),

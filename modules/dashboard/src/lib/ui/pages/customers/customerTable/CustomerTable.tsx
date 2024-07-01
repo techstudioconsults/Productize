@@ -62,19 +62,11 @@ export const CustomerTable = ({ draft, live, deleted, tableData }: tableProps) =
         );
     });
 
-    const handlePrevButton = async () => {
-        try {
-            await getAllCustomers({ link: paginate?.links?.prev }).unwrap();
-        } catch (error) {
-            console.log(error);
-        }
+    const handlePrevButton = () => {
+        getAllCustomers({ link: paginate?.links?.prev }).unwrap();
     };
-    const handleNextButton = async () => {
-        try {
-            await getAllCustomers({ link: paginate?.links?.next }).unwrap();
-        } catch (error) {
-            console.log(error);
-        }
+    const handleNextButton = () => {
+        getAllCustomers({ link: paginate?.links?.next }).unwrap();
     };
 
     return (
@@ -92,7 +84,15 @@ export const CustomerTable = ({ draft, live, deleted, tableData }: tableProps) =
                 </Table>
             </TableContainer>
             {/* TABLE PAGINATION */}
-            <Flex mt={4} gap={5} color={`grey.400`} alignItems={`center`} justifyContent={`space-between`} flexDir={{ base: `column-reverse`, lg: `row` }}>
+            <Flex
+                display={paginate?.meta?.total > 2 ? `flex` : `none`}
+                mt={4}
+                gap={5}
+                color={`grey.400`}
+                alignItems={`center`}
+                justifyContent={`space-between`}
+                flexDir={{ base: `column-reverse`, lg: `row` }}
+            >
                 <Flex alignItems={`center`} justifyContent={`space-between`} flexDir={{ base: `column`, lg: `row` }} gap={{ lg: 60 }}>
                     <Box>
                         <Text>10 Entries per page </Text>

@@ -45,7 +45,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                         })
                     );
                 } catch (error) {
-                    return error;
+                    return;
                 }
             },
         }),
@@ -69,7 +69,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                         })
                     );
                 } catch (error) {
-                    return error;
+                    return;
                 }
             },
         }),
@@ -92,7 +92,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                         })
                     );
                 } catch (error) {
-                    return error;
+                    return;
                 }
             },
         }),
@@ -115,7 +115,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                         })
                     );
                 } catch (error) {
-                    return error;
+                    return;
                 }
             },
         }),
@@ -133,7 +133,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                         })
                     );
                 } catch (error) {
-                    return error;
+                    return;
                 }
             },
         }),
@@ -152,7 +152,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                         })
                     );
                 } catch (error) {
-                    return error;
+                    return;
                 }
             },
         }),
@@ -171,7 +171,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                         })
                     );
                 } catch (error) {
-                    return error;
+                    return;
                 }
             },
         }),

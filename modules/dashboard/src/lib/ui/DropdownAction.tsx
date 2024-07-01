@@ -1,3 +1,5 @@
+/* eslint-disable @nx/enforce-module-boundaries */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Divider, IconButton, Menu, MenuButton, MenuItem, MenuList, useDisclosure } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import errorImg from '@icons/error.svg';
@@ -11,6 +13,7 @@ import {
     useRestoreSoftDeletedProductMutation,
     useDeleteProductPermanentlyMutation,
     selectCurrentUser,
+    useGetProductAnalyticsMutation,
 } from '@productize/redux';
 import { useToastAction, ToastFeedback, PaywallUnpublishWarning } from '@productize/ui';
 import { Icon } from '@iconify/react';
@@ -51,9 +54,9 @@ export const DropdownActionDraft = ({ icon, product }: dropProp) => {
     const navigate = useNavigate();
     const { toast, toastIdRef, close } = useToastAction();
     const [deleteProductSoftly] = useDeleteProductSoftlyMutation();
-    const [getAllProducts] = useGetAllProductsMutation();
-    const [getLiveProducts] = useGetLiveProductsMutation();
+     const [getAllProducts] = useGetAllProductsMutation();
     const [getDraftProducts] = useGetDraftProductsMutation();
+    const [getProductsAnalytics] = useGetProductAnalyticsMutation();
 
     const handleDeleteProductSoftly = async (e: { stopPropagation: () => void }) => {
         e.stopPropagation();
@@ -64,8 +67,8 @@ export const DropdownActionDraft = ({ icon, product }: dropProp) => {
 
             if (res) {
                 await getAllProducts(null).unwrap();
-                await getLiveProducts(null).unwrap();
                 await getDraftProducts(null).unwrap();
+                await getProductsAnalytics(null).unwrap();
                 toastIdRef.current = toast({
                     position: 'top',
                     render: () => (
@@ -113,9 +116,9 @@ export const DropdownActionDraft = ({ icon, product }: dropProp) => {
                 variant="outlined"
             />
             <MenuList zIndex={999}>
-                <MenuItem onClick={(e) => handleTabAction(e, `#product-details`)} justifyContent={`flex-start`}>
+                {/* <MenuItem onClick={(e) => handleTabAction(e, `#product-details`)} justifyContent={`flex-start`}>
                     Edit
-                </MenuItem>
+                </MenuItem> */}
                 <MenuItem onClick={(e) => handleTabAction(e, `#preview`)} justifyContent={`flex-start`}>
                     Preview
                 </MenuItem>
@@ -132,9 +135,9 @@ export const DropdownActionLive = ({ icon, product }: dropProp) => {
     const { toast, toastIdRef, close } = useToastAction();
     const [updateProductStatus] = useUpdateProductStatusMutation();
     const [deleteProductSoftly] = useDeleteProductSoftlyMutation();
+    const [getProductsAnalytics] = useGetProductAnalyticsMutation();
     const [getLiveProducts] = useGetLiveProductsMutation();
     const [getAllProducts] = useGetAllProductsMutation();
-    const [getDraftProducts] = useGetDraftProductsMutation();
     const { onOpen, onClose, isOpen } = useDisclosure();
     const user = useSelector(selectCurrentUser);
 
@@ -151,7 +154,6 @@ export const DropdownActionLive = ({ icon, product }: dropProp) => {
                 if (res) {
                     await getAllProducts(null).unwrap();
                     await getLiveProducts(null).unwrap();
-                    await getDraftProducts(null).unwrap();
                     toastIdRef.current = toast({
                         position: 'top',
                         render: () => (
@@ -193,9 +195,9 @@ export const DropdownActionLive = ({ icon, product }: dropProp) => {
             }).unwrap();
 
             if (res) {
-                await getAllProducts(null).unwrap();
+                await getProductsAnalytics(null).unwrap();
                 await getLiveProducts(null).unwrap();
-                await getDraftProducts(null).unwrap();
+                await getAllProducts(null).unwrap();
                 toastIdRef.current = toast({
                     position: 'top',
                     render: () => (
@@ -247,9 +249,9 @@ export const DropdownActionLive = ({ icon, product }: dropProp) => {
                     <PaywallUnpublishWarning onClose={onClose} isOpen={isOpen} productID={product?.id} />
                     Unpublish to drafts
                 </MenuItem>
-                <MenuItem onClick={(e) => handleTabAction(e, `#product-details`)} justifyContent={`flex-start`}>
+                {/* <MenuItem onClick={(e) => handleTabAction(e, `#product-details`)} justifyContent={`flex-start`}>
                     Edit
-                </MenuItem>
+                </MenuItem> */}
                 <MenuItem onClick={(e) => handleTabAction(e, `#preview`)} justifyContent={`flex-start`}>
                     Preview
                 </MenuItem>

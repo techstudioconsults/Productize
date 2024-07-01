@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box, Flex, IconButton } from '@chakra-ui/react';
 import DateRangePicker from 'rsuite/esm/DateRangePicker';
@@ -33,17 +34,6 @@ export const CustomersTableControl = ({ showRefreshBtn }: controlsProp) => {
             Authorization: `Bearer ${token}`,
         },
     };
-
-    // const data = [
-    //     `All Products`,
-    //     `UX Design Fundamentals`,
-    //     `Practical UI - User interface design book`,
-    //     `The Future of Design Systems Conference 2023`,
-    //     `Graphics Guide to Residential Design`,
-    // ].map((item) => ({
-    //     label: item,
-    //     value: item,
-    // }));
 
     const handleExport = async () => {
         try {
@@ -103,51 +93,31 @@ export const CustomersTableControl = ({ showRefreshBtn }: controlsProp) => {
     };
 
     const filterTable = async () => {
-        if (status === `all`) {
-            try {
-                await getAllCustomers(null).unwrap();
-            } catch (error: any) {
-                toastIdRef.current = toast({
-                    position: 'top',
-                    render: () => (
-                        <ToastFeedback
-                            message={error?.data?.message}
-                            title="Error!"
-                            icon={errorImg}
-                            color={`red.600`}
-                            btnColor={`red.600`}
-                            bgColor={undefined}
-                            handleClose={close}
-                        />
-                    ),
-                });
-            }
-        } else {
-            try {
-                await getAllCustomers({
+        try {
+            await getAllCustomers({
+                link: {
                     page: null,
                     startDate,
                     endDate,
                     status,
-                }).unwrap();
-            } catch (error: any) {
-                console.log(error);
-
-                toastIdRef.current = toast({
-                    position: 'top',
-                    render: () => (
-                        <ToastFeedback
-                            message={error?.data?.message}
-                            title="Error!"
-                            icon={errorImg}
-                            color={`red.600`}
-                            btnColor={`red.600`}
-                            bgColor={undefined}
-                            handleClose={close}
-                        />
-                    ),
-                });
-            }
+                },
+                isFilter: true,
+            }).unwrap();
+        } catch (error: any) {
+            toastIdRef.current = toast({
+                position: 'top',
+                render: () => (
+                    <ToastFeedback
+                        message={error?.data?.message}
+                        title="Error!"
+                        icon={errorImg}
+                        color={`red.600`}
+                        btnColor={`red.600`}
+                        bgColor={undefined}
+                        handleClose={close}
+                    />
+                ),
+            });
         }
     };
 

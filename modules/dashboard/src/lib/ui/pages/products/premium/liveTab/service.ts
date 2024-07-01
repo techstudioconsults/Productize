@@ -1,16 +1,21 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useGetLiveProductsMutation, selectLiveProducts } from '@productize/redux';
 
 export const useLiveProducts = () => {
+    const [isLoading, setLoading] = useState(true);
     const [getLiveProducts, getLiveProductsStatus] = useGetLiveProductsMutation();
     const liveProducts = useSelector(selectLiveProducts);
 
     const fetchLiveProducts = useCallback(async () => {
         try {
-            await getLiveProducts(null).unwrap();
+            const res = await getLiveProducts(null).unwrap();
+            if (res.data) {
+                setLoading(false);
+            }
         } catch (error) {
             console.error(error);
+            setLoading(false);
         }
     }, [getLiveProducts]);
 
@@ -21,5 +26,6 @@ export const useLiveProducts = () => {
     return {
         liveProducts,
         getLiveProductsStatus,
+        isLoading,
     };
 };

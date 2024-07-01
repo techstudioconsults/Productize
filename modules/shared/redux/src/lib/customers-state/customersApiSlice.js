@@ -8,8 +8,8 @@ const constructURL = (credentials) => {
         return '/customers';
     }
 
-    const { page, startDate, endDate } = credentials;
-    if (!credentials.link) {
+    const { page, startDate, endDate, link } = credentials.link;
+    if (!link) {
         return `/customers?page=${page}&start_date=${startDate}&end_date=${endDate}`;
     } else {
         return credentials.link;
@@ -29,12 +29,13 @@ export const CustomersApiSlice = apiSlice.injectEndpoints({
                     const { data } = await queryFulfilled;
                     dispatch(
                         setAllCustomers({
+                            isFilter: arg?.isFilter || false,
                             customers: data.data,
                             customersMetaData: { links: data.links, meta: data.meta },
                         })
                     );
                 } catch (error) {
-                    return error;
+                    return;
                 }
             },
         }),
@@ -53,7 +54,7 @@ export const CustomersApiSlice = apiSlice.injectEndpoints({
                         })
                     );
                 } catch (error) {
-                    return error;
+                    return;
                 }
             },
         }),
@@ -72,7 +73,7 @@ export const CustomersApiSlice = apiSlice.injectEndpoints({
                         })
                     );
                 } catch (error) {
-                    return error;
+                    return;
                 }
             },
         }),

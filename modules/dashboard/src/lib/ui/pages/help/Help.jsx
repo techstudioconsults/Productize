@@ -1,26 +1,11 @@
-import {
-    Accordion,
-    AccordionButton,
-    AccordionIcon,
-    AccordionItem,
-    AccordionPanel,
-    Box,
-    Flex,
-    FormControl,
-    FormLabel,
-    Grid,
-    GridItem,
-    Input,
-    Text,
-    Textarea,
-} from '@chakra-ui/react';
-import { yupResolver } from '@hookform/resolvers/yup';
+/* eslint-disable @nx/enforce-module-boundaries */
+import { Box, Flex, FormControl, FormLabel, Grid, GridItem, Input, Text, Textarea } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import errorImg from '@icons/error.svg';
 import toastImg from '@icons/star-notice.png';
 import { useSendHelpMessageMutation } from '@productize/redux';
-import { ErrorText, SharedButton, ToastFeedback, useToastAction } from '@productize/ui';
+import { AccordionComponent, ErrorText, SharedButton, ToastFeedback, useToastAction } from '@productize/ui';
 
 export const Help = () => {
     const [error, setError] = useState('');
@@ -40,9 +25,8 @@ export const Help = () => {
 
     const onSubmit = async (data) => {
         try {
-            console.log(data);
             const res = await sendHelpMessage(data).unwrap();
-            console.log(res);
+
             if (res.message) {
                 toastIdRef.current = toast({
                     position: 'top',
@@ -59,22 +43,9 @@ export const Help = () => {
                     ),
                 });
             }
+            reset();
         } catch (error) {
-            setError(error.data.message);
-            toastIdRef.current = toast({
-                position: 'top',
-                render: () => (
-                    <ToastFeedback
-                        message={error?.data?.message}
-                        title="Email not sent!"
-                        icon={errorImg}
-                        color={`red.600`}
-                        btnColor={`red.600`}
-                        bgColor={undefined}
-                        handleClose={close}
-                    />
-                ),
-            });
+            return;
         }
     };
 
@@ -92,7 +63,10 @@ export const Help = () => {
                         </Text>
                     </GridItem>
                     <GridItem colSpan={{ base: 12, md: 7 }}>
-                        <Accordion defaultIndex={[0]} allowMultiple>
+                        <Box flex={1}>
+                            <AccordionComponent />
+                        </Box>
+                        {/* <Accordion defaultIndex={[0]} allowMultiple>
                             {[1, 2, 3, 4, 5, 6].map((item) => {
                                 return (
                                     <AccordionItem key={item} py={3}>
@@ -114,7 +88,7 @@ export const Help = () => {
                                     </AccordionItem>
                                 );
                             })}
-                        </Accordion>
+                        </Accordion> */}
                     </GridItem>
                 </Grid>
                 {/* grid two*/}

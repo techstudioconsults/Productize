@@ -1,22 +1,26 @@
 // hooks/useCustomerDetails.ts
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { selectSingleCustomer, selectSingleCustomerOrders, useGetCustomerOrdersMutation, useGetSingleCustomerDetailsMutation } from '@productize/redux';
-// import { Customer, Order } from './customers.types';
 
 export const useCustomerDetails = () => {
+    const [isLoading, setLoading] = useState(true);
     const { customerID } = useParams<{ customerID: string }>();
-    const [getSingleCustomerDetails, { isLoading: isLoadingCustomerDetails }] = useGetSingleCustomerDetailsMutation();
-    const [getCustomerOrders, { isLoading: isLoadingCustomerOrders }] = useGetCustomerOrdersMutation();
+    const [getSingleCustomerDetails] = useGetSingleCustomerDetailsMutation();
+    const [getCustomerOrders] = useGetCustomerOrdersMutation();
     const singleCustomer = useSelector(selectSingleCustomer);
     const singleCustomerOrders = useSelector(selectSingleCustomerOrders);
 
     const fetchCustomerDetails = useCallback(async () => {
         try {
-            await getSingleCustomerDetails({ customerID }).unwrap();
-            await getCustomerOrders({ customerID }).unwrap();
+            const resA = await getSingleCustomerDetails({ customerID }).unwrap();
+            const res = await getCustomerOrders({ customerID }).unwrap();
+            if (resA.data) {
+                setLoading(false);
+            }
         } catch (error) {
+            setLoading(false);
             console.error(error);
         }
     }, [customerID, getCustomerOrders, getSingleCustomerDetails]);
@@ -25,5 +29,5 @@ export const useCustomerDetails = () => {
         fetchCustomerDetails();
     }, [fetchCustomerDetails]);
 
-    return { singleCustomer, singleCustomerOrders, isLoading: isLoadingCustomerDetails || isLoadingCustomerOrders };
+    return { singleCustomer, singleCustomerOrders, isLoading };
 };

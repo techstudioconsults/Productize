@@ -3,9 +3,8 @@ import { Box, Container, Flex, Image, Link as CLink, Stack, Text } from '@chakra
 import { Link } from 'react-router-dom';
 import { Hero } from '../../components/Hero';
 import { SectionLayout } from '../../components/section-layout/SectionLayout';
-import { AccordionComponent } from '../../components/Accordion';
 import { SharedSection } from '../../components/section-layout/SharedSection';
-import { PricingCard, SharedButton } from '@productize/ui';
+import { AccordionComponent, PricingCard, SharedButton } from '@productize/ui';
 import diamond from '@icons/diamond.png';
 import lines from '@icons/Lines.png';
 

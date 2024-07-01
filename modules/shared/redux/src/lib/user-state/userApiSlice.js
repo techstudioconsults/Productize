@@ -7,7 +7,7 @@ const constructURL = (credentials, filteredLink) => {
     } else if (credentials?.link) {
         return credentials?.link;
     } else {
-        return `/payouts`;
+        return `/payouts/user`;
     }
 };
 
@@ -27,7 +27,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
                         })
                     );
                 } catch (err) {
-                    console.error(err);
+                    return;
                 }
             },
         }),
@@ -53,15 +53,22 @@ export const userApiSlice = apiSlice.injectEndpoints({
             }),
         }),
 
+        // cancelSubscription: builder.mutation({
+        //     query: (credentials) => ({
+        //         url: `/subscriptions/${credentials.subID}/cancel`,
+        //         method: 'GET',
+        //     }),
+        // }),
+
         manageSubscription: builder.mutation({
             query: (credentials) => ({
-                url: `/subscriptions/manage`,
+                url: `/subscriptions/${credentials.subID}/manage`,
                 method: 'GET',
             }),
         }),
         billingHistory: builder.mutation({
             query: (credentials) => ({
-                url: `/subscriptions`,
+                url: `/subscriptions/billing`,
                 method: 'GET',
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
@@ -73,7 +80,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
                         })
                     );
                 } catch (err) {
-                    console.error(err);
+                    return;
                 }
             },
         }),
@@ -92,14 +99,14 @@ export const userApiSlice = apiSlice.injectEndpoints({
                         })
                     );
                 } catch (err) {
-                    console.error(err);
+                    return;
                 }
             },
         }),
 
         getPayouts: builder.mutation({
             query: (credentials) => ({
-                url: constructURL(credentials, `/payouts?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}`),
+                url: constructURL(credentials, `/payouts/user?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}`),
                 method: 'GET',
             }),
 
@@ -113,7 +120,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
                         })
                     );
                 } catch (err) {
-                    console.error(err);
+                    return;
                 }
             },
         }),
@@ -134,7 +141,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
                         })
                     );
                 } catch (err) {
-                    console.error(err);
+                    return;
                 }
             },
         }),
@@ -172,7 +179,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
 
         sendHelpMessage: builder.mutation({
             query: (credentials) => ({
-                url: `/users/request-help`,
+                url: `/complaints`,
                 method: 'POST',
                 body: { ...credentials },
             }),
@@ -192,7 +199,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
                         })
                     );
                 } catch (err) {
-                    console.error(err);
+                    return;
                 }
             },
         }),
@@ -211,7 +218,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
                         })
                     );
                 } catch (err) {
-                    console.error(err);
+                    return;
                 }
             },
         }),
@@ -222,18 +229,6 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 method: 'PATCH',
                 body: { ...credentials.body },
             }),
-            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-                try {
-                    const { data } = await queryFulfilled;
-                    // dispatch(
-                    //     setAccountList({
-                    //         accounts: data.data,
-                    //     })
-                    // );
-                } catch (err) {
-                    console.error(err);
-                }
-            },
         }),
     }),
 });
@@ -256,4 +251,5 @@ export const {
     useGetPayoutStatsMutation,
     useTogglePaystackAccountActivationMutation,
     useShowAnalyticsChartDataMutation,
+    useCancelSubscriptionMutation,
 } = userApiSlice;

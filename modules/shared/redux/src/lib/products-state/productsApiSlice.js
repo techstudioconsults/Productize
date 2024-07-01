@@ -126,11 +126,10 @@ export const productsApiSlice = apiSlice.injectEndpoints({
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
-                    const { data } = await queryFulfilled;
-
+                    const res = await queryFulfilled;
                     dispatch(
                         setProductsAnalytics({
-                            productsAnalytics: data.data,
+                            productsAnalytics: res.data.data,
                         })
                     );
                 } catch (error) {
@@ -149,7 +148,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
 
                     dispatch(
                         setSingleProduct({
-                            product: data,
+                            product: data.data,
                         })
                     );
                 } catch (error) {
@@ -208,7 +207,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
         }),
         downloadedProducts: builder.mutation({
             query: (credentials) => ({
-                url: `/products/downloads`,
+                url: `/products/purchased`,
                 method: 'GET',
             }),
         }),

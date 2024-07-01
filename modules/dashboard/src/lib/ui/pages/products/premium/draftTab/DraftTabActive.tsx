@@ -1,22 +1,22 @@
-import { Box } from '@chakra-ui/react';
+import { Box, Flex, HStack, Skeleton, VStack } from '@chakra-ui/react';
 import { ProductCards } from '../../../../ProductCards';
 import { EmptyState } from '../../../../empty-states/EmptyState';
 import { Link } from 'react-router-dom';
-import { OnBoardingLoader, SharedButton } from '@productize/ui';
+import { SharedButton } from '@productize/ui';
 import { DraftTableControl } from './draftTableControl/DraftTableControl';
 import { useDraftProducts } from './service';
 import { DraftTable } from './DraftTable';
 
 const DraftTabActive = () => {
-    const { draftProducts, getDraftProductsStatus } = useDraftProducts();
+    const { draftProducts, isLoading } = useDraftProducts();
 
-    if (getDraftProductsStatus.isLoading) {
-        return <OnBoardingLoader />;
+    if (isLoading) {
+        return <DraftSkeleton />;
     }
 
     return (
         <>
-            <Box mb={4}>
+            <Box hidden={!draftProducts?.length} mb={4}>
                 <DraftTableControl showRefreshBtn={false} />
             </Box>
             {!draftProducts?.length ? (
@@ -60,3 +60,28 @@ const DraftTabActive = () => {
 };
 
 export default DraftTabActive;
+
+export const DraftSkeleton = () => {
+    return (
+        <Box p={5}>
+            <Flex display={{ base: `none`, sm: `flex` }} justify="space-between" mb={6}>
+                <HStack spacing={4}>
+                    <Skeleton borderRadius={8} height="40px" width="240px" />
+                    <Skeleton borderRadius={8} height="40px" width="120px" />
+                    <Skeleton borderRadius={8} height="40px" width="40px" />
+                </HStack>
+                <HStack spacing={4}>
+                    <Skeleton borderRadius={8} height="40px" width="120px" />
+                </HStack>
+            </Flex>
+            <VStack>
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+            </VStack>
+        </Box>
+    );
+};

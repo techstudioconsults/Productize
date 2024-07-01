@@ -2,6 +2,7 @@ import { AbsoluteCenter, Box, Center, Container, Divider, Flex, Image, Link, Sta
 import CoverPageCard from './CoverPageCard';
 import { useEffect, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import { PaymentStatusTag } from '@productize/ui';
 
 export const CoverPage = () => {
     const [isMobileView, setMobileView] = useState(false);
@@ -29,16 +30,17 @@ export const CoverPage = () => {
         // <DefaultLayout removeFooter>
         <>
             {/* <Center> */}
-            <Center gap={4} mt={10}>
+            <Center mt={10}>
                 {/* <Sidenav links={<Links linkColor={linkColor} isMobile={true} />} /> */}
                 <Link as={RouterLink} to={`/seller`} role={'link'}>
                     <Image
-                        width={`18rem`}
+                        // width={`18rem`}
                         // width={`10rem`}
                         alt="logo"
                         src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png`}
                     />
                 </Link>
+                <PaymentStatusTag />
             </Center>
             {/* </Center> */}
             <Stack gap={10}>

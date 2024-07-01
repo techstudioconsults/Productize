@@ -56,7 +56,11 @@ const OnBoardingPage: React.FC = () => {
 
     useEffect(() => {
         const getCUser = async () => {
-            await getUser(null).unwrap();
+            try {
+                await getUser(null).unwrap();
+            } catch (err: any) {
+                return;
+            }
         };
         getCUser();
     }, [getUser]);

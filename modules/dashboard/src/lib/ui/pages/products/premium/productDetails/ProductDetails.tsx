@@ -1,4 +1,5 @@
-import { Box, Flex, Image, SimpleGrid, Skeleton, SkeletonText, Stack, Tag, Text, useDisclosure } from '@chakra-ui/react';
+/* eslint-disable @nx/enforce-module-boundaries */
+import { Box, Flex, Image, SimpleGrid, Skeleton, Stack, Tag, Text, useDisclosure, HStack, VStack } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
 import { useNavigate, Link } from 'react-router-dom';
 import arrowLeft from '@icons/Property_2_Arrow-left_kafkjg.svg';
@@ -14,17 +15,7 @@ export const ProductDetails = () => {
     const { onOpen, onClose, isOpen } = useDisclosure();
     const navigate = useNavigate();
     const { toast, toastIdRef, close } = useToastAction();
-    const {
-        product,
-        user,
-        singleProductStatus,
-        singleProductCustomersStatus,
-        deleteProductSoftly,
-        deleteStatus,
-        updateProductStatus,
-        updateProductStatusStatus,
-        productID,
-    } = useProductDetails();
+    const { product, user, isLoading, deleteProductSoftly, deleteStatus, updateProductStatus, updateProductStatusStatus, productID } = useProductDetails();
     const formatDate = useDate();
     const formatCurrency = useCurrency();
 
@@ -146,6 +137,10 @@ export const ProductDetails = () => {
         }
     };
 
+    if (isLoading) {
+        return <ProductDetailsSkeleton />;
+    }
+
     return (
         <Box my={8}>
             {/* row 1 */}
@@ -194,9 +189,7 @@ export const ProductDetails = () => {
             </Flex>
             {/* row 2 */}
             <Box mt={8} mb={4} color={`purple.300`}>
-                <SkeletonText width={`30%`} isLoaded={!singleProductStatus.isLoading} noOfLines={1}>
-                    <Text as={`h6`}>{product?.title}</Text>
-                </SkeletonText>
+                <Text as={`h6`}>{product?.title}</Text>
                 <Flex
                     flexDir={{ base: `column`, sm: `row` }}
                     borderBlock={`1px solid #EFEFEF`}
@@ -208,36 +201,29 @@ export const ProductDetails = () => {
                 >
                     <Stack gap={2}>
                         <Text fontWeight={600}>Publish Date</Text>
-                        <SkeletonText isLoaded={!singleProductStatus.isLoading} noOfLines={1}>
-                            <Text>{formatDate(product?.created_at)}</Text>
-                        </SkeletonText>
+
+                        <Text>{formatDate(product?.created_at)}</Text>
                     </Stack>
                     <Stack gap={2}>
                         <Text fontWeight={600}>Price</Text>
-                        <SkeletonText isLoaded={!singleProductStatus.isLoading} noOfLines={1}>
-                            <Text>{formatCurrency(product?.price)}</Text>
-                        </SkeletonText>
+                        <Text>{formatCurrency(product?.price)}</Text>
                     </Stack>
                     <Stack gap={2}>
                         <Text fontWeight={600}>Product link</Text>
-                        <SkeletonText isLoaded={!singleProductStatus.isLoading} noOfLines={1}>
-                            <Flex gap={2} alignItems={`center`}>
-                                <Link target="_blank" to={product?.link}>
-                                    <Text>{product?.link?.slice(0, 20)}...</Text>
-                                </Link>
-                                <Box _hover={{ color: `purple.200` }}>
-                                    <Icon cursor={`pointer`} onClick={copyTextToClipBoard} color="grey" icon={`ph:copy-simple-light`} />
-                                </Box>
-                            </Flex>
-                        </SkeletonText>
+                        <Flex gap={2} alignItems={`center`}>
+                            <Link target="_blank" to={product?.link}>
+                                <Text>{product?.link?.slice(0, 20)}...</Text>
+                            </Link>
+                            <Box _hover={{ color: `purple.200` }}>
+                                <Icon cursor={`pointer`} onClick={copyTextToClipBoard} color="grey" icon={`ph:copy-simple-light`} />
+                            </Box>
+                        </Flex>
                     </Stack>
                     <Stack gap={2}>
                         <Text fontWeight={600}>Status</Text>
-                        <SkeletonText isLoaded={!singleProductStatus.isLoading} noOfLines={1}>
-                            <Tag colorScheme={product?.status === `published` ? `green` : `yellow`} size={`lg`}>
-                                {product?.status}
-                            </Tag>
-                        </SkeletonText>
+                        <Tag colorScheme={product?.status === `published` ? `green` : `yellow`} size={`lg`}>
+                            {product?.status}
+                        </Tag>
                     </Stack>
                 </Flex>
             </Box>
@@ -245,26 +231,48 @@ export const ProductDetails = () => {
             {/* grid cards */}
             <Box>
                 <SimpleGrid gap={4} columns={{ base: 1, sm: 2, md: 3 }}>
-                    <Skeleton borderRadius={8} isLoaded={!singleProductStatus.isLoading}>
-                        <Box>
-                            <DataWidgetCard showIcon={false} title={'Viewed'} value={0} />
-                        </Box>
-                    </Skeleton>
-                    <Skeleton borderRadius={8} isLoaded={!singleProductStatus.isLoading}>
-                        <Box>
-                            <DataWidgetCard showIcon={false} title={'Total Order'} value={product?.total_order} />
-                        </Box>
-                    </Skeleton>
-                    <Skeleton borderRadius={8} isLoaded={!singleProductStatus.isLoading}>
-                        <Box>
-                            <DataWidgetCard showIcon={false} title={'Total Quantity'} value={product?.total_sales} />
-                        </Box>
-                    </Skeleton>
+                    <Box>
+                        <DataWidgetCard showIcon={false} title={'Viewed'} value={0} />
+                    </Box>
+                    <Box>
+                        <DataWidgetCard showIcon={false} title={'Total Order'} value={product?.total_order} />
+                    </Box>
+                    <Box>
+                        <DataWidgetCard showIcon={false} title={'Total Quantity'} value={product?.total_sales} />
+                    </Box>
                 </SimpleGrid>
                 <Box mt={8}>
-                    <ProductCustomerTable status={singleProductCustomersStatus} />
+                    <ProductCustomerTable status={isLoading} />
                 </Box>
             </Box>
+        </Box>
+    );
+};
+
+const ProductDetailsSkeleton = () => {
+    return (
+        <Box>
+            <Flex display={{ base: `none`, sm: `flex` }} justify="space-between" mb={6}>
+                <HStack spacing={4}>
+                    <Skeleton height="40px" width="240px" />
+                </HStack>
+                <HStack spacing={4}>
+                    <Skeleton height="40px" width="100px" />
+                    <Skeleton height="40px" width="160px" />
+                </HStack>
+            </Flex>
+            <Skeleton height="8rem" width="100%" />
+            <SimpleGrid my={5} gap={4} columns={{ base: 1, sm: 2, md: 3 }}>
+                <Skeleton height="7rem" width="100%" />
+                <Skeleton height="7rem" width="100%" />
+                <Skeleton height="7rem" width="100%" />
+            </SimpleGrid>
+            <VStack>
+                <Skeleton height="40px" width="100%" />
+                <Skeleton height="40px" width="100%" />
+                <Skeleton height="40px" width="100%" />
+                <Skeleton height="40px" width="100%" />
+            </VStack>
         </Box>
     );
 };

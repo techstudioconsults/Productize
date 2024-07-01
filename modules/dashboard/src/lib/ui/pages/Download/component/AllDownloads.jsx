@@ -1,20 +1,25 @@
-import { useCallback, useEffect, useState } from "react";
-import DownloadCard from "./DownloadCard";
-import NoDownload from "../empty-state/NoDownload";
-import { SimpleGrid } from "@chakra-ui/react";
-import { useDownloadedProductsMutation } from "@productize/redux";
-import { DownloadLoader } from "@productize/ui";
+/* eslint-disable @nx/enforce-module-boundaries */
+import { useCallback, useEffect, useState } from 'react';
+import DownloadCard from './DownloadCard';
+import NoDownload from '../empty-state/NoDownload';
+import { SimpleGrid } from '@chakra-ui/react';
+import { useDownloadedProductsMutation } from '@productize/redux';
+import { DownloadLoader } from '@productize/ui';
 
 const AllDownloads = () => {
-    const [downloadList, downloadListStatus] = useDownloadedProductsMutation();
+    const [isLoading, setLoading] = useState(true);
+    const [downloadList] = useDownloadedProductsMutation();
     const [downloadedProducts, setDownloadedProducts] = useState([]);
 
     const getDownloadedProducts = useCallback(async () => {
         try {
             const res = await downloadList(null).unwrap();
-            console.log(res);
-            setDownloadedProducts(res);
+            if (res) {
+                setDownloadedProducts(res);
+                setLoading(false);
+            }
         } catch (error) {
+            setLoading(false);
             console.log(error);
         }
     }, [downloadList]);
@@ -27,7 +32,7 @@ const AllDownloads = () => {
         getDownloadedProducts();
     }, [getDownloadedProducts]);
 
-    if (downloadListStatus.isLoading) {
+    if (isLoading) {
         return <DownloadLoader />;
     }
 

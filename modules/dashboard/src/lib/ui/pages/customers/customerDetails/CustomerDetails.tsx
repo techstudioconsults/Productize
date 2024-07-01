@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // components/CustomersDetails.tsx
-import { Box, Flex, Image, SimpleGrid, Skeleton, SkeletonText, Stack, Text } from '@chakra-ui/react';
+import { Box, Flex, HStack, Image, SimpleGrid, Skeleton, SkeletonText, Stack, Text, VStack } from '@chakra-ui/react';
 import { Link, useNavigate } from 'react-router-dom';
 import arrowLeft from '@icons/Property_2_Arrow-left_kafkjg.svg';
 import { CustomerDetailsTable } from '../customerTable/CustomerDetailsTable';
-import { OnBoardingLoader, ToastFeedback, useToastAction } from '@productize/ui';
+import { ToastFeedback, useToastAction } from '@productize/ui';
 import toastimg from '@icons/star-notice.png';
 import errorImg from '@icons/error.svg';
 import { useCurrency, useDate } from '@productize/hooks';
@@ -17,6 +17,10 @@ export const CustomersDetails = () => {
     const navigate = useNavigate();
     const { singleCustomer, singleCustomerOrders, isLoading } = useCustomerDetails();
     const { copyTextToClipBoard } = CopyTextFeedback({ textToCopy: singleCustomer?.email });
+
+    if (isLoading) {
+        return <CustomerDetailsSkeleton />;
+    }
 
     return (
         <Box my={8}>
@@ -33,7 +37,7 @@ export const CustomersDetails = () => {
             <Box mt={8} mb={4} color={`purple.300`}>
                 <SimpleGrid columns={{ base: 1, xl: 2 }} gap={5}>
                     <CustomerInfo singleCustomer={singleCustomer} isLoading={isLoading} copyTextToClipBoard={copyTextToClipBoard} />
-                    <Box>{isLoading ? <OnBoardingLoader /> : <CustomerDetailsTable tableData={singleCustomerOrders} />}</Box>
+                    <CustomerDetailsTable tableData={singleCustomerOrders} />
                 </SimpleGrid>
             </Box>
         </Box>
@@ -41,15 +45,14 @@ export const CustomersDetails = () => {
 };
 
 // components/CustomerInfo.tsx
-export const CustomerInfo = ({ singleCustomer, isLoading, copyTextToClipBoard }: any) => {
+export const CustomerInfo = ({ singleCustomer, copyTextToClipBoard }: any) => {
     const formatDate = useDate();
     const formatCurrency = useCurrency();
 
     return (
         <Box mb={4} color={`purple.300`}>
-            <SkeletonText isLoaded={!isLoading} noOfLines={1} w={`fit-content`}>
-                <Text as={`h6`}>{singleCustomer?.name}</Text>
-            </SkeletonText>
+            <Text as={`h6`}>{singleCustomer?.name}</Text>
+
             <Flex
                 flexDir={{ base: `column`, md: `row` }}
                 borderBlock={`1px solid #EFEFEF`}
@@ -61,35 +64,30 @@ export const CustomerInfo = ({ singleCustomer, isLoading, copyTextToClipBoard }:
             >
                 <Stack gap={2}>
                     <Text fontWeight={600}>Email Address</Text>
-                    <SkeletonText isLoaded={!isLoading} noOfLines={1} w={`fit-content`}>
-                        <Flex gap={2} alignItems={`center`}>
-                            <Link target="_blank" to={singleCustomer?.email}>
-                                <Text>{singleCustomer?.email}</Text>
-                            </Link>
-                            <Box _hover={{ color: `purple.200` }}>
-                                <Icon cursor={`pointer`} onClick={copyTextToClipBoard} color="grey" icon={`ph:copy-simple-light`} />
-                            </Box>
-                        </Flex>
-                    </SkeletonText>
+
+                    <Flex gap={2} alignItems={`center`}>
+                        <Link target="_blank" to={singleCustomer?.email}>
+                            <Text>{singleCustomer?.email}</Text>
+                        </Link>
+                        <Box _hover={{ color: `purple.200` }}>
+                            <Icon cursor={`pointer`} onClick={copyTextToClipBoard} color="grey" icon={`ph:copy-simple-light`} />
+                        </Box>
+                    </Flex>
                 </Stack>
                 <Stack gap={2}>
                     <Text fontWeight={600}>Joined</Text>
-                    <SkeletonText isLoaded={!isLoading} noOfLines={1} w={`10rem`}>
-                        <Text>{formatDate(singleCustomer?.joined)}</Text>
-                    </SkeletonText>
+
+                    <Text>{formatDate(singleCustomer?.joined)}</Text>
                 </Stack>
             </Flex>
             <SimpleGrid gap={4} columns={{ base: 1, sm: 2 }}>
-                <Skeleton isLoaded={!isLoading}>
-                    <Box>
-                        <DataWidgetCard showIcon={false} title={'Total Order'} value={singleCustomer.total_order} />
-                    </Box>
-                </Skeleton>
-                <Skeleton isLoaded={!isLoading}>
-                    <Box>
-                        <DataWidgetCard showIcon={false} title={'Total Transaction'} value={formatCurrency(singleCustomer.total_transactions)} />
-                    </Box>
-                </Skeleton>
+                <Box>
+                    <DataWidgetCard showIcon={false} title={'Total Order'} value={singleCustomer.total_order} />
+                </Box>
+
+                <Box>
+                    <DataWidgetCard showIcon={false} title={'Total Transaction'} value={formatCurrency(singleCustomer.total_transactions)} />
+                </Box>
             </SimpleGrid>
         </Box>
     );
@@ -137,4 +135,33 @@ export const CopyTextFeedback = ({ textToCopy }: CopyTextFeedbackProps) => {
     };
 
     return { copyTextToClipBoard };
+};
+
+const CustomerDetailsSkeleton = () => {
+    return (
+        <SimpleGrid my={10} gap={4} columns={{ base: 1, sm: 2 }}>
+            <Box>
+                <Flex justify="space-between" mb={6}>
+                    <HStack spacing={4}>
+                        {/* <SkeletonText width="140px" noOfLines={1} /> */}
+                        <Skeleton borderRadius={8} height="20px" width="200px" />
+                    </HStack>
+                </Flex>
+                <Skeleton borderRadius={8} height="8rem" width="100%" />
+                <SimpleGrid mt={5} gap={4} columns={{ base: 1, sm: 2, md: 3 }}>
+                    <Skeleton borderRadius={8} height="5rem" width="100%" />
+                    <Skeleton borderRadius={8} height="5rem" width="100%" />
+                    <Skeleton borderRadius={8} height="5rem" width="100%" />
+                </SimpleGrid>
+            </Box>
+            <VStack gap={2} justifyContent={`space-between`}>
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+            </VStack>
+        </SimpleGrid>
+    );
 };

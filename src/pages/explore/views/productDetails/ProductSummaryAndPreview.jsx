@@ -11,14 +11,14 @@ import 'swiper/css/pagination';
 
 // import required modules
 import { Pagination } from 'swiper/modules';
-import { Avatar, Box, Container, Divider, Flex, Image, List, ListItem, Skeleton, Stack, Text, useDisclosure } from '@chakra-ui/react';
+import { Avatar, Box, Card, Center, Container, Divider, Flex, Image, List, ListItem, Skeleton, Stack, Text, useDisclosure } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
 import { selectSingleProduct_EXTERNAL } from '@productize/redux';
 import { useSelector } from 'react-redux';
 import ProductSideNav from './ProductSideNav';
-import { ModalComp, SharedButton } from '@productize/ui';
+import { ModalComp, ReviewsCard, SharedButton } from '@productize/ui';
 
-const ProductSummaryAndPreview = ({ status }) => {
+const ProductSummaryAndPreview = ({ status, ratings }) => {
     const { onOpen, onClose, isOpen } = useDisclosure();
     const product = useSelector(selectSingleProduct_EXTERNAL);
     const [expand, setExpand] = useState(false);
@@ -26,9 +26,9 @@ const ProductSummaryAndPreview = ({ status }) => {
     const coverPhoto = product?.cover_photos?.map((photo, index) => {
         return (
             <SwiperSlide key={index}>
-                <Box borderRadius={`8px`} overflow={`hidden`} height={`248px`}>
+                <Card variant={`outline`} borderRadius={`8px`} overflow={`hidden`} height={`248px`}>
                     <Image src={photo} w={`100%`} h={`100%`} alt="img" objectFit={`cover`} objectPosition={`center`} />
-                </Box>
+                </Card>
             </SwiperSlide>
         );
     });
@@ -60,28 +60,38 @@ const ProductSummaryAndPreview = ({ status }) => {
             </Swiper>
             {/* =================================================== */}
             <Skeleton isLoaded={!status?.isLoading} borderRadius={8}>
-                <Flex alignItems={`flex-end`} w={`100%`} justifyContent={`space-between`} borderRadius={`8px`} border={`1px solid #CFCFD070`} p={5} my={4}>
+                <Flex
+                    flexDir={{ base: `column`, md: `row` }}
+                    alignItems={{ base: `center`, md: `flex-end` }}
+                    w={`100%`}
+                    justifyContent={`space-between`}
+                    borderRadius={`8px`}
+                    border={`1px solid #CFCFD070`}
+                    p={5}
+                    my={4}
+                    gap={5}
+                >
                     <Box>
                         <Text as={`h4`} fontWeight={600} color={`grey.800`}>
                             {product?.title}
                         </Text>
-                        <Flex alignItems={{ base: `flex-start`, xl: `center` }} flexDir={{ base: `column`, xl: `row` }} gap={{ base: 5, xl: 10 }}>
-                            <Flex gap={5} alignItems={`center`}>
-                                <Avatar size={`sm`} bg={`grey.300`} name={product?.publisher} src={product?.publisher_logo} />
-                                <Box>
-                                    <StarRatings rating={3} starDimension="20px" starSpacing="1px" starRatedColor={`orange`} />
-                                </Box>
-                                <Text fontWeight={`500`}>By {product?.publisher}</Text>
+                        <Flex my={4} alignItems={{ base: `flex-start`, xl: `center` }} flexDir={{ base: `column`, xl: `row` }} gap={{ base: 5, xl: 10 }}>
+                            <Flex w={`100%`} flexDir={{ base: `column`, md: `row` }} gap={5} alignItems={`center`}>
+                                <Center flexDir={{ base: `column`, md: `row` }} gap={2}>
+                                    <Avatar size={`sm`} bg={`grey.300`} name={product?.publisher} src={product?.publisher_logo} />
+                                    <Text fontWeight={`500`}>By {product?.publisher}</Text>
+                                </Center>
+                                <StarRatings rating={ratings} starDimension="22px" starSpacing="3px" starRatedColor={`orange`} />
                             </Flex>
                         </Flex>
                     </Box>
-                    <Box display={{ md: `none` }}>
+                    <Box w={`100%`} display={{ md: `none` }}>
                         <SharedButton
                             btnExtras={{
                                 onClick: onOpen,
                             }}
                             text={`Buy Product`}
-                            width={`fit-content`}
+                            width={{ base: `100%`, md: `fit-content` }}
                             height={`40px`}
                             bgColor={`purple.200`}
                             textColor={`grey.100`}
@@ -92,7 +102,7 @@ const ProductSummaryAndPreview = ({ status }) => {
                             {/* <Flex justifyContent={`flex-end`} pb={5} fontSize={`2rem`} color={`purple.200`}>
                                 <Icon icon={`material-symbols:cancel`} onClick={onClose} />
                             </Flex> */}
-                            <Container p={0} mt={10} maxW={`500px`}>
+                            <Container p={0} maxW={`500px`}>
                                 <ProductSideNav status={status} />
                             </Container>
                         </ModalComp>
@@ -131,6 +141,9 @@ const ProductSummaryAndPreview = ({ status }) => {
                     </Box>
                 </Box>
             </Skeleton>
+            <Box display={{ base: `block`, md: `none` }} my={5}>
+                <ReviewsCard />
+            </Box>
         </>
     );
 };

@@ -14,9 +14,10 @@ const baseQuery = fetchBaseQuery({
 });
 
 const handleUnauthorized = (result, api) => {
-    if (result?.error?.status === 401 && result.meta.request.url !== `https://productize-api.techstudio.academy/api/carts`) {
+    // console.log(result);
+    if (result?.error?.status === 401) {
         window.location.href = '/auth/login';
-    } else if (result?.error?.status === 403 || result?.error?.data?.message === `User is not subscribed`) {
+    } else if (result?.error?.status === 403 && result?.error?.data?.message === `User is not subscribed`) {
         store.dispatch({
             type: 'User/FREE_PLAN_OVER_RESPONSE',
             payload: {
@@ -24,6 +25,14 @@ const handleUnauthorized = (result, api) => {
                     isPlanExpired: true,
                     apiDetails: { endpoint: api.endpoint, ...result?.error },
                 },
+            },
+        });
+    }
+    if (result?.error) {
+        store.dispatch({
+            type: 'App/setAppError',
+            payload: {
+                appError: result.error,
             },
         });
     }
@@ -37,6 +46,6 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
 export const apiSlice = createApi({
     baseQuery: baseQueryWithReauth,
-    tagTypes: ['', ''],
+    tagTypes: [],
     endpoints: () => ({}),
 });

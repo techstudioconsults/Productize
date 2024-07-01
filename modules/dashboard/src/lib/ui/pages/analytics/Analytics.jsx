@@ -1,5 +1,6 @@
-import { Box, Flex, Select, SimpleGrid, Text } from '@chakra-ui/react';
-import { useEffect } from 'react';
+/* eslint-disable @nx/enforce-module-boundaries */
+import { Box, Flex, Grid, HStack, Select, SimpleGrid, Skeleton, Text, VStack } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import LineChart from './charts/Chart1';
 import style from './scss/graph.module.scss';
@@ -11,13 +12,20 @@ import { selectProductAnalytics, useGetProductAnalyticsMutation } from '@product
 import { useCurrency } from '@productize/hooks';
 
 export const Analytics = () => {
-    const [getProductAnalytics, { isLoading }] = useGetProductAnalyticsMutation();
+    const [isLoading, setLoading] = useState(true);
+    const [getProductAnalytics] = useGetProductAnalyticsMutation();
     const formatCurrency = useCurrency();
     const productAnalysis = useSelector(selectProductAnalytics);
     const currentMonth = new Date().toLocaleString('en-US', { month: 'long' });
 
     useEffect(() => {
-        getProductAnalytics(null).unwrap();
+        const getData = async () => {
+            const res = await getProductAnalytics(null).unwrap();
+            if (res.data) {
+                setLoading(false);
+            }
+        };
+        getData();
     }, [getProductAnalytics]);
 
     const EmptyStateDisplay = () => (
@@ -48,7 +56,7 @@ export const Analytics = () => {
             <Box my={10}>
                 <Text as="h6">Revenue Overview</Text>
                 <Box mt={4}>
-                    {productAnalysis.total_products === 0 ? (
+                    {productAnalysis?.total_products === 0 ? (
                         <EmptyStateDisplay />
                     ) : (
                         <section className={style.graphCard}>
@@ -93,10 +101,36 @@ export const Analytics = () => {
     );
 
     if (isLoading) {
-        return <Text>Loading...</Text>;
+        return <AnalyticsSkeleton />;
     }
 
     return productAnalysis.total_products ? <ActiveStateDisplay /> : <EmptyStateDisplay />;
 };
 
 export default Analytics;
+
+const AnalyticsSkeleton = () => {
+    return (
+        <Box p={5}>
+            <SimpleGrid columns={{ sm: 2, md: 3 }} gap={6} mb={6}>
+                <Skeleton borderRadius={8} p={5} height={`7rem`} borderWidth="1px" />
+                <Skeleton borderRadius={8} p={5} height={`7rem`} borderWidth="1px" />
+                <Skeleton borderRadius={8} p={5} height={`7rem`} borderWidth="1px" />
+                <Skeleton borderRadius={8} p={5} height={`7rem`} borderWidth="1px" />
+                <Skeleton borderRadius={8} p={5} height={`7rem`} borderWidth="1px" />
+                <Skeleton borderRadius={8} p={5} height={`7rem`} borderWidth="1px" />
+            </SimpleGrid>
+
+            <Flex mt={20} justify="space-between" mb={6} gap={6}>
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+            </Flex>
+            <Skeleton borderRadius={8} height="10rem" width="100%" />
+            <VStack mt={5}>
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+            </VStack>
+        </Box>
+    );
+};

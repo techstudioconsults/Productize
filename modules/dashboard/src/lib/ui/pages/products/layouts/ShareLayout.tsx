@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { Box, Card, Container, Flex, Image, Stack, Text } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
 import { useLocation } from 'react-router-dom';

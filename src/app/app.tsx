@@ -1,5 +1,3 @@
-import '../styles.scss';
-
 import React, { Suspense, useCallback, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { useGetProductTagsMutation } from '@productize/redux';

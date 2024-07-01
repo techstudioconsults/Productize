@@ -14,24 +14,24 @@ interface ToastProps {
 }
 
 // ToastFeedback component
-export const ToastFeedback: React.FC<ToastProps> = ({ title, message, icon, bgColor, color, btnColor, handleClose }) => {
+export const ToastFeedback: React.FC<ToastProps> = ({
+    title = 'Congratulations!',
+    message,
+    icon = successNotice,
+    bgColor = 'grey.100',
+    color = 'grey.400',
+    btnColor,
+    handleClose,
+}) => {
     return (
-        <Card
-            display="flex"
-            flexDir="row"
-            justifyContent="space-between"
-            alignItems="flex-end"
-            w={{ base: '100%', lg: '702px' }}
-            p={1}
-            bg={bgColor || 'grey.100'}
-        >
+        <Card display="flex" flexDir="row" justifyContent="space-between" alignItems="flex-end" w={{ base: '100%', lg: '702px' }} p={1} bg={bgColor}>
             <Flex justifyContent="space-between" alignItems="center">
                 <Box borderRight="1px solid grey" p={2}>
-                    <Image w="32px" h="32px" objectFit="cover" objectPosition="center" src={icon || successNotice} alt="img" />
+                    <Image w="32px" h="32px" objectFit="cover" objectPosition="center" src={icon} alt="img" />
                 </Box>
                 <Box p={2}>
-                    <Text fontWeight={600}>{title || 'Congratulations!'}</Text>
-                    <Text className="small-text" color={color || 'grey.400'}>
+                    <Text fontWeight={600}>{title}</Text>
+                    <Text className="small-text" color={color}>
                         {message}
                     </Text>
                 </Box>

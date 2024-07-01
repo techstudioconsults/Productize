@@ -1,7 +1,8 @@
 import React from 'react';
-import { Box, Heading, Image, Text } from '@chakra-ui/react';
+import { Box, Flex, Heading, Image, Text } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { useCurrency } from '@productize/hooks';
+import StarRatings from 'react-star-ratings';
 
 interface CardProps {
     width?: string;
@@ -42,25 +43,18 @@ const Card: React.FC<CardProps> = ({ width, image, heading, rate, count, price, 
                 <Text as="span" fontSize={'xs'} lineHeight={4} pr=".625rem" textAlign={'left'}>
                     By {publisher.slice(0, 25)}
                 </Text>
-                <Text as="span" fontSize={'xs'} lineHeight={4} ml="0.5rem" pr=".625rem">
-                    {rate}
-                </Text>
-                <Text as="span" fontSize={'xs'} lineHeight={4}>
-                    {count}
-                </Text>
+                {/* <Text as="span" fontSize={'xs'} lineHeight={4}>
+                    {`count`}
+                </Text> */}
             </Box>
-            <Text
-                display={'flex'}
-                justifyContent={'start'}
-                alignSelf={'flex-start'}
-                fontSize={'sm'}
-                fontWeight={'bold'}
-                lineHeight={5}
-                color={'#6D5DD3'}
-                textAlign={'start'}
-            >
-                {formatCurrency(price)}
-            </Text>
+            <Flex fontWeight={'bold'} color={'#6D5DD3'} textAlign={'start'} w={`100%`} alignItems={`center`} justifyContent={`space-between`}>
+                <Text lineHeight={5} fontSize={'sm'}>
+                    {formatCurrency(price)}
+                </Text>
+                <Box>
+                    <StarRatings rating={4} starDimension="12px" starSpacing="1px" starRatedColor={`orange`} />
+                </Box>
+            </Flex>
         </Box>
     );
 };

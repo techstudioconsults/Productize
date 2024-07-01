@@ -28,15 +28,15 @@ export const CustomerDetailsTable = ({ tableData }: tableProps) => {
                 <Td>
                     {/* use navigate to tap into all row */}
                     <Flex gap={2} alignItems={`center`}>
-                        <Avatar bgColor={`yellow.100`} src={customer.product_thumbnail} borderRadius={`8px`} w={`100px`} h={`64px`} />
+                        <Avatar bgColor={`yellow.100`} src={customer.product?.thumbnail} borderRadius={`8px`} w={`100px`} h={`64px`} />
                         <Stack>
-                            <Text>{customer.product_title}</Text>
+                            <Text>{customer.product?.title}</Text>
                             <Flex alignItems={`center`} color={`grey.400`}></Flex>
                         </Stack>
                     </Flex>
                 </Td>
                 <Td>
-                    <Flex>{formatCurrency(customer.product_price)}</Flex>
+                    <Flex>{formatCurrency(customer.product?.price)}</Flex>
                 </Td>
                 <Td>
                     <Flex>{`

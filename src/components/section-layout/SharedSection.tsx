@@ -26,6 +26,9 @@ export const SharedSection = ({ title, desc, btnText }: prop) => {
                         textColor={'white'}
                         borderRadius={'4px'}
                         fontSize={{ base: `sm`, xl: `2xl` }}
+                        btnExtras={{
+                            disabled: btnText.includes(`Join`) ? true : false,
+                        }}
                     />
                 </Link>
             </Container>

@@ -44,7 +44,7 @@ export const ProductsTableControl = ({ showRefreshBtn }: controlsProp) => {
         try {
             setExportLoading(true);
             const res = await axios.get(
-                `${BASE_URL}/products/download?page=1`,
+                `${BASE_URL}/products/records?page=1`,
                 // `${BASE_URL}/products/download?status=${status}&format=csv`,
                 // `${BASE_URL}products/download?start_date=${startDate}&end_date=${endDate}&format=csv`,
                 headersCredentials

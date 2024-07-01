@@ -12,7 +12,7 @@ import {
 import { useDateRangeFormat } from '@productize/hooks';
 
 export const useUser = () => {
-    const [getUser] = useGetUserMutation();
+    const [getUser, { error, isError }] = useGetUserMutation();
     const user = useSelector(selectCurrentUser);
 
     useEffect(() => {
@@ -21,6 +21,10 @@ export const useUser = () => {
         };
         fetchUser();
     }, [getUser]);
+    console.log(isError);
+
+    // if (isError) {
+    // }
 
     const refreshUser = useCallback(async () => {
         await getUser(null).unwrap();
@@ -54,12 +58,17 @@ export const useProductAnalytics = () => {
 };
 
 export const useOrders = () => {
-    const [getAllOrders, getLiveProductsStatus] = useGetAllOrdersMutation();
+    const [isLoading, setLoading] = useState(true);
+    const [getAllOrders] = useGetAllOrdersMutation();
     const orders = useSelector(selectAllOrders);
 
     const fetchAllOrders = useCallback(async () => {
         try {
-            await getAllOrders(null).unwrap();
+            const res = await getAllOrders(null).unwrap();
+
+            if (res.data) {
+                setLoading(false);
+            }
         } catch (error) {
             console.error('Error fetching orders:', error);
         }
@@ -69,7 +78,7 @@ export const useOrders = () => {
         fetchAllOrders();
     }, [fetchAllOrders]);
 
-    return { orders, getLiveProductsStatus, fetchAllOrders };
+    return { orders, isLoading, fetchAllOrders };
 };
 
 export const useExport = () => {

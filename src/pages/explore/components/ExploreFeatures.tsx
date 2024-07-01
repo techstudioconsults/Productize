@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box, Center, Container, Flex, SimpleGrid, Stack, Text } from '@chakra-ui/react';
-import { useState, useEffect, useCallback } from 'react';
+import { useEffect, useCallback } from 'react';
 
 import { useSelector } from 'react-redux';
 import Card from './cards/Card';
@@ -16,7 +16,6 @@ export interface slideProps {
 
 export const ExploreFeatures = ({ title }: slideProps) => {
     const tags = useSelector(selectTags);
-    const [error] = useState<string | null>(null);
     const [getAllProducts_EXTERNAL, getAllProducts_EXTERNALStatus] = useGetAllProducts_EXTERNALMutation();
     const products = useSelector(selectAllProducts_EXTERNAL);
     const location = useLocation();
@@ -24,16 +23,16 @@ export const ExploreFeatures = ({ title }: slideProps) => {
     const queryParams = new URLSearchParams(location.search);
     const tag = queryParams.get('tag');
 
-    const tagData = [`All`, ...tags]?.map((item: string) => ({
-        label: item,
-        value: item,
+    const tagData = [{ name: `All`, category: null }, ...tags]?.map((item: any) => ({
+        label: item?.name,
+        value: item?.name,
     }));
 
     const fetchData = useCallback(async () => {
         try {
             await getAllProducts_EXTERNAL({ tag }).unwrap();
         } catch (error) {
-            console.error(error);
+            return;
         }
     }, [getAllProducts_EXTERNAL, tag]);
 
@@ -43,7 +42,6 @@ export const ExploreFeatures = ({ title }: slideProps) => {
         } else {
             navigate(`/explore?tag=${tag.toLowerCase()}`);
         }
-        console.log(tag);
     };
 
     useEffect(() => {
@@ -51,22 +49,25 @@ export const ExploreFeatures = ({ title }: slideProps) => {
     }, [fetchData]);
 
     // Render product cards
-    const renderCards = products.products?.map((product: any) => (
-        <Card
-            key={product?.slug}
-            productID={product?.slug}
-            image={product?.thumbnail}
-            heading={product?.title}
-            price={product?.price}
-            publisher={product?.publisher}
-        />
-    ));
+    const renderCards = products.products
+        ?.slice() // Create a shallow copy of the products array
+        .sort((a: any, b: any) => new Date(b.created_at || b.createdAt).getTime() - new Date(a.created_at || a.createdAt).getTime()) // Sort by recency
+        .map((product: any) => (
+            <Card
+                key={product?.slug}
+                productID={product?.slug}
+                image={product?.thumbnail}
+                heading={product?.title}
+                price={product?.price}
+                publisher={product?.publisher}
+            />
+        ));
 
     const handlePrevButton = async () => {
         try {
             await getAllProducts_EXTERNAL({ link: products.productsMetaData?.links?.prev }).unwrap();
         } catch (error) {
-            console.log(error);
+            return;
         }
     };
 
@@ -74,7 +75,7 @@ export const ExploreFeatures = ({ title }: slideProps) => {
         try {
             await getAllProducts_EXTERNAL({ link: products.productsMetaData?.links?.next }).unwrap();
         } catch (error) {
-            console.log(error);
+            return;
         }
     };
 

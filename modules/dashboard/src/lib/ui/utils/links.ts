@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+/* eslint-disable @nx/enforce-module-boundaries */
+import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import download from '@icons/Property_2_Downloads-folder_zb8tdq.svg';
 import compass from '@icons/Property_2_Compass_jfe95t.svg';
@@ -10,8 +11,9 @@ import order from '@icons/Property_2_Cart_1_ubt3so.svg';
 import analysis from '@icons/Property_2_Chart-pie_bygfly.svg';
 import consumer from '@icons/Property_2_User-folder_n4spfl.svg';
 import payment from '@icons/Property_2_Wallet_3_teopvy.svg';
-import { useSetPaymentPlan } from '@productize/hooks';
-import { selectCurrentUser, selectProductAnalytics, useGetCountOfUnseenOrdersMutation } from '@productize/redux';
+import { selectCurrentUser, useMarkUnseenOrdersAsSeenMutation } from '@productize/redux';
+import { useNotifications } from '../pages/notification/service';
+import { useLocation } from 'react-router-dom';
 
 interface link {
     id: number;
@@ -23,11 +25,21 @@ interface link {
 }
 
 export const useLinks = () => {
-    const isPremium = useSetPaymentPlan();
+    const { pathname } = useLocation();
     const user = useSelector(selectCurrentUser);
-    const productAnaysis = useSelector(selectProductAnalytics);
-    const [orderCount, setOrderCount] = useState(0);
-    const [getCountOfUnseenOrders] = useGetCountOfUnseenOrdersMutation();
+    const [markUnseenOrdersAsSeen] = useMarkUnseenOrdersAsSeenMutation();
+    const { count, fetchUnseenCount } = useNotifications();
+
+    const makeunseenOrderSeen = useCallback(async () => {
+        try {
+            const res = await markUnseenOrdersAsSeen(null).unwrap();
+            if (res) {
+                fetchUnseenCount();
+            }
+        } catch (error) {
+            return error;
+        }
+    }, [fetchUnseenCount, markUnseenOrdersAsSeen]);
 
     const [links1, setLinks1] = useState<Array<link>>();
     const [links2] = useState([
@@ -71,16 +83,9 @@ export const useLinks = () => {
     ]);
 
     useEffect(() => {
-        const getUnseenOrders = async () => {
-            const res = await getCountOfUnseenOrders(null).unwrap();
-            console.log(res);
-
-            setOrderCount(res.data.count);
-        };
-        getUnseenOrders();
-    }, [getCountOfUnseenOrders]);
-
-    useEffect(() => {
+        if (pathname.includes(`/orders`)) {
+            makeunseenOrderSeen();
+        }
         setLinks1([
             {
                 id: 2,
@@ -94,7 +99,7 @@ export const useLinks = () => {
                 id: 3,
                 name: `Orders`,
                 path: `orders`,
-                analysis: orderCount,
+                analysis: count,
                 type: `free`,
                 icon: order,
             },
@@ -123,7 +128,7 @@ export const useLinks = () => {
                 analysis: null,
             },
         ]);
-    }, [isPremium, orderCount, productAnaysis.new_orders, productAnaysis.total_customers, productAnaysis.total_products]);
+    }, [count, makeunseenOrderSeen, pathname]);
 
-    return { links1, links2, links3 };
+    return { links1, links2, links3, count, makeunseenOrderSeen };
 };

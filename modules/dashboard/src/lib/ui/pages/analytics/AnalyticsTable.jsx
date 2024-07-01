@@ -7,7 +7,7 @@ import { useCurrency } from '@productize/hooks';
 import { selectCurrentToken } from '@productize/redux';
 import { OnBoardingLoader } from '@productize/ui';
 
-const tableHeaders = ['Latest Purchase', 'View', 'Price', 'Purchases', 'Revenue'];
+const tableHeaders = ['Product', 'View', 'Price', 'Purchases', 'Revenue'];
 
 export const AnalyticsTable = () => {
     const [data, setData] = useState([]);
@@ -18,10 +18,9 @@ export const AnalyticsTable = () => {
     const getTableData = useCallback(async () => {
         setLoading(true);
         try {
-            const res = await axios.get('https://productize-api.techstudio.academy/api/products/top', {
+            const res = await axios.get('https://productize-api.techstudio.academy/api/products/users/top-products', {
                 headers: {
                     Authorization: `Bearer ${token}`,
-                    'Content-Type': 'multipart/form-data',
                 },
             });
             if (res.status === 200) {

@@ -88,7 +88,7 @@ const FirstSalePage: React.FC = () => {
             </SimpleGrid>
             <Box>
                 <SimpleGrid gap={4} my={4} columns={{ base: 1, md: 2 }}>
-                    <Skeleton isLoaded={!isLoading}>
+                    <Skeleton borderRadius={8} isLoaded={!isLoading}>
                         <Box>
                             <DataWidgetCard
                                 tmy={2}
@@ -100,7 +100,7 @@ const FirstSalePage: React.FC = () => {
                             />
                         </Box>
                     </Skeleton>
-                    <Skeleton isLoaded={!isLoading}>
+                    <Skeleton borderRadius={8} isLoaded={!isLoading}>
                         <Box>
                             <DataWidgetCard
                                 tmy={2}
@@ -114,17 +114,17 @@ const FirstSalePage: React.FC = () => {
                     </Skeleton>
                 </SimpleGrid>
                 <SimpleGrid gap={4} my={4} columns={{ base: 1, md: 3 }}>
-                    <Skeleton isLoaded={!isLoading}>
+                    <Skeleton borderRadius={8} isLoaded={!isLoading}>
                         <Box>
                             <DataWidgetCard showIcon={false} title="New Order" value={productAnalytics.new_orders} />
                         </Box>
                     </Skeleton>
-                    <Skeleton isLoaded={!isLoading}>
+                    <Skeleton borderRadius={8} isLoaded={!isLoading}>
                         <Box>
                             <DataWidgetCard title="Total Sales" showIcon={false} value={productAnalytics.total_sales} />
                         </Box>
                     </Skeleton>
-                    <Skeleton isLoaded={!isLoading}>
+                    <Skeleton borderRadius={8} isLoaded={!isLoading}>
                         <Box>
                             <DataWidgetCard showIcon={false} title="Total Products" value={productAnalytics.total_products} />
                         </Box>

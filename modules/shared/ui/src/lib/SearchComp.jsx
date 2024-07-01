@@ -14,7 +14,6 @@ import {
     ModalOverlay,
     ModalContent,
     ModalHeader,
-    ModalCloseButton,
     ModalBody,
     Tabs,
     TabList,
@@ -42,7 +41,7 @@ import { SpinnerComponentSmall } from './SpinnerComponent';
 //     result?: object;
 // }
 
-export const SearchComp = ({ color, width, size }) => {
+export const SearchComp = ({ color, width, size = `lg` }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
@@ -72,15 +71,21 @@ export const SearchComp = ({ color, width, size }) => {
         setSearchTerm(event.target.value);
     };
 
+    const handleClose = () => {
+        setSearchTerm('');
+        onClose();
+    };
+
     return (
         <Box>
-            <InputGroup size={size}>
+            <InputGroup onClick={onOpen} size={size}>
                 <InputLeftElement pointerEvents="none" fontSize="1.2em">
                     <Icon icon={search} name="search" />
                 </InputLeftElement>
                 <Input
+                    readOnly
+                    type={`text`}
                     value={searchTerm}
-                    onChange={handleInputChange}
                     border="none"
                     placeholder="Search"
                     _placeholder={{ color: '#01010140' }}
@@ -89,7 +94,7 @@ export const SearchComp = ({ color, width, size }) => {
                 />
             </InputGroup>
 
-            <Modal isOpen={isOpen} onClose={onClose} size="4xl">
+            <Modal isOpen={isOpen} onClose={onClose} size={{ base: `full`, md: `3xl`, lg: `4xl` }}>
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader pb={0}>
@@ -98,6 +103,7 @@ export const SearchComp = ({ color, width, size }) => {
                                 <Icon icon={search} name="search" />
                             </InputLeftElement>
                             <Input
+                                type={`text`}
                                 value={searchTerm}
                                 onChange={handleInputChange}
                                 border="none"
@@ -106,8 +112,8 @@ export const SearchComp = ({ color, width, size }) => {
                                 bgColor="transparent"
                                 _focus={{ boxShadow: 'none', outline: 'none' }}
                             />
-                            <InputRightElement>
-                                <ModalCloseButton zIndex={999} />
+                            <InputRightElement onClick={handleClose} fontSize={'1.2em'}>
+                                <Iconify icon="material-symbols:close" />
                             </InputRightElement>
                         </InputGroup>
                     </ModalHeader>
@@ -115,21 +121,21 @@ export const SearchComp = ({ color, width, size }) => {
                         <hr />
                         <Tabs>
                             <TabList>
-                                <Tab disabled py={8} gap={2}>
-                                    <Text>All results</Text>
-                                    <Text>{searchResults?.length}</Text>
+                                <Tab py={8} gap={2}>
+                                    <Text fontSize={{ base: `xs`, md: `md` }}>All</Text>
+                                    <Text fontSize={{ base: `xs`, md: `md` }}>{searchResults?.length}</Text>
                                 </Tab>
-                                <Tab disabled py={8} gap={2}>
-                                    <Text>Projects</Text>
-                                    <Text>0</Text>
+                                <Tab isDisabled py={8} gap={2}>
+                                    <Text fontSize={{ base: `xs`, md: `md` }}>Products</Text>
+                                    <Text fontSize={{ base: `xs`, md: `md` }}>0</Text>
                                 </Tab>
-                                <Tab disabled py={8} gap={2}>
-                                    <Text>Files</Text>
-                                    <Text>0</Text>
+                                <Tab isDisabled py={8} gap={2}>
+                                    <Text fontSize={{ base: `xs`, md: `md` }}>Files</Text>
+                                    <Text fontSize={{ base: `xs`, md: `md` }}>0</Text>
                                 </Tab>
-                                <Tab disabled py={8} gap={2}>
-                                    <Text>Users</Text>
-                                    <Text>0</Text>
+                                <Tab isDisabled py={8} gap={2}>
+                                    <Text fontSize={{ base: `xs`, md: `md` }}>Users</Text>
+                                    <Text fontSize={{ base: `xs`, md: `md` }}>0</Text>
                                 </Tab>
                             </TabList>
 
@@ -140,14 +146,14 @@ export const SearchComp = ({ color, width, size }) => {
                                     {!isLoading && searchResults.length === 0 && <NotFound />}
                                     {!isLoading && searchResults.length > 0 && (
                                         <Stack gap={4}>
-                                            {searchResults.map((product) => (
-                                                <SearchResultTemplate result={product} />
+                                            {searchResults?.map((product, index) => (
+                                                <SearchResultTemplate key={product?.id} result={product} />
                                             ))}
                                         </Stack>
                                     )}
                                 </TabPanel>
                                 <TabPanel>
-                                    {isLoading ? (
+                                    {/* {isLoading ? (
                                         <Spin />
                                     ) : searchResults.length === 0 ? (
                                         <NotFound />
@@ -157,10 +163,10 @@ export const SearchComp = ({ color, width, size }) => {
                                                 {project.title}
                                             </Box>
                                         ))
-                                    )}
+                                    )} */}
                                 </TabPanel>
                                 <TabPanel>
-                                    {isLoading ? (
+                                    {/* {isLoading ? (
                                         <Spin />
                                     ) : searchResults.length === 0 ? (
                                         <NotFound />
@@ -170,10 +176,10 @@ export const SearchComp = ({ color, width, size }) => {
                                                 {file.title}
                                             </Box>
                                         ))
-                                    )}
+                                    )} */}
                                 </TabPanel>
                                 <TabPanel>
-                                    {isLoading ? (
+                                    {/* {isLoading ? (
                                         <Spin />
                                     ) : searchResults.length === 0 ? (
                                         <NotFound />
@@ -183,7 +189,7 @@ export const SearchComp = ({ color, width, size }) => {
                                                 {user.title}
                                             </Box>
                                         ))
-                                    )}
+                                    )} */}
                                 </TabPanel>
                             </TabPanels>
                         </Tabs>
@@ -219,16 +225,20 @@ const SearchResultTemplate = ({ result }) => {
     return (
         <Flex alignItems={`center`} justifyContent={`space-between`}>
             <Flex alignItems={`flex-end`} gap={2}>
-                <Box w={`3rem`} h={`3rem`} borderRadius={4} overflow={`hidden`}>
+                <Box w={{ base: `1.5rem`, sm: `3rem` }} h={{ base: `1.5rem`, sm: `3rem` }} borderRadius={4} overflow={`hidden`}>
                     <Image w={`100%`} h={`100%`} objectFit={`cover`} src={result?.thumbnail} alt={result?.title} />
                 </Box>
                 <Box>
-                    <Text fontWeight={600}>{result?.title}</Text>
-                    <Text fontSize={`xs`}>{result?.publisher}</Text>
+                    <Text fontSize={{ base: `xs`, sm: `md` }} fontWeight={600}>
+                        {result?.title}
+                    </Text>
+                    <Text fontSize={{ base: `10px`, sm: `xs` }}>{result?.publisher}</Text>
                 </Box>
             </Flex>
-            <Link to={`/products/${result?.slug}`} color={`blue.500`}>
-                <Text>view product</Text>
+            <Link to={`/products/${result?.slug}`}>
+                <Text color={`purple.200`} fontSize={{ base: `xs`, sm: `md` }}>
+                    view product
+                </Text>
             </Link>
         </Flex>
     );
@@ -250,12 +260,11 @@ const NotFound = () => {
     );
 };
 
-
 const Spin = () => {
-  return (
-      <Center p={10} gap={2}>
-          <SpinnerComponentSmall size={`sm`} />
-          <Text>Searching...</Text>
-      </Center>
-  );
-}
+    return (
+        <Center p={10} gap={2}>
+            <SpinnerComponentSmall size={`sm`} />
+            <Text>Searching...</Text>
+        </Center>
+    );
+};

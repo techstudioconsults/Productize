@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { selectCurrentToken } from '../../../redux/src';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const useAxiosInstance = ({ MIME_TYPE }) => {
+    // const dispatch = useDispatch();
     const [isLoading, setLoading] = useState(false);
     const token = useSelector(selectCurrentToken);
 
@@ -24,6 +25,7 @@ export const useAxiosInstance = ({ MIME_TYPE }) => {
             setLoading(false);
             return res;
         } catch (err) {
+            // dispatch({ type: `App/setAppError`, payload: err.response.data });
             setLoading(false);
             console.error(err);
             throw err;

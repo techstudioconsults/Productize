@@ -33,7 +33,7 @@ export const DashboardNavbar = () => {
                 </Flex>
                 <Flex justify={{ lg: 'center' }} alignItems={`center`} gap="1.5rem">
                     <Box display={{ base: `none`, md: `block` }}>
-                        <SearchComp width={`17rem`} color={`grey.200`} />
+                        <SearchComp  width={`17rem`} color={`grey.200`} />
                     </Box>
                     <Box>
                         <Icon icon={notification} name={'notification'} />

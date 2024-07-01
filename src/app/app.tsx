@@ -30,7 +30,7 @@ import {
     KycSettings,
 } from '@productize/dashboard';
 import { CoverPage } from '../pages/coverPage/CoverPage';
-import { Admin } from '@productize/admin-dashboard';
+import { Admin, AdminHome, AdminOrder, AdminProducts, AdminUser } from '@productize/admin-dashboard';
 
 // doesn't feel right
 
@@ -132,7 +132,12 @@ function App() {
                     </Route>
                 </Route>
                 {/* admin  dashboard */}
-                <Route path="/admin" element={<Admin />} />
+                <Route path="/admin" element={<Admin />}>
+                    <Route path="home" index element={<AdminHome />} />
+                    <Route path="products" element={<AdminProducts />} />
+                    <Route path="orders" element={<AdminOrder />} />
+                    <Route path="users" element={<AdminUser />} />
+                </Route>
                 {/* not found */}
                 <Route path="*" element={<PageNotFound />} />
             </Routes>

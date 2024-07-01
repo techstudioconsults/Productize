@@ -5,7 +5,7 @@ import { Icon } from '@iconify/react';
 import { Icon as IconSet } from '@productize/ui';
 import { NavLink } from 'react-router-dom';
 import { Box, Center, Flex, Stack, Text } from '@chakra-ui/react';
-import style from '../layouts/navbar.module.scss';
+import style from '../layouts/adminNavbar.module.scss';
 
 export const AdminDashboardLinks = ({ close }) => {
     const { links1, links3 } = useLinks();

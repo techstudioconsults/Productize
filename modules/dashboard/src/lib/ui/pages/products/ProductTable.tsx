@@ -78,7 +78,7 @@ export const ProductTable = ({ deleted }: tableProps) => {
                     <Flex>{product?.total_order}</Flex>
                 </Td>
                 <Td>
-                    <Flex>{product?.product_type}</Flex>
+                    <Flex>{product?.product_type.replace('_', ' ')}</Flex>
                 </Td>
                 <Td>
                     <Flex hidden={deleted}>

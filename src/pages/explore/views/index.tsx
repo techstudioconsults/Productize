@@ -23,14 +23,14 @@ export const Explore = () => {
             if (res.data) {
                 setTopProducts(res.data);
                 setTopProuctLoading(false);
-                }
+            }
             // const searchRes = await getProductsBasedOnSearch(null).unwrap();
             // if (searchRes.data) {
             //     setSearchedProducts(searchRes.data);
             //     setSearchProuctLoading(false);
             // }
         } else {
-            await getFromCart(null).unwrap();
+            getFromCart(null).unwrap();
         }
     }, [getFromCart, getTopProducts, pathname]);
 

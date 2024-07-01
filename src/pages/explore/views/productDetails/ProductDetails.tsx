@@ -24,7 +24,7 @@ export const ProductDetails = () => {
             const res = await getAggrProductRatings({ productID }).unwrap();
             setArgRatings(res.averageRating);
         } catch (error) {
-            console.error(error);
+            return;
         }
     }, [getAggrProductRatings, getSingleProducts_EXTERNAL, productID]);
 

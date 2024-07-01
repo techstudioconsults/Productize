@@ -17,7 +17,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
                     dispatch(setCredentials({ accessToken: data.token }));
                     dispatch(setUser({ user: data.user }));
                 } catch (err) {
-                    console.error('Login failed', err);
+                    return;
                 }
             },
         }),
@@ -34,7 +34,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
                     dispatch(setCredentials({ accessToken: data.token }));
                     dispatch(setUser({ user: data.user }));
                 } catch (err) {
-                    console.error('Signup failed', err);
+                    return;
                 }
             },
         }),
@@ -53,7 +53,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
                         console.error('Failed to obtain redirect URL for Google');
                     }
                 } catch (err) {
-                    console.error('Google Auth failed', err);
+                    return;
                 }
             },
         }),
@@ -70,7 +70,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
                     dispatch(setCredentials({ accessToken: data.token }));
                     dispatch(setUser({ user: data.user }));
                 } catch (err) {
-                    console.error('Google Auth Callback failed', err);
+                    return;
                 }
             },
         }),
@@ -83,11 +83,10 @@ export const authApiSlice = apiSlice.injectEndpoints({
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
-                    const { data } = await queryFulfilled;
-                    console.log(data);
+                    // const { data } = await queryFulfilled;
                     dispatch(setFPEmailConfirmation({ emailSent: true, email: arg.email }));
                 } catch (err) {
-                    console.error('Forgot Password failed', err);
+                    return;
                 }
             },
         }),
@@ -100,11 +99,10 @@ export const authApiSlice = apiSlice.injectEndpoints({
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
-                    const { data } = await queryFulfilled;
-                    console.log(data);
+                    // const { data } = await queryFulfilled;
                     dispatch(setFPEmailConfirmation({ emailSent: false, email: null }));
                 } catch (err) {
-                    console.error('Reset Password failed', err);
+                    return;
                 }
             },
         }),
@@ -116,13 +114,12 @@ export const authApiSlice = apiSlice.injectEndpoints({
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
-                    const { data } = await queryFulfilled;
-                    console.log(data);
+                    // const { data } = await queryFulfilled;
                     dispatch(logOut());
                     dispatch(resetUserStore());
                     dispatch(resetProductStore());
                 } catch (err) {
-                    console.error('Logout failed', err);
+                    return;
                 }
             },
         }),

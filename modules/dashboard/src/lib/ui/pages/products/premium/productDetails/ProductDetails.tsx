@@ -79,20 +79,7 @@ export const ProductDetails = () => {
                 });
             }
         } catch (err) {
-            toastIdRef.current = toast({
-                position: 'top',
-                render: () => (
-                    <ToastFeedback
-                        message={`something went wrong`}
-                        title="Error!"
-                        icon={errorImg}
-                        color={`red.600`}
-                        btnColor={`red.600`}
-                        bgColor={undefined}
-                        handleClose={close}
-                    />
-                ),
-            });
+            return;
         }
     };
 
@@ -120,20 +107,7 @@ export const ProductDetails = () => {
                 }
             }
         } catch (error) {
-            toastIdRef.current = toast({
-                position: 'top',
-                render: () => (
-                    <ToastFeedback
-                        message={`Something went wrong, please try again later.`}
-                        title="Error!"
-                        icon={errorImg}
-                        color={`red.600`}
-                        btnColor={`red.600`}
-                        bgColor={undefined}
-                        handleClose={close}
-                    />
-                ),
-            });
+            return;
         }
     };
 
@@ -254,24 +228,24 @@ const ProductDetailsSkeleton = () => {
         <Box>
             <Flex display={{ base: `none`, sm: `flex` }} justify="space-between" mb={6}>
                 <HStack spacing={4}>
-                    <Skeleton height="40px" width="240px" />
+                    <Skeleton borderRadius={8} height="40px" width="240px" />
                 </HStack>
                 <HStack spacing={4}>
-                    <Skeleton height="40px" width="100px" />
-                    <Skeleton height="40px" width="160px" />
+                    <Skeleton borderRadius={8} height="40px" width="100px" />
+                    <Skeleton borderRadius={8} height="40px" width="160px" />
                 </HStack>
             </Flex>
-            <Skeleton height="8rem" width="100%" />
+            <Skeleton borderRadius={8} height="8rem" width="100%" />
             <SimpleGrid my={5} gap={4} columns={{ base: 1, sm: 2, md: 3 }}>
-                <Skeleton height="7rem" width="100%" />
-                <Skeleton height="7rem" width="100%" />
-                <Skeleton height="7rem" width="100%" />
+                <Skeleton borderRadius={8} height="7rem" width="100%" />
+                <Skeleton borderRadius={8} height="7rem" width="100%" />
+                <Skeleton borderRadius={8} height="7rem" width="100%" />
             </SimpleGrid>
             <VStack>
-                <Skeleton height="40px" width="100%" />
-                <Skeleton height="40px" width="100%" />
-                <Skeleton height="40px" width="100%" />
-                <Skeleton height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
             </VStack>
         </Box>
     );

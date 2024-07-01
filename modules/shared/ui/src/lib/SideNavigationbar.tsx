@@ -3,7 +3,7 @@ import { Drawer, DrawerBody, DrawerHeader, DrawerOverlay, DrawerContent, useDisc
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import { SharedButton } from './SharedButton';
-import { useTokenExists } from '../../../hooks/src/lib/useToken';
+import { useTokenExists } from '@productize/hooks';
 
 interface SidebarProps {
     links?: ReactNode;

@@ -39,7 +39,7 @@ export const DashboardLayout = () => {
                             color={`grey.100`}
                             bg={`red.200`}
                         >
-                            {link?.analysis}
+                            {link?.analysis || 10}
                         </Center>
                     </Flex>
                     <Box display={link.type ? `none` : `block`}>
@@ -99,7 +99,11 @@ export const DashboardLayout = () => {
     });
 
     const setUser = useCallback(async () => {
-        await getUser(null).unwrap();
+        try {
+            await getUser(null).unwrap();
+        } catch (err: any) {
+            return;
+        }
     }, [getUser]);
 
     useEffect(() => {
@@ -121,7 +125,7 @@ export const DashboardLayout = () => {
                 gap={10}
                 className="hide_scrollbar"
             >
-                <Flex justifyContent={`center`} flexDir={`column`} alignItems={`center`} gap={2} minH={`40px`}>
+                <Flex justifyContent={`center`} alignItems={`flex-start`} minH={`40px`}>
                     <Link as={ReactLink} to={`/seller`}>
                         <Image
                             alt="logo"

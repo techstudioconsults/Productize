@@ -1,4 +1,4 @@
-import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Avatar, Text } from '@chakra-ui/react';
+import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Avatar, Text, Box, VStack, Skeleton } from '@chakra-ui/react';
 import { DashboardEmptyState } from '../empty-states/DashboardEmptyState';
 import { useCurrency, useDate, useTime } from '@productize/hooks';
 import { OnBoardingLoader } from '@productize/ui';
@@ -22,15 +22,15 @@ export const DashboardTable = ({ data, status }) => {
             <Tr key={content.id}>
                 <Td>
                     <Flex gap={2} alignItems={`center`}>
-                        <Avatar zIndex={-1} bgColor={`yellow.100`} src={content?.product_thumbnail} borderRadius={`4px`} boxSize={`44px`} />
-                        <Text>{content?.product_title}</Text>
+                        <Avatar zIndex={-1} bgColor={`yellow.100`} src={content?.product?.thumbnail} borderRadius={`4px`} boxSize={`44px`} />
+                        <Text>{content?.product?.title}</Text>
                     </Flex>
                 </Td>
                 <Td>
-                    <Flex>{formatCurrrency(content?.product_price)}</Flex>
+                    <Flex>{formatCurrrency(content?.product?.price)}</Flex>
                 </Td>
                 <Td>
-                    <Flex>{content?.customer_email}</Flex>
+                    <Flex>{content?.customer?.email}</Flex>
                 </Td>
                 <Td>
                     <Flex>
@@ -45,8 +45,8 @@ export const DashboardTable = ({ data, status }) => {
 
     return (
         <TableContainer maxH={`25rem`} overflowY={`auto`}>
-            {status?.isLoading ? (
-                <OnBoardingLoader />
+            {status ? (
+                <TableSkeleton />
             ) : data?.length ? (
                 <Table size={`sm`} variant="simple">
                     {/* head */}
@@ -70,5 +70,18 @@ export const DashboardTable = ({ data, status }) => {
                 />
             )}
         </TableContainer>
+    );
+};
+
+export const TableSkeleton = () => {
+    return (
+        <Box>
+            <VStack>
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+            </VStack>
+        </Box>
     );
 };

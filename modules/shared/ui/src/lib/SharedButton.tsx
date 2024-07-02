@@ -1,12 +1,12 @@
 import { Button } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
-import { useRef } from 'react';
+import React from 'react';
 
 export interface BtnExtras {
     border?: string;
-    leftIcon?: string | any;
-    rightIcon?: string | any;
-    type?: string | any;
+    leftIcon?: string;
+    rightIcon?: string;
+    type?: 'button' | 'submit' | 'reset';
     isLoading?: boolean;
     loadingText?: string;
     hasError?: boolean;
@@ -16,9 +16,9 @@ export interface BtnExtras {
     disabled?: boolean;
     onClick?: () => void;
     onClickAsync?: () => Promise<void>;
-    hover?: object | any;
-    active?: object | any;
-    focus?: object | any;
+    hover?: object;
+    active?: object;
+    focus?: object;
 }
 
 export interface ButtonProps {
@@ -33,16 +33,23 @@ export interface ButtonProps {
     btnExtras?: BtnExtras;
 }
 
-export function SharedButton({ TEST_ID, text, width, height, bgColor, textColor, borderRadius, fontSize, btnExtras }: ButtonProps) {
-    useRef();
+export function SharedButton({ TEST_ID, text, width, height, bgColor, textColor, borderRadius, fontSize, btnExtras = {} }: ButtonProps) {
+    const { border, leftIcon, rightIcon, type, isLoading, loadingText, disabled, onClick, onClickAsync, hover, active } = btnExtras;
+
     return (
         <Button
             data-test={TEST_ID}
-            onClick={btnExtras?.onClick || btnExtras?.onClickAsync}
-            loadingText={btnExtras?.loadingText}
-            isLoading={btnExtras?.isLoading}
-            leftIcon={<Icon fontSize={`1rem`} icon={btnExtras?.leftIcon} />}
-            rightIcon={<Icon fontSize={`1rem`} icon={btnExtras?.rightIcon} />}
+            onClick={
+                onClickAsync
+                    ? async () => {
+                          await onClickAsync();
+                      }
+                    : onClick
+            }
+            loadingText={loadingText}
+            isLoading={isLoading}
+            leftIcon={leftIcon ? <Icon fontSize="1rem" icon={leftIcon} /> : undefined}
+            rightIcon={rightIcon ? <Icon fontSize="1rem" icon={rightIcon} /> : undefined}
             fontWeight={500}
             fontSize={fontSize}
             w={width}
@@ -50,24 +57,17 @@ export function SharedButton({ TEST_ID, text, width, height, bgColor, textColor,
             bgColor={bgColor}
             color={textColor}
             borderRadius={borderRadius}
-            border={btnExtras?.border}
-            type={btnExtras?.type}
-            isDisabled={btnExtras?.disabled}
+            border={border}
+            type={type}
+            isDisabled={disabled}
             _hover={
-                bgColor === `transparent` && textColor === `purple.200`
-                    ? { filter: `brightness(115%)`, boxShadow: `0px 2px 5px 1px #00000050`, bgColor: `purple.200`, color: `grey.100` }
-                    : textColor === `red.200` && bgColor === `transparent`
-                    ? { filter: `brightness(115%)`, boxShadow: `0px 2px 5px 1px #00000050`, bgColor: `red.200`, color: `grey.100` }
-                    : { filter: `brightness(115%)`, boxShadow: `0px 2px 5px 1px #00000050` }
+                bgColor === 'transparent' && textColor === 'purple.200'
+                    ? { filter: 'brightness(115%)', boxShadow: '0px 2px 5px 1px #00000050', bgColor: 'purple.200', color: 'grey.100' }
+                    : textColor === 'red.200' && bgColor === 'transparent'
+                    ? { filter: 'brightness(115%)', boxShadow: '0px 2px 5px 1px #00000050', bgColor: 'red.200', color: 'grey.100' }
+                    : { filter: 'brightness(115%)', boxShadow: '0px 2px 5px 1px #00000050' }
             }
-            _active={
-                btnExtras?.border == null
-                    ? btnExtras?.active || {
-                          filter: `brightness(70%)`,
-                          boxShadow: `0px 1px 5px 1px #00000060`,
-                      }
-                    : btnExtras?.active
-            }
+            _active={border == null ? active || { filter: 'brightness(70%)', boxShadow: '0px 1px 5px 1px #00000060' } : active}
         >
             {text}
         </Button>

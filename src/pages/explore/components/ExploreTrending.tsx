@@ -1,17 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Box, Container, Flex, SimpleGrid, Stack, Text } from '@chakra-ui/react';
-
-// import { useSelector } from 'react-redux';
+import { Box, Center, Container, Flex, Text } from '@chakra-ui/react';
 import Card from './cards/Card';
-// import { selectTags } from '@productize/redux';
-// import { useLocation } from 'react-router-dom';
-import { SelectPicker } from 'rsuite';
+import { Swiper, SwiperSlide } from 'swiper/react';
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/pagination';
+import { Pagination } from 'swiper/modules';
+import { useEffect, useState } from 'react';
+import { SpinnerComponent, SpinnerComponentSmall } from '@productize/ui';
 
 export interface slideProps {
     title: string;
+    products: [];
+    loading: boolean;
 }
 
-const staticProducts = [
+export const staticProducts = [
     {
         title: 'The Shadow of the Wind',
         thumbnail: 'https://res.cloudinary.com/kingsleysolomon/image/upload/v1713336260/productize/SOTW_lhhrav.jpg',
@@ -72,45 +76,90 @@ const staticProducts = [
         description:
             "<h3>Overview</h3><p>Follow astronaut Mark Watney as he fights for survival on the hostile planet of Mars in Andy Weir's gripping science fiction novel, The Martian. Stranded alone after a dust storm forces his crew to evacuate, Watney must rely on his ingenuity and resourcefulness to endure.</p>",
     },
+    {
+        title: 'The Martian',
+        thumbnail: 'https://res.cloudinary.com/kingsleysolomon/image/upload/v1713336260/productize/TM_icggk6.jpg',
+        price: 10.99,
+        publisher: 'Crown Publishing Group',
+        slug: 'the-martian',
+        highlights: [
+            'Gripping survival story on the planet Mars',
+            'Ingenious tale of resourcefulness and resilience',
+            'Thrilling blend of humor, suspense, and science',
+        ],
+        product_type: 'digital_product',
+        cover_photos: ['https://res.cloudinary.com/kingsleysolomon/image/upload/v1713336260/productize/TM_icggk6.jpg'],
+        tags: ['Science Fiction', 'Adventure'],
+        description:
+            "<h3>Overview</h3><p>Follow astronaut Mark Watney as he fights for survival on the hostile planet of Mars in Andy Weir's gripping science fiction novel, The Martian. Stranded alone after a dust storm forces his crew to evacuate, Watney must rely on his ingenuity and resourcefulness to endure.</p>",
+    },
 ];
 
-export const ExploreTrending = ({ title }: slideProps) => {
-    // const tags = useSelector(selectTags);
-    // const location = useLocation();
-    // const queryParams = new URLSearchParams(location.search);
-    // const tag = queryParams.get('tag');
+export const ExploreTrending = ({ title, products, loading }: slideProps) => {
+    // const swiper = useSwiper();
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768); // Assuming mobile screen size width is less than 768px
 
-    // const tagData = [`All`, ...tags]?.map((item: string) => ({
-    //     label: item,
-    //     value: item,
-    // }));
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768); // Update isMobile state based on window width
+        };
+        window.addEventListener('resize', handleResize); // Listen for window resize events
+        return () => {
+            window.removeEventListener('resize', handleResize); // Cleanup the event listener
+        };
+    }, []); // Empty dependency array to run effect only once on component mount
 
     // Render product cards
-    const renderStaticCards = staticProducts?.map((product: any) => (
-        <Card
-            key={product?.slug}
-            // staticProduct={product}
-            productID={product?.slug}
-            image={product?.thumbnail}
-            heading={product?.title}
-            price={product?.price}
-            publisher={product?.publisher}
-        />
+    const renderStaticCards = products?.map((product: any) => (
+        <SwiperSlide key={product?.slug}>
+            <Card
+                // key={product?.slug}
+                // staticProduct={product}
+                // width={`257px`}
+                productID={product?.slug}
+                image={product?.thumbnail}
+                heading={product?.title}
+                price={product?.price}
+                publisher={product?.publisher}
+            />
+        </SwiperSlide>
     ));
+
+    if (loading) {
+        return (
+            <Center>
+                <SpinnerComponentSmall />
+            </Center>
+        );
+    }
+
+    if (products?.length === 0) {
+        return (
+            <Center>
+                <Text>No Product Available</Text>
+            </Center>
+        );
+    }
 
     return (
         <Flex>
             <Container p={0} maxW={`70rem`}>
                 <Flex mb={5} justifyContent={`space-between`} alignItems={`center`}>
                     <Text as={`h4`}>{title}</Text>
-                    {/* <Box display={{ lg: `none` }}>
-                        <SelectPicker searchable={false} style={{ width: `100%` }} placeholder={`Tags`} size="sm" data={tagData} />
-                    </Box> */}
                 </Flex>
 
-                <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 4 }} justifyContent={`space-between`} gap={`1.64rem`}>
+                <Swiper
+                    spaceBetween={25}
+                    slidesPerView={isMobile ? 1 : 4} // Change slidesPerView based on screen size
+                    pagination={{
+                        clickable: true,
+                        dynamicBullets: true,
+                    }}
+                    modules={[Pagination]}
+                >
                     {renderStaticCards}
-                </SimpleGrid>
+                    <Box py={5}></Box>
+                </Swiper>
             </Container>
         </Flex>
     );

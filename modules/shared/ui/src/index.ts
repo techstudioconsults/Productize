@@ -1,5 +1,3 @@
-export * from './lib/ui';
-
 export * from './lib/SharedButton';
 export * from './lib/Footer';
 export * from './lib/PreLoader';
@@ -20,7 +18,11 @@ export * from './lib/ToastFeedback';
 export * from './lib/Cart';
 export * from './lib/layouts/CardLayout';
 export * from './lib/PageNotFound';
-export * from './lib/DashboardDrawer';
+export * from './lib/dashboardDrawer/DashboardDrawer';
 export * from './lib/PaywallUpgrade';
 export * from './lib/PaywallUnpublishWarning';
 export * from './lib/PricingModal';
+export * from './lib/review/ReviewsCard';
+export * from './lib/review/ReviewTemplate';
+export * from './lib/Accordion';
+export * from './lib/error/AppError';

@@ -1,16 +1,16 @@
 import { DashboardBanner } from '../../../DashboardBanner';
 import PayoutPremiumView from '../premium/PayoutPremiumView';
-import { Box, SimpleGrid, Skeleton } from '@chakra-ui/react';
+import { Box, Flex, Grid, HStack, SimpleGrid, Skeleton, VStack } from '@chakra-ui/react';
 import { PayoutTableControl } from '../components/PayoutTableControls';
 import { DataWidgetCard } from '../../../DataWidgetCard';
 import { useCurrency } from '@productize/hooks';
-import { selectPayoutStats, selectPayouts, useGetPayoutStatsMutation } from '@productize/redux';
+import { selectPayoutStats, useGetPayoutStatsMutation } from '@productize/redux';
 import { useSelector } from 'react-redux';
-import { useCallback, useEffect } from 'react';
-import { OnBoardingLoader } from '@productize/ui';
+import { useCallback, useEffect, useState } from 'react';
 
 const PremiumLayout = () => {
-    const [getPayoutStats, getPayoutsStatus] = useGetPayoutStatsMutation();
+    const [isLoading, setLoading] = useState(true);
+    const [getPayoutStats] = useGetPayoutStatsMutation();
     const payouts = useSelector(selectPayoutStats);
     const formatCurrency = useCurrency();
 
@@ -19,20 +19,23 @@ const PremiumLayout = () => {
     //     return Math.min(totalPayout, totalEarning);
     // };
 
-    const showAllOrders = useCallback(async () => {
+    const showAllPayouts = useCallback(async () => {
         try {
-            await getPayoutStats(null).unwrap();
+            const res = await getPayoutStats(null).unwrap();
+            if (res.data) {
+                setLoading(false);
+            }
         } catch (error) {
             return error;
         }
     }, [getPayoutStats]);
 
     useEffect(() => {
-        showAllOrders();
-    }, [showAllOrders]);
+        showAllPayouts();
+    }, [showAllPayouts]);
 
-    if (getPayoutsStatus.isLoading) {
-        return <OnBoardingLoader />;
+    if (isLoading) {
+        return <PayoutSkeleton />;
     }
 
     return (
@@ -78,3 +81,34 @@ const PremiumLayout = () => {
 };
 
 export default PremiumLayout;
+
+export const PayoutSkeleton = () => {
+    return (
+        <Box p={5}>
+            <Skeleton borderRadius={8} height={{ base: `20rem`, lg: `10rem` }} width="100%" />
+            <Flex display={{ base: `none`, sm: `flex` }} mt={10} justify="space-between" mb={6}>
+                <HStack spacing={4}>
+                    <Skeleton borderRadius={8} height="40px" width="240px" />
+                    <Skeleton borderRadius={8} height="40px" width="120px" />
+                    <Skeleton borderRadius={8} height="40px" width="40px" />
+                </HStack>
+                <HStack spacing={4}>
+                    <Skeleton borderRadius={8} height="40px" width="120px" />
+                </HStack>
+            </Flex>
+            <SimpleGrid columns={{ sm: 2, lg: 4 }} gap={6} my={6}>
+                <Skeleton borderRadius={8} p={5} height={`6rem`} borderWidth="1px" />
+                <Skeleton borderRadius={8} p={5} height={`6rem`} borderWidth="1px" />
+                <Skeleton borderRadius={8} p={5} height={`6rem`} borderWidth="1px" />
+                <Skeleton borderRadius={8} p={5} height={`6rem`} borderWidth="1px" />
+            </SimpleGrid>
+            <VStack>
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+            </VStack>
+        </Box>
+    );
+};

@@ -6,18 +6,16 @@ import {
     Flex,
     FormControl,
     FormLabel,
-    IconButton,
     Input,
     InputGroup,
     InputLeftElement,
     InputRightElement,
     ModalCloseButton,
-    SimpleGrid,
     Stack,
     Text,
     useDisclosure,
 } from '@chakra-ui/react';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import BankCard from '../components/BankCard';
 import { Icon } from '@iconify/react';
 import { DataWidgetCard } from '../../../DataWidgetCard';
@@ -37,7 +35,7 @@ export const WithdrawalEarnings = () => {
     const payoutAccountList = useSelector(selectAccountList);
     const [retieveAllPayoutAccounts] = useRetrieveAllPayoutAccountMutation();
     const [initiateWithdrawal, initiateWithdrawalStatus] = useInitiateWithdrawalMutation();
-    const { register, handleSubmit, setValue } = useForm();
+    const { register, handleSubmit, setValue, reset } = useForm();
     const payouts = useSelector(selectPayoutStats);
     const navigate = useNavigate();
 
@@ -96,7 +94,8 @@ export const WithdrawalEarnings = () => {
                         />
                     ),
                 });
-                navigate(`/dashboard/payouts`);
+                reset()
+                // navigate(`/dashboard/payouts`);
             }
         } catch (error) {
             if (error?.status !== 400) {

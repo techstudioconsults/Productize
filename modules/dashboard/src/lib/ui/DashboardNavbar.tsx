@@ -1,8 +1,8 @@
 import { Box, Center, Flex, Text } from '@chakra-ui/react';
 import { useCallback, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import notification from '@icons/Property_2_Notifications_1_w4v7g4.svg';
-import { DashboardDrawer, SearchComp, AvatarComp, Icon } from '@productize/ui';
+import { DashboardDrawer, AvatarComp, SearchComp } from '@productize/ui';
+import NotificationApp from './pages/notification/NotificationApp';
 
 export const DashboardNavbar = () => {
     const [header, setHeader] = useState('');
@@ -36,12 +36,15 @@ export const DashboardNavbar = () => {
                         <SearchComp width={`17rem`} color={`grey.200`} />
                     </Box>
                     <Box>
-                        <Icon icon={notification} name={'notification'} />
+                        <NotificationApp />
                     </Box>
                     <Box>
                         <AvatarComp />
                     </Box>
                 </Flex>
+            </Box>
+            <Box mt={4} display={{ base: `block`, md: `none` }}>
+                <SearchComp width={`100%`} color={`grey.200`} />
             </Box>
         </Box>
     );

@@ -21,7 +21,6 @@ export const UploadExternalFiles = ({ btnTitle, descText, fileType, icon, showFi
             bgColor={`purple.100`}
             h={`200px`}
             gap={4}
-            mt={4}
             borderRadius={`5px`}
         >
             <SharedButton

@@ -1,20 +1,26 @@
-import { useCallback, useEffect } from 'react';
-import { Box } from '@chakra-ui/react';
+/* eslint-disable @nx/enforce-module-boundaries */
+import { useCallback, useEffect, useState } from 'react';
+import { Box, Flex, HStack, Skeleton, VStack } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { OrderTable } from './component/OrderTable';
 import { DashboardEmptyState } from '../../../empty-states/DashboardEmptyState';
-import { OrdersTableControl } from '../../../tables/tableControls/OrdersTableControl';
-import { useGetAllOrdersMutation, selectAllOrders } from '@productize/redux';
-import { OnBoardingLoader } from '@productize/ui';
+import { OrdersTableControl } from '../OrdersTableControl';
+import { useGetAllOrdersMutation, selectAllOrders, selectIsOrderfilter } from '@productize/redux';
 
 const OrderActive = () => {
-    const [getAllOrders, getLiveProductsStatus] = useGetAllOrdersMutation();
+    const [isLoading, setLoading] = useState(true);
+    const [getAllOrders] = useGetAllOrdersMutation();
     const orders = useSelector(selectAllOrders);
+    const isOrderFilter = useSelector(selectIsOrderfilter);
 
     const showAllOrders = useCallback(async () => {
         try {
-            await getAllOrders(null).unwrap();
+            const res = await getAllOrders(null).unwrap();
+            if (res.data) {
+                setLoading(false);
+            }
         } catch (error) {
+            setLoading(false);
             return error;
         }
     }, [getAllOrders]);
@@ -23,20 +29,20 @@ const OrderActive = () => {
         showAllOrders();
     }, [showAllOrders]);
 
-    if (getLiveProductsStatus.isLoading) {
-        return <OnBoardingLoader />;
+    if (isLoading) {
+        return <OrdersSkeleton />;
     }
 
     if (!orders?.length) {
         return (
             <Box my={10}>
-                <Box my={10}>
+                <Box hidden={!isOrderFilter} my={10}>
                     <OrdersTableControl />
                 </Box>
                 <DashboardEmptyState
                     content={{
                         title: '',
-                        desc: 'You do not have any active order yet.',
+                        desc: isOrderFilter ? `No Order Found` : `You do not have any active order yet.`,
                         img: `https://res.cloudinary.com/ceenobi/image/upload/v1697714644/icons/Chart_znlfld.png`,
                     }}
                     textAlign={{ base: `center` }}
@@ -57,3 +63,28 @@ const OrderActive = () => {
 };
 
 export default OrderActive;
+
+const OrdersSkeleton = () => {
+    return (
+        <Box p={5} mt={5}>
+            <Flex display={{ base: `none`, sm: `flex` }} justify="space-between" mb={6}>
+                <HStack spacing={4}>
+                    <Skeleton borderRadius={8} height="40px" width="240px" />
+                    <Skeleton borderRadius={8} height="40px" width="120px" />
+                    <Skeleton borderRadius={8} height="40px" width="40px" />
+                </HStack>
+                <HStack spacing={4}>
+                    <Skeleton borderRadius={8} height="40px" width="120px" />
+                </HStack>
+            </Flex>
+            <VStack>
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+            </VStack>
+        </Box>
+    );
+};

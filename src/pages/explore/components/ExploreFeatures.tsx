@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box, Center, Container, Flex, SimpleGrid, Stack, Text } from '@chakra-ui/react';
-import { useState, useEffect, useCallback } from 'react';
+import { useEffect, useCallback } from 'react';
 
 import { useSelector } from 'react-redux';
 import Card from './cards/Card';
@@ -16,7 +16,6 @@ export interface slideProps {
 
 export const ExploreFeatures = ({ title }: slideProps) => {
     const tags = useSelector(selectTags);
-    const [error] = useState<string | null>(null);
     const [getAllProducts_EXTERNAL, getAllProducts_EXTERNALStatus] = useGetAllProducts_EXTERNALMutation();
     const products = useSelector(selectAllProducts_EXTERNAL);
     const location = useLocation();
@@ -24,17 +23,13 @@ export const ExploreFeatures = ({ title }: slideProps) => {
     const queryParams = new URLSearchParams(location.search);
     const tag = queryParams.get('tag');
 
-    const tagData = [`All`, ...tags]?.map((item: string) => ({
-        label: item,
-        value: item,
+    const tagData = [{ name: `All`, category: null }, ...tags]?.map((item: any) => ({
+        label: item?.name.replace('_', ' '),
+        value: item?.name,
     }));
 
     const fetchData = useCallback(async () => {
-        try {
-            await getAllProducts_EXTERNAL({ tag }).unwrap();
-        } catch (error) {
-            console.error(error);
-        }
+        getAllProducts_EXTERNAL({ tag }).unwrap();
     }, [getAllProducts_EXTERNAL, tag]);
 
     const handleTagFilter = (tag: string) => {
@@ -43,7 +38,6 @@ export const ExploreFeatures = ({ title }: slideProps) => {
         } else {
             navigate(`/explore?tag=${tag.toLowerCase()}`);
         }
-        console.log(tag);
     };
 
     useEffect(() => {
@@ -51,32 +45,35 @@ export const ExploreFeatures = ({ title }: slideProps) => {
     }, [fetchData]);
 
     // Render product cards
-    const renderCards = products.products?.map((product: any) => (
-        <Card
-            key={product?.slug}
-            productID={product?.slug}
-            image={product?.thumbnail}
-            heading={product?.title}
-            price={product?.price}
-            publisher={product?.publisher}
-        />
-    ));
+    const renderCards = products.products
+        ?.slice() // Create a shallow copy of the products array
+        .sort((a: any, b: any) => new Date(b.created_at || b.createdAt).getTime() - new Date(a.created_at || a.createdAt).getTime()) // Sort by recency
+        .map((product: any) => (
+            <Card
+                key={product?.slug}
+                productID={product?.slug}
+                image={product?.thumbnail}
+                heading={product?.title}
+                price={product?.price}
+                publisher={product?.publisher}
+            />
+        ));
 
-    const handlePrevButton = async () => {
-        try {
-            await getAllProducts_EXTERNAL({ link: products.productsMetaData?.links?.prev }).unwrap();
-        } catch (error) {
-            console.log(error);
-        }
+    const handlePrevButton = () => {
+        getAllProducts_EXTERNAL({ link: products.productsMetaData?.links?.prev }).unwrap();
     };
 
-    const handleNextButton = async () => {
-        try {
-            await getAllProducts_EXTERNAL({ link: products.productsMetaData?.links?.next }).unwrap();
-        } catch (error) {
-            console.log(error);
-        }
+    const handleNextButton = () => {
+        getAllProducts_EXTERNAL({ link: products.productsMetaData?.links?.next }).unwrap();
     };
+
+    if (getAllProducts_EXTERNALStatus?.isLoading) {
+        return (
+            <Center p={10}>
+                <SpinnerComponentSmall />
+            </Center>
+        );
+    }
 
     return (
         <Flex>
@@ -84,18 +81,20 @@ export const ExploreFeatures = ({ title }: slideProps) => {
                 <Flex mb={5} justifyContent={`space-between`} alignItems={`center`}>
                     <Text as={`h4`}>{title}</Text>
                     <Box display={{ lg: `none` }}>
-                        <SelectPicker searchable={false} onSelect={handleTagFilter} style={{ width: `100%` }} placeholder={`Tags`} size="sm" data={tagData} />
+                        <SelectPicker
+                            placement={`auto`}
+                            searchable={false}
+                            onSelect={handleTagFilter}
+                            style={{ width: `100%` }}
+                            placeholder={`Category`}
+                            size="sm"
+                            data={tagData}
+                        />
                     </Box>
                 </Flex>
 
                 <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 4 }} justifyContent={`space-between`} gap={`1.64rem`}>
-                    {getAllProducts_EXTERNALStatus?.isLoading ? (
-                        <Center p={10}>
-                            <SpinnerComponentSmall />
-                        </Center>
-                    ) : (
-                        renderCards
-                    )}
+                    {renderCards}
                 </SimpleGrid>
                 {!products.products?.length && !getAllProducts_EXTERNALStatus?.isLoading && (
                     <EmptyState
@@ -109,7 +108,15 @@ export const ExploreFeatures = ({ title }: slideProps) => {
                     />
                 )}
                 {/* TABLE PAGINATION */}
-                <Flex mt={4} gap={5} color={`grey.400`} alignItems={`center`} justifyContent={`center`} flexDir={{ base: `column-reverse`, lg: `row` }}>
+                <Flex
+                    display={products.productsMetaData?.meta?.total > 1 ? `flex` : `none`}
+                    mt={4}
+                    gap={5}
+                    color={`grey.400`}
+                    alignItems={`center`}
+                    justifyContent={`center`}
+                    flexDir={{ base: `column-reverse`, lg: `row` }}
+                >
                     <Stack my={10} w={{ base: `100%`, lg: `initial` }} justifyContent={`space-between`} alignItems={`center`} direction={`row`} gap={5}>
                         <SharedButton
                             btnExtras={{

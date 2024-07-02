@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { Box, Divider, Flex, Grid, GridItem, Text } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
 import { selectBillingHistory, useBillingHistoryMutation } from '@productize/redux';
@@ -7,9 +8,10 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 export const PlanSettings = () => {
-    const [billingHistory, billingHistoryStatus] = useBillingHistoryMutation();
+    const [billingHistory] = useBillingHistoryMutation();
     const [renewalDate, setRenewalDate] = useState();
-    const billingHistoryData = useSelector(selectBillingHistory);
+    const billingHistoryData = useSelector(selectBillingHistory)
+
 
     const showBillingHistory = useCallback(async () => {
         try {

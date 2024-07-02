@@ -1,15 +1,13 @@
-import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Text, Avatar, Tag } from '@chakra-ui/react';
+import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Text, Avatar, Tag, Box } from '@chakra-ui/react';
 import { useCurrency, useDate, useTime } from '@productize/hooks';
 import { selectPayouts, useGetPayoutsMutation } from '@productize/redux';
-import { OnBoardingLoader } from '@productize/ui';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { DashboardEmptyState } from '../../../empty-states/DashboardEmptyState';
 
-export const PayoutTable = ({ tableData }) => {
-    const [getPayouts, getPayoutsStatus] = useGetPayoutsMutation();
+export const PayoutTable = () => {
+    const [getPayouts] = useGetPayoutsMutation();
     const payouts = useSelector(selectPayouts);
-    const navigate = useNavigate();
     const formatCurrency = useCurrency();
     const formatDate = useDate();
     const formatTime = useTime();
@@ -26,9 +24,9 @@ export const PayoutTable = ({ tableData }) => {
         showPayouts();
     }, [showPayouts]);
 
-    if (getPayoutsStatus.isLoading) {
-        return <OnBoardingLoader />;
-    }
+    // if (getPayoutsStatus.isLoading) {
+    //     return <OnBoardingLoader />;
+    // }
 
     function calculatePercentage(percentage, baseValue) {
         const percentageDecimal = percentage / 100;
@@ -45,8 +43,6 @@ export const PayoutTable = ({ tableData }) => {
     });
 
     const withdrawEarnings = payouts?.map((earning) => {
-        // onClick={() => navigate(`/dashboard/payouts/${earning.id}`)}
-        // cursor: `pointer` }
         return (
             <Tr _hover={{ bgColor: `purple.100` }} key={earning.id}>
                 <Td>
@@ -57,7 +53,7 @@ export const PayoutTable = ({ tableData }) => {
                 <Td py={5}>
                     <Flex alignItems={`center`} gap={5}>
                         <Avatar size={`xs`} name={earning.bank_name} src={null} />
-                        <Text>{`${earning.bank_name} ${earning?.account_number?.slice(0, 3)}****${earning?.account_number?.slice(7)}`}</Text>
+                        <Text>{`${earning.bank_name} ${earning?.account?.number?.slice(0, 3)}****${earning?.account?.number?.slice(7)}`}</Text>
                     </Flex>
                 </Td>
                 <Td>
@@ -110,6 +106,20 @@ export const PayoutTable = ({ tableData }) => {
                     {/* body */}
                     <Tbody color={`purple.300`}>{withdrawEarnings}</Tbody>
                 </Table>
+                {!payouts?.length && (
+                    <Box my={10}>
+                        <DashboardEmptyState
+                            content={{
+                                title: '',
+                                desc: 'Payout Table is Empty.',
+                                img: `https://res.cloudinary.com/kingsleysolomon/image/upload/v1700317427/productize/Illustration_4_pujumv.png`,
+                            }}
+                            textAlign={{ base: `center` }}
+                            showImage
+                            hideCta={true}
+                        />
+                    </Box>
+                )}
             </TableContainer>
             {/* TABLE PAGINATION */}
         </>

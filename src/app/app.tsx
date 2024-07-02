@@ -1,8 +1,5 @@
-import '../styles.scss';
-
-import React, { Suspense, useCallback, useEffect } from 'react';
+import React, { Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { useGetProductTagsMutation } from '@productize/redux';
 import { PageNotFound, PreLoader, SpinnerComponent } from '@productize/ui';
 import { ForgotPassword, Login, Signup } from '@productize/auth';
 import {
@@ -27,8 +24,12 @@ import {
     WithdrawalEarnings,
     AccountSettings,
     PaymentSettings,
+    KycSettings,
 } from '@productize/dashboard';
 import { CoverPage } from '../pages/coverPage/CoverPage';
+import { Admin } from '@productize/admin-dashboard';
+
+// doesn't feel right
 
 // using suspense and lazy loading
 const Home = React.lazy(() =>
@@ -51,6 +52,11 @@ const Explore = React.lazy(() =>
         default: module.Explore,
     }))
 );
+const CategoryPageDetails = React.lazy(() =>
+    import('../pages/explore/views/productDetails/CategoryPageDetails').then((module) => ({
+        default: module.CategoryPageDetails,
+    }))
+);
 const ProductDetails = React.lazy(() =>
     import('../pages/explore/views/productDetails/ProductDetails').then((module) => ({
         default: module.ProductDetails,
@@ -63,16 +69,6 @@ const ProductCart = React.lazy(() =>
 );
 
 function App() {
-    const [getProductTags] = useGetProductTagsMutation();
-
-    const getTags = useCallback(async () => {
-        await getProductTags(null).unwrap();
-    }, [getProductTags]);
-
-    useEffect(() => {
-        getTags();
-    }, [getTags]);
-
     return (
         <Suspense
             fallback={
@@ -93,6 +89,7 @@ function App() {
                 <Route path="/features" element={<Features />} />
                 <Route path="/pricing" element={<Pricing />} />
                 <Route path={`/explore`} element={<Explore />} />
+                <Route path={`/explore/category/:mainCategory`} element={<CategoryPageDetails />} />
                 <Route path="/products/:productID" element={<ProductDetails />} />
                 <Route path="/explore/product/cart" element={<ProductCart />} />
                 {/* dashboard */}
@@ -116,10 +113,14 @@ function App() {
                     <Route path="settings" element={<Settings />}>
                         <Route path="account" element={<AccountSettings />} />
                         <Route path="payment" element={<PaymentSettings />} />
+                        <Route path="kyc" element={<KycSettings />} />
                         <Route path="plans" element={<PlanSettings />} />
                         <Route path="plans/billing-cycle" element={<BillingCycle />} />
                     </Route>
                 </Route>
+                {/* admin  dashboard */}
+                <Route path="/admin" element={<Admin />} />
+                {/* not found */}
                 <Route path="*" element={<PageNotFound />} />
             </Routes>
         </Suspense>

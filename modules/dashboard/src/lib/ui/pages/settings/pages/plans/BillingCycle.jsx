@@ -1,27 +1,34 @@
-import { Box, Card, Flex, Image, SimpleGrid, Skeleton, SkeletonText, Text } from '@chakra-ui/react';
+/* eslint-disable @nx/enforce-module-boundaries */
+import { Box, Card, Flex, Image, SimpleGrid, Skeleton, Text, VStack } from '@chakra-ui/react';
 import arrowLeft from '@icons/Property_2_Arrow-left_kafkjg.svg';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { BillingCycleTable } from './BillingCycleTable';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useCurrency, useDate } from '@productize/hooks';
 import { selectBillingHistory, useBillingHistoryMutation, useManageSubscriptionMutation } from '@productize/redux';
-import { OnBoardingLoader, PricingModal } from '@productize/ui';
-import { Icon } from '@iconify/react';
+import { PricingModal, SpinnerComponentSmall } from '@productize/ui';
 
 export const BillingCycle = () => {
     const navigate = useNavigate();
     const formatCurrency = useCurrency();
     const formatDate = useDate();
-    const [billingHistory, billingHistoryStatus] = useBillingHistoryMutation();
+    const [isLoading, setLoading] = useState(true);
+    const [billingHistory] = useBillingHistoryMutation();
     const [manageSubscription, manageSubscriptionStatus] = useManageSubscriptionMutation();
     const billingHistoryData = useSelector(selectBillingHistory);
+    const [subID, setSubID] = useState();
 
     const showBillingHistory = useCallback(async () => {
         try {
-            await billingHistory(null).unwrap();
+            const res = await billingHistory(null).unwrap();
+            if (res) {
+                setSubID(res.id);
+                setLoading(false);
+            }
         } catch (error) {
-            return error;
+            setLoading(false);
+            return;
         }
     }, [billingHistory]);
 
@@ -31,12 +38,12 @@ export const BillingCycle = () => {
 
     const handlePlanDeactivation = async () => {
         try {
-            const res = await manageSubscription(null).unwrap();
+            const res = await manageSubscription({ subID }).unwrap();
             if (res) {
                 window.location.href = res.data.link;
             }
         } catch (error) {
-            return error;
+            return;
         }
     };
 
@@ -50,7 +57,7 @@ export const BillingCycle = () => {
             </Flex>
             {/* billing summary */}
             <SimpleGrid columns={{ base: 1, sm: 2, lg: 3 }} spacing={5} my={5}>
-                <Skeleton isLoaded={!billingHistoryStatus.isLoading}>
+                <Skeleton borderRadius={8} isLoaded={!isLoading}>
                     <Box>
                         <Card variant={`outline`} p={5} gap={3}>
                             <Text>Renewal Date</Text>
@@ -61,16 +68,19 @@ export const BillingCycle = () => {
                                         // `1 Sep, 2023`
                                     }
                                 </Text>
-                                <SkeletonText noOfLines={1} isLoaded={!manageSubscriptionStatus.isLoading}>
+
+                                {manageSubscriptionStatus.isLoading ? (
+                                    <SpinnerComponentSmall />
+                                ) : (
                                     <Text cursor={`pointer`} onClick={handlePlanDeactivation} color={`red.200`}>
                                         Deactivate Plan
                                     </Text>
-                                </SkeletonText>
+                                )}
                             </Flex>
                         </Card>
                     </Box>
                 </Skeleton>
-                <Skeleton isLoaded={!billingHistoryStatus.isLoading}>
+                <Skeleton borderRadius={8} isLoaded={!isLoading}>
                     <Box>
                         <Card variant={`outline`} p={5} gap={3}>
                             <Text>Currently</Text>
@@ -86,7 +96,7 @@ export const BillingCycle = () => {
                         </Card>
                     </Box>
                 </Skeleton>
-                <Skeleton isLoaded={!billingHistoryStatus.isLoading}>
+                <Skeleton borderRadius={8} isLoaded={!isLoading}>
                     <Box>
                         <Card variant={`outline`} p={5} gap={3}>
                             <Text>Billing Total</Text>
@@ -99,7 +109,16 @@ export const BillingCycle = () => {
                 </Skeleton>
             </SimpleGrid>
             {/* billing table */}
-            <Box my={10}>{billingHistoryStatus.isLoading ? <OnBoardingLoader /> : <BillingCycleTable tableData={billingHistoryData?.plans} />}</Box>
+            <Box my={10}>
+                {isLoading ? (
+                    <VStack gap={4}>
+                        <Skeleton borderRadius={8} height={`40px`} width={`100%`} />
+                        <Skeleton borderRadius={8} height={`40px`} width={`100%`} />
+                    </VStack>
+                ) : (
+                    <BillingCycleTable tableData={billingHistoryData?.plans} />
+                )}
+            </Box>
         </Box>
     );
 };

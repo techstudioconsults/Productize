@@ -1,4 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
+ // adjust the path as necessary
+import { persistor } from '../store'; // adjust the path as necessary
 
 const initialState = {
     token: null,
@@ -9,26 +11,32 @@ const initialState = {
 };
 
 const authSlice = createSlice({
-    name: "Auth",
+    name: 'auth',
     initialState,
     reducers: {
         setCredentials: (state, action) => {
-            const { accessToken } = action.payload;
-            state.token = accessToken;
+            state.token = action.payload.accessToken;
         },
         setFPEmailConfirmation: (state, action) => {
-            // FP - Forgot Password
             state.forgotPasswordEmailConfirmation = action.payload;
         },
-        logOut: (state) => {
-            Object.assign(state, initialState);
-        },
+        logout: () => initialState,
     },
 });
 
-export const { setCredentials, logOut, setFPEmailConfirmation } = authSlice.actions;
+export const { setCredentials, logout, setFPEmailConfirmation } = authSlice.actions;
 
 export default authSlice.reducer;
 
 export const selectCurrentToken = (state) => state.Auth.token;
 export const selectEmailConfirmation = (state) => state.Auth.forgotPasswordEmailConfirmation;
+
+// log out middle ware
+export const logoutMiddleware = (store) => (next) => (action) => {
+    if (action.type === logout.type) {
+        persistor.purge().then(() => {
+            window.location.href = `/auth/login`;
+        });
+    }
+    return next(action);
+};

@@ -1,4 +1,4 @@
-import { Box, Card, CardBody, CardFooter, Divider, Flex, Image, Skeleton, Stack, Text } from '@chakra-ui/react';
+import { Box, Card, CardBody, CardFooter, Divider, Flex, Image, Stack, Text } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
 import { useCurrency } from '@productize/hooks';
 import { selectCart, useDeleteCartMutation, useGetFromCartMutation, usePurchaseProductMutation } from '@productize/redux';
@@ -73,8 +73,6 @@ export const ProductCard = ({ product }) => {
 export const ProductCards = () => {
     const cart = useSelector(selectCart);
     const formatCurrency = useCurrency();
-
-    console.log(cart);
     const [purchaseProduct, { isLoading }] = usePurchaseProductMutation();
 
     const checkoutProductList = cart?.checkoutProducts?.map((product, index) => {
@@ -100,17 +98,17 @@ export const ProductCards = () => {
             products: checkoutProductFormat,
         };
 
-        console.log(checkout);
-
         try {
             const res = await purchaseProduct(checkout).unwrap();
             if (res && res.data.authorization_url) {
                 window.location.href = res.data.authorization_url;
             } else {
-                console.error('Invalid response from purchaseProduct');
+                // console.error('Invalid response from purchaseProduct');
+                return;
             }
         } catch (error) {
-            console.error('Error during purchase:', error);
+            // console.error('Error during purchase:', error);
+            return;
         }
     };
 

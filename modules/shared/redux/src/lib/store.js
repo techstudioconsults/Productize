@@ -1,5 +1,5 @@
 // app/store.ts
-import authReducer from "./auth-state/authSlice";
+import authReducer, { logoutMiddleware } from "./auth-state/authSlice";
 import userReducer from "./user-state/userSlice";
 import appReducer from "./external-view-state/appSlice";
 import customersReducer from "./customers-state/customersSlice";
@@ -46,7 +46,7 @@ export const store = configureStore({
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
             serializableCheck: false,
-        }).concat(apiSlice.middleware),
+        }).concat(apiSlice.middleware).concat(logoutMiddleware),
 
     // devTools: process.env.NODE_ENV !== 'production',
 });

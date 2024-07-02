@@ -2,7 +2,9 @@
 // import { ToastFeedback, useToastAction } from '@productize/ui';
 import { useAxiosInstance } from '@productize/hooks';
 import { selectCurrentToken } from '@productize/redux';
+import { ToastFeedback, useToastAction } from '@productize/ui';
 import axios from 'axios';
+import errorImg from '@icons/error.svg';
 import { useSelector } from 'react-redux';
 // import errorImg from '@icons/error.svg';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -18,6 +20,7 @@ const extractFormData = (data) => ({
 });
 
 export const useProductActions = () => {
+    const { toast, toastIdRef, close } = useToastAction();
     const token = useSelector(selectCurrentToken);
     const baseUrl = import.meta.env.VITE_BASE_URL;
     const { state } = useLocation();
@@ -70,6 +73,20 @@ export const useProductActions = () => {
             }
         } catch (err) {
             console.error('Error creating product:', err);
+            toastIdRef.current = toast({
+                position: 'top',
+                render: () => (
+                    <ToastFeedback
+                        message={`Product Saved To Draft`}
+                        title={err.response.data.message}
+                        icon={errorImg}
+                        color={null}
+                        btnColor={null}
+                        bgColor={undefined}
+                        handleClose={close}
+                    />
+                ),
+            });
         }
     };
 

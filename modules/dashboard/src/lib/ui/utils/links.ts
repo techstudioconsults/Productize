@@ -84,6 +84,7 @@ export const useLinks = () => {
 
     useEffect(() => {
         if (pathname.includes(`/orders`)) {
+            // if(user.email_)
             makeunseenOrderSeen();
         }
         setLinks1([

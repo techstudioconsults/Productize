@@ -1,6 +1,5 @@
-import React, { Suspense, useCallback, useEffect } from 'react';
+import React, { Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { selectCurrentUser, useGetFromCartMutation, useGetProductTagsMutation } from '@productize/redux';
 import { PageNotFound, PreLoader, SpinnerComponent } from '@productize/ui';
 import { ForgotPassword, Login, Signup } from '@productize/auth';
 import {
@@ -29,7 +28,6 @@ import {
 } from '@productize/dashboard';
 import { CoverPage } from '../pages/coverPage/CoverPage';
 import { Admin } from '@productize/admin-dashboard';
-import { useSelector } from 'react-redux';
 
 // doesn't feel right
 
@@ -71,17 +69,6 @@ const ProductCart = React.lazy(() =>
 );
 
 function App() {
-    const [getProductTags] = useGetProductTagsMutation();
-    const [getFromCart] = useGetFromCartMutation();
-    const user = useSelector(selectCurrentUser);
-
-    useEffect(() => {
-        getProductTags(null).unwrap();
-        if (user) {
-            getFromCart(null).unwrap();
-        }
-    }, [getFromCart, getProductTags, user]);
-
     return (
         <Suspense
             fallback={

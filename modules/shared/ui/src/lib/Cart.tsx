@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { AvatarBadge, Box, Avatar, Link } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
 import { Link as RouterLink } from 'react-router-dom';

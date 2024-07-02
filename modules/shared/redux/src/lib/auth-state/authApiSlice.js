@@ -1,7 +1,6 @@
 import { apiSlice } from '../apiSlice';
-import { resetProductStore } from '../products-state/productsSlice';
-import { resetUserStore, setUser } from '../user-state/userSlice';
-import { logOut, setCredentials, setFPEmailConfirmation } from './authSlice';
+import { setUser } from '../user-state/userSlice';
+import { logout, setCredentials, setFPEmailConfirmation } from './authSlice';
 
 export const authApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
@@ -114,10 +113,10 @@ export const authApiSlice = apiSlice.injectEndpoints({
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
-                    // const { data } = await queryFulfilled;
-                    dispatch(logOut());
-                    dispatch(resetUserStore());
-                    dispatch(resetProductStore());
+                    const res = await queryFulfilled;
+                    if (res.meta.response.status === 200) {
+                        dispatch(logout());
+                    }
                 } catch (err) {
                     return;
                 }

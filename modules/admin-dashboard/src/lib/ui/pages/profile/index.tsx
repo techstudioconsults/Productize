@@ -1,7 +1,7 @@
 import { Box } from '@chakra-ui/react';
-import { ProfileForm } from '../../dashboard-profile/ProfileForm';
+import { ProfileForm } from '../../dashboard-profile/AdminProfileForm';
 
-export const AdminProfile = () => {
+export const Profile = () => {
     return (
         <Box my={8}>
             <ProfileForm />

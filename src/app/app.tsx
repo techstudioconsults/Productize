@@ -28,7 +28,7 @@ import {
     KycSettings,
 } from '@productize/dashboard';
 import { CoverPage } from '../pages/coverPage/CoverPage';
-import { Admin } from '@productize/admin-dashboard';
+import { Admin, AdminAccountSettings, AdminHome, AdminOrder, AdminProducts, AdminSettings, AdminSettingsTab, AdminUser } from '@productize/admin-dashboard';
 import { useSelector } from 'react-redux';
 
 // doesn't feel right
@@ -137,6 +137,9 @@ function App() {
                     <Route path="products" element={<AdminProducts />} />
                     <Route path="orders" element={<AdminOrder />} />
                     <Route path="users" element={<AdminUser />} />
+                    <Route path="settings" element={<AdminSettings />}>
+                        <Route path="account" element={<AdminAccountSettings />} />
+                    </Route>
                 </Route>
                 {/* not found */}
                 <Route path="*" element={<PageNotFound />} />

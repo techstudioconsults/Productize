@@ -15,7 +15,7 @@ const inactiveTabStyle = {
 
 const tabNames = ['account', 'payment', 'kyc', 'plans'];
 
-export const SettingsTab = () => {
+export const AdminSettingsTab = () => {
     const { pathname } = useLocation();
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState('');
@@ -24,13 +24,13 @@ export const SettingsTab = () => {
         const currentTab = tabNames.find((tab) => pathname.includes(tab));
         setActiveTab(currentTab || 'account');
         if (activeTab === `account`) {
-            navigate(`/dashboard/settings/${activeTab}`);
+            navigate(`/Admin/settings/${activeTab}`);
         }
     }, [activeTab, navigate, pathname]);
 
     const handleTabClick = (tab) => {
         setActiveTab(tab);
-        navigate(`/dashboard/settings/${tab}`);
+        navigate(`/Admin/settings/${tab}`);
     };
 
     return (
@@ -41,7 +41,7 @@ export const SettingsTab = () => {
                         Account
                     </Text>
                 </NavLink>
-                <NavLink to="/dashboard/settings/payment" onClick={() => handleTabClick('payment')}>
+                {/* <NavLink to="/dashboard/settings/payment" onClick={() => handleTabClick('payment')}>
                     <Text fontSize={`sm`} py={3} px={3} style={activeTab === 'payment' ? activeStateStyle : inactiveTabStyle}>
                         Payment
                     </Text>
@@ -55,7 +55,7 @@ export const SettingsTab = () => {
                     <Text fontSize={`sm`} py={3} px={3} style={activeTab === 'plans' ? activeStateStyle : inactiveTabStyle}>
                         Plans
                     </Text>
-                </NavLink>
+                </NavLink> */}
             </Flex>
             <Outlet />
         </Box>

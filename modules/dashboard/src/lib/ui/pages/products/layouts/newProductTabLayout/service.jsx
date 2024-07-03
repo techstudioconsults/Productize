@@ -29,26 +29,27 @@ export const useProductActions = () => {
     // const [schema, setSchema] = useState(productFormSchema);
 
     const updateProduct = async (data) => {
-        const formData = extractFormData(data);
-        formData.resources = data.data;
+        console.log(data);
+        // const formData = extractFormData(data);
+        // formData.resources = data.data;
 
-        // const productCreationEndpoint = data.product_type === 'digital_product' ? '/digitalProducts' : '/skillSellings';
-        //  const additionalData =
-        //      data.product_type === 'digital_product'
-        //          ? { category: data.category, resources: data.data }
-        //          : { category: data.category, level: data.level, availability: data.availability, link: data.portfolio_link };
+        // // const productCreationEndpoint = data.product_type === 'digital_product' ? '/digitalProducts' : '/skillSellings';
+        // //  const additionalData =
+        // //      data.product_type === 'digital_product'
+        // //          ? { category: data.category, resources: data.data }
+        // //          : { category: data.category, level: data.level, availability: data.availability, link: data.portfolio_link };
 
-        try {
-            const res = await query('post', `/products/${state?.product?.id}?_method=PUT`, formData);
-            if (res.status === 200) {
-                // const additionalRes = await query('post', productCreationEndpoint, { ...additionalData, product_id: res.data.data.id });
-                // if (additionalRes.status === 201) {
-                navigate(`/dashboard/products/new#preview`, { state: { product: res.data } });
-                // }
-            }
-        } catch (err) {
-            console.error('Error updating product:', err);
-        }
+        // try {
+        //     const res = await query('post', `/products/${state?.product?.id}?_method=PUT`, formData);
+        //     if (res.status === 200) {
+        //         // const additionalRes = await query('post', productCreationEndpoint, { ...additionalData, product_id: res.data.data.id });
+        //         // if (additionalRes.status === 201) {
+        //         navigate(`/dashboard/products/new#preview`, { state: { product: res.data } });
+        //         // }
+        //     }
+        // } catch (err) {
+        //     console.error('Error updating product:', err);
+        // }
     };
 
     const createProduct = async (data) => {

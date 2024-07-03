@@ -6,8 +6,11 @@ import { SectionLayout } from '../../components/section-layout/SectionLayout';
 import { DualSectionLayout } from '../../components/section-layout/DualSectionLayout';
 import { SharedSection } from '../../components/section-layout/SharedSection';
 import { CardLayout, SharedButton } from '@productize/ui';
+import { useTokenExists } from '@productize/hooks';
 
 export const Home = () => {
+    const isAuth = useTokenExists();
+
     return (
         <DefaultLayout>
             <Hero
@@ -25,7 +28,7 @@ export const Home = () => {
                             allowing you to concentrate on what you do best.
                         </Text>
                     </Container>
-                    <Container display={{ xl: `none` }} w={`fit-content`}>
+                    <Container hidden={isAuth} display={{ xl: `none` }} w={`fit-content`}>
                         <Link as={RouterLink} to={`/auth`}>
                             <SharedButton
                                 fontSize={{ base: `sm`, md: `md` }}
@@ -62,7 +65,7 @@ export const Home = () => {
                                 Are you a digital artist, designer, writer, or developer looking to share your creations with the world and earn from your
                                 passion? Look no further! Productize is the ultimate platform for creators like you.
                             </Text>
-                            <Box display={{ base: `none`, xl: `block` }}>
+                            <Box hidden={isAuth} display={{ base: `none`, xl: `block` }}>
                                 <Link as={RouterLink} to={`/auth`}>
                                     <SharedButton
                                         text={'Get Started'}
@@ -88,7 +91,7 @@ export const Home = () => {
                                         <Text as={`h5`} my={2}>
                                             Digital Product
                                         </Text>
-                                        <Text color={`grey.500`}>Any set of files to download or stream.</Text>
+                                        <Text color={`grey.500`}>Ebooks, video content, digital art/graphics, online courses or stock photos.</Text>
                                     </CardBody>
                                 </CardLayout>
                             </Box>
@@ -101,10 +104,10 @@ export const Home = () => {
                                             alt=""
                                         />
                                         <Text as={`h5`} my={2}>
-                                            Print On Demand
+                                            Sales Dashboard
                                         </Text>
                                         <Text fontWeight={400} color={`grey.500`} as={`h6`}>
-                                            Any set of files to download or stream.
+                                            Monitor real-time sales data, track trends, and optimize your business.
                                         </Text>
                                     </CardBody>
                                 </CardLayout>
@@ -118,10 +121,10 @@ export const Home = () => {
                                             alt=""
                                         />
                                         <Text as={`h5`} my={2}>
-                                            Video Streaming
+                                            Product Analytics
                                         </Text>
                                         <Text fontWeight={400} color={`grey.500`} as={`h6`}>
-                                            Let customers listen to your audio content.
+                                            Gain valuable insights into your product performance and understand user engagement.
                                         </Text>
                                     </CardBody>
                                 </CardLayout>
@@ -135,10 +138,10 @@ export const Home = () => {
                                             alt=""
                                         />
                                         <Text as={`h5`} my={2}>
-                                            Subscription
+                                            Branded Profiles
                                         </Text>
                                         <Text fontWeight={400} color={`grey.500`} as={`h6`}>
-                                            Let customers subscribe to your contents.
+                                            Showcase your unique identity with a personalized profile and connect with your audience.
                                         </Text>
                                     </CardBody>
                                 </CardLayout>
@@ -186,7 +189,7 @@ export const Home = () => {
                             <CardLayout bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
                                 <CardBody p={`24px`} display={`flex`} flexDir={`column`} justifyContent={`space-between`}>
                                     <Box>
-                                        <Text as={`h5`} my={2}>
+                                        <Text as={`h4`} w={`60%`} my={2}>
                                             Customize your profile
                                         </Text>
                                         <Text color={`grey.500`}>Complete your profile to start getting your products published.</Text>
@@ -205,7 +208,7 @@ export const Home = () => {
                             <CardLayout bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
                                 <CardBody p={`24px`} display={`flex`} flexDir={`column`} justifyContent={`space-between`}>
                                     <Box>
-                                        <Text as={`h5`} my={2}>
+                                        <Text as={`h4`} w={`60%`} my={2}>
                                             Set up your payout
                                         </Text>
                                         <Text color={`grey.500`}>Set up your payout, and start receiving payments for your products or services!</Text>
@@ -224,7 +227,7 @@ export const Home = () => {
                             <CardLayout bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
                                 <CardBody p={`24px`} display={`flex`} flexDir={`column`} justifyContent={`space-between`}>
                                     <Box>
-                                        <Text as={`h5`} my={2}>
+                                        <Text as={`h4`} w={`60%`} my={2}>
                                             Create your first product
                                         </Text>
                                         <Text color={`grey.500`}>Create your first product , and start building your brand.</Text>
@@ -243,7 +246,7 @@ export const Home = () => {
                             <CardLayout bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
                                 <CardBody p={`24px`} display={`flex`} flexDir={`column`} justifyContent={`space-between`}>
                                     <Box>
-                                        <Text as={`h5`} my={2}>
+                                        <Text as={`h4`} w={`60%`} my={2}>
                                             Make your first sale
                                         </Text>
                                         <Text color={`grey.500`}>

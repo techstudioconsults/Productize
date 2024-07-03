@@ -44,7 +44,7 @@ export const appApiSlice = apiSlice.injectEndpoints({
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
-
+                    console.log(data);
                     dispatch(
                         setSingleProduct_EXTERNAL({
                             product: data.data,
@@ -78,7 +78,7 @@ export const appApiSlice = apiSlice.injectEndpoints({
                         })
                     );
                 } catch (error) {
-                    return ;
+                    return;
                 }
             },
         }),

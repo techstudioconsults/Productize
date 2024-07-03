@@ -20,7 +20,7 @@ export const ProductDetails = () => {
 
     const fetchData = useCallback(async () => {
         try {
-            await getSingleProducts_EXTERNAL({ productID }).unwrap();
+            getSingleProducts_EXTERNAL({ productID }).unwrap();
             const res = await getAggrProductRatings({ productID }).unwrap();
             setArgRatings(res.averageRating);
         } catch (error) {

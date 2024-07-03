@@ -68,6 +68,7 @@ export const NewProductTabLayout = () => {
     }, [getSkillSellingData, hash, methods, schema, state]);
 
     const onSubmit = async (data) => {
+        console.log(data);
         const action = state && hash ? updateProduct : createProduct;
         await action(data);
     };

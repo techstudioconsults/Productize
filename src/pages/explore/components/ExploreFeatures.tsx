@@ -111,7 +111,7 @@ export const ExploreFeatures = ({ title }: slideProps) => {
                 )}
                 {/* TABLE PAGINATION */}
                 <Flex
-                    display={products.productsMetaData?.meta?.total > 1 ? `flex` : `none`}
+                    display={products.productsMetaData?.meta?.last_page > 1 ? `flex` : `none`}
                     mt={4}
                     gap={5}
                     color={`grey.400`}

@@ -78,6 +78,7 @@ const ProductSideNav = ({ status }) => {
                             product_slug: product.slug,
                             quantity: productQuantity,
                         };
+                        console.log(modifiedProduct);
                         const res = await addToCart(modifiedProduct).unwrap();
                         if (res) {
                             getFromCart(null).unwrap();
@@ -89,6 +90,7 @@ const ProductSideNav = ({ status }) => {
                     product_slug: product.slug,
                     quantity: productQuantity,
                 };
+                console.log(modifiedProduct);
 
                 const res = await addToCart(modifiedProduct).unwrap();
                 if (res) {
@@ -114,10 +116,18 @@ const ProductSideNav = ({ status }) => {
                             <Text>{product?.total_orders}</Text>
                         </Flex>
                         <Box my={4}>
-                            <Text color={`grey.800`} fontSize={`22px`} fontWeight={600}>
-                                {formatCurrency(totalPrice)}
-                                <Text textDecor={`line-through`} ml={2} color={`red`} fontWeight={600} as={`span`}>
+                            <Text>
+                                <Text
+                                    as={`span`}
+                                    textDecor={product.discount_price ? `line-through` : null}
+                                    color={`grey.800`}
+                                    fontSize={`22px`}
+                                    fontWeight={600}
+                                >
                                     {formatCurrency(totalPrice)}
+                                </Text>
+                                <Text hidden={!product.discount_price} ml={2} color={`red`} fontWeight={600} as={`span`}>
+                                    {formatCurrency(product.discount_price)}
                                 </Text>
                             </Text>
                             <Box mt={4}>

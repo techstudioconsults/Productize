@@ -1,4 +1,4 @@
-import { FormControl, Grid, GridItem, Input, InputGroup, InputLeftElement, Select, Text } from '@chakra-ui/react';
+import { FormControl, Grid, GridItem, Input, InputGroup, InputLeftElement, Select } from '@chakra-ui/react';
 import { Field } from './FormFields';
 import { Icon } from '@iconify/react';
 import { useFormContext } from 'react-hook-form';
@@ -67,15 +67,12 @@ const MajorInputFields = () => {
                             <Icon fontSize="1.2rem" icon="mdi:naira" />
                         </InputLeftElement>
                         <Input
-                            disabled
+                            defaultValue={0}
                             placeholder="0.00"
                             variant="filled"
                             size="lg"
                             sx={globalFieldStyle}
-                            {...register('discount_price', {
-                                valueAsNumber: true,
-                                min: { value: 0, message: 'Discount price must be at least 0' },
-                            })}
+                            {...register('discount_price')}
                             type="number"
                             id="discount_price"
                         />

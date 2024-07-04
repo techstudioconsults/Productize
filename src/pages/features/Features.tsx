@@ -6,8 +6,10 @@ import { SectionLayout } from '../../components/section-layout/SectionLayout';
 import { DualSectionLayout, DualSectionLayoutList } from '../../components/section-layout/DualSectionLayout';
 import { SharedSection } from '../../components/section-layout/SharedSection';
 import { SharedButton } from '@productize/ui';
+import { useTokenExists } from '@productize/hooks';
 
 export const Features = () => {
+    const isAuth = useTokenExists();
     return (
         <DefaultLayout>
             <Hero height={{ base: `35rem`, xl: `39rem` }} bgImg={''} bgColor={'green.100'}>
@@ -25,7 +27,7 @@ export const Features = () => {
                             It is entirely up to you to determine how you want your products to look like to visitors, we only help you show it to them.
                         </Text>
                     </Container>
-                    <Container display={{ xl: `none` }} w={`fit-content`}>
+                    <Container hidden={isAuth} display={{ xl: `none` }} w={`fit-content`}>
                         <Link to={`/auth`}>
                             <SharedButton
                                 fontSize={{ base: `sm`, md: `md` }}
@@ -70,11 +72,11 @@ export const Features = () => {
                 <Flex alignItems={`center`} color={`purple.300`} height={`100%`} py={10}>
                     <Container maxW={`35rem`} px={{ base: 4, xl: 0 }} pr={{ base: 4, xl: 16 }}>
                         <DualSectionLayoutList
-                            shouldShowButton={true}
+                            shouldShowButton={!isAuth}
                             iconColor={`#F6C21C`}
                             title={'Create products with ease'}
                             subTitle={'Products can be easily created on our platform without stress no matter what it is and how tech savvy or not you are.'}
-                            listItems={[`Receive money from anywhere, blah blah blah blah blah.`, `Receive money from anywhere, blah blah blah blah blah.`]}
+                            listItems={[`Receive money from anywhere.`]}
                         />
                     </Container>
                 </Flex>
@@ -105,9 +107,10 @@ export const Features = () => {
                         <DualSectionLayoutList
                             shouldShowButton={false}
                             iconColor={`white`}
-                            title={'Raise an army of community.'}
-                            subTitle={'Receive money from anywhere, blah blah blah blah blah.'}
-                            listItems={[`Receive money from anywhere, blah blah blah blah blah.`, `Receive money from anywhere, blah blah blah blah blah.`]}
+                            title={'Helpful Information at your fingertips'}
+                            subTitle={`You can find out your best customers and what products sell better from your dashboard with ease. This can help you plan better
+`}
+                            listItems={[]}
                         />
                     </Container>
                 </Flex>
@@ -128,12 +131,9 @@ export const Features = () => {
                             shouldShowButton={false}
                             iconColor={`#F6C21C`}
                             title={'Making Money'}
-                            subTitle={'Receive money from anywhere, blah blah blah blah blah.'}
-                            listItems={[
-                                `Receive money from anywhere, blah blah blah blah blah.`,
-                                `Receive money from anywhere, blah blah blah blah blah.`,
-                                `Receive money from anywhere, blah blah blah blah blah.`,
-                            ]}
+                            subTitle={`Make money with those genius ideas of yours by letting your products reach multitude of buyers without the hassle of marketing. Just list it on Productize and get paid when they shop.
+`}
+                            listItems={[]}
                         />
                     </Container>
                 </Flex>

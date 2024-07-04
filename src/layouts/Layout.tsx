@@ -12,6 +12,7 @@ interface LayoutProps {
 
 const DefaultLayout = ({ children, removeFooter }: LayoutProps) => {
     const isAuth = useTokenExists();
+
     return (
         <>
             <Box>

@@ -43,9 +43,7 @@ const ProductNavbar = ({ isAuth }: any) => {
                                 </Link>
                             )}
                         </Box>
-                        <Box display={{ lg: `none` }}>
-                            <AvatarComp />
-                        </Box>
+                        <Box display={{ lg: `none` }}>{isAuth && <AvatarComp />}</Box>
                     </Flex>
                 </Box>
             </Container>

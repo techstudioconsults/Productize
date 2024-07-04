@@ -48,8 +48,8 @@ export const AppError = () => {
                 render: () => (
                     <ToastFeedback
                         btnColor="purple.200"
-                        message={message || `Something went wrong...please try again`}
-                        title=""
+                        message={message || `An error has occurred... please try again later, or check your internet connection`}
+                        title={`Something went wrong`}
                         icon={errorImg}
                         bgColor={undefined}
                         color={undefined}

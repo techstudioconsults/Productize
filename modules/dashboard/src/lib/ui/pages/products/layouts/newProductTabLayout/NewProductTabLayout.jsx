@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Tabs, TabList, Tab, TabPanels, TabPanel, Flex, Box, useDisclosure } from '@chakra-ui/react';
-import { DPFormSchema, ProductForm, SSFormSchema, productFormSchema } from '@productize/dashboard';
+import { DPFormSchema, ProductForm, SSFormSchema } from '@productize/dashboard';
 import { PreviewProductSummary, SharedButton, ToastFeedback, useToastAction } from '@productize/ui';
 import ShareLayout from '../ShareLayout';
 import { selectCurrentUser, useUpdateProductStatusMutation } from '@productize/redux';
@@ -61,6 +61,9 @@ export const NewProductTabLayout = () => {
             methods.setValue('product_type', state?.product?.product_type);
             methods.setValue('description', state?.product?.description);
             methods.setValue('tags', state?.product?.tags);
+            methods.setValue('data', state?.product?.resources);
+            methods.setValue('thumbnail', state?.product?.thumbnail);
+            methods.setValue('cover_photos', state?.product?.cover_photos);
             // methods.setValue('level', state?.product?.level);
             // methods.setValue('availability', state?.product?.availability);
             // methods.setValue('portfolio_link', state?.product?.link);
@@ -68,6 +71,7 @@ export const NewProductTabLayout = () => {
     }, [getSkillSellingData, hash, methods, schema, state]);
 
     const onSubmit = async (data) => {
+        // console.log(data);
         const action = state && hash ? updateProduct : createProduct;
         await action(data);
     };

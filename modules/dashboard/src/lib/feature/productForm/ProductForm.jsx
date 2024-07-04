@@ -43,7 +43,7 @@ export const ProductForm = ({ listenForSchemaChange }) => {
                 <RichTextField />
             </Box>
             {/* GRID FOUR */}
-            <Box my={8} hidden={selectedProductType === `digital_product` ? false : true}>
+            <Box my={8}>
                 <DataUploadField />
             </Box>
             {/* GRID FIVE */}

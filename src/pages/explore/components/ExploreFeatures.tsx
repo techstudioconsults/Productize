@@ -56,6 +56,8 @@ export const ExploreFeatures = ({ title }: slideProps) => {
                 heading={product?.title}
                 price={product?.price}
                 publisher={product?.publisher}
+                aggrRating={product?.avg_rating}
+                discountPrice={product?.discount_price}
             />
         ));
 

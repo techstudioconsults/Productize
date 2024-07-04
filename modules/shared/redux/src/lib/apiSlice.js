@@ -14,27 +14,33 @@ const baseQuery = fetchBaseQuery({
 });
 
 const handleUnauthorized = (result, api) => {
-    // console.log(result);
-    if (result?.error?.status === 401) {
-        // window.location.href = '/auth/login';
-    } else if (result?.error?.status === 403 && result?.error?.data?.message === `User is not subscribed`) {
-        store.dispatch({
-            type: 'User/FREE_PLAN_OVER_RESPONSE',
-            payload: {
-                planStatus: {
-                    isPlanExpired: true,
-                    apiDetails: { endpoint: api.endpoint, ...result?.error },
-                },
-            },
-        });
-    }
     if (result?.error) {
-        store.dispatch({
-            type: 'App/setAppError',
-            payload: {
-                appError: result.error,
-            },
-        });
+        const { status, data } = result.error;
+
+        if (status === 401) {
+            store.dispatch({
+                type: 'auth/logout',
+            });
+        } else if (status === 403 && data?.message === 'User is not subscribed') {
+            store.dispatch({
+                type: 'User/FREE_PLAN_OVER_RESPONSE',
+                payload: {
+                    planStatus: {
+                        isPlanExpired: true,
+                        apiDetails: { endpoint: api.endpoint, ...result?.error },
+                    },
+                },
+            });
+        } else if (status === 403) {
+            return;
+        } else {
+            store.dispatch({
+                type: 'App/setAppError',
+                payload: {
+                    appError: result.error,
+                },
+            });
+        }
     }
 };
 

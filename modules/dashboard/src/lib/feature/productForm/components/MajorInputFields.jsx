@@ -26,12 +26,14 @@ const MajorInputFields = () => {
                 {/* Product title */}
                 <Field label="Title" error={errors.title}>
                     <Input
+                        maxLength={30}
                         placeholder="Name of product"
                         variant="filled"
                         size="lg"
                         sx={globalFieldStyle}
                         {...register('title', {
                             required: 'Title is required',
+                            maxLength: { value: 30, message: 'Title cannot exceed 30 characters' },
                         })}
                         type="text"
                         id="title"

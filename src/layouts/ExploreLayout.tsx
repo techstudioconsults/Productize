@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ExploreNavBar } from '../components/navbar/ExploreNavBar';
 import { useTokenExists } from '@productize/hooks';
 import { Footer, SharedButton } from '@productize/ui';

@@ -3,13 +3,12 @@ import { useCallback, useEffect, useState } from 'react';
 import { ExploreBanner } from '../components/ExploreBanner';
 import { ExploreFeatures } from '../components/ExploreFeatures';
 import { ExploreLayout } from '../../../layouts/ExploreLayout';
-import { useGetFromCartMutation, useGetTopProductsMutation } from '@productize/redux';
+import {  useGetTopProductsMutation } from '@productize/redux';
 import { ExploreTrending } from '../components/ExploreTrending';
 import { useLocation } from 'react-router-dom';
 
 export const Explore = () => {
     const { pathname } = useLocation();
-    const [getFromCart] = useGetFromCartMutation();
     const [getTopProducts] = useGetTopProductsMutation();
     const [topProducts, setTopProducts] = useState<[]>([]);
     const [isTopProductLoading, setTopProuctLoading] = useState(true);
@@ -29,10 +28,8 @@ export const Explore = () => {
             //     setSearchedProducts(searchRes.data);
             //     setSearchProuctLoading(false);
             // }
-        } else {
-            getFromCart(null).unwrap();
         }
-    }, [getFromCart, getTopProducts, pathname]);
+    }, [ getTopProducts, pathname]);
 
     useEffect(() => {
         getExploreData();

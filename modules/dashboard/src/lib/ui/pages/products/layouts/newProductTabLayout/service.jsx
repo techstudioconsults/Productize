@@ -2,7 +2,9 @@
 // import { ToastFeedback, useToastAction } from '@productize/ui';
 import { useAxiosInstance } from '@productize/hooks';
 import { selectCurrentToken } from '@productize/redux';
+import { ToastFeedback, useToastAction } from '@productize/ui';
 import axios from 'axios';
+import errorImg from '@icons/error.svg';
 import { useSelector } from 'react-redux';
 // import errorImg from '@icons/error.svg';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -18,6 +20,7 @@ const extractFormData = (data) => ({
 });
 
 export const useProductActions = () => {
+    const { toast, toastIdRef, close } = useToastAction();
     const token = useSelector(selectCurrentToken);
     const baseUrl = import.meta.env.VITE_BASE_URL;
     const { state } = useLocation();
@@ -26,38 +29,41 @@ export const useProductActions = () => {
     // const [schema, setSchema] = useState(productFormSchema);
 
     const updateProduct = async (data) => {
-        const formData = extractFormData(data);
-        formData.resources = data.data;
+        console.log(data);
+        // const formData = extractFormData(data);
+        // formData.resources = data.data;
 
-        // const productCreationEndpoint = data.product_type === 'digital_product' ? '/digitalProducts' : '/skillSellings';
-        //  const additionalData =
-        //      data.product_type === 'digital_product'
-        //          ? { category: data.category, resources: data.data }
-        //          : { category: data.category, level: data.level, availability: data.availability, link: data.portfolio_link };
+        // // const productCreationEndpoint = data.product_type === 'digital_product' ? '/digitalProducts' : '/skillSellings';
+        // //  const additionalData =
+        // //      data.product_type === 'digital_product'
+        // //          ? { category: data.category, resources: data.data }
+        // //          : { category: data.category, level: data.level, availability: data.availability, link: data.portfolio_link };
 
-        try {
-            const res = await query('post', `/products/${state?.product?.id}?_method=PUT`, formData);
-            if (res.status === 200) {
-                // const additionalRes = await query('post', productCreationEndpoint, { ...additionalData, product_id: res.data.data.id });
-                // if (additionalRes.status === 201) {
-                navigate(`/dashboard/products/new#preview`, { state: { product: res.data } });
-                // }
-            }
-        } catch (err) {
-            console.error('Error updating product:', err);
-        }
+        // try {
+        //     const res = await query('post', `/products/${state?.product?.id}?_method=PUT`, formData);
+        //     if (res.status === 200) {
+        //         // const additionalRes = await query('post', productCreationEndpoint, { ...additionalData, product_id: res.data.data.id });
+        //         // if (additionalRes.status === 201) {
+        //         navigate(`/dashboard/products/new#preview`, { state: { product: res.data } });
+        //         // }
+        //     }
+        // } catch (err) {
+        //     console.error('Error updating product:', err);
+        // }
     };
 
     const createProduct = async (data) => {
         // console.log(data);
         const formData = extractFormData(data);
         formData.product_type = data.product_type;
+        formData.discount_price = parseInt(data.discount_price || 0);
 
         const productCreationEndpoint = data.product_type === 'digital_product' ? '/digitalProducts' : '/skillSellings';
         const additionalData =
             data.product_type === 'digital_product'
                 ? { category: data.category, resources: data.data }
-                : { category: data.category, level: data.level, availability: data.availability, link: data.portfolio_link };
+                // : { category: data.category, resources: data.data, level: data.level, link: data.portfolio_link };
+                : { category: data.category, resources: data.data, level: data.level, availability: data.availability, link: data.portfolio_link };
 
         try {
             const res = await query('post', '/products', formData);
@@ -70,6 +76,20 @@ export const useProductActions = () => {
             }
         } catch (err) {
             console.error('Error creating product:', err);
+            toastIdRef.current = toast({
+                position: 'top',
+                render: () => (
+                    <ToastFeedback
+                        message={`Product Saved To Draft`}
+                        title={err.response.data.message}
+                        icon={errorImg}
+                        color={null}
+                        btnColor={null}
+                        bgColor={undefined}
+                        handleClose={close}
+                    />
+                ),
+            });
         }
     };
 

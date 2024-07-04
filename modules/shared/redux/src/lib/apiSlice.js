@@ -31,6 +31,8 @@ const handleUnauthorized = (result, api) => {
                     },
                 },
             });
+        } else if (status === 403) {
+            return;
         } else {
             store.dispatch({
                 type: 'App/setAppError',

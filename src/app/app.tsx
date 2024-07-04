@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { PageNotFound, PreLoader, SpinnerComponent } from '@productize/ui';
 import { ForgotPassword, Login, Signup } from '@productize/auth';
@@ -28,6 +28,8 @@ import {
 } from '@productize/dashboard';
 import { CoverPage } from '../pages/coverPage/CoverPage';
 import { Admin } from '@productize/admin-dashboard';
+import { useTokenExists } from '@productize/hooks';
+import { useGetFromCartMutation, useGetProductTagsMutation } from '@productize/redux';
 
 // doesn't feel right
 
@@ -69,6 +71,19 @@ const ProductCart = React.lazy(() =>
 );
 
 function App() {
+
+     const isAuth = useTokenExists();
+     const [getProductTags] = useGetProductTagsMutation();
+     const [getFromCart] = useGetFromCartMutation();
+
+     useEffect(() => {
+         getProductTags(null).unwrap();
+         if (isAuth) {
+             getFromCart(null).unwrap();
+         }
+     }, [getFromCart, getProductTags, isAuth]);
+
+
     return (
         <Suspense
             fallback={

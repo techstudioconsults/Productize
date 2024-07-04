@@ -70,6 +70,7 @@ export const KycSettings = () => {
     if (isFormCompleted) {
         return (
             <DashboardEmptyState
+                hideCta
                 showImage
                 content={{
                     img: `https://res.cloudinary.com/kingsleysolomon/image/upload/v1716015379/productize/Frame_1171276417_lwjiib.png`,

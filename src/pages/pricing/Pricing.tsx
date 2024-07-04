@@ -7,8 +7,10 @@ import { SharedSection } from '../../components/section-layout/SharedSection';
 import { AccordionComponent, PricingCard, SharedButton } from '@productize/ui';
 import diamond from '@icons/diamond.png';
 import lines from '@icons/Lines.png';
+import { useTokenExists } from '@productize/hooks';
 
 export const Pricing = () => {
+    const isAuth = useTokenExists();
     return (
         <DefaultLayout>
             <Hero height={{ base: `fit-content`, xl: '60rem' }} bgImg={lines} bgColor={'yellow.100'}>
@@ -47,7 +49,7 @@ export const Pricing = () => {
                             textColor={'yellow.300'}
                             btnText={'Start Creating'}
                         />
-                        <Container display={{ lg: `none` }} w={`fit-content`}>
+                        <Container hidden={isAuth} display={{ lg: `none` }} w={`fit-content`}>
                             <Link to={`/auth`}>
                                 <SharedButton
                                     fontSize={{ base: `sm`, md: `md` }}

@@ -1,7 +1,7 @@
-import React from 'react';
-import { Box, Flex, Heading, Image, Text } from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
+import { Box, Flex, Heading, Image, Tag, Text } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
-import { useCurrency } from '@productize/hooks';
+import { useCurrency, useDiscountCalculator } from '@productize/hooks';
 import StarRatings from 'react-star-ratings';
 
 interface CardProps {
@@ -13,10 +13,20 @@ interface CardProps {
     price: number;
     publisher: string;
     productID: string | number;
+    aggrRating: string | number;
+    discountPrice: number; // Ensure discountPrice is a number
 }
 
-const Card: React.FC<CardProps> = ({ width, image, heading, rate, count, price, publisher, productID }) => {
+const Card: React.FC<CardProps> = ({ width, image, heading, rate, count, price, publisher, productID, aggrRating, discountPrice }) => {
     const formatCurrency = useCurrency();
+    const { calculateDiscountPercentage } = useDiscountCalculator();
+    const [discountPercentage, setDiscountPercentage] = useState(0);
+
+    useEffect(() => {
+        const res: any = calculateDiscountPercentage(price, discountPrice);
+        setDiscountPercentage(res.discount?.toFixed(0));
+    }, [calculateDiscountPercentage, discountPrice, price]);
+
     return (
         <Box
             to={`/products/${productID}`}
@@ -39,20 +49,20 @@ const Card: React.FC<CardProps> = ({ width, image, heading, rate, count, price, 
                 {heading.slice(0, 30)}
             </Heading>
 
-            <Box mt=".625rem">
+            <Flex alignItems={`center`} justifyContent={`space-between`} w={`100%`} mt=".625rem">
                 <Text as="span" fontSize={'xs'} lineHeight={4} pr=".625rem" textAlign={'left'}>
                     By {publisher.slice(0, 25)}
                 </Text>
-                {/* <Text as="span" fontSize={'xs'} lineHeight={4}>
-                    {`count`}
-                </Text> */}
-            </Box>
-            <Flex fontWeight={'bold'} color={'#6D5DD3'} textAlign={'start'} w={`100%`} alignItems={`center`} justifyContent={`space-between`}>
+                <Tag colorScheme={`orange`} fontSize={'xs'} hidden={discountPercentage >= 100}>
+                    {-discountPercentage}%
+                </Tag>
+            </Flex>
+            <Flex mt={4} fontWeight={'bold'} color={'#6D5DD3'} textAlign={'start'} w={`100%`} alignItems={`center`} justifyContent={`space-between`}>
                 <Text lineHeight={5} fontSize={'sm'}>
                     {formatCurrency(price)}
                 </Text>
                 <Box>
-                    <StarRatings rating={4} starDimension="12px" starSpacing="1px" starRatedColor={`orange`} />
+                    <StarRatings rating={aggrRating} starDimension="12px" starSpacing="1px" starRatedColor={`orange`} />
                 </Box>
             </Flex>
         </Box>

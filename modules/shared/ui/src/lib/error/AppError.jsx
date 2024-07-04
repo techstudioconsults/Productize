@@ -13,6 +13,7 @@ export const AppError = () => {
     const prevErrorRef = useRef(null); // Track the previous error
     const [isOnline, setIsOnline] = useState(navigator.onLine); // Track internet connection status
     const [showAlert, setShowAlert] = useState(!navigator.onLine); // State to control the alert visibility
+    const prevErrorMessageRef = useRef(''); // Track the previous error message
 
     useEffect(() => {
         const handleOnline = () => {
@@ -36,29 +37,34 @@ export const AppError = () => {
 
     useEffect(() => {
         if (error && error !== prevErrorRef.current) {
-            prevErrorRef.current = error; // Update the previous error
+            const message =
+                error?.data?.message ||
+                (error?.status === 500 || error?.originalStatus === 500
+                    ? 'Server error...please try again'
+                    : 'An error has occurred... please try again later, or check your internet connection');
 
-            let message = error?.data?.message;
-            if (error?.status === 500 || error?.originalStatus === 500) {
-                message = 'Server error...please try again';
+            // Only show the toast if the error message is different from the previous one
+            if (message !== prevErrorMessageRef.current) {
+                prevErrorMessageRef.current = message;
+                prevErrorRef.current = error; // Update the previous error
+
+                toastIdRef.current = toast({
+                    position: 'top',
+                    render: () => (
+                        <ToastFeedback
+                            btnColor="purple.200"
+                            message={message}
+                            title={`Something went wrong`}
+                            icon={errorImg}
+                            bgColor={undefined}
+                            color={undefined}
+                            handleClose={close}
+                        />
+                    ),
+                });
             }
-
-            toastIdRef.current = toast({
-                position: 'top',
-                render: () => (
-                    <ToastFeedback
-                        btnColor="purple.200"
-                        message={message || `An error has occurred... please try again later, or check your internet connection`}
-                        title={`Something went wrong`}
-                        icon={errorImg}
-                        bgColor={undefined}
-                        color={undefined}
-                        handleClose={close}
-                    />
-                ),
-            });
         }
-    }, [error, toast, close, toastIdRef, isOnline]);
+    }, [error, toast, close, toastIdRef]);
 
     useEffect(() => {
         if (isOnline) {

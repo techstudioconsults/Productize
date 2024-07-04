@@ -26,8 +26,21 @@ import {
     PaymentSettings,
     KycSettings,
 } from '@productize/dashboard';
+import {
+    Admin,
+    AdminAccountSettings,
+    AdminHome,
+    AdminOrder,
+    AdminPayouts,
+    AdminProducts,
+    AdminProfile,
+    AdminRevenue,
+    AdminSettings,
+    AdminUser,
+    AdminWithdrawalEarnings,
+} from '@productize/admin-dashboard';
 import { CoverPage } from '../pages/coverPage/CoverPage';
-import { Admin } from '@productize/admin-dashboard';
+// import { Admin } from '@productize/admin-dashboard';
 import { useTokenExists } from '@productize/hooks';
 import { useGetFromCartMutation, useGetProductTagsMutation } from '@productize/redux';
 

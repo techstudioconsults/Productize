@@ -130,7 +130,7 @@ const ProductSideNav = ({ status }) => {
                                     {formatCurrency(product.discount_price)}
                                 </Text>
                             </Text>
-                            <Box title={`You can only select one digital or skill selling quantity`} mt={4}>
+                            {/* <Box title={`You can only select one digital or skill selling quantity`} mt={4}>
                                 <NumberInput
                                     onChange={handleProductQuantity}
                                     defaultValue="1"
@@ -149,7 +149,7 @@ const ProductSideNav = ({ status }) => {
                                         </NumberDecrementStepper>
                                     </NumberInputStepper>
                                 </NumberInput>
-                            </Box>
+                            </Box> */}
                         </Box>
                         <Box>
                             <Flex flexDir={`column`} w={`100%`} gap={4}>

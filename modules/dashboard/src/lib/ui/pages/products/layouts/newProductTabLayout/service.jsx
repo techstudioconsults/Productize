@@ -56,12 +56,14 @@ export const useProductActions = () => {
         // console.log(data);
         const formData = extractFormData(data);
         formData.product_type = data.product_type;
+        formData.discount_price = parseInt(data.discount_price || 0);
 
         const productCreationEndpoint = data.product_type === 'digital_product' ? '/digitalProducts' : '/skillSellings';
         const additionalData =
             data.product_type === 'digital_product'
                 ? { category: data.category, resources: data.data }
-                : { category: data.category, level: data.level, availability: data.availability, link: data.portfolio_link };
+                // : { category: data.category, resources: data.data, level: data.level, link: data.portfolio_link };
+                : { category: data.category, resources: data.data, level: data.level, availability: data.availability, link: data.portfolio_link };
 
         try {
             const res = await query('post', '/products', formData);

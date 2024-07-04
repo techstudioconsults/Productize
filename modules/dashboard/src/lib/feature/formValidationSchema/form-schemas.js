@@ -30,7 +30,7 @@ export const DPFormSchema = yup.object().shape({
     title: yup.string().required('Title is required'),
     category: yup.string().required('Category is required'),
     price: yup.string().required('Price is required'),
-    discount_price: yup.string().required('Discount price is required'),
+    // discount_price: yup.string().required('Discount price is required'),
     description: yup.string().test('hasContent', 'Description is required', (value) => {
         const strippedValue = value.replace(/<\/?[^>]+(>|$)/g, ''); // Strip HTML tags
         return strippedValue.trim().length > 0;
@@ -47,7 +47,7 @@ export const SSFormSchema = yup.object().shape({
     title: yup.string().required('Title is required'),
     category: yup.string().required('Category is required'),
     price: yup.string().required('Price is required'),
-    discount_price: yup.string().required('Discount price is required'),
+    // discount_price: yup.string().required('Discount price is required'),
     description: yup.string().test('hasContent', 'Description is required', (value) => {
         const strippedValue = value.replace(/<\/?[^>]+(>|$)/g, ''); // Strip HTML tags
         return strippedValue.trim().length > 0;

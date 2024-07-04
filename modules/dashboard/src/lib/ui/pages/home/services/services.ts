@@ -12,19 +12,12 @@ import {
 import { useDateRangeFormat } from '@productize/hooks';
 
 export const useUser = () => {
-    const [getUser, { error, isError }] = useGetUserMutation();
+    const [getUser] = useGetUserMutation();
     const user = useSelector(selectCurrentUser);
 
     useEffect(() => {
-        const fetchUser = async () => {
-            await getUser(null).unwrap();
-        };
-        fetchUser();
+        getUser(null).unwrap();
     }, [getUser]);
-    console.log(isError);
-
-    // if (isError) {
-    // }
 
     const refreshUser = useCallback(async () => {
         await getUser(null).unwrap();

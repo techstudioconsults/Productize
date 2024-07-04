@@ -1,4 +1,4 @@
-import { FormControl, Grid, GridItem, Input, InputGroup, InputLeftElement, Select, Text } from '@chakra-ui/react';
+import { FormControl, Grid, GridItem, Input, InputGroup, InputLeftElement, Select } from '@chakra-ui/react';
 import { Field } from './FormFields';
 import { Icon } from '@iconify/react';
 import { useFormContext } from 'react-hook-form';
@@ -67,6 +67,7 @@ const MajorInputFields = () => {
                             <Icon fontSize="1.2rem" icon="mdi:naira" />
                         </InputLeftElement>
                         <Input
+                            defaultValue={0}
                             placeholder="0.00"
                             variant="filled"
                             size="lg"

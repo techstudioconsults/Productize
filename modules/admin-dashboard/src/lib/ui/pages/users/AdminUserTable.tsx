@@ -2,7 +2,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Avatar, Text, Stack, Checkbox, Box, Tag, Skeleton } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
-import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useCallback, useEffect } from 'react';
 import { ProductsTableControl } from './AdminUserTableControl';
@@ -19,7 +18,6 @@ interface tableProps {
 export const ProductTable = ({ deleted }: tableProps) => {
     const [getAllProducts, getAllProductsStatus] = useGetAllProductsMutation();
     const allProducts = useSelector(selectAllProducts);
-    const navigate = useNavigate();
     const formatCurrency = useCurrency();
     const formatDate = useDate();
     const formatTime = useTime();
@@ -49,10 +47,10 @@ export const ProductTable = ({ deleted }: tableProps) => {
 
     const tableProduct = allProducts?.map((product: any) => {
         return (
-            <Tr _hover={{ bgColor: `purple.100`, cursor: `pointer` }} onClick={() => navigate(`/dashboard/products/${product.id}`)} key={product.id}>
+            <Tr _hover={{ bgColor: `purple.100` }} key={product.id}>
                 <Td>
                     <Flex gap={2} alignItems={`center`}>
-                        <Box onClick={(e) => e.stopPropagation()}>
+                        <Box>
                             <Checkbox size={`lg`} colorScheme="purple" />
                         </Box>
                         <Avatar bgColor={`yellow.100`} src={product?.thumbnail} borderRadius={`8px`} w={`100px`} h={`64px`} />
@@ -75,13 +73,6 @@ export const ProductTable = ({ deleted }: tableProps) => {
                 <Td>
                     <Flex>{product?.product_type}</Flex>
                 </Td>
-                {/* <Td>
-                    <Flex hidden={deleted}>
-                        <Tag size={`lg`} colorScheme={product?.status === `draft` ? `yellow` : `green`}>
-                            {product?.status}
-                        </Tag>
-                    </Flex>
-                </Td> */}
             </Tr>
         );
     });

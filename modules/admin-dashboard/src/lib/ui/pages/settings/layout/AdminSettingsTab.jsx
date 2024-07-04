@@ -36,7 +36,7 @@ export const AdminSettingsTab = () => {
     return (
         <Box>
             <Flex mb={10} gap={6} borderBottom={`2px solid #e2e8f0`}>
-                <NavLink to="/dashboard/settings/account" onClick={() => handleTabClick('account')}>
+                <NavLink to="/Admin/settings/account" onClick={() => handleTabClick('account')}>
                     <Text fontSize={`sm`} py={3} px={3} style={activeTab === 'account' ? activeStateStyle : inactiveTabStyle}>
                         Account
                     </Text>

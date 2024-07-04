@@ -1,7 +1,6 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import React from 'react';
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Flex, Box, Link } from '@chakra-ui/react';
-import { SharedButton } from '../../../../../../../../shared/ui/src/lib/SharedButton';
+import { SharedButton } from '@productize/ui';
 import { Link as ReactLink } from 'react-router-dom';
 import { useDashboardTabs } from './AdminUseDashboardTab';
 import AllProductsTabLayout from '../../AllProduct/AdminAllProduct';
@@ -40,31 +39,15 @@ export const DashboardTab = () => {
                         All Products
                     </Tab>
                     <Tab onClick={() => handleTabClick('#top-selling')} id="top-selling" _selected={activeStateStyle} py={6}>
-                        Top Selling
+                        TopSelling
                     </Tab>
                 </Flex>
-                {/* <Box display={{ base: `none`, md: `block` }}>
-                    <Link as={ReactLink} to={`/dashboard/products/new#product-details`}>
-                        <SharedButton
-                            text={'New Product'}
-                            btnExtras={{
-                                leftIcon: `ei:plus`,
-                            }}
-                            width={'fit-content'}
-                            height={'40px'}
-                            bgColor={'purple.200'}
-                            textColor={'white'}
-                            borderRadius={'4px'}
-                            fontSize={{ base: `sm`, md: `sm` }}
-                        />
-                    </Link>
-                </Box> */}
             </TabList>
             <TabPanels>
                 <TabPanel px={0}>
                     <AllProductsTabLayout />
                 </TabPanel>
-                <TabPanel px={0} key={tabIndex}>
+                <TabPanel px={0}>
                     <TopSellingProduct />
                 </TabPanel>
             </TabPanels>

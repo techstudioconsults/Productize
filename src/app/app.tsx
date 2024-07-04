@@ -28,7 +28,19 @@ import {
     KycSettings,
 } from '@productize/dashboard';
 import { CoverPage } from '../pages/coverPage/CoverPage';
-import { Admin, AdminAccountSettings, AdminHome, AdminOrder, AdminProducts, AdminSettings, AdminSettingsTab, AdminUser } from '@productize/admin-dashboard';
+import {
+    Admin,
+    AdminAccountSettings,
+    AdminHome,
+    AdminOrder,
+    AdminPayouts,
+    AdminProducts,
+    AdminProfile,
+    AdminRevenue,
+    AdminSettings,
+    AdminUser,
+    AdminWithdrawalEarnings,
+} from '@productize/admin-dashboard';
 import { useSelector } from 'react-redux';
 
 // doesn't feel right
@@ -137,6 +149,10 @@ function App() {
                     <Route path="products" element={<AdminProducts />} />
                     <Route path="orders" element={<AdminOrder />} />
                     <Route path="users" element={<AdminUser />} />
+                    <Route path="profile/:userID" element={<AdminProfile />} />
+                    <Route path="payouts" element={<AdminPayouts />} />
+                    <Route path="revenue" element={<AdminRevenue />} />
+                    <Route path="payouts/:payoutid/withdraw-earnings" element={<AdminWithdrawalEarnings />} />
                     <Route path="settings" element={<AdminSettings />}>
                         <Route path="account" element={<AdminAccountSettings />} />
                     </Route>

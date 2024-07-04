@@ -3,9 +3,9 @@ import { useCurrency, useDate, useTime } from '@productize/hooks';
 import { selectPayouts, useGetPayoutsMutation } from '@productize/redux';
 import { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { DashboardEmptyState } from '../../../empty-states/DashboardEmptyState';
+import { DashboardEmptyState } from '../../../empty-states/AdminDashboardEmptyState';
 
-export const PayoutTable = () => {
+export const AdminPayoutTable = () => {
     const [getPayouts] = useGetPayoutsMutation();
     const payouts = useSelector(selectPayouts);
     const formatCurrency = useCurrency();
@@ -34,7 +34,7 @@ export const PayoutTable = () => {
         return result;
     }
 
-    const tableHeader = [`Price`, `Bank Account`, `Period`, `status`, `Commission ( % )`, `amount`].map((title) => {
+    const tableHeader = [`Price`, `Bank Account`, `Period`].map((title) => {
         return (
             <Th py={3} key={title}>
                 {title}
@@ -62,7 +62,7 @@ export const PayoutTable = () => {
                     ${formatTime(earning?.created_at)}
                     `}</Flex>
                 </Td>
-                <Td>
+                {/* <Td>
                     <Flex>
                         <Tag
                             bg={earning.status === `pending` ? `yellow.200` : earning.status === `completed` ? `green.200` : `red.200`}
@@ -74,21 +74,21 @@ export const PayoutTable = () => {
                             {earning?.status}
                         </Tag>
                     </Flex>
-                </Td>
-                <Td>
+                </Td> */}
+                {/* <Td>
                     <Flex>
                         <Tag bg={`grey.200`} color={`green.300`} fontWeight={600} size={`lg`} fontSize={`sm`}>
                             5%
                         </Tag>
                     </Flex>
-                </Td>
-                <Td>
+                </Td> */}
+                {/* <Td>
                     <Flex>
                         <Tag bg={`grey.200`} color={`green.200`} fontWeight={600} size={`lg`} fontSize={`sm`}>
                             {formatCurrency(calculatePercentage(5, earning?.amount))}
                         </Tag>
                     </Flex>
-                </Td>
+                </Td> */}
             </Tr>
         );
     });

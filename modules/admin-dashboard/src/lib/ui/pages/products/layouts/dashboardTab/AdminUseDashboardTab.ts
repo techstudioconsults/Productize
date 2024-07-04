@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { To, useLocation, useNavigate } from 'react-router-dom';
 
-const tabNames = ['all-products', 'live', 'draft', 'deleted'];
+const tabNames = ['all-products', 'top-selling', 'draft', 'deleted'];
 
 export const useDashboardTabs = () => {
     const { state, hash } = useLocation();

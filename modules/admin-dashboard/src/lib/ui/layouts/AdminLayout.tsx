@@ -128,7 +128,7 @@ export const AdminLayout = () => {
                             src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png`}
                         />
                     </Link>
-                    <PaymentStatusTag />
+                    {/* <PaymentStatusTag /> */}
                 </Flex>
                 <Stack p={0}>
                     <NavLink state={`Home`} className={({ isActive }) => (isActive ? style.active : style.inactive)} to={`home`}>

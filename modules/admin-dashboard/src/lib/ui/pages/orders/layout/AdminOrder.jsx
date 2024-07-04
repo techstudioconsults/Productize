@@ -1,6 +1,6 @@
 import { Box, SimpleGrid, Skeleton, Stack } from '@chakra-ui/react';
 import { DataWidgetCard } from '../../../AdminDataWidget';
-import { ProductTable } from '../AdminProductTable';
+import { OrderTable } from '../AdminProductTable';
 import { useAllProducts } from './AdminOrderService';
 
 export const AdminOrder = () => {
@@ -31,7 +31,7 @@ export const AdminOrder = () => {
                 </Skeleton> */}
             </SimpleGrid>
             <Stack mt={12} gap={4}>
-                <ProductTable />
+                <OrderTable />
             </Stack>
         </Box>
     );

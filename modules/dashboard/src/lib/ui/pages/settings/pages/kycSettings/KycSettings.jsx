@@ -132,7 +132,7 @@ export const KycSettings = () => {
                                 placeholder="Select document type"
                                 {...register('document_type', { required: 'Document type is required' })}
                             >
-                                <option value="license">Driver’s License</option>
+                                {/* <option value="license">Driver’s License</option> */}
                                 <option value="National Id card">National Id Card</option>
                                 <option value="National Passport">National Passport</option>
                             </Select>

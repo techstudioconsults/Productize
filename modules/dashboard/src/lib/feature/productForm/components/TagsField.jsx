@@ -43,6 +43,7 @@ const TagsField = () => {
                 control={control}
                 render={({ field }) => (
                     <TagPicker
+                        placement={`auto`}
                         size="lg"
                         data={tagData}
                         style={{

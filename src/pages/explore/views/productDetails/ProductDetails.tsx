@@ -1,5 +1,5 @@
 // import ExploreLayout from 'apps/explore/src/libs/layouts/ExploreLayout';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import ProductSummaryAndPreview from './ProductSummaryAndPreview';
 import ProductSideNav from './ProductSideNav';

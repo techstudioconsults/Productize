@@ -27,7 +27,7 @@ export const ProductTable = ({ deleted }: tableProps) => {
     const formatTime = useTime();
     const paginate = useSelector(selectPaginationMetaData);
 
-    const tableHeader = [`Product`, `Price`, `Sales`, `Type`, `Status`, ''].map((title) => {
+    const tableHeader = [`Product`, `Price`, `Sales`, `Type`, ''].map((title) => {
         if (deleted && title === `Status`) {
             title = `...`;
         }
@@ -80,13 +80,13 @@ export const ProductTable = ({ deleted }: tableProps) => {
                 <Td>
                     <Flex>{product?.product_type}</Flex>
                 </Td>
-                <Td>
+                {/* <Td>
                     <Flex hidden={deleted}>
                         <Tag size={`lg`} colorScheme={product?.status === `draft` ? `yellow` : `green`}>
                             {product?.status}
                         </Tag>
                     </Flex>
-                </Td>
+                </Td> */}
                 <Td>
                     {/* there is a status bug here...call tobi later 🤒 */}
                     {product?.status === `draft` && !product?.deleted_at ? (

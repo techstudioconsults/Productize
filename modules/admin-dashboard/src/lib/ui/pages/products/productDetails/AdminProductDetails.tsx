@@ -11,7 +11,7 @@ import { useProductDetails } from './service';
 import { DataWidgetCard } from '../../../../ui/AdminDataWidget';
 import { ProductCustomerTable } from '../../../../ui/tables/AdminProductCustomerTable';
 
-export const ProductDetails = () => {
+export const AdminProductDetails = () => {
     const { onOpen, onClose, isOpen } = useDisclosure();
     const navigate = useNavigate();
     const { toast, toastIdRef, close } = useToastAction();

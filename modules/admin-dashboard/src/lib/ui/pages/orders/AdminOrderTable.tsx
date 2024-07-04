@@ -10,7 +10,7 @@ interface tableProps {
     tableData: [];
 }
 
-export const OrderTable = ({ tableData }: tableProps) => {
+export const AdminOrderTable = ({ tableData }: tableProps) => {
     const [getAllOrders] = useGetAllOrdersMutation();
 
     const navigate = useNavigate();
@@ -28,7 +28,7 @@ export const OrderTable = ({ tableData }: tableProps) => {
     });
     const tableOrder = tableData?.map((order: any) => {
         return (
-            <Tr _hover={{ bgColor: `purple.100`, cursor: `pointer` }} onClick={() => navigate(`/dashboard/orders/${order.id}`)} key={order.id}>
+            <Tr _hover={{ bgColor: `purple.100`, cursor: `pointer` }} key={order.id}>
                 <Td>
                     <Flex gap={2} alignItems={`center`}>
                         <Avatar bgColor={`yellow.100`} src={order?.product?.thumbnail} borderRadius={`8px`} w={`100px`} h={`64px`} />

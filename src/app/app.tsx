@@ -30,13 +30,13 @@ import {
     Admin,
     AdminAccountSettings,
     AdminHome,
-    AdminOrder,
+    AdminOrders,
     AdminPayouts,
+    AdminProductDetails,
     AdminProducts,
     AdminProfile,
     AdminRevenue,
     AdminSettings,
-    AdminUser,
     AdminWithdrawalEarnings,
 } from '@productize/admin-dashboard';
 import { CoverPage } from '../pages/coverPage/CoverPage';
@@ -84,18 +84,16 @@ const ProductCart = React.lazy(() =>
 );
 
 function App() {
+    const isAuth = useTokenExists();
+    const [getProductTags] = useGetProductTagsMutation();
+    const [getFromCart] = useGetFromCartMutation();
 
-     const isAuth = useTokenExists();
-     const [getProductTags] = useGetProductTagsMutation();
-     const [getFromCart] = useGetFromCartMutation();
-
-     useEffect(() => {
-         getProductTags(null).unwrap();
-         if (isAuth) {
-             getFromCart(null).unwrap();
-         }
-     }, [getFromCart, getProductTags, isAuth]);
-
+    useEffect(() => {
+        getProductTags(null).unwrap();
+        if (isAuth) {
+            getFromCart(null).unwrap();
+        }
+    }, [getFromCart, getProductTags, isAuth]);
 
     return (
         <Suspense
@@ -150,8 +148,8 @@ function App() {
                 <Route path="/admin" element={<Admin />}>
                     <Route path="home" index element={<AdminHome />} />
                     <Route path="products" element={<AdminProducts />} />
-                    <Route path="orders" element={<AdminOrder />} />
-                    <Route path="users" element={<AdminUser />} />
+                    <Route path="products/:productID" element={<AdminProductDetails />} />
+                    <Route path="orders" element={<AdminOrders />} />
                     <Route path="profile/:userID" element={<AdminProfile />} />
                     <Route path="payouts" element={<AdminPayouts />} />
                     <Route path="revenue" element={<AdminRevenue />} />

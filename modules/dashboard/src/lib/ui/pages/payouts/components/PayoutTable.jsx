@@ -28,13 +28,14 @@ export const PayoutTable = () => {
     //     return <OnBoardingLoader />;
     // }
 
-    function calculatePercentage(percentage, baseValue) {
-        const percentageDecimal = percentage / 100;
-        const result = percentageDecimal * baseValue;
-        return result;
-    }
+    // function calculatePercentage(percentage, baseValue) {
+    //     const percentageDecimal = percentage / 100;
+    //     const result = percentageDecimal * baseValue;
+    //     return result;
+    // }
 
-    const tableHeader = [`Price`, `BAnk Account`, `Period`, `status`, `Commission ( % )`, `amount`].map((title) => {
+    // const tableHeader = [`Price`, `BAnk Account`, `Period`, `status`, `Commission ( % )`, `amount`].map((title) => {
+    const tableHeader = [`Price`, `BAnk Account`, `Period`, `status`, `Commission ( % )`].map((title) => {
         return (
             <Th py={3} key={title}>
                 {title}
@@ -82,13 +83,13 @@ export const PayoutTable = () => {
                         </Tag>
                     </Flex>
                 </Td>
-                <Td>
+                {/* <Td>
                     <Flex>
                         <Tag bg={`grey.200`} color={`green.200`} fontWeight={600} size={`lg`} fontSize={`sm`}>
                             {formatCurrency(calculatePercentage(5, earning?.amount))}
                         </Tag>
                     </Flex>
-                </Td>
+                </Td> */}
             </Tr>
         );
     });

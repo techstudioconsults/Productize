@@ -121,7 +121,7 @@ export const LiveTable = ({ draft, live, deleted, tableData }: tableProps) => {
             </TableContainer>
             {/* TABLE PAGINATION */}
             <Flex
-                display={paginate?.meta?.total > 2 ? `flex` : `none`}
+                display={paginate?.meta?.last_page > 1 ? `flex` : `none`}
                 mt={4}
                 gap={5}
                 color={`grey.400`}

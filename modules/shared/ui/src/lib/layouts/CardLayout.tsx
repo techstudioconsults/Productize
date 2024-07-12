@@ -7,9 +7,10 @@ export interface cardProps {
     width: string | object;
     height: string | object;
     borderRadius: string;
+    border: string | object;
 }
 
-export const CardLayout = ({ children, bgColor, width, height, borderRadius }: cardProps) => {
+export const CardLayout = ({ children, bgColor, width, height, borderRadius, border }: cardProps) => {
     return (
         <Card
             boxShadow={`3.9034483432769775px 3.9034483432769775px 0px 0.9758620858192444px #0E0A2D`}
@@ -18,6 +19,7 @@ export const CardLayout = ({ children, bgColor, width, height, borderRadius }: c
             height={height}
             borderRadius={borderRadius}
             flex={1}
+            border={border}
         >
             {children}
         </Card>

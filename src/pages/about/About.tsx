@@ -11,7 +11,7 @@ const About = ({ btnColor, shouldShowButton }: any) => {
     const navigate = useNavigate();
     return (
         <DefaultLayout>
-            <Hero height={{ base: `32rem`, xl: `32rem` }} bgImg={''} bgColor={'yellow.100'}>
+            <Hero height={{ base: `23.5rem`, xl: `32rem` }} bgImg={''} bgColor={'yellow.100'}>
                 <Stack gap={10}>
                     <Container zIndex={3} color={`yellow.300`} mt={`10rem`} textAlign={`center`} maxW={`70rem`}>
                         <Box>
@@ -76,10 +76,12 @@ const About = ({ btnColor, shouldShowButton }: any) => {
                     </Container>
                 </Flex>
             </DualSectionLayout>
+            <Container height={`140px`} maxW={'70rem'}>
+            </Container>
             <DualSectionLayout
                 height={{ base: ``, xl: `40rem` }}
                 img={`https://res.cloudinary.com/doejcrfso/image/upload/v1720797096/productize/OBJECTS_bkppl2.png`}
-                flexDirection={{ base: `column`, xl: `row-reverse` }}
+                flexDirection={{ base: `column-reverse`, xl: `row-reverse` }}
                 textSectionBgColor={'#1E2323'}
                 imgSectionBgColor={'#17B6BA'}
                 justifyContent={{ base: `center`, xl: `flex-start` }}
@@ -104,8 +106,8 @@ const About = ({ btnColor, shouldShowButton }: any) => {
                     </Container>
                 </Flex>
             </DualSectionLayout>
-            <Container maxW={'71rem'}>
-                <Heading>Why Choose Productize</Heading>
+            <Container maxW={'71rem'} py={'3.5rem'} px={{base: '1rem', lg: '1rem'}} >
+                <Heading as={`h1`} pb={'2rem'} textAlign={'center'}>Why Choose Productize</Heading>
                 <SimpleGrid flex={2} columns={{ base: 1, sm: 2 }} spacing={10}>
                             {/* card 1 */}
                             <Box>
@@ -113,9 +115,9 @@ const About = ({ btnColor, shouldShowButton }: any) => {
                                     <CardBody p={`23px`}>
                                        
                                         <Text as={`h5`} my={2}>
-                                            Digital Product
+                                        Flexible Product Options
                                         </Text>
-                                        <Text color={`grey.500`}>Any set of files to download or stream.</Text>
+                                        <Text color={`grey.500`}>Sell a variety of digital products, including courses, eBooks, software, music, and more. Customize your product pages with detailed descriptions, multimedia, and personalized settings.</Text>
                                     </CardBody>
                                 </CardLayout>
                             </Box>
@@ -125,10 +127,10 @@ const About = ({ btnColor, shouldShowButton }: any) => {
                                     <CardBody p={`23px`}>
                                        
                                         <Text as={`h5`} my={2}>
-                                            Print On Demand
+                                        Affiliate Programs
                                         </Text>
                                         <Text fontWeight={400} color={`grey.500`} as={`h6`}>
-                                            Any set of files to download or stream.
+                                        Leverage our built-in affiliate marketing features to expand your product reach. Collaborate with affiliates who promote your products in exchange for commissions.
                                         </Text>
                                     </CardBody>
                                 </CardLayout>
@@ -139,10 +141,10 @@ const About = ({ btnColor, shouldShowButton }: any) => {
                                     <CardBody p={`23px`}>
                                       
                                         <Text as={`h5`} my={2}>
-                                            Video Streaming
+                                        Secure Transactions
                                         </Text>
                                         <Text fontWeight={400} color={`grey.500`} as={`h6`}>
-                                            Let customers listen to your audio content.
+                                        Our platform ensures secure and seamless transactions, giving both sellers and buyers peace of mind. Our commitment to security extends to regular audits and compliance with industry standards
                                         </Text>
                                     </CardBody>
                                 </CardLayout>
@@ -152,10 +154,10 @@ const About = ({ btnColor, shouldShowButton }: any) => {
                                 <CardLayout border={'2px'} bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
                                     <CardBody p={`23px`}>
                                         <Text as={`h5`} my={2}>
-                                            Subscription
+                                        Community Engagement
                                         </Text>
                                         <Text fontWeight={400} color={`grey.500`} as={`h6`}>
-                                            Let customers subscribe to your contents.
+                                        Join a vibrant community of creators and entrepreneurs. Share insights and learn from others’ experiences. Our platform fosters an environment of innovation, where you can network with like-minded individuals
                                         </Text>
                                     </CardBody>
                                 </CardLayout>

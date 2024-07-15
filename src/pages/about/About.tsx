@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import DefaultLayout from '../../layouts/Layout';
-import { Box, CardBody, Container, Flex, Image, SimpleGrid, Stack, Text, Link, Heading } from '@chakra-ui/react';
+import { Box, CardBody, Container, Flex, Image, SimpleGrid, Stack, Text, Link, Heading, Center } from '@chakra-ui/react';
 import { SharedSection } from '../../components/section-layout/SharedSection';
 import { DualSectionLayout, DualSectionLayoutList } from '../../components/section-layout/DualSectionLayout';
 import { Hero } from '../../components/Hero';
@@ -11,7 +11,7 @@ const About = ({ btnColor, shouldShowButton }: any) => {
     const navigate = useNavigate();
     return (
         <DefaultLayout>
-            <Hero height={{ base: `23.5rem`, xl: `32rem` }} bgImg={''} bgColor={'yellow.100'}>
+            <Hero height={{ base: `23.5rem`, xl: `29.5rem` }} bgImg={''} bgColor={'yellow.100'}>
                 <Stack gap={10}>
                     <Container zIndex={3} color={`yellow.300`} mt={`10rem`} textAlign={`center`} maxW={`70rem`}>
                         <Box>
@@ -23,6 +23,7 @@ const About = ({ btnColor, shouldShowButton }: any) => {
                         Productize looks out for a better life with a money making system, no monthly charges. Just for you
                         </Text>
                     </Container>
+
                     <Box mb={{ base: `-4rem`, md: `-10rem`, lg: `-15rem`, xl: `-20rem` }}>
                         <Image
                             alt={`hero-illustration`}
@@ -41,19 +42,19 @@ const About = ({ btnColor, shouldShowButton }: any) => {
                 imgSectionBgColor={'#C9E7D3'}
                 justifyContent={{ base: `center`, xl: `flex-end` }}
                 imgPosition={`center`}
-                imgFit={{ base: `contain` }}
+                imgFit={{ base: `cover` }}
             >
                 <Flex alignItems={`center`} color={`purple.300`} height={`100%`} py={10}>
                     <Container maxW={`35rem`} px={{ base: 4, xl: 0 }} pr={{ base: 4, xl: 16 }}>
-                        <Heading as="h1" textAlign={{ base: 'center', xl: 'left' }}>
+                        <Text as="h1" py={'0.7rem'} textAlign={{ base: 'center', xl: 'left' }}>
                             Our Story
-                        </Heading>
-                        <Flex flexDirection={`column`} gap={`0.8rem`}>
+                        </Text>
+                        <Flex flexDirection={`column`} gap={`0.9rem`}>
                             <Text textAlign={{ base: 'center', xl: 'left' }} fontSize={{ base: '1.2rem', xl: '1.5rem' }}>
                                 Productize began with a simple idea: to create a platform where digital creators could easily share their products with the
                                 world.
                             </Text>
-                            <Text textAlign={{ base: 'center', xl: 'left' }} fontSize={{ base: '1.2rem', xl: '1.5rem' }}>
+                            <Text textAlign={{ base: 'center', xl: 'left' }} pb={'0.7rem'} fontSize={{ base: '1.2rem', xl: '1.5rem' }}>
                                 Founded by a team of tech enthusiasts and digital innovators, we set out to empower individuals to turn their creative ideas
                                 into successful digital businesses.
                             </Text>
@@ -76,7 +77,48 @@ const About = ({ btnColor, shouldShowButton }: any) => {
                     </Container>
                 </Flex>
             </DualSectionLayout>
-            <Container height={`140px`} maxW={'70rem'}>
+            <Container py={'1.5rem'} maxW={'70rem'} margin={'auto'}>
+                <SimpleGrid flex={2} alignItems={'center'} columns={{ base: 2, md: 3 }} spacing={10}>
+                    <Flex alignItems={'center'} justifyContent={'center'}>
+                        <Text as={`h1`}>
+                        30k+
+                        </Text>
+                        <Box>
+                      <Text as={`p`}>
+                        Digital  
+                        </Text>
+                        <Text>
+                        Creators
+                        </Text>
+                      </Box>
+                    </Flex>
+                    <Flex flex={2} alignItems={'center'} justifyContent={'center'}>
+                    <Text as={`h1`}>
+                        100k+
+                        </Text>
+                      <Box>
+                      <Text as={`p`}>
+                        Digital  
+                        </Text>
+                        <Text>
+                        Creators
+                        </Text>
+                      </Box>
+                    </Flex>
+                    <Flex flex={2} alignItems={'center'} justifyContent={'center'}>
+                    <Text as={`h1`}>
+                        45k+
+                        </Text>
+                        <Box>
+                      <Text as={`p`}>
+                        Digital  
+                        </Text>
+                        <Text>
+                        Creators
+                        </Text>
+                      </Box>
+                    </Flex>
+                </SimpleGrid>
             </Container>
             <DualSectionLayout
                 height={{ base: ``, xl: `40rem` }}
@@ -107,7 +149,7 @@ const About = ({ btnColor, shouldShowButton }: any) => {
                 </Flex>
             </DualSectionLayout>
             <Container maxW={'71rem'} py={'3.5rem'} px={{base: '1rem', lg: '1rem'}} >
-                <Heading as={`h1`} pb={'2rem'} textAlign={'center'}>Why Choose Productize</Heading>
+                <Text as={`h1`} pb={'2rem'} textAlign={'center'}>Why Choose Productize</Text>
                 <SimpleGrid flex={2} columns={{ base: 1, sm: 2 }} spacing={10}>
                             {/* card 1 */}
                             <Box>

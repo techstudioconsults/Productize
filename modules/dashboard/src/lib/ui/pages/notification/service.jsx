@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react';
 import Pusher from 'pusher-js';
 import { useSelector } from 'react-redux';
-import { selectCurrentToken, selectCurrentUser } from '@productize/redux';
+import { selectCurrentToken, selectCurrentUser, useNotificationMutation } from '@productize/redux';
 import { useToast } from '@chakra-ui/react';
 
 const APP_KEY = 'bb5f2a5342d24c39106c';
 const APP_CLUSTER = 'mt1';
 
 export const useNotifications = (playNotificationSound) => {
+    const [hasNotice, setNotice] = useState(false);
     const toast = useToast();
     const token = useSelector(selectCurrentToken);
     const user = useSelector(selectCurrentUser);
-    const [newOrder, setNewOrder] = useState([]);
-    const [count, setCount] = useState(0);
+    const [getNotice] = useNotificationMutation();
 
     useEffect(() => {
         const pusher = new Pusher(APP_KEY, {
@@ -37,20 +37,17 @@ export const useNotifications = (playNotificationSound) => {
         const channel = pusher.subscribe(`private-users.${user?.id}`);
 
         const eventHandler = (data) => {
-            console.log(data);
-            setCount((prev) => prev + 1);
-            setNewOrder((prev) => [data, ...prev]);
-            const res = playNotificationSound(); // Play sound on event
-            if (res) {
-                toast({
-                    title: data?.type.replace('.', ' '),
-                    description: data?.message,
-                    status: 'success',
-                    duration: 9000,
-                    isClosable: true,
-                    variant: `subtle`,
-                });
-            }
+            setNotice(true);
+            toast({
+                title: data?.type.replace('.', ' '),
+                description: data?.message,
+                status: 'success',
+                duration: 5000,
+                isClosable: true,
+                variant: 'subtle',
+            });
+            getNotice().unwrap();
+            playNotificationSound();
         };
 
         channel.bind('first.product.created', eventHandler);
@@ -67,7 +64,7 @@ export const useNotifications = (playNotificationSound) => {
         return () => {
             pusher.unsubscribe(`private-users.${user?.id}`);
         };
-    }, [playNotificationSound, toast, token, user.email_verified, user?.id]);
+    }, [getNotice, playNotificationSound, toast, token, user?.id]);
 
-    return { newOrder, count };
+    return { hasNotice };
 };

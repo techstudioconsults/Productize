@@ -15,9 +15,10 @@ const defaultProps: Partial<CardProps> = {
     width: '100%',
     height: 'auto',
     borderRadius: 'md',
+    
 };
 
-export const CardLayout = ({ children, bgColor, width, height, borderRadius, border }: cardProps) => {
+export const CardLayout = ({ children, bgColor, width, height, borderRadius, border }: CardProps) => {
     return (
         <Card
             boxShadow={`3.9034483432769775px 3.9034483432769775px 0px 0.9758620858192444px #0E0A2D`}
@@ -31,7 +32,7 @@ export const CardLayout = ({ children, bgColor, width, height, borderRadius, bor
             {children}
         </Card>
     );
-});
+};
 
 CardLayout.displayName = 'CardLayout';
 CardLayout.defaultProps = defaultProps;

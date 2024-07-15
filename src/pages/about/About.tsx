@@ -7,7 +7,7 @@ import { Hero } from '../../components/Hero';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { CardLayout, SharedButton } from '@productize/ui';
 
-const About = ({ btnColor, shouldShowButton }: any) => {
+export const About = ({ btnColor, shouldShowButton }: any) => {
     const navigate = useNavigate();
     return (
         <DefaultLayout>
@@ -85,7 +85,7 @@ const About = ({ btnColor, shouldShowButton }: any) => {
                         </Text>
                         <Box>
                       <Text as={`p`}>
-                        Digital  
+                        Digital
                         </Text>
                         <Text>
                         Creators
@@ -98,7 +98,7 @@ const About = ({ btnColor, shouldShowButton }: any) => {
                         </Text>
                       <Box>
                       <Text as={`p`}>
-                        Digital  
+                        Digital
                         </Text>
                         <Text>
                         Creators
@@ -111,7 +111,7 @@ const About = ({ btnColor, shouldShowButton }: any) => {
                         </Text>
                         <Box>
                       <Text as={`p`}>
-                        Digital  
+                        Digital
                         </Text>
                         <Text>
                         Creators
@@ -155,7 +155,7 @@ const About = ({ btnColor, shouldShowButton }: any) => {
                             <Box>
                                 <CardLayout border={'2px'} bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
                                     <CardBody p={`23px`}>
-                                       
+
                                         <Text as={`h5`} my={2}>
                                         Flexible Product Options
                                         </Text>
@@ -167,7 +167,7 @@ const About = ({ btnColor, shouldShowButton }: any) => {
                             <Box>
                                 <CardLayout border={'2px'} bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
                                     <CardBody p={`23px`}>
-                                       
+
                                         <Text as={`h5`} my={2}>
                                         Affiliate Programs
                                         </Text>
@@ -181,7 +181,7 @@ const About = ({ btnColor, shouldShowButton }: any) => {
                             <Box>
                                 <CardLayout border={'2px'} bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
                                     <CardBody p={`23px`}>
-                                      
+
                                         <Text as={`h5`} my={2}>
                                         Secure Transactions
                                         </Text>

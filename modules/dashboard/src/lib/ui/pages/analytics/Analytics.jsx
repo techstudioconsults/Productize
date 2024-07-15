@@ -10,9 +10,11 @@ import { DataWidgetCard } from '../../DataWidgetCard';
 import { DashboardEmptyState } from '../../empty-states/DashboardEmptyState';
 import { selectProductAnalytics, useGetProductAnalyticsMutation } from '@productize/redux';
 import { useCurrency } from '@productize/hooks';
+import BarChart from './charts/Chart2';
 
 export const Analytics = () => {
     const [isLoading, setLoading] = useState(true);
+    const [viewBy, setViewBy] = useState('days');
     const [getProductAnalytics] = useGetProductAnalyticsMutation();
     const formatCurrency = useCurrency();
     const productAnalysis = useSelector(selectProductAnalytics);
@@ -82,11 +84,13 @@ export const Analytics = () => {
                                         <option value="video-stream">Video streaming</option>
                                         <option value="subscription">Subscription</option>
                                     </Select>
+                                    <Select w={{md: `20rem`}} placeholder="View By" onChange={(e) => setViewBy(e.target.value)} defaultValue={viewBy}>
+                                        <option value="weeks">Weeks</option>
+                                        <option value="days">Days</option>
+                                    </Select>
                                 </Flex>
                             </div>
-                            <div className={style.imgWrapper}>
-                                <LineChart />
-                            </div>
+                            <div className={style.imgWrapper}>{viewBy === 'weeks' ? <LineChart hidden={false} /> : <BarChart hidden={false} />}</div>
                             <Box my={10}>
                                 <Text as="h6" my={5}>
                                     Top Product

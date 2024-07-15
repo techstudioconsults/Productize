@@ -1,5 +1,5 @@
 import { apiSlice } from '../apiSlice';
-import { setAccountList, setAnalyticsGraphData, setBillingHistory, setPayoutStats, setPayouts, setUser } from './userSlice';
+import { setAccountList, setAnalyticsGraphData, setBillingHistory, setNotifications, setPayoutStats, setPayouts, setUser } from './userSlice';
 
 const constructURL = (credentials, filteredLink) => {
     if (credentials && !credentials?.link) {
@@ -230,6 +230,33 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 body: { ...credentials.body },
             }),
         }),
+
+        notification: builder.mutation({
+            query: (credentials) => ({
+                url: `/users/notifications`,
+                method: 'GET',
+                // body: { ...credentials.body },
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    dispatch(
+                        setNotifications({
+                            data: data.data,
+                        })
+                    );
+                } catch (err) {
+                    return;
+                }
+            },
+        }),
+        readAllNotification: builder.mutation({
+            query: (credentials) => ({
+                url: `/users/notifications`,
+                method: 'POST',
+                body: { ...credentials },
+            }),
+        }),
     }),
 });
 
@@ -252,4 +279,6 @@ export const {
     useTogglePaystackAccountActivationMutation,
     useShowAnalyticsChartDataMutation,
     useCancelSubscriptionMutation,
+    useNotificationMutation,
+    useReadAllNotificationMutation,
 } = userApiSlice;

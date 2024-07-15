@@ -1,50 +1,155 @@
-// NotificationApp.js
 /* eslint-disable @nx/enforce-module-boundaries */
 import notification from '@icons/Property_2_Notifications_1_w4v7g4.svg';
 import { Icon } from '@productize/ui';
-import { Box, Center, IconButton, Popover, PopoverTrigger } from '@chakra-ui/react';
-// import { useNotifications } from './service';
-import { useLinks } from '../../utils/links';
+import { Icon as Iconify } from '@iconify/react';
+import { Box, Center, IconButton, Popover, PopoverContent, PopoverTrigger, Text, VStack, Avatar, Divider, Stack, Button, HStack, Flex } from '@chakra-ui/react';
+import { useNotifications } from './service';
+import { useEffect, useRef } from 'react';
+import { selectNotifications, useNotificationMutation, useReadAllNotificationMutation } from '@productize/redux';
+import { useSelector } from 'react-redux';
 
-export function NotificationApp() {
-    const { count } = useLinks();
+const NotificationItem = ({ notice, onMarkAsSeen }) => {
+    const { type, data, created_at } = notice;
+
+    const renderContent = () => {
+        switch (type) {
+            case 'withdraw.successful':
+                return (
+                    <Text fontSize="xs" fontWeight="bold">
+                        {data.message}
+                    </Text>
+                );
+
+            case 'order.created':
+                return (
+                    <>
+                        <Text fontSize="xs" fontWeight="bold">
+                            {data.message}
+                        </Text>
+                        <Divider my={2} />
+                        <Text fontSize="10px">Product: {data.product.title}</Text>
+                        <Text fontSize="10px">Quantity: {data.order.quantity}</Text>
+                        <Text fontSize="10px">Buyer: {data.buyer.full_name}</Text>
+                    </>
+                );
+
+            case 'product.published':
+            case 'product.created':
+            case 'first.product.created':
+                return (
+                    <>
+                        <Text fontSize="xs" fontWeight="bold">
+                            {data.message}
+                        </Text>
+                        <Divider my={2} />
+                        <Text fontSize="10px">Product: {data.product.title}</Text>
+                    </>
+                );
+
+            case 'payout.card.added':
+                return (
+                    <>
+                        <Text fontSize="xs" fontWeight="bold">
+                            {data.message}
+                        </Text>
+                        <Divider my={2} />
+                        <Text fontSize="10px">Account: {data.account.name}</Text>
+                        <Text fontSize="10px">Bank: {data.account.bank_name}</Text>
+                    </>
+                );
+
+            default:
+                return (
+                    <Text fontSize="xs" fontWeight="bold">
+                        Unknown notification type
+                    </Text>
+                );
+        }
+    };
 
     return (
-        <Popover placement={`top-start`}>
+        <HStack p={2} bg="gray.50" borderRadius="md" boxShadow="sm" justifyContent="space-between">
+            <Box w="100%" align="start">
+                {data?.product?.thumbnail && <Avatar size="sm" src={data.product.thumbnail} />}
+                <VStack align="start" spacing={0}>
+                    {renderContent()}
+                    <Text fontSize="10px" color="gray.500">
+                        {new Date(created_at).toLocaleString()}
+                    </Text>
+                </VStack>
+                <Flex color="purple.200" justifyContent="flex-end">
+                    <Iconify cursor="pointer" onClick={() => onMarkAsSeen(notice)} icon="mdi:eye" />
+                </Flex>
+            </Box>
+        </HStack>
+    );
+};
+
+export function NotificationApp() {
+    const [getNotice] = useNotificationMutation();
+    const [readAllNotification, { isLoading: isReadingAll }] = useReadAllNotificationMutation();
+    const newNotice = useSelector(selectNotifications);
+    const audioRef = useRef(null);
+    const playNotificationSound = () => {
+        if (audioRef.current) {
+            audioRef.current.play();
+        }
+    };
+    useNotifications(playNotificationSound);
+
+    const readAllNotice = async () => {
+        const res = await readAllNotification().unwrap();
+        if (res) {
+            getNotice();
+        }
+    };
+
+    const readSingleNotification = async (notice) => {
+        const res = await readAllNotification({ type: notice.type }).unwrap();
+        if (res) {
+            getNotice();
+        }
+    };
+
+    useEffect(() => {
+        getNotice();
+    }, [getNotice]);
+
+    return (
+        <Popover>
+            <audio ref={audioRef} src="../../../../../../../src/assets/slack-new-message-sound-ui-sounds.mp3" />
             <PopoverTrigger>
                 <Center position="relative">
                     <IconButton size="sm" bg="transparent" icon={<Icon icon={notification} name="notification" />} />
-                    {count > 0 && <Box border="2px solid #fff" position="absolute" bottom={2} right={1} borderRadius="100%" bg="green.200" boxSize=".7rem" />}
+                    {newNotice?.length > 0 && (
+                        <Box border="2px solid #fff" position="absolute" bottom={2} right={1} borderRadius="100%" bg="green.200" boxSize=".7rem" />
+                    )}
                 </Center>
             </PopoverTrigger>
 
-            {/* <PopoverContent width="320px" boxShadow="lg" borderRadius="md" p={4}>
-                {newOrder.length > 0 ? (
-                    <VStack spacing={4}>
-                        {newOrder.map((order, index) => (
-                            <Box key={index} p={3} borderBottom="1px solid #eee" width="100%">
-                                <Text fontWeight="bold" fontSize="md">
-                                    {order.product_title}
-                                </Text>
-                                <HStack justifyContent="space-between">
-                                    <Text fontSize={`xs`}>Quantity: {order.quantity}</Text>
-                                    <Text fontWeight="bold">${order.total_amount}</Text>
-                                </HStack>
-                            </Box>
-                        ))}
-                        <Link to={`/dashboard/orders`} onClick={handleMarkAsSeen}>
-                            Mark All As Seen
-                        </Link>
-                    </VStack>
+            <PopoverContent height="90vh" boxShadow="lg" borderRadius="md" p={4}>
+                {newNotice?.length > 0 ? (
+                    <Stack justifyContent="space-between" h="100%">
+                        <Stack spacing={4} overflowY="auto">
+                            {newNotice?.map((notice, index) => (
+                                <NotificationItem key={index} notice={notice} onMarkAsSeen={readSingleNotification} />
+                            ))}
+                        </Stack>
+                        <Button isLoading={isReadingAll} fontSize="xs" size="sm" onClick={readAllNotice} color="purple.500">
+                            Mark all as seen
+                        </Button>
+                    </Stack>
                 ) : (
                     <Box p={4} textAlign="center">
-                        <Center mb={2} color="gray.400" fontSize={`2xl`}>
+                        <Center mb={2} color="gray.400" fontSize="xl">
                             <Iconify icon="nonicons:not-found-16" />
                         </Center>
-                        <Text fontWeight={`bold`}>No new orders</Text>
+                        <Text size="xs" fontWeight="bold">
+                            No new orders
+                        </Text>
                     </Box>
                 )}
-            </PopoverContent> */}
+            </PopoverContent>
         </Popover>
     );
 }

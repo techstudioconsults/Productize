@@ -39,21 +39,8 @@ export const Footer: React.FC = memo(() => {
                     >
                         <FooterLink to="/explore">Explore</FooterLink>
                         <FooterLink to="/pricing">Pricing</FooterLink>
-                    </Flex>
-                    <Flex
-                        flexDir="column"
-                        fontSize="md"
-                        fontWeight="medium"
-                        lineHeight="base"
-                        cursor="pointer"
-                        gap={2}
-                        alignItems={{ base: 'center', lg: 'flex-start' }}
-                    >
                         <FooterLink to="/features">Features</FooterLink>
                         <FooterLink to="/auth">Become a creator</FooterLink>
-                        {/* <FooterLink to="/blogs">Blog</FooterLink> */}
-                        {/* <FooterLink to="/help-and-support">Help and support</FooterLink>
-                        <FooterLink to="/terms-and policy">Terms And Privacy Policy</FooterLink> */}
                     </Flex>
                     <Flex
                         flexDir="column"
@@ -64,10 +51,21 @@ export const Footer: React.FC = memo(() => {
                         gap={2}
                         alignItems={{ base: 'center', lg: 'flex-start' }}
                     >
-                        {/* <FooterLink to="/about">About us</FooterLink>
-                        <FooterLink to="/contact">Contact us</FooterLink> */}
+                        <FooterLink to="/blogs">Blog</FooterLink>
                         <FooterLink to="/help-and-support">Help and support</FooterLink>
                         <FooterLink to="/terms-and policy">Terms And Privacy Policy</FooterLink>
+                    </Flex>
+                    <Flex
+                        flexDir="column"
+                        fontSize="md"
+                        fontWeight="medium"
+                        lineHeight="base"
+                        cursor="pointer"
+                        gap={2}
+                        alignItems={{ base: 'center', lg: 'flex-start' }}
+                    >
+                        <FooterLink to="/about">About us</FooterLink>
+                        <FooterLink to="/contact-us">Contact us</FooterLink>
                     </Flex>
                 </SimpleGrid>
                 <Flex

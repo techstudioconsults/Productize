@@ -8,6 +8,7 @@ const initialState = {
     payouts: [],
     payoutMetaData: {},
     payoutStats: [],
+    notifications: [],
     planStatus: {
         isPlanExpired: false,
         apiDetails: null,
@@ -49,6 +50,14 @@ const userSlice = createSlice({
             state.analyticsGraphData = data;
         },
 
+        setNotifications: (state, action) => {
+            const { data } = action.payload;
+            state.notifications = data;
+        },
+        clearNotifications: (state, action) => {
+            state.notifications = [];
+        },
+
         resetUserStore: (state) => {
             Object.assign(state, initialState);
         },
@@ -61,7 +70,7 @@ const userSlice = createSlice({
     },
 });
 
-export const { setUser, setBillingHistory, setPayouts, setAccountList, resetUserStore, setPayoutStats, setAnalyticsGraphData } = userSlice.actions;
+export const { setUser, setBillingHistory, setPayouts, setAccountList, resetUserStore, setPayoutStats, setAnalyticsGraphData, setNotifications } = userSlice.actions;
 
 export default userSlice.reducer;
 
@@ -72,4 +81,5 @@ export const selectPayouts = (state) => state.User.payouts;
 export const selectPayoutStats = (state) => state.User.payoutStats;
 export const selectPlanStatus = (state) => state.User.planStatus;
 export const selectAnalyticsGraphData = (state) => state.User.analyticsGraphData;
+export const selectNotifications = (state) => state.User.notifications;
 // export const selectTaskCompletedCount = (state) => state.User.guideTaskCompleted;

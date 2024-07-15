@@ -1,5 +1,5 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import download from '@icons/Property_2_Downloads-folder_zb8tdq.svg';
 import compass from '@icons/Property_2_Compass_jfe95t.svg';
@@ -11,11 +11,10 @@ import order from '@icons/Property_2_Cart_1_ubt3so.svg';
 import analysis from '@icons/Property_2_Chart-pie_bygfly.svg';
 import consumer from '@icons/Property_2_User-folder_n4spfl.svg';
 import payment from '@icons/Property_2_Wallet_3_teopvy.svg';
-import { selectCurrentUser, useMarkUnseenOrdersAsSeenMutation } from '@productize/redux';
-import { useNotifications } from '../pages/notification/service';
+import { selectCurrentUser, selectNotifications } from '@productize/redux';
 import { useLocation } from 'react-router-dom';
 
-interface link {
+interface Link {
     id: number;
     name: string;
     path: string;
@@ -27,21 +26,9 @@ interface link {
 export const useLinks = () => {
     const { pathname } = useLocation();
     const user = useSelector(selectCurrentUser);
-    const [markUnseenOrdersAsSeen] = useMarkUnseenOrdersAsSeenMutation();
-    const { count, fetchUnseenCount } = useNotifications();
+    const newNotice = useSelector(selectNotifications);
 
-    const makeunseenOrderSeen = useCallback(async () => {
-        try {
-            const res = await markUnseenOrdersAsSeen(null).unwrap();
-            if (res) {
-                fetchUnseenCount();
-            }
-        } catch (error) {
-            return error;
-        }
-    }, [fetchUnseenCount, markUnseenOrdersAsSeen]);
-
-    const [links1, setLinks1] = useState<Array<link>>();
+    const [links1, setLinks1] = useState<Array<Link>>([]);
     const [links2] = useState([
         {
             id: 1,
@@ -83,10 +70,8 @@ export const useLinks = () => {
     ]);
 
     useEffect(() => {
-        if (pathname.includes(`/orders`)) {
-            // if(user.email_)
-            makeunseenOrderSeen();
-        }
+        const orderCount = newNotice.filter((notice) => notice.type === 'order.created').length;
+
         setLinks1([
             {
                 id: 2,
@@ -100,7 +85,7 @@ export const useLinks = () => {
                 id: 3,
                 name: `Orders`,
                 path: `orders`,
-                analysis: count,
+                analysis: orderCount,
                 type: `free`,
                 icon: order,
             },
@@ -129,7 +114,7 @@ export const useLinks = () => {
                 analysis: null,
             },
         ]);
-    }, [count, makeunseenOrderSeen, pathname]);
+    }, [pathname, newNotice]);
 
-    return { links1, links2, links3, count, makeunseenOrderSeen };
+    return { links1, links2, links3 };
 };

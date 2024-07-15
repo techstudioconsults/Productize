@@ -82,7 +82,7 @@ export const Home = () => {
                         <SimpleGrid flex={2} columns={{ base: 1, sm: 2 }} spacing={10}>
                             {/* card 1 */}
                             <Box>
-                                <CardLayout bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
+                                <CardLayout border={'0px'} bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
                                     <CardBody p={`23px`}>
                                         <Image
                                             src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951006/productize/Image_1_wc3l2p_a7lovq.png`}
@@ -97,7 +97,7 @@ export const Home = () => {
                             </Box>
                             {/* card 2 */}
                             <Box>
-                                <CardLayout bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
+                                <CardLayout border={'0px'} bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
                                     <CardBody p={`23px`}>
                                         <Image
                                             src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951007/productize/Image_2_co17c3_xwfjxd.png`}
@@ -114,7 +114,7 @@ export const Home = () => {
                             </Box>
                             {/* card 3 */}
                             <Box>
-                                <CardLayout bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
+                                <CardLayout border={'0px'} bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
                                     <CardBody p={`23px`}>
                                         <Image
                                             src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951008/productize/Image_3_l61xsx_qdgenv.png`}
@@ -131,7 +131,7 @@ export const Home = () => {
                             </Box>
                             {/* card 4 */}
                             <Box>
-                                <CardLayout bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
+                                <CardLayout border={'0px'} bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
                                     <CardBody p={`23px`}>
                                         <Image
                                             src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951009/productize/Image_4_hksvcm_ulhhl3.png`}
@@ -186,7 +186,7 @@ export const Home = () => {
                     <SimpleGrid columns={{ base: 1, sm: 2 }} spacing={10}>
                         {/* card 1 */}
                         <Box>
-                            <CardLayout bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
+                            <CardLayout border={'0px'} bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
                                 <CardBody p={`24px`} display={`flex`} flexDir={`column`} justifyContent={`space-between`}>
                                     <Box>
                                         <Text as={`h4`} w={`60%`} my={2}>
@@ -205,7 +205,7 @@ export const Home = () => {
                         </Box>
                         {/* card 2 */}
                         <Box>
-                            <CardLayout bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
+                            <CardLayout border={'0px'} bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
                                 <CardBody p={`24px`} display={`flex`} flexDir={`column`} justifyContent={`space-between`}>
                                     <Box>
                                         <Text as={`h4`} w={`60%`} my={2}>
@@ -224,7 +224,7 @@ export const Home = () => {
                         </Box>
                         {/* card 3 */}
                         <Box>
-                            <CardLayout bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
+                            <CardLayout border={'0px'} bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
                                 <CardBody p={`24px`} display={`flex`} flexDir={`column`} justifyContent={`space-between`}>
                                     <Box>
                                         <Text as={`h4`} w={`60%`} my={2}>
@@ -243,7 +243,7 @@ export const Home = () => {
                         </Box>
                         {/* card 4 */}
                         <Box>
-                            <CardLayout bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
+                            <CardLayout border={'0px'} bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
                                 <CardBody p={`24px`} display={`flex`} flexDir={`column`} justifyContent={`space-between`}>
                                     <Box>
                                         <Text as={`h4`} w={`60%`} my={2}>

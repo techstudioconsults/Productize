@@ -27,11 +27,10 @@ import {
     KycSettings,
 } from '@productize/dashboard';
 import { CoverPage } from '../pages/coverPage/CoverPage';
-import { Admin } from '@productize/admin-dashboard';
+import About from '../pages/about/About';
 import { useTokenExists } from '@productize/hooks';
 import { useGetFromCartMutation, useGetProductTagsMutation } from '@productize/redux';
-
-// doesn't feel right
+import {Admin} from '@productize/admin-dashboard'
 
 // using suspense and lazy loading
 const Home = React.lazy(() =>
@@ -39,6 +38,11 @@ const Home = React.lazy(() =>
         default: module.Home,
     }))
 );
+// const About = React.lazy(()=>
+//     import('../pages/about/About').then((module) => ({
+//         default: module.About,
+//     }))
+// );
 const Features = React.lazy(() =>
     import('../pages/features/Features').then((module) => ({
         default: module.Features,
@@ -104,7 +108,7 @@ function App() {
                 <Route path="/features" element={<Features />} />
                 <Route path="/pricing" element={<Pricing />} />
                 <Route path={`/explore`} element={<Explore />} />
-                <Route path={`/explore/category/:mainCategory`} element={<CategoryPageDetails />} />
+                <Route path={"/about"} element={<About />} />
                 <Route path="/products/:productID" element={<ProductDetails />} />
                 <Route path="/explore/product/cart" element={<ProductCart />} />
                 {/* dashboard */}

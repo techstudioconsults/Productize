@@ -1,16 +1,16 @@
-import { Avatar, Box, Card, Checkbox, Flex, IconButton, Menu, MenuButton, MenuItem, MenuList, Radio, Text } from '@chakra-ui/react';
+import { Avatar, Box, Card, Checkbox, Flex, IconButton, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
 import { useRetrieveAllPayoutAccountMutation, useTogglePaystackAccountActivationMutation } from '@productize/redux';
+import { SpinnerComponentSmall } from '@productize/ui';
 
 const BankCard = ({ account, src, width }) => {
-    const [togglePaystackAccountActivation, togglePaystackAccountActivationStatus] = useTogglePaystackAccountActivationMutation();
+    const [togglePaystackAccountActivation, { isLoading }] = useTogglePaystackAccountActivationMutation();
     const [retieveAllPayoutAccounts] = useRetrieveAllPayoutAccountMutation();
 
     const toggleAccountActivation = async () => {
         try {
             if (account.active) {
                 const res = await togglePaystackAccountActivation({ accountID: account?.id, body: { active: false } }).unwrap();
-                console.log(res);
                 if (res) {
                     await retieveAllPayoutAccounts(null).unwrap();
                 }
@@ -21,7 +21,7 @@ const BankCard = ({ account, src, width }) => {
                 }
             }
         } catch (e) {
-            console.error(e);
+            return;
         }
     };
 
@@ -32,7 +32,7 @@ const BankCard = ({ account, src, width }) => {
                     <Avatar name={account?.bank_name} size={`sm`} src={src} />
                     <Text fontWeight={600}>{account?.bank_name}</Text>
                 </Flex>
-                <Checkbox isChecked={account?.active} size={`lg`} colorScheme="purple" />
+                {isLoading ? <SpinnerComponentSmall size={`sm`} /> : <Checkbox isChecked={account?.active} size={`lg`} colorScheme="purple" />}
             </Flex>
             <Box mt={3}>
                 <Text fontSize={`sm`}>{account?.account_number}</Text>

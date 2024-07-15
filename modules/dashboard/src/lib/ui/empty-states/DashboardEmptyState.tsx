@@ -3,7 +3,7 @@ import { bannerProps } from "./EmptyState";
 import { Link } from "react-router-dom";
 import { SharedButton } from "@productize/ui";
 
-export const DashboardEmptyState = ({ maxW, content, showImage, textAlign }: bannerProps) => {
+export const DashboardEmptyState = ({ hideCta, maxW, content, showImage, textAlign }: bannerProps) => {
     return (
         <Box p={{ base: 4, md: 8 }} borderRadius={`10px`} bgColor={`grey.200`}>
             <Stack p={0} alignItems={`center`} justifyContent={`center`} maxW={maxW} m={`0 auto`}>
@@ -14,11 +14,11 @@ export const DashboardEmptyState = ({ maxW, content, showImage, textAlign }: ban
                     <Text fontWeight={400} color={`purple.200`}>
                         {content.title}
                     </Text>
-                    <Text as={`h6`} my={4} color={`purple.300`}>
+                    <Text textAlign={`center`} as={`h6`} my={4} color={`purple.300`}>
                         {content.desc}
                     </Text>
                 </Box>
-                <Link to={`/dashboard/products/new#product-details`}>
+                <Link hidden={hideCta} to={`/dashboard/products/new#product-details`}>
                     <SharedButton
                         text={"Create your first product"}
                         width={"fit-content"}

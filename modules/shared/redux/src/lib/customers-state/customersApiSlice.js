@@ -2,25 +2,25 @@
 import { apiSlice } from '../apiSlice';
 import { setAllCustomers, setSingleCustomer, setSingleCustomerOrders } from './customersSlice';
 
-const checkCredentials = (credentials, filteredLink) => {
-    if (credentials && !credentials?.link) {
-        return filteredLink;
-    } else if (credentials?.link) {
-        return credentials?.link;
+// Function to construct the URL based on credentials
+const constructURL = (credentials) => {
+    if (!credentials) {
+        return '/customers';
+    }
+
+    const { page, startDate, endDate, link } = credentials.link;
+    if (!link) {
+        return `/customers?page=${page}&start_date=${startDate}&end_date=${endDate}`;
     } else {
-        return `/customers`;
+        return credentials.link;
     }
 };
 
-//productize-api.techstudio.academy/api/Customers
 export const CustomersApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         getAllCustomers: builder.mutation({
             query: (credentials) => ({
-                url: checkCredentials(
-                    credentials,
-                    `/customers?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}`
-                ),
+                url: constructURL(credentials),
                 method: 'GET',
             }),
 
@@ -29,12 +29,13 @@ export const CustomersApiSlice = apiSlice.injectEndpoints({
                     const { data } = await queryFulfilled;
                     dispatch(
                         setAllCustomers({
+                            isFilter: arg?.isFilter || false,
                             customers: data.data,
                             customersMetaData: { links: data.links, meta: data.meta },
                         })
                     );
                 } catch (error) {
-                    return error;
+                    return;
                 }
             },
         }),
@@ -53,7 +54,7 @@ export const CustomersApiSlice = apiSlice.injectEndpoints({
                         })
                     );
                 } catch (error) {
-                    return error;
+                    return;
                 }
             },
         }),
@@ -72,14 +73,14 @@ export const CustomersApiSlice = apiSlice.injectEndpoints({
                         })
                     );
                 } catch (error) {
-                    return error;
+                    return;
                 }
             },
         }),
 
         downloadCustomersList: builder.mutation({
-            query: (credentials) => ({
-                url: `Customers/download?page=1&format=csv`,
+            query: () => ({
+                url: 'Customers/download?page=1&format=csv',
                 method: 'GET',
             }),
         }),

@@ -1,4 +1,4 @@
-import DraftTabActive from '../premium/DraftTabActive';
+import DraftTabActive from '../premium/draftTab/DraftTabActive';
 
 const DraftTabLayout = () => {
     return <DraftTabActive />;

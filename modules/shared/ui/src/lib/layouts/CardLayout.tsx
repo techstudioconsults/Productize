@@ -1,7 +1,7 @@
-import { Card } from "@chakra-ui/react";
-import React from "react";
+import { Card } from '@chakra-ui/react';
+import React, { memo } from 'react';
 
-export interface cardProps {
+export interface CardProps {
     children?: React.ReactNode;
     bgColor: string;
     width: string | object;
@@ -9,6 +9,13 @@ export interface cardProps {
     borderRadius: string;
     border: string | object;
 }
+
+const defaultProps: Partial<CardProps> = {
+    bgColor: 'white',
+    width: '100%',
+    height: 'auto',
+    borderRadius: 'md',
+};
 
 export const CardLayout = ({ children, bgColor, width, height, borderRadius, border }: cardProps) => {
     return (
@@ -24,4 +31,7 @@ export const CardLayout = ({ children, bgColor, width, height, borderRadius, bor
             {children}
         </Card>
     );
-};
+});
+
+CardLayout.displayName = 'CardLayout';
+CardLayout.defaultProps = defaultProps;

@@ -7,7 +7,7 @@
     "strict": true
   },
   "files": [],
-  "include": [],
+  "include": ["vite-env.d.ts"],
   "references": [
     {
       "path": "./tsconfig.lib.json"

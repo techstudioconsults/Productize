@@ -1,4 +1,4 @@
-import { LoginForm } from '../../forms/LogininForm';
+import { LoginForm } from '../../forms/login-form/LogininForm';
 import { AuthBackground } from '../../template-views/Auth-background';
 import { AuthFormTemplateLogin } from '../../template-views/Auth-form-template';
 

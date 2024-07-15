@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import {
     Box,
     Divider,
@@ -49,7 +50,6 @@ export const ProfileForm = () => {
     const onSubmit = async (data) => {
         try {
             const res = await query(`post`, `/users/me`, data);
-            console.log(data);
             if (res?.status === 200) {
                 toastIdRef.current = toast({
                     position: 'top',
@@ -66,7 +66,7 @@ export const ProfileForm = () => {
                     ),
                 });
                 await getUser(null).unwrap();
-                navigate(`/dashboard/home`)
+                navigate(`/dashboard/home`);
             }
         } catch (error) {
             toastIdRef.current = toast({
@@ -76,8 +76,8 @@ export const ProfileForm = () => {
                         message={error?.response?.data?.message}
                         title="Profile update"
                         icon={errorImg}
-                        color={`red.600`}
-                        btnColor={`red.600`}
+                        color={null}
+                        btnColor={null}
                         bgColor={undefined}
                         handleClose={close}
                     />

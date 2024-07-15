@@ -6,18 +6,16 @@ import {
     Flex,
     FormControl,
     FormLabel,
-    IconButton,
     Input,
     InputGroup,
     InputLeftElement,
     InputRightElement,
     ModalCloseButton,
-    SimpleGrid,
     Stack,
     Text,
     useDisclosure,
 } from '@chakra-ui/react';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import BankCard from '../components/BankCard';
 import { Icon } from '@iconify/react';
 import { DataWidgetCard } from '../../../DataWidgetCard';
@@ -37,7 +35,7 @@ export const WithdrawalEarnings = () => {
     const payoutAccountList = useSelector(selectAccountList);
     const [retieveAllPayoutAccounts] = useRetrieveAllPayoutAccountMutation();
     const [initiateWithdrawal, initiateWithdrawalStatus] = useInitiateWithdrawalMutation();
-    const { register, handleSubmit, setValue } = useForm();
+    const { register, handleSubmit, setValue, reset } = useForm();
     const payouts = useSelector(selectPayoutStats);
     const navigate = useNavigate();
 
@@ -63,22 +61,6 @@ export const WithdrawalEarnings = () => {
     };
 
     const handleWithdrawalForm = async (data) => {
-        if (data.amount > payouts?.available_earnings) {
-            toastIdRef.current = toast({
-                position: 'top',
-                render: () => (
-                    <ToastFeedback
-                        message={`Insuficient Balance.`}
-                        title="Download Error!"
-                        icon={errorImg}
-                        color={`red.600`}
-                        btnColor={`red.600`}
-                        bgColor={undefined}
-                        handleClose={close}
-                    />
-                ),
-            });
-        }
         try {
             const res = await initiateWithdrawal(data).unwrap();
             if (res.data) {
@@ -96,25 +78,11 @@ export const WithdrawalEarnings = () => {
                         />
                     ),
                 });
+                reset();
                 navigate(`/dashboard/payouts`);
             }
         } catch (error) {
-            if (error?.status !== 400) {
-                toastIdRef.current = toast({
-                    position: 'top',
-                    render: () => (
-                        <ToastFeedback
-                            message={error?.data?.message}
-                            title="Withdraw error"
-                            icon={errorImg}
-                            color={`red.600`}
-                            btnColor={`red.600`}
-                            bgColor={undefined}
-                            handleClose={close}
-                        />
-                    ),
-                });
-            }
+            return;
         }
     };
 
@@ -203,7 +171,7 @@ export const WithdrawalEarnings = () => {
                             {...register(`amount`)}
                         />
 
-                        <InputRightElement color="gray.500" fontSize="14px" onClick={setMaxAmount}>
+                        <InputRightElement cursor={`pointer`} color="purple.200" fontWeight={700} fontSize="14px" onClick={setMaxAmount}>
                             Max
                         </InputRightElement>
                     </InputGroup>

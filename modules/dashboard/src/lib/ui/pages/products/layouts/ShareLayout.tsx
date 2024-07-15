@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { Box, Card, Container, Flex, Image, Stack, Text } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
 import { useLocation } from 'react-router-dom';
@@ -11,8 +12,6 @@ const ShareLayout = () => {
     const { toast, toastIdRef, close } = useToastAction();
     const { state } = useLocation();
     const formatCurrency = useCurrency();
-
-    console.log(state);
 
     const copyTextToClipBoard = () => {
         navigator.clipboard

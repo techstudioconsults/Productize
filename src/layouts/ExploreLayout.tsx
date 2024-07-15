@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ExploreNavBar } from '../components/navbar/ExploreNavBar';
 import { useTokenExists } from '@productize/hooks';
 import { Footer, SharedButton } from '@productize/ui';
 import { Box, Container, Divider, Flex, Text } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
+// import ProductTagNav from '../pages/explore/components/ProductTagNav';
 
 type ExploreProps = {
     children: React.ReactNode; // type children
@@ -12,8 +13,11 @@ type ExploreProps = {
 export const ExploreLayout = (props: ExploreProps) => {
     return (
         <>
-            <Box pos={`sticky`} top={0} background={`coral.200`} zIndex={999}>
+            <Box pos={`sticky`} top={0} background={`coral.200`} zIndex={999} pb={3}>
                 <ExploreNavBar isAuth={useTokenExists()} />
+                {/* <Container p={0} maxW={`70rem`}>
+                    <ProductTagNav />
+                </Container> */}
             </Box>
             {props.children}
             <Box bgColor={`purple.100`} py={5}>

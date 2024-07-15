@@ -9,3 +9,6 @@ export * from './lib/useDateTimeConverter';
 export * from './lib/useStepGuide';
 export * from './lib/useCompressedFile';
 export * from './lib/UseUrlToBlobConverter';
+export * from './lib/useLogout';
+export * from './lib/useCart';
+export * from './lib/useDiscountCalculator';

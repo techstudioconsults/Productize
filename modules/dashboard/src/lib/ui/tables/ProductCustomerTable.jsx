@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Text } from '@chakra-ui/react';
 import { useDate, useTime } from '@productize/hooks';
 import { selectSingleProductCustomers } from '@productize/redux';
@@ -22,11 +23,11 @@ export const ProductCustomerTable = ({ status }) => {
             <Tr key={content.id}>
                 <Td>
                     <Flex gap={2} alignItems={`center`}>
-                        <Text>{content?.customer_name}</Text>
+                        <Text>{content?.customer?.name}</Text>
                     </Flex>
                 </Td>
                 <Td>
-                    <Flex my={5}>{content?.customer_email}</Flex>
+                    <Flex my={5}>{content?.customer?.email}</Flex>
                 </Td>
                 <Td>
                     <Flex>{content?.quantity}</Flex>

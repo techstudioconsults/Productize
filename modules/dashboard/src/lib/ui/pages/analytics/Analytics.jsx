@@ -1,8 +1,9 @@
-import { Box, Flex, Select, SimpleGrid, Text } from '@chakra-ui/react';
-import LineChart from './charts/Chart1';
-import style from './scss/graph.module.scss';
+/* eslint-disable @nx/enforce-module-boundaries */
+import { Box, Flex, Grid, HStack, Select, SimpleGrid, Skeleton, Text, VStack } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import LineChart from './charts/Chart1';
+import style from './scss/graph.module.scss';
 
 import { AnalyticsTable } from './AnalyticsTable';
 import { DataWidgetCard } from '../../DataWidgetCard';
@@ -11,17 +12,23 @@ import { selectProductAnalytics, useGetProductAnalyticsMutation } from '@product
 import { useCurrency } from '@productize/hooks';
 
 export const Analytics = () => {
-    const [emptyState] = useState(false);
-    const [getProductAnaysis] = useGetProductAnalyticsMutation();
+    const [isLoading, setLoading] = useState(true);
+    const [getProductAnalytics] = useGetProductAnalyticsMutation();
     const formatCurrency = useCurrency();
-    const productAnaysis = useSelector(selectProductAnalytics);
+    const productAnalysis = useSelector(selectProductAnalytics);
     const currentMonth = new Date().toLocaleString('en-US', { month: 'long' });
 
     useEffect(() => {
-        getProductAnaysis(null).unwrap();
-    }, [getProductAnaysis]);
+        const getData = async () => {
+            const res = await getProductAnalytics(null).unwrap();
+            if (res.data) {
+                setLoading(false);
+            }
+        };
+        getData();
+    }, [getProductAnalytics]);
 
-    const emptyDisplay = (
+    const EmptyStateDisplay = () => (
         <DashboardEmptyState
             content={{
                 title: '',
@@ -33,82 +40,55 @@ export const Analytics = () => {
         />
     );
 
-    const activeDisplay = (
+    const ActiveStateDisplay = () => (
         <Box my={8}>
-            {/* dropdown filters and buttons Controls */}
-            {/* <HomeFilterController /> */}
-            {/* grid cards */}
             <Box>
                 <SimpleGrid gap={4} my={4} columns={{ base: 1, sm: 2, md: 3 }}>
-                    <Box>
-                        <DataWidgetCard showIcon={false} title={'Order'} value={0} />
-                    </Box>
-                    <Box>
-                        <DataWidgetCard showIcon={false} title={'Views'} value={0} />
-                    </Box>
-                    <Box>
-                        <DataWidgetCard showIcon={false} title={'Revenue'} value={formatCurrency(productAnaysis.total_revenues)} />
-                    </Box>
-                    <Box>
-                        <DataWidgetCard showIcon={false} title={'New Order'} value={productAnaysis.new_orders} />
-                    </Box>
-                    <Box>
-                        <DataWidgetCard showIcon={false} title={'New Order Revenue'} value={formatCurrency(productAnaysis.new_orders_revenue)} />
-                    </Box>
-                    <Box>
-                        <DataWidgetCard showIcon={false} title={'Total Products'} value={productAnaysis.total_products} />
-                    </Box>
+                    <DataWidgetCard showIcon={false} title="Order" value={0} />
+                    <DataWidgetCard showIcon={false} title="Views" value={0} />
+                    <DataWidgetCard showIcon={false} title="Revenue" value={formatCurrency(productAnalysis.total_revenues)} />
+                    <DataWidgetCard showIcon={false} title="New Order" value={productAnalysis.new_orders} />
+                    <DataWidgetCard showIcon={false} title="New Order Revenue" value={formatCurrency(productAnalysis.new_orders_revenue)} />
+                    <DataWidgetCard showIcon={false} title="Total Products" value={productAnalysis.total_products} />
                 </SimpleGrid>
             </Box>
-            {/* empty state */}
+
             <Box my={10}>
-                <Text as={`h6`}>Revenue Overview</Text>
+                <Text as="h6">Revenue Overview</Text>
                 <Box mt={4}>
-                    {emptyState ? (
-                        <DashboardEmptyState
-                            content={{
-                                title: '',
-                                desc: 'You do not have any Customer activities yet.',
-                                img: `https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951005/productize/Illustration_oblvox_athyeh.png`,
-                            }}
-                            textAlign={{ base: `center` }}
-                            showImage
-                        />
+                    {productAnalysis?.total_products === 0 ? (
+                        <EmptyStateDisplay />
                     ) : (
                         <section className={style.graphCard}>
                             <div className={style.header}>
-                                <Flex w={`100%`} justifyContent={`flex-end`} alignItems={`center`} className={style.title} gap={5}>
-                                    <Flex>
-                                        <Select placeholder="Months" defaultValue={currentMonth}>
-                                            <option value="January">January</option>
-                                            <option value="February">February</option>
-                                            <option value="March">March</option>
-                                            <option value="April">April</option>
-                                            <option value="May">May</option>
-                                            <option value="June">June</option>
-                                            <option value="July">July</option>
-                                            <option value="August">August</option>
-                                            <option value="September">September</option>
-                                            <option value="October">October</option>
-                                            <option value="November">November</option>
-                                            <option value="December">December</option>
-                                        </Select>
-                                    </Flex>
-                                    <Flex>
-                                        <Select disabled placeholder="View By Digital Product">
-                                            <option value="digital-product">Digital Product</option>
-                                            <option value="print-on-demand">Print on demand</option>
-                                            <option value="video-stream">Video streaming</option>
-                                            <option value="subscription">Subscription</option>
-                                        </Select>
-                                    </Flex>
+                                <Flex w="100%" justifyContent="flex-end" alignItems="center" className={style.title} gap={5}>
+                                    <Select placeholder="Months" defaultValue={currentMonth}>
+                                        <option value="January">January</option>
+                                        <option value="February">February</option>
+                                        <option value="March">March</option>
+                                        <option value="April">April</option>
+                                        <option value="May">May</option>
+                                        <option value="June">June</option>
+                                        <option value="July">July</option>
+                                        <option value="August">August</option>
+                                        <option value="September">September</option>
+                                        <option value="October">October</option>
+                                        <option value="November">November</option>
+                                        <option value="December">December</option>
+                                    </Select>
+                                    <Select disabled placeholder="View By Digital Product">
+                                        <option value="digital-product">Digital Product</option>
+                                        <option value="print-on-demand">Print on demand</option>
+                                        <option value="video-stream">Video streaming</option>
+                                        <option value="subscription">Subscription</option>
+                                    </Select>
                                 </Flex>
                             </div>
                             <div className={style.imgWrapper}>
                                 <LineChart />
                             </div>
                             <Box my={10}>
-                                <Text as={`h6`} my={5}>
+                                <Text as="h6" my={5}>
                                     Top Product
                                 </Text>
                                 <AnalyticsTable />
@@ -120,6 +100,37 @@ export const Analytics = () => {
         </Box>
     );
 
-    const display = productAnaysis.total_products ? activeDisplay : emptyDisplay;
-    return display;
+    if (isLoading) {
+        return <AnalyticsSkeleton />;
+    }
+
+    return productAnalysis.total_products ? <ActiveStateDisplay /> : <EmptyStateDisplay />;
+};
+
+export default Analytics;
+
+const AnalyticsSkeleton = () => {
+    return (
+        <Box p={5}>
+            <SimpleGrid columns={{ sm: 2, md: 3 }} gap={6} mb={6}>
+                <Skeleton borderRadius={8} p={5} height={`7rem`} borderWidth="1px" />
+                <Skeleton borderRadius={8} p={5} height={`7rem`} borderWidth="1px" />
+                <Skeleton borderRadius={8} p={5} height={`7rem`} borderWidth="1px" />
+                <Skeleton borderRadius={8} p={5} height={`7rem`} borderWidth="1px" />
+                <Skeleton borderRadius={8} p={5} height={`7rem`} borderWidth="1px" />
+                <Skeleton borderRadius={8} p={5} height={`7rem`} borderWidth="1px" />
+            </SimpleGrid>
+
+            <Flex mt={20} justify="space-between" mb={6} gap={6}>
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+            </Flex>
+            <Skeleton borderRadius={8} height="10rem" width="100%" />
+            <VStack mt={5}>
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+                <Skeleton borderRadius={8} height="40px" width="100%" />
+            </VStack>
+        </Box>
+    );
 };

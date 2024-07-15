@@ -8,9 +8,10 @@ import {
     setProductsAnalytics,
     setSingleProduct,
     setSingleProductCustomers,
+    // setSearchedProducts,
 } from './productsSlice';
 
-const checkCredentials = (credentials, filteredLink, status) => {
+const constructURL = (credentials, filteredLink, status) => {
     if (credentials && !credentials?.link) {
         return filteredLink;
     } else if (credentials?.link) {
@@ -20,12 +21,12 @@ const checkCredentials = (credentials, filteredLink, status) => {
     }
 };
 
-//productize-api.techstudio.academy/api/products
+// productize-api.techstudio.academy/api/products
 export const productsApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         getAllProducts: builder.mutation({
             query: (credentials) => ({
-                url: checkCredentials(
+                url: constructURL(
                     credentials,
                     `/products/users?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}&status=${
                         credentials?.status ? credentials?.status : ''
@@ -44,13 +45,13 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                         })
                     );
                 } catch (error) {
-                    return error;
+                    return;
                 }
             },
         }),
         getLiveProducts: builder.mutation({
             query: (credentials) => ({
-                url: checkCredentials(
+                url: constructURL(
                     credentials,
                     `/products/users?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}&status=published`,
                     `published`
@@ -68,13 +69,13 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                         })
                     );
                 } catch (error) {
-                    return error;
+                    return;
                 }
             },
         }),
         getDraftProducts: builder.mutation({
             query: (credentials) => ({
-                url: checkCredentials(
+                url: constructURL(
                     credentials,
                     `/products/users?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}&status=draft`,
                     `draft`
@@ -91,13 +92,13 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                         })
                     );
                 } catch (error) {
-                    return error;
+                    return;
                 }
             },
         }),
         getDeletedProducts: builder.mutation({
             query: (credentials) => ({
-                url: checkCredentials(
+                url: constructURL(
                     credentials,
                     `/products/users?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}&status=deleted`,
                     `deleted`
@@ -114,7 +115,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                         })
                     );
                 } catch (error) {
-                    return error;
+                    return;
                 }
             },
         }),
@@ -125,15 +126,14 @@ export const productsApiSlice = apiSlice.injectEndpoints({
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
-                    const { data } = await queryFulfilled;
-
+                    const res = await queryFulfilled;
                     dispatch(
                         setProductsAnalytics({
-                            productsAnalytics: data.data,
+                            productsAnalytics: res.data.data,
                         })
                     );
                 } catch (error) {
-                    return error;
+                    return;
                 }
             },
         }),
@@ -148,11 +148,11 @@ export const productsApiSlice = apiSlice.injectEndpoints({
 
                     dispatch(
                         setSingleProduct({
-                            product: data,
+                            product: data.data,
                         })
                     );
                 } catch (error) {
-                    return error;
+                    return;
                 }
             },
         }),
@@ -171,7 +171,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                         })
                     );
                 } catch (error) {
-                    return error;
+                    return;
                 }
             },
         }),
@@ -201,14 +201,21 @@ export const productsApiSlice = apiSlice.injectEndpoints({
         }),
         downloadProductsList: builder.mutation({
             query: (credentials) => ({
-                url: `products/download?page=1&format=csv`,
+                url: `/products/download`,
                 method: 'GET',
             }),
         }),
         downloadedProducts: builder.mutation({
             query: (credentials) => ({
-                url: `/products/downloads`,
+                url: `/products/purchased`,
                 method: 'GET',
+            }),
+        }),
+        searchProducts: builder.mutation({
+            query: (credentials) => ({
+                url: `/products/search`,
+                method: 'POST',
+                body: { ...credentials },
             }),
         }),
     }),
@@ -228,4 +235,5 @@ export const {
     useDownloadProductsListMutation,
     useDownloadedProductsMutation,
     useGetCustomersOfSingleProductMutation,
+    useSearchProductsMutation,
 } = productsApiSlice;

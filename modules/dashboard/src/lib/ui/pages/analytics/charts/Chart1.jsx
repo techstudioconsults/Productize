@@ -9,27 +9,19 @@ const LineChart = () => {
     const [showAnalyticsChartData] = useShowAnalyticsChartDataMutation();
     const graphData = useSelector(selectAnalyticsGraphData);
 
-    // const resData = { revForLastWeek: 5000, revForThisWeek: 3000, revForThreeWeeksAgo: 100, revForTwoWeeksAgo: 25000 };
-
     useEffect(() => {
-        const analytics = async () => {
-            await showAnalyticsChartData(null).unwrap();
-        };
-        analytics();
+        showAnalyticsChartData(null).unwrap();
     }, [showAnalyticsChartData]);
 
     useEffect(() => {
-        const data = [
-            graphData?.revForThisWeek || 2000,
-            graphData?.revForLastWeek || 5000,
-            graphData?.revForTwoWeeksAgo || 1300,
-            graphData?.revForThreeWeeksAgo || 3989,
-        ];
-        const myChartRef = chartRef.current.getContext('2d');
+        const data = [graphData?.revForThisWeek, graphData?.revForLastWeek, graphData?.revForTwoWeeksAgo, graphData?.revForThreeWeeksAgo];
+
         // Destroy the previous chart instance before creating a new one
         if (chartInstance.current) {
             chartInstance.current.destroy();
         }
+
+        const myChartRef = chartRef.current.getContext('2d');
 
         chartInstance.current = new Chart(myChartRef, {
             type: 'line',
@@ -38,22 +30,39 @@ const LineChart = () => {
                 datasets: [
                     {
                         label: 'Revenue per Week',
-                        // data: graphData,
                         data,
                         borderColor: `#0266F4`,
+                        fill: false,
                     },
                 ],
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                interaction: {
+                    intersect: false,
+                    mode: 'index',
+                },
                 plugins: {
                     filler: {
                         propagate: false,
                     },
                 },
-                interaction: {
-                    intersect: false,
+                scales: {
+                    x: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: 'Weeks',
+                        },
+                    },
+                    y: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: 'Revenue',
+                        },
+                    },
                 },
             },
         });
@@ -64,7 +73,7 @@ const LineChart = () => {
                 chartInstance.current.destroy();
             }
         };
-    }, [graphData]);
+    }, [graphData?.revForLastWeek, graphData?.revForThisWeek, graphData?.revForThreeWeeksAgo, graphData?.revForTwoWeeksAgo]);
 
     return <canvas ref={chartRef} />;
 };

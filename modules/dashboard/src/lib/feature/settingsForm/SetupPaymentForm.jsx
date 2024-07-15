@@ -58,7 +58,7 @@ export const SetupPaymentForm = ({ closeModal }) => {
                     render: () => (
                         <ToastFeedback
                             btnColor={`purple.200`}
-                            message={res.data?.message || `Payment account setup successfully`}
+                            message={res?.data?.message || `Payment account setup successfully`}
                             title="Paystack Setup"
                             icon={undefined}
                             bgColor={undefined}
@@ -73,20 +73,7 @@ export const SetupPaymentForm = ({ closeModal }) => {
                 // close modal
             }
         } catch (error) {
-            toastIdRef.current = toast({
-                position: 'top',
-                render: () => (
-                    <ToastFeedback
-                        message={error.data.message}
-                        title="Paystack Setup"
-                        icon={errorImg}
-                        color={`red.600`}
-                        btnColor={`red.600`}
-                        bgColor={undefined}
-                        handleClose={close}
-                    />
-                ),
-            });
+            return;
         }
     };
 
@@ -154,10 +141,10 @@ export const SetupPaymentForm = ({ closeModal }) => {
                 <Box flex={1}>
                     <SharedButton
                         btnExtras={{
-                            border: `1px solid #6D5DD3`,
+                            // border: `1px solid #6D5DD3`,
                             onClick: () => reset(),
                         }}
-                        text={'Cancel'}
+                        text={'Clear'}
                         width={`100%`}
                         height={'48px'}
                         bgColor={'transparent'}

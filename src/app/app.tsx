@@ -1,8 +1,5 @@
-import '../styles.scss';
-
-import React, { Suspense, useCallback, useEffect } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { useGetProductTagsMutation } from '@productize/redux';
 import { PageNotFound, PreLoader, SpinnerComponent } from '@productize/ui';
 import { ForgotPassword, Login, Signup } from '@productize/auth';
 import {
@@ -27,6 +24,7 @@ import {
     WithdrawalEarnings,
     AccountSettings,
     PaymentSettings,
+    KycSettings,
 } from '@productize/dashboard';
 import { CoverPage } from '../pages/coverPage/CoverPage';
 import About from '../pages/about/About';
@@ -57,6 +55,11 @@ const Explore = React.lazy(() =>
         default: module.Explore,
     }))
 );
+const CategoryPageDetails = React.lazy(() =>
+    import('../pages/explore/views/productDetails/CategoryPageDetails').then((module) => ({
+        default: module.CategoryPageDetails,
+    }))
+);
 const ProductDetails = React.lazy(() =>
     import('../pages/explore/views/productDetails/ProductDetails').then((module) => ({
         default: module.ProductDetails,
@@ -69,15 +72,18 @@ const ProductCart = React.lazy(() =>
 );
 
 function App() {
-    const [getProductTags] = useGetProductTagsMutation();
 
-    const getTags = useCallback(async () => {
-        await getProductTags(null).unwrap();
-    }, [getProductTags]);
+     const isAuth = useTokenExists();
+     const [getProductTags] = useGetProductTagsMutation();
+     const [getFromCart] = useGetFromCartMutation();
 
-    useEffect(() => {
-        getTags();
-    }, [getTags]);
+     useEffect(() => {
+         getProductTags(null).unwrap();
+         if (isAuth) {
+             getFromCart(null).unwrap();
+         }
+     }, [getFromCart, getProductTags, isAuth]);
+
 
     return (
         <Suspense
@@ -123,10 +129,14 @@ function App() {
                     <Route path="settings" element={<Settings />}>
                         <Route path="account" element={<AccountSettings />} />
                         <Route path="payment" element={<PaymentSettings />} />
+                        <Route path="kyc" element={<KycSettings />} />
                         <Route path="plans" element={<PlanSettings />} />
                         <Route path="plans/billing-cycle" element={<BillingCycle />} />
                     </Route>
                 </Route>
+                {/* admin  dashboard */}
+                <Route path="/admin" element={<Admin />} />
+                {/* not found */}
                 <Route path="*" element={<PageNotFound />} />
             </Routes>
         </Suspense>

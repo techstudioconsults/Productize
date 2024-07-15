@@ -52,6 +52,11 @@ const productSlice = createSlice({
             state.productsAnalytics = productsAnalytics;
         },
 
+        // setSearch: (state, action) => {
+        //     const { productsAnalytics } = action.payload;
+        //     state.productsAnalytics = productsAnalytics;
+        // },
+
         resetProductStore: (state) => {
             Object.assign(state, initialState);
         },

@@ -39,6 +39,11 @@ const Home = React.lazy(() =>
         default: module.Home,
     }))
 );
+const ContactUs = React.lazy(() =>
+    import('../pages/contactUs/ContactUs').then((module) => ({
+        default: module.ContactUs,
+    }))
+);
 const Features = React.lazy(() =>
     import('../pages/features/Features').then((module) => ({
         default: module.Features,
@@ -102,6 +107,7 @@ function App() {
                 <Route index element={<CoverPage />} />
                 <Route path="/seller" element={<Home />} />
                 <Route path="/features" element={<Features />} />
+                <Route path="/contact-us" element={<ContactUs />} />
                 <Route path="/pricing" element={<Pricing />} />
                 <Route path={`/explore`} element={<Explore />} />
                 <Route path={`/explore/category/:mainCategory`} element={<CategoryPageDetails />} />

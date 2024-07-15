@@ -3,7 +3,7 @@ import Chart from 'chart.js/auto';
 import { useSelector } from 'react-redux';
 import { selectAnalyticsGraphData, useShowAnalyticsChartDataMutation } from '@productize/redux';
 
-const LineChart = (props) => {
+const BarChart = (props) => {
     const chartRef = useRef();
     const chartInstance = useRef(null);
     const [showAnalyticsChartData] = useShowAnalyticsChartDataMutation();
@@ -14,7 +14,7 @@ const LineChart = (props) => {
     }, [showAnalyticsChartData]);
 
     useEffect(() => {
-        const data = [graphData?.revForThisWeek, graphData?.revForLastWeek, graphData?.revForTwoWeeksAgo, graphData?.revForThreeWeeksAgo];
+        const data = [`3000`, `4000`, `1000`, `5000`, `1000`, `3400`, `3456`];
 
         // Destroy the previous chart instance before creating a new one
         if (chartInstance.current) {
@@ -24,15 +24,14 @@ const LineChart = (props) => {
         const myChartRef = chartRef.current.getContext('2d');
 
         chartInstance.current = new Chart(myChartRef, {
-            type: 'line',
+            type: 'bar',
             data: {
-                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                labels: ['day 1', 'day 2', 'day 3', 'day 4', 'day 5', 'day 6', 'day 7'],
                 datasets: [
                     {
-                        label: 'Revenue per Week',
+                        label: 'Revenue per day',
                         data,
-                        borderColor: `#6D5DD3`,
-                        fill: false,
+                        backgroundColor: '#6D5DD3',
                     },
                 ],
             },
@@ -53,7 +52,7 @@ const LineChart = (props) => {
                         display: true,
                         title: {
                             display: true,
-                            text: 'Weeks',
+                            text: 'Days',
                         },
                     },
                     y: {
@@ -73,9 +72,9 @@ const LineChart = (props) => {
                 chartInstance.current.destroy();
             }
         };
-    }, [graphData?.revForLastWeek, graphData?.revForThisWeek, graphData?.revForThreeWeeksAgo, graphData?.revForTwoWeeksAgo]);
+    }, []);
 
     return <canvas {...props} ref={chartRef} />;
 };
 
-export default LineChart;
+export default BarChart;

@@ -11,8 +11,7 @@ import order from '@icons/Property_2_Cart_1_ubt3so.svg';
 import analysis from '@icons/Property_2_Chart-pie_bygfly.svg';
 import consumer from '@icons/Property_2_User-folder_n4spfl.svg';
 import payment from '@icons/Property_2_Wallet_3_teopvy.svg';
-import { selectCurrentUser, useMarkUnseenOrdersAsSeenMutation } from '@productize/redux';
-import { useNotifications } from '../pages/notification/service';
+import { selectCurrentUser } from '@productize/redux';
 import { useLocation } from 'react-router-dom';
 
 interface link {
@@ -27,19 +26,6 @@ interface link {
 export const useLinks = () => {
     const { pathname } = useLocation();
     const user = useSelector(selectCurrentUser);
-    const [markUnseenOrdersAsSeen] = useMarkUnseenOrdersAsSeenMutation();
-    const { count, fetchUnseenCount } = useNotifications();
-
-    const makeunseenOrderSeen = useCallback(async () => {
-        try {
-            const res = await markUnseenOrdersAsSeen(null).unwrap();
-            if (res) {
-                fetchUnseenCount();
-            }
-        } catch (error) {
-            return error;
-        }
-    }, [fetchUnseenCount, markUnseenOrdersAsSeen]);
 
     const [links1, setLinks1] = useState<Array<link>>();
     const [links2] = useState([
@@ -83,10 +69,6 @@ export const useLinks = () => {
     ]);
 
     useEffect(() => {
-        if (pathname.includes(`/orders`)) {
-            // if(user.email_)
-            makeunseenOrderSeen();
-        }
         setLinks1([
             {
                 id: 2,
@@ -100,7 +82,7 @@ export const useLinks = () => {
                 id: 3,
                 name: `Orders`,
                 path: `orders`,
-                analysis: count,
+                analysis: 0,
                 type: `free`,
                 icon: order,
             },
@@ -129,7 +111,7 @@ export const useLinks = () => {
                 analysis: null,
             },
         ]);
-    }, [count, makeunseenOrderSeen, pathname]);
+    }, [pathname]);
 
-    return { links1, links2, links3, count, makeunseenOrderSeen };
+    return { links1, links2, links3 };
 };

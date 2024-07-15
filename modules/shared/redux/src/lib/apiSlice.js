@@ -14,11 +14,12 @@ const baseQuery = fetchBaseQuery({
 });
 
 const handleUnauthorized = (result, api) => {
-    console.log(api);
+    // console.log(api, result);
     if (result?.error) {
         const { status, data } = result.error;
 
-        if (status === 401 && !api.endpoint === 'getPayoutStats') {
+        // if (status === 401 && !api.endpoint === 'getPayoutStats') {
+        if (status === 401) {
             store.dispatch({
                 type: 'auth/logout',
             });

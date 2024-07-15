@@ -230,6 +230,14 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 body: { ...credentials.body },
             }),
         }),
+
+        notification: builder.mutation({
+            query: (credentials) => ({
+                url: `/users/notifications`,
+                method: 'GET',
+                // body: { ...credentials.body },
+            }),
+        }),
     }),
 });
 
@@ -252,4 +260,5 @@ export const {
     useTogglePaystackAccountActivationMutation,
     useShowAnalyticsChartDataMutation,
     useCancelSubscriptionMutation,
+    useNotificationMutation,
 } = userApiSlice;

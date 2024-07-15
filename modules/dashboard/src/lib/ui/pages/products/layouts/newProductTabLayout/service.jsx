@@ -61,9 +61,9 @@ export const useProductActions = () => {
         const productCreationEndpoint = data.product_type === 'digital_product' ? '/digitalProducts' : '/skillSellings';
         const additionalData =
             data.product_type === 'digital_product'
-                ? { category: data.category, resources: data.data }
+                ? { category: data.category, assets: data.data }
                 : // : { category: data.category, resources: data.data, level: data.level, link: data.portfolio_link };
-                  { category: data.category, resources: data.data, level: data.level, availability: data.availability, link: data.portfolio_link };
+                  { category: data.category, assets: data.data, level: data.level, availability: data.availability, link: data.portfolio_link };
 
         try {
             const res = await query('post', '/products', formData);

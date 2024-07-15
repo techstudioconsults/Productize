@@ -31,6 +31,7 @@ export const Pricing = () => {
                         {/* SUBSCRIPTION PLAN CARD */}
                         <PricingCard
                             cardProps={{
+                                border: `0px`,
                                 bgColor: `purple.100`,
                                 width: { base: `100%`, xl: `25rem` },
                                 height: `100%`,

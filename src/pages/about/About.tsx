@@ -11,28 +11,43 @@ const About = ({ btnColor, shouldShowButton }: any) => {
     const navigate = useNavigate();
     return (
         <DefaultLayout>
-            <Hero height={{ base: `23.5rem`, xl: `29.5rem` }} bgImg={''} bgColor={'yellow.100'}>
-                <Stack gap={10}>
-                    <Container zIndex={3} color={`yellow.300`} mt={`10rem`} textAlign={`center`} maxW={`70rem`}>
-                        <Box>
-                            <Text lineHeight={`shorter`} as={`h1`}>
-                            About Us
+            <Box position={'relative'}>
+                <Hero height={{ base: `25.5rem`, xl: `29.5rem` }} bgImg={''} bgColor={'yellow.100'}>
+                    <Stack position={'relative'}>
+                        <Container zIndex={3} color={`yellow.300`} mt={`10rem`} textAlign={`center`} maxW={`70rem`}>
+                            <Box>
+                                <Text lineHeight={`shorter`} as={`h1`}>
+                                    About Us
+                                </Text>
+                            </Box>
+                            <Text as={`h5`} fontWeight={300} maxW={{ base: '30rem', md: '30rem', lg: '40rem', xl: '50rem' }} margin={`auto`} mt={3}>
+                                Productize looks out for a better life with a money making system, no monthly charges. Just for you
                             </Text>
+                        </Container>
+                    </Stack>
+
+                    <Box position={'absolute'} bottom={'0px'} display="flex" flexDirection={'column'} justifyContent="center" alignItems="center">
+                        <Box display={{base: 'none', md: 'flex'}}>
+                            <Image
+                                position={'absolute'}
+                                left={{md:'8', lg: '10', xl:'20'}}
+                                top={'-10rem'}
+                                alt="star img"
+                                src="  https://res.cloudinary.com/doejcrfso/image/upload/v1721198983/productize/starOne_aymrh0.svg"
+                            />
+
+                            <Image
+                                position={'absolute'}
+                                right={{md:'8',lg: '10', xl:'20'}}
+                                top={'-8.5rem'}
+                                alt="star img"
+                                src="https://res.cloudinary.com/doejcrfso/image/upload/v1721198982/productize/StarTwo_s3apuj.svg "
+                            />
                         </Box>
-                        <Text as={`h5`} fontWeight={300} maxW={`70rem`} margin={`auto`} mt={3}>
-                        Productize looks out for a better life with a money making system, no monthly charges. Just for you
-                        </Text>
-                    </Container>
-
-                    <Box mb={{ base: `-4rem`, md: `-10rem`, lg: `-15rem`, xl: `-20rem` }}>
-                        <Image
-                            alt={`hero-illustration`}
-                            src={`https://res.cloudinary.com/doejcrfso/image/upload/v1720800272/productize/Lines_mel92h.png`}
-                        />
+                        <Image alt={`hero-illustration`} src={`https://res.cloudinary.com/doejcrfso/image/upload/v1720800272/productize/Lines_mel92h.png`} />
                     </Box>
-                </Stack>
-            </Hero>
-
+                </Hero>
+            </Box>
 
             <DualSectionLayout
                 height={{ base: ``, xl: `40rem` }}
@@ -78,47 +93,38 @@ const About = ({ btnColor, shouldShowButton }: any) => {
                 </Flex>
             </DualSectionLayout>
             <Container py={'1.5rem'} maxW={'70rem'} margin={'auto'}>
-                <SimpleGrid flex={2} alignItems={'center'} columns={{ base: 2, md: 3 }} spacing={10}>
+                <SimpleGrid flex={2} alignItems={'center'} justifyContent={'center'} columns={{ base: 2, md: 3 }} spacing={10}>
                     <Flex alignItems={'center'} justifyContent={'center'}>
-                        <Text as={`h1`}>
-                        30k+
-                        </Text>
+                        <Text as={`h1`}>30k+</Text>
                         <Box>
-                      <Text as={`p`}>
-                        Digital  
-                        </Text>
-                        <Text>
-                        Creators
-                        </Text>
-                      </Box>
+                            <Text as={`p`}>Digital</Text>
+                            <Text>Creators</Text>
+                        </Box>
                     </Flex>
-                    <Flex flex={2} alignItems={'center'} justifyContent={'center'}>
-                    <Text as={`h1`}>
-                        100k+
-                        </Text>
-                      <Box>
-                      <Text as={`p`}>
-                        Digital  
-                        </Text>
-                        <Text>
-                        Creators
-                        </Text>
-                      </Box>
-                    </Flex>
-                    <Flex flex={2} alignItems={'center'} justifyContent={'center'}>
-                    <Text as={`h1`}>
-                        45k+
-                        </Text>
+                    <Flex alignItems={'center'} justifyContent={'center'}>
+                        <Text as={`h1`}>100k+</Text>
                         <Box>
-                      <Text as={`p`}>
-                        Digital  
-                        </Text>
-                        <Text>
-                        Creators
-                        </Text>
-                      </Box>
+                            <Text as={`p`}>Digital</Text>
+                            <Text>Creators</Text>
+                        </Box>
+                    </Flex>
+                    <Flex display={{base:'none', md:'flex'}} alignItems={'center'} justifyContent={'center'}>
+                        <Text as={`h1`}>45k+</Text>
+                        <Box>
+                            <Text as={`p`}>Digital</Text>
+                            <Text>Creators</Text>
+                        </Box>
                     </Flex>
                 </SimpleGrid>
+                <Box display={{base: 'flex', md:'none'}} alignItems={'center'} justifyContent={'center'} pt={'5'} >
+                <Flex alignItems={'center'} justifyContent={'center'}>
+                        <Text as={`h1`}>45k+</Text>
+                        <Box>
+                            <Text as={`p`}>Digital</Text>
+                            <Text>Creators</Text>
+                        </Box>
+                    </Flex>
+                </Box>
             </Container>
             <DualSectionLayout
                 height={{ base: ``, xl: `40rem` }}
@@ -148,64 +154,68 @@ const About = ({ btnColor, shouldShowButton }: any) => {
                     </Container>
                 </Flex>
             </DualSectionLayout>
-            <Container maxW={'71rem'} py={'3.5rem'} px={{base: '1rem', lg: '1rem'}} >
-                <Text as={`h1`} pb={'2rem'} textAlign={'center'}>Why Choose Productize</Text>
+            <Container maxW={'71rem'} py={'3.5rem'} px={{ base: '1rem', lg: '1rem' }}>
+                <Text as={`h1`} pb={'2rem'} textAlign={'center'}>
+                    Why Choose Productize
+                </Text>
                 <SimpleGrid flex={2} columns={{ base: 1, sm: 2 }} spacing={10}>
-                            {/* card 1 */}
-                            <Box>
-                                <CardLayout border={'2px'} bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
-                                    <CardBody p={`23px`}>
-                                       
-                                        <Text as={`h5`} my={2}>
-                                        Flexible Product Options
-                                        </Text>
-                                        <Text color={`grey.500`}>Sell a variety of digital products, including courses, eBooks, software, music, and more. Customize your product pages with detailed descriptions, multimedia, and personalized settings.</Text>
-                                    </CardBody>
-                                </CardLayout>
-                            </Box>
-                            {/* card 2 */}
-                            <Box>
-                                <CardLayout border={'2px'} bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
-                                    <CardBody p={`23px`}>
-                                       
-                                        <Text as={`h5`} my={2}>
-                                        Affiliate Programs
-                                        </Text>
-                                        <Text fontWeight={400} color={`grey.500`} as={`h6`}>
-                                        Leverage our built-in affiliate marketing features to expand your product reach. Collaborate with affiliates who promote your products in exchange for commissions.
-                                        </Text>
-                                    </CardBody>
-                                </CardLayout>
-                            </Box>
-                            {/* card 3 */}
-                            <Box>
-                                <CardLayout border={'2px'} bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
-                                    <CardBody p={`23px`}>
-                                      
-                                        <Text as={`h5`} my={2}>
-                                        Secure Transactions
-                                        </Text>
-                                        <Text fontWeight={400} color={`grey.500`} as={`h6`}>
-                                        Our platform ensures secure and seamless transactions, giving both sellers and buyers peace of mind. Our commitment to security extends to regular audits and compliance with industry standards
-                                        </Text>
-                                    </CardBody>
-                                </CardLayout>
-                            </Box>
-                            {/* card 4 */}
-                            <Box>
-                                <CardLayout border={'2px'} bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
-                                    <CardBody p={`23px`}>
-                                        <Text as={`h5`} my={2}>
-                                        Community Engagement
-                                        </Text>
-                                        <Text fontWeight={400} color={`grey.500`} as={`h6`}>
-                                        Join a vibrant community of creators and entrepreneurs. Share insights and learn from others’ experiences. Our platform fosters an environment of innovation, where you can network with like-minded individuals
-                                        </Text>
-                                    </CardBody>
-                                </CardLayout>
-                            </Box>
-                        </SimpleGrid>
-
+                    {/* card 1 */}
+                    <Box>
+                        <CardLayout border={'2px'} bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
+                            <CardBody p={`23px`}>
+                                <Text as={`h5`} my={2}>
+                                    Flexible Product Options
+                                </Text>
+                                <Text color={`grey.500`}>
+                                    Sell a variety of digital products, including courses, eBooks, software, music, and more. Customize your product pages with
+                                    detailed descriptions, multimedia, and personalized settings.
+                                </Text>
+                            </CardBody>
+                        </CardLayout>
+                    </Box>
+                    {/* card 2 */}
+                    <Box>
+                        <CardLayout border={'2px'} bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
+                            <CardBody p={`23px`}>
+                                <Text as={`h5`} my={2}>
+                                    Affiliate Programs
+                                </Text>
+                                <Text fontWeight={400} color={`grey.500`} as={`h6`}>
+                                    Leverage our built-in affiliate marketing features to expand your product reach. Collaborate with affiliates who promote
+                                    your products in exchange for commissions.
+                                </Text>
+                            </CardBody>
+                        </CardLayout>
+                    </Box>
+                    {/* card 3 */}
+                    <Box>
+                        <CardLayout border={'2px'} bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
+                            <CardBody p={`23px`}>
+                                <Text as={`h5`} my={2}>
+                                    Secure Transactions
+                                </Text>
+                                <Text fontWeight={400} color={`grey.500`} as={`h6`}>
+                                    Our platform ensures secure and seamless transactions, giving both sellers and buyers peace of mind. Our commitment to
+                                    security extends to regular audits and compliance with industry standards
+                                </Text>
+                            </CardBody>
+                        </CardLayout>
+                    </Box>
+                    {/* card 4 */}
+                    <Box>
+                        <CardLayout border={'2px'} bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
+                            <CardBody p={`23px`}>
+                                <Text as={`h5`} my={2}>
+                                    Community Engagement
+                                </Text>
+                                <Text fontWeight={400} color={`grey.500`} as={`h6`}>
+                                    Join a vibrant community of creators and entrepreneurs. Share insights and learn from others’ experiences. Our platform
+                                    fosters an environment of innovation, where you can network with like-minded individuals
+                                </Text>
+                            </CardBody>
+                        </CardLayout>
+                    </Box>
+                </SimpleGrid>
             </Container>
             <SharedSection
                 title={'Join Our Thriving Creator Community'}

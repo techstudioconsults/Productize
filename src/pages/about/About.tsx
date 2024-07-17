@@ -20,7 +20,7 @@ const About = ({ btnColor, shouldShowButton }: any) => {
                     src="https://res.cloudinary.com/doejcrfso/image/upload/v1721238746/productize/star-top-mobile_wqdkhb.svg"
                     alt="purple star"
                 />
-                <Hero height={{ base: `20.5rem`,  xl: `29.5rem` }} bgImg={''} bgColor={'yellow.100'}>
+                <Hero height={{ base: `20.5rem`, md:'23rem', lg:'26rem',  xl: `29.5rem` }} bgImg={''} bgColor={'yellow.100'}>
                     <Stack position={'relative'}>
                         <Container zIndex={3} color={`yellow.300`} mt={{base:'8rem', lg:'10rem'}} textAlign={`center`} maxW={`70rem`}>
                             <Box>

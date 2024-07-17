@@ -29,6 +29,7 @@ import {
 import {
     Admin,
     AdminAccountSettings,
+    AdminComplaints,
     AdminHome,
     AdminOrders,
     AdminPayouts,
@@ -37,6 +38,7 @@ import {
     AdminProfile,
     AdminRevenue,
     AdminSettings,
+    AdminUser,
     AdminWithdrawalEarnings,
 } from '@productize/admin-dashboard';
 import { CoverPage } from '../pages/coverPage/CoverPage';
@@ -81,7 +83,7 @@ const ProductCart = React.lazy(() =>
     import('../pages/explore/views/productDetails/ProductCart').then((module) => ({
         default: module.ProductCart,
     }))
-);
+); 
 
 function App() {
     const isAuth = useTokenExists();
@@ -150,9 +152,11 @@ function App() {
                     <Route path="products" element={<AdminProducts />} />
                     <Route path="products/:productID" element={<AdminProductDetails />} />
                     <Route path="orders" element={<AdminOrders />} />
+                    <Route path="users" element={<AdminUser />} />
                     <Route path="profile/:userID" element={<AdminProfile />} />
                     <Route path="payouts" element={<AdminPayouts />} />
                     <Route path="revenue" element={<AdminRevenue />} />
+                    <Route path="complaints" element={<AdminComplaints />} />
                     <Route path="payouts/:payoutid/withdraw-earnings" element={<AdminWithdrawalEarnings />} />
                     <Route path="settings" element={<AdminSettings />}>
                         <Route path="account" element={<AdminAccountSettings />} />

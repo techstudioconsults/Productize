@@ -9,7 +9,7 @@ import { useCallback, useEffect } from 'react';
 import { ProductsTableControl } from './AdminProductsTableControl';
 import { DashboardEmptyState } from '../../empty-states/AdminDashboardEmptyState';
 import { useCurrency, useDate, useTime } from '@productize/hooks';
-import { useGetAllProductsMutation, selectAllProducts, selectPaginationMetaData } from '@productize/redux';
+import { useGetProductsMutation, selectProducts, selectPaginationMetaData } from '@productize/redux';
 import { OnBoardingLoader, SharedButton } from '@productize/ui';
 
 interface tableProps {
@@ -19,8 +19,8 @@ interface tableProps {
 }
 
 export const ProductTable = ({ deleted }: tableProps) => {
-    const [getAllProducts, getAllProductsStatus] = useGetAllProductsMutation();
-    const allProducts = useSelector(selectAllProducts);
+    const [getProducts, getProductsStatus] = useGetProductsMutation();
+    const allProducts = useSelector(selectProducts);
     const navigate = useNavigate();
     const formatCurrency = useCurrency();
     const formatDate = useDate();
@@ -103,14 +103,14 @@ export const ProductTable = ({ deleted }: tableProps) => {
 
     const handlePrevButton = async () => {
         try {
-            await getAllProducts({ link: paginate?.links?.prev }).unwrap();
+            await getProducts({ link: paginate?.links?.prev }).unwrap();
         } catch (error) {
             console.log(error);
         }
     };
     const handleNextButton = async () => {
         try {
-            await getAllProducts({ link: paginate?.links?.next }).unwrap();
+            await getProducts({ link: paginate?.links?.next }).unwrap();
         } catch (error) {
             console.log(error);
         }
@@ -118,11 +118,11 @@ export const ProductTable = ({ deleted }: tableProps) => {
 
     const showAllProducts = useCallback(async () => {
         try {
-            await getAllProducts(null).unwrap();
+            await getProducts(null).unwrap();
         } catch (error) {
             return error;
         }
-    }, [getAllProducts]);
+    }, [getProducts]);
 
     useEffect(() => {
         showAllProducts();
@@ -130,7 +130,7 @@ export const ProductTable = ({ deleted }: tableProps) => {
 
     return (
         <>
-            <Skeleton isLoaded={!getAllProductsStatus.isLoading}>
+            <Skeleton isLoaded={!getProductsStatus.isLoading}>
                 <ProductsTableControl />
             </Skeleton>
             <TableContainer
@@ -140,7 +140,7 @@ export const ProductTable = ({ deleted }: tableProps) => {
                 justifyContent={`space-between`}
                 overflowY={`auto`}
             >
-                {getAllProductsStatus.isLoading ? (
+                {getProductsStatus.isLoading ? (
                     <OnBoardingLoader />
                 ) : (
                     <Table size={`sm`} variant="simple">
@@ -154,7 +154,7 @@ export const ProductTable = ({ deleted }: tableProps) => {
                         <Tbody color={`purple.300`}>{tableproduct}</Tbody>
                     </Table>
                 )}
-                {!allProducts?.length && !getAllProductsStatus.isLoading && (
+                {!allProducts?.length && !getProductsStatus.isLoading && (
                     <Box my={10}>
                         <DashboardEmptyState
                             content={{

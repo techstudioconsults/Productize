@@ -5,7 +5,7 @@ import { Icon } from '@iconify/react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useCallback, useEffect } from 'react';
-import { ProductsTableControl } from './AdminProductTableControl';
+import { ProductsTableControl } from './ComplaintsTableControl';
 import { useCurrency, useDate, useTime } from '@productize/hooks';
 import { useGetAllProductsMutation, selectAllProducts, selectPaginationMetaData } from '@productize/redux';
 import { OnBoardingLoader, SharedButton } from '@productize/ui';
@@ -16,7 +16,7 @@ interface tableProps {
     deleted?: boolean;
 }
 
-export const ProductTable = ({ deleted }: tableProps) => {
+export const ComplaintTable = ({ deleted }: tableProps) => {
     const [getAllProducts, getAllProductsStatus] = useGetAllProductsMutation();
     const allProducts = useSelector(selectAllProducts);
     const navigate = useNavigate();
@@ -25,7 +25,7 @@ export const ProductTable = ({ deleted }: tableProps) => {
     const formatTime = useTime();
     const paginate = useSelector(selectPaginationMetaData);
 
-    const tableHeader = [`Activity`, `User ID`, `Product`, `Amount`, `Status`].map((title) => {
+    const tableHeader = [`Product`, `Price`, `Sales`, `Type`, `Status`, ''].map((title) => {
         if (deleted && title === `Status`) {
             title = `...`;
         }
@@ -33,7 +33,7 @@ export const ProductTable = ({ deleted }: tableProps) => {
             return (
                 <Th alignItems={`center`} py={3} key={title}>
                     <Flex gap={4} alignItems={`center`}>
-                        {/* <Checkbox size={`lg`} colorScheme="purple" defaultChecked /> */}
+                        <Checkbox size={`lg`} colorScheme="purple" defaultChecked />
                         {title}
                     </Flex>
                 </Th>
@@ -52,17 +52,12 @@ export const ProductTable = ({ deleted }: tableProps) => {
             <Tr _hover={{ bgColor: `purple.100`, cursor: `pointer` }} onClick={() => navigate(`/dashboard/products/${product.id}`)} key={product.id}>
                 <Td>
                     <Flex gap={2} alignItems={`center`}>
-                        {/* <Box onClick={(e) => e.stopPropagation()}>
+                        <Box onClick={(e) => e.stopPropagation()}>
                             <Checkbox size={`lg`} colorScheme="purple" />
-                        </Box> */}
+                        </Box>
                         {/* <Avatar bgColor={`yellow.100`} src={product?.thumbnail} borderRadius={`8px`} w={`100px`} h={`64px`} /> */}
                         <Stack>
                             <Text>{product?.title}</Text>
-                            <Flex alignItems={`center`} color={`grey.400`}>
-                                <Text className="tiny-text">{formatDate(product.created_at)}</Text>
-                                <Icon className="large-text" icon={`mdi:dot`} />
-                                <Text className="tiny-text">{formatTime(product?.created_at)}</Text>
-                            </Flex>
                         </Stack>
                     </Flex>
                 </Td>
@@ -70,18 +65,11 @@ export const ProductTable = ({ deleted }: tableProps) => {
                     <Flex>{formatCurrency(product?.price)}</Flex>
                 </Td>
                 <Td>
-                    <Flex>{product?.total_order}</Flex>
+                    <Flex>{`
+                    ${formatDate(product?.created_at)}
+                    ${formatTime(product?.created_at)}
+                    `}</Flex>
                 </Td>
-                <Td>
-                    <Flex>{product?.product_type}</Flex>
-                </Td>
-                {/* <Td>
-                    <Flex hidden={deleted}>
-                        <Tag size={`lg`} colorScheme={product?.status === `draft` ? `yellow` : `green`}>
-                            {product?.status}
-                        </Tag>
-                    </Flex>
-                </Td> */}
             </Tr>
         );
     });
@@ -131,9 +119,9 @@ export const ProductTable = ({ deleted }: tableProps) => {
                 ) : (
                     <Table size={`sm`} variant="simple">
                         <Thead zIndex={1} pos={`sticky`} top={0}>
-                            <Tr bgColor={`purple.100`} color={`grey.300`}>
+                            {/* <Tr bgColor={`purple.100`} color={`grey.300`}>
                                 {tableHeader}
-                            </Tr>
+                            </Tr> */}
                         </Thead>
                         <Tbody color={`purple.300`}>{tableProduct}</Tbody>
                     </Table>

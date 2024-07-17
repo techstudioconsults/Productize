@@ -1,5 +1,5 @@
 import { apiSlice } from '../apiSlice';
-import { setAccountList, setAnalyticsGraphData, setBillingHistory, setPayoutStats, setPayouts, setUser } from './userSlice';
+import { setAccountList, setAnalyticsGraphData, setBillingHistory, setPayoutStats, setPayouts, setUser, setUserAnalytics, setAllUser } from './userSlice';
 
 const constructURL = (credentials, filteredLink) => {
     if (credentials && !credentials?.link) {
@@ -13,6 +13,26 @@ const constructURL = (credentials, filteredLink) => {
 
 export const userApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
+        getAllUser: builder.mutation({
+            query: () => ({
+                url: `/users`,
+                method: 'GET',
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    dispatch(
+                        setAllUser({
+                            isFilter: arg?.isFilter || false,
+                            user: data.data,
+                            paginationMetaData: { links: data.links, meta: data.meta },
+                        })
+                    );
+                } catch (err) {
+                    return;
+                }
+            },
+        }),
         getUser: builder.mutation({
             query: () => ({
                 url: `/users/me`,
@@ -27,6 +47,24 @@ export const userApiSlice = apiSlice.injectEndpoints({
                         })
                     );
                 } catch (err) {
+                    return;
+                }
+            },
+        }),
+        getUserAnalytics: builder.mutation({
+            query: () => ({
+                url: `/users/stats/admin`,
+                method: 'GET',
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const res = await queryFulfilled;
+                    dispatch(
+                        setUserAnalytics({
+                            userAnalytics: res.data.data,
+                        })
+                    );
+                } catch (error) {
                     return;
                 }
             },
@@ -203,7 +241,6 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 }
             },
         }),
-
         showAnalyticsChartData: builder.mutation({
             query: (credentials) => ({
                 url: `/products/revenues`,
@@ -234,6 +271,8 @@ export const userApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+    useGetAllUserMutation,
+    useGetUserAnalyticsMutation,
     useGetUserMutation,
     useUpgradePlanMutation,
     useVerifyEmailMutation,

@@ -2,6 +2,7 @@
 import { Box, Flex, IconButton } from '@chakra-ui/react';
 import DateRangePicker from 'rsuite/esm/DateRangePicker';
 import SelectPicker from 'rsuite/esm/SelectPicker';
+import { DropdownAction } from '../../AdminDropdownAction';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
@@ -9,7 +10,7 @@ import { Icon } from '@iconify/react';
 import errorImg from '@icons/error.svg';
 import { useDateRangeFormat } from '@productize/hooks';
 import { selectCurrentToken, useGetAllProductsMutation } from '@productize/redux';
-import { useToastAction, ToastFeedback, SharedButton } from '@productize/ui';
+import { useToastAction, ToastFeedback, SpinnerComponentSmall, SharedButton } from '@productize/ui';
 import download from 'downloadjs';
 
 const BASE_URL = import.meta.env['VITE_BASE_URL'];
@@ -34,15 +35,20 @@ export const ProductsTableControl = ({ showRefreshBtn }: controlsProp) => {
         },
     };
 
-    // const data = [`All`, `Draft`, `Published`].map((item) => ({
-    //     label: item,
-    //     value: item,
-    // }));
+    const data = [`All`, `Draft`, `Published`].map((item) => ({
+        label: item,
+        value: item,
+    }));
 
     const handleExport = async () => {
         try {
             setExportLoading(true);
-            const res = await axios.get(`${BASE_URL}/products/download?page=1`, headersCredentials);
+            const res = await axios.get(
+                `${BASE_URL}/products/download?page=1`,
+                // `${BASE_URL}/products/download?status=${status}&format=csv`,
+                // `${BASE_URL}products/download?start_date=${startDate}&end_date=${endDate}&format=csv`,
+                headersCredentials
+            );
             if (res.status === 200) {
                 setExportLoading(false);
                 const blob = new Blob([res.data], { type: 'text/csv' });
@@ -81,10 +87,9 @@ export const ProductsTableControl = ({ showRefreshBtn }: controlsProp) => {
         }
     };
 
-    // const handleStatusChange = (value: string) => {
-    //     setStatus(value.toLowerCase());
-    // };
-
+    const handleStatusChange = (value: string) => {
+        setStatus(value.toLowerCase());
+    };
     const handleDateRangeChange = async (value: any | null) => {
         if (value) {
             setStartDate(formatDateRange(value?.[0]));
@@ -96,39 +101,31 @@ export const ProductsTableControl = ({ showRefreshBtn }: controlsProp) => {
         }
     };
 
-    // const filterTable = async () => {
-    //     if (status === `all`) {
-    //         try {
-    //             await getAllProducts(null).unwrap();
-    //         } catch (error) {
-    //             console.error(error);
-    //         }
-    //     } else {
-    //         try {
-    //             await getAllProducts({
-    //                 page: null,
-    //                 startDate,
-    //                 endDate,
-    //                 status,
-    //             }).unwrap();
-    //         } catch (error) {
-    //             console.error(error);
-    //         }
-    //     }
-    // };
-
-    const handleRefresh = async () => {
-        try {
-            await getAllProducts(null).unwrap();
-        } catch (error) {
-            console.error(error);
+    const filterTable = async () => {
+        if (status === `all`) {
+            try {
+                await getAllProducts(null).unwrap();
+            } catch (error) {
+                console.error(error);
+            }
+        } else {
+            try {
+                await getAllProducts({
+                    page: null,
+                    startDate,
+                    endDate,
+                    status,
+                }).unwrap();
+            } catch (error) {
+                console.error(error);
+            }
         }
     };
 
     return (
         <Flex alignItems={{ md: `center` }} justifyContent={`space-between`}>
             <Flex w={{ base: `100%`, md: `fit-content` }} flexDir={{ base: `column`, md: `row` }} gap={4} alignItems={{ base: `flex-start`, md: `center` }}>
-                <Flex w={{ base: `100%`, md: `fit-content` }} gap={4} alignItems={{ base: `flex-start`, md: `center` }}>
+                {/* <Flex w={{ base: `100%`, md: `fit-content` }} gap={4} alignItems={{ base: `flex-start`, md: `center` }}>
                     <DateRangePicker
                         onChange={handleDateRangeChange}
                         placeholder={`15 Feb, 2023 - 22 Feb, 2023`}
@@ -136,9 +133,11 @@ export const ProductsTableControl = ({ showRefreshBtn }: controlsProp) => {
                         character="-"
                         style={{ width: `100%` }}
                     />
-                </Flex>
+                    <Box display={{ md: `none` }}>
+                        <DropdownAction handleExport={handleExport} icon={`zondicons:dots-horizontal-triple`} />
+                    </Box>
+                </Flex> */}
                 {/* <Flex w={{ base: `100%`, md: `fit-content` }} gap={4} alignItems={{ base: `flex-start`, md: `center` }}>
-                    <SelectPicker searchable={false} onSelect={handleStatusChange} style={{ width: `100%` }} placeholder={`Status`} size="lg" data={data} />
                     <IconButton
                         color={`purple.200`}
                         bgColor={`purple.100`}
@@ -146,34 +145,15 @@ export const ProductsTableControl = ({ showRefreshBtn }: controlsProp) => {
                         spinner={<SpinnerComponentSmall size="sm" />}
                         onClick={filterTable}
                         fontSize={`xl`}
+                        // variant={`outline`}
                         aria-label="Filter table"
                         icon={<Icon icon={`system-uicons:filtering`} />}
                     />
+                    <SelectPicker searchable={false} onSelect={handleStatusChange} style={{ width: `100%` }} placeholder={`Status`} size="lg" data={data} />
                 </Flex> */}
-                {/* {This is where i want to put the referesh button} */}
-                <Flex alignItems="center">
-                    <Box
-                        as="button"
-                        onClick={handleRefresh}
-                        display="flex"
-                        alignItems="center"
-                        color="purple.200"
-                        bgColor={'transparent'}
-                        fontSize="xl"
-                        cursor="pointer"
-                        p={2}
-                        borderRadius={'4px'}
-                        border="1px solid #6D5DD3"
-                        _hover={{ bg: 'purple.200', color: 'white' }}
-                    >
-                        <Icon icon="basil:refresh-outline" />
-                        <Box as="span" ml={2}>
-                            Refresh
-                        </Box>
-                    </Box>
-                </Flex>
             </Flex>
-            <Box>
+            {/* dots and buttons */}
+            {/* <Box>
                 <Flex display={{ base: `none`, md: `flex` }} gap={4} alignItems={`center`}>
                     <Box hidden={showRefreshBtn ? false : true}>
                         <SharedButton
@@ -187,6 +167,7 @@ export const ProductsTableControl = ({ showRefreshBtn }: controlsProp) => {
                             btnExtras={{
                                 border: `1px solid #6D5DD3`,
                                 leftIcon: `basil:refresh-outline`,
+                                // onClick: () => setEmptyState((prevState) => !prevState),
                             }}
                         />
                     </Box>
@@ -209,7 +190,7 @@ export const ProductsTableControl = ({ showRefreshBtn }: controlsProp) => {
                         />
                     </Box>
                 </Flex>
-            </Box>
+            </Box> */}
         </Flex>
     );
 };

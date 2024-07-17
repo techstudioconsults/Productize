@@ -3,12 +3,12 @@ import { Box, Flex, HStack, SimpleGrid, Skeleton } from '@chakra-ui/react';
 import { useCurrency } from '@productize/hooks';
 import { DataWidgetCard } from '../../../AdminDataWidget';
 import { DashboardTable } from '../../../tables/AdminDashboardTable';
-import { OrdersTableControl } from '../../../../../../../dashboard/src/lib/ui/pages/orders/OrdersTableControl';
+import { OrdersTableControl } from '../../../pages/orders/AdminOrderTableControl';
 import { useOrders, useProductAnalytics } from '../services/AdminServices';
 
 const ActiveUserPage: React.FC = () => {
     const formatCurrency = useCurrency();
-    const { productAnalytics, isLoading } = useProductAnalytics();
+    const { revenueAnalytics, isLoading } = useProductAnalytics();
     const { orders, isLoading: loading } = useOrders();
 
     return (
@@ -24,8 +24,8 @@ const ActiveUserPage: React.FC = () => {
                                 bmt={4}
                                 showIcon
                                 bgImg="https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951020/productize/Data_widget_1_bqcsji_dvrrm5.png"
-                                title="New Order Revenue"
-                                value={formatCurrency(productAnalytics.new_orders_revenue) || formatCurrency(0)}
+                                title="Total Revenue"
+                                value={formatCurrency(revenueAnalytics.total_revenues) || formatCurrency(0)}
                             />
                         </Box>
                     </Skeleton>
@@ -45,17 +45,21 @@ const ActiveUserPage: React.FC = () => {
                 <SimpleGrid gap={4} my={4} columns={{ base: 1, md: 3 }}>
                     <Skeleton borderRadius={8} isLoaded={!isLoading}>
                         <Box>
-                            <DataWidgetCard showIcon={false} title="New Order" value={productAnalytics.new_orders || 0} />
+                            <DataWidgetCard showIcon={false} title="Total Sales Revenue" value={formatCurrency(revenueAnalytics.total_sale_revenue) || 0} />
                         </Box>
                     </Skeleton>
                     <Skeleton borderRadius={8} isLoaded={!isLoading}>
                         <Box>
-                            <DataWidgetCard showIcon={false} title="Total Sales" value={productAnalytics.total_sales || 0} />
+                            <DataWidgetCard
+                                showIcon={false}
+                                title="Total Subscription Revenue"
+                                value={formatCurrency(revenueAnalytics.total_subscription_revenue) || 0}
+                            />
                         </Box>
                     </Skeleton>
                     <Skeleton borderRadius={8} isLoaded={!isLoading}>
                         <Box>
-                            <DataWidgetCard showIcon={false} title="Total Products" value={productAnalytics.total_products || 0} />
+                            <DataWidgetCard showIcon={false} title="Total Commission" value={formatCurrency(revenueAnalytics.total_commission) || 0} />
                         </Box>
                     </Skeleton>
                 </SimpleGrid>

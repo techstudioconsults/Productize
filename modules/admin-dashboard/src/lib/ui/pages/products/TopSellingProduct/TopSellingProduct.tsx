@@ -1,5 +1,5 @@
 import { Box, Stack } from '@chakra-ui/react';
-import { ProductTable } from '../../products/AdminProductTable';
+import { TopProductTable } from './TopSellingProductTable';
 
 const TopSellingProduct = () => {
     // const { productsAnalytics, getProductsAnalyticsStatus, formatCurrency } = useAllProducts();
@@ -7,7 +7,7 @@ const TopSellingProduct = () => {
     const containsTopProduct = (
         <Box my={8}>
             <Stack mt={12} gap={4}>
-                <ProductTable />
+                <TopProductTable />
             </Stack>
         </Box>
     );

@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Box, Flex } from '@chakra-ui/react';
+import { Box, Flex, IconButton } from '@chakra-ui/react';
 import DateRangePicker from 'rsuite/esm/DateRangePicker';
-// import SelectPicker from 'rsuite/esm/SelectPicker';
+import SelectPicker from 'rsuite/esm/SelectPicker';
 import { DropdownAction } from '../../AdminDropdownAction';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
-// import { Icon } from '@iconify/react';
+import { Icon } from '@iconify/react';
 import errorImg from '@icons/error.svg';
 import { useDateRangeFormat } from '@productize/hooks';
-import { selectCurrentToken, useGetAllProductsMutation } from '@productize/redux';
-import { useToastAction, ToastFeedback, SharedButton } from '@productize/ui';
+import { selectCurrentToken, useGetProductsMutation } from '@productize/redux';
+import { useToastAction, ToastFeedback, SpinnerComponentSmall, SharedButton } from '@productize/ui';
 import download from 'downloadjs';
 
 const BASE_URL = import.meta.env['VITE_BASE_URL'];
@@ -25,7 +25,7 @@ export const ProductsTableControl = ({ showRefreshBtn }: controlsProp) => {
     const [startDate, setStartDate] = useState(``);
     const [endDate, setEndDate] = useState(``);
     const [status, setStatus] = useState(``);
-    const [getAllProducts, getAllProductsStatus] = useGetAllProductsMutation();
+    const [getProducts, getProductsStatus] = useGetProductsMutation();
     const formatDateRange = useDateRangeFormat();
     const { toast, toastIdRef, close } = useToastAction();
 
@@ -97,20 +97,20 @@ export const ProductsTableControl = ({ showRefreshBtn }: controlsProp) => {
         } else {
             setStartDate(``);
             setEndDate(``);
-            await getAllProducts(null).unwrap();
+            await getProducts(null).unwrap();
         }
     };
 
     const filterTable = async () => {
         if (status === `all`) {
             try {
-                await getAllProducts(null).unwrap();
+                await getProducts(null).unwrap();
             } catch (error) {
                 console.error(error);
             }
         } else {
             try {
-                await getAllProducts({
+                await getProducts({
                     page: null,
                     startDate,
                     endDate,
@@ -137,12 +137,11 @@ export const ProductsTableControl = ({ showRefreshBtn }: controlsProp) => {
                         <DropdownAction handleExport={handleExport} icon={`zondicons:dots-horizontal-triple`} />
                     </Box>
                 </Flex>
-                {/* <Flex w={{ base: `100%`, md: `fit-content` }} gap={4} alignItems={{ base: `flex-start`, md: `center` }}>
-                    <SelectPicker searchable={false} onSelect={handleStatusChange} style={{ width: `100%` }} placeholder={`Status`} size="lg" data={data} />
+                <Flex w={{ base: `100%`, md: `fit-content` }} gap={4} alignItems={{ base: `flex-start`, md: `center` }}>
                     <IconButton
                         color={`purple.200`}
                         bgColor={`purple.100`}
-                        isLoading={getAllProductsStatus.isLoading}
+                        isLoading={getProductsStatus.isLoading}
                         spinner={<SpinnerComponentSmall size="sm" />}
                         onClick={filterTable}
                         fontSize={`xl`}
@@ -150,7 +149,8 @@ export const ProductsTableControl = ({ showRefreshBtn }: controlsProp) => {
                         aria-label="Filter table"
                         icon={<Icon icon={`system-uicons:filtering`} />}
                     />
-                </Flex> */}
+                    <SelectPicker searchable={false} onSelect={handleStatusChange} style={{ width: `100%` }} placeholder={`Status`} size="lg" data={data} />
+                </Flex>
             </Flex>
             {/* dots and buttons */}
             <Box>

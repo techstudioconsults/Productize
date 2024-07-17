@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 import {
     useGetUserMutation,
     selectCurrentUser,
-    useGetProductAnalyticsMutation,
-    selectProductAnalytics,
+    useGetRevenueAnalyticsMutation,
+    selectRevenueAnalytics,
     useGetAllOrdersMutation,
     selectAllOrders,
     useGetAllProductsMutation,
@@ -35,12 +35,12 @@ export const useUser = () => {
 
 export const useProductAnalytics = () => {
     const [isLoading, setLoading] = useState(true);
-    const [getProductAnalytics] = useGetProductAnalyticsMutation();
-    const productAnalytics = useSelector(selectProductAnalytics);
+    const [getRevenueAnalytics] = useGetRevenueAnalyticsMutation();
+    const revenueAnalytics = useSelector(selectRevenueAnalytics);
 
     const fetchProductAnalytics = useCallback(async () => {
         try {
-            const res = await getProductAnalytics(null).unwrap();
+            const res = await getRevenueAnalytics(null).unwrap();
             if (res.data) {
                 setLoading(false);
             }
@@ -48,13 +48,13 @@ export const useProductAnalytics = () => {
             console.error('Error fetching product analytics:', error);
             setLoading(false);
         }
-    }, [getProductAnalytics]);
+    }, [getRevenueAnalytics]);
 
     useEffect(() => {
         fetchProductAnalytics();
     }, [fetchProductAnalytics]);
 
-    return { productAnalytics, isLoading };
+    return { revenueAnalytics, isLoading };
 };
 
 export const useOrders = () => {

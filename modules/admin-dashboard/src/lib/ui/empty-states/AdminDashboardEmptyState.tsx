@@ -1,7 +1,7 @@
 import { Box, Image, Stack, Text } from '@chakra-ui/react';
 import { bannerProps } from './AdminEmptyState';
-import { Link } from 'react-router-dom';
-import { SharedButton } from '@productize/ui';
+// import { Link } from 'react-router-dom';
+// import { SharedButton } from '@productize/ui';
 
 export const DashboardEmptyState = ({ maxW, content, showImage, textAlign }: bannerProps) => {
     return (
@@ -18,7 +18,7 @@ export const DashboardEmptyState = ({ maxW, content, showImage, textAlign }: ban
                         {content.desc}
                     </Text>
                 </Box>
-                <Link to={`/dashboard/products/new#product-details`}>
+                {/* <Link to={`/dashboard/products/new#product-details`}>
                     <SharedButton
                         text={'Create your first product'}
                         width={'fit-content'}
@@ -28,7 +28,7 @@ export const DashboardEmptyState = ({ maxW, content, showImage, textAlign }: ban
                         borderRadius={'4px'}
                         fontSize={{ base: `sm`, md: `md` }}
                     />
-                </Link>
+                </Link> */}
             </Stack>
         </Box>
     );

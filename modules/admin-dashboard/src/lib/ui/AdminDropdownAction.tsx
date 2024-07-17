@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import errorImg from '@icons/error.svg';
 import {
     useDeleteProductSoftlyMutation,
-    useGetAllProductsMutation,
+    useGetProductsMutation,
     useGetLiveProductsMutation,
     useGetDraftProductsMutation,
     useUpdateProductStatusMutation,
@@ -51,7 +51,7 @@ export const DropdownActionDraft = ({ icon, product }: dropProp) => {
     const navigate = useNavigate();
     const { toast, toastIdRef, close } = useToastAction();
     const [deleteProductSoftly] = useDeleteProductSoftlyMutation();
-    const [getAllProducts] = useGetAllProductsMutation();
+    const [getProducts] = useGetProductsMutation();
     const [getLiveProducts] = useGetLiveProductsMutation();
     const [getDraftProducts] = useGetDraftProductsMutation();
 
@@ -63,7 +63,7 @@ export const DropdownActionDraft = ({ icon, product }: dropProp) => {
             }).unwrap();
 
             if (res) {
-                await getAllProducts(null).unwrap();
+                await getProducts(null).unwrap();
                 await getLiveProducts(null).unwrap();
                 await getDraftProducts(null).unwrap();
                 toastIdRef.current = toast({
@@ -133,7 +133,7 @@ export const DropdownActionLive = ({ icon, product }: dropProp) => {
     const [updateProductStatus] = useUpdateProductStatusMutation();
     const [deleteProductSoftly] = useDeleteProductSoftlyMutation();
     const [getLiveProducts] = useGetLiveProductsMutation();
-    const [getAllProducts] = useGetAllProductsMutation();
+    const [getProducts] = useGetProductsMutation();
     const [getDraftProducts] = useGetDraftProductsMutation();
     const { onOpen, onClose, isOpen } = useDisclosure();
     const user = useSelector(selectCurrentUser);
@@ -149,7 +149,7 @@ export const DropdownActionLive = ({ icon, product }: dropProp) => {
                 }).unwrap();
 
                 if (res) {
-                    await getAllProducts(null).unwrap();
+                    await getProducts(null).unwrap();
                     await getLiveProducts(null).unwrap();
                     await getDraftProducts(null).unwrap();
                     toastIdRef.current = toast({
@@ -193,7 +193,7 @@ export const DropdownActionLive = ({ icon, product }: dropProp) => {
             }).unwrap();
 
             if (res) {
-                await getAllProducts(null).unwrap();
+                await getProducts(null).unwrap();
                 await getLiveProducts(null).unwrap();
                 await getDraftProducts(null).unwrap();
                 toastIdRef.current = toast({

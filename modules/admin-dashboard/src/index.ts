@@ -13,3 +13,5 @@ export * from './lib/ui/pages/payouts/pages/AdminWithdrawEarnings';
 export * from './lib/ui/pages/payouts/index';
 export * from './lib/ui/pages/revenue/index';
 export * from './lib/ui/pages/orders/index';
+export * from './lib/ui/pages/users/index'
+export * from './lib/ui/pages/complaints/index'

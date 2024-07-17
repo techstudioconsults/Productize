@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/rules-of-hooks */
 import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Avatar, Text, Stack, Checkbox, Box, Tag, Skeleton } from '@chakra-ui/react';
-import { Icon } from '@iconify/react';
-import { useNavigate } from 'react-router-dom';
+// import { Icon } from '@iconify/react';
+// import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useCallback, useEffect } from 'react';
-import { ProductsTableControl } from './AdminProductTableControl';
-import { useCurrency, useDate, useTime } from '@productize/hooks';
-import { useGetAllProductsMutation, selectAllProducts, selectPaginationMetaData } from '@productize/redux';
+import { DashboardEmptyState } from '../../empty-states/AdminDashboardEmptyState';
+import { useDate, useTime } from '@productize/hooks';
+import { useGetAllUserMutation, selectAllUsers, selectPaginationMetaData } from '@productize/redux';
 import { OnBoardingLoader, SharedButton } from '@productize/ui';
 
 interface tableProps {
@@ -16,16 +16,16 @@ interface tableProps {
     deleted?: boolean;
 }
 
-export const ProductTable = ({ deleted }: tableProps) => {
-    const [getAllProducts, getAllProductsStatus] = useGetAllProductsMutation();
-    const allProducts = useSelector(selectAllProducts);
-    const navigate = useNavigate();
-    const formatCurrency = useCurrency();
+export const CustomerTable = ({ deleted }: tableProps) => {
+    const [getAllUser, getAllUserStatus] = useGetAllUserMutation();
+    const allProducts = useSelector(selectAllUsers);
+    // const navigate = useNavigate();
+    // const formatCurrency = useCurrency();
     const formatDate = useDate();
     const formatTime = useTime();
     const paginate = useSelector(selectPaginationMetaData);
 
-    const tableHeader = [`Activity`, `User ID`, `Product`, `Amount`, `Status`].map((title) => {
+    const tableHeader = [`User Name`, `User Email`, `Subscription Status`, `Date`].map((title) => {
         if (deleted && title === `Status`) {
             title = `...`;
         }
@@ -33,7 +33,7 @@ export const ProductTable = ({ deleted }: tableProps) => {
             return (
                 <Th alignItems={`center`} py={3} key={title}>
                     <Flex gap={4} alignItems={`center`}>
-                        {/* <Checkbox size={`lg`} colorScheme="purple" defaultChecked /> */}
+                        <Checkbox size={`lg`} colorScheme="purple" defaultChecked />
                         {title}
                     </Flex>
                 </Th>
@@ -46,34 +46,35 @@ export const ProductTable = ({ deleted }: tableProps) => {
             );
         }
     });
-
-    const tableProduct = allProducts?.map((product: any) => {
+    const tableproduct = allProducts?.map((product: any) => {
         return (
-            <Tr _hover={{ bgColor: `purple.100`, cursor: `pointer` }} onClick={() => navigate(`/dashboard/products/${product.id}`)} key={product.id}>
+            <Tr _hover={{ bgColor: `purple.100`, cursor: `pointer` }} key={product.id}>
                 <Td>
+                    {/* use navigate to tap into all row */}
                     <Flex gap={2} alignItems={`center`}>
                         {/* <Box onClick={(e) => e.stopPropagation()}>
                             <Checkbox size={`lg`} colorScheme="purple" />
                         </Box> */}
                         {/* <Avatar bgColor={`yellow.100`} src={product?.thumbnail} borderRadius={`8px`} w={`100px`} h={`64px`} /> */}
-                        <Stack>
-                            <Text>{product?.title}</Text>
-                            <Flex alignItems={`center`} color={`grey.400`}>
-                                <Text className="tiny-text">{formatDate(product.created_at)}</Text>
-                                <Icon className="large-text" icon={`mdi:dot`} />
-                                <Text className="tiny-text">{formatTime(product?.created_at)}</Text>
-                            </Flex>
+                        <Stack padding={3}>
+                            <Text>{product?.name}</Text>
                         </Stack>
                     </Flex>
                 </Td>
                 <Td>
-                    <Flex>{formatCurrency(product?.price)}</Flex>
+                    <Flex>{product?.email}</Flex>
                 </Td>
                 <Td>
-                    <Flex>{product?.total_order}</Flex>
+                    {/* if show sale count is true */}
+                    <Tag size={`lg`} colorScheme={product?.account_type === `free` ? `yellow` : `green`}>
+                        {product?.account_type}
+                    </Tag>
                 </Td>
                 <Td>
-                    <Flex>{product?.product_type}</Flex>
+                    <Flex>{`
+                    ${formatDate(product?.created_at)}
+                    ${formatTime(product?.created_at)}
+                    `}</Flex>
                 </Td>
                 {/* <Td>
                     <Flex hidden={deleted}>
@@ -88,15 +89,14 @@ export const ProductTable = ({ deleted }: tableProps) => {
 
     const handlePrevButton = async () => {
         try {
-            await getAllProducts({ link: paginate?.links?.prev }).unwrap();
+            await getAllUser({ link: paginate?.links?.prev }).unwrap();
         } catch (error) {
             console.log(error);
         }
     };
-
     const handleNextButton = async () => {
         try {
-            await getAllProducts({ link: paginate?.links?.next }).unwrap();
+            await getAllUser({ link: paginate?.links?.next }).unwrap();
         } catch (error) {
             console.log(error);
         }
@@ -104,11 +104,11 @@ export const ProductTable = ({ deleted }: tableProps) => {
 
     const showAllProducts = useCallback(async () => {
         try {
-            await getAllProducts(null).unwrap();
+            await getAllUser(null).unwrap();
         } catch (error) {
             return error;
         }
-    }, [getAllProducts]);
+    }, [getAllUser]);
 
     useEffect(() => {
         showAllProducts();
@@ -116,9 +116,6 @@ export const ProductTable = ({ deleted }: tableProps) => {
 
     return (
         <>
-            <Skeleton isLoaded={!getAllProductsStatus.isLoading}>
-                <ProductsTableControl />
-            </Skeleton>
             <TableContainer
                 display={`flex`}
                 flexDir={`column`}
@@ -126,19 +123,35 @@ export const ProductTable = ({ deleted }: tableProps) => {
                 justifyContent={`space-between`}
                 overflowY={`auto`}
             >
-                {getAllProductsStatus.isLoading ? (
+                {getAllUserStatus.isLoading ? (
                     <OnBoardingLoader />
                 ) : (
                     <Table size={`sm`} variant="simple">
+                        {/* head */}
                         <Thead zIndex={1} pos={`sticky`} top={0}>
                             <Tr bgColor={`purple.100`} color={`grey.300`}>
                                 {tableHeader}
                             </Tr>
                         </Thead>
-                        <Tbody color={`purple.300`}>{tableProduct}</Tbody>
+                        {/* body */}
+                        <Tbody color={`purple.300`}>{tableproduct}</Tbody>
                     </Table>
                 )}
+                {!allProducts?.length && !getAllUserStatus.isLoading && (
+                    <Box my={10}>
+                        <DashboardEmptyState
+                            content={{
+                                title: '',
+                                desc: 'Product Table is Empty.',
+                                img: `https://res.cloudinary.com/kingsleysolomon/image/upload/v1700317427/productize/Illustration_4_pujumv.png`,
+                            }}
+                            textAlign={{ base: `center` }}
+                            showImage
+                        />
+                    </Box>
+                )}
             </TableContainer>
+            {/* TABLE PAGINATION */}
             <Flex mt={4} gap={5} color={`grey.400`} alignItems={`center`} justifyContent={`space-between`} flexDir={{ base: `column-reverse`, lg: `row` }}>
                 <Flex alignItems={`center`} justifyContent={`space-between`} flexDir={{ base: `column`, lg: `row` }} gap={{ lg: 60 }}>
                     <Box>

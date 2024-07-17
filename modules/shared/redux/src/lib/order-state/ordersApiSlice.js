@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { apiSlice } from '../apiSlice';
-import { setAllOrders, setSingleOrder } from './ordersSlice';
+import { setAllOrders, setSingleOrder, setOrderAnalytics, setAllAdminOrders } from './ordersSlice';
 
 const constructURL = (credentials) => {
     if (!credentials) {
-        return '/orders/user';
+        return '/orders';
     }
 
     const { page, startDate, endDate, link } = credentials.link;
@@ -30,6 +30,45 @@ export const OrdersApiSlice = apiSlice.injectEndpoints({
                             isFilter: arg?.isFilter || false,
                             orders: data.data,
                             ordersMetaData: { links: data.links, meta: data.meta },
+                        })
+                    );
+                } catch (error) {
+                    return;
+                }
+            },
+        }),
+        getAllAdminOrders: builder.mutation({
+            query: () => ({
+                url: `/orders`,
+                method: 'GET',
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    dispatch(
+                        setAllAdminOrders({
+                            isFilter: arg?.isFilter || false,
+                            orders: data.data,
+                            ordersMetaData: { links: data.links, meta: data.meta },
+                        })
+                    );
+                } catch (error) {
+                    return;
+                }
+            },
+        }),
+
+        getOrderAnalytics: builder.mutation({
+            query: () => ({
+                url: `/orders/stats`,
+                method: 'GET',
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const res = await queryFulfilled;
+                    dispatch(
+                        setOrderAnalytics({
+                            orderAnalytics: res.data.data,
                         })
                     );
                 } catch (error) {
@@ -73,5 +112,11 @@ export const OrdersApiSlice = apiSlice.injectEndpoints({
     }),
 });
 
-export const { useGetAllOrdersMutation, useGetSingleOrderDetailsMutation, useGetCountOfUnseenOrdersMutation, useMarkUnseenOrdersAsSeenMutation } =
-    OrdersApiSlice;
+export const {
+    useGetAllOrdersMutation,
+    useGetSingleOrderDetailsMutation,
+    useGetCountOfUnseenOrdersMutation,
+    useMarkUnseenOrdersAsSeenMutation,
+    useGetOrderAnalyticsMutation,
+    useGetAllAdminOrdersMutation,
+} = OrdersApiSlice;

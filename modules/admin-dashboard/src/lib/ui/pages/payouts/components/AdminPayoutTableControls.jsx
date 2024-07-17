@@ -139,7 +139,7 @@ export const PayoutTableControl = ({ showRefreshBtn, balance }) => {
                                 disabled: !balance,
                                 border: `1px solid #6D5DD3`,
                                 leftIcon: `ei:plus`,
-                                onClick: () => navigate(`/dashboard/payouts/${`38y23862938`}/withdraw-earnings`),
+                                onClick: () => navigate(`/Admin/payouts/${`38y23862938`}/withdraw-earnings`),
                             }}
                         />
                     </Box>
@@ -179,7 +179,7 @@ export const PayoutTableControl = ({ showRefreshBtn, balance }) => {
                                 disabled: !balance,
                                 border: `1px solid #6D5DD3`,
                                 leftIcon: `ei:plus`,
-                                onClick: () => navigate(`/dashboard/payouts/${`38y23862938`}/withdraw-earnings`),
+                                onClick: () => navigate(`/Admin/payouts/${`38y23862938`}/withdraw-earnings`),
                             }}
                         />
                     </Box>

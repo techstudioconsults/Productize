@@ -27,7 +27,7 @@ const AllproductActive = () => {
                 </Skeleton>
                 <Skeleton isLoaded={!getProductsAnalyticsStatus.isLoading}>
                     <Box>
-                        <DataWidgetCard showIcon={false} title="Total Revenue" value={formatCurrency(productsAnalytics?.total_revenues)} />
+                        <DataWidgetCard showIcon={false} title="Total Revenue" value={formatCurrency(productsAnalytics?.total_revenue)} />
                     </Box>
                 </Skeleton>
             </SimpleGrid>

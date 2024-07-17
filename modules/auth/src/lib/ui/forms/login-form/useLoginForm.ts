@@ -34,7 +34,7 @@ export function useLoginForm(): UseLoginFormReturn {
         try {
             const res = await login(data).unwrap();
             if (res.token) {
-                navigate(`/dashboard/home`);
+                navigate(`/Admin/home`);
             }
         } catch (error: any) {
             setError(error.data.message);

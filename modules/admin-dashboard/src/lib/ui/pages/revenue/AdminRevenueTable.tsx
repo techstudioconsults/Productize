@@ -19,7 +19,7 @@ export const OrderTable = ({ tableData }: tableProps) => {
     const formatTime = useTime();
     const paginate = useSelector(selectOrdersMetaData);
 
-    const tableHeader = [`Activity`, `Product`, `Amount`, `Date`].map((title) => {
+    const tableHeader = [`Product`, `Price`, `Customer's Email`, `Date`].map((title) => {
         return (
             <Th py={3} key={title}>
                 {title}

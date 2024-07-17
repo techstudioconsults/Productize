@@ -12,9 +12,17 @@ const About = ({ btnColor, shouldShowButton }: any) => {
     return (
         <DefaultLayout>
             <Box position={'relative'}>
-                <Hero height={{ base: `25.5rem`, xl: `29.5rem` }} bgImg={''} bgColor={'yellow.100'}>
+                <Image
+                    display={{ base: 'block', md: 'none' }}
+                    position={'absolute'}
+                    right={'2rem'}
+                    top={'5rem'}
+                    src="https://res.cloudinary.com/doejcrfso/image/upload/v1721238746/productize/star-top-mobile_wqdkhb.svg"
+                    alt="purple star"
+                />
+                <Hero height={{ base: `20.5rem`,  xl: `29.5rem` }} bgImg={''} bgColor={'yellow.100'}>
                     <Stack position={'relative'}>
-                        <Container zIndex={3} color={`yellow.300`} mt={`10rem`} textAlign={`center`} maxW={`70rem`}>
+                        <Container zIndex={3} color={`yellow.300`} mt={{base:'8rem', lg:'10rem'}} textAlign={`center`} maxW={`70rem`}>
                             <Box>
                                 <Text lineHeight={`shorter`} as={`h1`}>
                                     About Us
@@ -27,10 +35,10 @@ const About = ({ btnColor, shouldShowButton }: any) => {
                     </Stack>
 
                     <Box position={'absolute'} bottom={'0px'} display="flex" flexDirection={'column'} justifyContent="center" alignItems="center">
-                        <Box display={{base: 'none', md: 'flex'}}>
+                        <Box display={{ base: 'none', md: 'flex' }}>
                             <Image
                                 position={'absolute'}
-                                left={{md:'8', lg: '10', xl:'20'}}
+                                left={{ md: '8', lg: '10', xl: '20' }}
                                 top={'-10rem'}
                                 alt="star img"
                                 src="  https://res.cloudinary.com/doejcrfso/image/upload/v1721198983/productize/starOne_aymrh0.svg"
@@ -38,15 +46,29 @@ const About = ({ btnColor, shouldShowButton }: any) => {
 
                             <Image
                                 position={'absolute'}
-                                right={{md:'8',lg: '10', xl:'20'}}
-                                top={'-8.5rem'}
+                                right={{ md: '8', lg: '10', xl: '20' }}
+                                top={'-5rem'}
                                 alt="star img"
                                 src="https://res.cloudinary.com/doejcrfso/image/upload/v1721198982/productize/StarTwo_s3apuj.svg "
                             />
                         </Box>
-                        <Image alt={`hero-illustration`} src={`https://res.cloudinary.com/doejcrfso/image/upload/v1720800272/productize/Lines_mel92h.png`} />
+                        <Box mt={{ base: '0rem', md: '-1rem', lg: '-0.5rem', xl: '0.2rem' }}>
+                            <Image
+                                alt={`hero-illustration`}
+                                src={`https://res.cloudinary.com/doejcrfso/image/upload/v1721238304/productize/about-hero-desktop_pisdhc.svg`}
+                            />
+                        </Box>
                     </Box>
                 </Hero>
+                <Image
+                display={{base:'block', md:'none'}}
+                    position={'absolute'}
+                    width={'40px'}
+                    left={'-2'}
+                    bottom={'0rem'}
+                    alt="star img"
+                    src="  https://res.cloudinary.com/doejcrfso/image/upload/v1721198983/productize/starOne_aymrh0.svg"
+                />
             </Box>
 
             <DualSectionLayout
@@ -108,7 +130,7 @@ const About = ({ btnColor, shouldShowButton }: any) => {
                             <Text>Creators</Text>
                         </Box>
                     </Flex>
-                    <Flex display={{base:'none', md:'flex'}} alignItems={'center'} justifyContent={'center'}>
+                    <Flex display={{ base: 'none', md: 'flex' }} alignItems={'center'} justifyContent={'center'}>
                         <Text as={`h1`}>45k+</Text>
                         <Box>
                             <Text as={`p`}>Digital</Text>
@@ -116,8 +138,8 @@ const About = ({ btnColor, shouldShowButton }: any) => {
                         </Box>
                     </Flex>
                 </SimpleGrid>
-                <Box display={{base: 'flex', md:'none'}} alignItems={'center'} justifyContent={'center'} pt={'5'} >
-                <Flex alignItems={'center'} justifyContent={'center'}>
+                <Box display={{ base: 'flex', md: 'none' }} alignItems={'center'} justifyContent={'center'} pt={'5'}>
+                    <Flex alignItems={'center'} justifyContent={'center'}>
                         <Text as={`h1`}>45k+</Text>
                         <Box>
                             <Text as={`p`}>Digital</Text>

@@ -9,15 +9,12 @@ import { selectCurrentToken } from '@productize/redux';
 import axios from 'axios';
 import NotificationList from './NoticeForSkillSelling';
 
-
 export const DownloadedContent = () => {
     const baseUrl = import.meta.env.VITE_BASE_URL;
     const token = useSelector(selectCurrentToken);
     const { downloadedContentID } = useParams();
     const [content, setContent] = useState();
-    // const { state } = useLocation();
     const navigate = useNavigate();
-    // const url = state?.data?.[0];
     const resource = content?.[0];
 
     useEffect(() => {

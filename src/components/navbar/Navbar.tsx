@@ -29,6 +29,10 @@ export const Navbar = ({ isAuth, btnColor }: any) => {
                 setLinkColor(`yellow.300`);
                 setBgColor(`yellow.100`);
                 break;
+            case `/contact-us`:
+                setLinkColor(`yellow.300`);
+                setBgColor(`yellow.100`);
+                break;
             default:
                 setLinkColor(`black.300`);
                 setBgColor(`white`);

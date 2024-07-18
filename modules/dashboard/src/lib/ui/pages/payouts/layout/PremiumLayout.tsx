@@ -26,7 +26,7 @@ const PremiumLayout = () => {
                 setLoading(false);
             }
         } catch (error) {
-            return error;
+            return;
         }
     }, [getPayoutStats]);
 

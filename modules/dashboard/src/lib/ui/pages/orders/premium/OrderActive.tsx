@@ -5,25 +5,31 @@ import { useSelector } from 'react-redux';
 import { OrderTable } from './component/OrderTable';
 import { DashboardEmptyState } from '../../../empty-states/DashboardEmptyState';
 import { OrdersTableControl } from '../OrdersTableControl';
-import { useGetAllOrdersMutation, selectAllOrders, selectIsOrderfilter } from '@productize/redux';
+import { useGetAllOrdersMutation, selectAllOrders, selectIsOrderfilter, useReadAllNotificationMutation, useNotificationMutation } from '@productize/redux';
 
 const OrderActive = () => {
     const [isLoading, setLoading] = useState(true);
     const [getAllOrders] = useGetAllOrdersMutation();
     const orders = useSelector(selectAllOrders);
     const isOrderFilter = useSelector(selectIsOrderfilter);
+    const [readOrderNotification] = useReadAllNotificationMutation();
+    const [getNotice] = useNotificationMutation();
 
     const showAllOrders = useCallback(async () => {
         try {
             const res = await getAllOrders(null).unwrap();
             if (res.data) {
                 setLoading(false);
+                const res = await readOrderNotification({ type: `order.created` }).unwrap();
+                if (res) {
+                    getNotice(null);
+                }
             }
         } catch (error) {
             setLoading(false);
             return error;
         }
-    }, [getAllOrders]);
+    }, [getAllOrders, getNotice, readOrderNotification]);
 
     useEffect(() => {
         showAllOrders();

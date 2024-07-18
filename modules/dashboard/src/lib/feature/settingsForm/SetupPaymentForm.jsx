@@ -141,10 +141,10 @@ export const SetupPaymentForm = ({ closeModal }) => {
                 <Box flex={1}>
                     <SharedButton
                         btnExtras={{
-                            border: `1px solid #6D5DD3`,
+                            // border: `1px solid #6D5DD3`,
                             onClick: () => reset(),
                         }}
-                        text={'Cancel'}
+                        text={'Clear'}
                         width={`100%`}
                         height={'48px'}
                         bgColor={'transparent'}

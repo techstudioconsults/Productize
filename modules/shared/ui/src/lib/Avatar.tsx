@@ -35,7 +35,7 @@ export const AvatarComp: React.FC<AvatarProps> = memo(({ isScroll = false, linkC
                     <Avatar size="sm" name={user?.name} src={user?.logo} />
                     <Flex display={{ base: 'none', lg: 'flex' }} alignItems="center" gap={2}>
                         <Text fontWeight={600} color={linkColor}>
-                            {user?.name}
+                            {user?.username || user?.name}
                         </Text>
                     </Flex>
                 </Center>

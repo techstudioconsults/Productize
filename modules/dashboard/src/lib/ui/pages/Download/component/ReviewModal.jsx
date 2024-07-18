@@ -1,13 +1,12 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import { Box, Center, Flex, FormControl, ModalBody, ModalFooter, Stack, Text, Textarea, useDisclosure } from '@chakra-ui/react';
 import { useCreateProductReviewMutation } from '@productize/redux';
-import { ModalComp, SharedButton, ToastFeedback, useToastAction } from '@productize/ui';
+import { ModalComp, SharedButton } from '@productize/ui';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import StarRatings from 'react-star-ratings';
 
 export const ReviewModal = ({ handleClose }) => {
-    const { toast, toastIdRef } = useToastAction();
     const { downloadedContentID } = useParams();
     const [rating, setRating] = useState(0);
     const { onClose, onOpen, isOpen } = useDisclosure();

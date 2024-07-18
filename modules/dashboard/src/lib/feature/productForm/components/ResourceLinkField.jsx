@@ -5,41 +5,40 @@ import { useFormContext } from 'react-hook-form';
 import { useLocation } from 'react-router-dom';
 import { SharedButton } from '@productize/ui';
 import { Icon } from '@iconify/react';
-import { Heading } from './Heading';
 
-export const HighLightField = () => {
+export const ResourceLinkField = () => {
     const { state } = useLocation();
     const {
         register,
         setValue,
         formState: { errors },
     } = useFormContext();
-    const [highlights, setHighlights] = useState(['']);
+    const [resourceLinks, setResourceLinks] = useState(['']);
 
     useEffect(() => {
-        if (state?.product?.highlights) {
-            const initialHighlights = state.product.highlights.map((highlight) => highlight || '');
-            setHighlights(initialHighlights);
-            setValue('highlights', initialHighlights);
+        if (state?.product?.resourcelink) {
+            const initialResourceLinks = state.product.resourcelink.map((link) => link || '');
+            setResourceLinks(initialResourceLinks);
+            setValue('resourcelink', initialResourceLinks);
         }
     }, [setValue, state]);
 
-    const addHighlight = () => {
-        setHighlights([...highlights, '']);
+    const addResourceLink = () => {
+        setResourceLinks([...resourceLinks, '']);
     };
 
-    const removeHighlight = (indexToRemove) => {
-        const newHighlights = highlights.filter((_, index) => index !== indexToRemove);
-        setHighlights(newHighlights);
-        setValue('highlights', newHighlights);
+    const removeResourceLink = (indexToRemove) => {
+        const newResourceLinks = resourceLinks.filter((_, index) => index !== indexToRemove);
+        setResourceLinks(newResourceLinks);
+        setValue('resourcelink', newResourceLinks);
     };
 
     return (
         <FormControl>
-            <Heading title={`Highlights`} tip={`Write key features that highlight your product.`} />
-            <InputGroup size="lg">
+            <Heading />
+            <InputGroup>
                 <Stack w="100%">
-                    {highlights.map((highlight, index) => (
+                    {resourceLinks.map((link, index) => (
                         <Box key={index}>
                             <InputGroup>
                                 <Input
@@ -47,26 +46,27 @@ export const HighLightField = () => {
                                     bgColor="gray.200"
                                     _focus={{ bgColor: 'gray.200', color: 'gray.800' }}
                                     _placeholder={{ color: 'gray.400' }}
-                                    placeholder="What do you want to hightlight in your product?"
+                                    placeholder="Enter your preferred resource link"
                                     variant="filled"
-                                    value={highlight}
-                                    {...register(`highlights.${index}`, {
+                                    value={link}
+                                    {...register(`resourcelink.${index}`, {
                                         onChange: (e) => {
-                                            const newHighlights = [...highlights];
-                                            newHighlights[index] = e.target.value;
-                                            setHighlights(newHighlights);
+                                            const newResourceLinks = [...resourceLinks];
+                                            newResourceLinks[index] = e.target.value;
+                                            setResourceLinks(newResourceLinks);
+                                            setValue('resourcelink', newResourceLinks);
                                         },
                                     })}
                                 />
                                 {index !== 0 && (
                                     <InputRightElement _hover={{ cursor: 'pointer' }}>
-                                        <Icon onClick={() => removeHighlight(index)} fontSize="1.2rem" color="#6D5DD3" icon="ic:baseline-cancel" />
+                                        <Icon onClick={() => removeResourceLink(index)} fontSize="1.2rem" color="#6D5DD3" icon="ic:baseline-cancel" />
                                     </InputRightElement>
                                 )}
                             </InputGroup>
-                            {errors.highlights && errors.highlights[index] && (
+                            {errors.resourcelink && errors.resourcelink[index] && (
                                 <Text className="tiny-text" color="red.200">
-                                    {errors.highlights[index].message}
+                                    {errors.resourcelink[index].message}
                                 </Text>
                             )}
                         </Box>
@@ -75,7 +75,7 @@ export const HighLightField = () => {
             </InputGroup>
             <Box mt={5}>
                 <SharedButton
-                    text="Add more highlight"
+                    text="Add more Resource Links"
                     type="button"
                     width="100%"
                     height="48px"
@@ -85,11 +85,26 @@ export const HighLightField = () => {
                     fontSize={{ base: 'sm', md: 'md' }}
                     btnExtras={{
                         border: '1px solid #6D5DD3',
-                        onClick: addHighlight,
+                        onClick: addResourceLink,
                     }}
                 />
             </Box>
             <input type="submit" style={{ display: 'none' }} />
         </FormControl>
+    );
+};
+
+const Heading = () => {
+    return (
+        <Flex mb={4} justifyContent="space-between" alignItems="flex-end">
+            <Box>
+                <Text color="purple.300" fontWeight={600}>
+                    Resource Links
+                </Text>
+                <FormHelperText color="gray.400" fontSize={{ base: 'xs', md: 'sm' }}>
+                    Upload the links to your videos hosted on Youtube or Vimeo
+                </FormHelperText>
+            </Box>
+        </Flex>
     );
 };

@@ -20,7 +20,7 @@ export const DownloadedContent = () => {
 
     useEffect(() => {
         const getData = async () => {
-            const res = await axios.get(`${baseUrl}/resources/products/${downloadedContentID}`, {
+            const res = await axios.get(`${baseUrl}/assets/products/${downloadedContentID}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

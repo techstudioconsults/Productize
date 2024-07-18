@@ -7,9 +7,9 @@ const constructURL = (credentials) => {
         return '/orders';
     }
 
-    const { page, startDate, endDate, link } = credentials.link;
+    const { link } = credentials;
     if (!link) {
-        return `/orders/user?page=${page}&start_date=${startDate}&end_date=${endDate}`;
+        return `/orders/user?page=${credentials.filter.page}&start_date=${credentials.filter.startDate}&end_date=${credentials.filter.endDate}`;
     } else {
         return link;
     }
@@ -25,6 +25,7 @@ export const OrdersApiSlice = apiSlice.injectEndpoints({
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
+                    console.log(data);
                     dispatch(
                         setAllOrders({
                             isFilter: arg?.isFilter || false,
@@ -115,19 +116,19 @@ export const OrdersApiSlice = apiSlice.injectEndpoints({
             },
         }),
 
-        getCountOfUnseenOrders: builder.mutation({
-            query: () => ({
-                url: `/orders/unseen`,
-                method: 'GET',
-            }),
-        }),
+        // getCountOfUnseenOrders: builder.mutation({
+        //     query: () => ({
+        //         url: `/orders/unseen`,
+        //         method: 'GET',
+        //     }),
+        // }),
 
-        markUnseenOrdersAsSeen: builder.mutation({
-            query: () => ({
-                url: `/orders/seen`,
-                method: 'PATCH',
-            }),
-        }),
+        // markUnseenOrdersAsSeen: builder.mutation({
+        //     query: () => ({
+        //         url: `/orders/seen`,
+        //         method: 'PATCH',
+        //     }),
+        // }),
     }),
 });
 

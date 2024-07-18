@@ -106,7 +106,7 @@ export const NewProductTabLayout = () => {
     return (
         <FormProvider {...methods}>
             <Tabs index={tabIndex} onChange={(index) => setTabIndex(index)} size={`sm`}>
-                <Flex zIndex={999} bgColor={`#ffffff`} pos={`sticky`} top={`75px`} display={{ lg: `none` }} my={5}>
+                <Flex bgColor={`#ffffff`} pos={`sticky`} top={`75px`} display={{ lg: `none` }} my={5}>
                     {(state?.product?.data?.status || state?.product?.status) === `draft` || hash === `#product-details` ? (
                         <Flex w={`100%`} display={hash !== `#share` ? `flex` : `none`} gap={4}>
                             <SharedButton

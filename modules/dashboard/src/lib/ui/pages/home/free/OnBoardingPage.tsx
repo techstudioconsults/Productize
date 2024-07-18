@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @nx/enforce-module-boundaries */
 import React, { useEffect, Suspense } from 'react';
 import { Box, Container, Flex, Stack, Text } from '@chakra-ui/react';
@@ -88,7 +89,7 @@ const OnBoardingPage: React.FC = () => {
             </Flex>
             <Stack>
                 <Suspense fallback={<OnBoardingLoader />}>
-                    <Box>
+                    <Box hidden={user?.email_verified}>
                         <DashboardRadioBtnComp
                             isPremium={true}
                             isChecked={user?.email_verified}
@@ -103,7 +104,7 @@ const OnBoardingPage: React.FC = () => {
                             btnText="Verify Email"
                         />
                     </Box>
-                    <Box>
+                    <Box hidden={user?.profile_completed}>
                         <DashboardRadioBtnComp
                             isPremium={isPremium}
                             isChecked={user?.profile_completed}
@@ -116,7 +117,7 @@ const OnBoardingPage: React.FC = () => {
                             btnText="Customize Profile"
                         />
                     </Box>
-                    <Box>
+                    <Box hidden={user?.payout_setup}>
                         <DashboardRadioBtnComp
                             isPremium={isPremium}
                             isChecked={user?.payout_setup}
@@ -129,7 +130,7 @@ const OnBoardingPage: React.FC = () => {
                             btnText="Make Money"
                         />
                     </Box>
-                    <Box>
+                    <Box hidden={user?.first_product_created}>
                         <DashboardRadioBtnComp
                             isPremium={isPremium}
                             isChecked={user?.first_product_created}
@@ -142,7 +143,7 @@ const OnBoardingPage: React.FC = () => {
                             btnText="Create Product"
                         />
                     </Box>
-                    <Box>
+                    <Box hidden={user?.first_sale}>
                         <DashboardRadioBtnComp
                             isPremium={isPremium}
                             isChecked={user?.first_sale}

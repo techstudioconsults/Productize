@@ -53,17 +53,23 @@ const Card: React.FC<CardProps> = ({ width, image, heading, rate, count, price, 
                 <Text as="span" fontSize={'xs'} lineHeight={4} pr=".625rem" textAlign={'left'}>
                     By {publisher.slice(0, 25)}
                 </Text>
+                <Flex hidden={!aggrRating} alignItems={`flex-end`}>
+                    <StarRatings numberOfStars={1} rating={aggrRating} starDimension="20px" starSpacing="1px" starRatedColor={`orange`} />
+                    <Text as={`span`} fontSize={`xs`}>
+                        {aggrRating}
+                    </Text>
+                </Flex>
+            </Flex>
+            <Flex mt={2} fontWeight={'bold'} color={'#6D5DD3'} textAlign={'start'} w={`100%`} alignItems={`center`} justifyContent={`space-between`}>
+                <Flex alignItems={`center`} gap={2}>
+                    <Text fontSize={'sm'}>{discountPrice ? formatCurrency(discountPrice) : formatCurrency(price)}</Text>
+                    <Text hidden={!discountPrice} textDecoration={`line-through`} color={`red.500`} fontSize={'xs'}>
+                        {!discountPrice ? formatCurrency(discountPrice) : formatCurrency(price)}
+                    </Text>
+                </Flex>
                 <Tag colorScheme={`orange`} fontSize={'xs'} hidden={discountPercentage >= 100}>
                     {-discountPercentage}%
                 </Tag>
-            </Flex>
-            <Flex mt={4} fontWeight={'bold'} color={'#6D5DD3'} textAlign={'start'} w={`100%`} alignItems={`center`} justifyContent={`space-between`}>
-                <Text lineHeight={5} fontSize={'sm'}>
-                    {formatCurrency(price)}
-                </Text>
-                <Box>
-                    <StarRatings rating={aggrRating} starDimension="12px" starSpacing="1px" starRatedColor={`orange`} />
-                </Box>
             </Flex>
         </Box>
     );

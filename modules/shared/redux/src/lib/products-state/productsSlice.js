@@ -14,7 +14,8 @@ const initialState = {
     },
     paginationMetaData: null,
     revenueAnalytics: {},
-    allRevenue: {},
+    allComplaints: {},
+    complaintsMetaData: null,
 };
 
 const productSlice = createSlice({
@@ -59,7 +60,11 @@ const productSlice = createSlice({
             const { customers } = action.payload;
             state.singleProduct.customers = customers;
         },
-
+        setAllComplaints: (state, action) => {
+            const { allComplaints, complaintsMetaData } = action.payload;
+            state.allComplaints = allComplaints;
+            state.complaintsMetaData = complaintsMetaData;
+        },
         setProductsAnalytics: (state, action) => {
             const { productsAnalytics } = action.payload;
             state.productsAnalytics = productsAnalytics;
@@ -67,11 +72,6 @@ const productSlice = createSlice({
         setRevenueAnalytics: (state, action) => {
             const { revenueAnalytics } = action.payload;
             state.revenueAnalytics = revenueAnalytics;
-        },
-        setAllRevenue: (state, action) => {
-            const { revenue, paginationMetaData } = action.payload;
-            state.allRevenue = revenue;
-            state.paginationMetaData = paginationMetaData;
         },
         // setSearch: (state, action) => {
         //     const { productsAnalytics } = action.payload;
@@ -97,7 +97,7 @@ export const {
     setProductsAnalytics,
     resetProductStore,
     setRevenueAnalytics,
-    setAllRevenue,
+    setAllComplaints,
 } = productSlice.actions;
 export default productSlice.reducer;
 
@@ -112,4 +112,4 @@ export const selectSingleProduct = (state) => state.Products.singleProduct.produ
 export const selectSingleProductCustomers = (state) => state.Products.singleProduct.customers;
 export const selectProductAnalytics = (state) => state.Products.productsAnalytics;
 export const selectRevenueAnalytics = (state) => state.Products.revenueAnalytics;
-export const selectAllRevenue = (state) => state.Products.allRevenue;
+export const selectAllComplaints = (state) => state.Products.allComplaints;

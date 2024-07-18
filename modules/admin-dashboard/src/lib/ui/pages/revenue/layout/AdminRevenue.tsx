@@ -2,8 +2,8 @@ import React from 'react';
 import { Box, Flex, HStack, SimpleGrid, Skeleton } from '@chakra-ui/react';
 import { useCurrency } from '@productize/hooks';
 import { DataWidgetCard } from '../../../AdminDataWidget';
-import { DashboardTable } from '../../../tables/AdminDashboardTable';
-import { OrdersTableControl } from '../../../pages/orders/AdminOrderTableControl';
+import { DashboardTable } from '../AdminRevenueTable';
+import { OrdersTableControl } from '../AdminRevenueTableControl';
 import { useOrders, useProductAnalytics } from '../services/AdminServices';
 
 const ActiveUserPage: React.FC = () => {
@@ -67,9 +67,9 @@ const ActiveUserPage: React.FC = () => {
 
             {/* Empty state */}
             <Box my={10}>
-                <Box>{isLoading ? <ControlSkeleton /> : <OrdersTableControl />}</Box>
+                <Box>{<OrdersTableControl />}</Box>
                 <Box mt={4}>
-                    <DashboardTable data={orders} status={loading} />
+                    <DashboardTable />
                 </Box>
             </Box>
         </Box>

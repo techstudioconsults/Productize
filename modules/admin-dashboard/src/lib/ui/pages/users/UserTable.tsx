@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/rules-of-hooks */
-import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Avatar, Text, Stack, Checkbox, Box, Tag, Skeleton } from '@chakra-ui/react';
-// import { Icon } from '@iconify/react';
-// import { useNavigate } from 'react-router-dom';
+import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Text, Stack, Checkbox, Box, Tag, Skeleton } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { useCallback, useEffect } from 'react';
 import { DashboardEmptyState } from '../../empty-states/AdminDashboardEmptyState';
@@ -116,6 +114,9 @@ export const CustomerTable = ({ deleted }: tableProps) => {
 
     return (
         <>
+            {/* <Skeleton isLoaded={!getProductsStatus.isLoading}>
+                <CustomersTableControl />
+            </Skeleton> */}
             <TableContainer
                 display={`flex`}
                 flexDir={`column`}

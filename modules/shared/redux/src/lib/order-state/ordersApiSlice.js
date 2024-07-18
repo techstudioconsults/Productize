@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { apiSlice } from '../apiSlice';
-import { setAllOrders, setSingleOrder, setOrderAnalytics, setAllAdminOrders } from './ordersSlice';
+import { setAllOrders, setSingleOrder, setOrderAnalytics, setAllAdminOrders, setAllRevenue } from './ordersSlice';
 
 const constructURL = (credentials) => {
     if (!credentials) {
@@ -50,6 +50,25 @@ export const OrdersApiSlice = apiSlice.injectEndpoints({
                             isFilter: arg?.isFilter || false,
                             orders: data.data,
                             ordersMetaData: { links: data.links, meta: data.meta },
+                        })
+                    );
+                } catch (error) {
+                    return;
+                }
+            },
+        }),
+        getAllRevenue: builder.mutation({
+            query: () => ({
+                url: `/revenues`,
+                method: 'GET',
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    dispatch(
+                        setAllRevenue({
+                            revenue: data.data,
+                            revenueMetaData: { links: data.links, meta: data.meta },
                         })
                     );
                 } catch (error) {
@@ -119,4 +138,5 @@ export const {
     useMarkUnseenOrdersAsSeenMutation,
     useGetOrderAnalyticsMutation,
     useGetAllAdminOrdersMutation,
+    useGetAllRevenueMutation,
 } = OrdersApiSlice;

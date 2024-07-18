@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Icon } from '@iconify/react';
 import errorImg from '@icons/error.svg';
 import { useDateRangeFormat } from '@productize/hooks';
-import { selectCurrentToken, useGetAllAdminOrdersMutation } from '@productize/redux';
+import { selectCurrentToken, useGetAllRevenueMutation } from '@productize/redux';
 import { useToastAction, ToastFeedback, SpinnerComponentSmall, SharedButton } from '@productize/ui';
 import axios from 'axios';
 import download from 'downloadjs';
@@ -23,7 +23,7 @@ export const OrdersTableControl = ({ showRefreshBtn }: controlsProp) => {
     const [startDate, setStartDate] = useState(``);
     const [endDate, setEndDate] = useState(``);
     const [status, setStatus] = useState(``);
-    const [getAllAdminOrders, getAllAdminOrdersStatus] = useGetAllAdminOrdersMutation();
+    const [getAllRevenue, getAllRevenueStatus] = useGetAllRevenueMutation();
     const formatDateRange = useDateRangeFormat();
     const token = useSelector(selectCurrentToken);
 
@@ -100,13 +100,13 @@ export const OrdersTableControl = ({ showRefreshBtn }: controlsProp) => {
         } else {
             setStartDate(``);
             setEndDate(``);
-            await getAllAdminOrders(null).unwrap();
+            await getAllRevenue(null).unwrap();
         }
     };
 
     const filterTable = async () => {
         try {
-            await getAllAdminOrders({
+            await getAllRevenue({
                 link: {
                     page: null,
                     startDate,
@@ -150,7 +150,7 @@ export const OrdersTableControl = ({ showRefreshBtn }: controlsProp) => {
                         // isDisabled
                         color={`purple.200`}
                         bgColor={`purple.100`}
-                        isLoading={getAllAdminOrdersStatus.isLoading}
+                        isLoading={getAllRevenueStatus.isLoading}
                         spinner={<SpinnerComponentSmall size="sm" />}
                         onClick={filterTable}
                         fontSize={`xl`}

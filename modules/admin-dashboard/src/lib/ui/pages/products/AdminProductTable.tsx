@@ -50,7 +50,7 @@ export const ProductTable = ({ deleted }: tableProps) => {
     });
     const tableproduct = allProducts?.map((product: any) => {
         return (
-            <Tr _hover={{ bgColor: `purple.100`, cursor: `pointer` }} onClick={() => navigate(`/Admin/products/${product.id}`)} key={product.id}>
+            <Tr _hover={{ bgColor: `purple.100`, cursor: `pointer` }} key={product.id}>
                 <Td>
                     {/* use navigate to tap into all row */}
                     <Flex gap={2} alignItems={`center`}>

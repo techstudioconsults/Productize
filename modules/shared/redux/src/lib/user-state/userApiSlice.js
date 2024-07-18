@@ -1,5 +1,14 @@
 import { apiSlice } from '../apiSlice';
-import { setAccountList, setAnalyticsGraphData, setBillingHistory, setPayoutStats, setPayouts, setUser, setUserAnalytics, setAllUser } from './userSlice';
+import {
+    setAccountList,
+    setAnalyticsGraphData,
+    setBillingHistory,
+    setPayoutStats,
+    setPayouts,
+    setUser,
+    setUserAnalytics,
+    setAllUser,
+} from './userSlice';
 
 const constructURL = (credentials, filteredLink) => {
     if (credentials && !credentials?.link) {

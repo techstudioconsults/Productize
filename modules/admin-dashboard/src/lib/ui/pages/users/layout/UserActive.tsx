@@ -1,19 +1,19 @@
-import { Box, Flex, HStack, Skeleton, Text, VStack, SimpleGrid } from '@chakra-ui/react';
+import { Box, Flex, HStack, Skeleton, VStack, SimpleGrid } from '@chakra-ui/react';
 import { useCallback, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import { CustomersTableControl } from '../UserTableControl';
 import { CustomerTable } from '../UserTable';
 // import { DashboardEmptyState } from '../../../empty-states/AdminDashboardEmptyState';
-import { selectAllCustomers, selectIsCustomerFilter, useGetAllCustomersMutation } from '@productize/redux';
+import { useGetAllCustomersMutation } from '@productize/redux';
 import { useAllProducts } from './UserService';
 import { DataWidgetCard } from '../../../AdminDataWidget';
 
 const UserActive = () => {
     const [isLoading, setLoading] = useState(true);
     const [getAllCustomers] = useGetAllCustomersMutation();
-    const allCustomers = useSelector(selectAllCustomers);
-    const isFilter = useSelector(selectIsCustomerFilter);
-    const { userAnalytics, getUserAnalyticsStatus, formatCurrency } = useAllProducts();
+    // const allCustomers = useSelector(selectAllCustomers);
+    // const isFilter = useSelector(selectIsCustomerFilter);
+    const { userAnalytics, getUserAnalyticsStatus } = useAllProducts();
 
     const showAllCustomers = useCallback(async () => {
         try {
@@ -62,7 +62,7 @@ const UserActive = () => {
                 <SimpleGrid gap={4} my={4} columns={{ base: 1, sm: 2, lg: 4 }}>
                     <Skeleton isLoaded={!getUserAnalyticsStatus.isLoading}>
                         <Box>
-                            <DataWidgetCard showIcon={false} title="Total Users" value={userAnalytics?.total_products} />
+                            <DataWidgetCard showIcon={false} title="Total Users" value={userAnalytics?.total_users} />
                         </Box>
                     </Skeleton>
                     <Skeleton isLoaded={!getUserAnalyticsStatus.isLoading}>
@@ -72,7 +72,7 @@ const UserActive = () => {
                     </Skeleton>
                     <Skeleton isLoaded={!getUserAnalyticsStatus.isLoading}>
                         <Box>
-                            <DataWidgetCard showIcon={false} title="Total Trial Users" value={userAnalytics?.total_users} />
+                            <DataWidgetCard showIcon={false} title="Total Trial Users" value={userAnalytics?.total_trial_users} />
                         </Box>
                     </Skeleton>
                     <Skeleton isLoaded={!getUserAnalyticsStatus.isLoading}>

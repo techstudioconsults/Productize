@@ -1,31 +1,30 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable react-hooks/rules-of-hooks */
-import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Avatar, Text, Stack, Checkbox, Box, Tag, Skeleton } from '@chakra-ui/react';
-import { Icon } from '@iconify/react';
-import { useNavigate } from 'react-router-dom';
+import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Text, Stack, Checkbox, Box, Skeleton } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { useCallback, useEffect } from 'react';
-import { ProductsTableControl } from './ComplaintsTableControl';
+import { DashboardEmptyState } from '../../empty-states/AdminDashboardEmptyState';
 import { useCurrency, useDate, useTime } from '@productize/hooks';
-import { useGetAllProductsMutation, selectAllProducts, selectPaginationMetaData } from '@productize/redux';
+import { selectPaginationMetaData, useGetAllComplaintsMutation, selectAllComplaints } from '@productize/redux';
 import { OnBoardingLoader, SharedButton } from '@productize/ui';
 
-interface tableProps {
+interface TableProps {
     draft?: boolean;
     live?: boolean;
     deleted?: boolean;
 }
 
-export const ComplaintTable = ({ deleted }: tableProps) => {
-    const [getAllProducts, getAllProductsStatus] = useGetAllProductsMutation();
-    const allProducts = useSelector(selectAllProducts);
-    const navigate = useNavigate();
+const truncateText = (text: string, maxLength: number) => {
+    return text.length > maxLength ? `${text.substring(0, maxLength)}...` : text;
+};
+
+export const ComplaintTable = ({ deleted }: TableProps) => {
+    const [getAllComplaints, getAllComplaintsStatus] = useGetAllComplaintsMutation();
+    const allProducts = useSelector(selectAllComplaints);
     const formatCurrency = useCurrency();
     const formatDate = useDate();
     const formatTime = useTime();
     const paginate = useSelector(selectPaginationMetaData);
 
-    const tableHeader = [`Product`, `Price`, `Sales`, `Type`, `Status`, ''].map((title) => {
+    const tableHeader = [`Email`, `Subject`, `Date`].map((title) => {
         if (deleted && title === `Status`) {
             title = `...`;
         }
@@ -33,7 +32,6 @@ export const ComplaintTable = ({ deleted }: tableProps) => {
             return (
                 <Th alignItems={`center`} py={3} key={title}>
                     <Flex gap={4} alignItems={`center`}>
-                        <Checkbox size={`lg`} colorScheme="purple" defaultChecked />
                         {title}
                     </Flex>
                 </Th>
@@ -47,36 +45,36 @@ export const ComplaintTable = ({ deleted }: tableProps) => {
         }
     });
 
-    const tableProduct = allProducts?.map((product: any) => {
-        return (
-            <Tr _hover={{ bgColor: `purple.100`, cursor: `pointer` }} onClick={() => navigate(`/dashboard/products/${product.id}`)} key={product.id}>
-                <Td>
-                    <Flex gap={2} alignItems={`center`}>
-                        <Box onClick={(e) => e.stopPropagation()}>
-                            <Checkbox size={`lg`} colorScheme="purple" />
-                        </Box>
-                        {/* <Avatar bgColor={`yellow.100`} src={product?.thumbnail} borderRadius={`8px`} w={`100px`} h={`64px`} /> */}
-                        <Stack>
-                            <Text>{product?.title}</Text>
-                        </Stack>
-                    </Flex>
-                </Td>
-                <Td>
-                    <Flex>{formatCurrency(product?.price)}</Flex>
-                </Td>
-                <Td>
-                    <Flex>{`
-                    ${formatDate(product?.created_at)}
-                    ${formatTime(product?.created_at)}
-                    `}</Flex>
-                </Td>
-            </Tr>
-        );
-    });
+    const tableProduct = Array.isArray(allProducts)
+        ? allProducts.map((product: any) => {
+              return (
+                  <Tr _hover={{ bgColor: `purple.100`, cursor: `pointer` }} key={product.id}>
+                      <Td>
+                          <Flex gap={6} alignItems={`center`}>
+                              <Box onClick={(e) => e.stopPropagation()}>
+                                  <Checkbox size={`lg`} colorScheme="purple" />
+                              </Box>
+                              <Stack padding={5}>
+                                  <Text>{product?.email}</Text>
+                              </Stack>
+                          </Flex>
+                      </Td>
+                      <Td>
+                          <Flex>{truncateText(product?.subject, 40)}</Flex>
+                      </Td>
+                      <Td>
+                          <Flex>{`${formatDate(product?.created_at)} ${formatTime(product?.created_at)}`}</Flex>
+                      </Td>
+                  </Tr>
+              );
+          })
+        : [];
+
+    const firstFourProducts = tableProduct.slice(0, 5);
 
     const handlePrevButton = async () => {
         try {
-            await getAllProducts({ link: paginate?.links?.prev }).unwrap();
+            await getAllComplaints({ link: paginate?.links?.prev }).unwrap();
         } catch (error) {
             console.log(error);
         }
@@ -84,7 +82,7 @@ export const ComplaintTable = ({ deleted }: tableProps) => {
 
     const handleNextButton = async () => {
         try {
-            await getAllProducts({ link: paginate?.links?.next }).unwrap();
+            await getAllComplaints({ link: paginate?.links?.next }).unwrap();
         } catch (error) {
             console.log(error);
         }
@@ -92,11 +90,11 @@ export const ComplaintTable = ({ deleted }: tableProps) => {
 
     const showAllProducts = useCallback(async () => {
         try {
-            await getAllProducts(null).unwrap();
+            await getAllComplaints(null).unwrap();
         } catch (error) {
             return error;
         }
-    }, [getAllProducts]);
+    }, [getAllComplaints]);
 
     useEffect(() => {
         showAllProducts();
@@ -104,17 +102,33 @@ export const ComplaintTable = ({ deleted }: tableProps) => {
 
     return (
         <>
-            <Skeleton isLoaded={!getAllProductsStatus.isLoading}>
-                <ProductsTableControl />
-            </Skeleton>
+            <Box mb={4}>
+                <Text fontSize="lg" fontWeight="bold">
+                    Recent
+                </Text>
+            </Box>
+            <Table size={`sm`} variant="simple">
+                <Thead zIndex={1} pos={`sticky`} top={0}>
+                    {/* <Tr bgColor={`purple.100`} color={`grey.300`}>
+                                {tableHeader}
+                            </Tr> */}
+                </Thead>
+                <Tbody color={`purple.300`}>{firstFourProducts}</Tbody>
+            </Table>
+
+            <Box mb={2} mt={9}>
+                <Text fontSize="lg" fontWeight="bold">
+                    Recent
+                </Text>
+            </Box>
             <TableContainer
                 display={`flex`}
                 flexDir={`column`}
-                height={allProducts?.length ? `40rem` : `fit-Content`}
+                height={Array.isArray(allProducts) && allProducts.length ? `40rem` : `fit-Content`}
                 justifyContent={`space-between`}
                 overflowY={`auto`}
             >
-                {getAllProductsStatus.isLoading ? (
+                {getAllComplaintsStatus.isLoading ? (
                     <OnBoardingLoader />
                 ) : (
                     <Table size={`sm`} variant="simple">
@@ -125,6 +139,19 @@ export const ComplaintTable = ({ deleted }: tableProps) => {
                         </Thead>
                         <Tbody color={`purple.300`}>{tableProduct}</Tbody>
                     </Table>
+                )}
+                {(!Array.isArray(allProducts) || !allProducts.length) && !getAllComplaintsStatus.isLoading && (
+                    <Box my={10}>
+                        <DashboardEmptyState
+                            content={{
+                                title: '',
+                                desc: 'Product Table is Empty.',
+                                img: `https://res.cloudinary.com/kingsleysolomon/image/upload/v1700317427/productize/Illustration_4_pujumv.png`,
+                            }}
+                            textAlign={{ base: `center` }}
+                            showImage
+                        />
+                    </Box>
                 )}
             </TableContainer>
             <Flex mt={4} gap={5} color={`grey.400`} alignItems={`center`} justifyContent={`space-between`} flexDir={{ base: `column-reverse`, lg: `row` }}>

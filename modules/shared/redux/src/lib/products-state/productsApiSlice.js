@@ -11,7 +11,7 @@ import {
     setSingleProduct,
     setSingleProductCustomers,
     setRevenueAnalytics,
-    setAllRevenue,
+    setAllComplaints,
     // setSearchedProducts,
 } from './productsSlice';
 
@@ -64,6 +64,25 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                 }
             },
         }),
+        getAllComplaints: builder.mutation({
+            query: () => ({
+                url: `/complaints`,
+                method: 'GET',
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    dispatch(
+                        setAllComplaints({
+                            allComplaints: data.data,
+                            complaintsMetaData: { links: data.links, meta: data.meta },
+                        })
+                    );
+                } catch (error) {
+                    return;
+                }
+            },
+        }),
         getRevenueAnalytics: builder.mutation({
             query: () => ({
                 url: `/revenues/stats`,
@@ -82,27 +101,6 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                 }
             },
         }),
-        getAllRevenue: builder.mutation({
-            query: () => ({
-                url: `/revenues`,
-                method: 'GET',
-            }),
-            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-                try {
-                    // const res = await queryFulfilled;
-                    const { data } = await queryFulfilled;
-                    dispatch(
-                        setAllRevenue({
-                            allRevenue: data.data,
-                            paginationMetaData: { links: data.links, meta: data.meta },
-                        })
-                    );
-                } catch (error) {
-                    return;
-                }
-            },
-        }),
-
         getTopAdminProducts: builder.mutation({
             query: (credentials) => ({
                 url: constructURL1(
@@ -345,5 +343,5 @@ export const {
     useGetCustomersOfSingleProductMutation,
     useSearchProductsMutation,
     useGetRevenueAnalyticsMutation,
-    useGetAllRevenueMutation,
+    useGetAllComplaintsMutation,
 } = productsApiSlice;

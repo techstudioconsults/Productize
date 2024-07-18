@@ -39,7 +39,7 @@ export const DashboardTab = () => {
                         All Products
                     </Tab>
                     <Tab onClick={() => handleTabClick('#top-selling')} id="top-selling" _selected={activeStateStyle} py={6}>
-                        TopSelling
+                        Top Selling
                     </Tab>
                 </Flex>
             </TabList>

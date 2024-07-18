@@ -7,6 +7,8 @@ const initialState = {
     ordersMetaData: null,
     orderAnalytics: {},
     allAdminOrders: {},
+    allRevenue: {},
+    revenueMetaData: null,
 };
 
 const OrderSlice = createSlice({
@@ -18,6 +20,11 @@ const OrderSlice = createSlice({
             state.allOrders = orders;
             state.ordersMetaData = ordersMetaData;
             state.isFilter = isFilter;
+        },
+        setAllRevenue: (state, action) => {
+            const { revenue, revenueMetaData } = action.payload;
+            state.allRevenue = revenue;
+            state.revenueMetaData = revenueMetaData;
         },
         setAllAdminOrders: (state, action) => {
             const { orders, ordersMetaData, isFilter } = action.payload;
@@ -41,7 +48,7 @@ const OrderSlice = createSlice({
     },
 });
 
-export const { setAllOrders, resetOrdersStore, setSingleOrder, setOrderAnalytics, setAllAdminOrders } = OrderSlice.actions;
+export const { setAllOrders, resetOrdersStore, setSingleOrder, setOrderAnalytics, setAllAdminOrders, setAllRevenue } = OrderSlice.actions;
 export default OrderSlice.reducer;
 
 export const selectAllOrders = (state) => state.Orders.allOrders;
@@ -50,3 +57,4 @@ export const selectOrdersMetaData = (state) => state.Orders.ordersMetaData;
 export const selectSingleOrder = (state) => state.Orders.singleOrder;
 export const selectIsOrderfilter = (state) => state.Orders.isFilter;
 export const selectOrderAnalytics = (state) => state.Orders.orderAnalytics;
+export const selectAllRevenue = (state) => state.Orders.allRevenue;

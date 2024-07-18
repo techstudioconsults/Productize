@@ -1,6 +1,6 @@
 import { Box, SimpleGrid, Skeleton, Stack } from '@chakra-ui/react';
 import { DataWidgetCard } from '../../../AdminDataWidget';
-import { ProductTable } from '../../home/AdminProductTable';
+import { ProductTable } from '../../products/AdminProductTable';
 import { useAllProducts } from './AdminService';
 
 export const AdminHome = () => {

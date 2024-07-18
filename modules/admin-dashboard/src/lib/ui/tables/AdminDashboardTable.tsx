@@ -10,7 +10,7 @@ interface tableProps {
     tableData: [];
 }
 
-export const OrderTable = ({ tableData }: tableProps) => {
+export const DashboardTable = ({ tableData }: tableProps) => {
     const [getAllAdminOrders] = useGetAllAdminOrdersMutation();
 
     // const navigate = useNavigate();

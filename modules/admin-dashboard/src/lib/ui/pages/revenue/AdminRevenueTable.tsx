@@ -1,95 +1,137 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Text, Stack, Box, Avatar } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
+import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Text, Stack, Box, Tag, Skeleton } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
-import { selectOrdersMetaData, useGetAllAdminOrdersMutation } from '@productize/redux';
+import { useCallback, useEffect } from 'react';
+import { DashboardEmptyState } from '../../empty-states/AdminDashboardEmptyState';
 import { useCurrency, useDate, useTime } from '@productize/hooks';
-import { SharedButton } from '@productize/ui';
+import { useGetAllRevenueMutation, selectAllRevenue, selectPaginationMetaData } from '@productize/redux';
+import { OnBoardingLoader, SharedButton } from '@productize/ui';
 
-interface tableProps {
-    tableData: [];
+interface TableProps {
+    draft?: boolean;
+    live?: boolean;
+    deleted?: boolean;
 }
 
-export const OrderTable = ({ tableData }: tableProps) => {
-    const [getAllAdminOrders] = useGetAllAdminOrdersMutation();
-
-    // const navigate = useNavigate();
+export const DashboardTable = ({ deleted }: TableProps) => {
+    const [getAllRevenue, getAllRevenueStatus] = useGetAllRevenueMutation();
+    const allProducts = useSelector(selectAllRevenue);
     const formatCurrency = useCurrency();
     const formatDate = useDate();
     const formatTime = useTime();
-    const paginate = useSelector(selectOrdersMetaData);
+    const paginate = useSelector(selectPaginationMetaData);
 
-    const tableHeader = [`Product`, `Price`, `Customer's Email`, `Date`].map((title) => {
-        return (
-            <Th py={3} key={title}>
-                {title}
-            </Th>
-        );
+    const tableHeader = [`Activity`, `Product`, `Amount`, `Date`].map((title) => {
+        if (deleted && title === `Status`) {
+            title = `...`;
+        }
+        if (title === `Product`) {
+            return (
+                <Th alignItems={`center`} py={3} key={title}>
+                    <Flex gap={4} alignItems={`center`}>
+                        {title}
+                    </Flex>
+                </Th>
+            );
+        } else {
+            return (
+                <Th py={3} key={title}>
+                    {title}
+                </Th>
+            );
+        }
     });
-    const tableOrder = tableData?.map((order: any) => {
+
+    const tableProduct = Array.isArray(allProducts) ? allProducts.map((product: any) => {
         return (
-            <Tr _hover={{ bgColor: `purple.100`, cursor: `pointer` }} key={order.id}>
-                <Td>
+            <Tr _hover={{ bgColor: `purple.100`, cursor: `pointer` }}  key={product.id}>
+                <Td >
                     <Flex gap={2} alignItems={`center`}>
-                        <Avatar bgColor={`yellow.100`} src={order?.product?.thumbnail} borderRadius={`8px`} w={`100px`} h={`64px`} />
-                        <Stack>
-                            <Text>{order?.product?.title}</Text>
+                        <Stack padding={3}>
+                            <Text>{product?.activity}</Text>
                             <Flex alignItems={`center`} color={`grey.400`}>
-                                <Text className="tiny-text">{}</Text>
                             </Flex>
                         </Stack>
                     </Flex>
                 </Td>
                 <Td>
-                    <Flex>{formatCurrency(order.product?.price)}</Flex>
+                    <Flex>{product?.product}</Flex>
                 </Td>
                 <Td>
-                    {/* if show sale count is true */}
-                    <Flex flexDir={`column`} gap={2} py={2}>
-                        <Text>{order?.customer?.email}</Text>
-                    </Flex>
+                    <Flex>{formatCurrency(product?.amount)}</Flex>
                 </Td>
                 <Td>
                     <Flex>{`
-                    ${formatDate(order?.created_at)}
-                    ${formatTime(order?.created_at)}
+                    ${formatDate(product?.created_at)}
+                    ${formatTime(product?.created_at)}
                     `}</Flex>
                 </Td>
             </Tr>
         );
-    });
+    }) : [];
 
-    const handlePrevButton = () => {
-        getAllAdminOrders({ link: paginate?.links?.prev }).unwrap();
+    const handlePrevButton = async () => {
+        try {
+            await getAllRevenue({ link: paginate?.links?.prev }).unwrap();
+        } catch (error) {
+            console.log(error);
+        }
     };
-    const handleNextButton = () => {
-        getAllAdminOrders({ link: paginate?.links?.next }).unwrap();
+    const handleNextButton = async () => {
+        try {
+            await getAllRevenue({ link: paginate?.links?.next }).unwrap();
+        } catch (error) {
+            console.log(error);
+        }
     };
+
+    const showAllProducts = useCallback(async () => {
+        try {
+            await getAllRevenue(null).unwrap();
+        } catch (error) {
+            return error;
+        }
+    }, [getAllRevenue]);
+
+    useEffect(() => {
+        showAllProducts();
+    }, [showAllProducts]);
 
     return (
         <>
-            <TableContainer display={`flex`} flexDir={`column`} height={`40rem`} justifyContent={`space-between`} overflowY={`auto`}>
-                <Table size={`sm`} variant="simple">
-                    {/* head */}
-                    <Thead zIndex={1} pos={`sticky`} top={0}>
-                        <Tr bgColor={`purple.100`} color={`grey.300`}>
-                            {tableHeader}
-                        </Tr>
-                    </Thead>
-                    {/* body */}
-                    <Tbody color={`purple.300`}>{tableOrder}</Tbody>
-                </Table>
-            </TableContainer>
-            {/* TABLE PAGINATION */}
-            <Flex
-                display={paginate?.meta?.total > 2 ? `flex` : `none`}
-                mt={4}
-                gap={5}
-                color={`grey.400`}
-                alignItems={`center`}
+            <TableContainer
+                display={`flex`}
+                flexDir={`column`}
+                height={Array.isArray(allProducts) && allProducts.length ? `40rem` : `fit-Content`}
                 justifyContent={`space-between`}
-                flexDir={{ base: `column-reverse`, lg: `row` }}
+                overflowY={`auto`}
             >
+                {getAllRevenueStatus.isLoading ? (
+                    <OnBoardingLoader />
+                ) : (
+                    <Table size={`sm`} variant="simple">
+                        <Thead zIndex={1} pos={`sticky`} top={0}>
+                            <Tr bgColor={`purple.100`} color={`grey.300`}>
+                                {tableHeader}
+                            </Tr>
+                        </Thead>
+                        <Tbody color={`purple.300`}>{tableProduct}</Tbody>
+                    </Table>
+                )}
+                {(!Array.isArray(allProducts) || !allProducts.length) && !getAllRevenueStatus.isLoading && (
+                    <Box my={10}>
+                        <DashboardEmptyState
+                            content={{
+                                title: '',
+                                desc: 'Product Table is Empty.',
+                                img: `https://res.cloudinary.com/kingsleysolomon/image/upload/v1700317427/productize/Illustration_4_pujumv.png`,
+                            }}
+                            textAlign={{ base: `center` }}
+                            showImage
+                        />
+                    </Box>
+                )}
+            </TableContainer>
+            <Flex mt={4} gap={5} color={`grey.400`} alignItems={`center`} justifyContent={`space-between`} flexDir={{ base: `column-reverse`, lg: `row` }}>
                 <Flex alignItems={`center`} justifyContent={`space-between`} flexDir={{ base: `column`, lg: `row` }} gap={{ lg: 60 }}>
                     <Box>
                         <Text>10 Entries per page </Text>

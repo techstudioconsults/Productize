@@ -11,65 +11,28 @@ export const About = ({ btnColor, shouldShowButton }: any) => {
     const navigate = useNavigate();
     return (
         <DefaultLayout>
-            <Box position={'relative'}>
-                <Image
-                    display={{ base: 'block', md: 'none' }}
-                    position={'absolute'}
-                    right={'2rem'}
-                    top={'5rem'}
-                    src="https://res.cloudinary.com/doejcrfso/image/upload/v1721238746/productize/star-top-mobile_wqdkhb.svg"
-                    alt="purple star"
-                />
-                <Hero height={{ base: `20.5rem`, md:'23rem', lg:'26rem',  xl: `29.5rem` }} bgImg={''} bgColor={'yellow.100'}>
-                    <Stack position={'relative'}>
-                        <Container zIndex={3} color={`yellow.300`} mt={{base:'8rem', lg:'10rem'}} textAlign={`center`} maxW={`70rem`}>
-                            <Box>
-                                <Text lineHeight={`shorter`} as={`h1`}>
-                                    About Us
-                                </Text>
-                            </Box>
-                            <Text as={`h5`} fontWeight={300} maxW={{ base: '30rem', md: '30rem', lg: '40rem', xl: '50rem' }} margin={`auto`} mt={3}>
-                                Productize looks out for a better life with a money making system, no monthly charges. Just for you
+            <Hero height={{ base: `23.5rem`, xl: `29.5rem` }} bgImg={''} bgColor={'yellow.100'}>
+                <Stack gap={10}>
+                    <Container zIndex={3} color={`yellow.300`} mt={`10rem`} textAlign={`center`} maxW={`70rem`}>
+                        <Box>
+                            <Text lineHeight={`shorter`} as={`h1`}>
+                            About Us
                             </Text>
-                        </Container>
-                    </Stack>
-
-                    <Box position={'absolute'} bottom={'0px'} display="flex" flexDirection={'column'} justifyContent="center" alignItems="center">
-                        <Box display={{ base: 'none', md: 'flex' }}>
-                            <Image
-                                position={'absolute'}
-                                left={{ md: '8', lg: '10', xl: '20' }}
-                                top={'-10rem'}
-                                alt="star img"
-                                src="  https://res.cloudinary.com/doejcrfso/image/upload/v1721198983/productize/starOne_aymrh0.svg"
-                            />
-
-                            <Image
-                                position={'absolute'}
-                                right={{ md: '8', lg: '10', xl: '20' }}
-                                top={'-5rem'}
-                                alt="star img"
-                                src="https://res.cloudinary.com/doejcrfso/image/upload/v1721198982/productize/StarTwo_s3apuj.svg "
-                            />
                         </Box>
-                        <Box mt={{ base: '0rem', md: '-1rem', lg: '-0.5rem', xl: '0.2rem' }}>
-                            <Image
-                                alt={`hero-illustration`}
-                                src={`https://res.cloudinary.com/doejcrfso/image/upload/v1721238304/productize/about-hero-desktop_pisdhc.svg`}
-                            />
-                        </Box>
+                        <Text as={`h5`} fontWeight={300} maxW={`70rem`} margin={`auto`} mt={3}>
+                        Productize looks out for a better life with a money making system, no monthly charges. Just for you
+                        </Text>
+                    </Container>
+
+                    <Box mb={{ base: `-4rem`, md: `-10rem`, lg: `-15rem`, xl: `-20rem` }}>
+                        <Image
+                            alt={`hero-illustration`}
+                            src={`https://res.cloudinary.com/doejcrfso/image/upload/v1720800272/productize/Lines_mel92h.png`}
+                        />
                     </Box>
-                </Hero>
-                <Image
-                display={{base:'block', md:'none'}}
-                    position={'absolute'}
-                    width={'40px'}
-                    left={'-2'}
-                    bottom={'0rem'}
-                    alt="star img"
-                    src="  https://res.cloudinary.com/doejcrfso/image/upload/v1721198983/productize/starOne_aymrh0.svg"
-                />
-            </Box>
+                </Stack>
+            </Hero>
+
 
             <DualSectionLayout
                 height={{ base: ``, xl: `40rem` }}
@@ -115,9 +78,11 @@ export const About = ({ btnColor, shouldShowButton }: any) => {
                 </Flex>
             </DualSectionLayout>
             <Container py={'1.5rem'} maxW={'70rem'} margin={'auto'}>
-                <SimpleGrid flex={2} alignItems={'center'} justifyContent={'center'} columns={{ base: 2, md: 3 }} spacing={9}>
-                    <Flex alignItems={'center'} justifyContent={'center'} gap={3}>
-                        <Text as={`h1`}>30k+</Text>
+                <SimpleGrid flex={2} alignItems={'center'} columns={{ base: 2, md: 3 }} spacing={10}>
+                    <Flex alignItems={'center'} justifyContent={'center'}>
+                        <Text as={`h1`}>
+                        30k+
+                        </Text>
                         <Box>
                       <Text as={`p`}>
                         Digital
@@ -127,7 +92,7 @@ export const About = ({ btnColor, shouldShowButton }: any) => {
                         </Text>
                       </Box>
                     </Flex>
-                    <Flex flex={2} alignItems={'center'} justifyContent={'center'} gap={3}>
+                    <Flex flex={2} alignItems={'center'} justifyContent={'center'}>
                     <Text as={`h1`}>
                         100k+
                         </Text>
@@ -140,7 +105,7 @@ export const About = ({ btnColor, shouldShowButton }: any) => {
                         </Text>
                       </Box>
                     </Flex>
-                    <Flex display={{base:'none', md:'flex'}} flex={2} alignItems={'center'} justifyContent={'center'} gap={3}>
+                    <Flex flex={2} alignItems={'center'} justifyContent={'center'}>
                     <Text as={`h1`}>
                         45k+
                         </Text>
@@ -154,15 +119,6 @@ export const About = ({ btnColor, shouldShowButton }: any) => {
                       </Box>
                     </Flex>
                 </SimpleGrid>
-                <Box display={{ base: 'flex', md: 'none' }} alignItems={'center'} justifyContent={'center'} pt={'5'}>
-                    <Flex alignItems={'center'} justifyContent={'center'} gap={3}>
-                        <Text as={`h1`}>45k+</Text>
-                        <Box>
-                            <Text as={`p`}>Digital</Text>
-                            <Text>Creators</Text>
-                        </Box>
-                    </Flex>
-                </Box>
             </Container>
             <DualSectionLayout
                 height={{ base: ``, xl: `40rem` }}
@@ -192,10 +148,8 @@ export const About = ({ btnColor, shouldShowButton }: any) => {
                     </Container>
                 </Flex>
             </DualSectionLayout>
-            <Container maxW={'71rem'} py={'3.5rem'} px={{ base: '1rem', lg: '1rem' }}>
-                <Text as={`h1`} pb={'2rem'} textAlign={'center'}>
-                    Why Choose Productize
-                </Text>
+            <Container maxW={'71rem'} py={'3.5rem'} px={{base: '1rem', lg: '1rem'}} >
+                <Text as={`h1`} pb={'2rem'} textAlign={'center'}>Why Choose Productize</Text>
                 <SimpleGrid flex={2} columns={{ base: 1, sm: 2 }} spacing={10}>
                             {/* card 1 */}
                             <Box>

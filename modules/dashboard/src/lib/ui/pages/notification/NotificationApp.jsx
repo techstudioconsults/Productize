@@ -20,7 +20,6 @@ import {
     Stack,
     Button,
     HStack,
-    Flex,
     useDisclosure,
     useBreakpointValue,
 } from '@chakra-ui/react';
@@ -28,6 +27,7 @@ import { useNotifications } from './service';
 import { useEffect, useRef } from 'react';
 import { selectNotifications, useNotificationMutation, useReadAllNotificationMutation } from '@productize/redux';
 import { useSelector } from 'react-redux';
+import toastImg from '@icons/star-notice.png';
 
 const NotificationItem = ({ notice, onMarkAsSeen }) => {
     const { type, data, created_at } = notice;
@@ -92,9 +92,9 @@ const NotificationItem = ({ notice, onMarkAsSeen }) => {
     };
 
     return (
-        <HStack p={4} bg="white" borderRadius="md" boxShadow="sm" justifyContent="space-between" alignItems="center">
-            <Avatar size="md" src={data?.product?.thumbnail || ''} />
-            <VStack align="start" spacing={0} flex="1" pl={2}>
+        <HStack border={`1px solid #CFCFD0`} p={4} bg="white" borderRadius="md" justifyContent="space-between" alignItems="center">
+            <Avatar size="sm" src={data?.product?.thumbnail || toastImg} />
+            <VStack  borderLeft={`1px solid`} align="start" spacing={0} flex="1" pl={4}>
                 {renderContent()}
                 <Text fontSize="xs" color="gray.500">
                     {new Date(created_at).toLocaleString()}
@@ -168,7 +168,7 @@ export function NotificationApp() {
                                         Recent
                                     </Text>
                                     <Stack spacing={4} mt={2}>
-                                        {recentNotifications.map((notice, index) => (
+                                        {recentNotifications?.map((notice, index) => (
                                             <NotificationItem key={index} notice={notice} onMarkAsSeen={readSingleNotification} />
                                         ))}
                                     </Stack>
@@ -179,7 +179,7 @@ export function NotificationApp() {
                                         Older
                                     </Text>
                                     <Stack spacing={4} mt={2}>
-                                        {olderNotifications.map((notice, index) => (
+                                        {olderNotifications?.map((notice, index) => (
                                             <NotificationItem key={index} notice={notice} onMarkAsSeen={readSingleNotification} />
                                         ))}
                                     </Stack>

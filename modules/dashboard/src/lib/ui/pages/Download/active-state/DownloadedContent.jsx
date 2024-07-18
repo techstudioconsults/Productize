@@ -7,6 +7,7 @@ import { ReviewModal } from '../component/ReviewModal';
 import { useSelector } from 'react-redux';
 import { selectCurrentToken } from '@productize/redux';
 import axios from 'axios';
+import NotificationList from './sandboxLink';
 
 export const DownloadedContent = () => {
     const baseUrl = import.meta.env.VITE_BASE_URL;
@@ -42,14 +43,15 @@ export const DownloadedContent = () => {
 
     if (content?.length === 0) {
         return (
-            <Flex h={`50vh`} direction="column" justify="center" align="center" p={4} border="1px solid" borderColor="gray.200" borderRadius="md">
-                <Box color={`purple.200`} fontSize={`9xl`}>
-                    <Icon icon="raphael:package" />
-                </Box>
-                <Text mt={2} fontSize="lg" color="gray.600">
-                    No Content Available
-                </Text>
-            </Flex>
+            <NotificationList />
+            // <Flex h={`50vh`} direction="column" justify="center" align="center" p={4} border="1px solid" borderColor="gray.200" borderRadius="md">
+            //     <Box color={`purple.200`} fontSize={`9xl`}>
+            //         <Icon icon="raphael:package" />
+            //     </Box>
+            //     <Text mt={2} fontSize="lg" color="gray.600">
+            //         No Content Available
+            //     </Text>
+            // </Flex>
         );
     }
 

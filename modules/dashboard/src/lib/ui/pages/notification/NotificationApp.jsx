@@ -135,19 +135,19 @@ export function NotificationApp() {
                                 <NotificationItem key={index} notice={notice} onMarkAsSeen={readSingleNotification} />
                             ))}
                         </Stack>
-                        <Button isLoading={isReadingAll} fontSize="xs" size="sm" onClick={readAllNotice} color="purple.500">
+                        <Button isLoading={isReadingAll} fontSize="xs" size="md" py={5} onClick={readAllNotice} color="purple.500">
                             Mark all as seen
                         </Button>
                     </Stack>
                 ) : (
-                    <Box p={4} textAlign="center">
-                        <Center mb={2} color="gray.400" fontSize="xl">
+                    <Stack h={`100%`} alignItems={`center`} justifyContent={`center`} p={4} textAlign="center">
+                        <Center mb={2} color={`purple.200`} fontSize="2xl">
                             <Iconify icon="nonicons:not-found-16" />
                         </Center>
-                        <Text size="xs" fontWeight="bold">
-                            No new orders
+                        <Text size="xs" fontWeight={500} color={`grey.400`}>
+                            No new notifications at the moment. Check back later!
                         </Text>
-                    </Box>
+                    </Stack>
                 )}
             </PopoverContent>
         </Popover>

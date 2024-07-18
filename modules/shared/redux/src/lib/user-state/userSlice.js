@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
     profile: null,
     analyticsGraphData: null,
+    dailyAnalyticsGraphData: null,
     billingHistory: null,
     accountList: [],
     payouts: [],
@@ -49,6 +50,10 @@ const userSlice = createSlice({
             const { data } = action.payload;
             state.analyticsGraphData = data;
         },
+        setDailyAnalyticsGraphData: (state, action) => {
+            const { data } = action.payload;
+            state.dailyAnalyticsGraphData = data;
+        },
 
         setNotifications: (state, action) => {
             const { data } = action.payload;
@@ -70,7 +75,17 @@ const userSlice = createSlice({
     },
 });
 
-export const { setUser, setBillingHistory, setPayouts, setAccountList, resetUserStore, setPayoutStats, setAnalyticsGraphData, setNotifications } = userSlice.actions;
+export const {
+    setUser,
+    setBillingHistory,
+    setPayouts,
+    setAccountList,
+    resetUserStore,
+    setPayoutStats,
+    setAnalyticsGraphData,
+    setNotifications,
+    setDailyAnalyticsGraphData,
+} = userSlice.actions;
 
 export default userSlice.reducer;
 
@@ -81,5 +96,6 @@ export const selectPayouts = (state) => state.User.payouts;
 export const selectPayoutStats = (state) => state.User.payoutStats;
 export const selectPlanStatus = (state) => state.User.planStatus;
 export const selectAnalyticsGraphData = (state) => state.User.analyticsGraphData;
+export const selectDailyAnalyticsGraphData = (state) => state.User.dailyAnalyticsGraphData;
 export const selectNotifications = (state) => state.User.notifications;
 // export const selectTaskCompletedCount = (state) => state.User.guideTaskCompleted;

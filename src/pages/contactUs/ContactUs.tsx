@@ -8,7 +8,11 @@ import { SharedSection } from '../../components/section-layout/SharedSection';
 export const ContactUs = () => {
     return (
         <DefaultLayout>
-            <Hero height={{ base: `25rem`, xl: `420` }} bgImg={''} bgColor={'green.100'}>
+            <Hero
+                height={{ base: `25rem`, xl: `420` }}
+                bgImg={'https://res.cloudinary.com/kingsleysolomon/image/upload/v1721287010/productize/riamjkifvusoaagt8qsp.png'}
+                bgColor={'green.100'}
+            >
                 <Stack gap={10}>
                     <Container zIndex={3} color={`yellow.300`} mt={`10rem`} textAlign={`center`} maxW={`70rem`}>
                         <Box>
@@ -29,7 +33,7 @@ export const ContactUs = () => {
                             <Text lineHeight={`shorter`} as={`h2`}>
                                 Reach Out To Us
                             </Text>
-                            <Text fontSize={`2xl`}>
+                            <Text fontSize={{ lg: `2xl` }}>
                                 Reach out to us for any queries or support. Our team is here to help you with your shopping experience and ensure your
                                 satisfaction.
                             </Text>
@@ -38,15 +42,15 @@ export const ContactUs = () => {
                                     <Center fontSize={`40`} boxSize={`68`} bgColor={`grey.800`} color={`grey.100`} borderRadius={`100%`}>
                                         <Icon icon="material-symbols:mail" />
                                     </Center>
-                                    <Text fontSize={`2xl`}>support@productize.com</Text>
+                                    <Text fontSize={{ lg: `2xl` }}>support@productize.com</Text>
                                 </Flex>
                                 <Flex fontWeight={600} alignItems={`center`} gap={4}>
                                     <Center fontSize={`40`} boxSize={`68`} bgColor={`grey.800`} color={`grey.100`} borderRadius={`100%`}>
                                         <Icon icon="f7:phone-circle-fill" />
                                     </Center>
                                     <Box>
-                                        <Text fontSize={`2xl`}>+2347012345678</Text>
-                                        <Text fontSize={`2xl`}>+2347012345678</Text>
+                                        <Text fontSize={{ lg: `2xl` }}>+2347012345678</Text>
+                                        <Text fontSize={{ lg: `2xl` }}>+2347012345678</Text>
                                     </Box>
                                 </Flex>
                             </Stack>

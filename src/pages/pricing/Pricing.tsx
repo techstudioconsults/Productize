@@ -31,8 +31,8 @@ export const Pricing = () => {
                         {/* SUBSCRIPTION PLAN CARD */}
                         <PricingCard
                             cardProps={{
-                                border: `0px`,
-                                bgColor: `purple.100`,
+                                border: ``,
+                                bgColor: `white`,
                                 width: { base: `100%`, xl: `25rem` },
                                 height: `100%`,
                                 borderRadius: `8px`,
@@ -76,7 +76,7 @@ export const Pricing = () => {
                             <Text as={`h5`} my={`2rem`}>
                                 Haven’t found what you’re looking for? Try the
                                 <Text as={`span`} fontSize={`2xl`} color={`purple.200`} textDecoration={`underline`}>
-                                    <CLink as={Link} to={'/dashboard/help#contact-support'} w={`fit-content`}>
+                                    <CLink as={Link} to={'/contact-us'} w={`fit-content`}>
                                         Productize Help Center or Contact us
                                     </CLink>
                                 </Text>

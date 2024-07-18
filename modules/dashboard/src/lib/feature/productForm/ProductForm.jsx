@@ -11,6 +11,7 @@ import { DataUploadField } from './components/DataUploadField';
 import MajorInputFields from './components/MajorInputFields';
 import SkillSellingSubForm from './components/SkillSellingSubForm';
 import { useLocation } from 'react-router-dom';
+import { ResourceLinkField } from './components/ResourceLinkField';
 
 export const ProductForm = ({ listenForSchemaChange }) => {
     const { state, hash } = useLocation();
@@ -44,7 +45,13 @@ export const ProductForm = ({ listenForSchemaChange }) => {
             </Box>
             {/* GRID FOUR */}
             <Box my={8}>
-                <DataUploadField />
+                <Box hidden={selectedProductType === `skill_selling` ? true : false}>
+                    <DataUploadField />
+                </Box>
+                <Box hidden={selectedProductType === `skill_selling` ? false : true} as={SimpleGrid} gap={8} columns={{ base: 1, sm: 2 }}>
+                    <ResourceLinkField />
+                    <SkillSellingSubForm />
+                </Box>
             </Box>
             {/* GRID FIVE */}
             <Box my={8} gap={4}>
@@ -52,14 +59,13 @@ export const ProductForm = ({ listenForSchemaChange }) => {
             </Box>
             {/* GRID SIX */}
             <Box my={8} as={SimpleGrid} gap={8} columns={{ base: 1, sm: 2 }}>
+                {/* <Box hidden={selectedProductType === `skill_selling` ? true : false}> */}
                 <HighLightField />
+                {/* </Box> */}
                 <ThumbnailUploadField />
             </Box>
             {/* GRID EIGHT */}
             <Box my={8} as={SimpleGrid} gap={8} columns={{ base: 1, sm: 2 }}>
-                <Box hidden={selectedProductType === `skill_selling` ? false : true}>
-                    <SkillSellingSubForm />
-                </Box>
                 <TagsField />
             </Box>
         </Stack>

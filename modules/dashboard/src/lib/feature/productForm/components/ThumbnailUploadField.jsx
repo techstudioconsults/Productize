@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { useLocation } from 'react-router-dom';
 import { Field } from './FormFields';
+import { Heading } from './Heading';
 
 export const ThumbnailUploadField = () => {
     const { state, hash } = useLocation();
@@ -40,7 +41,7 @@ export const ThumbnailUploadField = () => {
 
     return (
         <FormControl isInvalid={!!errors.thumbnail}>
-            <Heading errors={errors} />
+            <Heading title={`Thumbnail`} tip={`This image will appear in the explore page, upload a square size of 2mb.`} />
             {errors.thumbnail && (
                 <Text className="tiny-text" color="red.500">
                     {errors.thumbnail.message}
@@ -93,17 +94,5 @@ export const ThumbnailUploadField = () => {
                 />
             </Center> */}
         </FormControl>
-    );
-};
-
-const Heading = ({ errors }) => {
-    return (
-        <Field label={`Thumbnail`}>
-            <Stack mb={4}>
-                <FormHelperText color={`grey.400`} m={0} fontSize={{ base: `xs`, md: `sm` }}>
-                    This image will appear in the explore page, upload a square size of 2mb.
-                </FormHelperText>
-            </Stack>
-        </Field>
     );
 };

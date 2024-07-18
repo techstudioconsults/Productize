@@ -25,7 +25,7 @@ import { ModalComp, SharedButton, ToastFeedback, useToastAction } from '@product
 import { SetupPaymentForm } from '@productize/dashboard';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import errorImg from '@icons/error.svg';
+import toastImg from '@icons/star-notice.png';
 import { useNavigate } from 'react-router-dom';
 
 export const WithdrawalEarnings = () => {
@@ -70,7 +70,7 @@ export const WithdrawalEarnings = () => {
                         <ToastFeedback
                             message={res.data}
                             title="Withdraw status"
-                            icon={null}
+                            icon={toastImg}
                             color={`grey.600`}
                             btnColor={`grey.600`}
                             bgColor={undefined}

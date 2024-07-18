@@ -1,8 +1,9 @@
 import { Controller, useFormContext } from 'react-hook-form';
-import { FormControl, FormLabel, Text } from '@chakra-ui/react';
+import { FormControl, FormLabel, Stack, Text } from '@chakra-ui/react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { Field } from './FormFields';
+import { Heading } from './Heading';
 
 const quillModules = {
     toolbar: [
@@ -22,8 +23,9 @@ const RichTextField = () => {
     } = useFormContext(); // retrieve all hook methods
 
     return (
-        <Field label={`Description`}>
-            <FormControl>
+        <FormControl>
+            <Stack>
+                <Heading title={`Description`} tip={`Enter the Description for your Products`} />
                 {errors.description && (
                     <Text className="tiny-text" color="red.200">
                         {errors.description.message}
@@ -45,8 +47,8 @@ const RichTextField = () => {
                         />
                     )}
                 />
-            </FormControl>
-        </Field>
+            </Stack>
+        </FormControl>
     );
 };
 

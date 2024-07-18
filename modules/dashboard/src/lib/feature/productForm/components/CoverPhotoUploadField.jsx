@@ -6,6 +6,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { useLocation } from 'react-router-dom';
 import { SharedButton } from '@productize/ui';
 import { Field } from './FormFields';
+import { Heading } from './Heading';
 
 export const CoverPhotoUploadField = () => {
     const { state } = useLocation();
@@ -46,7 +47,7 @@ export const CoverPhotoUploadField = () => {
 
     return (
         <FormControl isInvalid={!!errors.cover_photos}>
-            <Heading action={handleInput} errors={errors} showPreview={showPreview} />
+            <HeadingGroup action={handleInput} errors={errors} showPreview={showPreview} />
             {errors.cover_photos && (
                 <Text className="tiny-text" color="red.500">
                     {errors.cover_photos.message}
@@ -88,33 +89,29 @@ export const CoverPhotoUploadField = () => {
     );
 };
 
-const Heading = ({ action, errors, showPreview }) => {
+const HeadingGroup = ({ action, errors, showPreview }) => {
     return (
-        <Field label="Cover Photos">
-            <Flex mb={4} flexDir={{ base: `column`, sm: `row` }} justifyContent="space-between" alignItems="flex-end">
-                <Box>
-                    <FormHelperText my={0} fontSize={{ base: 'xs', md: 'sm' }} color="grey.400">
-                        Upload the actual product you want to sell. Upload the product file
-                    </FormHelperText>
-                </Box>
-                <Box display={showPreview ? 'block' : 'none'}>
-                    <SharedButton
-                        btnExtras={{
-                            leftIcon: 'ri:file-upload-line',
-                            border: '1px solid #6D5DD3',
-                            onClick: action,
-                        }}
-                        text="Upload File"
-                        width="fit-content"
-                        height="48px"
-                        bgColor="transparent"
-                        textColor="purple.200"
-                        borderRadius="4px"
-                        fontSize={{ base: 'sm', md: 'md' }}
-                    />
-                </Box>
-            </Flex>
-        </Field>
+        <Flex mb={4} flexDir={{ base: `column`, sm: `row` }} justifyContent="space-between" alignItems="flex-end">
+            <Box>
+                <Heading title={`Cover Photos`} tip={`Upload the actual product you want to sell. Upload the product file`} />
+            </Box>
+            <Box display={showPreview ? 'block' : 'none'}>
+                <SharedButton
+                    btnExtras={{
+                        leftIcon: 'ri:file-upload-line',
+                        border: '1px solid #6D5DD3',
+                        onClick: action,
+                    }}
+                    text="Upload File"
+                    width="fit-content"
+                    height="48px"
+                    bgColor="transparent"
+                    textColor="purple.200"
+                    borderRadius="4px"
+                    fontSize={{ base: 'sm', md: 'md' }}
+                />
+            </Box>
+        </Flex>
     );
 };
 

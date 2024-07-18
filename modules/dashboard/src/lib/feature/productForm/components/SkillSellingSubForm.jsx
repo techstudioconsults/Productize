@@ -1,8 +1,9 @@
-import { Box, FormControl, Input, Select, Stack, Text } from '@chakra-ui/react';
+import { Box, Flex, FormControl, FormHelperText, Input, Select, Stack, Text } from '@chakra-ui/react';
 import { Field } from './FormFields';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { Heading } from './Heading';
 
 const globalFieldStyle = {
     bgColor: 'grey.200',
@@ -27,56 +28,27 @@ const SkillSellingSubForm = () => {
 
     useEffect(() => {
         if (productType !== 'skill_selling') {
-            resetField('level');
-            resetField('availability');
+            // resetField('level');
+            // resetField('availability');
             resetField('portfolio_link');
         }
     }, [productType, resetField]);
 
     return (
         <FormControl>
+            <Heading title={`Portfolio Link`} tip={`Show us something you have doe before`} />
             <Stack gap={10}>
                 <Box>
-                    <Field label="Skill Level">
-                        <Select {...register('level')} sx={globalFieldStyle} variant="filled" size="lg" placeholder="Select option">
-                            <option value="low">Low</option>
-                            <option value="medium">Medium</option>
-                            <option value="high">High</option>
-                        </Select>
-                    </Field>
-                    {errors.level && (
-                        <Text className="tiny-text" color="red.500">
-                            {errors.level.message}
-                        </Text>
-                    )}
-                </Box>
-
-                <Box>
-                    <Field label="Availability">
-                        <Select {...register('availability')} sx={globalFieldStyle} variant="filled" size="lg" placeholder="Select option">
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                        </Select>
-                    </Field>
-                    {errors.availability && (
-                        <Text className="tiny-text" color="red.500">
-                            {errors.availability.message}
-                        </Text>
-                    )}
-                </Box>
-                <Box>
-                    <Field label="Portfolio Link">
-                        <Input
-                            maxLength={30}
-                            placeholder="portfolio link"
-                            variant="filled"
-                            size="lg"
-                            sx={globalFieldStyle}
-                            {...register('portfolio_link')}
-                            type="text"
-                            id="portfolio-link"
-                        />
-                    </Field>
+                    <Input
+                        bgColor="gray.200"
+                        maxLength={30}
+                        placeholder="portfolio link"
+                        variant="filled"
+                        sx={globalFieldStyle}
+                        {...register('portfolio_link')}
+                        type="text"
+                        id="portfolio-link"
+                    />
                     {errors.portfolio_link && (
                         <Text className="tiny-text" color="red.500">
                             {errors.portfolio_link.message}

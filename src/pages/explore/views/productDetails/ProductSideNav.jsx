@@ -117,17 +117,11 @@ const ProductSideNav = ({ status }) => {
                         </Flex>
                         <Box my={4}>
                             <Text>
-                                <Text
-                                    as={`span`}
-                                    textDecor={product.discount_price ? `line-through` : null}
-                                    color={`grey.800`}
-                                    fontSize={`22px`}
-                                    fontWeight={600}
-                                >
-                                    {formatCurrency(totalPrice)}
+                                <Text as={`span`} color={`grey.800`} fontSize={`22px`} fontWeight={600}>
+                                    {product?.discount_price ? formatCurrency(product?.discount_price) : formatCurrency(totalPrice)}
                                 </Text>
-                                <Text hidden={!product.discount_price} ml={2} color={`red`} fontWeight={600} as={`span`}>
-                                    {formatCurrency(product.discount_price)}
+                                <Text textDecor={`line-through`} hidden={!product?.discount_price} ml={2} color={`red`} fontWeight={600} as={`span`}>
+                                    {formatCurrency(product?.price)}
                                 </Text>
                             </Text>
                             {/* <Box title={`You can only select one digital or skill selling quantity`} mt={4}>

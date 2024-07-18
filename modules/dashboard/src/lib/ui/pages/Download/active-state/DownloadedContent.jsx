@@ -7,7 +7,8 @@ import { ReviewModal } from '../component/ReviewModal';
 import { useSelector } from 'react-redux';
 import { selectCurrentToken } from '@productize/redux';
 import axios from 'axios';
-import NotificationList from './sandboxLink';
+import NotificationList from './NoticeForSkillSelling';
+
 
 export const DownloadedContent = () => {
     const baseUrl = import.meta.env.VITE_BASE_URL;

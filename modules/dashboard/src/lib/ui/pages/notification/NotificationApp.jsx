@@ -101,7 +101,7 @@ const NotificationItem = ({ notice, onMarkAsSeen }) => {
                 </Text>
             </VStack>
             <Button size="sm" variant="link" colorScheme="purple" onClick={() => onMarkAsSeen(notice)}>
-                View
+                Seen
             </Button>
         </HStack>
     );

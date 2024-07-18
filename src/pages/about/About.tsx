@@ -115,8 +115,8 @@ export const About = ({ btnColor, shouldShowButton }: any) => {
                 </Flex>
             </DualSectionLayout>
             <Container py={'1.5rem'} maxW={'70rem'} margin={'auto'}>
-                <SimpleGrid flex={2} alignItems={'center'} justifyContent={'center'} columns={{ base: 2, md: 3 }} spacing={10}>
-                    <Flex alignItems={'center'} justifyContent={'center'}>
+                <SimpleGrid flex={2} alignItems={'center'} justifyContent={'center'} columns={{ base: 2, md: 3 }} spacing={9}>
+                    <Flex alignItems={'center'} justifyContent={'center'} gap={3}>
                         <Text as={`h1`}>30k+</Text>
                         <Box>
                       <Text as={`p`}>
@@ -127,7 +127,7 @@ export const About = ({ btnColor, shouldShowButton }: any) => {
                         </Text>
                       </Box>
                     </Flex>
-                    <Flex flex={2} alignItems={'center'} justifyContent={'center'}>
+                    <Flex flex={2} alignItems={'center'} justifyContent={'center'} gap={3}>
                     <Text as={`h1`}>
                         100k+
                         </Text>
@@ -140,7 +140,7 @@ export const About = ({ btnColor, shouldShowButton }: any) => {
                         </Text>
                       </Box>
                     </Flex>
-                    <Flex flex={2} alignItems={'center'} justifyContent={'center'}>
+                    <Flex display={{base:'none', md:'flex'}} flex={2} alignItems={'center'} justifyContent={'center'} gap={3}>
                     <Text as={`h1`}>
                         45k+
                         </Text>
@@ -155,7 +155,7 @@ export const About = ({ btnColor, shouldShowButton }: any) => {
                     </Flex>
                 </SimpleGrid>
                 <Box display={{ base: 'flex', md: 'none' }} alignItems={'center'} justifyContent={'center'} pt={'5'}>
-                    <Flex alignItems={'center'} justifyContent={'center'}>
+                    <Flex alignItems={'center'} justifyContent={'center'} gap={3}>
                         <Text as={`h1`}>45k+</Text>
                         <Box>
                             <Text as={`p`}>Digital</Text>

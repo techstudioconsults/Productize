@@ -1,15 +1,16 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { useEffect, useState } from 'react';
 import Pusher from 'pusher-js';
 import { useSelector } from 'react-redux';
 import { selectCurrentToken, selectCurrentUser, useNotificationMutation } from '@productize/redux';
-import { useToast } from '@chakra-ui/react';
+import { ToastFeedback, useToastAction } from '@productize/ui';
 
 const APP_KEY = 'bb5f2a5342d24c39106c';
 const APP_CLUSTER = 'mt1';
 
 export const useNotifications = (playNotificationSound) => {
+    const { toast, toastIdRef, close } = useToastAction();
     const [hasNotice, setNotice] = useState(false);
-    const toast = useToast();
     const token = useSelector(selectCurrentToken);
     const user = useSelector(selectCurrentUser);
     const [getNotice] = useNotificationMutation();
@@ -38,13 +39,20 @@ export const useNotifications = (playNotificationSound) => {
 
         const eventHandler = (data) => {
             setNotice(true);
-            toast({
-                title: data?.type.replace('.', ' '),
-                description: data?.message,
-                status: 'success',
-                duration: 5000,
-                isClosable: true,
-                variant: 'subtle',
+            toastIdRef.current = toast({
+                position: 'top',
+                render: () => (
+                    <ToastFeedback
+                        btnColor={`purple.200`}
+                        title={data?.type.replace('.', ' ')}
+                        message={data?.message}
+                        icon={`iconamoon:notification-fill`}
+                        iconFont={true}
+                        bgColor={undefined}
+                        color={undefined}
+                        handleClose={close}
+                    />
+                ),
             });
             getNotice().unwrap();
             playNotificationSound();
@@ -64,7 +72,7 @@ export const useNotifications = (playNotificationSound) => {
         return () => {
             pusher.unsubscribe(`private-users.${user?.id}`);
         };
-    }, [getNotice, playNotificationSound, toast, token, user?.id]);
+    }, [close, getNotice, playNotificationSound, toast, toastIdRef, token, user?.id]);
 
     return { hasNotice };
 };

@@ -6,6 +6,7 @@ import { TagPicker } from 'rsuite';
 import { Field } from './FormFields';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { Heading } from './Heading';
 
 const TagsField = () => {
     const baseUrl = import.meta.env.VITE_BASE_URL;
@@ -37,7 +38,7 @@ const TagsField = () => {
 
     return (
         <FormControl isInvalid={errors.tags}>
-            <Heading errors={errors} />
+            <HeadingGroup errors={errors} />
             <Controller
                 name="tags"
                 control={control}
@@ -61,19 +62,15 @@ const TagsField = () => {
 
 export default TagsField;
 
-const Heading = ({ errors }) => {
+const HeadingGroup = ({ errors }) => {
     return (
-        <Field label={`Tags`}>
-            <Stack>
-                <FormHelperText my={0} color={`grey.400`} fontSize={{ base: `xs`, md: `sm` }}>
-                    Select tags you want your product to be categorized under.
-                </FormHelperText>
-                {errors.tags && (
-                    <Text className="tiny-text" color="red.200">
-                        {errors.tags.message}
-                    </Text>
-                )}
-            </Stack>
-        </Field>
+        <Stack>
+            <Heading title={`Tags`} tip={`Select tags you want your product to be categorized under.`} />
+            {errors.tags && (
+                <Text className="tiny-text" color="red.200">
+                    {errors.tags.message}
+                </Text>
+            )}
+        </Stack>
     );
 };

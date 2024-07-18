@@ -1,5 +1,5 @@
 import { apiSlice } from '../apiSlice';
-import { setAccountList, setAnalyticsGraphData, setBillingHistory, setNotifications, setPayoutStats, setPayouts, setUser } from './userSlice';
+import { setAccountList, setAnalyticsGraphData, setBillingHistory, setDailyAnalyticsGraphData, setNotifications, setPayoutStats, setPayouts, setUser } from './userSlice';
 
 const constructURL = (credentials, filteredLink) => {
     if (credentials && !credentials?.link) {
@@ -223,6 +223,25 @@ export const userApiSlice = apiSlice.injectEndpoints({
             },
         }),
 
+        showDailyAnalyticsChartData: builder.mutation({
+            query: (credentials) => ({
+                url: `/revenues/daily`,
+                method: 'GET',
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    dispatch(
+                        setDailyAnalyticsGraphData({
+                            data: data.data,
+                        })
+                    );
+                } catch (err) {
+                    return;
+                }
+            },
+        }),
+
         togglePaystackAccountActivation: builder.mutation({
             query: (credentials) => ({
                 url: `/accounts/${credentials.accountID}`,
@@ -257,6 +276,14 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 body: { ...credentials },
             }),
         }),
+
+        contactUs: builder.mutation({
+            query: (credentials) => ({
+                url: `/complaints/contact-us`,
+                method: 'POST',
+                body: { ...credentials },
+            }),
+        }),
     }),
 });
 
@@ -278,7 +305,9 @@ export const {
     useGetPayoutStatsMutation,
     useTogglePaystackAccountActivationMutation,
     useShowAnalyticsChartDataMutation,
+    useShowDailyAnalyticsChartDataMutation,
     useCancelSubscriptionMutation,
     useNotificationMutation,
     useReadAllNotificationMutation,
+    useContactUsMutation,
 } = userApiSlice;

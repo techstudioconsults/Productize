@@ -137,6 +137,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                 }
             },
         }),
+
         getSingleProductDetails: builder.mutation({
             query: (credentials) => ({
                 url: `/products/${credentials?.productID}`,

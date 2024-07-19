@@ -91,17 +91,17 @@ const userSlice = createSlice({
 
 export const { setUser, setBillingHistory, setPayouts, setAccountList, resetUserStore, setPayoutStats, setAnalyticsGraphData, setUserAnalytics, setAllUser } =
     userSlice.actions;
-export const {
-    setUser,
-    setBillingHistory,
-    setPayouts,
-    setAccountList,
-    resetUserStore,
-    setPayoutStats,
-    setAnalyticsGraphData,
-    setNotifications,
-    setDailyAnalyticsGraphData,
-} = userSlice.actions;
+// export const {
+//     setUser,
+//     setBillingHistory,
+//     setPayouts,
+//     setAccountList,
+//     resetUserStore,
+//     setPayoutStats,
+//     setAnalyticsGraphData,
+//     setNotifications,
+//     setDailyAnalyticsGraphData,
+// } = userSlice.actions;
 
 export default userSlice.reducer;
 

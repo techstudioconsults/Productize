@@ -1,57 +1,26 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import React from 'react';
-import { Box, Text, VStack, HStack, Link, Heading, Stack, useColorModeValue } from '@chakra-ui/react';
+import { Box, Text, VStack, HStack, Link, Heading, Flex } from '@chakra-ui/react';
+import { Icon } from '@productize/ui';
 
-const cardsData = [
-    {
-        title: 'Module One',
-        description: 'Click to view this module',
-        link: '#',
-        icon: '🎉',
-    },
-    {
-        title: 'Module Two',
-        description: 'Click to view this module',
-        link: '#',
-        icon: '🎉',
-    },
-    {
-        title: 'Module Three',
-        description: 'Click to view this module',
-        link: '#',
-        icon: '🎉',
-    },
-    // Add more cards as needed
-];
-
-const NotificationCard = ({ title, description, link, icon }) => {
-    const bg = useColorModeValue('white', 'gray.800');
-    const hoverBg = useColorModeValue('gray.100', 'gray.700');
-
+export const NotificationCard = ({ title, description, link, icon }) => {
     return (
-        <Link href={link} _hover={{ textDecoration: 'none' }}>
-            <Box w={`100%`} p={4} bg={bg} borderRadius="md" boxShadow="md" _hover={{ bg: hoverBg }} transition="background-color 0.3s">
-                <HStack spacing={4}>
-                    <Box fontSize="2xl">{icon}</Box>
-                    <VStack align="start" spacing={1}>
-                        <Heading size="md">{title}</Heading>
-                        <Text fontSize="sm" color="gray.500">
-                            {description}
+        <Link h={`fit-content`} href={link} _hover={{ textDecoration: 'none' }}>
+            <Flex bg={`#FFFFFF`} w={`351px`} h={`99px`} p={4} borderRadius="lg" _hover={{ boxShadow: 'md' }} transition="box-shadow 0.3s">
+                <HStack spacing={7}>
+                    <Box fontSize="3xl" color="red.500">
+                        <Icon size={`4rem`} icon={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951009/productize/Image_4_hksvcm_ulhhl3.png`} />
+                    </Box>
+                    <VStack align="start" spacing={3}>
+                        <Heading size="md" color="black">
+                            {title}
+                        </Heading>
+                        <Text fontSize="sm" color="blue.500">
+                            {`Click here to view`}
                         </Text>
                     </VStack>
                 </HStack>
-            </Box>
+            </Flex>
         </Link>
     );
 };
-
-const NotificationList = () => {
-    return (
-        <Stack spacing={4} p={4}>
-            {cardsData.map((card, index) => (
-                <NotificationCard key={index} title={card.title} description={card.description} link={card.link} icon={card.icon} />
-            ))}
-        </Stack>
-    );
-};
-
-export default NotificationList;

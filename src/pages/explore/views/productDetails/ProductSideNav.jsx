@@ -27,7 +27,7 @@ import {
 import { SharedButton, ToastFeedback, useToastAction } from '@productize/ui';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import toastImg from '@icons/star-notice.png';
 
 const ProductSideNav = ({ status }) => {
@@ -41,6 +41,7 @@ const ProductSideNav = ({ status }) => {
     const [totalPrice, setTotalPrice] = useState(0);
     const [productQuantity, setProductQuantity] = useState(1);
     const formatCurrency = useCurrency();
+    const navigate = useNavigate();
 
     const disableVendor = user?.name === product?.publisher;
 
@@ -100,6 +101,13 @@ const ProductSideNav = ({ status }) => {
         } catch (err) {
             return;
         }
+    };
+
+    const handleBuyNow = () => {
+        sendToCart();
+        setTimeout(() => {
+            navigate(`/explore/product/cart`);
+        }, [2000]);
     };
 
     useEffect(() => {
@@ -162,21 +170,22 @@ const ProductSideNav = ({ status }) => {
                                         loadingText: `adding to cart...`,
                                     }}
                                 />
-                                <Link hidden={!cart.totalProductQuantity} to={`/explore/product/cart`}>
-                                    <SharedButton
-                                        btnExtras={{
-                                            border: '1px solid #6D5DD3',
-                                            disabled: disableVendor,
-                                        }}
-                                        text={'Buy Now'}
-                                        width={`100%`}
-                                        height={'38px'}
-                                        bgColor={'white'}
-                                        textColor={'purple.200'}
-                                        borderRadius={'4px'}
-                                        fontSize={{ base: `sm`, xl: `md` }}
-                                    />
-                                </Link>
+                                {/* <Link to={`/explore/product/cart`}> */}
+                                <SharedButton
+                                    btnExtras={{
+                                        onClick: handleBuyNow,
+                                        border: '1px solid #6D5DD3',
+                                        disabled: disableVendor,
+                                    }}
+                                    text={'Buy Now'}
+                                    width={`100%`}
+                                    height={'38px'}
+                                    bgColor={'white'}
+                                    textColor={'purple.200'}
+                                    borderRadius={'4px'}
+                                    fontSize={{ base: `sm`, xl: `md` }}
+                                />
+                                {/* </Link> */}
                             </Flex>
                         </Box>
                         <Box my={10}>

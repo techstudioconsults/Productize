@@ -212,6 +212,12 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                 method: 'GET',
             }),
         }),
+        singleDownloadedProduct: builder.mutation({
+            query: (credentials) => ({
+                url: `/skillSellings/products/${credentials.productID}`,
+                method: 'GET',
+            }),
+        }),
         searchProducts: builder.mutation({
             query: (credentials) => ({
                 url: `/products/search`,
@@ -237,4 +243,5 @@ export const {
     useDownloadedProductsMutation,
     useGetCustomersOfSingleProductMutation,
     useSearchProductsMutation,
+    useSingleDownloadedProductMutation
 } = productsApiSlice;

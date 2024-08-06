@@ -66,7 +66,7 @@ export const ProfileForm = () => {
                     ),
                 });
                 await getUser(null).unwrap();
-                navigate(`/dashboard/home`);
+                navigate(`/Admin/home`);
             }
         } catch (error) {
             toastIdRef.current = toast({

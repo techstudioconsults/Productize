@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box, Flex, IconButton } from '@chakra-ui/react';
 import DateRangePicker from 'rsuite/esm/DateRangePicker';
-import SelectPicker from 'rsuite/esm/SelectPicker';
 import { DropdownAction } from '../../AdminDropdownAction';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
@@ -35,24 +33,14 @@ export const CustomersTableControl = ({ showRefreshBtn }: controlsProp) => {
         },
     };
 
-    const data = [`All`, `Draft`, `Published`].map((item) => ({
-        label: item,
-        value: item,
-    }));
-
     const handleExport = async () => {
         try {
             setExportLoading(true);
-            const res = await axios.get(
-                `${BASE_URL}/products/download?page=1`,
-                // `${BASE_URL}/products/download?status=${status}&format=csv`,
-                // `${BASE_URL}products/download?start_date=${startDate}&end_date=${endDate}&format=csv`,
-                headersCredentials
-            );
+            const res = await axios.get(`${BASE_URL}/users/download?page=1`, headersCredentials);
             if (res.status === 200) {
                 setExportLoading(false);
                 const blob = new Blob([res.data], { type: 'text/csv' });
-                download(blob, `Products.csv`);
+                download(blob, `Users.csv`);
                 toastIdRef.current = toast({
                     position: 'top',
                     render: () => (
@@ -60,9 +48,6 @@ export const CustomersTableControl = ({ showRefreshBtn }: controlsProp) => {
                             btnColor={`purple.200`}
                             message={`Check your download folder for product file`}
                             title="Downloaded successfully"
-                            icon={undefined}
-                            bgColor={undefined}
-                            color={undefined}
                             handleClose={close}
                         />
                     ),
@@ -79,7 +64,6 @@ export const CustomersTableControl = ({ showRefreshBtn }: controlsProp) => {
                         icon={errorImg}
                         color={`red.600`}
                         btnColor={`red.600`}
-                        bgColor={undefined}
                         handleClose={close}
                     />
                 ),
@@ -90,10 +74,14 @@ export const CustomersTableControl = ({ showRefreshBtn }: controlsProp) => {
     const handleStatusChange = (value: string) => {
         setStatus(value.toLowerCase());
     };
+
     const handleDateRangeChange = async (value: any | null) => {
         if (value) {
-            setStartDate(formatDateRange(value?.[0]));
-            setEndDate(formatDateRange(value?.[1]));
+            const formattedStartDate = formatDateRange(value?.[0]);
+            const formattedEndDate = formatDateRange(value?.[1]);
+            setStartDate(formattedStartDate);
+            setEndDate(formattedEndDate);
+            console.log('Date range changed:', { startDate: formattedStartDate, endDate: formattedEndDate });
         } else {
             setStartDate(``);
             setEndDate(``);
@@ -102,23 +90,17 @@ export const CustomersTableControl = ({ showRefreshBtn }: controlsProp) => {
     };
 
     const filterTable = async () => {
-        if (status === `all`) {
-            try {
-                await getAllUser(null).unwrap();
-            } catch (error) {
-                console.error(error);
-            }
-        } else {
-            try {
-                await getAllUser({
-                    page: null,
-                    startDate,
-                    endDate,
-                    status,
-                }).unwrap();
-            } catch (error) {
-                console.error(error);
-            }
+        console.log('Filtering with:', { startDate, endDate, status });
+        try {
+            const result = await getAllUser({
+                page: null,
+                startDate,
+                endDate,
+                status,
+            }).unwrap();
+            console.log('Filtered data:', result);
+        } catch (error) {
+            console.error(error);
         }
     };
 
@@ -145,14 +127,11 @@ export const CustomersTableControl = ({ showRefreshBtn }: controlsProp) => {
                         spinner={<SpinnerComponentSmall size="sm" />}
                         onClick={filterTable}
                         fontSize={`xl`}
-                        // variant={`outline`}
                         aria-label="Filter table"
                         icon={<Icon icon={`system-uicons:filtering`} />}
                     />
-                    <SelectPicker searchable={false} onSelect={handleStatusChange} style={{ width: `100%` }} placeholder={`Status`} size="lg" data={data} />
                 </Flex>
             </Flex>
-            {/* dots and buttons */}
             <Box>
                 <Flex display={{ base: `none`, md: `flex` }} gap={4} alignItems={`center`}>
                     <Box hidden={showRefreshBtn ? false : true}>
@@ -164,11 +143,6 @@ export const CustomersTableControl = ({ showRefreshBtn }: controlsProp) => {
                             textColor={'purple.200'}
                             borderRadius={'4px'}
                             fontSize={{ base: `sm`, md: `md` }}
-                            btnExtras={{
-                                border: `1px solid #6D5DD3`,
-                                leftIcon: `basil:refresh-outline`,
-                                // onClick: () => setEmptyState((prevState) => !prevState),
-                            }}
                         />
                     </Box>
                     <Box>

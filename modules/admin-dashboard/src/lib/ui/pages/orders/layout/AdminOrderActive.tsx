@@ -12,7 +12,7 @@ const AdminOrderActive = () => {
     const [isLoading, setLoading] = useState(true);
     const [getAllOrders] = useGetAllOrdersMutation();
     const orders = useSelector(selectAllOrders);
-    const isOrderFilter = useSelector(selectIsOrderfilter);
+    // const isOrderFilter = useSelector(selectIsOrderfilter);
     const { orderAnalytics, getOrderAnalyticsStatus, formatCurrency } = useAllProducts();
 
     const showAllOrders = useCallback(async () => {
@@ -75,7 +75,7 @@ const AdminOrderActive = () => {
             <Box my={10}>
                 <OrdersTableControl />
             </Box>
-            <OrderTable tableData={orders} />
+            <OrderTable  />
         </Box>
     );
 };

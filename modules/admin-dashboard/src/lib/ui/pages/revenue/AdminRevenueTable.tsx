@@ -1,24 +1,28 @@
-import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Text, Stack, Box, Tag, Skeleton } from '@chakra-ui/react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/rules-of-hooks */
+import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Text, Stack, Box, Skeleton } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { useCallback, useEffect } from 'react';
 import { DashboardEmptyState } from '../../empty-states/AdminDashboardEmptyState';
 import { useCurrency, useDate, useTime } from '@productize/hooks';
-import { useGetAllRevenueMutation, selectAllRevenue, selectPaginationMetaData } from '@productize/redux';
+import { useGetAllRevenueMutation, selectAllRevenue, selectRevenueMetaData } from '@productize/redux';
 import { OnBoardingLoader, SharedButton } from '@productize/ui';
+import { OrdersTableControl } from './AdminRevenueTableControl';
 
-interface TableProps {
+interface tableProps {
     draft?: boolean;
     live?: boolean;
     deleted?: boolean;
 }
 
-export const DashboardTable = ({ deleted }: TableProps) => {
+export const DashboardTable = ({ deleted }: tableProps) => {
     const [getAllRevenue, getAllRevenueStatus] = useGetAllRevenueMutation();
     const allProducts = useSelector(selectAllRevenue);
+    // const navigate = useNavigate();
     const formatCurrency = useCurrency();
     const formatDate = useDate();
     const formatTime = useTime();
-    const paginate = useSelector(selectPaginationMetaData);
+    const paginate = useSelector(selectRevenueMetaData);
 
     const tableHeader = [`Activity`, `Product`, `Amount`, `Date`].map((title) => {
         if (deleted && title === `Status`) {
@@ -40,34 +44,34 @@ export const DashboardTable = ({ deleted }: TableProps) => {
             );
         }
     });
-
-    const tableProduct = Array.isArray(allProducts) ? allProducts.map((product: any) => {
-        return (
-            <Tr _hover={{ bgColor: `purple.100`, cursor: `pointer` }}  key={product.id}>
-                <Td >
-                    <Flex gap={2} alignItems={`center`}>
-                        <Stack padding={3}>
-                            <Text>{product?.activity}</Text>
-                            <Flex alignItems={`center`} color={`grey.400`}>
-                            </Flex>
-                        </Stack>
-                    </Flex>
-                </Td>
-                <Td>
-                    <Flex>{product?.product}</Flex>
-                </Td>
-                <Td>
-                    <Flex>{formatCurrency(product?.amount)}</Flex>
-                </Td>
-                <Td>
-                    <Flex>{`
+    const tableproduct = Array.isArray(allProducts)
+        ? allProducts.map((product: any) => {
+              return (
+                  <Tr _hover={{ bgColor: `purple.100`, cursor: `pointer` }} key={product.id}>
+                      <Td>
+                          <Flex gap={2} alignItems={`center`}>
+                              <Stack padding={3}>
+                                  <Text>{product?.activity}</Text>
+                                  <Flex alignItems={`center`} color={`grey.400`}></Flex>
+                              </Stack>
+                          </Flex>
+                      </Td>
+                      <Td>
+                          <Flex>{product?.product}</Flex>
+                      </Td>
+                      <Td>
+                          <Flex>{formatCurrency(product?.amount)}</Flex>
+                      </Td>
+                      <Td>
+                          <Flex>{`
                     ${formatDate(product?.created_at)}
                     ${formatTime(product?.created_at)}
                     `}</Flex>
-                </Td>
-            </Tr>
-        );
-    }) : [];
+                      </Td>
+                  </Tr>
+              );
+          })
+        : [];
 
     const handlePrevButton = async () => {
         try {
@@ -98,10 +102,13 @@ export const DashboardTable = ({ deleted }: TableProps) => {
 
     return (
         <>
+            <Skeleton isLoaded={!getAllRevenueStatus.isLoading} paddingBottom={3}>
+                <OrdersTableControl />
+            </Skeleton>
             <TableContainer
                 display={`flex`}
                 flexDir={`column`}
-                height={Array.isArray(allProducts) && allProducts.length ? `40rem` : `fit-Content`}
+                height={allProducts?.length ? `40rem` : `fit-Content`}
                 justifyContent={`space-between`}
                 overflowY={`auto`}
             >
@@ -109,20 +116,22 @@ export const DashboardTable = ({ deleted }: TableProps) => {
                     <OnBoardingLoader />
                 ) : (
                     <Table size={`sm`} variant="simple">
+                        {/* head */}
                         <Thead zIndex={1} pos={`sticky`} top={0}>
                             <Tr bgColor={`purple.100`} color={`grey.300`}>
                                 {tableHeader}
                             </Tr>
                         </Thead>
-                        <Tbody color={`purple.300`}>{tableProduct}</Tbody>
+                        {/* body */}
+                        <Tbody color={`purple.300`}>{tableproduct}</Tbody>
                     </Table>
                 )}
-                {(!Array.isArray(allProducts) || !allProducts.length) && !getAllRevenueStatus.isLoading && (
+                {!allProducts?.length && !getAllRevenueStatus.isLoading && (
                     <Box my={10}>
                         <DashboardEmptyState
                             content={{
                                 title: '',
-                                desc: 'Product Table is Empty.',
+                                desc: 'Revenue Table is Empty.',
                                 img: `https://res.cloudinary.com/kingsleysolomon/image/upload/v1700317427/productize/Illustration_4_pujumv.png`,
                             }}
                             textAlign={{ base: `center` }}
@@ -131,6 +140,7 @@ export const DashboardTable = ({ deleted }: TableProps) => {
                     </Box>
                 )}
             </TableContainer>
+            {/* TABLE PAGINATION */}
             <Flex mt={4} gap={5} color={`grey.400`} alignItems={`center`} justifyContent={`space-between`} flexDir={{ base: `column-reverse`, lg: `row` }}>
                 <Flex alignItems={`center`} justifyContent={`space-between`} flexDir={{ base: `column`, lg: `row` }} gap={{ lg: 60 }}>
                     <Box>

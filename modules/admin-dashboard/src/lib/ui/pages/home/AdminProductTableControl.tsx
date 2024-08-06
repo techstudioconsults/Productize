@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { Box, Flex} from '@chakra-ui/react';
+import { Box, Flex, IconButton } from '@chakra-ui/react';
 import DateRangePicker from 'rsuite/esm/DateRangePicker';
 // import SelectPicker from 'rsuite/esm/SelectPicker';
 import axios from 'axios';
@@ -8,8 +7,8 @@ import { useState } from 'react';
 import { Icon } from '@iconify/react';
 import errorImg from '@icons/error.svg';
 import { useDateRangeFormat } from '@productize/hooks';
-import { selectCurrentToken, useGetAllProductsMutation } from '@productize/redux';
-import { useToastAction, ToastFeedback, SharedButton } from '@productize/ui';
+import { selectCurrentToken, useGetAllProductsMutation, useGetAllRevenueMutation } from '@productize/redux';
+import { useToastAction, ToastFeedback, SharedButton, SpinnerComponentSmall } from '@productize/ui';
 import download from 'downloadjs';
 
 const BASE_URL = import.meta.env['VITE_BASE_URL'];
@@ -24,7 +23,7 @@ export const ProductsTableControl = ({ showRefreshBtn }: controlsProp) => {
     const [startDate, setStartDate] = useState(``);
     const [endDate, setEndDate] = useState(``);
     const [status, setStatus] = useState(``);
-    const [getAllProducts, getAllProductsStatus] = useGetAllProductsMutation();
+    const [getAllRevenue, getAllRevenueStatus] = useGetAllRevenueMutation();
     const formatDateRange = useDateRangeFormat();
     const { toast, toastIdRef, close } = useToastAction();
 
@@ -34,19 +33,14 @@ export const ProductsTableControl = ({ showRefreshBtn }: controlsProp) => {
         },
     };
 
-    // const data = [`All`, `Draft`, `Published`].map((item) => ({
-    //     label: item,
-    //     value: item,
-    // }));
-
     const handleExport = async () => {
         try {
             setExportLoading(true);
-            const res = await axios.get(`${BASE_URL}/products/download?page=1`, headersCredentials);
+            const res = await axios.get(`${BASE_URL}/revenues/download?page=1`, headersCredentials);
             if (res.status === 200) {
                 setExportLoading(false);
                 const blob = new Blob([res.data], { type: 'text/csv' });
-                download(blob, `Products.csv`);
+                download(blob, `Homepage.csv`);
                 toastIdRef.current = toast({
                     position: 'top',
                     render: () => (
@@ -81,10 +75,6 @@ export const ProductsTableControl = ({ showRefreshBtn }: controlsProp) => {
         }
     };
 
-    // const handleStatusChange = (value: string) => {
-    //     setStatus(value.toLowerCase());
-    // };
-
     const handleDateRangeChange = async (value: any | null) => {
         if (value) {
             setStartDate(formatDateRange(value?.[0]));
@@ -92,37 +82,33 @@ export const ProductsTableControl = ({ showRefreshBtn }: controlsProp) => {
         } else {
             setStartDate(``);
             setEndDate(``);
-            await getAllProducts(null).unwrap();
+            await getAllRevenue(null).unwrap();
         }
     };
 
-    // const filterTable = async () => {
-    //     if (status === `all`) {
-    //         try {
-    //             await getAllProducts(null).unwrap();
-    //         } catch (error) {
-    //             console.error(error);
-    //         }
-    //     } else {
-    //         try {
-    //             await getAllProducts({
-    //                 page: null,
-    //                 startDate,
-    //                 endDate,
-    //                 status,
-    //             }).unwrap();
-    //         } catch (error) {
-    //             console.error(error);
-    //         }
-    //     }
-    // };
-
-    const handleRefresh = async () => {
-        try {
-            await getAllProducts(null).unwrap();
-        } catch (error) {
-            console.error(error);
+    const filterTable = async () => {
+        if (status === `all`) {
+            try {
+                await getAllRevenue(null).unwrap();
+            } catch (error) {
+                console.error(error);
+            }
+        } else {
+            try {
+                await getAllRevenue({
+                    page: null,
+                    startDate,
+                    endDate,
+                    status,
+                }).unwrap();
+            } catch (error) {
+                console.error(error);
+            }
         }
+    };
+
+    const handleRefresh = () => {
+        window.location.reload();
     };
 
     return (
@@ -137,20 +123,20 @@ export const ProductsTableControl = ({ showRefreshBtn }: controlsProp) => {
                         style={{ width: `100%` }}
                     />
                 </Flex>
-                {/* <Flex w={{ base: `100%`, md: `fit-content` }} gap={4} alignItems={{ base: `flex-start`, md: `center` }}>
-                    <SelectPicker searchable={false} onSelect={handleStatusChange} style={{ width: `100%` }} placeholder={`Status`} size="lg" data={data} />
+                <Flex w={{ base: `100%`, md: `fit-content` }} gap={4} alignItems={{ base: `flex-start`, md: `center` }}>
                     <IconButton
                         color={`purple.200`}
                         bgColor={`purple.100`}
-                        isLoading={getAllProductsStatus.isLoading}
+                        isLoading={getAllRevenueStatus.isLoading}
                         spinner={<SpinnerComponentSmall size="sm" />}
                         onClick={filterTable}
                         fontSize={`xl`}
+                        // variant={`outline`}
                         aria-label="Filter table"
                         icon={<Icon icon={`system-uicons:filtering`} />}
                     />
-                </Flex> */}
-                {/* {This is where i want to put the referesh button} */}
+                    {/* <SelectPicker searchable={false} onSelect={handleStatusChange} style={{ width: `100%` }} placeholder={`Status`} size="lg" data={data} /> */}
+                </Flex>
                 <Flex alignItems="center">
                     <Box
                         as="button"

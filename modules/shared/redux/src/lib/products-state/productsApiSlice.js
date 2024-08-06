@@ -12,6 +12,7 @@ import {
     setSingleProductCustomers,
     setRevenueAnalytics,
     setAllComplaints,
+    setSingleComplaints,
     // setSearchedProducts,
 } from './productsSlice';
 
@@ -31,6 +32,25 @@ const constructURL1 = (credentials, filteredLink, status) => {
         return credentials?.link;
     } else {
         return `/products?status=${status}`;
+    }
+};
+const constructURL2 = (credentials, filteredLink, status) => {
+    if (credentials && !credentials?.link) {
+        return filteredLink;
+    } else if (credentials?.link) {
+        return credentials?.link;
+    } else {
+        return `/complaints?status=${status}`;
+    }
+};
+
+const constructURL3 = (credentials, filteredLink) => {
+    if (credentials && !credentials?.link) {
+        return filteredLink;
+    } else if (credentials?.link) {
+        return credentials?.link;
+    } else {
+        return `/products/top-products/admin`;
     }
 };
 
@@ -65,8 +85,14 @@ export const productsApiSlice = apiSlice.injectEndpoints({
             },
         }),
         getAllComplaints: builder.mutation({
-            query: () => ({
-                url: `/complaints`,
+            query: (credentials) => ({
+                url: constructURL2(
+                    credentials,
+                    `/complaints?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}&status=${
+                        credentials?.status ? credentials?.status : ''
+                    }`,
+                    ''
+                ),
                 method: 'GET',
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
@@ -101,26 +127,22 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                 }
             },
         }),
+
         getTopAdminProducts: builder.mutation({
             query: (credentials) => ({
-                url: constructURL1(
+                url: constructURL3(
                     credentials,
-                    `/products/top-products/admin?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}&status=${
-                        credentials?.status ? credentials?.status : ''
-                    }`,
-                    ''
+                    `/products/top-products/admin?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}`
                 ),
                 method: 'GET',
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
-                    const res = await queryFulfilled;
-                    console.log(res);
                     const { data } = await queryFulfilled;
                     dispatch(
                         setTopAdminProduct({
-                            products: data.data,
-                            paginationMetaData: { links: data.links, meta: data.meta },
+                            topProducts: data.data,
+                            topProductsMetaData: { links: data.links, meta: data.meta },
                         })
                     );
                 } catch (error) {
@@ -128,6 +150,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                 }
             },
         }),
+
         getAllProducts: builder.mutation({
             query: (credentials) => ({
                 url: constructURL(
@@ -260,6 +283,24 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                 }
             },
         }),
+        getSingleComplaints: builder.mutation({
+            query: (credentials) => ({
+                url: `/complaints/${credentials?.complaintID}`,
+                method: 'GET',
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    dispatch(
+                        setSingleComplaints({
+                            complaint: data.data,
+                        })
+                    );
+                } catch (error) {
+                    return;
+                }
+            },
+        }),
         getCustomersOfSingleProduct: builder.mutation({
             query: (credentials) => ({
                 url: `/orders/products/${credentials.productID}`,
@@ -344,4 +385,5 @@ export const {
     useSearchProductsMutation,
     useGetRevenueAnalyticsMutation,
     useGetAllComplaintsMutation,
+    useGetSingleComplaintsMutation,
 } = productsApiSlice;

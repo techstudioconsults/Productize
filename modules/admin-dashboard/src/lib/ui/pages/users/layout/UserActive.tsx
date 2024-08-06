@@ -1,7 +1,7 @@
 import { Box, Flex, HStack, Skeleton, VStack, SimpleGrid } from '@chakra-ui/react';
 import { useCallback, useEffect, useState } from 'react';
 // import { useSelector } from 'react-redux';
-import { CustomersTableControl } from '../UserTableControl';
+// import { CustomersTableControl } from '../UserTableControl';
 import { CustomerTable } from '../UserTable';
 // import { DashboardEmptyState } from '../../../empty-states/AdminDashboardEmptyState';
 import { useGetAllCustomersMutation } from '@productize/redux';
@@ -84,7 +84,7 @@ const UserActive = () => {
                 {/* <Text fontWeight={`semibold`} fontSize={`lg`} my={5}>
                     {allCustomers?.length} Customers
                 </Text> */}
-                <CustomersTableControl />
+                {/* <CustomersTableControl /> */}
             </Box>
             <CustomerTable />
         </>

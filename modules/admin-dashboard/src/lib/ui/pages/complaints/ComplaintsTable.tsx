@@ -1,10 +1,11 @@
 import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Text, Stack, Checkbox, Box, Skeleton } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { DashboardEmptyState } from '../../empty-states/AdminDashboardEmptyState';
 import { useCurrency, useDate, useTime } from '@productize/hooks';
-import { selectPaginationMetaData, useGetAllComplaintsMutation, selectAllComplaints } from '@productize/redux';
+import { useGetAllComplaintsMutation, selectAllComplaints, selectComplaintsMetaData } from '@productize/redux';
 import { OnBoardingLoader, SharedButton } from '@productize/ui';
+import { useNavigate } from 'react-router-dom';
 
 interface TableProps {
     draft?: boolean;
@@ -19,10 +20,13 @@ const truncateText = (text: string, maxLength: number) => {
 export const ComplaintTable = ({ deleted }: TableProps) => {
     const [getAllComplaints, getAllComplaintsStatus] = useGetAllComplaintsMutation();
     const allProducts = useSelector(selectAllComplaints);
-    const formatCurrency = useCurrency();
+    // const formatCurrency = useCurrency();
+    const navigate = useNavigate()
     const formatDate = useDate();
     const formatTime = useTime();
-    const paginate = useSelector(selectPaginationMetaData);
+    const paginate = useSelector(selectComplaintsMetaData);
+
+    const [recentLoading, setRecentLoading] = useState(true);
 
     const tableHeader = [`Email`, `Subject`, `Date`].map((title) => {
         if (deleted && title === `Status`) {
@@ -48,7 +52,7 @@ export const ComplaintTable = ({ deleted }: TableProps) => {
     const tableProduct = Array.isArray(allProducts)
         ? allProducts.map((product: any) => {
               return (
-                  <Tr _hover={{ bgColor: `purple.100`, cursor: `pointer` }} key={product.id}>
+                  <Tr _hover={{ bgColor: `purple.100`, cursor: `pointer` }} onClick={() => navigate(`/Admin/complaints/${product.id}`)} key={product.id}>
                       <Td>
                           <Flex gap={6} alignItems={`center`}>
                               <Box onClick={(e) => e.stopPropagation()}>
@@ -89,10 +93,13 @@ export const ComplaintTable = ({ deleted }: TableProps) => {
     };
 
     const showAllProducts = useCallback(async () => {
+        setRecentLoading(true);
         try {
             await getAllComplaints(null).unwrap();
         } catch (error) {
             return error;
+        } finally {
+            setRecentLoading(false);
         }
     }, [getAllComplaints]);
 
@@ -109,16 +116,34 @@ export const ComplaintTable = ({ deleted }: TableProps) => {
             </Box>
             <Table size={`sm`} variant="simple">
                 <Thead zIndex={1} pos={`sticky`} top={0}>
-                    {/* <Tr bgColor={`purple.100`} color={`grey.300`}>
-                                {tableHeader}
-                            </Tr> */}
+                    <Tr bgColor={`purple.100`} color={`grey.300`}>
+                        {tableHeader}
+                    </Tr>
                 </Thead>
-                <Tbody color={`purple.300`}>{firstFourProducts}</Tbody>
+                <Tbody color={`purple.300`}>
+                    {recentLoading
+                        ? Array(4)
+                              .fill('')
+                              .map((_, index) => (
+                                  <Tr key={index}>
+                                      <Td>
+                                          <Skeleton height="20px" />
+                                      </Td>
+                                      <Td>
+                                          <Skeleton height="20px" />
+                                      </Td>
+                                      <Td>
+                                          <Skeleton height="20px" />
+                                      </Td>
+                                  </Tr>
+                              ))
+                        : firstFourProducts}
+                </Tbody>
             </Table>
 
             <Box mb={2} mt={9}>
                 <Text fontSize="lg" fontWeight="bold">
-                    Recent
+                    Older
                 </Text>
             </Box>
             <TableContainer
@@ -133,9 +158,9 @@ export const ComplaintTable = ({ deleted }: TableProps) => {
                 ) : (
                     <Table size={`sm`} variant="simple">
                         <Thead zIndex={1} pos={`sticky`} top={0}>
-                            {/* <Tr bgColor={`purple.100`} color={`grey.300`}>
+                            <Tr bgColor={`purple.100`} color={`grey.300`}>
                                 {tableHeader}
-                            </Tr> */}
+                            </Tr>
                         </Thead>
                         <Tbody color={`purple.300`}>{tableProduct}</Tbody>
                     </Table>

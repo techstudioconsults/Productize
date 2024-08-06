@@ -67,7 +67,7 @@ const ActiveUserPage: React.FC = () => {
 
             {/* Empty state */}
             <Box my={10}>
-                <Box>{<OrdersTableControl />}</Box>
+                {/* <Box>{<OrdersTableControl />}</Box> */}
                 <Box mt={4}>
                     <DashboardTable />
                 </Box>

@@ -35,16 +35,16 @@ export const ProductsTableControl = ({ showRefreshBtn }: controlsProp) => {
         },
     };
 
-    const data = [`All`, `Draft`, `Published`].map((item) => ({
-        label: item,
-        value: item,
-    }));
+    // const data = [`All`, `Draft`, `Published`].map((item) => ({
+    //     label: item,
+    //     value: item,
+    // }));
 
     const handleExport = async () => {
         try {
             setExportLoading(true);
             const res = await axios.get(
-                `${BASE_URL}/products/download?page=1`,
+                `${BASE_URL}/products/records/admin?page=1`,
                 // `${BASE_URL}/products/download?status=${status}&format=csv`,
                 // `${BASE_URL}products/download?start_date=${startDate}&end_date=${endDate}&format=csv`,
                 headersCredentials
@@ -87,9 +87,9 @@ export const ProductsTableControl = ({ showRefreshBtn }: controlsProp) => {
         }
     };
 
-    const handleStatusChange = (value: string) => {
-        setStatus(value.toLowerCase());
-    };
+    // const handleStatusChange = (value: string) => {
+    //     setStatus(value.toLowerCase());
+    // };
     const handleDateRangeChange = async (value: any | null) => {
         if (value) {
             setStartDate(formatDateRange(value?.[0]));
@@ -149,13 +149,13 @@ export const ProductsTableControl = ({ showRefreshBtn }: controlsProp) => {
                         aria-label="Filter table"
                         icon={<Icon icon={`system-uicons:filtering`} />}
                     />
-                    <SelectPicker searchable={false} onSelect={handleStatusChange} style={{ width: `100%` }} placeholder={`Status`} size="lg" data={data} />
+                    {/* <SelectPicker searchable={false} onSelect={handleStatusChange} style={{ width: `100%` }} placeholder={`Status`} size="lg" data={data} /> */}
                 </Flex>
             </Flex>
             {/* dots and buttons */}
             <Box>
                 <Flex display={{ base: `none`, md: `flex` }} gap={4} alignItems={`center`}>
-                    <Box hidden={showRefreshBtn ? false : true}>
+                    {/* <Box hidden={showRefreshBtn ? false : true}>
                         <SharedButton
                             text={'Refresh'}
                             width={'fit-content'}
@@ -170,7 +170,7 @@ export const ProductsTableControl = ({ showRefreshBtn }: controlsProp) => {
                                 // onClick: () => setEmptyState((prevState) => !prevState),
                             }}
                         />
-                    </Box>
+                    </Box> */}
                     <Box>
                         <SharedButton
                             text={'Export'}

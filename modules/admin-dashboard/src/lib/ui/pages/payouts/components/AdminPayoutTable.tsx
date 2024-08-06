@@ -1,11 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/rules-of-hooks */
-import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Text, Avatar, Stack, Checkbox, Box, Tag, Skeleton } from '@chakra-ui/react';
+import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Text, Stack, Avatar, Checkbox, Box, Tag, Skeleton } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { useCallback, useEffect } from 'react';
-import { DashboardEmptyState } from '../../empty-states/AdminDashboardEmptyState';
+import { DashboardEmptyState } from '../../../empty-states/AdminDashboardEmptyState';
 import { useCurrency, useDate, useTime } from '@productize/hooks';
-import { selectAllOrders, useGetAllOrdersMutation, selectOrdersMetaData, useGetAllAdminOrdersMutation, selectAllAdminOrders } from '@productize/redux';
+import {
+    selectAllUsers,
+    selectPayoutHistory,
+    selectpayoutPaginationMetaData,
+    selectUserPaginationMetaData,
+    useGetAllPayoutHistoryMutation,
+} from '@productize/redux';
 import { OnBoardingLoader, SharedButton } from '@productize/ui';
 
 interface tableProps {
@@ -14,48 +20,65 @@ interface tableProps {
     deleted?: boolean;
 }
 
-export const OrderTable = ({ deleted }: tableProps) => {
-    const [getAllOrders, getAllOrdersStatus] = useGetAllAdminOrdersMutation();
-    const tableData = useSelector(selectAllAdminOrders);
+export const AdminPayoutTable = ({ deleted }: tableProps) => {
+    const [getAllPayoutHistory, getAllPayoutHistoryStatus] = useGetAllPayoutHistoryMutation();
+    const allProducts = useSelector(selectPayoutHistory);
+    // const allProducts = useSelector(selectPayoutHistory);
+    console.log('Payout History:', allProducts);
     // const navigate = useNavigate();
     const formatCurrency = useCurrency();
     const formatDate = useDate();
     const formatTime = useTime();
-    const paginate = useSelector(selectOrdersMetaData);
+    const paginate = useSelector(selectpayoutPaginationMetaData);
 
-    const tableHeader = [`Product`, `Price`, `Customer's Email`, `Date`].map((title) => {
+    const tableHeader = [`Price`, `Bank Account`, `Period`].map((title) => {
         return (
             <Th py={3} key={title}>
                 {title}
             </Th>
         );
     });
-    const tableOrder = Array.isArray(tableData)
-        ? tableData.map((order: any) => {
+    const tableproduct = Array.isArray(allProducts)
+        ? allProducts.map((earning: any) => {
               return (
-                  <Tr _hover={{ bgColor: `purple.100`, cursor: `pointer` }} key={order.id}>
+                  <Tr _hover={{ bgColor: `purple.100` }} key={earning.id}>
                       <Td>
-                          <Flex gap={2} alignItems={`center`}>
-                              <Avatar bgColor={`yellow.100`} src={order?.product?.thumbnail} borderRadius={`8px`} w={`100px`} h={`64px`} />
-                              <Stack>
-                                  <Text>{order?.product?.title}</Text>
-                              </Stack>
+                          <Flex alignItems={`center`}>
+                              <Text>{formatCurrency(earning.amount)}</Text>
                           </Flex>
                       </Td>
-                      <Td>
-                          <Flex>{formatCurrency(order.product?.price)}</Flex>
-                      </Td>
-                      <Td>
-                          <Flex flexDir={`column`} gap={2} py={2}>
-                              <Text>{order?.customer?.email}</Text>
+                      <Td py={5}>
+                          <Flex alignItems={`center`} gap={5}>
+                              <Avatar size={`xs`} name={earning.bank_name} />
+                              <Text>{`${earning.bank_name} ${earning?.account?.number?.slice(0, 3)}****${earning?.account?.number?.slice(7)}`}</Text>
                           </Flex>
                       </Td>
                       <Td>
                           <Flex>{`
-                        ${formatDate(order?.created_at)}
-                        ${formatTime(order?.created_at)}
-                    `}</Flex>
+                      ${formatDate(earning?.created_at)}
+                      ${formatTime(earning?.created_at)}
+                      `}</Flex>
                       </Td>
+                      {/* <Td>
+                      <Flex>
+                          <Tag
+                              bg={earning.status === `pending` ? `yellow.200` : earning.status === `completed` ? `green.200` : `red.200`}
+                              color={`grey.100`}
+                              fontWeight={600}
+                              size={`lg`}
+                              fontSize={`sm`}
+                          >
+                              {earning?.status}
+                          </Tag>
+                      </Flex>
+                  </Td> */}
+                      {/* <Td>
+                      <Flex>
+                          <Tag bg={`grey.200`} color={`green.300`} fontWeight={600} size={`lg`} fontSize={`sm`}>
+                              5%
+                          </Tag>
+                      </Flex>
+                  </Td> */}
                   </Tr>
               );
           })
@@ -63,14 +86,14 @@ export const OrderTable = ({ deleted }: tableProps) => {
 
     const handlePrevButton = async () => {
         try {
-            await getAllOrders({ link: paginate?.links?.prev }).unwrap();
+            await getAllPayoutHistory({ link: paginate?.links?.prev }).unwrap();
         } catch (error) {
             console.log(error);
         }
     };
     const handleNextButton = async () => {
         try {
-            await getAllOrders({ link: paginate?.links?.next }).unwrap();
+            await getAllPayoutHistory({ link: paginate?.links?.next }).unwrap();
         } catch (error) {
             console.log(error);
         }
@@ -78,11 +101,11 @@ export const OrderTable = ({ deleted }: tableProps) => {
 
     const showAllProducts = useCallback(async () => {
         try {
-            await getAllOrders(null).unwrap();
+            await getAllPayoutHistory(null).unwrap();
         } catch (error) {
             return error;
         }
-    }, [getAllOrders]);
+    }, [getAllPayoutHistory]);
 
     useEffect(() => {
         showAllProducts();
@@ -96,11 +119,11 @@ export const OrderTable = ({ deleted }: tableProps) => {
             <TableContainer
                 display={`flex`}
                 flexDir={`column`}
-                height={tableData?.length ? `40rem` : `fit-Content`}
+                height={allProducts?.length ? `40rem` : `fit-Content`}
                 justifyContent={`space-between`}
                 overflowY={`auto`}
             >
-                {getAllOrdersStatus.isLoading ? (
+                {getAllPayoutHistoryStatus.isLoading ? (
                     <OnBoardingLoader />
                 ) : (
                     <Table size={`sm`} variant="simple">
@@ -111,15 +134,15 @@ export const OrderTable = ({ deleted }: tableProps) => {
                             </Tr>
                         </Thead>
                         {/* body */}
-                        <Tbody color={`purple.300`}>{tableOrder}</Tbody>
+                        <Tbody color={`purple.300`}>{tableproduct}</Tbody>
                     </Table>
                 )}
-                {!tableData?.length && !getAllOrdersStatus.isLoading && (
+                {!allProducts?.length && !getAllPayoutHistoryStatus.isLoading && (
                     <Box my={10}>
                         <DashboardEmptyState
                             content={{
                                 title: '',
-                                desc: 'Order Table is Empty.',
+                                desc: 'Payout Table is Empty.',
                                 img: `https://res.cloudinary.com/kingsleysolomon/image/upload/v1700317427/productize/Illustration_4_pujumv.png`,
                             }}
                             textAlign={{ base: `center` }}

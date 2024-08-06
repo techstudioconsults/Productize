@@ -29,6 +29,7 @@ import {
 import {
     Admin,
     AdminAccountSettings,
+    AdminComplaintDetails,
     AdminComplaints,
     AdminHome,
     AdminOrders,
@@ -83,7 +84,7 @@ const ProductCart = React.lazy(() =>
     import('../pages/explore/views/productDetails/ProductCart').then((module) => ({
         default: module.ProductCart,
     }))
-); 
+);
 
 function App() {
     const isAuth = useTokenExists();
@@ -157,6 +158,7 @@ function App() {
                     <Route path="payouts" element={<AdminPayouts />} />
                     <Route path="revenue" element={<AdminRevenue />} />
                     <Route path="complaints" element={<AdminComplaints />} />
+                    <Route path="complaints/:complaintID" element={<AdminComplaintDetails />} />
                     <Route path="payouts/:payoutid/withdraw-earnings" element={<AdminWithdrawalEarnings />} />
                     <Route path="settings" element={<AdminSettings />}>
                         <Route path="account" element={<AdminAccountSettings />} />

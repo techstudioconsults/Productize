@@ -1,17 +1,35 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { apiSlice } from '../apiSlice';
-import { setAllOrders, setSingleOrder, setOrderAnalytics, setAllAdminOrders, setAllRevenue } from './ordersSlice';
+import { setAllOrders, setSingleOrder, setOrderAnalytics, setAllAdminOrders, setAllRevenue, setHomeAnalytics } from './ordersSlice';
 
 const constructURL = (credentials) => {
     if (!credentials) {
         return '/orders';
     }
-
     const { page, startDate, endDate, link } = credentials.link;
     if (!link) {
         return `/orders/user?page=${page}&start_date=${startDate}&end_date=${endDate}`;
     } else {
         return link;
+    }
+};
+
+const constructURL1 = (credentials, filteredLink, status) => {
+    if (credentials && !credentials?.link) {
+        return filteredLink;
+    } else if (credentials?.link) {
+        return credentials?.link;
+    } else {
+        return `/orders?status=${status}`;
+    }
+};
+const constructURL2 = (credentials, filteredLink, status) => {
+    if (credentials && !credentials?.link) {
+        return filteredLink;
+    } else if (credentials?.link) {
+        return credentials?.link;
+    } else {
+        return `/revenues?status=${status}`;
     }
 };
 
@@ -38,8 +56,14 @@ export const OrdersApiSlice = apiSlice.injectEndpoints({
             },
         }),
         getAllAdminOrders: builder.mutation({
-            query: () => ({
-                url: `/orders`,
+            query: (credentials) => ({
+                url: constructURL1(
+                    credentials,
+                    `/orders?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}&status=${
+                        credentials?.status ? credentials?.status : ''
+                    }`,
+                    credentials?.status
+                ),
                 method: 'GET',
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
@@ -49,7 +73,7 @@ export const OrdersApiSlice = apiSlice.injectEndpoints({
                         setAllAdminOrders({
                             isFilter: arg?.isFilter || false,
                             orders: data.data,
-                            ordersMetaData: { links: data.links, meta: data.meta },
+                            ordersMetaData: { links: data.links, meta: data.meta }, // Updated to adminOrdersMetaData
                         })
                     );
                 } catch (error) {
@@ -58,8 +82,14 @@ export const OrdersApiSlice = apiSlice.injectEndpoints({
             },
         }),
         getAllRevenue: builder.mutation({
-            query: () => ({
-                url: `/revenues`,
+            query: (credentials) => ({
+                url: constructURL2(
+                    credentials,
+                    `/revenues?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}&status=${
+                        credentials?.status ? credentials?.status : ''
+                    }`,
+                    credentials?.status
+                ),
                 method: 'GET',
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
@@ -67,6 +97,7 @@ export const OrdersApiSlice = apiSlice.injectEndpoints({
                     const { data } = await queryFulfilled;
                     dispatch(
                         setAllRevenue({
+                            isFilter: arg?.isFilter || false,
                             revenue: data.data,
                             revenueMetaData: { links: data.links, meta: data.meta },
                         })
@@ -88,6 +119,24 @@ export const OrdersApiSlice = apiSlice.injectEndpoints({
                     dispatch(
                         setOrderAnalytics({
                             orderAnalytics: res.data.data,
+                        })
+                    );
+                } catch (error) {
+                    return;
+                }
+            },
+        }),
+        getHomeAnalytics: builder.mutation({
+            query: () => ({
+                url: `/revenues/allstats`,
+                method: 'GET',
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const res = await queryFulfilled;
+                    dispatch(
+                        setHomeAnalytics({
+                            homeAnalytics: res.data.data,
                         })
                     );
                 } catch (error) {
@@ -139,4 +188,5 @@ export const {
     useGetOrderAnalyticsMutation,
     useGetAllAdminOrdersMutation,
     useGetAllRevenueMutation,
+    useGetHomeAnalyticsMutation,
 } = OrdersApiSlice;

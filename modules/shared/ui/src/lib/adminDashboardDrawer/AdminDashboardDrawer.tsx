@@ -2,16 +2,15 @@ import { Drawer, DrawerBody, DrawerHeader, DrawerOverlay, DrawerContent, Image, 
 import { Link as RouterLink } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import React, { memo } from 'react';
-import { DashboardLinks } from '@productize/dashboard';
+import { AdminDashboardLinks } from '@productize/admin-dashboard';
 import { useTokenExists } from '@productize/hooks';
-import { PaymentStatusTag } from '../PaymentStatusTag';
 import { useDrawerState } from './useDrawState';
 
 interface DashboardDrawerProps {
     links: any; // Adjust the type as per your requirement
 }
 
-export const DashboardDrawer: React.FC<DashboardDrawerProps> = memo(({ links }) => {
+export const AdminDashboardDrawer: React.FC<DashboardDrawerProps> = memo(({ links }) => {
     const isAuth = useTokenExists();
     const { isOpen, onOpen, onClose, menuColor } = useDrawerState();
 
@@ -20,7 +19,6 @@ export const DashboardDrawer: React.FC<DashboardDrawerProps> = memo(({ links }) 
             <Center color="grey.600" cursor="pointer" display={{ xl: 'none' }}>
                 <Icon fontSize="2rem" onClick={onOpen} icon="ci:hamburger-md" />
             </Center>
-
             <Drawer size={{ base: 'xs' }} isOpen={isOpen} placement="left" onClose={onClose}>
                 <DrawerOverlay />
                 <DrawerContent px={5}>
@@ -32,12 +30,10 @@ export const DashboardDrawer: React.FC<DashboardDrawerProps> = memo(({ links }) 
                                     src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png"
                                 />
                             </Link>
-                            <PaymentStatusTag />
                         </Flex>
                     </DrawerHeader>
                     <DrawerBody p={0}>
-                        <DashboardLinks close={onClose} />
-
+                        <AdminDashboardLinks close={onClose} />
                     </DrawerBody>
                 </DrawerContent>
             </Drawer>
@@ -45,5 +41,5 @@ export const DashboardDrawer: React.FC<DashboardDrawerProps> = memo(({ links }) 
     );
 });
 
-DashboardDrawer.displayName = 'DashboardDrawer';
-export default DashboardDrawer;
+AdminDashboardDrawer.displayName = 'AdminDashboardDrawer';
+export default AdminDashboardDrawer;

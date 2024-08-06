@@ -16,6 +16,11 @@ const initialState = {
     revenueAnalytics: {},
     allComplaints: {},
     complaintsMetaData: null,
+    topProductsMetaData: null,
+    singleComplaints: {
+        complaint: null,
+    },
+    complaints: null,
 };
 
 const productSlice = createSlice({
@@ -33,9 +38,9 @@ const productSlice = createSlice({
             state.paginationMetaData = paginationMetaData;
         },
         setTopAdminProduct: (state, action) => {
-            const { products, paginationMetaData } = action.payload;
-            state.topAdminProducts = products;
-            state.paginationMetaData = paginationMetaData;
+            const { topProducts, topProductsMetaData } = action.payload;
+            state.topAdminProducts = topProducts;
+            state.topProductsMetaData = topProductsMetaData;
         },
         setLiveProduct: (state, action) => {
             const { products, paginationMetaData } = action.payload;
@@ -64,6 +69,10 @@ const productSlice = createSlice({
             const { allComplaints, complaintsMetaData } = action.payload;
             state.allComplaints = allComplaints;
             state.complaintsMetaData = complaintsMetaData;
+        },
+        setSingleComplaints: (state, action) => {
+            const { complaint } = action.payload;
+            state.singleComplaints.complaint = complaint;
         },
         setProductsAnalytics: (state, action) => {
             const { productsAnalytics } = action.payload;
@@ -98,13 +107,16 @@ export const {
     resetProductStore,
     setRevenueAnalytics,
     setAllComplaints,
+    setSingleComplaints,
 } = productSlice.actions;
 export default productSlice.reducer;
 
 export const selectProducts = (state) => state.Products.products;
 export const selectAllProducts = (state) => state.Products.allProducts;
 export const selectTopAdminProducts = (state) => state.Products.topAdminProducts;
+export const selectTopProductsMetaData = (state) => state.Products.topProductsMetaData;
 export const selectPaginationMetaData = (state) => state.Products.paginationMetaData;
+export const selectComplaintsMetaData = (state) => state.Products.complaintsMetaData;
 export const selectDraftProducts = (state) => state.Products.draftProducts;
 export const selectLiveProducts = (state) => state.Products.liveProducts;
 export const selectDeletedProducts = (state) => state.Products.deletedProducts;
@@ -113,3 +125,4 @@ export const selectSingleProductCustomers = (state) => state.Products.singleProd
 export const selectProductAnalytics = (state) => state.Products.productsAnalytics;
 export const selectRevenueAnalytics = (state) => state.Products.revenueAnalytics;
 export const selectAllComplaints = (state) => state.Products.allComplaints;
+export const selectSingleComplaints = (state) => state.Products.singleComplaints.complaint;

@@ -9,7 +9,7 @@ import { useCallback, useEffect } from 'react';
 import { ProductsTableControl } from '../AdminProductsTableControl';
 import { DashboardEmptyState } from '../../../empty-states/AdminDashboardEmptyState';
 import { useCurrency, useDate, useTime } from '@productize/hooks';
-import { useGetTopAdminProductsMutation, selectProducts, selectPaginationMetaData } from '@productize/redux';
+import { useGetTopAdminProductsMutation, selectTopAdminProducts, selectPaginationMetaData, selectTopProductsMetaData } from '@productize/redux';
 import { OnBoardingLoader, SharedButton } from '@productize/ui';
 
 interface tableProps {
@@ -20,12 +20,12 @@ interface tableProps {
 
 export const TopProductTable = ({ deleted }: tableProps) => {
     const [getTopAdminProducts, getTopAdminProductsStatus] = useGetTopAdminProductsMutation();
-    const allProducts = useSelector(selectProducts);
+    const allProducts = useSelector(selectTopAdminProducts);
     const navigate = useNavigate();
     const formatCurrency = useCurrency();
     const formatDate = useDate();
     const formatTime = useTime();
-    const paginate = useSelector(selectPaginationMetaData);
+    const paginate = useSelector(selectTopProductsMetaData);
 
     const tableHeader = [`Product`, `Price`, `Sales`, `Type`, ''].map((title) => {
         if (deleted && title === `Status`) {
@@ -75,7 +75,7 @@ export const TopProductTable = ({ deleted }: tableProps) => {
                 </Td>
                 <Td>
                     {/* if show sale count is true */}
-                    <Flex>{product?.total_order}</Flex>
+                    <Flex>{product?.total_sales}</Flex>
                 </Td>
                 <Td>
                     <Flex>{product?.product_type}</Flex>
@@ -172,7 +172,7 @@ export const TopProductTable = ({ deleted }: tableProps) => {
             <Flex mt={4} gap={5} color={`grey.400`} alignItems={`center`} justifyContent={`space-between`} flexDir={{ base: `column-reverse`, lg: `row` }}>
                 <Flex alignItems={`center`} justifyContent={`space-between`} flexDir={{ base: `column`, lg: `row` }} gap={{ lg: 60 }}>
                     <Box>
-                        <Text>5 Entries per page </Text>
+                        <Text>10 Entries per page </Text>
                     </Box>
                     <Box>
                         <Text>

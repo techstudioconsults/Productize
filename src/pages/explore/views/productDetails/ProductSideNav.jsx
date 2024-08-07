@@ -27,7 +27,7 @@ import {
 import { SharedButton, ToastFeedback, useToastAction } from '@productize/ui';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import toastImg from '@icons/star-notice.png';
 
 const ProductSideNav = ({ status }) => {
@@ -41,6 +41,7 @@ const ProductSideNav = ({ status }) => {
     const [totalPrice, setTotalPrice] = useState(0);
     const [productQuantity, setProductQuantity] = useState(1);
     const formatCurrency = useCurrency();
+    const navigate = useNavigate();
 
     const disableVendor = user?.name === product?.publisher;
 
@@ -102,6 +103,13 @@ const ProductSideNav = ({ status }) => {
         }
     };
 
+    const handleBuyNow = () => {
+        sendToCart();
+        setTimeout(() => {
+            navigate(`/explore/product/cart`);
+        }, [2000]);
+    };
+
     useEffect(() => {
         setTotalPrice(product?.price);
     }, [product?.price]);
@@ -117,20 +125,14 @@ const ProductSideNav = ({ status }) => {
                         </Flex>
                         <Box my={4}>
                             <Text>
-                                <Text
-                                    as={`span`}
-                                    textDecor={product.discount_price ? `line-through` : null}
-                                    color={`grey.800`}
-                                    fontSize={`22px`}
-                                    fontWeight={600}
-                                >
-                                    {formatCurrency(totalPrice)}
+                                <Text as={`span`} color={`grey.800`} fontSize={`22px`} fontWeight={600}>
+                                    {product?.discount_price ? formatCurrency(product?.discount_price) : formatCurrency(totalPrice)}
                                 </Text>
-                                <Text hidden={!product.discount_price} ml={2} color={`red`} fontWeight={600} as={`span`}>
-                                    {formatCurrency(product.discount_price)}
+                                <Text textDecor={`line-through`} hidden={!product?.discount_price} ml={2} color={`red`} fontWeight={600} as={`span`}>
+                                    {formatCurrency(product?.price)}
                                 </Text>
                             </Text>
-                            <Box mt={4}>
+                            {/* <Box title={`You can only select one digital or skill selling quantity`} mt={4}>
                                 <NumberInput
                                     onChange={handleProductQuantity}
                                     defaultValue="1"
@@ -149,7 +151,7 @@ const ProductSideNav = ({ status }) => {
                                         </NumberDecrementStepper>
                                     </NumberInputStepper>
                                 </NumberInput>
-                            </Box>
+                            </Box> */}
                         </Box>
                         <Box>
                             <Flex flexDir={`column`} w={`100%`} gap={4}>
@@ -168,21 +170,22 @@ const ProductSideNav = ({ status }) => {
                                         loadingText: `adding to cart...`,
                                     }}
                                 />
-                                <Link hidden={!cart.totalProductQuantity} to={`/explore/product/cart`}>
-                                    <SharedButton
-                                        btnExtras={{
-                                            border: '1px solid #6D5DD3',
-                                            disabled: disableVendor,
-                                        }}
-                                        text={'Buy Now'}
-                                        width={`100%`}
-                                        height={'38px'}
-                                        bgColor={'white'}
-                                        textColor={'purple.200'}
-                                        borderRadius={'4px'}
-                                        fontSize={{ base: `sm`, xl: `md` }}
-                                    />
-                                </Link>
+                                {/* <Link to={`/explore/product/cart`}> */}
+                                <SharedButton
+                                    btnExtras={{
+                                        onClick: handleBuyNow,
+                                        border: '1px solid #6D5DD3',
+                                        disabled: disableVendor,
+                                    }}
+                                    text={'Buy Now'}
+                                    width={`100%`}
+                                    height={'38px'}
+                                    bgColor={'white'}
+                                    textColor={'purple.200'}
+                                    borderRadius={'4px'}
+                                    fontSize={{ base: `sm`, xl: `md` }}
+                                />
+                                {/* </Link> */}
                             </Flex>
                         </Box>
                         <Box my={10}>

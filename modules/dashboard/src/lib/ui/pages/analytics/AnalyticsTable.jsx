@@ -37,9 +37,9 @@ export const AnalyticsTable = () => {
         getTableData();
     }, [getTableData]);
 
-    if (isLoading) {
-        return <OnBoardingLoader />;
-    }
+    // if (isLoading) {
+    //     return <OnBoardingLoader />;
+    // }
 
     const renderTableHeader = () => (
         <Thead pos="sticky" top={0}>
@@ -83,8 +83,8 @@ export const AnalyticsTable = () => {
                 {renderTableHeader()}
                 <Tbody color="purple.300">{renderTableContent()}</Tbody>
             </Table>
-            {!data?.data?.length && (
-                <Box my={10}>
+            {/* {!data?.data?.length && ( */}
+            {/* <Box my={10}>
                     <DashboardEmptyState
                         content={{
                             title: '',
@@ -94,8 +94,8 @@ export const AnalyticsTable = () => {
                         textAlign={{ base: 'center' }}
                         showImage
                     />
-                </Box>
-            )}
+                </Box> */}
+            {/* )} */}
         </TableContainer>
     );
 };

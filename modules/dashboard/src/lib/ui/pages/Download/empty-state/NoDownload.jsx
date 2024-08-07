@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { Box, Flex, Image, Text } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { DashboardBanner } from "../../../DashboardBanner";
@@ -44,3 +45,10 @@ const NoDownload = () => {
 };
 
 export default NoDownload;
+
+// const NoDownload = () => {
+//   return (
+//     <div>NoDownload</div>
+//   )
+// }
+// export default NoDownload

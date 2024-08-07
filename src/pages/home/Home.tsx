@@ -82,7 +82,7 @@ export const Home = () => {
                         <SimpleGrid flex={2} columns={{ base: 1, sm: 2 }} spacing={10}>
                             {/* card 1 */}
                             <Box>
-                                <CardLayout bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
+                                <CardLayout border={'0px'} bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
                                     <CardBody p={`23px`}>
                                         <Image
                                             src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951006/productize/Image_1_wc3l2p_a7lovq.png`}
@@ -97,10 +97,10 @@ export const Home = () => {
                             </Box>
                             {/* card 2 */}
                             <Box>
-                                <CardLayout bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
+                                <CardLayout border={'0px'} bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
                                     <CardBody p={`23px`}>
                                         <Image
-                                            src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951007/productize/Image_2_co17c3_xwfjxd.png`}
+                                            src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1721286358/productize/gkw6ietvs5asmzsqlkkk.png`}
                                             alt=""
                                         />
                                         <Text as={`h5`} my={2}>
@@ -114,10 +114,10 @@ export const Home = () => {
                             </Box>
                             {/* card 3 */}
                             <Box>
-                                <CardLayout bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
+                                <CardLayout border={'0px'} bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
                                     <CardBody p={`23px`}>
                                         <Image
-                                            src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951008/productize/Image_3_l61xsx_qdgenv.png`}
+                                            src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1721286358/productize/obodmkoin4emt8vhncll.png`}
                                             alt=""
                                         />
                                         <Text as={`h5`} my={2}>
@@ -131,10 +131,10 @@ export const Home = () => {
                             </Box>
                             {/* card 4 */}
                             <Box>
-                                <CardLayout bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
+                                <CardLayout border={'0px'} bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
                                     <CardBody p={`23px`}>
                                         <Image
-                                            src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951009/productize/Image_4_hksvcm_ulhhl3.png`}
+                                            src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1721286358/productize/wl8tu0t12l1fse6gm8tw.png`}
                                             alt=""
                                         />
                                         <Text as={`h5`} my={2}>
@@ -186,13 +186,15 @@ export const Home = () => {
                     <SimpleGrid columns={{ base: 1, sm: 2 }} spacing={10}>
                         {/* card 1 */}
                         <Box>
-                            <CardLayout bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
+                            <CardLayout border={'0px'} bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
                                 <CardBody p={`24px`} display={`flex`} flexDir={`column`} justifyContent={`space-between`}>
                                     <Box>
                                         <Text as={`h4`} w={`60%`} my={2}>
                                             Customize your profile
                                         </Text>
-                                        <Text color={`grey.500`}>Complete your profile to start getting your products published.</Text>
+                                        <Text color={`grey.500`}>
+                                            Start off by putting in your details and customizing what you want your profile to look like.
+                                        </Text>
                                     </Box>
                                     <Flex justifyContent={`flex-end`}>
                                         <Image
@@ -205,13 +207,13 @@ export const Home = () => {
                         </Box>
                         {/* card 2 */}
                         <Box>
-                            <CardLayout bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
+                            <CardLayout border={'0px'} bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
                                 <CardBody p={`24px`} display={`flex`} flexDir={`column`} justifyContent={`space-between`}>
                                     <Box>
                                         <Text as={`h4`} w={`60%`} my={2}>
                                             Set up your payout
                                         </Text>
-                                        <Text color={`grey.500`}>Set up your payout, and start receiving payments for your products or services!</Text>
+                                        <Text color={`grey.500`}>Put in your payment details and get ready to receive payments from all over the world.</Text>
                                     </Box>
                                     <Flex justifyContent={`flex-end`}>
                                         <Image
@@ -224,13 +226,16 @@ export const Home = () => {
                         </Box>
                         {/* card 3 */}
                         <Box>
-                            <CardLayout bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
+                            <CardLayout border={'0px'} bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
                                 <CardBody p={`24px`} display={`flex`} flexDir={`column`} justifyContent={`space-between`}>
                                     <Box>
                                         <Text as={`h4`} w={`60%`} my={2}>
                                             Create your first product
                                         </Text>
-                                        <Text color={`grey.500`}>Create your first product , and start building your brand.</Text>
+                                        <Text color={`grey.500`}>
+                                            Upload your first product on our platform and put in the necessary details to ensure customers can get a feel of
+                                            what you’re selling.
+                                        </Text>
                                     </Box>
                                     <Flex justifyContent={`flex-end`}>
                                         <Image
@@ -243,15 +248,13 @@ export const Home = () => {
                         </Box>
                         {/* card 4 */}
                         <Box>
-                            <CardLayout bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
+                            <CardLayout border={'0px'} bgColor={'white'} width={'100%'} borderRadius={'16px'} height={`100%`}>
                                 <CardBody p={`24px`} display={`flex`} flexDir={`column`} justifyContent={`space-between`}>
                                     <Box>
                                         <Text as={`h4`} w={`60%`} my={2}>
                                             Make your first sale
                                         </Text>
-                                        <Text color={`grey.500`}>
-                                            Make your first sale and receive payments for your work through your connected bank account.
-                                        </Text>
+                                        <Text color={`grey.500`}>Patiently await your first customer and make your first sale.</Text>
                                     </Box>
                                     <Flex justifyContent={`flex-end`}>
                                         <Image

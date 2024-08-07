@@ -43,16 +43,25 @@ import {
     AdminWithdrawalEarnings,
 } from '@productize/admin-dashboard';
 import { CoverPage } from '../pages/coverPage/CoverPage';
-// import { Admin } from '@productize/admin-dashboard';
+// // import About from '../pages/about/About';
 import { useTokenExists } from '@productize/hooks';
 import { useGetFromCartMutation, useGetProductTagsMutation } from '@productize/redux';
-
-// doesn't feel right
+import {Admin} from '@productize/admin-dashboard'
 
 // using suspense and lazy loading
 const Home = React.lazy(() =>
     import('../pages/home/Home').then((module) => ({
         default: module.Home,
+    }))
+);
+const ContactUs = React.lazy(() =>
+    import('../pages/contactUs/ContactUs').then((module) => ({
+        default: module.ContactUs,
+    }))
+);
+const About = React.lazy(()=>
+    import('../pages/about/About').then((module) => ({
+        default: module.About,
     }))
 );
 const Features = React.lazy(() =>
@@ -70,11 +79,11 @@ const Explore = React.lazy(() =>
         default: module.Explore,
     }))
 );
-const CategoryPageDetails = React.lazy(() =>
-    import('../pages/explore/views/productDetails/CategoryPageDetails').then((module) => ({
-        default: module.CategoryPageDetails,
-    }))
-);
+// const CategoryPageDetails = React.lazy(() =>
+//     import('../pages/explore/views/productDetails/CategoryPageDetails').then((module) => ({
+//         default: module.CategoryPageDetails,
+//     }))
+// );
 const ProductDetails = React.lazy(() =>
     import('../pages/explore/views/productDetails/ProductDetails').then((module) => ({
         default: module.ProductDetails,
@@ -116,9 +125,10 @@ function App() {
                 <Route index element={<CoverPage />} />
                 <Route path="/seller" element={<Home />} />
                 <Route path="/features" element={<Features />} />
+                <Route path="/contact-us" element={<ContactUs />} />
                 <Route path="/pricing" element={<Pricing />} />
                 <Route path={`/explore`} element={<Explore />} />
-                <Route path={`/explore/category/:mainCategory`} element={<CategoryPageDetails />} />
+                <Route path={"/about"} element={<About />} />
                 <Route path="/products/:productID" element={<ProductDetails />} />
                 <Route path="/explore/product/cart" element={<ProductCart />} />
                 {/* dashboard */}
@@ -172,3 +182,4 @@ function App() {
 }
 
 export default App;
+

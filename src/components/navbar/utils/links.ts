@@ -27,4 +27,16 @@ export const links = [
     path: `/pricing`,
     type: `link`,
   },
+  // {
+  //   id: 4,
+  //   name: `About`,
+  //   path: `/about-us`,
+  //   type: `link`,
+  // },
+  // {
+  //   id: 5,
+  //   name: `Contact`,
+  //   path: `/contact-us`,
+  //   type: `link`,
+  // },
 ];

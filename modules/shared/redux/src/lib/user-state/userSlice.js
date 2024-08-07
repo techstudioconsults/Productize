@@ -94,7 +94,20 @@ const userSlice = createSlice({
     },
 });
 
-export const { setUser, setBillingHistory, setPayouts, setAccountList, resetUserStore, setPayoutStats, setAnalyticsGraphData } = userSlice.actions;
+export const {
+    setUser,
+    setBillingHistory,
+    setPayouts,
+    setAccountList,
+    resetUserStore,
+    setPayoutStats,
+    setAnalyticsGraphData,
+    setAllUser,
+    setNotifications,
+    setPayoutHistory,
+    setUserAnalytics,
+    setDailyAnalyticsGraphData,
+} = userSlice.actions;
 
 export default userSlice.reducer;
 

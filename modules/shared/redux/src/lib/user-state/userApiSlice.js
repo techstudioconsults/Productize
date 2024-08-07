@@ -1,5 +1,16 @@
 import { apiSlice } from '../apiSlice';
-import { setAccountList, setAnalyticsGraphData, setBillingHistory, setPayoutStats, setPayouts, setUser } from './userSlice';
+import {
+    setAccountList,
+    setAnalyticsGraphData,
+    setBillingHistory,
+    setPayoutStats,
+    setPayouts,
+    setUser,
+    setUserAnalytics,
+    setPayoutHistory,
+    setAllUser,
+    setNotifications
+} from './userSlice';
 
 const constructURL = (credentials, filteredLink) => {
     if (credentials && !credentials?.link) {
@@ -355,4 +366,8 @@ export const {
     useTogglePaystackAccountActivationMutation,
     useShowAnalyticsChartDataMutation,
     useCancelSubscriptionMutation,
+    useNotificationMutation,
+    useContactUsMutation,
+    useGetAllPayoutHistoryMutation,
+    useReadAllNotificationMutation
 } = userApiSlice;

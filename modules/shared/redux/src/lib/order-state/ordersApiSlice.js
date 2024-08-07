@@ -182,4 +182,11 @@ export const OrdersApiSlice = apiSlice.injectEndpoints({
     }),
 });
 
-export const { useGetAllOrdersMutation, useGetSingleOrderDetailsMutation } = OrdersApiSlice;
+export const {
+    useGetAllOrdersMutation,
+    useGetSingleOrderDetailsMutation,
+    useGetAllAdminOrdersMutation,
+    useGetAllRevenueMutation,
+    useGetHomeAnalyticsMutation,
+    useGetOrderAnalyticsMutation,
+} = OrdersApiSlice;

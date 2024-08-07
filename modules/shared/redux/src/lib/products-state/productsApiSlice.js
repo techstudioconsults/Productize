@@ -393,5 +393,6 @@ export const {
     useGetRevenueAnalyticsMutation,
     useGetAllComplaintsMutation,
     useGetSingleComplaintsMutation,
-    useSingleDownloadedProductMutation
+    useSingleDownloadedProductMutation,
+    
 } = productsApiSlice;

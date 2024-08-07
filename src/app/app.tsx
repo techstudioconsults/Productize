@@ -46,7 +46,7 @@ import { CoverPage } from '../pages/coverPage/CoverPage';
 // // import About from '../pages/about/About';
 import { useTokenExists } from '@productize/hooks';
 import { useGetFromCartMutation, useGetProductTagsMutation } from '@productize/redux';
-import {Admin} from '@productize/admin-dashboard'
+// import {Admin} from '@productize/admin-dashboard'
 
 // using suspense and lazy loading
 const Home = React.lazy(() =>

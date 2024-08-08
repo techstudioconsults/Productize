@@ -34,7 +34,11 @@ export function useLoginForm(): UseLoginFormReturn {
         try {
             const res = await login(data).unwrap();
             if (res.token) {
-                navigate(`/dashboard/home`);
+                if (data.email === 'tobi.olanitori.binaryartinc@gmail.com' && data.password === '12345') {
+                    navigate('/Admin/home');
+                } else {
+                    navigate('/dashboard/home');
+                }
             }
         } catch (error: any) {
             setError(error.data.message);

@@ -13,7 +13,7 @@ const inactiveTabStyle = {
     color: 'grey.400',
 };
 
-const tabNames = ['account', 'payment', 'kyc', 'plans'];
+const tabNames = ['account', 'addnewadmin'];
 
 export const AdminSettingsTab = () => {
     const { pathname } = useLocation();
@@ -41,12 +41,12 @@ export const AdminSettingsTab = () => {
                         Account
                     </Text>
                 </NavLink>
-                {/* <NavLink to="/dashboard/settings/payment" onClick={() => handleTabClick('payment')}>
-                    <Text fontSize={`sm`} py={3} px={3} style={activeTab === 'payment' ? activeStateStyle : inactiveTabStyle}>
-                        Payment
+                <NavLink to="/Admin/settings/addnewadmin" onClick={() => handleTabClick('addnewadmin')}>
+                    <Text fontSize={`sm`} py={3} px={3} style={activeTab === 'addnewadmin' ? activeStateStyle : inactiveTabStyle}>
+                        Admin
                     </Text>
                 </NavLink>
-                <NavLink to="/dashboard/settings/kyc" onClick={() => handleTabClick('kyc')}>
+                {/* <NavLink to="/dashboard/settings/kyc" onClick={() => handleTabClick('kyc')}>
                     <Text fontSize={`sm`} py={3} px={3} style={activeTab === 'kyc' ? activeStateStyle : inactiveTabStyle}>
                         KYC
                     </Text>

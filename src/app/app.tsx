@@ -41,7 +41,9 @@ import {
     AdminSettings,
     AdminUser,
     AdminWithdrawalEarnings,
+    AddNewAdmin,
 } from '@productize/admin-dashboard';
+// import {AddNewAdmin} from '@productize/admin-dashboard'
 import { CoverPage } from '../pages/coverPage/CoverPage';
 // // import About from '../pages/about/About';
 import { useTokenExists } from '@productize/hooks';
@@ -172,6 +174,7 @@ function App() {
                     <Route path="payouts/:payoutid/withdraw-earnings" element={<AdminWithdrawalEarnings />} />
                     <Route path="settings" element={<AdminSettings />}>
                         <Route path="account" element={<AdminAccountSettings />} />
+                        <Route path="addnewadmin" element={<AddNewAdmin/>} />
                     </Route>
                 </Route>
                 {/* not found */}

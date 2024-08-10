@@ -295,12 +295,12 @@ export const ProfileForm = () => {
             {/* grid three */}
             <Grid templateColumns="repeat(12, 1fr)" gap={6}>
                 <GridItem colSpan={{ base: 12, md: 5 }}>
-                    <Text textAlign={{ base: `center`, md: `initial` }} color={`purple.300`} as={`h5`}>
+                    {/* <Text textAlign={{ base: `center`, md: `initial` }} color={`purple.300`} as={`h5`}>
                         Social Links
-                    </Text>
+                    </Text> */}
                 </GridItem>
                 <GridItem colSpan={{ base: 12, md: 7, xl: 5 }}>
-                    <Box mb={4}>
+                    {/* <Box mb={4}>
                         <FormControl>
                             <FormLabel color={`purple.300`} fontWeight={600}>
                                 X
@@ -368,7 +368,7 @@ export const ProfileForm = () => {
                                 {errors?.youtube_account?.message}
                             </Text>
                         </FormControl>
-                    </Box>
+                    </Box> */}
                     <Flex gap={4} mt={12}>
                         <SharedButton
                             btnExtras={{

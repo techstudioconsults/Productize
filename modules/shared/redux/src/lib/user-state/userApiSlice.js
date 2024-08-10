@@ -9,7 +9,8 @@ import {
     setUserAnalytics,
     setPayoutHistory,
     setAllUser,
-    setNotifications
+    setNotifications,
+    setAllAdminUser,
 } from './userSlice';
 
 const constructURL = (credentials, filteredLink) => {
@@ -43,6 +44,7 @@ const constructURL2 = (credentials, filteredLink, status) => {
 
 export const userApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
+        
         getAllUser: builder.mutation({
             query: (credentials) => ({
                 url: constructURL1(
@@ -66,6 +68,32 @@ export const userApiSlice = apiSlice.injectEndpoints({
                     );
                 } catch (err) {
                     return;
+                }
+            },
+        }),
+        getAllAdminUsers: builder.mutation({
+            query: (credentials) => {
+                const url = `/users?role=ADMIN${credentials?.page ? `&page=${credentials.page}` : ''}${credentials?.startDate ? `&start_date=${credentials.startDate}` : ''}${credentials?.endDate ? `&end_date=${credentials.endDate}` : ''}${credentials?.status ? `&status=${credentials.status}` : ''}`;
+                console.log('Constructed URL:', url);
+                return {
+                    url,
+                    method: 'GET',
+                };
+            },
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    console.log('All Admin', data);
+                    
+                    dispatch(
+                        setAllAdminUser({
+                            isFilter: arg?.isFilter || false,
+                            adminUsers: data.data,
+                            adminPaginationMetaData: { links: data.links, meta: data.meta },
+                        })
+                    );
+                } catch (err) {
+                    console.error('Error fetching admin users:', err);
                 }
             },
         }),
@@ -347,6 +375,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
 
 export const {
     useGetAllUserMutation,
+    useGetAllAdminUsersMutation,
     useGetUserAnalyticsMutation,
     useGetUserMutation,
     useUpgradePlanMutation,

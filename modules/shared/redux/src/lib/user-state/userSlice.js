@@ -16,9 +16,11 @@ const initialState = {
     },
     userAnalytics: {},
     allUsers: {},
+    allAdminUsers: {},
     userPaginationMetaData: null,
     payoutHistory: null,
     payoutPaginationMetaData: null,
+    adminPaginationMetaData:null
 };
 
 const userSlice = createSlice({
@@ -31,6 +33,14 @@ const userSlice = createSlice({
             state.userPaginationMetaData = userPaginationMetaData;
             state.isFilter = isFilter;
         },
+
+        setAllAdminUser: (state, action) =>{
+            const { adminUsers, adminPaginationMetaData, isFilter } = action.payload;
+            state.allAdminUsers = adminUsers;
+            state.adminPaginationMetaData = adminPaginationMetaData;
+            state.isFilter = isFilter;
+        },
+
         setUser: (state, action) => {
             const { user } = action.payload;
             state.profile = user;
@@ -96,6 +106,7 @@ const userSlice = createSlice({
 
 export const {
     setUser,
+    setAllAdminUser,
     setBillingHistory,
     setPayouts,
     setAccountList,
@@ -112,9 +123,11 @@ export const {
 export default userSlice.reducer;
 
 export const selectAllUsers = (state) => state.User.allUsers;
+export const selectAllAdminUsers = (state) => state.User.allAdminUsers;
 export const selectCurrentUser = (state) => state.User.profile;
 export const selectBillingHistory = (state) => state.User.billingHistory;
 export const selectUserPaginationMetaData = (state) => state.User.userPaginationMetaData;
+export const selectAdminUserPaginationMetaData = (state) =>state.User.adminPaginationMetaData;
 export const selectAccountList = (state) => state.User.accountList;
 export const selectPayouts = (state) => state.User.payouts;
 export const selectPayoutStats = (state) => state.User.payoutStats;

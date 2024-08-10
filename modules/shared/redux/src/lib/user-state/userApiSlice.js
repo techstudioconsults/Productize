@@ -97,6 +97,14 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 }
             },
         }),
+
+        revokeAdmin: builder.mutation({
+            query: (credentials) => ({
+                url: `/users/${credentials.userID}revoke-admin-role`,
+                method: 'PATCH',
+                body: { ...credentials.body },
+            }),
+        }),
         getAllPayoutHistory: builder.mutation({
             query: (credentials) => ({
                 url: constructURL2(
@@ -376,6 +384,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
 export const {
     useGetAllUserMutation,
     useGetAllAdminUsersMutation,
+    useRevokeAdminMutation,
     useGetUserAnalyticsMutation,
     useGetUserMutation,
     useUpgradePlanMutation,

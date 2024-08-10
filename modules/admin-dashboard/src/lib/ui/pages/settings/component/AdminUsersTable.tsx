@@ -211,8 +211,9 @@
 
 
 import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Text, Stack, Avatar, Box, Button } from '@chakra-ui/react';
+import { useDisclosure } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { DashboardEmptyState } from '../../../empty-states/AdminDashboardEmptyState';
 import {
     selectAllAdminUsers,
@@ -220,11 +221,20 @@ import {
     useGetAllAdminUsersMutation,
 } from '@productize/redux';
 import { OnBoardingLoader, SharedButton } from '@productize/ui';
+import { RevokeAdminModal } from './RevokeAdminModal';
 
 export const AdminUsersTable = () => {
     const [getAllAdminUsers, getAllAdminUsersStatus] = useGetAllAdminUsersMutation();
     const allAdminUsers = useSelector(selectAllAdminUsers);
     const paginate = useSelector(selectAdminUserPaginationMetaData);
+
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const [selectedUser, setSelectedUser] = useState(null);
+
+    const handleRemoveClick = (user) => {
+        setSelectedUser(user);
+        onOpen();
+    };
 
     const tableHeader = [`User Name`, `User Email`, `Last Login`, `Actions`].map((title) => (
         <Th py={3} key={title}>{title}</Th>
@@ -240,11 +250,11 @@ export const AdminUsersTable = () => {
                     </Flex>
                 </Td>
                 <Td>{user.email}</Td>
-                <Td>{user.last_login || 'N/A'}</Td>
+                <Td>{user.createdAt || 'N/A'}</Td>
                 <Td>
                     <Flex gap={3}>
                         <Button bg={`none`}>Edit</Button>
-                        <Button bg={`none`}>Remove</Button>
+                        <Button bg={`none`} onClick={() => handleRemoveClick(user)}>Remove</Button>
                     </Flex>
                 </Td>
             </Tr>
@@ -314,6 +324,16 @@ export const AdminUsersTable = () => {
                     </Box>
                 )}
             </TableContainer>
+            <RevokeAdminModal 
+                isOpen={isOpen} 
+                onClose={onClose} 
+                user={selectedUser}
+                onConfirm={() => {
+                    // Handle the confirmation logic here
+                    console.log('Removing user:', selectedUser);
+                    onClose();
+                }}
+            />
             {/* Pagination controls (kept as is) */}
             
             <Flex mt={4} gap={5} color={`grey.400`} alignItems={`center`} justifyContent={`space-between`} flexDir={{ base: `column-reverse`, lg: `row` }}>

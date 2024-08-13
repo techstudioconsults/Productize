@@ -19,10 +19,6 @@ export default defineConfig({
     },
 
     plugins: [react(), nxViteTsPaths()],
-    
-    optimizeDeps: {
-        include: ['react-chartjs-2']
-      },
 
     build: {
         outDir: './dist',

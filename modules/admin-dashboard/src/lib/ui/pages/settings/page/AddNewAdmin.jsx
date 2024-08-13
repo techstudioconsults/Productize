@@ -10,14 +10,14 @@
 
 import { Box, Text } from "@chakra-ui/react"
 import { AdminUsersTable } from "../component/AdminUsersTable"
-import { AddAdminModal } from "../component/AddAdminModal"
+// import { AddAdminModal } from "../component/AddAdminModal"
 
 
 export const AddNewAdmin =()=>{
   return(
     <Box>
       <AdminUsersTable/>
-      <AddAdminModal/>
+      {/* <AddAdminModal/> */}
     </Box>
   )
 }

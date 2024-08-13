@@ -1,54 +1,71 @@
 import React from 'react';
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  Button,
-  Text,
-  Flex,
-  Heading
-} from '@chakra-ui/react';
+import { SharedButton } from '@productize/ui';
+import { useRevokeAdminMutation } from '@productize/redux';
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, Text, Flex, Button } from '@chakra-ui/react';
+import { selectCurrentToken } from '@productize/redux';
+import { useSelector } from 'react-redux';
+export const RevokeAdminModal = ({ isOpen, onClose, user, onConfirm }) => {
+    const [revokeAdmin, {isLoading, isError, error}] = useRevokeAdminMutation();
+    const token = useSelector(selectCurrentToken)
+    
+
+    const initialRef = React.useRef(null);
+    const finalRef = React.useRef(null);
 
 
-export const RevokeAdminModal = ({isOpen, onClose, user, onConfirm}) => {
+    const handleRemoveAdmin = async (userId) => {
+      console.log('clicked');
+      console.log(userId);
+      console.log(token);  // Verify token value
+      
+      try {
+          const res = await revokeAdmin({ userID: userId, token }).unwrap();
+          console.log(res);
+          onClose()
+      } catch (error) {
+          console.log(error);
+      }
+  };
+  
 
-console.log(user);
-  const initialRef = React.useRef(null);
-  const finalRef = React.useRef(null);
+    return (
+        <>
+            {/* <Button onClick={onOpen}>Open Modal</Button> */}
 
-  return (
-    <>
-      {/* <Button onClick={onOpen}>Open Modal</Button> */}
+            <Modal initialFocusRef={initialRef} finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose} size="xl">
+                <ModalOverlay />
+                <ModalContent padding={`1rem`}>
+                    <Flex justifyContent={`center`} alignItems={`center`}>
+                        <img src="https://res.cloudinary.com/doejcrfso/image/upload/v1723469894/productize/Wavy_Bus-09_Single-01_1_wgev9j.svg" alt="" />
+                    </Flex>
+                    <ModalHeader textAlign={`center`}>Remove Admin User</ModalHeader>
+                    <ModalBody pb={6}>
+                        <Flex gap={`5`} flexDirection={`column`}>
+                            <Text textAlign={'center'}>Are you sure you want to remove this admin user?</Text>
+                        </Flex>
+                    </ModalBody>
 
-      <Modal
-        initialFocusRef={initialRef}
-        finalFocusRef={finalRef}
-        isOpen={isOpen}
-        onClose={onClose}
-        size="lg"
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader textAlign={`center`}>Remove Admin User</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody pb={6}>
-        <Flex gap={`5`} flexDirection={`column`}> 
-            <Text>Are you sure you want to remove this admin user?</Text>
-        </Flex>
-          </ModalBody>
-
-          <ModalFooter>
-            <Button colorScheme='blue' mr={3}>
-              Save
-            </Button>
-            <Button onClick={onClose}>Cancel</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    </>
-  );
+                    <ModalFooter justifyContent={'center'} gap={`1rem`}>
+                    <Button onClick={()=> handleRemoveAdmin(user?.id)} colorScheme="red" mr={3} width={`246px`} height={`40px`} isLoading={isLoading}>
+                            Remove Admin
+                        </Button>
+   
+                        <SharedButton
+                            btnExtras={{
+                                border: `1px solid #6D5DD3`,
+                                onClick: onClose,
+                            }}
+                            text={'Go Back'}
+                            width={'246px'}
+                            height={'40px'}
+                            bgColor={`transparent`}
+                            textColor={`purple.200`}
+                            borderRadius={'4px'}
+                            fontSize={{ base: `sm`, md: `md` }}
+                        />
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
+        </>
+    );
 };

@@ -31,7 +31,7 @@
 //     // const allProducts = useSelector(selectPayoutHistory);
 //     console.log('Payout History:', allProducts);
 //     // const navigate = useNavigate();
-    
+
 //     const paginate = useSelector(selectAdminUserPaginationMetaData);
 
 //     const tableHeader = [`User Name`, `User Email`, `Last Login`, `Actions`].map((title) => {
@@ -63,7 +63,7 @@
 //                           </Flex>
 //                       </Td>
 //                       <Td>
-//                           <Flex gap={3}> 
+//                           <Flex gap={3}>
 //                             <Button bg={`none`} >Edit</Button>
 //                             <Button bg={`none`}>Remove</Button>
 //                           </Flex>
@@ -209,56 +209,101 @@
 //     );
 // };
 
-
 import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Text, Stack, Avatar, Box, Button } from '@chakra-ui/react';
 import { useDisclosure } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { useCallback, useEffect, useState } from 'react';
 import { DashboardEmptyState } from '../../../empty-states/AdminDashboardEmptyState';
-import {
-    selectAllAdminUsers,
-    selectAdminUserPaginationMetaData,
-    useGetAllAdminUsersMutation,
-} from '@productize/redux';
+import { selectAllAdminUsers, selectAdminUserPaginationMetaData, useGetAllAdminUsersMutation } from '@productize/redux';
 import { OnBoardingLoader, SharedButton } from '@productize/ui';
 import { RevokeAdminModal } from './RevokeAdminModal';
+import { useDate, useTime } from '@productize/hooks';
+import { EditAdminModal } from './edit-admin-modal/EditAdminModal';
+import { AddAdminModal } from './add-admin-modal/AddAdminModal';
 
 export const AdminUsersTable = () => {
     const [getAllAdminUsers, getAllAdminUsersStatus] = useGetAllAdminUsersMutation();
     const allAdminUsers = useSelector(selectAllAdminUsers);
     const paginate = useSelector(selectAdminUserPaginationMetaData);
 
-    const { isOpen, onOpen, onClose } = useDisclosure();
+    // const { isOpen, onOpen, onClose } = useDisclosure();
+    const { isOpen: isRemoveOpen, onOpen: onRemoveOpen, onClose: onRemoveClose } = useDisclosure();
+    const { isOpen: isEditOpen, onOpen: onEditOpen, onClose: onEditClose } = useDisclosure();
+    const { isOpen: isAddOpen, onOpen: onAddOpen, onClose: onAddClose } = useDisclosure();
     const [selectedUser, setSelectedUser] = useState(null);
+    const [selectedUserEdit, setSelectedUserEdit] = useState(null);
+    const formatDate = useDate();
+    const formatTime = useTime();
 
     const handleRemoveClick = (user) => {
         setSelectedUser(user);
-        onOpen();
+        onRemoveOpen();
     };
 
-    const tableHeader = [`User Name`, `User Email`, `Last Login`, `Actions`].map((title) => (
-        <Th py={3} key={title}>{title}</Th>
+    const handleEditClick = (user) => {
+        setSelectedUserEdit(user);
+        onEditOpen();
+    };
+
+    const handleAddClick = () => {
+        onAddOpen();
+    };
+
+    const tableHeader = [`User Name`, `User Email`, `Date`, `Actions`].map((title) => (
+        <Th py={3} key={title}>
+            {title}
+        </Th>
     ));
 
     const tableRows = Array.isArray(allAdminUsers)
         ? allAdminUsers.map((user) => (
-            <Tr _hover={{ bgColor: `purple.100` }} key={user.id}>
-                <Td>
-                    <Flex alignItems={`center`}>
-                        <Avatar size={`xs`} name={user.name} mr={2} />
-                        <Text>{user.name}</Text>
-                    </Flex>
-                </Td>
-                <Td>{user.email}</Td>
-                <Td>{user.createdAt || 'N/A'}</Td>
-                <Td>
-                    <Flex gap={3}>
-                        <Button bg={`none`}>Edit</Button>
-                        <Button bg={`none`} onClick={() => handleRemoveClick(user)}>Remove</Button>
-                    </Flex>
-                </Td>
-            </Tr>
-        ))
+              <Tr _hover={{ bgColor: `purple.100` }} key={user.id}>
+                  <Td>
+                      <Flex alignItems={`center`}>
+                          <Avatar size={`xs`} name={user.name} mr={2} />
+                          <Text>{user.name}</Text>
+                      </Flex>
+                  </Td>
+                  <Td>{user.email}</Td>
+                  <Td>
+                      {/* {user.created_at || 'N/A'} */}
+                      {formatDate(user?.created_at)}
+                      {formatTime(user?.created_at)}
+                  </Td>
+                  <Td>
+                      <Flex gap={3}>
+                          <Button
+                              bg="transparent"
+                              color={'purple.200'}
+                              cursor="pointer"
+                              sx={{
+                                  _hover: {
+                                      bg: 'transparent',
+                                      color: 'inherit',
+                                  },
+                              }}
+                              onClick={() => handleEditClick(user)}
+                          >
+                              Edit
+                          </Button>
+
+                          <Button
+                              sx={{
+                                  _hover: {
+                                      bg: 'transparent',
+                                      color: 'inherit',
+                                  },
+                              }}
+                              bg={`none`}
+                              color={`red.200`}
+                              onClick={() => handleRemoveClick(user)}
+                          >
+                              Remove
+                          </Button>
+                      </Flex>
+                  </Td>
+              </Tr>
+          ))
         : [];
 
     const handlePrevButton = async () => {
@@ -301,6 +346,26 @@ export const AdminUsersTable = () => {
                 {getAllAdminUsersStatus.isLoading ? (
                     <OnBoardingLoader />
                 ) : (
+                    <Box>
+                        <Flex justifyContent={`space-between`} alignItems={`center`} padding={`1rem 0rem`}>
+                        <Text fontWeight={`bold`}  > {allAdminUsers.length} Admins</Text>
+                        {/* <SharedButton  /> */}
+                        <SharedButton
+                        btnExtras={{
+                            leftIcon: 'ei:plus',
+                            // border: `1px solid #CFCFD0`,
+                            onClick: handleAddClick,
+                            // disabled: !paginate?.links?.next,
+                        }}
+                        text={'Add Admin'}
+                        width={'146px'}
+                        height={'40px'}
+                        bgColor={'purple.200'}
+                        textColor={'white'}
+                        borderRadius={'4px'}
+                        fontSize={{ base: `sm`, md: `md` }}
+                    />
+                        </Flex>
                     <Table size={`sm`} variant="simple">
                         <Thead zIndex={1} pos={`sticky`} top={0}>
                             <Tr bgColor={`purple.100`} color={`grey.300`}>
@@ -309,6 +374,7 @@ export const AdminUsersTable = () => {
                         </Thead>
                         <Tbody color={`purple.300`}>{tableRows}</Tbody>
                     </Table>
+                    </Box>
                 )}
                 {!allAdminUsers?.length && !getAllAdminUsersStatus.isLoading && (
                     <Box my={10}>
@@ -324,18 +390,25 @@ export const AdminUsersTable = () => {
                     </Box>
                 )}
             </TableContainer>
-            <RevokeAdminModal 
-                isOpen={isOpen} 
-                onClose={onClose} 
+          
+
+                <EditAdminModal
+                    isOpen={isEditOpen}
+                    onClose={onEditClose}
+                    user={selectedUserEdit}
+                />
+                <AddAdminModal
+                  isOpen={isAddOpen}
+                  onClose={onAddClose}
+                />
+            <RevokeAdminModal
+                isOpen={isRemoveOpen}
+                onClose={onRemoveClose}
                 user={selectedUser}
-                onConfirm={() => {
-                    // Handle the confirmation logic here
-                    console.log('Removing user:', selectedUser);
-                    onClose();
-                }}
             />
+        
             {/* Pagination controls (kept as is) */}
-            
+
             <Flex mt={4} gap={5} color={`grey.400`} alignItems={`center`} justifyContent={`space-between`} flexDir={{ base: `column-reverse`, lg: `row` }}>
                 <Flex alignItems={`center`} justifyContent={`space-between`} flexDir={{ base: `column`, lg: `row` }} gap={{ lg: 60 }}>
                     <Box>
@@ -380,10 +453,6 @@ export const AdminUsersTable = () => {
                     />
                 </Stack>
             </Flex>
-            
         </>
     );
 };
-
-
-

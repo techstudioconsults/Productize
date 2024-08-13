@@ -28,7 +28,7 @@ export const CustomerTable = ({ deleted }: tableProps) => {
         if (deleted && title === `Status`) {
             title = `...`;
         }
-        if (title === `Product`) {
+        if (title === `Users`) {
             return (
                 <Th alignItems={`center`} py={3} key={title}>
                     <Flex gap={4} alignItems={`center`}>

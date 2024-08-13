@@ -74,7 +74,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
         getAllAdminUsers: builder.mutation({
             query: (credentials) => {
                 const url = `/users?role=ADMIN${credentials?.page ? `&page=${credentials.page}` : ''}${credentials?.startDate ? `&start_date=${credentials.startDate}` : ''}${credentials?.endDate ? `&end_date=${credentials.endDate}` : ''}${credentials?.status ? `&status=${credentials.status}` : ''}`;
-                console.log('Constructed URL:', url);
+                // console.log('Constructed URL:', url);
                 return {
                     url,
                     method: 'GET',
@@ -83,7 +83,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
-                    console.log('All Admin', data);
+                    // console.log('All Admin', data);
                     
                     dispatch(
                         setAllAdminUser({
@@ -97,14 +97,17 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 }
             },
         }),
-
         revokeAdmin: builder.mutation({
-            query: (credentials) => ({
-                url: `/users/${credentials.userID}revoke-admin-role`,
+            query: ({ userID, token }) => ({
+                url: `/users/${userID}/revoke-admin-role`,
                 method: 'PATCH',
-                body: { ...credentials.body },
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
             }),
         }),
+        
+        
         getAllPayoutHistory: builder.mutation({
             query: (credentials) => ({
                 url: constructURL2(

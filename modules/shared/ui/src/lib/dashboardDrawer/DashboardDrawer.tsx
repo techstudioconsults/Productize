@@ -37,6 +37,7 @@ export const DashboardDrawer: React.FC<DashboardDrawerProps> = memo(({ links }) 
                     </DrawerHeader>
                     <DrawerBody p={0}>
                         <DashboardLinks close={onClose} />
+
                     </DrawerBody>
                 </DrawerContent>
             </Drawer>

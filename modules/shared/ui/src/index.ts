@@ -19,6 +19,7 @@ export * from './lib/Cart';
 export * from './lib/layouts/CardLayout';
 export * from './lib/PageNotFound';
 export * from './lib/dashboardDrawer/DashboardDrawer';
+export * from './lib/adminDashboardDrawer/AdminDashboardDrawer';
 export * from './lib/PaywallUpgrade';
 export * from './lib/PaywallUnpublishWarning';
 export * from './lib/PricingModal';

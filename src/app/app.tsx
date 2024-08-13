@@ -26,11 +26,29 @@ import {
     PaymentSettings,
     KycSettings,
 } from '@productize/dashboard';
+import {
+    Admin,
+    AdminAccountSettings,
+    AdminComplaintDetails,
+    AdminComplaints,
+    AdminHome,
+    AdminOrders,
+    AdminPayouts,
+    AdminProductDetails,
+    AdminProducts,
+    AdminProfile,
+    AdminRevenue,
+    AdminSettings,
+    AdminUser,
+    AdminWithdrawalEarnings,
+    AddNewAdmin,
+} from '@productize/admin-dashboard';
+// import {AddNewAdmin} from '@productize/admin-dashboard'
 import { CoverPage } from '../pages/coverPage/CoverPage';
-// import About from '../pages/about/About';
+// // import About from '../pages/about/About';
 import { useTokenExists } from '@productize/hooks';
 import { useGetFromCartMutation, useGetProductTagsMutation } from '@productize/redux';
-import {Admin} from '@productize/admin-dashboard'
+// import {Admin} from '@productize/admin-dashboard'
 
 // using suspense and lazy loading
 const Home = React.lazy(() =>
@@ -80,18 +98,16 @@ const ProductCart = React.lazy(() =>
 );
 
 function App() {
+    const isAuth = useTokenExists();
+    const [getProductTags] = useGetProductTagsMutation();
+    const [getFromCart] = useGetFromCartMutation();
 
-     const isAuth = useTokenExists();
-     const [getProductTags] = useGetProductTagsMutation();
-     const [getFromCart] = useGetFromCartMutation();
-
-     useEffect(() => {
-         getProductTags(null).unwrap();
-         if (isAuth) {
-             getFromCart(null).unwrap();
-         }
-     }, [getFromCart, getProductTags, isAuth]);
-
+    useEffect(() => {
+        getProductTags(null).unwrap();
+        if (isAuth) {
+            getFromCart(null).unwrap();
+        }
+    }, [getFromCart, getProductTags, isAuth]);
 
     return (
         <Suspense
@@ -144,7 +160,23 @@ function App() {
                     </Route>
                 </Route>
                 {/* admin  dashboard */}
-                <Route path="/admin" element={<Admin />} />
+                <Route path="/admin" element={<Admin />}>
+                    <Route path="home" index element={<AdminHome />} />
+                    <Route path="products" element={<AdminProducts />} />
+                    <Route path="products/:productID" element={<AdminProductDetails />} />
+                    <Route path="orders" element={<AdminOrders />} />
+                    <Route path="users" element={<AdminUser />} />
+                    <Route path="profile/:userID" element={<AdminProfile />} />
+                    <Route path="payouts" element={<AdminPayouts />} />
+                    <Route path="revenue" element={<AdminRevenue />} />
+                    <Route path="complaints" element={<AdminComplaints />} />
+                    <Route path="complaints/:complaintID" element={<AdminComplaintDetails />} />
+                    <Route path="payouts/:payoutid/withdraw-earnings" element={<AdminWithdrawalEarnings />} />
+                    <Route path="settings" element={<AdminSettings />}>
+                        <Route path="account" element={<AdminAccountSettings />} />
+                        <Route path="addnewadmin" element={<AddNewAdmin/>} />
+                    </Route>
+                </Route>
                 {/* not found */}
                 <Route path="*" element={<PageNotFound />} />
             </Routes>

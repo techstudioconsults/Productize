@@ -1,13 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { apiSlice } from '../apiSlice';
 import {
+    setProduct,
     setAllProduct,
+    setTopAdminProduct,
     setDeletedProduct,
     setDraftProduct,
     setLiveProduct,
     setProductsAnalytics,
     setSingleProduct,
     setSingleProductCustomers,
+    setRevenueAnalytics,
+    setAllComplaints,
+    setSingleComplaints,
     // setSearchedProducts,
 } from './productsSlice';
 
@@ -20,10 +25,132 @@ const constructURL = (credentials, filteredLink, status) => {
         return `/products/users?status=${status}`;
     }
 };
+const constructURL1 = (credentials, filteredLink, status) => {
+    if (credentials && !credentials?.link) {
+        return filteredLink;
+    } else if (credentials?.link) {
+        return credentials?.link;
+    } else {
+        return `/products?status=${status}`;
+    }
+};
+const constructURL2 = (credentials, filteredLink, status) => {
+    if (credentials && !credentials?.link) {
+        return filteredLink;
+    } else if (credentials?.link) {
+        return credentials?.link;
+    } else {
+        return `/complaints?status=${status}`;
+    }
+};
+
+const constructURL3 = (credentials, filteredLink) => {
+    if (credentials && !credentials?.link) {
+        return filteredLink;
+    } else if (credentials?.link) {
+        return credentials?.link;
+    } else {
+        return `/products/top-products/admin`;
+    }
+};
 
 // productize-api.techstudio.academy/api/products
 export const productsApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
+        getProducts: builder.mutation({
+            query: (credentials) => ({
+                url: constructURL1(
+                    credentials,
+                    `/products?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}&status=${
+                        credentials?.status ? credentials?.status : ''
+                    }`,
+                    ''
+                ),
+                method: 'GET',
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    // const res = await queryFulfilled;
+                    // console.log(res);
+                    const { data } = await queryFulfilled;
+                    dispatch(
+                        setProduct({
+                            products: data.data,
+                            paginationMetaData: { links: data.links, meta: data.meta },
+                        })
+                    );
+                } catch (error) {
+                    return;
+                }
+            },
+        }),
+        getAllComplaints: builder.mutation({
+            query: (credentials) => ({
+                url: constructURL2(
+                    credentials,
+                    `/complaints?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}&status=${
+                        credentials?.status ? credentials?.status : ''
+                    }`,
+                    ''
+                ),
+                method: 'GET',
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    dispatch(
+                        setAllComplaints({
+                            allComplaints: data.data,
+                            complaintsMetaData: { links: data.links, meta: data.meta },
+                        })
+                    );
+                } catch (error) {
+                    return;
+                }
+            },
+        }),
+        getRevenueAnalytics: builder.mutation({
+            query: () => ({
+                url: `/revenues/stats`,
+                method: 'GET',
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const res = await queryFulfilled;
+                    dispatch(
+                        setRevenueAnalytics({
+                            revenueAnalytics: res.data.data,
+                        })
+                    );
+                } catch (error) {
+                    return;
+                }
+            },
+        }),
+
+        getTopAdminProducts: builder.mutation({
+            query: (credentials) => ({
+                url: constructURL3(
+                    credentials,
+                    `/products/top-products/admin?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}`
+                ),
+                method: 'GET',
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    dispatch(
+                        setTopAdminProduct({
+                            topProducts: data.data,
+                            topProductsMetaData: { links: data.links, meta: data.meta },
+                        })
+                    );
+                } catch (error) {
+                    return;
+                }
+            },
+        }),
+
         getAllProducts: builder.mutation({
             query: (credentials) => ({
                 url: constructURL(
@@ -121,7 +248,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
         }),
         getProductAnalytics: builder.mutation({
             query: () => ({
-                url: `/products/analytics`,
+                url: `/products/stats/admin`,
                 method: 'GET',
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
@@ -150,6 +277,24 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                     dispatch(
                         setSingleProduct({
                             product: data.data,
+                        })
+                    );
+                } catch (error) {
+                    return;
+                }
+            },
+        }),
+        getSingleComplaints: builder.mutation({
+            query: (credentials) => ({
+                url: `/complaints/${credentials?.complaintID}`,
+                method: 'GET',
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    dispatch(
+                        setSingleComplaints({
+                            complaint: data.data,
                         })
                     );
                 } catch (error) {
@@ -229,6 +374,8 @@ export const productsApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+    useGetProductsMutation,
+    useGetTopAdminProductsMutation,
     useGetAllProductsMutation,
     useGetDeletedProductsMutation,
     useGetDraftProductsMutation,
@@ -243,5 +390,9 @@ export const {
     useDownloadedProductsMutation,
     useGetCustomersOfSingleProductMutation,
     useSearchProductsMutation,
-    useSingleDownloadedProductMutation
+    useGetRevenueAnalyticsMutation,
+    useGetAllComplaintsMutation,
+    useGetSingleComplaintsMutation,
+    useSingleDownloadedProductMutation,
+    
 } = productsApiSlice;

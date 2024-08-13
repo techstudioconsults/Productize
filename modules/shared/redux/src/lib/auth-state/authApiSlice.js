@@ -38,6 +38,38 @@ export const authApiSlice = apiSlice.injectEndpoints({
             },
         }),
 
+
+        createAdmin: builder.mutation({
+            query: ({credentials, token}) => ({
+                url: '/users',
+                method: 'POST',
+                body: credentials,
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+            }),
+            // async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+            //     try {
+            //         const { data } = await queryFulfilled;
+            //         dispatch(setCredentials({ accessToken: data.token }));
+            //         dispatch(setUser({ user: data.user }));
+            //     } catch (err) {
+            //         return;
+            //     }
+            // },
+        }),
+
+        updateAdmin: builder.mutation({
+            query: ({credentials, userID, token }) => ({
+                url: `/users/update/${userID}`,
+                method: 'PUT',
+                body: credentials,
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }),
+        }),
+        
         googleAuth: builder.mutation({
             query: () => ({
                 url: '/auth/oauth/redirect?provider=google',
@@ -128,6 +160,8 @@ export const authApiSlice = apiSlice.injectEndpoints({
 export const {
     useLoginMutation,
     useSignupMutation,
+    useCreateAdminMutation,
+    useUpdateAdminMutation,
     useGoogleAuthMutation,
     useGoogleAuthCallbackMutation,
     useForgotPasswordMutation,

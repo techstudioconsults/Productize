@@ -1,39 +1,36 @@
 name: Deploy to Production
 
 on:
-  push:
-    branches: [ main ]
+    push:
+        branches: [main]
 
 jobs:
-  build:
-    runs-on: [production]
+    build:
+        runs-on: [production]
 
-    strategy:
-      matrix:
-        node-version: [18.x]
+        strategy:
+            matrix:
+                node-version: [18.x]
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-      
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-   #  - name: Copy env files from client config folder
-   #    run: cp -rf /var/www/config/.env /var/www/application/_work/Techstudio-site/Techstudio-site/
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
 
-    - name: Install dependencies
-      run: npm install
-      
-    - name: Build Application
-      run: npm run build
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  cache: 'npm'
 
-   #  - name: Build application
-   #    run: |
-   #      export NODE_OPTIONS="--max_old_space_size=4096"
-   #      CI=false npm run build --if-present
+            - name: Create .env file
+              run: |
+                  echo "${{ secrets.ENV_FILE_CONTENT }}" > .env
 
-   #  - name: Reload server instances
-   #    run: pm2 reload 0 --update-env --wait-ready
+            - name: Install dependencies
+              run: npm install
+
+            - name: Build Application
+              run: npm run build
+
+            - name: Reload server instances
+              run: pm2 reload 0 --update-env --wait-ready

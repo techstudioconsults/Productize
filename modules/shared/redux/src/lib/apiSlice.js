@@ -10,7 +10,7 @@ const baseQuery = fetchBaseQuery({
         }
         return headers;
     },
-    // credentials: 'include',
+    credentials: 'include',
 });
 
 const handleUnauthorized = (result, api) => {

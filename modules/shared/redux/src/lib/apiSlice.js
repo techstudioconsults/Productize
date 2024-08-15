@@ -42,12 +42,15 @@ const baseQuery = fetchBaseQuery({
     prepareHeaders: async (headers, { getState }) => {
         // Fetch CSRF token before making any API request
         const xsrfToken = await fetchCsrfToken();
-        console.log(xsrfToken);
 
         const token = getState().Auth.token;
 
         if (token) {
             headers.set('Authorization', `Bearer ${token}`);
+        }
+
+        if (xsrfToken) {
+            headers.set('XSRF-TOKEN', xsrfToken);
         }
 
         // Laravel automatically attaches the CSRF token from the cookies to the headers

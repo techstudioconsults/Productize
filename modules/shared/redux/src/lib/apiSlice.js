@@ -26,10 +26,6 @@ const fetchCsrfToken = async () => {
 };
 
 const baseQueryWithCsrf = async (args, api, extraOptions) => {
-    // Fetch CSRF token before making any API request
-    // const xsrfToken = await fetchCsrfToken();
-    // extraOptions = { ...extraOptions, xsrfToken };
-    // Proceed with the actual API request
     const result = await baseQuery(args, api, extraOptions);
     // Handle unauthorized cases
     handleUnauthorized(result, api);
@@ -42,7 +38,6 @@ const baseQuery = fetchBaseQuery({
     prepareHeaders: async (headers, { getState }) => {
         // Fetch CSRF token before making any API request
         const xsrfToken = await fetchCsrfToken();
-
         const token = getState().Auth.token;
 
         if (token) {

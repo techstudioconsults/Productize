@@ -1,23 +1,31 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { store } from './store';
+import Cookies from 'js-cookie';
+
+function getCookie(name) {
+    return Cookies.get(name);
+}
 
 // Function to fetch CSRF token
 const fetchCsrfToken = async () => {
     const response = await fetch(`${import.meta.env.VITE_BASE_URL}/sanctum/csrf-cookie`, {
         credentials: 'include', // Important if you're working with cookies
     });
-    console.log(response);
 
     if (!response.ok) {
         throw new Error('Failed to fetch CSRF token');
     }
-    // Laravel stores the CSRF token in the cookies, so no need to extract it from the response
+
+    const cookie = getCookie('XSRF-TOKEN');
+
+    if (!cookie) {
+        return '';
+    }
+
+    return decodeURIComponent(getCookie('XSRF-TOKEN'));
 };
 
 const baseQueryWithCsrf = async (args, api, extraOptions) => {
-    // Fetch CSRF token before making any API request
-    await fetchCsrfToken();
-    // Proceed with the actual API request
     const result = await baseQuery(args, api, extraOptions);
     // Handle unauthorized cases
     handleUnauthorized(result, api);
@@ -26,12 +34,18 @@ const baseQueryWithCsrf = async (args, api, extraOptions) => {
 };
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_BASE_URL,
-    prepareHeaders: (headers, { getState }) => {
+    baseUrl: `${import.meta.env.VITE_BASE_URL}/api`,
+    prepareHeaders: async (headers, { getState }) => {
+        // Fetch CSRF token before making any API request
+        const xsrfToken = await fetchCsrfToken();
         const token = getState().Auth.token;
 
         if (token) {
             headers.set('Authorization', `Bearer ${token}`);
+        }
+
+        if (xsrfToken) {
+            headers.set('XSRF-TOKEN', xsrfToken);
         }
 
         // Laravel automatically attaches the CSRF token from the cookies to the headers

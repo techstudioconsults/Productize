@@ -5,8 +5,8 @@ import { useSelector } from 'react-redux';
 import { selectCurrentToken, selectCurrentUser, useNotificationMutation } from '@productize/redux';
 import { ToastFeedback, useToastAction } from '@productize/ui';
 
-const APP_KEY = 'bb5f2a5342d24c39106c';
-const APP_CLUSTER = 'mt1';
+const APP_KEY = import.meta.env.PUSHER_APP_KEY;
+const APP_CLUSTER = import.meta.env.PUSHER_CLUSTER;
 
 export const useNotifications = (playNotificationSound) => {
     const { toast, toastIdRef, close } = useToastAction();
@@ -19,7 +19,7 @@ export const useNotifications = (playNotificationSound) => {
         const pusher = new Pusher(APP_KEY, {
             cluster: APP_CLUSTER,
             forceTLS: false,
-            authEndpoint: 'https://productize-api.techstudio.academy/broadcasting/auth',
+            authEndpoint: `${import.meta.env.VITE_BASE_URL}/broadcasting/auth`,
             auth: {
                 headers: {
                     Authorization: `Bearer ${token}`,

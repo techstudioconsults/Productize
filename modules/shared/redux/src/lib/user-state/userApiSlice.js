@@ -1,5 +1,17 @@
 import { apiSlice } from '../apiSlice';
-import { setAccountList, setAnalyticsGraphData, setBillingHistory, setDailyAnalyticsGraphData, setNotifications, setPayoutStats, setPayouts, setUser } from './userSlice';
+import {
+    setAccountList,
+    setAnalyticsGraphData,
+    setBillingHistory,
+    setPayoutStats,
+    setPayouts,
+    setUser,
+    setUserAnalytics,
+    setPayoutHistory,
+    setAllUser,
+    setNotifications,
+    setAllAdminUser,
+} from './userSlice';
 
 const constructURL = (credentials, filteredLink) => {
     if (credentials && !credentials?.link) {
@@ -11,8 +23,117 @@ const constructURL = (credentials, filteredLink) => {
     }
 };
 
+const constructURL1 = (credentials, filteredLink, status) => {
+    if (credentials && !credentials?.link) {
+        return filteredLink;
+    } else if (credentials?.link) {
+        return credentials?.link;
+    } else {
+        return `/users?status=${status}`;
+    }
+};
+const constructURL2 = (credentials, filteredLink, status) => {
+    if (credentials && !credentials?.link) {
+        return filteredLink;
+    } else if (credentials?.link) {
+        return credentials?.link;
+    } else {
+        return `/payouts?status=${status}`;
+    }
+};
+
 export const userApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
+        
+        getAllUser: builder.mutation({
+            query: (credentials) => ({
+                url: constructURL1(
+                    credentials,
+                    `/users?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}&status=${
+                        credentials?.status ? credentials?.status : ''
+                    }`,
+                    credentials?.status
+                ),
+                method: 'GET',
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    dispatch(
+                        setAllUser({
+                            isFilter: arg?.isFilter || false,
+                            user: data.data,
+                            userPaginationMetaData: { links: data.links, meta: data.meta },
+                        })
+                    );
+                } catch (err) {
+                    return;
+                }
+            },
+        }),
+        getAllAdminUsers: builder.mutation({
+            query: (credentials) => {
+                const url = `/users?role=ADMIN${credentials?.page ? `&page=${credentials.page}` : ''}${credentials?.startDate ? `&start_date=${credentials.startDate}` : ''}${credentials?.endDate ? `&end_date=${credentials.endDate}` : ''}${credentials?.status ? `&status=${credentials.status}` : ''}`;
+                // console.log('Constructed URL:', url);
+                return {
+                    url,
+                    method: 'GET',
+                };
+            },
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    // console.log('All Admin', data);
+                    
+                    dispatch(
+                        setAllAdminUser({
+                            isFilter: arg?.isFilter || false,
+                            adminUsers: data.data,
+                            adminPaginationMetaData: { links: data.links, meta: data.meta },
+                        })
+                    );
+                } catch (err) {
+                    console.error('Error fetching admin users:', err);
+                }
+            },
+        }),
+        revokeAdmin: builder.mutation({
+            query: ({ userID, token }) => ({
+                url: `/users/${userID}/revoke-admin-role`,
+                method: 'PATCH',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }),
+        }),
+        
+        
+        getAllPayoutHistory: builder.mutation({
+            query: (credentials) => ({
+                url: constructURL2(
+                    credentials,
+                    `/payouts?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}&status=${
+                        credentials?.status || ''
+                    }`,
+                    credentials?.status
+                ),
+                method: 'GET',
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    console.log('API Data:', data);
+                    dispatch(
+                        setPayoutHistory({
+                            payoutHistory: data.data,
+                            payoutPaginationMetaData: { links: data.links, meta: data.meta },
+                        })
+                    );
+                } catch (err) {
+                    console.error(err);
+                }
+            },
+        }),
         getUser: builder.mutation({
             query: () => ({
                 url: `/users/me`,
@@ -31,35 +152,42 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 }
             },
         }),
-
+        getUserAnalytics: builder.mutation({
+            query: () => ({
+                url: `/users/stats/admin`,
+                method: 'GET',
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const res = await queryFulfilled;
+                    dispatch(
+                        setUserAnalytics({
+                            userAnalytics: res.data.data,
+                        })
+                    );
+                } catch (error) {
+                    return;
+                }
+            },
+        }),
         verifyEmail: builder.mutation({
             query: () => ({
                 url: `/auth/email/resend`,
                 method: 'GET',
             }),
         }),
-
         upgradePlan: builder.mutation({
             query: () => ({
                 url: `/subscriptions`,
                 method: 'POST',
             }),
         }),
-
         enableSubscription: builder.mutation({
             query: () => ({
                 url: `/subscriptions/enable`,
                 method: 'GET',
             }),
         }),
-
-        // cancelSubscription: builder.mutation({
-        //     query: (credentials) => ({
-        //         url: `/subscriptions/${credentials.subID}/cancel`,
-        //         method: 'GET',
-        //     }),
-        // }),
-
         manageSubscription: builder.mutation({
             query: (credentials) => ({
                 url: `/subscriptions/${credentials.subID}/manage`,
@@ -84,7 +212,6 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 }
             },
         }),
-
         getPayoutStats: builder.mutation({
             query: (credentials) => ({
                 url: `/earnings`,
@@ -103,13 +230,11 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 }
             },
         }),
-
         getPayouts: builder.mutation({
             query: (credentials) => ({
                 url: constructURL(credentials, `/payouts/user?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}`),
                 method: 'GET',
             }),
-
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
@@ -124,14 +249,12 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 }
             },
         }),
-
         updateProfile: builder.mutation({
             query: (credentials) => ({
                 url: `/users/me`,
                 method: 'POST',
                 body: { ...credentials },
             }),
-
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
@@ -145,7 +268,6 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 }
             },
         }),
-
         setupPaymentAccount: builder.mutation({
             query: (credentials) => ({
                 url: `/accounts`,
@@ -153,7 +275,6 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 body: { ...credentials },
             }),
         }),
-
         initiateWithdrawal: builder.mutation({
             query: (credentials) => ({
                 url: `/earnings/withdraw`,
@@ -161,14 +282,12 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 body: { ...credentials },
             }),
         }),
-
         getBankList: builder.mutation({
             query: () => ({
                 url: `/accounts/bank-list`,
                 method: 'GET',
             }),
         }),
-
         changePassword: builder.mutation({
             query: (credentials) => ({
                 url: `/users/change-password`,
@@ -176,7 +295,6 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 body: { ...credentials },
             }),
         }),
-
         sendHelpMessage: builder.mutation({
             query: (credentials) => ({
                 url: `/complaints`,
@@ -184,7 +302,6 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 body: { ...credentials },
             }),
         }),
-
         retrieveAllPayoutAccount: builder.mutation({
             query: (credentials) => ({
                 url: `/accounts`,
@@ -203,7 +320,6 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 }
             },
         }),
-
         showAnalyticsChartData: builder.mutation({
             query: (credentials) => ({
                 url: `/products/revenues`,
@@ -214,25 +330,6 @@ export const userApiSlice = apiSlice.injectEndpoints({
                     const { data } = await queryFulfilled;
                     dispatch(
                         setAnalyticsGraphData({
-                            data: data.data,
-                        })
-                    );
-                } catch (err) {
-                    return;
-                }
-            },
-        }),
-
-        showDailyAnalyticsChartData: builder.mutation({
-            query: (credentials) => ({
-                url: `/revenues/daily`,
-                method: 'GET',
-            }),
-            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-                try {
-                    const { data } = await queryFulfilled;
-                    dispatch(
-                        setDailyAnalyticsGraphData({
                             data: data.data,
                         })
                     );
@@ -288,6 +385,10 @@ export const userApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+    useGetAllUserMutation,
+    useGetAllAdminUsersMutation,
+    useRevokeAdminMutation,
+    useGetUserAnalyticsMutation,
     useGetUserMutation,
     useUpgradePlanMutation,
     useVerifyEmailMutation,
@@ -305,9 +406,9 @@ export const {
     useGetPayoutStatsMutation,
     useTogglePaystackAccountActivationMutation,
     useShowAnalyticsChartDataMutation,
-    useShowDailyAnalyticsChartDataMutation,
     useCancelSubscriptionMutation,
     useNotificationMutation,
-    useReadAllNotificationMutation,
     useContactUsMutation,
+    useGetAllPayoutHistoryMutation,
+    useReadAllNotificationMutation
 } = userApiSlice;

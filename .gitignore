@@ -39,3 +39,12 @@ testem.log
 Thumbs.db
 
 .nx/cache
+
+.env
+.env*.local
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.staging
+.env.production

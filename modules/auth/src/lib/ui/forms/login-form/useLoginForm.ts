@@ -33,9 +33,21 @@ export function useLoginForm(): UseLoginFormReturn {
         setIsLoading(true);
         try {
             const res = await login(data).unwrap();
-            if (res.token) {
-                navigate(`/dashboard/home`);
+            console.log(res);
+
+            if(res.user.role === 'SUPER_ADMIN' || res.user.role === 'ADMIN'){
+                navigate('/Admin/home')
+            }else if(res.user.role === 'USER'){
+                navigate('/dashboard/home')
             }
+            
+            // if (res.token) {
+            //     if (data.email === 'tobi.olanitori.binaryartinc@gmail.com' && data.password === '12345') {
+            //         navigate('/Admin/home');
+            //     } else {
+            //         navigate('/dashboard/home');
+            //     }
+            // }
         } catch (error: any) {
             setError(error.data.message);
         } finally {

@@ -4,7 +4,7 @@
     "license": "MIT",
     "scripts": {
         "start": "nx serve",
-        "build": "nx build",
+        "build": "nx build --skip-nx-cache",
         "test": "nx test",
         "test-auth": "nx run auth:test",
         "test-dashboard": "nx run dashboard:test",
@@ -29,6 +29,7 @@
         "core-js": "^3.6.5",
         "date-fns": "^2.30.0",
         "downloadjs": "^1.4.7",
+        "express": "^4.19.2",
         "framer-motion": "^10.15.1",
         "js-cookie": "^3.0.5",
         "pusher-js": "^8.4.0-rc2",

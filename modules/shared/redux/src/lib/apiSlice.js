@@ -23,14 +23,12 @@ const fetchCsrfToken = async () => {
     }
 
     return decodeURIComponent(getCookie('XSRF-TOKEN'));
-    // console.log('token =>>>>>>>>>', token);
 };
 
 const baseQueryWithCsrf = async (args, api, extraOptions) => {
     // Fetch CSRF token before making any API request
-    const xsrfToken = await fetchCsrfToken();
-
-    extraOptions = { ...extraOptions, xsrfToken };
+    // const xsrfToken = await fetchCsrfToken();
+    // extraOptions = { ...extraOptions, xsrfToken };
     // Proceed with the actual API request
     const result = await baseQuery(args, api, extraOptions);
     // Handle unauthorized cases
@@ -41,8 +39,10 @@ const baseQueryWithCsrf = async (args, api, extraOptions) => {
 
 const baseQuery = fetchBaseQuery({
     baseUrl: `${import.meta.env.VITE_BASE_URL}/api`,
-    prepareHeaders: (headers, { getState }, extraOptions) => {
-        console.log('extraoptions =>>>>>>', extraOptions);
+    prepareHeaders: async (headers, { getState }) => {
+        // Fetch CSRF token before making any API request
+        const xsrfToken = await fetchCsrfToken();
+        console.log(xsrfToken);
 
         const token = getState().Auth.token;
 

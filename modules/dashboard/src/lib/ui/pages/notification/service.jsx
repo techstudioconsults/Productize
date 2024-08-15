@@ -5,8 +5,10 @@ import { useSelector } from 'react-redux';
 import { selectCurrentToken, selectCurrentUser, useNotificationMutation } from '@productize/redux';
 import { ToastFeedback, useToastAction } from '@productize/ui';
 
-const APP_KEY = import.meta.env.PUSHER_APP_KEY;
-const APP_CLUSTER = import.meta.env.PUSHER_CLUSTER;
+const APP_KEY = import.meta.env.VITE_PUSHER_APP_KEY;
+const APP_CLUSTER = import.meta.env.VITE_PUSHER_CLUSTER;
+
+
 
 export const useNotifications = (playNotificationSound) => {
     const { toast, toastIdRef, close } = useToastAction();

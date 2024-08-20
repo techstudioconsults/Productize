@@ -7,7 +7,7 @@ function getCookie(name) {
 }
 
 // Remove `/api` from the api base url - use it to fetch the xscrf token.
-function cleanUrl() {
+export function cleanUrl() {
     const url = `${import.meta.env.VITE_BASE_URL}`;
     return url.replace(/\/api\/?$/, '');
 }

@@ -6,9 +6,24 @@ function getCookie(name) {
     return Cookies.get(name);
 }
 
+// Remove `/api` from the api base url - use it to fetch the xscrf token.
+function cleanUrl() {
+    const url = `${import.meta.env.VITE_BASE_URL}`;
+    return url.replace(/\/api\/?$/, '');
+}
+
 // Function to fetch CSRF token
 const fetchCsrfToken = async () => {
-    const response = await fetch(`${import.meta.env.VITE_BASE_URL}/sanctum/csrf-cookie`, {
+    // Check for the cookie
+    let cookie = getCookie('XSRF-TOKEN');
+
+    // If present, exit the function and return it
+    if (cookie) return decodeURIComponent(cookie);
+
+    const endpoint = cleanUrl();
+
+    // Else, request for it
+    const response = await fetch(`${endpoint}/sanctum/csrf-cookie`, {
         credentials: 'include', // Important if you're working with cookies
     });
 
@@ -16,13 +31,13 @@ const fetchCsrfToken = async () => {
         throw new Error('Failed to fetch CSRF token');
     }
 
-    const cookie = getCookie('XSRF-TOKEN');
+    cookie = getCookie('XSRF-TOKEN');
 
     if (!cookie) {
         return '';
     }
 
-    return decodeURIComponent(getCookie('XSRF-TOKEN'));
+    return decodeURIComponent(cookie);
 };
 
 const baseQueryWithCsrf = async (args, api, extraOptions) => {
@@ -34,7 +49,7 @@ const baseQueryWithCsrf = async (args, api, extraOptions) => {
 };
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: `${import.meta.env.VITE_BASE_URL}/api`,
+    baseUrl: `${import.meta.env.VITE_BASE_URL}`,
     prepareHeaders: async (headers, { getState }) => {
         // Fetch CSRF token before making any API request
         const xsrfToken = await fetchCsrfToken();

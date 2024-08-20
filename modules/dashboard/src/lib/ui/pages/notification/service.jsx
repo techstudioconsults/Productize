@@ -4,11 +4,10 @@ import Pusher from 'pusher-js';
 import { useSelector } from 'react-redux';
 import { selectCurrentToken, selectCurrentUser, useNotificationMutation } from '@productize/redux';
 import { ToastFeedback, useToastAction } from '@productize/ui';
+import { cleanUrl } from '../../../../../../shared/redux/src/lib/apiSlice';
 
 const APP_KEY = import.meta.env.VITE_PUSHER_APP_KEY;
 const APP_CLUSTER = import.meta.env.VITE_PUSHER_CLUSTER;
-
-
 
 export const useNotifications = (playNotificationSound) => {
     const { toast, toastIdRef, close } = useToastAction();
@@ -21,7 +20,7 @@ export const useNotifications = (playNotificationSound) => {
         const pusher = new Pusher(APP_KEY, {
             cluster: APP_CLUSTER,
             forceTLS: false,
-            authEndpoint: `${import.meta.env.VITE_BASE_URL}/broadcasting/auth`,
+            authEndpoint: `${cleanUrl()}/broadcasting/auth`,
             auth: {
                 headers: {
                     Authorization: `Bearer ${token}`,

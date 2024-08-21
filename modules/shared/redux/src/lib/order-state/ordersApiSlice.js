@@ -4,7 +4,7 @@ import { setAllOrders, setSingleOrder, setOrderAnalytics, setAllAdminOrders, set
 
 const constructURL = (credentials) => {
     if (!credentials) {
-        return '/orders';
+        return '/orders/user';
     }
 
     const { link } = credentials;

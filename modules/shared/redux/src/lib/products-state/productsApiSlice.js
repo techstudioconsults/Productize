@@ -127,7 +127,6 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                 }
             },
         }),
-
         getTopAdminProducts: builder.mutation({
             query: (credentials) => ({
                 url: constructURL3(
@@ -150,21 +149,20 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                 }
             },
         }),
-
         getAllProducts: builder.mutation({
             query: (credentials) => ({
                 url: constructURL(
                     credentials,
-                    `/products/users?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}&status=${
+                    `/product/users?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}&status=${
                         credentials?.status ? credentials?.status : ''
-                    }`,
-                    ''
+                    }`
                 ),
                 method: 'GET',
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
+                    console.log(data);
                     dispatch(
                         setAllProduct({
                             products: data.data,
@@ -212,6 +210,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
+                    console.log(data);
                     dispatch(
                         setDraftProduct({
                             products: data.data,
@@ -394,5 +393,4 @@ export const {
     useGetAllComplaintsMutation,
     useGetSingleComplaintsMutation,
     useSingleDownloadedProductMutation,
-    
 } = productsApiSlice;

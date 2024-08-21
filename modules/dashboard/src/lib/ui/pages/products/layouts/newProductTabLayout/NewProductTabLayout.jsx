@@ -79,7 +79,7 @@ export const NewProductTabLayout = () => {
     const handlePublishAction = async () => {
         const productID = state?.product?.id || state?.product?.data?.id;
         // if (user?.account_type === 'free_trial' && state?.product?.status !== 'draft') {
-        //     onOpen();
+        //     onOpen(); 
         // } else {
         try {
             const res = await updateProductStatus({ productID }).unwrap();

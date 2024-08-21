@@ -16,7 +16,6 @@ export function cleanUrl() {
 const getCsrfToken = async () => {
     // Check for the cookie
     let cookie = getCookie('XSRF-TOKEN');
-
     if (!cookie) return '';
 
     // If present, exit the function and return it
@@ -88,3 +87,5 @@ export const apiSlice = createApi({
     tagTypes: [],
     endpoints: () => ({}),
 });
+
+export { getCsrfToken };

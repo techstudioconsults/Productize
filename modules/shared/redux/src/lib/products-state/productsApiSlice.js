@@ -13,6 +13,7 @@ import {
     setRevenueAnalytics,
     setAllComplaints,
     setSingleComplaints,
+    setAdminProductsAnalytics,
     // setSearchedProducts,
 } from './productsSlice';
 
@@ -70,8 +71,6 @@ export const productsApiSlice = apiSlice.injectEndpoints({
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
-                    // const res = await queryFulfilled;
-                    // console.log(res);
                     const { data } = await queryFulfilled;
                     dispatch(
                         setProduct({
@@ -155,7 +154,8 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                     credentials,
                     `/product/users?page=${credentials?.page}&start_date=${credentials?.startDate}&end_date=${credentials?.endDate}&status=${
                         credentials?.status ? credentials?.status : ''
-                    }`
+                    }`,
+                    ''
                 ),
                 method: 'GET',
             }),
@@ -247,7 +247,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
         }),
         getProductAnalytics: builder.mutation({
             query: () => ({
-                url: `/products/stats/admin`,
+                url: `/products/analytics`,
                 method: 'GET',
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
@@ -263,7 +263,24 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                 }
             },
         }),
-
+        getAdminProductAnalytics: builder.mutation({
+            query: () => ({
+                url: `/products/stats/admin`,
+                method: 'GET',
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const res = await queryFulfilled;
+                    dispatch(
+                        setAdminProductsAnalytics({
+                            productsAdminAnalytics: res.data.data,
+                        })
+                    );
+                } catch (error) {
+                    return;
+                }
+            },
+        }),
         getSingleProductDetails: builder.mutation({
             query: (credentials) => ({
                 url: `/products/${credentials?.productID}`,
@@ -380,6 +397,7 @@ export const {
     useGetDraftProductsMutation,
     useGetLiveProductsMutation,
     useGetProductAnalyticsMutation,
+    useGetAdminProductAnalyticsMutation,
     useGetSingleProductDetailsMutation,
     useUpdateProductStatusMutation,
     useDeleteProductSoftlyMutation,

@@ -1,21 +1,36 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
-import { selectCurrentToken } from '../../../redux/src';
+import { fetchCsrfToken, selectCurrentToken } from '../../../redux/src';
+import { getCsrfToken } from '../../../../shared/redux/src/lib/apiSlice';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const useAxiosInstance = ({ MIME_TYPE }) => {
-    // const dispatch = useDispatch();
     const [isLoading, setLoading] = useState(false);
+    const [csrfToken, setCsrfToken] = useState(null);
     const token = useSelector(selectCurrentToken);
+
+    useEffect(() => {
+        const setupCsrfToken = async () => {
+            try {
+                await fetchCsrfToken(); // Fetch the CSRF token
+                const token = await getCsrfToken(); // Get the CSRF token from cookies
+                setCsrfToken(token);
+            } catch (error) {
+                console.error('CSRF token setup failed:', error);
+            }
+        };
+        setupCsrfToken();
+    }, []);
 
     const headersCredentials = {
         headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': MIME_TYPE,
+            'X-XSRF-TOKEN': csrfToken || '', // Include the CSRF token
         },
+        withCredentials: true, // Ensure cookies are included
     };
 
     const query = async (method, endPoint, content) => {
@@ -25,9 +40,8 @@ export const useAxiosInstance = ({ MIME_TYPE }) => {
             setLoading(false);
             return res;
         } catch (err) {
-            // dispatch({ type: `App/setAppError`, payload: err.response.data });
-            setLoading(false);
             console.error(err);
+            setLoading(false);
             throw err;
         }
     };

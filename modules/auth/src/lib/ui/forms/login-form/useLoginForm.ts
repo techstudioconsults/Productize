@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useGoogleAuthMutation, useLoginMutation } from '@productize/redux';
+import { useGoogleAuthMutation, useLoginMutation, fetchCsrfToken } from '@productize/redux';
 import { LoginFormData, UseLoginFormReturn } from './login-form.types';
 import { loginSchema } from '../form-validation-schema/auth-schema';
 
@@ -32,15 +32,16 @@ export function useLoginForm(): UseLoginFormReturn {
     const onSubmit = async (data: LoginFormData) => {
         setIsLoading(true);
         try {
+            await fetchCsrfToken();
             const res = await login(data).unwrap();
             console.log(res);
 
-            if(res.user.role === 'SUPER_ADMIN' || res.user.role === 'ADMIN'){
-                navigate('/Admin/home')
-            }else if(res.user.role === 'USER'){
-                navigate('/dashboard/home')
+            if (res.user.role === 'SUPER_ADMIN' || res.user.role === 'ADMIN') {
+                navigate('/Admin/home');
+            } else if (res.user.role === 'USER') {
+                navigate('/dashboard/home');
             }
-            
+
             // if (res.token) {
             //     if (data.email === 'tobi.olanitori.binaryartinc@gmail.com' && data.password === '12345') {
             //         navigate('/Admin/home');

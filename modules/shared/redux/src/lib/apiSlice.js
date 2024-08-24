@@ -6,23 +6,20 @@ function getCookie(name) {
     return Cookies.get(name);
 }
 
+// Remove `/api` from the api base url - use it to fetch the xscrf token.
+export function cleanUrl() {
+    const url = `${import.meta.env.VITE_BASE_URL}`;
+    return url.replace(/\/api\/?$/, '');
+}
+
 // Function to fetch CSRF token
-const fetchCsrfToken = async () => {
-    const response = await fetch(`${import.meta.env.VITE_BASE_URL}/sanctum/csrf-cookie`, {
-        credentials: 'include', // Important if you're working with cookies
-    });
+const getCsrfToken = async () => {
+    // Check for the cookie
+    let cookie = getCookie('XSRF-TOKEN');
+    if (!cookie) return '';
 
-    if (!response.ok) {
-        throw new Error('Failed to fetch CSRF token');
-    }
-
-    const cookie = getCookie('XSRF-TOKEN');
-
-    if (!cookie) {
-        return '';
-    }
-
-    return decodeURIComponent(getCookie('XSRF-TOKEN'));
+    // If present, exit the function and return it
+    return decodeURIComponent(cookie);
 };
 
 const baseQueryWithCsrf = async (args, api, extraOptions) => {
@@ -34,10 +31,10 @@ const baseQueryWithCsrf = async (args, api, extraOptions) => {
 };
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: `${import.meta.env.VITE_BASE_URL}/api`,
+    baseUrl: `${import.meta.env.VITE_BASE_URL}`,
     prepareHeaders: async (headers, { getState }) => {
         // Fetch CSRF token before making any API request
-        const xsrfToken = await fetchCsrfToken();
+        const xsrfToken = await getCsrfToken();
         const token = getState().Auth.token;
 
         if (token) {
@@ -45,7 +42,7 @@ const baseQuery = fetchBaseQuery({
         }
 
         if (xsrfToken) {
-            headers.set('XSRF-TOKEN', xsrfToken);
+            headers.set('X-XSRF-TOKEN', xsrfToken);
         }
 
         // Laravel automatically attaches the CSRF token from the cookies to the headers
@@ -90,3 +87,5 @@ export const apiSlice = createApi({
     tagTypes: [],
     endpoints: () => ({}),
 });
+
+export { getCsrfToken };

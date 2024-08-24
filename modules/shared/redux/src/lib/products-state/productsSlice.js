@@ -5,6 +5,7 @@ const initialState = {
     allProducts: null,
     topAdminProducts: null,
     productsAnalytics: {},
+    adminProductsAnalytics: {},
     liveProducts: null,
     draftProducts: null,
     deletedProducts: null,
@@ -78,6 +79,10 @@ const productSlice = createSlice({
             const { productsAnalytics } = action.payload;
             state.productsAnalytics = productsAnalytics;
         },
+        setAdminProductsAnalytics: (state, action) => {
+            const { adminProductsAnalytics } = action.payload;
+            state.adminProductsAnalytics = adminProductsAnalytics;
+        },
         setRevenueAnalytics: (state, action) => {
             const { revenueAnalytics } = action.payload;
             state.revenueAnalytics = revenueAnalytics;
@@ -104,6 +109,7 @@ export const {
     setSingleProduct,
     setSingleProductCustomers,
     setProductsAnalytics,
+    setAdminProductsAnalytics,
     resetProductStore,
     setRevenueAnalytics,
     setAllComplaints,
@@ -123,6 +129,7 @@ export const selectDeletedProducts = (state) => state.Products.deletedProducts;
 export const selectSingleProduct = (state) => state.Products.singleProduct.product;
 export const selectSingleProductCustomers = (state) => state.Products.singleProduct.customers;
 export const selectProductAnalytics = (state) => state.Products.productsAnalytics;
+export const selectAdminProductAnalytics = (state) => state.Products.adminProductsAnalytics;
 export const selectRevenueAnalytics = (state) => state.Products.revenueAnalytics;
 export const selectAllComplaints = (state) => state.Products.allComplaints;
 export const selectSingleComplaints = (state) => state.Products.singleComplaints.complaint;

@@ -1,7 +1,7 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/rules-of-hooks */
-import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Avatar, Text, Stack, Checkbox, Box, Tag, Skeleton } from '@chakra-ui/react';
+import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Flex, Avatar, Text, Stack, Checkbox, Box, Tag } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
 import { DropdownActionDelete, DropdownActionDraft, DropdownActionLive } from '../../DropdownAction';
 import { useNavigate } from 'react-router-dom';
@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import { useCallback, useEffect } from 'react';
 import { ProductsTableControl } from './ProductsTableControl';
 import { DashboardEmptyState } from '../../empty-states/DashboardEmptyState';
-import { useCurrency, useDate, useTime } from '@productize/hooks';
+import { useAxiosInstance, useCurrency, useDate, useTime } from '@productize/hooks';
 import { useGetAllProductsMutation, selectAllProducts, selectPaginationMetaData } from '@productize/redux';
 import { SharedButton } from '@productize/ui';
 
@@ -27,6 +27,7 @@ export const ProductTable = ({ deleted }: tableProps) => {
     const formatDate = useDate();
     const formatTime = useTime();
     const paginate = useSelector(selectPaginationMetaData);
+    const { query, isLoading } = useAxiosInstance({ MIME_TYPE: 'applicaton/json' });
 
     const tableHeader = [`Product`, `Price`, `Sales`, `Type`, `Status`, ''].map((title) => {
         if (deleted && title === `Status`) {

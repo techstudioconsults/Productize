@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Tabs, TabList, Tab, TabPanels, TabPanel, Flex, Box, useDisclosure } from '@chakra-ui/react';
+import { Tabs, TabList, Tab, TabPanels, TabPanel, Flex, Box } from '@chakra-ui/react';
 import { DPFormSchema, ProductForm, SSFormSchema } from '@productize/dashboard';
 import { PreviewProductSummary, SharedButton, ToastFeedback, useToastAction } from '@productize/ui';
 import ShareLayout from '../ShareLayout';
-import { selectCurrentUser, useUpdateProductStatusMutation } from '@productize/redux';
+import { useUpdateProductStatusMutation } from '@productize/redux';
 import errorImg from '@icons/error.svg';
 import { useProductActions } from './service';
 
@@ -79,7 +78,7 @@ export const NewProductTabLayout = () => {
     const handlePublishAction = async () => {
         const productID = state?.product?.id || state?.product?.data?.id;
         // if (user?.account_type === 'free_trial' && state?.product?.status !== 'draft') {
-        //     onOpen(); 
+        //     onOpen();
         // } else {
         try {
             const res = await updateProductStatus({ productID }).unwrap();

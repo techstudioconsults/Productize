@@ -112,7 +112,8 @@ const ProductSideNav = ({ status }) => {
 
     useEffect(() => {
         setTotalPrice(product?.price);
-    }, [product?.price]);
+        console.log(product);
+    }, [product, product?.price]);
 
     return (
         <Box>
@@ -194,11 +195,11 @@ const ProductSideNav = ({ status }) => {
                             <Stack gap={4}>
                                 <Flex color={`grey.500`} fontSize={`sm`} alignItems={`center`} justifyContent={`space-between`}>
                                     <Text fontWeight={600}>Format</Text>
-                                    <Text>{product?.resources?.[0]?.mime_type}</Text>
+                                    <Text>{product?.assets?.[0]?.mime_type}</Text>
                                 </Flex>
                                 <Flex color={`grey.500`} fontSize={`sm`} alignItems={`center`} justifyContent={`space-between`}>
                                     <Text fontWeight={600}>File size</Text>
-                                    <Text>{product?.resources?.[0]?.size}</Text>
+                                    <Text>{product?.assets?.[0]?.size}</Text>
                                 </Flex>
                                 {/* <Flex color={`grey.500`} fontSize={`sm`} alignItems={`center`} justifyContent={`space-between`}>
                                     <Text>Articles</Text>

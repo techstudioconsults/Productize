@@ -128,7 +128,7 @@ export const SetupPaymentForm = ({ closeModal }) => {
                     size={`lg`}
                     bgColor={`grey.200`}
                     variant={`filled`}
-                    placeholder="Enter account name"
+                    placeholder="Enter account number"
                     _placeholder={{ fontSize: { base: `xs`, lg: `sm` } }}
                     {...register('account_number')}
                 />

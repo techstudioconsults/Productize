@@ -22,7 +22,7 @@ export const CustomerTable = ({ draft, live, deleted, tableData }: tableProps) =
     const formatTime = useTime();
     const paginate = useSelector(selectCustomersMetaData);
 
-    const tableHeader = [`Customer Name`, `Customer Email`, `Latest Purchase`, `Price`, `Date`].map((title) => {
+    const tableHeader = [`Customer Name`, `Customer Email`, `Price`, `Date`].map((title) => {
         return (
             <Th py={3} key={title}>
                 {title}
@@ -39,15 +39,6 @@ export const CustomerTable = ({ draft, live, deleted, tableData }: tableProps) =
                 </Td>
                 <Td>
                     <Flex>{customer?.email}</Flex>
-                </Td>
-                <Td>
-                    {/* if show sale count is true */}
-                    <Flex flexDir={`column`} gap={2} py={2}>
-                        <Text>{customer?.id}</Text>
-                        <Text fontWeight={`light`} letterSpacing={1} fontSize={`xs`} color={`grey.300`}>
-                            {customer?.id}
-                        </Text>
-                    </Flex>
                 </Td>
                 <Td>
                     <Flex>{formatCurrency(customer.total_transactions)}</Flex>

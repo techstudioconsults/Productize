@@ -19,7 +19,6 @@ export const CustomerTable = ({ deleted }: tableProps) => {
     const formatDate = useDate();
     const formatTime = useTime();
     const paginate = useSelector(selectUserPaginationMetaData);
-
     useEffect(() => {
         console.log('All products:', allProducts);
     }, [allProducts]);

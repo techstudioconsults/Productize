@@ -48,6 +48,7 @@ import { CoverPage } from '../pages/coverPage/CoverPage';
 // // import About from '../pages/about/About';
 import { useTokenExists } from '@productize/hooks';
 import { useGetFromCartMutation, useGetProductTagsMutation } from '@productize/redux';
+import { AuthGuard } from '@productize/admin-dashboard';
 // import {Admin} from '@productize/admin-dashboard'
 
 // using suspense and lazy loading
@@ -61,7 +62,7 @@ const ContactUs = React.lazy(() =>
         default: module.ContactUs,
     }))
 );
-const About = React.lazy(()=>
+const About = React.lazy(() =>
     import('../pages/about/About').then((module) => ({
         default: module.About,
     }))
@@ -130,7 +131,7 @@ function App() {
                 <Route path="/contact-us" element={<ContactUs />} />
                 <Route path="/pricing" element={<Pricing />} />
                 <Route path={`/explore`} element={<Explore />} />
-                <Route path={"/about"} element={<About />} />
+                <Route path={'/about'} element={<About />} />
                 <Route path="/products/:productID" element={<ProductDetails />} />
                 <Route path="/explore/product/cart" element={<ProductCart />} />
                 {/* dashboard */}
@@ -160,7 +161,7 @@ function App() {
                     </Route>
                 </Route>
                 {/* admin  dashboard */}
-                <Route path="/admin" element={<Admin />}>
+                {/* <Route path="/admin" element={<Admin />}>
                     <Route path="home" index element={<AdminHome />} />
                     <Route path="products" element={<AdminProducts />} />
                     <Route path="products/:productID" element={<AdminProductDetails />} />
@@ -175,6 +176,31 @@ function App() {
                     <Route path="settings" element={<AdminSettings />}>
                         <Route path="account" element={<AdminAccountSettings />} />
                         <Route path="addnewadmin" element={<AddNewAdmin/>} />
+                    </Route>
+                </Route> */}
+
+                <Route
+                    path="/admin"
+                    element={
+                        <AuthGuard requiredRole="admin">
+                            <Admin />
+                        </AuthGuard>
+                    }
+                >
+                    <Route path="home" index element={<AdminHome />} />
+                    <Route path="products" element={<AdminProducts />} />
+                    <Route path="products/:productID" element={<AdminProductDetails />} />
+                    <Route path="orders" element={<AdminOrders />} />
+                    <Route path="users" element={<AdminUser />} />
+                    <Route path="profile/:userID" element={<AdminProfile />} />
+                    <Route path="payouts" element={<AdminPayouts />} />
+                    <Route path="revenue" element={<AdminRevenue />} />
+                    <Route path="complaints" element={<AdminComplaints />} />
+                    <Route path="complaints/:complaintID" element={<AdminComplaintDetails />} />
+                    <Route path="payouts/:payoutid/withdraw-earnings" element={<AdminWithdrawalEarnings />} />
+                    <Route path="settings" element={<AdminSettings />}>
+                        <Route path="account" element={<AdminAccountSettings />} />
+                        <Route path="addnewadmin" element={<AddNewAdmin />} />
                     </Route>
                 </Route>
                 {/* not found */}

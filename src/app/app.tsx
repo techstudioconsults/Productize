@@ -160,25 +160,8 @@ function App() {
                         <Route path="plans/billing-cycle" element={<BillingCycle />} />
                     </Route>
                 </Route>
-                {/* admin  dashboard */}
-                {/* <Route path="/admin" element={<Admin />}>
-                    <Route path="home" index element={<AdminHome />} />
-                    <Route path="products" element={<AdminProducts />} />
-                    <Route path="products/:productID" element={<AdminProductDetails />} />
-                    <Route path="orders" element={<AdminOrders />} />
-                    <Route path="users" element={<AdminUser />} />
-                    <Route path="profile/:userID" element={<AdminProfile />} />
-                    <Route path="payouts" element={<AdminPayouts />} />
-                    <Route path="revenue" element={<AdminRevenue />} />
-                    <Route path="complaints" element={<AdminComplaints />} />
-                    <Route path="complaints/:complaintID" element={<AdminComplaintDetails />} />
-                    <Route path="payouts/:payoutid/withdraw-earnings" element={<AdminWithdrawalEarnings />} />
-                    <Route path="settings" element={<AdminSettings />}>
-                        <Route path="account" element={<AdminAccountSettings />} />
-                        <Route path="addnewadmin" element={<AddNewAdmin/>} />
-                    </Route>
-                </Route> */}
 
+                {/* Admin Pages */}
                 <Route
                     path="/admin"
                     element={

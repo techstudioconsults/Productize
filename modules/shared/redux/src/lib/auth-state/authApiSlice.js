@@ -1,9 +1,16 @@
-import { apiSlice } from '../apiSlice';
+import { apiSlice, cleanUrl } from '../apiSlice';
 import { setUser } from '../user-state/userSlice';
 import { logout, setCredentials, setFPEmailConfirmation } from './authSlice';
 
+const endpointWithoutApiPostfix = cleanUrl();
+
 export const authApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
+        initCsrf: builder.query({
+            query: () => ({
+                url: `${endpointWithoutApiPostfix}/sanctum/csrf-cookie`,
+            }),
+        }),
         login: builder.mutation({
             query: (credentials) => ({
                 url: '/auth/login',
@@ -38,14 +45,13 @@ export const authApiSlice = apiSlice.injectEndpoints({
             },
         }),
 
-
         createAdmin: builder.mutation({
-            query: ({credentials, token}) => ({
+            query: ({ credentials, token }) => ({
                 url: '/users',
                 method: 'POST',
                 body: credentials,
                 headers: {
-                    'Authorization': `Bearer ${token}`
+                    Authorization: `Bearer ${token}`,
                 },
             }),
             // async onQueryStarted(arg, { dispatch, queryFulfilled }) {
@@ -60,7 +66,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
         }),
 
         updateAdmin: builder.mutation({
-            query: ({credentials, userID, token }) => ({
+            query: ({ credentials, userID, token }) => ({
                 url: `/users/update/${userID}`,
                 method: 'PUT',
                 body: credentials,
@@ -69,7 +75,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
                 },
             }),
         }),
-        
+
         googleAuth: builder.mutation({
             query: () => ({
                 url: '/auth/oauth/redirect?provider=google',
@@ -158,6 +164,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+    useInitCsrfQuery,
     useLoginMutation,
     useSignupMutation,
     useCreateAdminMutation,
@@ -168,3 +175,15 @@ export const {
     useResetPasswordMutation,
     useLogoutMutation,
 } = authApiSlice;
+
+export async function fetchCsrfToken() {
+    const endpoint = cleanUrl();
+
+    const response = await fetch(`${endpoint}/sanctum/csrf-cookie`, {
+        credentials: 'include', // Important if you're working with cookies
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch CSRF token');
+    }
+}

@@ -1,0 +1,36 @@
+name: Deploy to Production
+
+on:
+    push:
+        branches: [main]
+
+jobs:
+    build:
+        runs-on: [production]
+
+        strategy:
+            matrix:
+                node-version: [18.x]
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  cache: 'npm'
+
+            - name: Create .env file
+              run: |
+                  echo "${{ secrets.ENV_FILE_CONTENT }}" > .env
+
+            - name: Install dependencies
+              run: npm install
+
+            - name: Build Application
+              run: npm run build
+
+            - name: Reload server instances
+              run: pm2 reload 0 --update-env --wait-ready

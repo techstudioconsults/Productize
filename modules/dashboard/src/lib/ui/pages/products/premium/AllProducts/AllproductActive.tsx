@@ -1,5 +1,5 @@
-import React from 'react';
-import { Box, Flex, Grid, HStack, Skeleton, SkeletonText, VStack } from '@chakra-ui/react';
+/* eslint-disable @nx/enforce-module-boundaries */
+import { Box, Flex, HStack, Skeleton, VStack } from '@chakra-ui/react';
 import { SimpleGrid, Stack } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { ProductCards } from '../../../../ProductCards';

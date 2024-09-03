@@ -1,28 +1,28 @@
 import { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useGetProductAnalyticsMutation, selectProductAnalytics } from '@productize/redux';
+import { useGetAdminProductAnalyticsMutation, selectAdminProductAnalytics } from '@productize/redux';
 import { useCurrency } from '@productize/hooks';
 
 export const useAllProducts = () => {
-    const [getProductsAnalytics, getProductsAnalyticsStatus] = useGetProductAnalyticsMutation();
-    const productsAnalytics = useSelector(selectProductAnalytics);
+    const [getAdminProductsAnalytics, getAdminProductsAnalyticsStatus] = useGetAdminProductAnalyticsMutation();
+    const adminProductsAnalytics = useSelector(selectAdminProductAnalytics);
     const formatCurrency = useCurrency();
 
     const fetchAllProducts = useCallback(async () => {
         try {
-            await getProductsAnalytics(null).unwrap();
+            await getAdminProductsAnalytics(null).unwrap();
         } catch (error) {
             console.error(error);
         }
-    }, [getProductsAnalytics]);
+    }, [getAdminProductsAnalytics]);
 
     useEffect(() => {
         fetchAllProducts();
     }, [fetchAllProducts]);
 
     return {
-        productsAnalytics,
-        getProductsAnalyticsStatus,
+        adminProductsAnalytics,
+        getAdminProductsAnalyticsStatus,
         formatCurrency,
     };
 };

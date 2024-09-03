@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Flex, Image, Center, Link, Box } from '@chakra-ui/react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 

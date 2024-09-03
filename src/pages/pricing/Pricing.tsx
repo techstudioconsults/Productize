@@ -24,7 +24,7 @@ export const Pricing = () => {
                             30 Days Free Trial
                         </Text>
                         <Text fontWeight={300} as={`h5`} mt={3} px={{ lg: 36 }}>
-                            Productize looks out for a better life with a money making system, no monthly charges. Just for you
+                        ByteAlley looks out for a better life with a money making system, no monthly charges. Just for you
                         </Text>
                     </Container>
                     <Flex flexDir={{ base: `column`, lg: `row` }} p={5} gap={10} mt={0} alignItems={`center`} w={{ base: `100%`, lg: `46.3rem` }} m={`auto`}>
@@ -77,7 +77,7 @@ export const Pricing = () => {
                                 Haven’t found what you’re looking for? Try the
                                 <Text as={`span`} fontSize={`2xl`} color={`purple.200`} textDecoration={`underline`}>
                                     <CLink as={Link} to={'/contact-us'} w={`fit-content`}>
-                                        Productize Help Center or Contact us
+                                    ByteAlley Help Center or Contact us
                                     </CLink>
                                 </Text>
                             </Text>
@@ -90,7 +90,7 @@ export const Pricing = () => {
             </SectionLayout>
             <SharedSection
                 title={'Ready To Explore Our Marketplace?'}
-                desc={`With Productize, turn your creativity into a lucrative business venture by showcasing and selling your work online.`}
+                desc={`With ByteAlley, turn your creativity into a lucrative business venture by showcasing and selling your work online.`}
                 btnText={'Start Selling'}
             />
         </DefaultLayout>

@@ -20,7 +20,7 @@ export const About = ({ btnColor, shouldShowButton }: any) => {
                             </Text>
                         </Box>
                         <Text as={`h5`} fontWeight={300} maxW={`70rem`} margin={`auto`} mt={3}>
-                        Productize looks out for a better life with a money making system, no monthly charges. Just for you
+                        ByteAlley looks out for a better life with a money making system, no monthly charges. Just for you
                         </Text>
                     </Container>
 
@@ -51,7 +51,7 @@ export const About = ({ btnColor, shouldShowButton }: any) => {
                         </Text>
                         <Flex flexDirection={`column`} gap={`0.9rem`}>
                             <Text textAlign={{ base: 'center', xl: 'left' }} fontSize={{ base: '1.2rem', xl: '1.5rem' }}>
-                                Productize began with a simple idea: to create a platform where digital creators could easily share their products with the
+                            ByteAlley began with a simple idea: to create a platform where digital creators could easily share their products with the
                                 world.
                             </Text>
                             <Text textAlign={{ base: 'center', xl: 'left' }} pb={'0.7rem'} fontSize={{ base: '1.2rem', xl: '1.5rem' }}>
@@ -137,7 +137,7 @@ export const About = ({ btnColor, shouldShowButton }: any) => {
                             iconColor={`#F6C21C`}
                             title={'Our Mission'}
                             subTitle={
-                                'At Productize, our mission is to empower creators and entrepreneurs to transform their ideas into successful digital products.'
+                                'At ByteAlley, our mission is to empower creators and entrepreneurs to transform their ideas into successful digital products.'
                             }
                             listItems={[
                                 `Continuously enhancing our platform with cutting-edge features.`,
@@ -149,7 +149,7 @@ export const About = ({ btnColor, shouldShowButton }: any) => {
                 </Flex>
             </DualSectionLayout>
             <Container maxW={'71rem'} py={'3.5rem'} px={{base: '1rem', lg: '1rem'}} >
-                <Text as={`h1`} pb={'2rem'} textAlign={'center'}>Why Choose Productize</Text>
+                <Text as={`h1`} pb={'2rem'} textAlign={'center'}>Why Choose ByteAlley</Text>
                 <SimpleGrid flex={2} columns={{ base: 1, sm: 2 }} spacing={10}>
                             {/* card 1 */}
                             <Box>
@@ -209,7 +209,7 @@ export const About = ({ btnColor, shouldShowButton }: any) => {
             </Container>
             <SharedSection
                 title={'Join Our Thriving Creator Community'}
-                desc={`Are you ready to embark on a creative journey like no other? Productize is here to make it happen. Join our community of creators and buyers
+                desc={`Are you ready to embark on a creative journey like no other? ByteAlley is here to make it happen. Join our community of creators and buyers
                     today.`}
                 btnText={'Join Now'}
             />

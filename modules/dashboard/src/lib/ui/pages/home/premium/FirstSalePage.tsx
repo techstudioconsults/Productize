@@ -27,7 +27,7 @@ const FirstSalePage: React.FC = () => {
                         height="100%"
                         img="https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951034/productize/Illustration_2_fslyo9_vfqfto.png"
                         bgImg="https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951013/productize/Lines_t1t27k_gg0jau.png"
-                        title="Welcome to productize."
+                        title="Welcome to ByteAlley."
                         desc="Complete your profile to start getting your products published."
                         py={8}
                         px={8}

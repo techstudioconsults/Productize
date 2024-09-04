@@ -34,11 +34,11 @@ export function useLoginForm(): UseLoginFormReturn {
         try {
             await fetchCsrfToken();
             const res = await login(data).unwrap();
-            console.log(res);
+            // console.log(res);
 
-            if (res.user.role === 'SUPER_ADMIN' || res.user.role === 'ADMIN') {
+            if (res?.user?.role === 'SUPER_ADMIN' || res?.user?.role === 'ADMIN') {
                 navigate('/Admin/home');
-            } else if (res.user.role === 'USER') {
+            } else if (res?.user?.role === 'USER') {
                 navigate('/dashboard/home');
             }
 

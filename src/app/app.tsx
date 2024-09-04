@@ -48,6 +48,7 @@ import { CoverPage } from '../pages/coverPage/CoverPage';
 // // import About from '../pages/about/About';
 import { useTokenExists } from '@productize/hooks';
 import { useGetFromCartMutation, useGetProductTagsMutation } from '@productize/redux';
+import { AuthGuard } from '@productize/admin-dashboard';
 // import {Admin} from '@productize/admin-dashboard'
 
 // using suspense and lazy loading
@@ -61,11 +62,16 @@ const ContactUs = React.lazy(() =>
         default: module.ContactUs,
     }))
 );
-const About = React.lazy(()=>
+const About = React.lazy(() =>
     import('../pages/about/About').then((module) => ({
         default: module.About,
     }))
 );
+
+const PrivacyPolicy = React.lazy(()=> import('../pages/privacyPolicy/PrivacyPolicy').then((module) =>({
+    default: module.PrivacyPolicy
+})));
+
 const Features = React.lazy(() =>
     import('../pages/features/Features').then((module) => ({
         default: module.Features,
@@ -130,7 +136,8 @@ function App() {
                 <Route path="/contact-us" element={<ContactUs />} />
                 <Route path="/pricing" element={<Pricing />} />
                 <Route path={`/explore`} element={<Explore />} />
-                <Route path={"/about"} element={<About />} />
+                <Route path={'/about'} element={<About />} />
+                <Route path={'/privacypolicy'} element={<PrivacyPolicy />} />
                 <Route path="/products/:productID" element={<ProductDetails />} />
                 <Route path="/explore/product/cart" element={<ProductCart />} />
                 {/* dashboard */}
@@ -159,8 +166,16 @@ function App() {
                         <Route path="plans/billing-cycle" element={<BillingCycle />} />
                     </Route>
                 </Route>
-                {/* admin  dashboard */}
-                <Route path="/admin" element={<Admin />}>
+
+                {/* Admin Pages */}
+                <Route
+                    path="/admin"
+                    element={
+                        <AuthGuard requiredRole={["admin", "super_admin"]}>
+                            <Admin />
+                        </AuthGuard>
+                    }
+                >
                     <Route path="home" index element={<AdminHome />} />
                     <Route path="products" element={<AdminProducts />} />
                     <Route path="products/:productID" element={<AdminProductDetails />} />
@@ -174,7 +189,7 @@ function App() {
                     <Route path="payouts/:payoutid/withdraw-earnings" element={<AdminWithdrawalEarnings />} />
                     <Route path="settings" element={<AdminSettings />}>
                         <Route path="account" element={<AdminAccountSettings />} />
-                        <Route path="addnewadmin" element={<AddNewAdmin/>} />
+                        <Route path="addnewadmin" element={<AddNewAdmin />} />
                     </Route>
                 </Route>
                 {/* not found */}

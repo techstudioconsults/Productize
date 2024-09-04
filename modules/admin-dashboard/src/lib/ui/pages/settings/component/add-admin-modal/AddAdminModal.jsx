@@ -143,11 +143,12 @@ import {
 } from '@chakra-ui/react';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { registrationSchema } from '@productize/auth';
-
+import errorImg from '@icons/error.svg';
+import toastImg from '@icons/star-notice.png';
 import { useCreateAdminMutation, selectCurrentToken } from '@productize/redux';
 import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nx/enforce-module-boundaries
-import { SharedButton } from '@productize/ui';
+import { SharedButton, ToastFeedback, useToastAction } from '@productize/ui';
 
 export const AddAdminModal = ({ isOpen, onClose }) => {
     const token = useSelector(selectCurrentToken);
@@ -158,7 +159,7 @@ export const AddAdminModal = ({ isOpen, onClose }) => {
     });
 
     const [createAdmin, { isLoading, isError, error }] = useCreateAdminMutation();
-
+    const { toast, toastIdRef, close } = useToastAction();
     const initialRef = React.useRef(null);
     const finalRef = React.useRef(null);
 
@@ -174,7 +175,7 @@ export const AddAdminModal = ({ isOpen, onClose }) => {
 
     const handleFormSubmit = async (data) => {
         try {
-            await createAdmin({
+          const res =  await createAdmin({
                 credentials: {
                     full_name: data.full_name,
                     email: data.email,
@@ -184,7 +185,24 @@ export const AddAdminModal = ({ isOpen, onClose }) => {
                 },
                 token
             });
+            console.log(res);
             onClose();
+            
+            if (res?.status === 200) {
+                toastIdRef.current = toast({
+                    position: 'top',
+                    render: () => (
+                        <ToastFeedback
+                            btnColor={`purple.200`}
+                            message={`Admin Added successfully`}
+                            title="Admin Created"
+                            icon={toastImg}
+                            bgColor={undefined}
+                            color={undefined}
+                            handleClose={close}
+                        />
+                    ),
+                })}
         } catch (err) {
             console.error('Failed to create admin:', err);
         }

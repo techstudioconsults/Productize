@@ -26,7 +26,7 @@ export const Footer: React.FC = memo(() => {
             <Container maxW="70rem">
                 <SimpleGrid fontWeight="bold" spacing={10} columns={{ base: 1, lg: 4 }} marginTop="1rem">
                     <Flex as={RouterLink} to="/" alignItems="start" justifyContent={{ base: 'center', lg: 'initial' }}>
-                        <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png" alt="Logo" />
+                        <img src="https://res.cloudinary.com/doejcrfso/image/upload/v1725356813/productize/ByteAAlley-Logo_ue2hqr.svg" alt="Logo" />
                     </Flex>
                     <Flex
                         flexDir="column"
@@ -53,7 +53,7 @@ export const Footer: React.FC = memo(() => {
                     >
                         <FooterLink to="/blogs">Blog</FooterLink>
                         <FooterLink to="/help-and-support">Help and support</FooterLink>
-                        <FooterLink to="/terms-and policy">Terms And Privacy Policy</FooterLink>
+                        <FooterLink to="/privacypolicy">Terms And Privacy Policy</FooterLink>
                     </Flex>
                     <Flex
                         flexDir="column"

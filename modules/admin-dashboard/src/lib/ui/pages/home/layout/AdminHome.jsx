@@ -2,10 +2,8 @@ import { Box, SimpleGrid, Skeleton, Stack } from '@chakra-ui/react';
 import { DataWidgetCard } from '../../../AdminDataWidget';
 import { ProductTable } from '../AdminProductTable';
 import { useAllProducts } from './AdminService';
-
 export const AdminHome = () => {
     const { getHomeAnalyticsStatus, orderAnalytics, formatCurrency } = useAllProducts();
-
     return (
         <Box my={8}>
             <SimpleGrid gap={4} my={4} columns={{ base: 1, sm: 2, lg: 4 }}>

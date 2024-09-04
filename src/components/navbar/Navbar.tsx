@@ -34,6 +34,10 @@ export const Navbar = ({ isAuth, btnColor }: any) => {
                 setLinkColor(`yellow.300`);
                 setBgColor(`yellow.100`);
                 break;
+            case `/privacypolicy`:
+                setLinkColor(`white`);
+                setBgColor(`purple.200`);
+                break;
             default:
                 setLinkColor(`black.300`);
                 setBgColor(`white`);
@@ -64,7 +68,7 @@ export const Navbar = ({ isAuth, btnColor }: any) => {
                     <Link as={RouterLink} to={`/seller`} role={'link'}>
                         <Image
                             alt="logo"
-                            src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png`}
+                            src={`https://res.cloudinary.com/doejcrfso/image/upload/v1725356813/productize/ByteAAlley-Logo_ue2hqr.svg`}
                         />
                     </Link>
                 </Center>

@@ -5,8 +5,9 @@ import { selectCurrentToken, selectCurrentUser } from '@productize/redux';
 
 export const AuthGuard = ({ children, requiredRole }) => {
   const location = useLocation();
-  const { user } = useSelector(selectCurrentUser);
+  const user  = useSelector(selectCurrentUser);
   console.log(user);
+  const currentUser = user?.role
   
   const token = useSelector(selectCurrentToken);
 
@@ -15,7 +16,7 @@ export const AuthGuard = ({ children, requiredRole }) => {
     return <Navigate to="/auth/login" state={{ from: location }} replace />;
   }
 
-  if (!user || !requiredRole.includes(user.role)) {
+  if (!currentUser || !requiredRole.includes(currentUser)) {
     // User is logged in but doesn't have one of the required roles
     return <Navigate to="/dashboard/home" replace />;
   }

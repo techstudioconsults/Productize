@@ -7,8 +7,13 @@ import { DualSectionLayout } from '../../components/section-layout/DualSectionLa
 import { SharedSection } from '../../components/section-layout/SharedSection';
 import { CardLayout, SharedButton } from '@productize/ui';
 import { useTokenExists } from '@productize/hooks';
+import { useSelector } from 'react-redux';
+import { selectCurrentUser } from '@productize/redux';
 
 export const Home = () => {
+    // const user  = useSelector(selectCurrentUser);
+    // console.log(user.role);
+    
     const isAuth = useTokenExists();
 
     return (

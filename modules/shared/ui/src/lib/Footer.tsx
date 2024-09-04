@@ -53,7 +53,7 @@ export const Footer: React.FC = memo(() => {
                     >
                         <FooterLink to="/blogs">Blog</FooterLink>
                         <FooterLink to="/help-and-support">Help and support</FooterLink>
-                        <FooterLink to="/terms-and policy">Terms And Privacy Policy</FooterLink>
+                        <FooterLink to="/privacypolicy">Terms And Privacy Policy</FooterLink>
                     </Flex>
                     <Flex
                         flexDir="column"

@@ -171,7 +171,7 @@ function App() {
                 <Route
                     path="/admin"
                     element={
-                        <AuthGuard requiredRole="admin">
+                        <AuthGuard requiredRole={["admin", "super-admin"]}>
                             <Admin />
                         </AuthGuard>
                     }

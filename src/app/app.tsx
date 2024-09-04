@@ -67,6 +67,11 @@ const About = React.lazy(() =>
         default: module.About,
     }))
 );
+
+const PrivacyPolicy = React.lazy(()=> import('../pages/privacyPolicy/PrivacyPolicy').then((module) =>({
+    default: module.PrivacyPolicy
+})));
+
 const Features = React.lazy(() =>
     import('../pages/features/Features').then((module) => ({
         default: module.Features,
@@ -132,6 +137,7 @@ function App() {
                 <Route path="/pricing" element={<Pricing />} />
                 <Route path={`/explore`} element={<Explore />} />
                 <Route path={'/about'} element={<About />} />
+                <Route path={'/privacypolicy'} element={<PrivacyPolicy />} />
                 <Route path="/products/:productID" element={<ProductDetails />} />
                 <Route path="/explore/product/cart" element={<ProductCart />} />
                 {/* dashboard */}

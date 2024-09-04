@@ -34,6 +34,10 @@ export const Navbar = ({ isAuth, btnColor }: any) => {
                 setLinkColor(`yellow.300`);
                 setBgColor(`yellow.100`);
                 break;
+            case `/privacypolicy`:
+                setLinkColor(`white`);
+                setBgColor(`purple.200`);
+                break;
             default:
                 setLinkColor(`black.300`);
                 setBgColor(`white`);

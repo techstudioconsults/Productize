@@ -42,7 +42,7 @@ export const ContactUs = () => {
                                     <Center fontSize={`40`} boxSize={`68`} bgColor={`grey.800`} color={`grey.100`} borderRadius={`100%`}>
                                         <Icon icon="material-symbols:mail" />
                                     </Center>
-                                    <Text fontSize={{ lg: `2xl` }}>support@productize.com</Text>
+                                    <Text fontSize={{ lg: `2xl` }}>info@trybytealley.com</Text>
                                 </Flex>
                                 <Flex fontWeight={600} alignItems={`center`} gap={4}>
                                     <Center fontSize={`40`} boxSize={`68`} bgColor={`grey.800`} color={`grey.100`} borderRadius={`100%`}>
@@ -63,7 +63,7 @@ export const ContactUs = () => {
             </Box>
             <SharedSection
                 title={'Ready To Explore Our Marketplace?'}
-                desc={`With Productize, turn your creativity into a lucrative business venture by showcasing and selling your work online.`}
+                desc={`With ByteAlley, turn your creativity into a lucrative business venture by showcasing and selling your work online.`}
                 btnText={'Start Selling'}
             />
         </DefaultLayout>

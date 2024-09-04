@@ -131,7 +131,7 @@ export const Features = () => {
                             shouldShowButton={false}
                             iconColor={`#F6C21C`}
                             title={'Making Money'}
-                            subTitle={`Make money with those genius ideas of yours by letting your products reach multitude of buyers without the hassle of marketing. Just list it on Productize and get paid when they shop.
+                            subTitle={`Make money with those genius ideas of yours by letting your products reach multitude of buyers without the hassle of marketing. Just list it on ByteAlley and get paid when they shop.
 `}
                             listItems={[]}
                         />
@@ -139,8 +139,8 @@ export const Features = () => {
                 </Flex>
             </DualSectionLayout>
             <SharedSection
-                title={'Starting monetize on Productize'}
-                desc={'With Productize, turn your creativity into a lucrative business venture by showcasing and selling your work online.'}
+                title={'Get Monetized on ByteAlley'}
+                desc={'With ByteAlley, turn your creativity into a lucrative business venture by showcasing and selling your work online.'}
                 btnText={'Create an Account'}
             />
         </DefaultLayout>

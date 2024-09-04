@@ -141,17 +141,20 @@ import {
     InputGroup,
     InputRightElement,
 } from '@chakra-ui/react';
+import errorImg from '@icons/error.svg';
+import toastImg from '@icons/star-notice.png';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { registrationSchema } from '@productize/auth';
 
 import {  selectCurrentToken, useUpdateAdminMutation } from '@productize/redux';
 import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nx/enforce-module-boundaries
-import { SharedButton } from '@productize/ui';
+import { SharedButton, ToastFeedback, useToastAction  } from '@productize/ui';
 
 export const EditAdminModal = ({ isOpen, onClose, user }) => {
     const token = useSelector(selectCurrentToken);
     console.log(user);
+    const { toast, toastIdRef, close } = useToastAction()
     
 
     const { register, reset, handleSubmit, formState: { errors, isValid } } = useForm({
@@ -205,11 +208,56 @@ export const EditAdminModal = ({ isOpen, onClose, user }) => {
                 token,
             });
             console.log(res);
+
+            // i would delete later when i get the right response f
+            toastIdRef.current = toast({
+                position: 'top',
+                render: () => (
+                    <ToastFeedback
+                        btnColor={`purple.200`}
+                        message={`Admin Updated successfully`}
+                        title="Admin Update"
+                        icon={toastImg}
+                        bgColor={undefined}
+                        color={undefined}
+                        handleClose={close}
+                    />
+                ),
+            })
+            // if (res?.status === 200) {
+            //     toastIdRef.current = toast({
+            //         position: 'top',
+            //         render: () => (
+            //             <ToastFeedback
+            //                 btnColor={`purple.200`}
+            //                 message={`Admin Added successfully`}
+            //                 title="Admin Created"
+            //                 icon={toastImg}
+            //                 bgColor={undefined}
+            //                 color={undefined}
+            //                 handleClose={close}
+            //             />
+            //         ),
+            //     })}
             
             onClose();
             reset();
         } catch (err) {
             console.error('Failed to update admin:', err);
+            toastIdRef.current = toast({
+                position: 'top',
+                render: () => (
+                    <ToastFeedback
+                        btnColor={`purple.200`}
+                        message={`${err}`}
+                        title="Admin Update"
+                        icon={errorImg}
+                        bgColor={undefined}
+                        color={undefined}
+                        handleClose={close}
+                    />
+                ),
+            })
         }
     };
 

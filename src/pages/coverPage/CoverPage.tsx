@@ -37,7 +37,7 @@ export const CoverPage = () => {
                         // width={`18rem`}
                         // width={`10rem`}
                         alt="logo"
-                        src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png`}
+                        src={`https://res.cloudinary.com/doejcrfso/image/upload/v1725356813/productize/ByteAAlley-Logo_ue2hqr.svg`}
                     />
                 </Link>
                 <PaymentStatusTag />
@@ -47,7 +47,7 @@ export const CoverPage = () => {
                 <Container pos={`relative`} color={`grey.800`} mt={`2rem`} textAlign={`center`} maxW={`898px`}>
                     <Image pos={`absolute`} top={`12rem`} left={`-8rem`} src={``} />
                     <Text lineHeight={`shorter`} as={`h1`}>
-                        Welcome to Productize!
+                        Welcome to ByteAlley!
                     </Text>
                     <Text fontWeight={400} as={`h5`} color={`grey.800`} mt={3}>
                         From Ebooks, video content, digital art/graphics, online courses or stock photos, you are spoilt for choice whether as a creator or as a

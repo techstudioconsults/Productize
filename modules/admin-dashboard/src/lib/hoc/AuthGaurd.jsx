@@ -6,6 +6,8 @@ import { selectCurrentToken, selectCurrentUser } from '@productize/redux';
 export const AuthGuard = ({ children, requiredRole }) => {
   const location = useLocation();
   const { user } = useSelector(selectCurrentUser);
+  console.log(user);
+  
   const token = useSelector(selectCurrentToken);
 
   if (!token) {

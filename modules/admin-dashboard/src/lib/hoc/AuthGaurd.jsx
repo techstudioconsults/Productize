@@ -2,11 +2,12 @@ import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectCurrentToken, selectCurrentUser } from '@productize/redux';
-// import { selectCurrentUser } from '@productize/redux';
 
 export const AuthGuard = ({ children, requiredRole }) => {
   const location = useLocation();
   const { user } = useSelector(selectCurrentUser);
+  console.log(user);
+  
   const token = useSelector(selectCurrentToken);
 
   if (!token) {
@@ -14,8 +15,8 @@ export const AuthGuard = ({ children, requiredRole }) => {
     return <Navigate to="/auth/login" state={{ from: location }} replace />;
   }
 
-  if (!user || user.role !== requiredRole) {
-    // User is logged in but doesn't have the required role
+  if (!user || !requiredRole.includes(user.role)) {
+    // User is logged in but doesn't have one of the required roles
     return <Navigate to="/dashboard/home" replace />;
   }
 

@@ -99,8 +99,9 @@ export const userApiSlice = apiSlice.injectEndpoints({
         }),
         revokeAdmin: builder.mutation({
             query: ({ userID, token }) => ({
-                url: `/users/${userID}/revoke-admin-role`,
-                method: 'PATCH',
+                // url: `/users/${userID}`,
+                url: `/users/${userID}`,
+                method: 'DELETE',
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

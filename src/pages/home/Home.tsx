@@ -24,7 +24,7 @@ export const Home = () => {
                             Monetize your skills with ease
                         </Text>
                         <Text fontWeight={300} as={`h5`} color={`purple.100`} mt={3}>
-                            With Productize, selling your products online is hassle-free. You can showcase your work and let us handle the backend tasks,
+                            With ByteAlley, selling your products online is hassle-free. You can showcase your work and let us handle the backend tasks,
                             allowing you to concentrate on what you do best.
                         </Text>
                     </Container>
@@ -63,7 +63,7 @@ export const Home = () => {
                             </Text>
                             <Text fontWeight={300} as={`h5`} my={`2rem`} textAlign={{ base: `center`, xl: `initial` }}>
                                 Are you a digital artist, designer, writer, or developer looking to share your creations with the world and earn from your
-                                passion? Look no further! Productize is the ultimate platform for creators like you.
+                                passion? Look no further! ByteAlley is the ultimate platform for creators like you.
                             </Text>
                             <Box hidden={isAuth} display={{ base: `none`, xl: `block` }}>
                                 <Link as={RouterLink} to={`/auth`}>
@@ -163,10 +163,10 @@ export const Home = () => {
                 <Flex alignItems={`center`} color={`purple.100`} height={`100%`}>
                     <Container textAlign={{ base: `center`, xl: `initial` }} maxW={`35rem`} px={{ base: 4, xl: 0 }}>
                         <Text as={`h1`} lineHeight={`shorter`}>
-                            Everyone can Buy & Sell on Productize
+                            Everyone can Buy & Sell on ByteAlley
                         </Text>
                         <Text fontWeight={300} as={`h5`} pr={{ xl: 20 }} mt={5}>
-                            Not really tech-savvy or just looking for a way to share that knowledge you think will be valuable to others, Productize is here to
+                            Not really tech-savvy or just looking for a way to share that knowledge you think will be valuable to others, ByteAlley is here to
                             cater to whatever your needs may be.
                         </Text>
                     </Container>
@@ -178,7 +178,7 @@ export const Home = () => {
                         Start monetizing in 4 simple steps
                     </Text>
                     <Text as={`h5`} fontWeight={`200`}>
-                        You can easily reach a broader audience, increase your sales, and build your brand. Monetize everything with Productize and unleash your
+                        You can easily reach a broader audience, increase your sales, and build your brand. Monetize everything with ByteAlley and unleash your
                         full potential!
                     </Text>
                 </Container>
@@ -270,7 +270,7 @@ export const Home = () => {
             </SectionLayout>
             <SharedSection
                 title={'Join Our Thriving Creator Community'}
-                desc={`Are you ready to embark on a creative journey like no other? Productize is here to make it happen. Join our community of creators and buyers
+                desc={`Are you ready to embark on a creative journey like no other? ByteAlley is here to make it happen. Join our community of creators and buyers
                     today.`}
                 btnText={'Join Now'}
             />

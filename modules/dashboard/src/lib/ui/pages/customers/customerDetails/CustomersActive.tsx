@@ -5,12 +5,16 @@ import { CustomersTableControl } from '../customerTable/CustomersTableControl';
 import { CustomerTable } from '../customerTable/CustomerTable';
 import { DashboardEmptyState } from '../../../empty-states/DashboardEmptyState';
 import { selectAllCustomers, selectIsCustomerFilter, useGetAllCustomersMutation } from '@productize/redux';
+import { resolve } from 'path/win32';
 
 const CustomersActive = () => {
     const [isLoading, setLoading] = useState(true);
     const [getAllCustomers] = useGetAllCustomersMutation();
     const allCustomers = useSelector(selectAllCustomers);
     const isFilter = useSelector(selectIsCustomerFilter);
+
+    
+    
 
     const showAllCustomers = useCallback(async () => {
         try {

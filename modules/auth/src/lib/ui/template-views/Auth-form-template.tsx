@@ -14,11 +14,11 @@ export const AuthFormTemplateSignup = ({ children }: AuthFormTemplateProps) => {
             <CardHeader>
                 <Center>
                     <Link as={RouterLink} to="/">
-                        <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png" alt="logo" />
+                        <img src="https://res.cloudinary.com/doejcrfso/image/upload/v1725356813/productize/ByteAAlley-Logo_ue2hqr.svg" alt="logo" />
                     </Link>
                 </Center>
                 <Text as="h5" textAlign="left" my={5}>
-                    Discover a world of creativity and innovation on Productize.
+                    Discover a world of creativity and innovation on ByteAlley.
                 </Text>
             </CardHeader>
             <CardBody borderRadius="8px" bgColor="white">
@@ -34,7 +34,7 @@ export const AuthFormTemplateLogin = ({ children, title, subTitle }: AuthFormTem
             <CardHeader>
                 <Center>
                     <Link as={RouterLink} to="/">
-                        <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png" alt="logo" />
+                        <img src="https://res.cloudinary.com/doejcrfso/image/upload/v1725356813/productize/ByteAAlley-Logo_ue2hqr.svg" alt="logo" />
                     </Link>
                 </Center>
             </CardHeader>

@@ -65,7 +65,7 @@ export const Sidenav: React.FC<SidebarProps> = ({ links }) => {
                             <Image
                                 w="60%"
                                 cursor="pointer"
-                                src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png"
+                                src="https://res.cloudinary.com/doejcrfso/image/upload/v1725356813/productize/ByteAAlley-Logo_ue2hqr.svg"
                                 alt="Productize"
                             />
                         </Link>

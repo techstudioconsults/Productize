@@ -18,7 +18,7 @@ export const AuthGuard = ({ children, requiredRole }) => {
 
   if (!currentUser || !requiredRole.includes(currentUser)) {
     // User is logged in but doesn't have one of the required roles
-    return <Navigate to="/dashboard/home" replace />;
+    return <Navigate to="/seller" replace />;
   }
 
   return children;

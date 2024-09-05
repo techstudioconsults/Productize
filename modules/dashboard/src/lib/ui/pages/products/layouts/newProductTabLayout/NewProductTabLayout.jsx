@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Tabs, TabList, Tab, TabPanels, TabPanel, Flex, Box } from '@chakra-ui/react';
+import { Tabs, TabList, Tab, TabPanels, TabPanel, Flex, Box} from '@chakra-ui/react';
 import { DPFormSchema, ProductForm, SSFormSchema } from '@productize/dashboard';
 import { PreviewProductSummary, SharedButton, ToastFeedback, useToastAction } from '@productize/ui';
 import ShareLayout from '../ShareLayout';
@@ -105,9 +105,9 @@ export const NewProductTabLayout = () => {
     return (
         <FormProvider {...methods}>
             <Tabs index={tabIndex} onChange={(index) => setTabIndex(index)} size={`sm`}>
-                <Flex bgColor={`#ffffff`} pos={`sticky`} top={`75px`} display={{ lg: `none` }} my={5}>
+                <Flex bgColor={`#ffffff`} zIndex={10} pos={`sticky`}  top={`85px`} display={{ lg: `none` }} my={5}>
                     {(state?.product?.data?.status || state?.product?.status) === `draft` || hash === `#product-details` ? (
-                        <Flex w={`100%`} display={hash !== `#share` ? `flex` : `none`} gap={4}>
+                        <Flex w={`100%`}  display={hash !== `#share` ? `flex` : `none`} gap={4}>
                             <SharedButton
                                 btnExtras={{
                                     border: `1px solid red`,

@@ -43,7 +43,7 @@ export const policies = [
 },
 {
     title: "9. Contact Us",
-    text: "If you have any questions or concerns about this Privacy Policy, please contact us at: Email: [info@trybytealley.com]",
+    text: "If you have any questions or concerns about this Privacy Policy, please contact us at: Email: info@trybytealley.com",
     points: [""]
 },
 ]

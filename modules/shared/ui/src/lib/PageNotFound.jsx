@@ -10,7 +10,7 @@ export const PageNotFound = () => {
         <Box bgColor={`grey.200`} h={`100vh`} bgImage={bg404}>
             <Flex p={5}>
                 <Link as={RouterLink} to={`/`}>
-                    <Image alt="logo" src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png`} />
+                    <Image alt="logo" src={`https://res.cloudinary.com/doejcrfso/image/upload/v1725356813/productize/ByteAAlley-Logo_ue2hqr.svg`} />
                 </Link>
             </Flex>
             <Flex

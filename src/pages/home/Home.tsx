@@ -49,7 +49,7 @@ export const Home = () => {
                     <Container zIndex={2} maxW={{ base: `90%` }}>
                         <Image
                             alt={`hero-illustration`}
-                            src={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951027/productize/Group_5_pximlf_m8bs3m.png`}
+                            src={`https://res.cloudinary.com/doejcrfso/image/upload/v1725527537/productize/hero-img_mmohcz.svg`}
                         />
                     </Container>
                 </Stack>

@@ -15,7 +15,7 @@ import { policies } from '../../content/privacypolicies';
 export const PrivacyPolicy = () => {
     return (
         <DefaultLayout>
-            <Hero height={{ base: `21.5rem`, xl: `22rem` }} bgImg={''} bgColor={'purple.200'}>
+            <Hero height={{ base: `21.5rem`, xl: `21rem` }} bgImg={''} bgColor={'purple.200'}>
                 <Stack gap={10}>
                     <Container zIndex={3} color={`yellow.300`} mt={`10rem`} textAlign={`center`} maxW={`70rem`}>
                         <Box>
@@ -23,9 +23,9 @@ export const PrivacyPolicy = () => {
                                 Privacy Policy
                             </Text>
                         </Box>
-                        <Text as={`h5`} color={`white`} fontWeight={300} maxW={`70rem`} margin={`auto`} mt={3}>
+                        {/* <Text as={`h5`} color={`white`} fontWeight={300} maxW={`70rem`} margin={`auto`} mt={3}>
                             Effective Date: [Insert Date]
-                        </Text>
+                        </Text> */}
                     </Container>
                 </Stack>
             </Hero>

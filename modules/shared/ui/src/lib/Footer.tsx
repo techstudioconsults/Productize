@@ -6,10 +6,12 @@ import { Link as RouterLink } from 'react-router-dom';
 interface FooterLinkProps {
     to: string;
     children: React.ReactNode;
+    disabled?: boolean;
 }
 
-const FooterLink: React.FC<FooterLinkProps> = ({ to, children }) => (
-    <Text as={RouterLink} fontWeight={600} to={to}>
+const FooterLink: React.FC<FooterLinkProps> = ({ to, children, disabled = false }) => (
+    <Text as={RouterLink} to={disabled ? undefined : to} fontWeight={600} color={disabled ? 'gray.500' : 'inherit'}
+    cursor={disabled ? 'not-allowed' : 'pointer'} >
         {children}
     </Text>
 );
@@ -51,9 +53,9 @@ export const Footer: React.FC = memo(() => {
                         gap={2}
                         alignItems={{ base: 'center', lg: 'flex-start' }}
                     >
-                        <FooterLink to="/blogs">Blog</FooterLink>
-                        <FooterLink to="/help-and-support">Help and support</FooterLink>
                         <FooterLink to="/privacypolicy">Terms And Privacy Policy</FooterLink>
+                        <FooterLink disabled to="/blogs">Blog</FooterLink>
+                        <FooterLink disabled to="/help-and-support">Help and support</FooterLink>
                     </Flex>
                     <Flex
                         flexDir="column"

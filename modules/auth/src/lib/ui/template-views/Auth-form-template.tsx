@@ -13,7 +13,7 @@ export const AuthFormTemplateSignup = ({ children }: AuthFormTemplateProps) => {
         <Card p={{ base: 5, sm: 8 }} maxW="548px" w="100%" h="fit-content">
             <CardHeader>
                 <Center>
-                    <Link as={RouterLink} to="/">
+                    <Link as={RouterLink} to="/seller">
                         <img src="https://res.cloudinary.com/doejcrfso/image/upload/v1725356813/productize/ByteAAlley-Logo_ue2hqr.svg" alt="logo" />
                     </Link>
                 </Center>
@@ -33,7 +33,7 @@ export const AuthFormTemplateLogin = ({ children, title, subTitle }: AuthFormTem
         <Card bgColor={{ base: 'white', sm: 'transparent' }} maxW={{ base: '100%', sm: '444px' }} py={{ sm: '5rem' }} h={{ base: '100vh', sm: 'fit-content' }}>
             <CardHeader>
                 <Center>
-                    <Link as={RouterLink} to="/">
+                    <Link as={RouterLink} to="/seller">
                         <img src="https://res.cloudinary.com/doejcrfso/image/upload/v1725356813/productize/ByteAAlley-Logo_ue2hqr.svg" alt="logo" />
                     </Link>
                 </Center>

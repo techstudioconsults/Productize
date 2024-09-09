@@ -53,7 +53,8 @@ export const Footer: React.FC = memo(() => {
                         gap={2}
                         alignItems={{ base: 'center', lg: 'flex-start' }}
                     >
-                        <FooterLink to="/privacypolicy">Terms And Privacy Policy</FooterLink>
+                        <FooterLink to="/termsandconditions">Terms And Conditions</FooterLink>
+                        <FooterLink to="/privacypolicy">Privacy Policy</FooterLink>
                         <FooterLink disabled to="/blogs">Blog</FooterLink>
                         <FooterLink disabled to="/help-and-support">Help and support</FooterLink>
                     </Flex>

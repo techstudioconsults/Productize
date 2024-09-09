@@ -52,12 +52,21 @@ export const WithdrawalEarnings = () => {
         return <BankCard width={`300px`} key={account?.id} account={account} src={null} />;
     });
 
+    // fixing max withdrawer bug
+    const maxWithdrawal = payouts?.available_earnings
+
+    console.log(maxWithdrawal);
+
     useEffect(() => {
         retrivePayoutAcc();
     }, [retrivePayoutAcc]);
 
+    // const setMaxAmount = () => {
+    //     setValue(`amount`, 500);
+    // };
+
     const setMaxAmount = () => {
-        setValue(`amount`, 5000);
+        setValue(`amount`, maxWithdrawal);
     };
 
     const handleWithdrawalForm = async (data) => {

@@ -38,6 +38,10 @@ export const Navbar = ({ isAuth, btnColor }: any) => {
                 setLinkColor(`white`);
                 setBgColor(`purple.200`);
                 break;
+            // case `/termsandconditions`:
+            //     setLinkColor(`white`);
+            //     setBgColor(`purple.200`);
+            //     break;
             default:
                 setLinkColor(`black.300`);
                 setBgColor(`white`);

@@ -12,6 +12,9 @@ const PremiumLayout = () => {
     const [isLoading, setLoading] = useState(true);
     const [getPayoutStats] = useGetPayoutStatsMutation();
     const payouts = useSelector(selectPayoutStats);
+
+    // console.log(`total ${payouts?.total_earnings}`);
+    
     const formatCurrency = useCurrency();
 
     // const getPendingAmount = (totalEarning, pendingPayments) => {

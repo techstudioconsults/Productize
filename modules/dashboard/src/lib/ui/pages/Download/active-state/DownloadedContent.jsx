@@ -1,6 +1,5 @@
 import { Box, Center, Flex, SimpleGrid, Text } from '@chakra-ui/react';
 import { Icon } from '@iconify/react';
-
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ReviewModal } from '../component/ReviewModal';
@@ -37,6 +36,8 @@ export const DownloadedContent = () => {
         };
         getData();
     }, [baseUrl, downloadedContentID, singleDownloadedProduct, token]);
+
+    
 
     useEffect(() => {
         const isMobileView = window.innerWidth <= 768;

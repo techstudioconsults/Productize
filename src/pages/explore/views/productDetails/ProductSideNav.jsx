@@ -45,6 +45,9 @@ const ProductSideNav = ({ status }) => {
 
     const disableVendor = user?.name === product?.publisher;
 
+    // const productProperty = product?.assets?.length
+    // console.log(productProperty); 
+
     const handleProductQuantity = (quantity) => {
         setTotalPrice(product.price * parseInt(quantity));
         setProductQuantity(parseInt(quantity));
@@ -194,19 +197,19 @@ const ProductSideNav = ({ status }) => {
                             <Stack gap={4}>
                                 <Flex color={`grey.500`} fontSize={`sm`} alignItems={`center`} justifyContent={`space-between`}>
                                     <Text fontWeight={600}>Format</Text>
-                                    <Text>{product?.resources?.[0]?.mime_type}</Text>
+                                    <Text>{product?.assets?.[0]?.extension}</Text>
                                 </Flex>
                                 <Flex color={`grey.500`} fontSize={`sm`} alignItems={`center`} justifyContent={`space-between`}>
                                     <Text fontWeight={600}>File size</Text>
-                                    <Text>{product?.resources?.[0]?.size}</Text>
+                                    <Text>{product?.assets?.[0]?.size}</Text>
                                 </Flex>
                                 {/* <Flex color={`grey.500`} fontSize={`sm`} alignItems={`center`} justifyContent={`space-between`}>
                                     <Text>Articles</Text>
                                     <Text>0</Text>
                                 </Flex> */}
                                 <Flex color={`grey.500`} fontSize={`sm`} alignItems={`center`} justifyContent={`space-between`}>
-                                    <Text fontWeight={600}>Downloadable recources</Text>
-                                    <Text>{product?.resources?.length}</Text>
+                                    <Text fontWeight={600}>Downloadable Resources</Text>
+                                    <Text>{product?.assets?.length}</Text>
                                 </Flex>
                             </Stack>
                         </Box>

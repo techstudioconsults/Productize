@@ -8,6 +8,14 @@ import { selectTags } from '@productize/redux';
 import { useSelector } from 'react-redux';
 
 // Define the types for the links
+
+// Title case conversion function
+function toTitleCase(str: string): string {
+    return str.replace(/\w\S*/g, (txt: string) => {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+}
+
 type SubLink = {
     id: number;
     name: string;
@@ -31,10 +39,19 @@ type DropdownLinkProps = {
 const DropdownLink = ({ isScroll, link, linkColor }: DropdownLinkProps) => {
     const tags = useSelector(selectTags);
 
+    
+    // const navLinks = tags?.map((tag: { name: string }) => (
+    //     <NavLink key={tag.name} to={`/explore?tag=${tag.name.toLowerCase()}`}>
+    //         <MenuItem justifyContent="start" fontSize="sm" fontWeight={500}>
+    //             {tag.name.replace('_', ' ')}
+    //         </MenuItem>
+    //     </NavLink>
+    // ));
+
     const navLinks = tags?.map((tag: { name: string }) => (
         <NavLink key={tag.name} to={`/explore?tag=${tag.name.toLowerCase()}`}>
             <MenuItem justifyContent="start" fontSize="sm" fontWeight={500}>
-                {tag.name.replace('_', ' ')}
+                {toTitleCase(tag.name.replace('_', ' '))}
             </MenuItem>
         </NavLink>
     ));

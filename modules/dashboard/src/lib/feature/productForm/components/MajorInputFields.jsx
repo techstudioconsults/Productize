@@ -67,7 +67,7 @@ const MajorInputFields = () => {
                             <Icon fontSize="1.2rem" icon="mdi:naira" />
                         </InputLeftElement>
                         <Input
-                            defaultValue={0}
+                            // defaultValue={0}
                             placeholder="0.00"
                             variant="filled"
                             size="lg"

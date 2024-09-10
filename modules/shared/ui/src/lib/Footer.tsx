@@ -27,7 +27,7 @@ export const Footer: React.FC = memo(() => {
         <Box background="purple.100" display="flex" flexDirection="column" paddingTop="1rem">
             <Container maxW="70rem">
                 <SimpleGrid fontWeight="bold" spacing={10} columns={{ base: 1, lg: 4 }} marginTop="1rem">
-                    <Flex as={RouterLink} to="/" alignItems="start" justifyContent={{ base: 'center', lg: 'initial' }}>
+                    <Flex as={RouterLink} to="/seller" alignItems="start" justifyContent={{ base: 'center', lg: 'initial' }}>
                         <img src="https://res.cloudinary.com/doejcrfso/image/upload/v1725356813/productize/ByteAAlley-Logo_ue2hqr.svg" alt="Logo" />
                     </Flex>
                     <Flex
@@ -42,7 +42,7 @@ export const Footer: React.FC = memo(() => {
                         <FooterLink to="/explore">Explore</FooterLink>
                         <FooterLink to="/pricing">Pricing</FooterLink>
                         <FooterLink to="/features">Features</FooterLink>
-                        <FooterLink to="/auth">Become a creator</FooterLink>
+                        <FooterLink to="/auth">Become A Creator</FooterLink>
                     </Flex>
                     <Flex
                         flexDir="column"
@@ -56,7 +56,7 @@ export const Footer: React.FC = memo(() => {
                         <FooterLink to="/termsandconditions">Terms And Conditions</FooterLink>
                         <FooterLink to="/privacypolicy">Privacy Policy</FooterLink>
                         <FooterLink disabled to="/blogs">Blog</FooterLink>
-                        <FooterLink disabled to="/help-and-support">Help and support</FooterLink>
+                        <FooterLink disabled to="/dashboard/help">Help And Support</FooterLink>
                     </Flex>
                     <Flex
                         flexDir="column"

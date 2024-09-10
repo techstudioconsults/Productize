@@ -27,7 +27,7 @@ export const Footer: React.FC = memo(() => {
         <Box background="purple.100" display="flex" flexDirection="column" paddingTop="1rem">
             <Container maxW="70rem">
                 <SimpleGrid fontWeight="bold" spacing={10} columns={{ base: 1, lg: 4 }} marginTop="1rem">
-                    <Flex as={RouterLink} to="/" alignItems="start" justifyContent={{ base: 'center', lg: 'initial' }}>
+                    <Flex as={RouterLink} to="/seller" alignItems="start" justifyContent={{ base: 'center', lg: 'initial' }}>
                         <img src="https://res.cloudinary.com/doejcrfso/image/upload/v1725356813/productize/ByteAAlley-Logo_ue2hqr.svg" alt="Logo" />
                     </Flex>
                     <Flex

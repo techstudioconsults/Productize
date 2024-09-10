@@ -42,7 +42,7 @@ export const Footer: React.FC = memo(() => {
                         <FooterLink to="/explore">Explore</FooterLink>
                         <FooterLink to="/pricing">Pricing</FooterLink>
                         <FooterLink to="/features">Features</FooterLink>
-                        <FooterLink to="/auth">Become a creator</FooterLink>
+                        <FooterLink to="/auth">Become A Creator</FooterLink>
                     </Flex>
                     <Flex
                         flexDir="column"
@@ -56,7 +56,7 @@ export const Footer: React.FC = memo(() => {
                         <FooterLink to="/termsandconditions">Terms And Conditions</FooterLink>
                         <FooterLink to="/privacypolicy">Privacy Policy</FooterLink>
                         <FooterLink disabled to="/blogs">Blog</FooterLink>
-                        <FooterLink disabled to="/help-and-support">Help and support</FooterLink>
+                        <FooterLink disabled to="/dashboard/help">Help And Support</FooterLink>
                     </Flex>
                     <Flex
                         flexDir="column"

@@ -86,6 +86,14 @@ export const CoverPage = () => {
                         title={`Buyer`}
                     />
                 </Flex>
+                <Flex justifyContent={`center`} gap={`1rem`} pb={`0.5rem`}>
+                <Link as={RouterLink} to={`/privacypolicy`} role={'link'}>
+                Privacy Policy
+                </Link>
+                <Link as={RouterLink} to={`/termsandconditions`} role={'link'}>
+                Terms And Conditions
+                </Link>
+                </Flex>
             </Box>
         </>
         // </DefaultLayout>

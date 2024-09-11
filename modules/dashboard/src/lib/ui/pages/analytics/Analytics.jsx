@@ -26,9 +26,14 @@ export const Analytics = () => {
     const productAnalysis = useSelector(selectProductAnalytics);
 
     const fetchDailyRevenueData = async (month) => {
+
+        const baseUrl = import.meta.env.VITE_BASE_URL
+        // console.log(baseUrl);
+        
         const year = new Date().getFullYear();
         const formattedMonth = month < 10 ? `0${month}` : month;
-        const url = `https://productize-api.techstudio.academy/api/revenues/daily?month=${year}-${formattedMonth}`;
+
+        const url = `${baseUrl}/revenues/daily?month=${year}-${formattedMonth}`;
         try {
             const response = await axios.get(url, {
                 headers: {

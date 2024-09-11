@@ -14,6 +14,8 @@ interface tableProps {
     tableData: [];
 }
 
+
+
 export const CustomerTable = ({ draft, live, deleted, tableData }: tableProps) => {
     const [getAllCustomers] = useGetAllCustomersMutation();
     const navigate = useNavigate();
@@ -21,6 +23,9 @@ export const CustomerTable = ({ draft, live, deleted, tableData }: tableProps) =
     const formatDate = useDate();
     const formatTime = useTime();
     const paginate = useSelector(selectCustomersMetaData);
+
+    // console.log(tableData);
+    
 
     const tableHeader = [`Customer Name`, `Customer Email`, `Latest Purchase`, `Price`, `Date`].map((title) => {
         return (
@@ -34,7 +39,7 @@ export const CustomerTable = ({ draft, live, deleted, tableData }: tableProps) =
             <Tr _hover={{ bgColor: `purple.100`, cursor: `pointer` }} onClick={() => navigate(`/dashboard/customers/${customer.id}`)} key={customer.id}>
                 <Td>
                     <Flex alignItems={`center`} color={`grey.400`}>
-                        <Text>{customer?.name}</Text>
+                        <Text>{customer?.name.length > 22 ? `${customer.name.substring(0, 22)}...` : customer.name}</Text>
                     </Flex>
                 </Td>
                 <Td>
@@ -43,10 +48,7 @@ export const CustomerTable = ({ draft, live, deleted, tableData }: tableProps) =
                 <Td>
                     {/* if show sale count is true */}
                     <Flex flexDir={`column`} gap={2} py={2}>
-                        <Text>{customer?.id}</Text>
-                        <Text fontWeight={`light`} letterSpacing={1} fontSize={`xs`} color={`grey.300`}>
-                            {customer?.id}
-                        </Text>
+                        <Text>{customer?.latest_purchase_title}</Text>
                     </Flex>
                 </Td>
                 <Td>

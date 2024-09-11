@@ -43,7 +43,7 @@ export const PreLoader: React.FC = () => {
             <Stack alignItems={`center`} gap={2}>
                 <Image
                     w="5rem"
-                    src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png"
+                    src="https://res.cloudinary.com/doejcrfso/image/upload/v1725356813/productize/ByteAAlley-Logo_ue2hqr.svg"
                     alt="spinner"
                 />
                 <Text as="h6">Please wait...</Text>

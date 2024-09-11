@@ -9,6 +9,7 @@ import { DownloadLoader } from '@productize/ui';
 const AllDownloads = () => {
     const [isLoading, setLoading] = useState(true);
     const [downloadList] = useDownloadedProductsMutation();
+
     const [downloadedProducts, setDownloadedProducts] = useState([]);
 
     const getDownloadedProducts = useCallback(async () => {
@@ -25,9 +26,14 @@ const AllDownloads = () => {
         }
     }, [downloadList]);
 
+    // console.log(downloa);
+    
     const downloadedProductsList = downloadedProducts.map((product) => {
         return <DownloadCard product={product} key={product.id} />;
     });
+
+    console.log(downloadedProductsList);
+    
 
     useEffect(() => {
         getDownloadedProducts();

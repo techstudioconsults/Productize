@@ -15,10 +15,13 @@ export const AnalyticsTable = () => {
     const formatCurrency = useCurrency();
     const token = useSelector(selectCurrentToken);
 
+    const baseUrl = import.meta.env.VITE_BASE_URL
+    // console.log(baseUrl);
+
     const getTableData = useCallback(async () => {
         setLoading(true);
         try {
-            const res = await axios.get('https://productize-api.techstudio.academy/api/products/users/top-products', {
+            const res = await axios.get(`${baseUrl}/products/users/top-products`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

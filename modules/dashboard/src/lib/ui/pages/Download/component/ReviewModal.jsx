@@ -107,8 +107,8 @@ export const ReviewModal = ({ handleClose }) => {
                         width="100%"
                         btnExtras={{
                             onClick: handleSubmit,
-                            // disabled: rating === 0 || review.trim() === '',
-                            disabled: rating === 0,
+                            disabled: rating === 0 || review.trim() === '',
+                        
                         }}
                     />
                 </ModalFooter>

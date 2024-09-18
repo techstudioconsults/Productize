@@ -14,8 +14,6 @@ interface tableProps {
     tableData: [];
 }
 
-
-
 export const CustomerTable = ({ draft, live, deleted, tableData }: tableProps) => {
     const [getAllCustomers] = useGetAllCustomersMutation();
     const navigate = useNavigate();
@@ -25,7 +23,6 @@ export const CustomerTable = ({ draft, live, deleted, tableData }: tableProps) =
     const paginate = useSelector(selectCustomersMetaData);
 
     // console.log(tableData);
-    
 
     const tableHeader = [`Customer Name`, `Customer Email`, `Latest Purchase`, `Price`, `Date`].map((title) => {
         return (
@@ -52,7 +49,7 @@ export const CustomerTable = ({ draft, live, deleted, tableData }: tableProps) =
                     </Flex>
                 </Td>
                 <Td>
-                    <Flex>{formatCurrency(customer.total_transactions)}</Flex>
+                    <Flex> {formatCurrency(customer?.latest_purchase_discount_price ?? customer?.total_transactions)}</Flex>
                 </Td>
                 <Td>
                     <Flex>{`

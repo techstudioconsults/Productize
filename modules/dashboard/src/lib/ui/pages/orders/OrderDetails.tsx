@@ -23,6 +23,8 @@ export const OrderDetails = () => {
         fontSize: '18px',
     };
 
+    console.log(singleOrder);
+
     const showAllOrders = useCallback(async () => {
         try {
             const res = await getAllOrders({ orderID }).unwrap();
@@ -78,7 +80,7 @@ export const OrderDetails = () => {
                     <GridItem colSpan={{ base: 12, md: 3 }} mb="16px">
                         <Stack spacing="10px" direction="column" color="purple.300" lineHeight="24px" fontWeight="400" fontSize="16px">
                             <Text fontWeight={`bold`}>Price</Text>
-                            <Text>{formatCurrency(singleOrder?.product?.price)}</Text>
+                            <Text>{formatCurrency(singleOrder?.product?.discount_price ?? singleOrder?.product?.price)}</Text>
                         </Stack>
                     </GridItem>
                     <GridItem colSpan={{ base: 12, md: 6 }} mb="16px">
@@ -136,7 +138,7 @@ export const OrderDetails = () => {
                                 Total Value
                             </Text>
                             <Text fontWeight="600" fontSize="24px" lineHeight="32px">
-                                {formatCurrency(singleOrder?.total_amount)}
+                                {formatCurrency(singleOrder?.product?.discount_price ?? singleOrder?.total_amount)}
                             </Text>
                         </Stack>
                     </GridItem>

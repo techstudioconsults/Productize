@@ -36,7 +36,7 @@ export const CustomerDetailsTable = ({ tableData }: tableProps) => {
                     </Flex>
                 </Td>
                 <Td>
-                    <Flex>{formatCurrency(customer.product?.price)}</Flex>
+                    <Flex>{formatCurrency(customer.product?.discount_price ?? customer.product?.price)}</Flex>
                 </Td>
                 <Td>
                     <Flex>{`

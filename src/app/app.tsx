@@ -107,6 +107,8 @@ const ProductCart = React.lazy(() =>
     }))
 );
 
+
+
 function App() {
     const isAuth = useTokenExists();
     const [getProductTags] = useGetProductTagsMutation();

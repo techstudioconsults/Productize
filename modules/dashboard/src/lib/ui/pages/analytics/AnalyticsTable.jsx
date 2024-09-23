@@ -6,7 +6,6 @@ import { DashboardEmptyState } from '../../empty-states/DashboardEmptyState';
 import { useCurrency } from '@productize/hooks';
 import { selectCurrentToken } from '@productize/redux';
 import { OnBoardingLoader } from '@productize/ui';
-
 const tableHeaders = ['Product', 'View', 'Price', 'Purchases', 'Revenue'];
 
 export const AnalyticsTable = () => {

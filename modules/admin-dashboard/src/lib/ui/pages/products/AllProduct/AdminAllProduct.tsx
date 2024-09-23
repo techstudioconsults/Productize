@@ -6,6 +6,8 @@ import { useAllProducts } from './AdminService';
 
 const AllproductActive = () => {
     const { adminProductsAnalytics , getAdminProductsAnalyticsStatus, formatCurrency } = useAllProducts();
+    // console.log(adminProductsAnalytics);
+    
 
     const containsProductDisplay = (
         <Box my={8}>

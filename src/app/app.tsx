@@ -68,13 +68,17 @@ const About = React.lazy(() =>
     }))
 );
 
-const PrivacyPolicy = React.lazy(()=> import('../pages/privacyPolicy/PrivacyPolicy').then((module) =>({
-    default: module.PrivacyPolicy
-})));
+const PrivacyPolicy = React.lazy(() =>
+    import('../pages/privacyPolicy/PrivacyPolicy').then((module) => ({
+        default: module.PrivacyPolicy,
+    }))
+);
 
-const TermsAndConditions = React.lazy(()=> import('../pages/termsAndConditions/TermsAndConditions').then((module)=>({
-    default: module.TermsAndConditions
-})));
+const TermsAndConditions = React.lazy(() =>
+    import('../pages/termsAndConditions/TermsAndConditions').then((module) => ({
+        default: module.TermsAndConditions,
+    }))
+);
 
 const Features = React.lazy(() =>
     import('../pages/features/Features').then((module) => ({
@@ -142,7 +146,7 @@ function App() {
                 <Route path={`/explore`} element={<Explore />} />
                 <Route path={'/about'} element={<About />} />
                 <Route path={'/privacypolicy'} element={<PrivacyPolicy />} />
-                <Route path={`/termsandconditions`} element={<TermsAndConditions/>} />
+                <Route path={`/termsandconditions`} element={<TermsAndConditions />} />
                 <Route path="/products/:productID" element={<ProductDetails />} />
                 <Route path="/explore/product/cart" element={<ProductCart />} />
                 {/* dashboard */}
@@ -172,11 +176,11 @@ function App() {
                     </Route>
                 </Route>
 
-                {/* Admin Pages */}
+                {/*SuperAdmin & Admin Pages */}
                 <Route
                     path="/admin"
                     element={
-                        <AuthGuard requiredRole={["ADMIN", "SUPER_ADMIN"]}>
+                        <AuthGuard excludedRole={['USER']} requiredRole={['ADMIN', 'SUPER_ADMIN']}>
                             <Admin />
                         </AuthGuard>
                     }
@@ -187,14 +191,41 @@ function App() {
                     <Route path="orders" element={<AdminOrders />} />
                     <Route path="users" element={<AdminUser />} />
                     <Route path="profile/:userID" element={<AdminProfile />} />
+                    {/* 
                     <Route path="payouts" element={<AdminPayouts />} />
                     <Route path="revenue" element={<AdminRevenue />} />
+                     */}
+
+                    {/* Routes accessible only to SUPER_ADMIN */}
+                    <Route
+                        path="payouts"
+                        element={
+                            <AuthGuard requiredRole={['SUPER_ADMIN']} excludedRole={['ADMIN']}>
+                                <AdminPayouts />
+                            </AuthGuard>
+                        }
+                    />
+                    <Route
+                        path="revenue"
+                        element={
+                            <AuthGuard requiredRole={['SUPER_ADMIN']} excludedRole={['ADMIN']}>
+                                <AdminRevenue />
+                            </AuthGuard>
+                        }
+                    />
+
                     <Route path="complaints" element={<AdminComplaints />} />
                     <Route path="complaints/:complaintID" element={<AdminComplaintDetails />} />
                     <Route path="payouts/:payoutid/withdraw-earnings" element={<AdminWithdrawalEarnings />} />
                     <Route path="settings" element={<AdminSettings />}>
                         <Route path="account" element={<AdminAccountSettings />} />
-                        <Route path="addnewadmin" element={<AddNewAdmin />} />
+                        <Route path="addnewadmin"
+                          element={
+                            <AuthGuard requiredRole={['SUPER_ADMIN']} excludedRole={['ADMIN']}>
+                                <AddNewAdmin />
+                            </AuthGuard>
+                        }
+                     />
                     </Route>
                 </Route>
                 {/* not found */}

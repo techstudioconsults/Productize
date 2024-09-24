@@ -20,7 +20,7 @@ const defaultProps: Partial<AvatarProps> = {
 export const AvatarComp: React.FC<AvatarProps> = memo(({ isScroll = false, linkColor = 'black' }) => {
     const { logOut } = useLogout();
     const user = useSelector(selectCurrentUser);
-    const location = useLocation();  
+    const location = useLocation();
 
     const isDashboardHidden = location.pathname.startsWith('/Admin/') || location.pathname.startsWith('/dashboard/');
 
@@ -35,10 +35,13 @@ export const AvatarComp: React.FC<AvatarProps> = memo(({ isScroll = false, linkC
                 _focus={{ boxShadow: 'none' }}
             >
                 <Center gap={4}>
-                    <Avatar size="sm" name={user?.name} src={user?.logo} />
+                    <Avatar size="sm" name={user?.name || ''} src={user?.logo || ''} />
                     <Flex display={{ base: 'none', lg: 'flex' }} alignItems="center" gap={2}>
                         <Text fontWeight={600} color={linkColor}>
-                            {user?.username || user?.name}
+                            {/* Truncate the name to 20 characters and ensure safety */}
+                            {(user?.username || user?.name || '').length > 20
+                                ? `${(user?.username || user?.name || '').slice(0, 20)}...`
+                                : user?.username || user?.name || ''}
                         </Text>
                     </Flex>
                 </Center>

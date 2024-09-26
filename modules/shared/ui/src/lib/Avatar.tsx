@@ -22,7 +22,7 @@ export const AvatarComp: React.FC<AvatarProps> = memo(({ isScroll = false, linkC
     const user = useSelector(selectCurrentUser);
     const location = useLocation();
 
-    const isDashboardHidden = location.pathname.startsWith('/Admin/') || location.pathname.startsWith('/dashboard/');
+    const isDashboardHidden = location.pathname.startsWith('/Admin/') || location.pathname.startsWith('/dashboard/') || location.pathname.startsWith('/admin/');
 
     return (
         <Menu>

@@ -27,6 +27,8 @@ export const ProductTable = ({ deleted }: tableProps) => {
     const formatDate = useDate();
     const formatTime = useTime();
     const paginate = useSelector(selectPaginationMetaData);
+    console.log(allProducts);
+    
 
     const tableHeader = [`Product`, `Price`, `Sales`, `Type`, ''].map((title) => {
         if (deleted && title === `Status`) {

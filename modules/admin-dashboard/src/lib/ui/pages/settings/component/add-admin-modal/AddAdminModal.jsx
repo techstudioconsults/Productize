@@ -1,125 +1,3 @@
-// import React from 'react';
-// import {
-//     Modal,
-//     ModalOverlay,
-//     ModalContent,
-//     ModalHeader,
-//     ModalFooter,
-//     ModalBody,
-//     ModalCloseButton,
-//     Button,
-//     FormControl,
-//     FormLabel,
-//     Input,
-//     Text,
-//     Flex,
-//     useDisclosure,
-// } from '@chakra-ui/react';
-
-// export const AddAdminModal = ({ isOpen, onClose, }) => {
-//     // const { isOpen, onOpen, onClose } = useDisclosure();
-
-//     const initialRef = React.useRef(null);
-//     const finalRef = React.useRef(null);
-
-//     return (
-//         <Modal initialFocusRef={initialRef} finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose} size="lg">
-//                 <ModalOverlay />
-//                 <ModalContent>
-//                     <ModalHeader>Create your account</ModalHeader>
-//                     <ModalCloseButton />
-//                     <ModalBody pb={6}>
-//                         <Flex gap={`5`} flexDirection={`column`}>
-//                             <FormControl>
-//                                 <FormLabel color={`purple.300`} fontWeight={600}>
-//                                     Name
-//                                 </FormLabel>
-//                                 <Input
-//                                     // required
-//                                     // defaultValue={}
-//                                     bgColor={`grey.200`}
-//                                     _focus={{ bgColor: `grey.300`, color: `grey.800` }}
-//                                     _placeholder={{ color: `grey.400` }}
-//                                     placeholder="Enter Your Name"
-//                                     variant={`filled`}
-//                                     size={`lg`}
-//                                     // {...register('full_name')}
-//                                 />
-//                                 <Text className={`tiny-text`} color={`red.200`}>
-//                                     {/* {errors?.full_name?.message} */}
-//                                 </Text>
-//                             </FormControl>
-//                             <FormControl>
-//                                 <FormLabel color={`purple.300`} fontWeight={600}>
-//                                     Email Address
-//                                 </FormLabel>
-//                                 <Input
-//                                     // required
-//                                     // defaultValue={}
-//                                     bgColor={`grey.200`}
-//                                     _focus={{ bgColor: `grey.300`, color: `grey.800` }}
-//                                     _placeholder={{ color: `grey.400` }}
-//                                     placeholder="Enter Your Name"
-//                                     variant={`filled`}
-//                                     size={`lg`}
-//                                     // {...register('full_name')}
-//                                 />
-//                                 <Text className={`tiny-text`} color={`red.200`}>
-//                                     {/* {errors?.full_name?.message} */}
-//                                 </Text>
-//                             </FormControl>
-//                             <FormControl>
-//                                 <FormLabel color={`purple.300`} fontWeight={600}>
-//                                     Password
-//                                 </FormLabel>
-//                                 <Input
-//                                     // required
-//                                     // defaultValue={}
-//                                     bgColor={`grey.200`}
-//                                     _focus={{ bgColor: `grey.300`, color: `grey.800` }}
-//                                     _placeholder={{ color: `grey.400` }}
-//                                     placeholder="Enter Your Name"
-//                                     variant={`filled`}
-//                                     size={`lg`}
-//                                     // {...register('full_name')}
-//                                 />
-//                                 <Text className={`tiny-text`} color={`red.200`}>
-//                                     {/* {errors?.full_name?.message} */}
-//                                 </Text>
-//                             </FormControl>
-//                             <FormControl>
-//                                 <FormLabel color={`purple.300`} fontWeight={600}>
-//                                     Confirm Password
-//                                 </FormLabel>
-//                                 <Input
-//                                     // required
-//                                     // defaultValue={}
-//                                     bgColor={`grey.200`}
-//                                     _focus={{ bgColor: `grey.300`, color: `grey.800` }}
-//                                     _placeholder={{ color: `grey.400` }}
-//                                     placeholder="Enter Your Name"
-//                                     variant={`filled`}
-//                                     size={`lg`}
-//                                     // {...register('full_name')}
-//                                 />
-//                                 <Text className={`tiny-text`} color={`red.200`}>
-//                                     {/* {errors?.full_name?.message} */}
-//                                 </Text>
-//                             </FormControl>
-//                         </Flex>
-//                     </ModalBody>
-
-//                     <ModalFooter justifyContent={`center`}>
-//                         <Button colorScheme="blue" mr={3}>
-//                             Save
-//                         </Button>
-//                         <Button onClick={onClose}>Cancel</Button>
-//                     </ModalFooter>
-//                 </ModalContent>
-//             </Modal>
-//     );
-// };
-
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Icon } from '@iconify/react';
@@ -187,8 +65,7 @@ export const AddAdminModal = ({ isOpen, onClose }) => {
             });
             console.log(res);
             onClose();
-            
-            if (res?.status === 200) {
+            if (res?.data?.message === 'Success'){
                 toastIdRef.current = toast({
                     position: 'top',
                     render: () => (
@@ -202,9 +79,27 @@ export const AddAdminModal = ({ isOpen, onClose }) => {
                             handleClose={close}
                         />
                     ),
-                })}
+                });
+            setTimeout(()=>{
+                window.location.reload();
+            },2000)
+            }
         } catch (err) {
-            console.error('Failed to create admin:', err);
+            console.error('Failed to add admin:', err);
+            toastIdRef.current = toast({
+                position: 'top',
+                render: () => (
+                    <ToastFeedback
+                        btnColor={`purple.200`}
+                        message={`${err}`}
+                        title="Failed to update Admin"
+                        icon={errorImg}
+                        bgColor={undefined}
+                        color={undefined}
+                        handleClose={close}
+                    />
+                ),
+            })
         }
     };
 

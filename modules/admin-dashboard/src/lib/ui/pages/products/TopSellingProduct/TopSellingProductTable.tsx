@@ -71,7 +71,7 @@ export const TopProductTable = ({ deleted }: tableProps) => {
                     </Flex>
                 </Td>
                 <Td>
-                    <Flex>{formatCurrency(product?.price)}</Flex>
+                    <Flex>{formatCurrency(product?.discount_price ?? product?.price)}</Flex>
                 </Td>
                 <Td>
                     {/* if show sale count is true */}

@@ -20,8 +20,7 @@ const truncateText = (text: string, maxLength: number) => {
 export const ComplaintTable = ({ deleted }: TableProps) => {
     const [getAllComplaints, getAllComplaintsStatus] = useGetAllComplaintsMutation();
     const allProducts = useSelector(selectAllComplaints);
-    // const formatCurrency = useCurrency();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const formatDate = useDate();
     const formatTime = useTime();
     const paginate = useSelector(selectComplaintsMetaData);
@@ -114,32 +113,50 @@ export const ComplaintTable = ({ deleted }: TableProps) => {
                     Recent
                 </Text>
             </Box>
-            <Table size={`sm`} variant="simple">
-                <Thead zIndex={1} pos={`sticky`} top={0}>
-                    <Tr bgColor={`purple.100`} color={`grey.300`}>
-                        {tableHeader}
-                    </Tr>
-                </Thead>
-                <Tbody color={`purple.300`}>
-                    {recentLoading
-                        ? Array(4)
-                              .fill('')
-                              .map((_, index) => (
-                                  <Tr key={index}>
-                                      <Td>
-                                          <Skeleton height="20px" />
-                                      </Td>
-                                      <Td>
-                                          <Skeleton height="20px" />
-                                      </Td>
-                                      <Td>
-                                          <Skeleton height="20px" />
-                                      </Td>
-                                  </Tr>
-                              ))
-                        : firstFourProducts}
-                </Tbody>
-            </Table>
+            <TableContainer>
+                <Table size={`sm`} variant="simple">
+                    <Thead zIndex={1} pos={`sticky`} top={0}>
+                        <Tr bgColor={`purple.100`} color={`grey.300`}>
+                            {tableHeader}
+                        </Tr>
+                    </Thead>
+                    <Tbody color={`purple.300`}>
+                        {recentLoading ? (
+                            Array(4)
+                                .fill('')
+                                .map((_, index) => (
+                                    <Tr key={index}>
+                                        <Td>
+                                            <Skeleton height="20px" />
+                                        </Td>
+                                        <Td>
+                                            <Skeleton height="20px" />
+                                        </Td>
+                                        <Td>
+                                            <Skeleton height="20px" />
+                                        </Td>
+                                    </Tr>
+                                ))
+                        ) : firstFourProducts.length > 0 ? (
+                            firstFourProducts
+                        ) : (
+                            <Tr>
+                                <Td colSpan={3}>
+                                    <DashboardEmptyState
+                                        content={{
+                                            title: '',
+                                            desc: 'No recent complaints available.',
+                                            img: `https://res.cloudinary.com/kingsleysolomon/image/upload/v1700317427/productize/Illustration_4_pujumv.png`,
+                                        }}
+                                        textAlign={{ base: `center` }}
+                                        showImage
+                                    />
+                                </Td>
+                            </Tr>
+                        )}
+                    </Tbody>
+                </Table>
+            </TableContainer>
 
             <Box mb={2} mt={9}>
                 <Text fontSize="lg" fontWeight="bold">
@@ -153,32 +170,50 @@ export const ComplaintTable = ({ deleted }: TableProps) => {
                 justifyContent={`space-between`}
                 overflowY={`auto`}
             >
-                {getAllComplaintsStatus.isLoading ? (
-                    <OnBoardingLoader />
-                ) : (
-                    <Table size={`sm`} variant="simple">
-                        <Thead zIndex={1} pos={`sticky`} top={0}>
-                            <Tr bgColor={`purple.100`} color={`grey.300`}>
-                                {tableHeader}
+                <Table size={`sm`} variant="simple">
+                    <Thead zIndex={1} pos={`sticky`} top={0}>
+                        <Tr bgColor={`purple.100`} color={`grey.300`}>
+                            {tableHeader}
+                        </Tr>
+                    </Thead>
+                    <Tbody color={`purple.300`}>
+                        {getAllComplaintsStatus.isLoading ? (
+                            Array(4)
+                                .fill('')
+                                .map((_, index) => (
+                                    <Tr key={index}>
+                                        <Td>
+                                            <Skeleton height="20px" />
+                                        </Td>
+                                        <Td>
+                                            <Skeleton height="20px" />
+                                        </Td>
+                                        <Td>
+                                            <Skeleton height="20px" />
+                                        </Td>
+                                    </Tr>
+                                ))
+                        ) : allProducts.length > 0 ? (
+                            tableProduct
+                        ) : (
+                            <Tr>
+                                <Td colSpan={3}>
+                                    <DashboardEmptyState
+                                        content={{
+                                            title: '',
+                                            desc: 'Complaint Table is Empty.',
+                                            img: `https://res.cloudinary.com/kingsleysolomon/image/upload/v1700317427/productize/Illustration_4_pujumv.png`,
+                                        }}
+                                        textAlign={{ base: `center` }}
+                                        showImage
+                                    />
+                                </Td>
                             </Tr>
-                        </Thead>
-                        <Tbody color={`purple.300`}>{tableProduct}</Tbody>
-                    </Table>
-                )}
-                {(!Array.isArray(allProducts) || !allProducts.length) && !getAllComplaintsStatus.isLoading && (
-                    <Box my={10}>
-                        <DashboardEmptyState
-                            content={{
-                                title: '',
-                                desc: 'Product Table is Empty.',
-                                img: `https://res.cloudinary.com/kingsleysolomon/image/upload/v1700317427/productize/Illustration_4_pujumv.png`,
-                            }}
-                            textAlign={{ base: `center` }}
-                            showImage
-                        />
-                    </Box>
-                )}
+                        )}
+                    </Tbody>
+                </Table>
             </TableContainer>
+
             <Flex mt={4} gap={5} color={`grey.400`} alignItems={`center`} justifyContent={`space-between`} flexDir={{ base: `column-reverse`, lg: `row` }}>
                 <Flex alignItems={`center`} justifyContent={`space-between`} flexDir={{ base: `column`, lg: `row` }} gap={{ lg: 60 }}>
                     <Box>

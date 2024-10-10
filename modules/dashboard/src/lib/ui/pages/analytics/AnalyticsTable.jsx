@@ -14,7 +14,7 @@ export const AnalyticsTable = () => {
     const formatCurrency = useCurrency();
     const token = useSelector(selectCurrentToken);
 
-    const baseUrl = import.meta.env.VITE_BASE_URL
+    const baseUrl = import.meta.env.VITE_BASE_URL;
     // console.log(baseUrl);
 
     const getTableData = useCallback(async () => {
@@ -27,6 +27,7 @@ export const AnalyticsTable = () => {
             });
             if (res.status === 200) {
                 setData(res.data);
+                console.log(data);
             }
         } catch (error) {
             console.error(error);
@@ -68,13 +69,13 @@ export const AnalyticsTable = () => {
                     <Flex>N/A</Flex>
                 </Td>
                 <Td>
-                    <Flex>{formatCurrency(content?.price)}</Flex>
+                    <Flex>{formatCurrency(content?.discount_price ?? content?.price)}</Flex>
                 </Td>
                 <Td>
                     <Flex>{content?.total_sales}</Flex>
                 </Td>
                 <Td>
-                    <Flex>{formatCurrency(content?.price * content?.total_sales)}</Flex>
+                    <Flex>{formatCurrency(content?.discount_price * content?.total_sales ?? content?.price * content?.total_sales)}</Flex>
                 </Td>
             </Tr>
         ));

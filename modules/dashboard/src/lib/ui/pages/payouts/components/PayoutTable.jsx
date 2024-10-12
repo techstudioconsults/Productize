@@ -35,7 +35,7 @@ export const PayoutTable = () => {
     // }
 
     // const tableHeader = [`Price`, `BAnk Account`, `Period`, `status`, `Commission ( % )`, `amount`].map((title) => {
-    const tableHeader = [`Price`, `BAnk Account`, `Period`, `status`, `Commission ( % )`].map((title) => {
+    const tableHeader = [`Price`, `BAnk Account`, `Period`, `status`].map((title) => {
         return (
             <Th py={3} key={title}>
                 {title}
@@ -76,13 +76,13 @@ export const PayoutTable = () => {
                         </Tag>
                     </Flex>
                 </Td>
-                <Td>
+                {/* <Td>
                     <Flex>
                         <Tag bg={`grey.200`} color={`green.300`} fontWeight={600} size={`lg`} fontSize={`sm`}>
                             5%
                         </Tag>
                     </Flex>
-                </Td>
+                </Td> */}
                 {/* <Td>
                     <Flex>
                         <Tag bg={`grey.200`} color={`green.200`} fontWeight={600} size={`lg`} fontSize={`sm`}>

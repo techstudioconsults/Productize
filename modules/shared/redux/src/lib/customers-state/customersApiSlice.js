@@ -67,6 +67,8 @@ export const CustomersApiSlice = apiSlice.injectEndpoints({
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
+                    // console.log(data);
+                    
                     dispatch(
                         setSingleCustomerOrders({
                             customerOrder: data.data,

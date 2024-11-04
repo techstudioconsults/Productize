@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { Box, Center, Flex, Text } from '@chakra-ui/react';
 import { useCallback, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';

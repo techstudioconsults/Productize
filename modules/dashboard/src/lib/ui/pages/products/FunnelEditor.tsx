@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from 'react';
 import type { Editor } from 'grapesjs';
 import GrapesJsStudio from '@grapesjs/studio-sdk/react';
@@ -24,7 +25,6 @@ export function FunnelEditor() {
     };
 
     const onReady = (editor: Editor) => {
-        // console.log('Editor loaded', editor);
         setEditor(editor);
     };
 
@@ -42,15 +42,14 @@ export function FunnelEditor() {
 
     return (
         <Box h={`100vh`}>
-            <div className="p-1 flex gap-5">
+            {/* <div className="p-1 flex gap-5">
                 <button className="border rounded px-2" onClick={getProjectData}>
                     Log Project Data
                 </button>
                 <button className="border rounded px-2" onClick={getExportData}>
                     Log HTML/CSS
                 </button>
-            </div>
-
+            </div> */}
             <GrapesJsStudio onReady={onReady} options={options} />
         </Box>
     );

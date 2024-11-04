@@ -24,7 +24,7 @@ export function FunnelEditor() {
     };
 
     const onReady = (editor: Editor) => {
-        console.log('Editor loaded', editor);
+        // console.log('Editor loaded', editor);
         setEditor(editor);
     };
 

@@ -50,7 +50,7 @@ export const DashboardTab = () => {
                         Deleted
                     </Tab>
                 </Flex>
-                <Box display={{ base: `none`, md: `block` }}>
+                <Box display={{ base: `none`, md: `flex` }} gap={4}>
                     <Link as={ReactLink} to={`/dashboard/products/new#product-details`}>
                         <SharedButton
                             text={'New Product'}
@@ -62,7 +62,22 @@ export const DashboardTab = () => {
                             bgColor={'purple.200'}
                             textColor={'white'}
                             borderRadius={'4px'}
-                            fontSize={{ base: `sm`, md: `sm` }}
+                            fontSize={{}} // fontSize={{ base: `sm`, md: `sm` }}
+                        />
+                    </Link>
+                    <Link as={ReactLink} to={`/dashboard/funnels`}>
+                        <SharedButton
+                            text={'Funnels'}
+                            btnExtras={{
+                                leftIcon: `circum:filter`,
+                                border: `1px solid`,
+                            }}
+                            width={'fit-content'}
+                            height={'40px'}
+                            bgColor={'transparent'}
+                            textColor={'purple.200'}
+                            borderRadius={'4px'}
+                            fontSize={{}} // fontSize={{ base: `sm`, md: `sm` }}
                         />
                     </Link>
                 </Box>

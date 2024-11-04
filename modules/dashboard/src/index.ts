@@ -7,6 +7,7 @@ export * from './lib/feature/formValidationSchema/form-schemas';
 export * from './lib/feature/settingsForm/SetupPaymentForm';
 
 export * from './lib/ui/layouts/Layout';
+export * from './lib/ui/layouts/FunnelLayout';
 export * from './lib/ui/pages/home';
 export * from './lib/ui/pages/products';
 export * from './lib/ui/pages/products/premium/productDetails/ProductDetails';
@@ -35,3 +36,4 @@ export * from './lib/ui/pages/settings/pages/PaymentSettings';
 export * from './lib/ui/pages/settings/pages/kycSettings/KycSettings.jsx';
 export * from './lib/ui/utils/DashboardLinks';
 export * from './lib/ui/empty-states/EmptyState';
+export * from './lib/ui/pages/products/FunnelEditor';

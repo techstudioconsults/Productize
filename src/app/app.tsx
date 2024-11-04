@@ -8,6 +8,7 @@ import {
     Customers,
     CustomersDetails,
     DashboardLayout,
+    FunnelLayout,
     Download,
     DownloadedContent,
     Help,
@@ -25,6 +26,7 @@ import {
     AccountSettings,
     PaymentSettings,
     KycSettings,
+    FunnelEditor,
 } from '@productize/dashboard';
 import {
     Admin,
@@ -49,6 +51,7 @@ import { CoverPage } from '../pages/coverPage/CoverPage';
 import { useTokenExists } from '@productize/hooks';
 import { useGetFromCartMutation, useGetProductTagsMutation } from '@productize/redux';
 import { AuthGuard } from '@productize/admin-dashboard';
+
 // import {Admin} from '@productize/admin-dashboard'
 
 // using suspense and lazy loading
@@ -111,8 +114,6 @@ const ProductCart = React.lazy(() =>
     }))
 );
 
-
-
 function App() {
     const isAuth = useTokenExists();
     const [getProductTags] = useGetProductTagsMutation();
@@ -152,6 +153,9 @@ function App() {
                 <Route path="/products/:productID" element={<ProductDetails />} />
                 <Route path="/explore/product/cart" element={<ProductCart />} />
                 {/* dashboard */}
+                <Route path="/dashboard" element={<FunnelLayout />}>
+                    <Route path="/dashboard/funnels" element={<FunnelEditor />} />
+                </Route>
                 <Route path="/dashboard" element={<DashboardLayout />}>
                     <Route path="home" index element={<DashboardHome />} />
                     <Route path="products" element={<Products />} />
@@ -193,7 +197,7 @@ function App() {
                     <Route path="orders" element={<AdminOrders />} />
                     <Route path="users" element={<AdminUser />} />
                     <Route path="profile/:userID" element={<AdminProfile />} />
-                    {/* 
+                    {/*
                     <Route path="payouts" element={<AdminPayouts />} />
                     <Route path="revenue" element={<AdminRevenue />} />
                      */}
@@ -221,13 +225,14 @@ function App() {
                     <Route path="payouts/:payoutid/withdraw-earnings" element={<AdminWithdrawalEarnings />} />
                     <Route path="settings" element={<AdminSettings />}>
                         <Route path="account" element={<AdminAccountSettings />} />
-                        <Route path="addnewadmin"
-                          element={
-                            <AuthGuard requiredRole={['SUPER_ADMIN']} excludedRole={['ADMIN']}>
-                                <AddNewAdmin />
-                            </AuthGuard>
-                        }
-                     />
+                        <Route
+                            path="addnewadmin"
+                            element={
+                                <AuthGuard requiredRole={['SUPER_ADMIN']} excludedRole={['ADMIN']}>
+                                    <AddNewAdmin />
+                                </AuthGuard>
+                            }
+                        />
                     </Route>
                 </Route>
                 {/* not found */}

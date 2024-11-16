@@ -17,6 +17,8 @@ import {
   Stack,
   Card,
   Progress,
+  ModalCloseButton,
+  useToast,
 } from '@chakra-ui/react';
 import { Controller, useForm } from 'react-hook-form';
 import { SharedButton } from '@productize/ui';
@@ -77,9 +79,10 @@ const FunnelForm = ({ CTATitle = `Create New Funnel`, templateData, title, thumb
           btnExtras={{ onClick: onOpen }}
         />
       </div>
-      <Modal size={`3xl`} isOpen={isOpen} onClose={onClose}>
+      <Modal closeOnOverlayClick={false} size={`3xl`} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent p={`3rem`}>
+          <ModalCloseButton />
           <Box textAlign="center">
             <Text mb={10} as="h5" fontSize={{ base: `18px`, md: `24px` }}>
               Final Steps Before Publishing...
@@ -189,6 +192,24 @@ const PublishModal = ({ isOpen, onClose, formData }) => {
   const token = useSelector(selectCurrentToken);
   const router = useNavigate();
 
+  const simulateProgress = (start, end, duration) => {
+    let current = start;
+    const step = (end - start) / (duration / 100); // Slower step
+
+    return new Promise((resolve) => {
+      const interval = setInterval(() => {
+        current += step;
+        if (current >= end) {
+          setProgress(end);
+          clearInterval(interval);
+          resolve(); // Resolve the promise once the progress reaches the end
+        } else {
+          setProgress(Math.min(Math.round(current), end)); // Ensure it doesn't exceed the end value
+        }
+      }, 100); // Slow down by adjusting the interval
+    });
+  };
+
   const saveContent = async () => {
     console.log('Data to be saved:', formData);
 
@@ -216,40 +237,60 @@ const PublishModal = ({ isOpen, onClose, formData }) => {
     }
   };
 
-  const simulateProgress = (start, end, duration) => {
-    let current = start;
-    const step = (end - start) / (duration / 100); // Slower step
-
-    return new Promise((resolve) => {
-      const interval = setInterval(() => {
-        current += step;
-        if (current >= end) {
-          setProgress(end);
-          clearInterval(interval);
-          resolve(); // Resolve the promise once the progress reaches the end
-        } else {
-          setProgress(Math.min(Math.round(current), end)); // Ensure it doesn't exceed the end value
-        }
-      }, 100); // Slow down by adjusting the interval
-    });
-  };
-
   const PublishContent = async () => {
     console.log('Data to be saved:', formData);
 
     const formattedData = new FormData();
     formattedData.append('title', formData.data.title);
-    formattedData.append('thumbnail', formData.data.logo); // Assuming logo is a File object
+    formattedData.append('thumbnail', formData.data.logo);
     formattedData.append('status', 'published');
     formattedData.append('template', formData.templateData().content);
 
+    typeof formData.data.logo === 'string'
+      ? update(`https://api-dev.trybytealley.com/api/funnels/?_method=PATCH`, formattedData)
+      : publish(`https://api-dev.trybytealley.com/api/funnels`, formattedData);
+  };
+
+  const update = async (URLTYPE, data) => {
     try {
       setIsPublishing(true);
       setProgress(0); // Start with 0% progress
       // Simulate the upload progress gradually
       await simulateProgress(0, 60, 20000); // Simulate slower upload (0-60% in 3 seconds)
 
-      const response = await axios.post('https://api-dev.trybytealley.com/api/funnels', formattedData, {
+      const response = await axios.patch(URLTYPE, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+        onUploadProgress: (progressEvent) => {
+          // Handle real file upload progress in parallel
+          const percentage = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          setProgress(Math.min(percentage + 60, 100)); // Gradually increase progress
+        },
+      });
+
+      // Simulate post-upload processing (100% after upload)
+      if (response.status === 201) {
+        await simulateProgress(60, 100, 2000); // Simulate slow processing (60%-100% in 2 seconds)
+        setContent(response.data.data);
+        setIsSuccessOpen(true);
+      }
+    } catch (error) {
+      console.error('Error saving content:', error);
+    } finally {
+      setIsPublishing(false);
+      setProgress(0); // Reset progress after completion
+    }
+  };
+  const publish = async (URLTYPE, data) => {
+    try {
+      setIsPublishing(true);
+      setProgress(0); // Start with 0% progress
+      // Simulate the upload progress gradually
+      await simulateProgress(0, 60, 20000); // Simulate slower upload (0-60% in 3 seconds)
+
+      const response = await axios.post(URLTYPE, data, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',
@@ -276,9 +317,10 @@ const PublishModal = ({ isOpen, onClose, formData }) => {
   };
 
   return (
-    <Modal size={`3xl`} isOpen={isOpen} onClose={onClose}>
+    <Modal closeOnOverlayClick={false} size={`3xl`} isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent p={`3rem`}>
+        <ModalCloseButton />
         <Box textAlign={`center`}>
           <Text mb={10} as={`h5`} fontSize={{ base: `18px`, md: `24px` }}>
             Do you wish to publish this funnel?
@@ -293,29 +335,30 @@ const PublishModal = ({ isOpen, onClose, formData }) => {
             <Progress borderRadius={`10px`} value={progress} colorScheme="purple" />
           </Box>
         )}
-
-        <Flex gap={10}>
-          <SharedButton
-            text="Publish"
-            width="100%"
-            height="40px"
-            bgColor="purple.200"
-            textColor="white"
-            borderRadius="4px"
-            btnExtras={{ onClick: PublishContent }}
-            isDisabled={isPublishing} // Disable button while publishing
-          />
-          <SharedButton
-            text={`Save to Draft`}
-            width="100%"
-            height="40px"
-            textColor="purple.200"
-            bgColor="transparent"
-            borderRadius="4px"
-            btnExtras={{ border: `1px solid purple`, onClick: saveContent }}
-            isDisabled={isPublishing} // Disable button while publishing
-          />
-        </Flex>
+        {!isPublishing  && (
+          <Flex gap={10}>
+            <SharedButton
+              text="Publish"
+              width="100%"
+              height="40px"
+              bgColor="purple.200"
+              textColor="white"
+              borderRadius="4px"
+              btnExtras={{ onClick: PublishContent }}
+              isDisabled={isPublishing} // Disable button while publishing
+            />
+            <SharedButton
+              text={`Save to Draft`}
+              width="100%"
+              height="40px"
+              textColor="purple.200"
+              bgColor="transparent"
+              borderRadius="4px"
+              btnExtras={{ border: `1px solid purple`, onClick: saveContent }}
+              isDisabled={isPublishing} // Disable button while publishing
+            />
+          </Flex>
+        )}
       </ModalContent>
       {isSuccessOpen && <SuccessModal publishContent={content} isOpen={isSuccessOpen} onClose={() => setIsSuccessOpen(false)} />}
     </Modal>
@@ -324,39 +367,75 @@ const PublishModal = ({ isOpen, onClose, formData }) => {
 
 const SuccessModal = ({ isOpen, onClose, publishContent }) => {
   const router = useNavigate();
+  const toast = useToast(); // Optional for showing feedback
+
+  const handleCopy = () => {
+    if (publishContent?.url) {
+      navigator.clipboard
+        .writeText(publishContent.url)
+        .then(() => {
+          toast({
+            title: 'Link copied!',
+            description: 'The URL has been copied to your clipboard.',
+            status: 'success',
+            duration: 3000,
+            isClosable: true,
+          });
+        })
+        .catch((err) => {
+          console.error('Failed to copy:', err);
+          toast({
+            title: 'Copy failed',
+            description: 'Unable to copy the URL.',
+            status: 'error',
+            duration: 3000,
+            isClosable: true,
+          });
+        });
+    }
+  };
+
   return (
-    <Modal size={`3xl`} isOpen={isOpen} onClose={onClose}>
+    <Modal closeOnOverlayClick={false} size="3xl" isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent p={`3rem`}>
-        <Card variant={`unstyled`} border={`1px solid #CFCFD0`} p={2}>
-          <Box h={`197px`}>
-            <Image objectFit={`cover`} w={`100%`} h={`100%`} src={publishContent?.thumbnail} alt="img" />
+      <ModalContent p="3rem">
+        <ModalCloseButton />
+        <Card variant="unstyled" border="1px solid #CFCFD0" p={2}>
+          <Box h="197px">
+            <Image objectFit="cover" w="100%" h="100%" src={publishContent?.thumbnail} alt="img" />
           </Box>
-          <Stack mt={4} alignItems={`center`}>
+          <Stack mt={4} alignItems="center">
             <Text fontWeight={600}>{publishContent?.title}</Text>
             <Text fontWeight={600}>₦3,000</Text>
           </Stack>
         </Card>
-        <Stack alignItems={`center`} mt={`4rem`}>
-          <Text as={`h5`}>Funnel Published Successfully!</Text>
-          <Text color={`grey.500`} my={4}>
+        <Stack alignItems="center" mt="4rem">
+          <Text as="h5">Funnel Published Successfully!</Text>
+          <Text color="grey.500" my={4}>
             Copy and send this link to someone and they’ll be able to get your Funnel
           </Text>
-          <Flex w={`100%`} p={`8px`} borderRadius={5} bgColor={`grey.200`} gap={2} alignItems={`center`} justifyContent={`space-around`}>
+          <Flex w="100%" p="8px" borderRadius={5} bgColor="grey.200" gap={2} alignItems="center" justifyContent="space-around">
             <Text>{publishContent?.url}</Text>
-
-            <Icon fontSize={`24px`} cursor={`pointer`} icon={`ph:copy-simple-light`} />
+            <Icon
+              fontSize="24px"
+              cursor="pointer"
+              icon="ph:copy-simple-light"
+              onClick={handleCopy} // Add the click handler here
+            />
           </Flex>
         </Stack>
         <Box mt={10}>
           <SharedButton
-            text={`Go to All Funnels`}
+            text="Go to All Funnels"
             width="100%"
             height="40px"
             textColor="purple.200"
             bgColor="transparent"
             borderRadius="4px"
-            btnExtras={{ border: `1px solid purple`, onClick: () => router(`/dashboard/funnels/#all-funnels`) }}
+            btnExtras={{
+              border: '1px solid purple',
+              onClick: () => router(`/dashboard/funnels/#all-funnels`),
+            }}
           />
         </Box>
       </ModalContent>

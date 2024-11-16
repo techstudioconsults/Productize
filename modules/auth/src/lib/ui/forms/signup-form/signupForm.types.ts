@@ -1,4 +1,4 @@
-import { FieldErrors } from 'react-hook-form';
+import {FieldErrors} from 'react-hook-form';
 
 export interface SignupFormInputs {
     full_name: string;

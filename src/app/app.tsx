@@ -3,47 +3,48 @@ import { Route, Routes } from 'react-router-dom';
 import { PageNotFound, PreLoader, SpinnerComponent } from '@productize/ui';
 import { ForgotPassword, Login, Signup } from '@productize/auth';
 import {
-    Analytics,
-    BillingCycle,
-    Customers,
-    CustomersDetails,
-    DashboardLayout,
-    FunnelLayout,
-    Download,
-    DownloadedContent,
-    Help,
-    NewProduct,
-    Orders,
-    Payouts,
-    PlanSettings,
-    Products,
-    Profile,
-    Settings,
-    ProductDetails as DashboardProductDetails,
-    Home as DashboardHome,
-    OrderDetails as DashboardOrderDetails,
-    WithdrawalEarnings,
-    AccountSettings,
-    PaymentSettings,
-    KycSettings,
-    FunnelEditor,
+  Analytics,
+  BillingCycle,
+  Customers,
+  CustomersDetails,
+  DashboardLayout,
+  FunnelLayout,
+  Download,
+  DownloadedContent,
+  Help,
+  NewProduct,
+  Orders,
+  Payouts,
+  PlanSettings,
+  Products,
+  Profile,
+  Settings,
+  ProductDetails as DashboardProductDetails,
+  Home as DashboardHome,
+  OrderDetails as DashboardOrderDetails,
+  WithdrawalEarnings,
+  AccountSettings,
+  PaymentSettings,
+  KycSettings,
+  FunnelEditor,
+  Funnels,
 } from '@productize/dashboard';
 import {
-    Admin,
-    AdminAccountSettings,
-    AdminComplaintDetails,
-    AdminComplaints,
-    AdminHome,
-    AdminOrders,
-    AdminPayouts,
-    AdminProductDetails,
-    AdminProducts,
-    AdminProfile,
-    AdminRevenue,
-    AdminSettings,
-    AdminUser,
-    AdminWithdrawalEarnings,
-    AddNewAdmin,
+  Admin,
+  AdminAccountSettings,
+  AdminComplaintDetails,
+  AdminComplaints,
+  AdminHome,
+  AdminOrders,
+  AdminPayouts,
+  AdminProductDetails,
+  AdminProducts,
+  AdminProfile,
+  AdminRevenue,
+  AdminSettings,
+  AdminUser,
+  AdminWithdrawalEarnings,
+  AddNewAdmin,
 } from '@productize/admin-dashboard';
 // import {AddNewAdmin} from '@productize/admin-dashboard'
 import { CoverPage } from '../pages/coverPage/CoverPage';
@@ -56,190 +57,187 @@ import { AuthGuard } from '@productize/admin-dashboard';
 
 // using suspense and lazy loading
 const Home = React.lazy(() =>
-    import('../pages/home/Home').then((module) => ({
-        default: module.Home,
-    }))
+  import('../pages/home/Home').then((module) => ({
+    default: module.Home,
+  }))
 );
 const ContactUs = React.lazy(() =>
-    import('../pages/contactUs/ContactUs').then((module) => ({
-        default: module.ContactUs,
-    }))
+  import('../pages/contactUs/ContactUs').then((module) => ({
+    default: module.ContactUs,
+  }))
 );
 const About = React.lazy(() =>
-    import('../pages/about/About').then((module) => ({
-        default: module.About,
-    }))
+  import('../pages/about/About').then((module) => ({
+    default: module.About,
+  }))
 );
 
 const PrivacyPolicy = React.lazy(() =>
-    import('../pages/privacyPolicy/PrivacyPolicy').then((module) => ({
-        default: module.PrivacyPolicy,
-    }))
+  import('../pages/privacyPolicy/PrivacyPolicy').then((module) => ({
+    default: module.PrivacyPolicy,
+  }))
 );
 
 const TermsAndConditions = React.lazy(() =>
-    import('../pages/termsAndConditions/TermsAndConditions').then((module) => ({
-        default: module.TermsAndConditions,
-    }))
+  import('../pages/termsAndConditions/TermsAndConditions').then((module) => ({
+    default: module.TermsAndConditions,
+  }))
 );
 
 const Features = React.lazy(() =>
-    import('../pages/features/Features').then((module) => ({
-        default: module.Features,
-    }))
+  import('../pages/features/Features').then((module) => ({
+    default: module.Features,
+  }))
 );
 const Pricing = React.lazy(() =>
-    import('../pages/pricing/Pricing').then((module) => ({
-        default: module.Pricing,
-    }))
+  import('../pages/pricing/Pricing').then((module) => ({
+    default: module.Pricing,
+  }))
 );
 const Explore = React.lazy(() =>
-    import('../pages/explore/views').then((module) => ({
-        default: module.Explore,
-    }))
+  import('../pages/explore/views').then((module) => ({
+    default: module.Explore,
+  }))
 );
-// const CategoryPageDetails = React.lazy(() =>
-//     import('../pages/explore/views/productDetails/CategoryPageDetails').then((module) => ({
-//         default: module.CategoryPageDetails,
-//     }))
-// );
+
 const ProductDetails = React.lazy(() =>
-    import('../pages/explore/views/productDetails/ProductDetails').then((module) => ({
-        default: module.ProductDetails,
-    }))
+  import('../pages/explore/views/productDetails/ProductDetails').then((module) => ({
+    default: module.ProductDetails,
+  }))
 );
 const ProductCart = React.lazy(() =>
-    import('../pages/explore/views/productDetails/ProductCart').then((module) => ({
-        default: module.ProductCart,
-    }))
+  import('../pages/explore/views/productDetails/ProductCart').then((module) => ({
+    default: module.ProductCart,
+  }))
 );
 
 function App() {
-    const isAuth = useTokenExists();
-    const [getProductTags] = useGetProductTagsMutation();
-    const [getFromCart] = useGetFromCartMutation();
+  const isAuth = useTokenExists();
+  const [getProductTags] = useGetProductTagsMutation();
+  const [getFromCart] = useGetFromCartMutation();
 
-    useEffect(() => {
-        getProductTags(null).unwrap();
-        if (isAuth) {
-            getFromCart(null).unwrap();
-        }
-    }, [getFromCart, getProductTags, isAuth]);
+  useEffect(() => {
+    getProductTags(null).unwrap();
+    if (isAuth) {
+      getFromCart(null).unwrap();
+    }
+  }, [getFromCart, getProductTags, isAuth]);
 
-    return (
-        <Suspense
-            fallback={
-                <div style={{ width: `100%`, height: `100vh` }} className="d-flex align-items-center justify-content-center">
-                    <SpinnerComponent />
-                </div>
-            }
+  return (
+    <Suspense
+      fallback={
+        <div style={{ width: `100%`, height: `100vh` }} className="d-flex align-items-center justify-content-center">
+          <SpinnerComponent />
+        </div>
+      }
+    >
+      <Routes>
+        {/* authentication */}
+        <Route path={`/auth`} element={<Signup />} />
+        <Route path="/auth/login" element={<Login />} />
+        <Route path="/auth/fetching-data/:provider" element={<PreLoader />} />
+        <Route path="/auth/forgot-password" element={<ForgotPassword />} />
+        {/* external pages */}
+        <Route index element={<CoverPage />} />
+        <Route path="/seller" element={<Home />} />
+        <Route path="/features" element={<Features />} />
+        <Route path="/contact-us" element={<ContactUs />} />
+        <Route path="/pricing" element={<Pricing />} />
+        <Route path={`/explore`} element={<Explore />} />
+        <Route path={'/about'} element={<About />} />
+        <Route path={'/privacypolicy'} element={<PrivacyPolicy />} />
+        <Route path={`/termsandconditions`} element={<TermsAndConditions />} />
+        <Route path="/products/:productID" element={<ProductDetails />} />
+        <Route path="/explore/product/cart" element={<ProductCart />} />
+        {/* dashboard */}
+        <Route path="/dashboard" element={<FunnelLayout />}>
+          <Route path="funnels/editor" element={<FunnelEditor />} />
+        </Route>
+        <Route path="/dashboard" element={<DashboardLayout />}>
+          <Route path="home" index element={<DashboardHome />} />
+          <Route path="products" element={<Products />} />
+          <Route path="products/:productID" element={<DashboardProductDetails />} />
+          <Route path="funnels" element={<Funnels />} />
+          <Route path="products/new" element={<NewProduct />} />
+          <Route path="orders" element={<Orders />} />
+          <Route path="orders/:orderID" element={<DashboardOrderDetails />} />
+          <Route path="customers" element={<Customers />} />
+          <Route path="customers/:customerID" element={<CustomersDetails />} />
+          <Route path="payouts" element={<Payouts />} />
+          {/* <Route path="payouts/:payout" element={<PayoutDetails />} /> */}
+          <Route path="payouts/:payoutid/withdraw-earnings" element={<WithdrawalEarnings />} />
+          <Route path="analytics" element={<Analytics />} />
+          <Route path="profile/:userID" element={<Profile />} />
+          <Route path="help" element={<Help />} />
+          <Route path="downloads" element={<Download />} />
+          <Route path="downloads/:downloadedContentID" element={<DownloadedContent />} />
+          <Route path="settings" element={<Settings />}>
+            <Route path="account" element={<AccountSettings />} />
+            <Route path="payment" element={<PaymentSettings />} />
+            <Route path="kyc" element={<KycSettings />} />
+            <Route path="plans" element={<PlanSettings />} />
+            <Route path="plans/billing-cycle" element={<BillingCycle />} />
+          </Route>
+        </Route>
+
+        {/*SuperAdmin & Admin Pages */}
+        <Route
+          path="/admin"
+          element={
+            <AuthGuard excludedRole={['USER']} requiredRole={['ADMIN', 'SUPER_ADMIN']}>
+              <Admin />
+            </AuthGuard>
+          }
         >
-            <Routes>
-                {/* authentication */}
-                <Route path={`/auth`} element={<Signup />} />
-                <Route path="/auth/login" element={<Login />} />
-                <Route path="/auth/fetching-data/:provider" element={<PreLoader />} />
-                <Route path="/auth/forgot-password" element={<ForgotPassword />} />
-                {/* external pages */}
-                <Route index element={<CoverPage />} />
-                <Route path="/seller" element={<Home />} />
-                <Route path="/features" element={<Features />} />
-                <Route path="/contact-us" element={<ContactUs />} />
-                <Route path="/pricing" element={<Pricing />} />
-                <Route path={`/explore`} element={<Explore />} />
-                <Route path={'/about'} element={<About />} />
-                <Route path={'/privacypolicy'} element={<PrivacyPolicy />} />
-                <Route path={`/termsandconditions`} element={<TermsAndConditions />} />
-                <Route path="/products/:productID" element={<ProductDetails />} />
-                <Route path="/explore/product/cart" element={<ProductCart />} />
-                {/* dashboard */}
-                <Route path="/dashboard" element={<FunnelLayout />}>
-                    <Route path="/dashboard/funnels" element={<FunnelEditor />} />
-                </Route>
-                <Route path="/dashboard" element={<DashboardLayout />}>
-                    <Route path="home" index element={<DashboardHome />} />
-                    <Route path="products" element={<Products />} />
-                    <Route path="products/:productID" element={<DashboardProductDetails />} />
-                    <Route path="products/new" element={<NewProduct />} />
-                    <Route path="orders" element={<Orders />} />
-                    <Route path="orders/:orderID" element={<DashboardOrderDetails />} />
-                    <Route path="customers" element={<Customers />} />
-                    <Route path="customers/:customerID" element={<CustomersDetails />} />
-                    <Route path="payouts" element={<Payouts />} />
-                    {/* <Route path="payouts/:payoutid" element={<PayoutDetails />} /> */}
-                    <Route path="payouts/:payoutid/withdraw-earnings" element={<WithdrawalEarnings />} />
-                    <Route path="analytics" element={<Analytics />} />
-                    <Route path="profile/:userID" element={<Profile />} />
-                    <Route path="help" element={<Help />} />
-                    <Route path="downloads" element={<Download />} />
-                    <Route path="downloads/:downloadedContentID" element={<DownloadedContent />} />
-                    <Route path="settings" element={<Settings />}>
-                        <Route path="account" element={<AccountSettings />} />
-                        <Route path="payment" element={<PaymentSettings />} />
-                        <Route path="kyc" element={<KycSettings />} />
-                        <Route path="plans" element={<PlanSettings />} />
-                        <Route path="plans/billing-cycle" element={<BillingCycle />} />
-                    </Route>
-                </Route>
-
-                {/*SuperAdmin & Admin Pages */}
-                <Route
-                    path="/admin"
-                    element={
-                        <AuthGuard excludedRole={['USER']} requiredRole={['ADMIN', 'SUPER_ADMIN']}>
-                            <Admin />
-                        </AuthGuard>
-                    }
-                >
-                    <Route path="home" index element={<AdminHome />} />
-                    <Route path="products" element={<AdminProducts />} />
-                    <Route path="products/:productID" element={<AdminProductDetails />} />
-                    <Route path="orders" element={<AdminOrders />} />
-                    <Route path="users" element={<AdminUser />} />
-                    <Route path="profile/:userID" element={<AdminProfile />} />
-                    {/*
+          <Route path="home" index element={<AdminHome />} />
+          <Route path="products" element={<AdminProducts />} />
+          <Route path="products/:productID" element={<AdminProductDetails />} />
+          <Route path="orders" element={<AdminOrders />} />
+          <Route path="users" element={<AdminUser />} />
+          <Route path="profile/:userID" element={<AdminProfile />} />
+          {/*
                     <Route path="payouts" element={<AdminPayouts />} />
                     <Route path="revenue" element={<AdminRevenue />} />
                      */}
 
-                    {/* Routes accessible only to SUPER_ADMIN */}
-                    <Route
-                        path="payouts"
-                        element={
-                            <AuthGuard requiredRole={['SUPER_ADMIN']} excludedRole={['ADMIN']}>
-                                <AdminPayouts />
-                            </AuthGuard>
-                        }
-                    />
-                    <Route
-                        path="revenue"
-                        element={
-                            <AuthGuard requiredRole={['SUPER_ADMIN']} excludedRole={['ADMIN']}>
-                                <AdminRevenue />
-                            </AuthGuard>
-                        }
-                    />
+          {/* Routes accessible only to SUPER_ADMIN */}
+          <Route
+            path="payouts"
+            element={
+              <AuthGuard requiredRole={['SUPER_ADMIN']} excludedRole={['ADMIN']}>
+                <AdminPayouts />
+              </AuthGuard>
+            }
+          />
+          <Route
+            path="revenue"
+            element={
+              <AuthGuard requiredRole={['SUPER_ADMIN']} excludedRole={['ADMIN']}>
+                <AdminRevenue />
+              </AuthGuard>
+            }
+          />
 
-                    <Route path="complaints" element={<AdminComplaints />} />
-                    <Route path="complaints/:complaintID" element={<AdminComplaintDetails />} />
-                    <Route path="payouts/:payoutid/withdraw-earnings" element={<AdminWithdrawalEarnings />} />
-                    <Route path="settings" element={<AdminSettings />}>
-                        <Route path="account" element={<AdminAccountSettings />} />
-                        <Route
-                            path="addnewadmin"
-                            element={
-                                <AuthGuard requiredRole={['SUPER_ADMIN']} excludedRole={['ADMIN']}>
-                                    <AddNewAdmin />
-                                </AuthGuard>
-                            }
-                        />
-                    </Route>
-                </Route>
-                {/* not found */}
-                <Route path="*" element={<PageNotFound />} />
-            </Routes>
-        </Suspense>
-    );
+          <Route path="complaints" element={<AdminComplaints />} />
+          <Route path="complaints/:complaintID" element={<AdminComplaintDetails />} />
+          <Route path="payouts/:payoutid/withdraw-earnings" element={<AdminWithdrawalEarnings />} />
+          <Route path="settings" element={<AdminSettings />}>
+            <Route path="account" element={<AdminAccountSettings />} />
+            <Route
+              path="addnewadmin"
+              element={
+                <AuthGuard requiredRole={['SUPER_ADMIN']} excludedRole={['ADMIN']}>
+                  <AddNewAdmin />
+                </AuthGuard>
+              }
+            />
+          </Route>
+        </Route>
+        {/* not found */}
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+    </Suspense>
+  );
 }
 
 export default App;

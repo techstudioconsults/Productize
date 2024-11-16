@@ -329,15 +329,15 @@ export const template1 = `<!DOCTYPE html>
 
         <footer>
             <div class="container footerner">
-                <a href="/"><img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1729933350/grape.js/qfwhpt8s0wcxavkeu9ss.png" alt="logo" /></a>
+                <a href="/public"><img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1729933350/grape.js/qfwhpt8s0wcxavkeu9ss.png" alt="logo" /></a>
                 <div class="footerNav">
-                    <a href="/">Navitem</a>
-                    <a href="/">Navitem</a>
-                    <a href="/">Navitem</a>
+                    <a href="/public">Navitem</a>
+                    <a href="/public">Navitem</a>
+                    <a href="/public">Navitem</a>
                 </div>
 
                 <div>
-                    <a href="/">Navitem</a>
+                    <a href="/public">Navitem</a>
                 </div>
             </div>
         </footer>

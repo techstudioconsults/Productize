@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect } from 'react';
+import { Key, useEffect } from 'react';
 
 import { Box, Flex, HStack, Skeleton, VStack, SimpleGrid } from '@chakra-ui/react';
 import { ProductCards } from '../../../../ProductCards';
@@ -7,9 +8,12 @@ import { EmptyState } from '../../../../empty-states/EmptyState';
 import FunnelTypeModal from '../../funnelTypeModal';
 import { FunnelCardII } from '../../funnelTypeModal/FunnelCardII';
 import { useFunnelData } from '../../services/useFunnelData';
+import { useSelector } from 'react-redux';
+import { selectFunnelData } from '@productize/redux';
 
 const AllFunnelActive = () => {
-  const { data, isLoading, error, fetchData } = useFunnelData(); // Use the hook
+  const { isLoading, error, fetchData } = useFunnelData(); // Use the hook
+  const data = useSelector(selectFunnelData);
 
   // Trigger data fetch when the component mounts
   useEffect(() => {
@@ -50,7 +54,7 @@ const AllFunnelActive = () => {
 
   const containsProductDisplay = (
     <SimpleGrid columns={3} gap={10} my={8}>
-      {data?.map((item, index) => (
+      {data?.map((item: any, index: Key | null | undefined) => (
         <FunnelCardII key={index} template={item} />
       ))}
     </SimpleGrid>

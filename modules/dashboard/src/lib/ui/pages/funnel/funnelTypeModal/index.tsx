@@ -1,8 +1,8 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import { Box, Text, useDisclosure } from '@chakra-ui/react';
+import { Flex, Text, useDisclosure } from '@chakra-ui/react';
 import { ModalComp, SharedButton } from '@productize/ui';
 import { FunnelCard } from './funnelCard';
-import { template1, template2 } from '../templates';
+import { template1, template2, template3 } from '../templates';
 
 const FunnelTypeModal = ({ CTATitle = `Create New Funnel` }: { CTATitle?: string }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -26,19 +26,26 @@ const FunnelTypeModal = ({ CTATitle = `Create New Funnel` }: { CTATitle?: string
           </Text>
           <p>Select a template to continue</p>
         </section>
-        <Box mt={`24px`} display={`flex`} alignItems={`center`} justifyContent={`space-between`}>
+        <Flex mt={`24px`} alignItems={`center`} justifyContent={`space-between`} gap={10}>
           <FunnelCard
             template={template1}
-            title={'template-1'}
+            title={'Sales Template'}
             pic={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1731740083/productize/wnz9v59cefccxdtb2c6r.png`}
+            description={''}
           />
           <FunnelCard
-            title={'template-2'}
+            title={'Webinar Template'}
             template={template2}
             pic={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1731740810/productize/lt2bnclg7cl58gmwcpfm.png`}
+            description={''}
           />
-          <FunnelCard title={'template-3'} template={``} pic={``} />
-        </Box>
+          <FunnelCard
+            title={'template-3'}
+            template={template3}
+            pic={`https://res.cloudinary.com/kingsleysolomon/image/upload/v1733567089/grape.js/xhl9d0izcvlxlh0aqyyk.png`}
+            description={''}
+          />
+        </Flex>
       </ModalComp>
     </div>
   );

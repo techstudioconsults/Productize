@@ -2,26 +2,41 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { selectCurrentToken } from '@productize/redux';
+import { useFunnelData } from '../../services/useFunnelData';
 
 export const useUpdateFunnel = () => {
   const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const token = useSelector(selectCurrentToken);
+  const { fetchData } = useFunnelData(); // Use the hook
 
-  const updateFunnel = async () => {
+  const updateFunnel = async (template, title, status, thumbnail, funnelID) => {
+    setIsLoading(true);
     const formattedData = new FormData();
-    formattedData.append('status', 'draft');
+    if (template) {
+      formattedData.append('template', template);
+    }
+    formattedData.append('title', title);
+   if (thumbnail && thumbnail instanceof File) {
+     formattedData.append('thumbnail', thumbnail);
+   }
+    formattedData.append('status', status);
+    formattedData.append('_method', `PATCH`);
+
     try {
-      setIsLoading(true);
-      const response = await axios.patch('https://api-dev.trybytealley.com/api/funnels/?_method=PATCH', formattedData, {
+      const response = await axios.post(`https://api-dev.trybytealley.com/api/funnels/${funnelID}`, formattedData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',
+          // 'Content-Type': 'application/x-www-form-urlencoded',
         },
       });
+      console.log(response);
       setData(response.data.data);
+      fetchData();
     } catch (err) {
+      setIsLoading(false);
       setError(err);
     } finally {
       setIsLoading(false);

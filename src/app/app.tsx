@@ -28,6 +28,7 @@ import {
   KycSettings,
   FunnelEditor,
   Funnels,
+  FunnelSettings
 } from '@productize/dashboard';
 import {
   Admin,
@@ -152,9 +153,11 @@ function App() {
         {/* dashboard */}
         <Route path="/dashboard" element={<FunnelLayout />}>
           <Route path="funnels/editor" element={<FunnelEditor />} />
+          <Route path="funnels/editor/:funnelID" element={<FunnelEditor />} />
         </Route>
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route path="home" index element={<DashboardHome />} />
+          <Route path="funnels/settings" element={<FunnelSettings />} />
           <Route path="products" element={<Products />} />
           <Route path="products/:productID" element={<DashboardProductDetails />} />
           <Route path="funnels" element={<Funnels />} />

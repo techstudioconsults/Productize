@@ -16,22 +16,23 @@ import {
   Flex,
   Stack,
   Card,
-  Progress,
   ModalCloseButton,
   useToast,
+  // useToast,
 } from '@chakra-ui/react';
 import { Controller, useForm } from 'react-hook-form';
 import { SharedButton } from '@productize/ui';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
-import { selectCurrentToken } from '@productize/redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectCurrentToken, setProgressBar } from '@productize/redux';
 import { Icon } from '@iconify/react';
 import { useNavigate } from 'react-router-dom';
 
-const FunnelForm = ({ CTATitle = `Create New Funnel`, templateData, title, thumbnail }) => {
+const FunnelForm = ({ CTATitle = `Create New Funnel`, templateData }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isPublishOpen, setIsPublishOpen] = useState(false);
   const [formData, setFormData] = useState();
+  const logoInput = useRef(null);
   const fileInput = useRef(null);
   const imgRef = useRef(null);
 
@@ -43,10 +44,6 @@ const FunnelForm = ({ CTATitle = `Create New Funnel`, templateData, title, thumb
   } = useForm({
     criteriaMode: 'all',
     mode: 'onChange',
-    defaultValues: {
-      title: title || '', // Initial value for title
-      logo: thumbnail || null, // Initial value for logo
-    },
   });
 
   const previewImg = (files) => {
@@ -57,7 +54,6 @@ const FunnelForm = ({ CTATitle = `Create New Funnel`, templateData, title, thumb
   };
 
   const saveContent = async (data) => {
-    console.log(data);
     setFormData({ templateData, data });
   };
 
@@ -117,13 +113,13 @@ const FunnelForm = ({ CTATitle = `Create New Funnel`, templateData, title, thumb
               </FormLabel>
               <Box>
                 <Center overflow="hidden" borderRadius="8px" bgColor="purple.100" h="200px" pos="relative">
-                  <Image ref={imgRef} objectFit="contain" src={thumbnail} alt="img" />
+                  <Image ref={imgRef} objectFit="contain" src={``} alt="img" />
                   <Box pos="absolute">
                     <SharedButton
                       text="Upload Image"
                       btnExtras={{
                         leftIcon: 'solar:camera-bold',
-                        onClick: () => fileInput.current?.click(),
+                        onClick: () => logoInput.current?.click(),
                       }}
                       width="fit-content"
                       height="40px"
@@ -140,7 +136,7 @@ const FunnelForm = ({ CTATitle = `Create New Funnel`, templateData, title, thumb
                     render={({ field }) => (
                       <Input
                         hidden
-                        ref={fileInput}
+                        ref={logoInput}
                         type="file"
                         onChange={(e) => {
                           field.onChange(e.target.files?.[0]);
@@ -152,6 +148,71 @@ const FunnelForm = ({ CTATitle = `Create New Funnel`, templateData, title, thumb
                 </Center>
                 <Text color="red.200" fontSize="sm">
                   {errors.logo?.message}
+                </Text>
+              </Box>
+            </FormControl>
+            <FormControl isInvalid={errors.asset}>
+              <FormLabel color="purple.300" fontWeight={600}>
+                File Upload
+                <Text fontSize="14px" color="grey">
+                  This is optional but recommended if your funnel requires downloadable resources
+                </Text>
+              </FormLabel>
+              <Box>
+                <Center overflow="hidden" borderRadius="8px" bgColor="purple.100" h="100px" pos="relative" flexDirection="column">
+                  {formData?.asset && (
+                    <Flex align="center" mb={2}>
+                      <Image
+                        src="/file-icon.png" // Replace with the file icon URL
+                        alt="File Icon"
+                        boxSize="20px"
+                        mr={2}
+                      />
+                      <Text fontSize="14px" color="grey.800">
+                        {formData.asset.name}
+                      </Text>
+                    </Flex>
+                  )}
+                  <Box pos="absolute">
+                    <SharedButton
+                      text="Upload File"
+                      btnExtras={{
+                        leftIcon: 'solar:camera-bold',
+                        onClick: () => fileInput.current?.click(),
+                      }}
+                      width="fit-content"
+                      height="40px"
+                      bgColor="purple.200"
+                      textColor="white"
+                      borderRadius="4px"
+                    />
+                  </Box>
+                  <Controller
+                    name="asset"
+                    control={control}
+                    defaultValue={null}
+                    rules={{ required: 'File is required' }}
+                    render={({ field }) => (
+                      <Input
+                        hidden
+                        ref={fileInput}
+                        type="file"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            field.onChange(file);
+                            setFormData((prev) => ({
+                              ...prev,
+                              asset: file,
+                            }));
+                          }
+                        }}
+                      />
+                    )}
+                  />
+                </Center>
+                <Text color="red.200" fontSize="sm">
+                  {errors.asset?.message}
                 </Text>
               </Box>
             </FormControl>
@@ -187,10 +248,11 @@ const FunnelForm = ({ CTATitle = `Create New Funnel`, templateData, title, thumb
 const PublishModal = ({ isOpen, onClose, formData }) => {
   const [isSuccessOpen, setIsSuccessOpen] = useState(false);
   const [content, setContent] = useState(false);
-  const [progress, setProgress] = useState(0);
   const [isPublishing, setIsPublishing] = useState(false);
+  const [isSavingToDraft, setSavingToDraft] = useState(false);
   const token = useSelector(selectCurrentToken);
   const router = useNavigate();
+  const dispatch = useDispatch();
 
   const simulateProgress = (start, end, duration) => {
     let current = start;
@@ -200,24 +262,24 @@ const PublishModal = ({ isOpen, onClose, formData }) => {
       const interval = setInterval(() => {
         current += step;
         if (current >= end) {
-          setProgress(end);
+          dispatch(setProgressBar(end));
           clearInterval(interval);
-          resolve(); // Resolve the promise once the progress reaches the end
+          resolve();
         } else {
-          setProgress(Math.min(Math.round(current), end)); // Ensure it doesn't exceed the end value
+          dispatch(setProgressBar(Math.min(Math.round(current), end)));
         }
-      }, 100); // Slow down by adjusting the interval
+      }, 100);
     });
   };
 
   const saveContent = async () => {
-    console.log('Data to be saved:', formData);
-
+    setSavingToDraft(true);
     const formattedData = new FormData();
     formattedData.append('title', formData.data.title);
-    formattedData.append('thumbnail', formData.data.logo); // Assuming logo is a File object
+    formattedData.append('thumbnail', formData.data.logo);
     formattedData.append('status', 'draft');
     formattedData.append('template', formData.templateData().content);
+    formattedData.append('asset', formData.data.asset);
 
     console.log('Formatted Data:', formattedData);
 
@@ -231,34 +293,31 @@ const PublishModal = ({ isOpen, onClose, formData }) => {
 
       if (response.status === 201) {
         router(`/dashboard/funnels#all-funnels`);
+        setSavingToDraft(false);
       }
     } catch (error) {
       console.error('Error saving content:', error);
+      setSavingToDraft(false);
     }
   };
 
-  const PublishContent = async () => {
-    console.log('Data to be saved:', formData);
-
+  const publish = async () => {
     const formattedData = new FormData();
     formattedData.append('title', formData.data.title);
     formattedData.append('thumbnail', formData.data.logo);
     formattedData.append('status', 'published');
     formattedData.append('template', formData.templateData().content);
+    formattedData.append('asset', formData.data.asset);
 
-    typeof formData.data.logo === 'string'
-      ? update(`https://api-dev.trybytealley.com/api/funnels/?_method=PATCH`, formattedData)
-      : publish(`https://api-dev.trybytealley.com/api/funnels`, formattedData);
-  };
+    console.log(formattedData);
 
-  const update = async (URLTYPE, data) => {
     try {
+      router(`/dashboard/funnels#all-funnels`);
       setIsPublishing(true);
-      setProgress(0); // Start with 0% progress
-      // Simulate the upload progress gradually
-      await simulateProgress(0, 60, 20000); // Simulate slower upload (0-60% in 3 seconds)
+      dispatch(setProgressBar(0));
+      await simulateProgress(0, 60, 20000);
 
-      const response = await axios.patch(URLTYPE, data, {
+      const response = await axios.post('https://api-dev.trybytealley.com/api/funnels', formattedData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',
@@ -266,7 +325,7 @@ const PublishModal = ({ isOpen, onClose, formData }) => {
         onUploadProgress: (progressEvent) => {
           // Handle real file upload progress in parallel
           const percentage = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-          setProgress(Math.min(percentage + 60, 100)); // Gradually increase progress
+          dispatch(setProgressBar(Math.min(percentage + 60, 100)));
         },
       });
 
@@ -274,45 +333,14 @@ const PublishModal = ({ isOpen, onClose, formData }) => {
       if (response.status === 201) {
         await simulateProgress(60, 100, 2000); // Simulate slow processing (60%-100% in 2 seconds)
         setContent(response.data.data);
+        dispatch(setProgressBar(100));
         setIsSuccessOpen(true);
       }
     } catch (error) {
       console.error('Error saving content:', error);
     } finally {
       setIsPublishing(false);
-      setProgress(0); // Reset progress after completion
-    }
-  };
-  const publish = async (URLTYPE, data) => {
-    try {
-      setIsPublishing(true);
-      setProgress(0); // Start with 0% progress
-      // Simulate the upload progress gradually
-      await simulateProgress(0, 60, 20000); // Simulate slower upload (0-60% in 3 seconds)
-
-      const response = await axios.post(URLTYPE, data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data',
-        },
-        onUploadProgress: (progressEvent) => {
-          // Handle real file upload progress in parallel
-          const percentage = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-          setProgress(Math.min(percentage + 60, 100)); // Gradually increase progress
-        },
-      });
-
-      // Simulate post-upload processing (100% after upload)
-      if (response.status === 201) {
-        await simulateProgress(60, 100, 2000); // Simulate slow processing (60%-100% in 2 seconds)
-        setContent(response.data.data);
-        setIsSuccessOpen(true);
-      }
-    } catch (error) {
-      console.error('Error saving content:', error);
-    } finally {
-      setIsPublishing(false);
-      setProgress(0); // Reset progress after completion
+      dispatch(setProgressBar(0));
     }
   };
 
@@ -327,38 +355,28 @@ const PublishModal = ({ isOpen, onClose, formData }) => {
           </Text>
         </Box>
 
-        {isPublishing && (
-          <Box mb={6}>
-            <Text mb={2} textAlign="center">
-              {progress < 100 ? `Uploading... ${progress}%` : 'Processing...'}
-            </Text>
-            <Progress borderRadius={`10px`} value={progress} colorScheme="purple" />
-          </Box>
-        )}
-        {!isPublishing  && (
-          <Flex gap={10}>
-            <SharedButton
-              text="Publish"
-              width="100%"
-              height="40px"
-              bgColor="purple.200"
-              textColor="white"
-              borderRadius="4px"
-              btnExtras={{ onClick: PublishContent }}
-              isDisabled={isPublishing} // Disable button while publishing
-            />
-            <SharedButton
-              text={`Save to Draft`}
-              width="100%"
-              height="40px"
-              textColor="purple.200"
-              bgColor="transparent"
-              borderRadius="4px"
-              btnExtras={{ border: `1px solid purple`, onClick: saveContent }}
-              isDisabled={isPublishing} // Disable button while publishing
-            />
-          </Flex>
-        )}
+        <Flex gap={10}>
+          <SharedButton
+            text="Publish"
+            width="100%"
+            height="40px"
+            bgColor="purple.200"
+            textColor="white"
+            borderRadius="4px"
+            btnExtras={{ onClick: publish }}
+            isDisabled={isPublishing} // Disable button while publishing
+          />
+          <SharedButton
+            text={`Save to Draft`}
+            width="100%"
+            height="40px"
+            textColor="purple.200"
+            bgColor="transparent"
+            borderRadius="4px"
+            btnExtras={{ border: `1px solid purple`, onClick: saveContent, isLoading: isSavingToDraft }}
+            isDisabled={isPublishing} // Disable button while publishing
+          />
+        </Flex>
       </ModalContent>
       {isSuccessOpen && <SuccessModal publishContent={content} isOpen={isSuccessOpen} onClose={() => setIsSuccessOpen(false)} />}
     </Modal>

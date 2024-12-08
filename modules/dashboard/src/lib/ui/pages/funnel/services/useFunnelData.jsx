@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
-import { selectCurrentToken } from '@productize/redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectCurrentToken, setFunnelData } from '@productize/redux';
 
 export const useFunnelData = () => {
-  const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const token = useSelector(selectCurrentToken);
+  const dispatch = useDispatch();
 
   const fetchData = async () => {
     try {
@@ -18,7 +18,7 @@ export const useFunnelData = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
-      setData(response.data.data);
+      dispatch(setFunnelData(response.data.data));
     } catch (err) {
       setError(err);
     } finally {
@@ -26,5 +26,5 @@ export const useFunnelData = () => {
     }
   };
 
-  return { data, isLoading, error, fetchData };
+  return { isLoading, error, fetchData };
 };

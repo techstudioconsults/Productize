@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { Box } from '@chakra-ui/react';
 import { FunnelTab } from './funnelTab/FunnelTab';
 

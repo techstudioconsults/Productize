@@ -24,7 +24,7 @@ export function FunnelEditor() {
   const options = {
     licenseKey: 'a7a12ec76a304d27b4c0efff2a5903c92e618065ff5b469ea95fb4a68896911e',
     theme: 'light',
-    pages: false,
+    pages: true,
   };
 
   const handleEditorReady = useCallback(

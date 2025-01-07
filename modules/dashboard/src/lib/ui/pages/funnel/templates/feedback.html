@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Feedback</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Inter', sans-serif;
+      }
+
+      body {
+        background-color: #f9f9f9;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 1230px;
+        margin: 0 auto;
+        padding: 1rem;
+      }
+
+      /* --- Navbar Styling --- */
+      .nav {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem 0;
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav h1 {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #17b6ba;
+      }
+
+      .nav-item {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .nav-item p {
+        cursor: pointer;
+        padding: 0.5rem;
+        color: #333;
+      }
+
+      .nav-item p:hover {
+        text-decoration: underline;
+      }
+
+      .button {
+        background-color: #17b6ba;
+        color: #fff;
+        padding: 12px 28px;
+        border: none;
+        border-radius: 4px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .button:hover {
+        background-color: #138a8d;
+      }
+
+      /* --- Feedback Form Styling --- */
+      .feedback-form {
+        background-color: #fff;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin: 2rem auto;
+        max-width: 600px;
+      }
+
+      .feedback-form h2 {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+      }
+
+      .form-group {
+        margin-bottom: 1rem;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        width: 100%;
+        padding: 0.8rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 1rem;
+      }
+
+      .form-group textarea {
+        height: 100px;
+      }
+
+      .feedback-form button {
+        width: 100%;
+        padding: 0.8rem;
+        background-color: #17b6ba;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+
+      .feedback-form button:hover {
+        background-color: #138a8d;
+      }
+
+      /* --- Thank You Section --- */
+      .thank-you-section {
+        background-color: #fff;
+        padding: 2rem;
+        margin: 2rem auto;
+        max-width: 600px;
+        text-align: center;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .thank-you-section img {
+        width: 60px;
+        margin-bottom: 1rem;
+      }
+
+      .thank-you-section h2 {
+        font-size: 1.6rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .thank-you-section p {
+        color: #666;
+      }
+
+      /* --- Footer Styling --- */
+      .t3_footer {
+        background-color: #333;
+        color: #fff;
+        padding: 2rem;
+        text-align: center;
+      }
+
+      .t3_footer p {
+        margin-top: 1rem;
+        font-size: 0.9rem;
+      }
+
+      /* --- Responsive Design --- */
+      @media (min-width: 768px) {
+        .nav {
+          flex-direction: row;
+          justify-content: space-between;
+        }
+
+        .feedback-form button {
+          max-width: 200px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="container nav">
+      <h1>Feedback Page</h1>
+      <div class="nav-item">
+        <p>Home</p>
+        <p>About</p>
+        <p>Contact</p>
+      </div>
+    </nav>
+
+    <!-- Feedback Form -->
+    <section class="container feedback-form">
+      <h2>We Value Your Feedback</h2>
+      <form>
+        <div class="form-group">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" placeholder="Enter your name" required />
+        </div>
+        <div class="form-group">
+          <label for="email">Your Email</label>
+          <input type="email" id="email" placeholder="Enter your email" required />
+        </div>
+        <div class="form-group">
+          <label for="message">Your Message</label>
+          <textarea id="message" placeholder="Enter your feedback"></textarea>
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+    </section>
+
+    <!-- Thank You Section -->
+    <section class="thank-you-section">
+      <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1733566356/grape.js/vjeys6u1ybqilbsusbiq.png" alt="Check Icon" />
+      <h2>Thank You for Your Feedback!</h2>
+      <p>We appreciate you taking the time to share your thoughts with us.</p>
+    </section>
+
+    <!-- Footer -->
+    <footer class="t3_footer">
+      <p>&copy; 2025 Feedback Page. All rights reserved.</p>
+    </footer>
+  </body>
+</html>

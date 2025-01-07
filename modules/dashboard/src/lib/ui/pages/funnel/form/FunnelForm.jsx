@@ -278,7 +278,7 @@ const PublishModal = ({ isOpen, onClose, formData }) => {
     formattedData.append('title', formData.data.title);
     formattedData.append('thumbnail', formData.data.logo);
     formattedData.append('status', 'draft');
-    formattedData.append('template', formData.templateData().content);
+    formattedData.append('template', JSON.stringify(formData.templateData()));
     formattedData.append('asset', formData.data.asset);
 
     console.log('Formatted Data:', formattedData);
@@ -306,7 +306,7 @@ const PublishModal = ({ isOpen, onClose, formData }) => {
     formattedData.append('title', formData.data.title);
     formattedData.append('thumbnail', formData.data.logo);
     formattedData.append('status', 'published');
-    formattedData.append('template', formData.templateData().content);
+    formattedData.append('template', JSON.stringify(formData.templateData()));
     formattedData.append('asset', formData.data.asset);
 
     console.log(formattedData);

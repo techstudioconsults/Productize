@@ -17,6 +17,7 @@ export function FunnelEditor() {
   const {
     pathname,
     state: { title, template, thumbnail },
+    // state: { title, thumbnail },
   } = useLocation();
 
   const { isLoading, error, updateFunnel } = useUpdateFunnel();
@@ -24,41 +25,92 @@ export function FunnelEditor() {
   const options = {
     licenseKey: 'a7a12ec76a304d27b4c0efff2a5903c92e618065ff5b469ea95fb4a68896911e',
     theme: 'light',
-    pages: true,
+    pages: [],
   };
 
   const handleEditorReady = useCallback(
     (editorInstance) => {
+      console.log(template);
       setEditor(editorInstance);
+      const TEMPLATE = JSON.parse(template);
 
-      if (template) {
-        editorInstance.DomComponents.getWrapper().set('content', template);
-        editorInstance.setComponents(template);
+      if (TEMPLATE && Array.isArray(TEMPLATE.pages)) {
+        // Remove all existing pages
+        const existingPages = editorInstance.Pages.getAll();
+        existingPages.forEach((page) => editorInstance.Pages.remove(page.id));
+
+        // Add new pages
+        TEMPLATE.pages.forEach((page) => {
+          const { id, name, content, styles } = page;
+
+          // Create a new page
+          const newPage = editorInstance.Pages.add({ id, name });
+
+          if (newPage) {
+            // Set the newly created page as active
+            editorInstance.Pages.select(newPage.id);
+
+            // Add content to the page
+            editorInstance.addComponents(content, { pageId: newPage.id });
+
+            // Add styles
+            editorInstance.addStyle(styles);
+          }
+        });
+
+        // Set the first page as the active page
+        const firstPageId = TEMPLATE.pages[0]?.id;
+        if (firstPageId) {
+          editorInstance.Pages.select(firstPageId);
+        }
+
+        // Update navigation state
         navigate(pathname, { state: { title, thumbnail } });
       } else {
-        console.warn('No project HTML provided in state.');
+        console.warn('No valid pages found in the provided template.');
       }
     },
-    [template, title, navigate, pathname, thumbnail]
+    [template, navigate, pathname, title, thumbnail]
   );
 
   const generateTemplateData = useCallback(() => {
     if (!editor) return null;
 
-    const html = editor.getHtml();
-    const css = editor.getCss();
+    const pages = editor.Pages.getAll(); // Get all pages
+    if (!pages.length) return null;
 
-    return {
-      content: `<!DOCTYPE html>
+    const templates = pages.map((page) => {
+      const pageId = page.getId();
+      const pageName = page.get('name') || `Page ${pageId}`;
+
+      // Temporarily select the page to get its content
+      editor.Pages.select(pageId);
+
+      // Get the HTML and CSS for the currently active page
+      const html = editor.getHtml();
+      const css = editor.getCss();
+
+      return {
+        id: pageId,
+        name: pageName,
+        content: `<!DOCTYPE html>
                 <html lang="en">
                 <head><style>${css}</style></head>
                 <body>${html}</body>
                 </html>`,
-    };
+        style: ``,
+      };
+    });
+
+    const result = { pages: templates.filter(Boolean) }; // Filter out any null values
+
+    console.log(result);
+
+    return result; // Return the structured data
   }, [editor]);
 
   const saveFunnel = async (status) => {
-    const templateContent = generateTemplateData()?.content;
+    const templateContent = JSON.stringify(generateTemplateData());
 
     if (!templateContent) {
       console.error('Template content is empty. Cannot save the funnel.');
@@ -117,6 +169,7 @@ export function FunnelEditor() {
         )}
 
         <Box hidden={!!funnelID}>
+          <button onClick={generateTemplateData}>show code</button>
           <FunnelForm templateData={generateTemplateData} title={title} thumbnail={thumbnail} />
         </Box>
       </Flex>

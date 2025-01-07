@@ -1,4 +1,4 @@
-export const template1 = `<!DOCTYPE html>
+const template1 = `<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -290,6 +290,7 @@ export const template1 = `<!DOCTYPE html>
         font-size: 48px;
       }
     }
+
   </style>
   <body>
     <header class="header">
@@ -478,7 +479,7 @@ export const template1 = `<!DOCTYPE html>
 </html>
 `;
 
-export const template2 = `<!DOCTYPE html>
+const template2 = `<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -1421,6 +1422,7 @@ export const template2 = `<!DOCTYPE html>
         margin-top: 22.22px;
       }
     }
+
   </style>
   <body>
     <header class="header">
@@ -1830,7 +1832,7 @@ export const template2 = `<!DOCTYPE html>
   </script>
 </html>
 `;
-export const template3 = `<!DOCTYPE html>
+const template3 = `<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -1840,7 +1842,8 @@ export const template3 = `<!DOCTYPE html>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Karla:ital,wght@0,200..800;1,200..800&family=Kumbh+Sans:wght@100..900&family=League+Spartan:wght@100..900&family=Lexend+Deca:wght@100..900&display=swap');
 
-    * {
+
+* {
       margin: 0;
       padding: 0;
       text-decoration: none;
@@ -2307,7 +2310,7 @@ export const template3 = `<!DOCTYPE html>
       </div>
 
       <div>
-        <a href="/feedback">
+        <a href="./Feedback.html">
           <button class="button">CTA Button</button>
         </a>
       </div>
@@ -2669,3 +2672,52 @@ export const template3 = `<!DOCTYPE html>
   </script>
 </html>
 `;
+
+export const template_1 = {
+  pages: [
+    {
+      id: 'page-1',
+      name: 'Home',
+      content: template1,
+      styles: ``,
+    },
+    {
+      id: 'page-2',
+      name: 'Feedback',
+      content: '<div>feedback Page Content</div>',
+      styles: '',
+    },
+  ],
+};
+export const template_2 = {
+  pages: [
+    {
+      id: 'page-1',
+      name: 'Home',
+      content: template2,
+      styles: ``,
+    },
+    {
+      id: 'page-2',
+      name: 'Feedback',
+      content: '<div>feedback Page Content</div>',
+      styles: '',
+    },
+  ],
+};
+export const template_3 = {
+  pages: [
+    {
+      id: 'page-1',
+      name: 'Home',
+      content: template3,
+      styles: ``,
+    },
+    {
+      id: 'page-2',
+      name: 'Feedback',
+      content: '<div>feedback Page Content</div>',
+      styles: '',
+    },
+  ],
+};

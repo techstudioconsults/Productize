@@ -16,37 +16,68 @@ const template1 = `<!DOCTYPE html>
       font-family: 'Inter', sans-serif;
     }
 
-    .container {
+    .t1_container {
       max-width: 1237px;
       margin: 0 auto;
       padding: 0 2rem;
     }
 
-    .header {
+    .t1_nav {
+      padding-block: 2rem;
+    }
+
+    .t1_header {
       height: 510px;
       background-color: #332b67;
     }
-    .header-nav {
-      height: 48px;
+    .t1_header-nav {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       padding-top: 3rem;
       padding-bottom: 16px;
       margin-bottom: 150px;
       width: 100%;
+      position: relative;
     }
-    .header-nav-items {
+    .t1_logo {
+      display: flex;
+      align-items: center;
+    }
+    .t1_nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    .t1_nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .t1_hamburger {
+      display: none;
+      cursor: pointer;
+      padding: 10px;
+      z-index: 100;
+    }
+    .t1_hamburger div {
+      width: 25px;
+      height: 2px;
+      background-color: #fff;
+      margin: 6px 0;
+      transition: all 0.3s ease;
+    }
+    .t1_header-nav-items {
       display: flex;
       width: 366px;
       height: 48px;
       gap: 12px;
       color: white;
     }
-    .header-nav h1 {
+    .t1_header-nav h1 {
       color: white;
     }
-    .header-nav-items p {
+    .t1_header-nav-items p {
       width: 114px;
       border: 1px solid transparent;
       border-radius: 4px;
@@ -56,10 +87,10 @@ const template1 = `<!DOCTYPE html>
       padding-left: 24px;
       gap: 8px;
     }
-    .header-buttons {
+    .t1_header-buttons {
       gap: 8px;
     }
-    .header-button1 {
+    .t1_header-button1 {
       width: 123px;
       height: 48px;
       padding: 12px, 36, 12px, 36px;
@@ -68,7 +99,7 @@ const template1 = `<!DOCTYPE html>
       border: 1px solid transparent;
       border-radius: 4px;
     }
-    .header-button2 {
+    .t1_header-button2 {
       width: 123px;
       height: 48px;
       padding: 12px, 36, 12px, 36px;
@@ -77,21 +108,23 @@ const template1 = `<!DOCTYPE html>
       border: 1px solid transparent;
       border-radius: 4px;
     }
-    .hero-section {
+    .t1_hero-section {
       text-align: center;
       gap: 2px;
+      margin-top: 68px;
     }
-    .hero-section h1 {
+    .t1_hero-section h1 {
       font-weight: 600;
       font-size: 56px;
       color: #ffffff;
       line-height: 78.34px;
       align-items: center;
     }
-    .hero-section p {
+    .t1_hero-section p {
       max-width: 928.32px;
       margin: 0 auto;
-      font-weight: 400px;
+      margin-top: 20px;
+      font-weight: 400;
       font-size: 20px;
       line-height: 25px;
       gap: 6px;
@@ -188,7 +221,6 @@ const template1 = `<!DOCTYPE html>
     }
     .t1_footer {
       background-color: #f6f6f6;
-      height: 198px;
       margin-top: 132px;
     }
     .footer-container {
@@ -221,57 +253,7 @@ const template1 = `<!DOCTYPE html>
       text-decoration: none;
     }
 
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0, 0, 0, 0.5);
-    }
-
-    .modal h1 {
-      font-size: 24px;
-    }
-
-    .modal h1,
-    .modal p {
-      margin-block: 1rem;
-    }
-
-    .modal-content {
-      background-color: #fdfbf6;
-      margin: 15% auto;
-      padding: 50px;
-      border-radius: 8px;
-      max-width: 700px;
-      text-align: center;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    }
-
-    .close-button {
-      margin-top: 20px;
-      background-color: #332b67;
-      color: white;
-      border: none;
-      padding: 15px 60px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    .close-button:hover {
-      background-color: #f6c21c;
-      color: black;
-    }
-
     @media (max-width: 1199.98px) {
-      /* .modal h1 {
-        font-size: 24px;
-      } */
-
       .features-section {
         flex-direction: column;
       }
@@ -280,7 +262,7 @@ const template1 = `<!DOCTYPE html>
       }
     }
     @media (max-width: 767.98px) {
-      .header-nav {
+      .t1_header-nav {
         flex-direction: column;
         gap: 20px;
       }
@@ -291,29 +273,338 @@ const template1 = `<!DOCTYPE html>
       }
     }
 
+    @media screen and (max-width: 991.98px) {
+      .t1_hamburger {
+        display: block;
+      }
+
+      .t1_nav-links {
+        position: fixed;
+        left: auto;
+        right: -100%;
+        top: 0;
+        transform: none;
+        height: 100vh;
+        width: 300px;
+        background-color: #332b67;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding-top: 80px;
+        transition: 0.3s ease;
+        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+        gap: 0;
+      }
+
+      .t1_nav-links.active {
+        right: 0;
+      }
+
+      .t1_nav-item {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+      }
+
+      .t1_nav-item p {
+        width: 100%;
+        padding: 15px 30px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .button-container {
+        margin: 20px 30px;
+      }
+
+      .t1_hamburger.active div:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
+      }
+
+      .t1_hamburger.active div:nth-child(2) {
+        opacity: 0;
+      }
+
+      .t1_hamburger.active div:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
+      }
+    }
+
+    nav {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 40px 20px;
+      position: relative;
+    }
+
+    .t1_logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .t1_nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .t1_nav-item {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .t1_nav-item p {
+      padding-block: 12px;
+      padding-inline: 24px;
+      color: #fff;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      height: 48px;
+      display: flex;
+      align-items: center;
+    }
+
+    .t1_button-container {
+      margin-left: auto;
+      display: none;
+    }
+
+    .t1_hamburger {
+      display: none;
+      cursor: pointer;
+      padding: 10px;
+      z-index: 100;
+    }
+
+    .t1_hamburger div {
+      width: 25px;
+      height: 2px;
+      background-color: #fff;
+      margin: 6px 0;
+      transition: all 0.3s ease;
+    }
+
+    @media screen and (max-width: 991.98px) {
+      .t1_hamburger {
+        display: block;
+      }
+
+      .t1_nav-links {
+        position: fixed;
+        left: auto;
+        right: -100%;
+        top: 0;
+        transform: none;
+        height: 100vh;
+        width: 300px;
+        background-color: #332b67;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding-top: 80px;
+        transition: 0.3s ease;
+        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+        gap: 0;
+      }
+
+      .t1_nav-links.active {
+        right: 0;
+      }
+
+      .t1_nav-item {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+      }
+
+      .t1_nav-item p {
+        width: 100%;
+        padding: 15px 30px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .button-container {
+        margin: 20px 30px;
+      }
+
+      .t1_hamburger.active div:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
+      }
+
+      .t1_hamburger.active div:nth-child(2) {
+        opacity: 0;
+      }
+
+      .t1_hamburger.active div:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
+      }
+    }
+
+    .t1_desktop-buttons {
+      display: block;
+    }
+
+    .t1_nav-links .button-container {
+      display: none;
+    }
+
+    @media screen and (max-width: 991.98px) {
+      .t1_desktop-buttons {
+        display: none;
+      }
+
+      .t1_nav-links .button-container {
+        display: block;
+        margin: 20px 30px;
+        width: calc(100% - 60px); /* Account for margins */
+      }
+
+      .t1_nav-links .button-container button {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+
+      .t1_nav-links {
+        position: fixed;
+        left: auto;
+        right: -100%;
+        top: 0;
+        transform: none;
+        height: 100vh;
+        width: 300px;
+        background-color: #332b67;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding-top: 80px;
+        transition: 0.3s ease;
+        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+        gap: 0;
+      }
+
+      .t1_nav-links.active {
+        right: 0;
+      }
+
+      .t1_nav-item {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+      }
+
+      .t1_nav-item p {
+        width: 100%;
+        padding: 15px 30px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+    }
+
+    .button-container button {
+      height: 48px;
+    }
+
+    .t1_logo h1 {
+      color: #ffffff;
+    }
+
+    .t1_footer {
+      background-color: #f6f6f6;
+    }
+
+    .footer {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 36px 20px;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .footer-navitem {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .footer-navitem p {
+      color: #727272;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .footer-navitem p:hover {
+      color: #332b67;
+    }
+
+    @media screen and (max-width: 768px) {
+      .footer {
+        flex-direction: column;
+        gap: 24px;
+        text-align: center;
+        padding: 40px 20px;
+      }
+
+      .footer-navitem {
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .footer-logo {
+        margin-bottom: 8px;
+      }
+    }
+
+    @media screen and (min-width: 769px) and (max-width: 991px) {
+      .footer {
+        padding: 30px 40px;
+      }
+
+      .footer-navitem {
+        gap: 16px;
+      }
+    }
   </style>
   <body>
-    <header class="header">
-      <nav class="container">
-        <div class="header-nav">
-          <div>
-            <h1>LOGO</h1>
-          </div>
-          <div class="header-nav-items">
-            <p>Navitem</p>
-            <p>Navitem</p>
-            <p>Navitem</p>
-          </div>
+    <header class="t1_header">
+      <nav class="t1_container t1_nav">
+        <div class="t1_logo">
+          <h1>LOGO</h1>
+        </div>
 
-          <div class="header-buttons">
-            <button class="header-button1">Button</button>
-            <button class="header-button2">Button</button>
+        <div class="t1_nav-links">
+          <div class="t1_nav-item">
+            <p>Navitem</p>
+            <p>Navitem</p>
+            <p>Navitem</p>
           </div>
+          <div class="t1_button-container">
+            <button class="t1_header-button1">Button</button>
+            <button class="t1_header-button2">Button</button>
+          </div>
+        </div>
+
+        <div class="t1_button-container t1_desktop-buttons">
+          <button class="t1_header-button1">Button</button>
+          <button class="t1_header-button2">Button</button>
+        </div>
+
+        <div class="t1_hamburger">
+          <div></div>
+          <div></div>
+          <div></div>
         </div>
       </nav>
 
-      <section class="container">
-        <div class="hero-section">
+      <section class="t1_container">
+        <div class="t1_hero-section">
           <h1>Hero Section</h1>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum quaerat ratione soluta placeat reiciendis, dignissimos, voluptatum cupiditate facere
@@ -327,7 +618,7 @@ const template1 = `<!DOCTYPE html>
       <img class="banner" src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1729933331/grape.js/su3byl2ir9hqg07iqsol.png" alt="banner" />
     </section>
 
-    <section class="container features-section">
+    <section class="t1_container features-section">
       <div class="main-wrapper">
         <div class="headline-text">
           <h1>Your Headline</h1>
@@ -379,37 +670,18 @@ const template1 = `<!DOCTYPE html>
     </section>
 
     <footer class="t1_footer">
-      <section class="container">
-        <div class="footer-container">
-          <div>
-            <h1>LOGO</h1>
-          </div>
-          <div class="footer-nav">
-            <div>
-              <a href="#">Terms and Conditions</a>
-            </div>
-
-            <div>
-              <a href="#">Privacy Policy</a>
-            </div>
-
-            <div>
-              <a href="#">Cookies</a>
-            </div>
-          </div>
+      <div class="footer">
+        <div class="footer-logo">
+          <h1>LOGO</h1>
         </div>
-      </section>
-    </footer>
 
-    <!-- Modal -->
-    <div id="thankyou-modal" class="modal">
-      <div class="modal-content">
-        <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1732777197/productize/zmddmfcyfw7ieia4qpup.svg" alt="check" />
-        <h1>Thank You for Signing Up</h1>
-        <p>Lorem ipsum dolor sit amet consectetur. Posuere in etiam turpis arcu et neque quis. Eget nisl semper orci pellentesque faucibus praesent id.</p>
-        <button class="close-button" onclick="closeModal()">Close</button>
+        <div class="footer-navitem">
+          <p>Terms and Conditions</p>
+          <p>Privacy Policy</p>
+          <p>Cookies</p>
+        </div>
       </div>
-    </div>
+    </footer>
   </body>
   <script>
     document.getElementById('form').addEventListener('submit', function (e) {
@@ -443,8 +715,7 @@ const template1 = `<!DOCTYPE html>
           }
         })
         .then(function (data) {
-          showModal();
-          console.log('submit successfully');
+          window.location.href = './Feedback.html';
           document.getElementById('submit-button').disabled = false;
           document.getElementById('form').reset();
 
@@ -456,29 +727,37 @@ const template1 = `<!DOCTYPE html>
           console.error(error);
         });
     });
-    // Function to show the modal
-    function showModal() {
-      const modal = document.getElementById('thankyou-modal');
-      modal.style.display = 'block'; // Show the modal
-    }
 
-    // Function to close the modal
-    function closeModal() {
-      const modal = document.getElementById('thankyou-modal');
-      modal.style.display = 'none'; // Hide the modal
-    }
+    const hamburger = document.querySelector('.t1_hamburger');
+    const navLinks = document.querySelector('.t1_nav-links');
+    const body = document.body;
 
-    // Close the modal if the user clicks outside the modal content
-    window.onclick = function (event) {
-      const modal = document.getElementById('thankyou-modal');
-      if (event.target === modal) {
-        closeModal();
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navLinks.classList.toggle('active');
+      body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : 'auto';
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!navLinks.contains(e.target) && !hamburger.contains(e.target)) {
+        hamburger.classList.remove('active');
+        navLinks.classList.remove('active');
+        body.style.overflow = 'auto';
       }
-    };
+    });
+
+    // Close menu when clicking a link
+    document.querySelectorAll('.t1_nav-links a, .t1_nav-item p').forEach((link) => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navLinks.classList.remove('active');
+        body.style.overflow = 'auto';
+      });
+    });
   </script>
 </html>
 `;
-
 const template2 = `<!DOCTYPE html>
 <html lang="en">
   <head>
@@ -497,49 +776,54 @@ const template2 = `<!DOCTYPE html>
       font-family: 'Inter', sans-serif;
     }
 
-    .header {
+    .t2_header {
       background-color: #fbe69a;
       padding-bottom: 67px;
     }
 
-    .nav {
+    .t2_nav {
       max-width: 1240px;
       margin: 0 auto;
-      display: flex;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
       align-items: center;
-      justify-content: space-between;
-      flex-direction: column;
-      padding-block: 26px;
+      padding: 26px 20px;
+      position: relative;
     }
 
-    .navitem {
+    .t2_nav-left {
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding-block: 12px;
-      padding-inline: 24px;
+      gap: 20px;
     }
 
-    .button {
+    .t2_navitem {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+    }
+
+    .t2_button {
       background-color: #2f40d5;
       padding-block: 12px;
       padding-inline: 36px;
       border-radius: 4px;
     }
-    .text {
+    .t2_text {
       color: #f3f2fb;
       font-weight: 500;
     }
 
-    .line {
+    .t2_line {
       background-color: lightgray;
       height: 1px;
     }
-    .hero {
+    .t2_hero {
       max-width: 1084px;
       margin: 0 auto;
     }
-    .hero h1 {
+    .t2_hero h1 {
       font-weight: 600;
       font-size: 20px;
       color: #262528;
@@ -547,14 +831,14 @@ const template2 = `<!DOCTYPE html>
       padding-inline: 41.84px;
       margin-top: 70px;
     }
-    .hero p {
+    .t2_hero p {
       font-size: 16px;
       text-align: center;
       margin-inline: 14.13px;
       margin-top: 22px;
     }
 
-    .button2 {
+    .t2_button2 {
       width: fit-content;
       margin: 0 auto;
       background-color: #2f40d5;
@@ -565,20 +849,20 @@ const template2 = `<!DOCTYPE html>
       margin-top: 22px;
     }
 
-    .text2 {
+    .t2_text2 {
       color: #ffffff;
       font-weight: 700;
       font-size: 18px;
     }
 
-    .section1 {
+    .t2_section1 {
       max-width: 1066px;
       margin: 0 auto;
       padding-bottom: 63px;
       padding-inline: 32px;
     }
 
-    .section1 h1 {
+    .t2_section1 h1 {
       color: #292d32;
       font-weight: 600;
       font-size: 35px;
@@ -586,7 +870,7 @@ const template2 = `<!DOCTYPE html>
       margin-top: 57px;
     }
 
-    .image {
+    .t2_image {
       margin-top: 61px;
     }
 
@@ -594,52 +878,52 @@ const template2 = `<!DOCTYPE html>
       width: 100%;
     }
 
-    .blue {
+    .t2_blue {
       background-color: #2f40d5;
       padding-block: 65px;
       padding-inline: 16px;
     }
 
-    .headline h1 {
+    .t2_headline h1 {
       font-weight: 600px;
       font-size: 30px;
       color: #ffffff;
     }
 
-    .headline p {
+    .t2_headline p {
       font-size: 16px;
       color: #ffffff;
     }
 
-    .fill {
+    .t2_fill {
       padding-top: 31px;
       display: flex;
       align-items: center;
       gap: 10px;
       padding-right: 20.02px;
     }
-    .pic {
+    .t2_pic {
       width: fit-content;
     }
-    .pic img {
+    .t2_pic img {
       width: fit-content;
     }
 
-    .p-text p {
+    .t2_p-text p {
       font-size: 11px;
       color: #ffffff;
     }
 
-    .form {
+    .t2_form {
       background-color: #ffffff;
       margin-block: 53px;
       border-radius: 7px;
     }
 
-    .formfill {
+    .t2_formfill {
       padding: 30px;
     }
-    .name {
+    .t2_name {
       margin-top: 23px;
     }
     label {
@@ -659,7 +943,7 @@ const template2 = `<!DOCTYPE html>
       border-radius: 4.69px;
       border: 0.94px solid #00000066;
     }
-    .package {
+    .t2_package {
       background-color: #2f40d5;
       color: #ffffff;
       padding-inline: 60px;
@@ -671,19 +955,19 @@ const template2 = `<!DOCTYPE html>
       width: 100%;
     }
 
-    .section3 {
+    .t2_section3 {
       max-width: 968px;
       margin: 0 auto;
     }
 
-    .section3 h1 {
+    .t2_section3 h1 {
       margin-top: 73px;
       text-align: center;
       font-size: 40px;
       font-weight: 600;
     }
 
-    .section3 p {
+    .t2_section3 p {
       font-size: 16px;
       text-align: center;
       margin-top: 21px;
@@ -691,7 +975,7 @@ const template2 = `<!DOCTYPE html>
       padding-inline: 30px;
     }
 
-    .section4 {
+    .t2_section4 {
       max-width: 1239.91px;
       margin: 0 auto;
       padding-inline: 30px;
@@ -701,98 +985,98 @@ const template2 = `<!DOCTYPE html>
       /* flex-flow: row; */
       gap: 38px;
     }
-    .subsec1 {
+    .t2_subsec1 {
       background-color: #f3f4ff;
       padding: 22.22px;
       border-radius: 7.41px;
     }
-    .subsec1 h1 {
+    .t2_subsec1 h1 {
       font-size: 22.22px;
       font-weight: 700;
     }
 
-    .subsec1 p {
+    .t2_subsec1 p {
       font-size: 10.81px;
       line-height: 22.2px;
       margin-top: 22.22px;
     }
-    .subsec2 {
+    .t2_subsec2 {
       background-color: #f3f4ff;
       padding: 22.22px;
       border-radius: 7.41px;
     }
-    .subsec2 h1 {
+    .t2_subsec2 h1 {
       font-size: 22.22px;
       font-weight: 700;
     }
 
-    .subsec2 p {
+    .t2_subsec2 p {
       font-size: 10.81px;
       line-height: 22.2px;
       margin-top: 22.22px;
     }
-    .subsec3 {
+    .t2_subsec3 {
       background-color: #f3f4ff;
       padding: 22.22px;
       border-radius: 7.41px;
     }
-    .subsec3 h1 {
+    .t2_subsec3 h1 {
       font-size: 22.22px;
       font-weight: 700;
     }
 
-    .subsec3 p {
-      font-size: 10.81px;
-      line-height: 22.2px;
-      margin-top: 22.22px;
-    }
-
-    .subsec4 {
-      background-color: #f3f4ff;
-      padding: 22.22px;
-      border-radius: 7.41px;
-    }
-    .subsec4 h1 {
-      font-size: 22.22px;
-      font-weight: 700;
-    }
-
-    .subsec4 p {
+    .t2_subsec3 p {
       font-size: 10.81px;
       line-height: 22.2px;
       margin-top: 22.22px;
     }
 
-    .section5 {
+    .t2_subsec4 {
+      background-color: #f3f4ff;
+      padding: 22.22px;
+      border-radius: 7.41px;
+    }
+    .t2_subsec4 h1 {
+      font-size: 22.22px;
+      font-weight: 700;
+    }
+
+    .t2_subsec4 p {
+      font-size: 10.81px;
+      line-height: 22.2px;
+      margin-top: 22.22px;
+    }
+
+    .t2_section5 {
       background-color: #fbe69a;
       padding-block: 50px;
       padding-inline: 30px;
     }
 
-    .mainsec5 {
+    .t2_mainsec5 {
       max-width: 1236px;
       margin: 0 auto;
     }
-    .submain {
+    .t2_submain {
       text-align: center;
       /* margin-inline: 136.4px; */
     }
-    .submain h1 {
+    .t2_submain h1 {
       font-size: 50px;
       font-weight: 600;
     }
 
-    .submain p {
+    .t2_submain p {
       font-size: 16px;
       margin-top: 21px;
       line-height: 29.05px;
     }
 
-    .flexsec {
+    .t2_flexsec {
       margin-block: 61px;
     }
 
-    .min-flex1 {
+    .t2_min-flex1 {
       background-color: #ffffff;
       margin-top: 61px;
       padding-inline: 16.68px;
@@ -801,7 +1085,7 @@ const template2 = `<!DOCTYPE html>
       flex: 1;
       /* height: 561px; */
     }
-    .min-flex {
+    .t2_min-flex {
       background-color: #ffffff;
       margin-top: 61px;
       padding-inline: 16.68px;
@@ -811,7 +1095,7 @@ const template2 = `<!DOCTYPE html>
       /* height: 561px; */
     }
 
-    .button- {
+    .t2_button- {
       background-color: #ffd828;
       width: fit-content;
       border-radius: 20.61px;
@@ -819,46 +1103,46 @@ const template2 = `<!DOCTYPE html>
       padding-inline: 1rem;
       border: none;
     }
-    .butt- {
+    .t2_butt- {
       color: #1e1e1e;
       font-size: 11.66px;
       padding-block: 7.85px;
       padding-inline: 20.61px;
     }
 
-    .lorem {
+    .t2_lorem {
       font-size: 11.78px;
       color: #292d32;
       margin-top: 16.68px;
       line-height: 20.61px;
     }
 
-    .naira {
+    .t2_naira {
       padding-top: 11.78px;
       font-weight: 600;
       color: #292d32;
       font-size: 30.07px;
     }
 
-    .general {
+    .t2_general {
       display: flex;
       align-items: center;
       margin-top: 21.59px;
     }
 
-    .image1 {
+    .t2_image1 {
       width: fit-content;
     }
 
-    .image1 img {
+    .t2_image1 img {
       width: fit-content;
     }
-    .image1 P {
+    .t2_image1 P {
       font-size: 13.74px;
       font-weight: 500;
     }
 
-    .line2 {
+    .t2_line2 {
       width: 100%;
       margin-top: 62px;
       border: 0.98px solid #00000026;
@@ -877,7 +1161,7 @@ const template2 = `<!DOCTYPE html>
     padding-block: 16.68px;
     padding-inline: 59.31px;
 } */
-    .pack {
+    .t2_pack {
       width: 100%;
       margin-top: 25.51px;
       color: #2f40d5;
@@ -887,7 +1171,7 @@ const template2 = `<!DOCTYPE html>
       /* background-color: #f3f4ff; */
     }
 
-    .min-flex2 {
+    .t2_min-flex2 {
       background-color: #2f40d5;
       margin-top: 61px;
       padding-inline: 16.68px;
@@ -896,7 +1180,7 @@ const template2 = `<!DOCTYPE html>
       flex: 1;
     }
 
-    .button3 {
+    .t2_button3 {
       background-color: #ffffff;
       border-radius: 20.61px;
       width: fit-content;
@@ -905,32 +1189,32 @@ const template2 = `<!DOCTYPE html>
       padding-inline: 1rem;
       border: none;
     }
-    .butt3 {
+    .t2_butt3 {
       color: #767676;
       font-size: 17.66px;
       padding-block: 7.85px;
       padding-inline: 20.61px;
     }
 
-    .lorem2 {
+    .t2_lorem2 {
       font-size: 11.78px;
       color: #ffffff;
       margin-top: 16.68px;
       line-height: 20.61px;
     }
 
-    .naira2 {
+    .t2_naira2 {
       padding-top: 11.78px;
       font-weight: 600;
       color: #ffffff;
       font-size: 30.07px;
     }
-    .image1 img {
+    .t2_image1 img {
       width: fit-content;
       color: #ffffff;
     }
 
-    .pack2 {
+    .t2_pack2 {
       width: 100%;
       background-color: #2f40d5;
       border: 1.18px solid #ffffff;
@@ -940,23 +1224,23 @@ const template2 = `<!DOCTYPE html>
       color: #ffffff;
     }
 
-    .ptag {
+    .t2_ptag {
       color: #ffffff;
     }
 
-    .general2 {
+    .t2_general2 {
       display: flex;
       align-items: center;
       margin-top: 21.59px;
     }
 
-    .line3 {
+    .t2_line3 {
       width: 100%;
       margin-top: 62px;
       border: 0.98px solid #ffffff3d;
     }
 
-    .button4 {
+    .t2_button4 {
       background-color: #000000;
       width: fit-content;
       border-radius: 20.61px;
@@ -965,46 +1249,92 @@ const template2 = `<!DOCTYPE html>
       border: none;
       color: #ffffff;
     }
-    .butt4 {
+    .t2_butt4 {
       font-size: 11.66px;
       padding-block: 7.85px;
       padding-inline: 20.61px;
     }
 
-    .t2_footer {
+    .t2_t2_footer {
       background-color: #fdfbf6;
     }
-    .footer-nav {
-      max-width: 1239px;
+    .t2_footer-nav {
+      max-width: 1240px;
       margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding-top: 36.07px;
-      padding-left: 100px;
-      padding-right: 101px;
-      padding-bottom: 35.93px;
-      flex-direction: column;
+      padding: 36px 20px;
     }
 
-    .nav-image {
-      width: fit-content;
-    }
-    .nav-image img {
-      width: fit-content;
-    }
-
-    .footer-navitem {
+    .t2_footer-logo {
       display: flex;
       align-items: center;
-      gap: 12px;
-    }
-    .footer-navitem p {
-      padding-inline: 12px;
-      padding-block: 24px;
     }
 
-    .modal {
+    .t2_footer-navitem {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .t2_footer-navitem p {
+      color: #727272;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .t2_footer-navitem p:hover {
+      color: #2f40d5;
+    }
+
+    .t2_footer-end {
+      margin-top: 8px;
+    }
+
+    .t2_footer-end p {
+      color: #727272;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .t2_footer-end p:hover {
+      color: #2f40d5;
+    }
+
+    @media screen and (max-width: 768px) {
+      .t2_footer-nav {
+        flex-direction: column;
+        gap: 24px;
+        text-align: center;
+        padding: 40px 20px;
+      }
+
+      .t2_footer-navitem {
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .t2_footer-logo {
+        margin-bottom: 8px;
+      }
+
+      .t2_footer-end {
+        margin-top: 8px;
+      }
+    }
+
+    @media screen and (min-width: 769px) and (max-width: 991px) {
+      .t2_footer-nav {
+        padding: 30px 40px;
+      }
+
+      .t2_footer-navitem {
+        gap: 16px;
+      }
+    }
+
+    .t2_modal {
       display: none;
       position: fixed;
       z-index: 1000;
@@ -1016,20 +1346,20 @@ const template2 = `<!DOCTYPE html>
       background-color: rgba(0, 0, 0, 0.5);
     }
 
-    .modal h1 {
+    .t2_modal h1 {
       font-size: 24px;
     }
 
-    .modal p {
+    .t2_modal p {
       font-size: 16px;
     }
 
-    .modal h1,
-    .modal p {
+    .t2_modal h1,
+    .t2_modal p {
       margin-block: 1rem;
     }
 
-    .modal-content {
+    .t2_modal-content {
       background-color: #fdfbf6;
       margin: 15% auto;
       padding: 50px;
@@ -1039,11 +1369,11 @@ const template2 = `<!DOCTYPE html>
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     }
 
-    .modal-content img {
+    .t2_modal-content img {
       width: 220px;
     }
 
-    .close-button {
+    .t2_close-button {
       margin-top: 20px;
       background-color: #332b67;
       height: 60px;
@@ -1056,7 +1386,7 @@ const template2 = `<!DOCTYPE html>
       cursor: pointer;
     }
 
-    .close-button:hover {
+    .t2_close-button:hover {
       background-color: #f6c21c;
       color: black;
     }
@@ -1065,34 +1395,34 @@ const template2 = `<!DOCTYPE html>
     }
 
     @media (min-width: 375px) {
-      .hero h1 {
+      .t2_hero h1 {
         padding-inline: 42.84px;
       }
-      .p-text p {
+      .t2_p-text p {
         font-size: 15px;
         color: #ffffff;
       }
-      .package {
+      .t2_package {
         background-color: #2f40d5;
         color: #ffffff;
         padding-inline: 83px;
       }
     }
     @media (min-width: 425px) {
-      .hero h1 {
+      .t2_hero h1 {
         font-size: 25px;
       }
     }
     @media (min-width: 576px) {
-      .nav {
+      .t2_nav {
         flex-direction: row;
       }
-      .hero h1 {
+      .t2_hero h1 {
         font-size: 45px;
 
         padding-inline: 80.84px;
       }
-      .section1 h1 {
+      .t2_section1 h1 {
         color: #292d32;
         font-weight: 600;
         font-size: 50px;
@@ -1100,41 +1430,41 @@ const template2 = `<!DOCTYPE html>
         margin-top: 57px;
       }
 
-      .section3 {
+      .t2_section3 {
         max-width: 968px;
         margin: 0 auto;
       }
 
-      .section3 h1 {
+      .t2_section3 h1 {
         margin-top: 73px;
         text-align: center;
         font-size: 50px;
         font-weight: 600;
       }
 
-      .section3 p {
+      .t2_section3 p {
         font-size: 24px;
         text-align: center;
         margin-top: 21px;
         margin-bottom: 53px;
       }
-      .footer-nav {
+      .t2_footer-nav {
         flex-direction: row;
       }
     }
 
     @media (min-width: 768px) {
-      .hero h1 {
+      .t2_hero h1 {
         font-size: 68px;
       }
-      .hero p {
+      .t2_hero p {
         font-size: 24px;
         text-align: center;
         margin-inline: 58.13px;
         margin-top: 22px;
       }
 
-      .button2 {
+      .t2_button2 {
         width: fit-content;
         margin: 0 auto;
         background-color: #2f40d5;
@@ -1145,12 +1475,12 @@ const template2 = `<!DOCTYPE html>
         margin-top: 22px;
       }
 
-      .text2 {
+      .t2_text2 {
         color: #ffffff;
         font-weight: 700;
         font-size: 18px;
       }
-      .section4 {
+      .t2_section4 {
         max-width: 1239.91px;
         margin: 0 auto;
         padding-inline: 40px;
@@ -1159,123 +1489,123 @@ const template2 = `<!DOCTYPE html>
         padding-bottom: 73px;
         gap: 38px;
       }
-      .subsec1 {
+      .t2_subsec1 {
         background-color: #f3f4ff;
         padding: 22.22px;
         flex: 1;
       }
-      .subse1 h1 {
+      .t2_subse1 h1 {
         font-size: 22.22px;
         font-weight: 700;
       }
 
-      .subsec1 p {
+      .t2_subsec1 p {
         font-size: 9.81px;
         line-height: 22.2px;
         margin-top: 22.22px;
       }
 
-      .subsec2 {
-        background-color: #f3f4ff;
-        padding: 22.22px;
-        border-radius: 7.41px;
-        flex: 1;
-      }
-      .subsec2 h1 {
-        font-size: 22.22px;
-        font-weight: 700;
-      }
-
-      .subsec2 p {
-        font-size: 9.81px;
-        line-height: 22.2px;
-        margin-top: 22.22px;
-      }
-      .subsec3 {
+      .t2_subsec2 {
         background-color: #f3f4ff;
         padding: 22.22px;
         border-radius: 7.41px;
         flex: 1;
       }
-      .subsec3 h1 {
+      .t2_subsec2 h1 {
         font-size: 22.22px;
         font-weight: 700;
       }
 
-      .subsec3 p {
+      .t2_subsec2 p {
         font-size: 9.81px;
         line-height: 22.2px;
         margin-top: 22.22px;
       }
-
-      .subsec4 {
+      .t2_subsec3 {
         background-color: #f3f4ff;
         padding: 22.22px;
         border-radius: 7.41px;
         flex: 1;
       }
-      .subsec4 h1 {
+      .t2_subsec3 h1 {
         font-size: 22.22px;
         font-weight: 700;
       }
 
-      .subsec4 p {
+      .t2_subsec3 p {
         font-size: 9.81px;
         line-height: 22.2px;
         margin-top: 22.22px;
       }
-      .submain {
+
+      .t2_subsec4 {
+        background-color: #f3f4ff;
+        padding: 22.22px;
+        border-radius: 7.41px;
+        flex: 1;
+      }
+      .t2_subsec4 h1 {
+        font-size: 22.22px;
+        font-weight: 700;
+      }
+
+      .t2_subsec4 p {
+        font-size: 9.81px;
+        line-height: 22.2px;
+        margin-top: 22.22px;
+      }
+      .t2_submain {
         margin-inline: 70px;
       }
-      .submain p {
+      .t2_submain p {
         font-size: 16px;
         margin-top: 21px;
       }
 
-      .blue {
+      .t2_blue {
         background-color: #2f40d5;
       }
 
-      .headline h1 {
+      .t2_headline h1 {
         font-weight: 600;
         font-size: 56px;
         color: #ffffff;
       }
 
-      .headline p {
+      .t2_headline p {
         font-size: 20px;
         color: #ffffff;
       }
 
-      .fill {
+      .t2_fill {
         padding-top: 31px;
         display: flex;
         align-items: center;
         gap: 20px;
       }
-      .pic {
+      .t2_pic {
         width: fit-content;
       }
-      .pic img {
+      .t2_pic img {
         width: fit-content;
       }
 
-      .p-text p {
+      .t2_p-text p {
         font-size: 20px;
         color: #ffffff;
       }
 
-      .flexsec {
+      .t2_flexsec {
         display: flex;
         align-items: center;
         gap: 27px;
       }
     }
     @media (min-width: 992px) {
-      .hero h1 {
+      .t2_hero h1 {
         padding-inline: 105.84px;
       }
-      .section4 {
+      .t2_section4 {
         max-width: 1239.91px;
         margin: 0 auto;
         padding-inline: 102px;
@@ -1284,80 +1614,80 @@ const template2 = `<!DOCTYPE html>
         padding-bottom: 73px;
         gap: 38px;
       }
-      .subsec1 {
+      .t2_subsec1 {
         background-color: #f3f4ff;
         padding: 22.22px;
         flex: 1;
       }
-      .subse1 h1 {
+      .t2_subse1 h1 {
         font-size: 22.22px;
         font-weight: 700;
       }
 
-      .subsec1 p {
+      .t2_subsec1 p {
         font-size: 9.81px;
         line-height: 22.2px;
         margin-top: 22.22px;
       }
 
-      .subsec2 {
-        background-color: #f3f4ff;
-        padding: 22.22px;
-        border-radius: 7.41px;
-        flex: 1;
-      }
-      .subsec2 h1 {
-        font-size: 22.22px;
-        font-weight: 700;
-      }
-
-      .subsec2 p {
-        font-size: 9.81px;
-        line-height: 22.2px;
-        margin-top: 22.22px;
-      }
-      .subsec3 {
+      .t2_subsec2 {
         background-color: #f3f4ff;
         padding: 22.22px;
         border-radius: 7.41px;
         flex: 1;
       }
-      .subsec3 h1 {
+      .t2_subsec2 h1 {
         font-size: 22.22px;
         font-weight: 700;
       }
 
-      .subsec3 p {
+      .t2_subsec2 p {
         font-size: 9.81px;
         line-height: 22.2px;
         margin-top: 22.22px;
       }
-
-      .subsec4 {
+      .t2_subsec3 {
         background-color: #f3f4ff;
         padding: 22.22px;
         border-radius: 7.41px;
         flex: 1;
       }
-      .subsec4 h1 {
+      .t2_subsec3 h1 {
         font-size: 22.22px;
         font-weight: 700;
       }
 
-      .subsec4 p {
+      .t2_subsec3 p {
         font-size: 9.81px;
         line-height: 22.2px;
         margin-top: 22.22px;
       }
-      .submain p {
+
+      .t2_subsec4 {
+        background-color: #f3f4ff;
+        padding: 22.22px;
+        border-radius: 7.41px;
+        flex: 1;
+      }
+      .t2_subsec4 h1 {
+        font-size: 22.22px;
+        font-weight: 700;
+      }
+
+      .t2_subsec4 p {
+        font-size: 9.81px;
+        line-height: 22.2px;
+        margin-top: 22.22px;
+      }
+      .t2_submain p {
         font-size: 24px;
       }
 
-      .submain {
+      .t2_submain {
         margin-inline: 102px;
       }
 
-      .flexsec {
+      .t2_flexsec {
         max-width: 1240px;
         margin: 0 auto;
         display: flex;
@@ -1365,11 +1695,11 @@ const template2 = `<!DOCTYPE html>
         gap: 27px;
       }
 
-      .modal h1 {
+      .t2_modal h1 {
         font-size: 40px;
       }
 
-      .modal-content {
+      .t2_modal-content {
         background-color: #fdfbf6;
         margin: 15% auto;
         padding: 50px;
@@ -1380,233 +1710,407 @@ const template2 = `<!DOCTYPE html>
       }
     }
     @media (min-width: 1024px) {
-      .head {
+      .t2_head {
         display: flex;
         align-items: center;
         gap: 10rem;
         max-width: 1240px;
         margin: 0 auto;
       }
-      .blue {
+      .t2_blue {
         padding-block: 163px;
       }
-      .head-sub {
+      .t2_head-sub {
         width: 100%;
         /* margin-right: 105px; */
         /* margin-left: 107px; */
       }
-      .form {
+      .t2_form {
         width: 100%;
         /* margin-right: 107px; */
       }
     }
     @media (min-width: 1049px) {
-      .subsec1 p {
+      .t2_subsec1 p {
         font-size: 10.81px;
         line-height: 22.2px;
         margin-top: 22.22px;
       }
-      .subsec2 p {
+      .t2_subsec2 p {
         font-size: 10.81px;
         line-height: 22.2px;
         margin-top: 22.22px;
       }
-      .subsec3 p {
+      .t2_subsec3 p {
         font-size: 10.81px;
         line-height: 22.2px;
         margin-top: 22.22px;
       }
-      .subsec4 p {
+      .t2_subsec4 p {
         font-size: 10.81px;
         line-height: 22.2px;
         margin-top: 22.22px;
       }
     }
 
+    .t2_hamburger {
+      display: none;
+      cursor: pointer;
+    }
+
+    .t2_hamburger span {
+      display: block;
+      width: 25px;
+      height: 2px;
+      background-color: #333;
+      margin: 5px 0;
+      transition: 0.3s;
+    }
+
+    @media (max-width: 575px) {
+      .t2_hamburger {
+        display: block;
+      }
+
+      .t2_nav {
+        grid-template-columns: 1fr auto;
+      }
+
+      .t2_navitem,
+      .t2_button {
+        display: none; /* Hide by default */
+      }
+
+      .t2_navitem.active,
+      .t2_button.active {
+        display: flex; /* Show when active */
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: #fbe69a;
+        padding: 20px;
+        z-index: 1000;
+      }
+
+      .t2_navitem.active {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .t2_button.active {
+        justify-content: center;
+        margin-top: -1px; /* Remove gap between nav items and button */
+      }
+
+      /* Hamburger animation */
+      .t2_hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+
+      .t2_hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .t2_hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+      }
+    }
+
+    nav {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-inline: 20px;
+      padding-block: 26px;
+      position: relative;
+    }
+
+    .t2_logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .t2_nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .t2_nav-item {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .t2_nav-item p {
+      padding-block: 12px;
+      padding-inline: 24px;
+      color: #727272;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .t2_nav-item p:hover {
+      color: #2f40d5;
+    }
+
+    .t2_button-container {
+      margin-left: auto;
+    }
+
+    .t2_button-1 {
+      background-color: #2f40d5;
+      color: #f3f2fb;
+      padding-block: 12px;
+      padding-inline: 28px;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+
+    .t2_hamburger {
+      display: none;
+      cursor: pointer;
+      padding: 10px;
+      z-index: 100;
+    }
+
+    .t2_hamburger div {
+      width: 25px;
+      height: 2px;
+      background-color: #333;
+      margin: 6px 0;
+      transition: all 0.3s ease;
+    }
+
+    @media screen and (max-width: 991.98px) {
+      .t2_hamburger {
+        display: block;
+      }
+
+      .t2_nav-links {
+        position: fixed;
+        left: auto;
+        right: -100%;
+        top: 0;
+        transform: none;
+        height: 100vh;
+        width: 300px;
+        background-color: #fbe69a;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding-top: 80px;
+        transition: 0.3s ease;
+        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+        gap: 0;
+      }
+
+      .t2_nav-links.active {
+        right: 0;
+      }
+
+      .t2_button-container {
+        margin: 20px 30px;
+      }
+
+      .t2_nav-item {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+      }
+
+      .t2_nav-item p {
+        width: 100%;
+        padding: 15px 30px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      }
+
+      .t2_button-container {
+        display: none;
+      }
+
+      .t2_nav-links .t2_button-container {
+        display: block;
+      }
+
+      .t2_hamburger.active div:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
+      }
+
+      .t2_hamburger.active div:nth-child(2) {
+        opacity: 0;
+      }
+
+      .t2_hamburger.active div:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
+      }
+    }
   </style>
   <body>
-    <header class="header">
-      <nav class="nav">
-        <div>
+    <header class="t2_header">
+      <nav>
+        <div class="t2_logo">
           <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1731750172/productize/dk3ikhtl6rmfahp3i0yy.png" alt="" />
         </div>
 
-        <div class="navitem">
-          <p>Navitem</p>
-          <p>Navitem</p>
-          <p>Navitem</p>
+        <div class="t2_nav-links">
+          <div class="t2_nav-item">
+            <p>Navitem</p>
+            <p>Navitem</p>
+            <p>Navitem</p>
+          </div>
         </div>
 
-        <div class="button">
-          <a href="https://www.tiktok.com" class="text">Get Package</a>
+        <div class="t2_button-container">
+          <a href="https://www.tiktok.com" class="t2_button-1">Get Package</a>
+        </div>
+
+        <div class="t2_hamburger">
+          <div></div>
+          <div></div>
+          <div></div>
         </div>
       </nav>
-      <div class="line"></div>
-      <section class="hero">
+
+      <div class="t2_line"></div>
+
+      <section class="t2_hero">
         <h1>Your Hero Headline Goes Right Here</h1>
         <p>Lorem ipsum dolor sit amet consectetur. Posuere in etiam turpis arcu et neque quis. Eget nisl semper orci pellentesque faucibus praesent id.</p>
-
-        <div class="button2">
-          <a href="https://www.tiktok.com" class="text2">Get Package</a>
+        <div class="t2_button2">
+          <a href="https://www.tiktok.com" class="t2_text2">Get Package</a>
         </div>
       </section>
     </header>
-    <section class="section1">
+    <section class="t2_section1">
       <h1>The Product</h1>
 
-      <div class="image">
+      <div class="t2_image">
         <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1731750250/productize/knsnegea71wsuvkp47k4.png" alt="" />
       </div>
     </section>
 
-    <section class="blue">
-      <div class="head">
-        <div class="head-sub">
-          <div class="headline">
+    <section class="t2_blue">
+      <div class="t2_head">
+        <div class="t2_head-sub">
+          <div class="t2_headline">
             <h1>Your Headline</h1>
             <p>Lorem ipsum dolor sit amet consectetur. Posuere in etiam turpis arcu et neque quis.</p>
           </div>
 
-          <div class="fill">
-            <div class="pic">
+          <div class="t2_fill">
+            <div class="t2_pic">
               <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1731750389/productize/mgxkjgpq00pl062gld9w.png" alt="" />
             </div>
-            <div class="p-text">
+            <div class="t2_p-text">
               <p>Lorem ipsum dolor sit amet consectetur.</p>
             </div>
           </div>
-          <div class="fill">
-            <div class="pic">
+          <div class="t2_fill">
+            <div class="t2_pic">
               <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1731750389/productize/mgxkjgpq00pl062gld9w.png" alt="" />
             </div>
-            <div class="p-text">
-              <p>Lorem ipsum dolor sit amet consectetur.</p>
-            </div>
-          </div>
-
-          <div class="fill">
-            <div class="pic">
-              <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1731750389/productize/mgxkjgpq00pl062gld9w.png" alt="" />
-            </div>
-            <div class="p-text">
+            <div class="t2_p-text">
               <p>Lorem ipsum dolor sit amet consectetur.</p>
             </div>
           </div>
 
-          <div class="fill">
-            <div class="pic">
+          <div class="t2_fill">
+            <div class="t2_pic">
               <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1731750389/productize/mgxkjgpq00pl062gld9w.png" alt="" />
             </div>
-            <div class="p-text">
+            <div class="t2_p-text">
+              <p>Lorem ipsum dolor sit amet consectetur.</p>
+            </div>
+          </div>
+
+          <div class="t2_fill">
+            <div class="t2_pic">
+              <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1731750389/productize/mgxkjgpq00pl062gld9w.png" alt="" />
+            </div>
+            <div class="t2_p-text">
               <p>Lorem ipsum dolor sit amet consectetur.</p>
             </div>
           </div>
         </div>
 
-        <form id="form" method="POST" class="form">
-          <div class="formfill">
-            <div class="name">
+        <form id="form" method="POST" class="t2_form">
+          <div class="t2_formfill">
+            <div class="t2_name">
               <label for="fName">Full Name</label>
               <input type=" text" id="name" name="Full Name" placeholder="Enter Name" />
             </div>
-            <div class="name">
+            <div class="t2_name">
               <label for="fName">Email</label>
               <input type=" text" id="email" name="Email" placeholder="Enter Email" />
             </div>
-            <div class="name">
+            <div class="t2_name">
               <label for="fName">Phone Number</label>
               <input type=" text" id="phone number" name="Phone" placeholder="Enter phone number" />
             </div>
-            <!-- <div class="name">
-                            <label for="fName"> Package</label>
-                            <input type=" text" id="Package" name="Package" placeholder="Select Package" />
-                        </div> -->
+            <div class="t2_name">
+              <label for="fName"> Package</label>
+              <input type=" text" id="Package" name="Package" placeholder="Select Package" />
+            </div>
 
-            <button type="submit" id="submit-button" class="form-button package">Get package</button>
+            <button type="submit" id="submit-button" class="t2_form-button t2_package">Get package</button>
           </div>
         </form>
       </div>
     </section>
 
-    <section class="section3">
+    <section class="t2_section3">
       <h1>Feature</h1>
       <p>Lorem ipsum dolor sit amet consectetur. Posuere in etiam turpis arcu et neque quis. Eget nisl semper orci pellentesque faucibus praesent id.</p>
     </section>
 
-    <section class="section4">
-      <div class="subsec1">
+    <section class="t2_section4">
+      <div class="t2_subsec1">
         <h1>Feature1</h1>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</p>
       </div>
 
-      <div class="subsec2">
+      <div class="t2_subsec2">
         <h1>Feature2</h1>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</p>
       </div>
 
-      <div class="subsec3">
+      <div class="t2_subsec3">
         <h1>Feature3</h1>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</p>
       </div>
 
-      <div class="subsec4">
+      <div class="t2_subsec4">
         <h1>Feature</h1>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</p>
       </div>
     </section>
 
-    <section class="section5">
-      <div class="mainsec5">
-        <div class="submain">
+    <section class="t2_section5">
+      <div class="t2_mainsec5">
+        <div class="t2_submain">
           <h1>Pricing</h1>
           <p>Lorem ipsum dolor sit amet consectetur. Posuere in etiam turpis arcu et neque quis. Eget nisl semper orci pellentesque faucibus praesent id.</p>
         </div>
       </div>
 
-      <section class="flexsec">
-        <article class="min-flex1 p-card">
-          <button class="button-">Package 1</button>
+      <section class="t2_flexsec">
+        <article class="t2_min-flex1 p-card">
+          <button class="t2_button-">Package 1</button>
 
-          <p class="lorem">
+          <p class="t2_lorem">
             lLorem ipsum dolor sit amet consectetur. Posuere in etiam turpis arcu et neque quis. Eget nisl semper orci pellentesque faucibus praesent id.
           </p>
-          <p class="naira">#100,00</p>
+          <p class="t2_naira">#100,00</p>
 
-          <div class="general">
-            <div class="image1">
-              <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1731750707/productize/obbscovmi9ambw6zumhx.png" alt="" />
-            </div>
-            <div>
-              <p>Lorem ipsum dolor sit amet</p>
-            </div>
-          </div>
-
-          <div class="general">
-            <div class="image1">
-              <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1731750707/productize/obbscovmi9ambw6zumhx.png" alt="" />
-            </div>
-            <div>
-              <p>Lorem ipsum dolor sit amet</p>
-            </div>
-          </div>
-          <div class="general">
-            <div class="image1">
-              <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1731750707/productize/obbscovmi9ambw6zumhx.png" alt="" />
-            </div>
-            <div>
-              <p>Lorem ipsum dolor sit amet</p>
-            </div>
-          </div>
-          <div class="general">
-            <div class="image1">
-              <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1731750707/productize/obbscovmi9ambw6zumhx.png" alt="" />
-            </div>
-            <div>
-              <p>Lorem ipsum dolor sit amet</p>
-            </div>
-          </div>
-          <div class="general">
-            <div class="image1">
+          <div class="t2_general">
+            <div class="t2_image1">
               <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1731750707/productize/obbscovmi9ambw6zumhx.png" alt="" />
             </div>
             <div>
@@ -1614,79 +2118,112 @@ const template2 = `<!DOCTYPE html>
             </div>
           </div>
 
-          <div class="line2"></div>
+          <div class="t2_general">
+            <div class="t2_image1">
+              <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1731750707/productize/obbscovmi9ambw6zumhx.png" alt="" />
+            </div>
+            <div>
+              <p>Lorem ipsum dolor sit amet</p>
+            </div>
+          </div>
+          <div class="t2_general">
+            <div class="t2_image1">
+              <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1731750707/productize/obbscovmi9ambw6zumhx.png" alt="" />
+            </div>
+            <div>
+              <p>Lorem ipsum dolor sit amet</p>
+            </div>
+          </div>
+          <div class="t2_general">
+            <div class="t2_image1">
+              <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1731750707/productize/obbscovmi9ambw6zumhx.png" alt="" />
+            </div>
+            <div>
+              <p>Lorem ipsum dolor sit amet</p>
+            </div>
+          </div>
+          <div class="t2_general">
+            <div class="t2_image1">
+              <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1731750707/productize/obbscovmi9ambw6zumhx.png" alt="" />
+            </div>
+            <div>
+              <p>Lorem ipsum dolor sit amet</p>
+            </div>
+          </div>
 
-          <button class="pack">Get Package</button>
+          <div class="t2_line2"></div>
+
+          <button class="t2_pack">Get Package</button>
         </article>
 
-        <article class="min-flex2 p-card">
-          <button class="button3">Package 2</button>
+        <article class="t2_min-flex2 p-card">
+          <button class="t2_button3">Package 2</button>
 
-          <p class="lorem2">
+          <p class="t2_lorem2">
             lLorem ipsum dolor sit amet consectetur. Posuere in etiam turpis arcu et neque quis. Eget nisl semper orci pellentesque faucibus praesent id.
           </p>
-          <p class="naira2">#250,000</p>
+          <p class="t2_naira2">#250,000</p>
 
-          <div class="general2">
-            <div class="image3">
+          <div class="t2_general2">
+            <div class="t2_image3">
               <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1731750707/productize/obbscovmi9ambw6zumhx.png" alt="" />
             </div>
             <div>
-              <p class="ptag">Lorem ipsum dolor sit amet</p>
+              <p class="t2_ptag">Lorem ipsum dolor sit amet</p>
             </div>
           </div>
 
-          <div class="general2">
-            <div class="image3">
+          <div class="t2_general2">
+            <div class="t2_image3">
               <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1731750707/productize/obbscovmi9ambw6zumhx.png" alt="" />
             </div>
             <div>
-              <p class="ptag">Lrem ipsum dolor sit amet</p>
+              <p class="t2_ptag">Lrem ipsum dolor sit amet</p>
             </div>
           </div>
 
-          <div class="general2">
-            <div class="image3">
+          <div class="t2_general2">
+            <div class="t2_image3">
               <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1731750707/productize/obbscovmi9ambw6zumhx.png" alt="" />
             </div>
             <div>
-              <p class="ptag">Lorem ipsum dolor sit amet</p>
+              <p class="t2_ptag">Lorem ipsum dolor sit amet</p>
             </div>
           </div>
 
-          <div class="general2">
-            <div class="image3">
+          <div class="t2_general2">
+            <div class="t2_image3">
               <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1731750707/productize/obbscovmi9ambw6zumhx.png" alt="" />
             </div>
             <div>
-              <p class="ptag">Lorem ipsum dolor sit amet</p>
+              <p class="t2_ptag">Lorem ipsum dolor sit amet</p>
             </div>
           </div>
 
-          <div class="general2">
-            <div class="image3">
+          <div class="t2_general2">
+            <div class="t2_image3">
               <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1731750707/productize/obbscovmi9ambw6zumhx.png" alt="" />
             </div>
             <div>
-              <p class="ptag">Lorem ipsum dolor sit amet</p>
+              <p class="t2_ptag">Lorem ipsum dolor sit amet</p>
             </div>
           </div>
 
-          <div class="line3"></div>
+          <div class="t2_line3"></div>
 
-          <button class="pack2">Get Package</button>
+          <button class="t2_pack2">Get Package</button>
         </article>
 
-        <article class="min-flex p-card">
-          <button class="button4">Package 3</button>
+        <article class="t2_min-flex p-card">
+          <button class="t2_button4">Package 3</button>
 
-          <p class="lorem">
+          <p class="t2_lorem">
             lLorem ipsum dolor sit amet consectetur. Posuere in etiam turpis arcu et neque quis. Eget nisl semper orci pellentesque faucibus praesent id.
           </p>
-          <p class="naira">#500,00</p>
+          <p class="t2_naira">#500,00</p>
 
-          <div class="general">
-            <div class="image1">
+          <div class="t2_general">
+            <div class="t2_image1">
               <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1731750707/productize/obbscovmi9ambw6zumhx.png" alt="" />
             </div>
             <div>
@@ -1694,8 +2231,8 @@ const template2 = `<!DOCTYPE html>
             </div>
           </div>
 
-          <div class="general">
-            <div class="image1">
+          <div class="t2_general">
+            <div class="t2_image1">
               <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1731750707/productize/obbscovmi9ambw6zumhx.png" alt="" />
             </div>
             <div>
@@ -1703,8 +2240,8 @@ const template2 = `<!DOCTYPE html>
             </div>
           </div>
 
-          <div class="general">
-            <div class="image1">
+          <div class="t2_general">
+            <div class="t2_image1">
               <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1731750707/productize/obbscovmi9ambw6zumhx.png" alt="" />
             </div>
             <div>
@@ -1712,8 +2249,8 @@ const template2 = `<!DOCTYPE html>
             </div>
           </div>
 
-          <div class="general">
-            <div class="image1">
+          <div class="t2_general">
+            <div class="t2_image1">
               <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1731750707/productize/obbscovmi9ambw6zumhx.png" alt="" />
             </div>
             <div>
@@ -1721,8 +2258,8 @@ const template2 = `<!DOCTYPE html>
             </div>
           </div>
 
-          <div class="general">
-            <div class="image1">
+          <div class="t2_general">
+            <div class="t2_image1">
               <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1731750707/productize/obbscovmi9ambw6zumhx.png" alt="" />
             </div>
             <div>
@@ -1730,38 +2267,38 @@ const template2 = `<!DOCTYPE html>
             </div>
           </div>
 
-          <div class="line2"></div>
+          <div class="t2_line2"></div>
 
-          <button class="pack">Get Package</button>
+          <button class="t2_pack">Get Package</button>
         </article>
       </section>
     </section>
 
-    <section class="t2_footer">
-      <div class="footer-nav">
-        <div class="nav-image">
+    <section class="t2_t2_footer">
+      <div class="t2_footer-nav">
+        <div class="t2_footer-logo">
           <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1731750172/productize/dk3ikhtl6rmfahp3i0yy.png" alt="" />
         </div>
 
-        <div class="footer-navitem">
+        <div class="t2_footer-navitem">
           <p>Nav item</p>
           <p>Nav item</p>
           <p>Nav item</p>
         </div>
 
-        <div>
+        <div class="t2_footer-end">
           <p>Nav item</p>
         </div>
       </div>
     </section>
 
     <!-- Modal -->
-    <div id="thankyou-modal" class="modal">
-      <div class="modal-content">
+    <div id="thankyou-modal" class="t2_modal">
+      <div class="t2_modal-content">
         <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1732777197/productize/zmddmfcyfw7ieia4qpup.svg" alt="check" />
         <h1>Thank You for Signing Up</h1>
         <p>Lorem ipsum dolor sit amet consectetur. Posuere in etiam turpis arcu et neque quis. Eget nisl semper orci pellentesque faucibus praesent id.</p>
-        <button class="close-button" onclick="closeModal()">Close</button>
+        <button class="t2_close-button" onclick="closeModal()">Close</button>
       </div>
     </div>
   </body>
@@ -1797,8 +2334,7 @@ const template2 = `<!DOCTYPE html>
           }
         })
         .then(function (data) {
-          showModal();
-          console.log("submit successfully");
+          window.location.href = './Feedback.html';
           document.getElementById('submit-button').disabled = false;
           document.getElementById('form').reset();
 
@@ -1810,25 +2346,35 @@ const template2 = `<!DOCTYPE html>
           console.error(error);
         });
     });
-    // Function to show the modal
-    function showModal() {
-      const modal = document.getElementById('thankyou-modal');
-      modal.style.display = 'block'; // Show the modal
-    }
 
-    // Function to close the modal
-    function closeModal() {
-      const modal = document.getElementById('thankyou-modal');
-      modal.style.display = 'none'; // Hide the modal
-    }
+    const hamburger = document.querySelector('.t2_hamburger');
+    const navLinks = document.querySelector('.t2_nav-links');
+    const body = document.body;
 
-    // Close the modal if the user clicks outside the modal content
-    window.onclick = function (event) {
-      const modal = document.getElementById('thankyou-modal');
-      if (event.target === modal) {
-        closeModal();
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navLinks.classList.toggle('active');
+      // Prevent scrolling when menu is open
+      body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : 'auto';
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!navLinks.contains(e.target) && !hamburger.contains(e.target)) {
+        hamburger.classList.remove('active');
+        navLinks.classList.remove('active');
+        body.style.overflow = 'auto';
       }
-    };
+    });
+
+    // Close menu when clicking a link
+    document.querySelectorAll('.t2_nav-links a, .t2_nav-item p').forEach((link) => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navLinks.classList.remove('active');
+        body.style.overflow = 'auto';
+      });
+    });
   </script>
 </html>
 `;
@@ -1842,8 +2388,15 @@ const template3 = `<!DOCTYPE html>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Karla:ital,wght@0,200..800;1,200..800&family=Kumbh+Sans:wght@100..900&family=League+Spartan:wght@100..900&family=Lexend+Deca:wght@100..900&display=swap');
 
+    :root {
+      --primary-color: #17b6ba;
+      --text-color: #333;
+      --bg-color: #f9f9f9;
+      --white: #ffffff;
+      --footer-bg: #333;
+    }
 
-* {
+    * {
       margin: 0;
       padding: 0;
       text-decoration: none;
@@ -1851,54 +2404,102 @@ const template3 = `<!DOCTYPE html>
       font-family: 'Inter', sans-serif;
     }
 
-    .container {
+    .t3_button {
+      background-color: var(--primary-color);
+      color: var(--white);
+      padding: 12px 28px;
+      border-radius: 4px;
+      border: none;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .t3_button:hover {
+      background-color: #149598;
+    }
+
+    .t3_container {
       max-width: 1230px;
       margin: 0 auto;
       padding-inline: 1rem;
     }
 
-    .text-wrapper {
+    .t3_text-wrapper {
       max-width: 700px;
       margin: 0 auto;
     }
 
-    .nav {
+    .t3_nav {
+      background: var(--white);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .t3_nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-block: 1rem;
+    }
+
+    .t3_logo h1 {
+      font-size: 1.5rem;
+      color: var(--primary-color);
+    }
+
+    .t3_nav-menu {
+      position: fixed;
+      top: 60px;
+      left: -100%;
+      background: var(--white);
+      width: 100%;
+      height: calc(100vh - 60px);
+      padding: 2rem;
+      transition: 0.3s ease-in-out;
+    }
+
+    .t3_nav-menu.t3_active {
+      left: 0;
+    }
+
+    .t3_nav-list {
+      list-style: none;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      padding: 1rem;
-      padding-block: 2rem;
-      gap: 1rem;
+      gap: 2rem;
     }
 
-    .nav h1 {
-      font-size: 1.5rem;
-    }
-
-    .nav-item {
-      display: flex;
-      gap: 0.5rem;
-    }
-
-    .nav-item p {
-      margin: 0;
+    .t3_nav-item {
       cursor: pointer;
-      padding: 0.5rem 0;
     }
 
-    .nav-item p:hover {
-      text-decoration: underline;
-    }
-
-    .button {
-      background-color: #17b6ba;
-      color: #f3f2fb;
-      padding-block: 12px;
-      padding-inline: 28px;
-      border-radius: 4px;
-      border: 1px;
-      font-family: 'Inter';
+    .t3_nav-link {
+      color: var(--text-color);
       font-weight: 500;
+    }
+
+    .t3_nav-link:hover {
+      color: var(--primary-color);
+    }
+
+    .t3_hamburger {
+      display: block;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+
+    .t3_bar {
+      display: block;
+      width: 25px;
+      height: 3px;
+      margin: 5px auto;
+      transition: all 0.3s ease-in-out;
+      background-color: var(--text-color);
     }
 
     .section-1,
@@ -1906,7 +2507,7 @@ const template3 = `<!DOCTYPE html>
     .footer {
       background: #1d1c20;
       color: #fff;
-      padding: 2rem 1rem;
+      padding: 10rem 1rem;
       text-align: center;
     }
 
@@ -2088,75 +2689,18 @@ const template3 = `<!DOCTYPE html>
       width: 1.2rem;
     }
 
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0, 0, 0, 0.5);
-    }
-
-    .modal h1 {
-      font-size: 24px;
-    }
-
-    .modal p {
-      font-size: 16px;
-    }
-
-    .modal h1,
-    .modal p {
-      margin-block: 1rem;
-    }
-
-    .modal-content {
-      background-color: #fdfbf6;
-      margin: 25% auto;
-      padding: 50px;
-      border-radius: 8px;
-      max-width: 700px;
-      text-align: center;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    }
-
-    .modal-content img {
-      width: 220px;
-    }
-
-    .close-button {
-      margin-top: 20px;
-      background-color: #332b67;
-      height: 60px;
-      width: 264px;
-      color: white;
-      font-size: 1.3rem;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    .close-button:hover {
-      background-color: #f6c21c;
-      color: black;
-    }
-
     @media (min-width: 425px) {
     }
 
     @media (min-width: 768px) {
-      .nav {
+      .t3_nav {
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
         /* height: 98px; */
       }
 
-      .nav-item {
+      .t3_nav-item {
         flex-direction: row;
         gap: 1rem;
         width: auto;
@@ -2246,20 +2790,6 @@ const template3 = `<!DOCTYPE html>
       .socials {
         margin-top: 0 !important;
       }
-
-      .modal h1 {
-        font-size: 40px;
-      }
-
-      .modal-content {
-        background-color: #fdfbf6;
-        margin: 15% auto;
-        padding: 50px;
-        border-radius: 8px;
-        max-width: 700px;
-        text-align: center;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-      }
     }
 
     @media (min-width: 1240px) {
@@ -2296,35 +2826,129 @@ const template3 = `<!DOCTYPE html>
         flex: 1;
       }
     }
+
+    /* Footer styles */
+    .footer {
+      background: var(--footer-bg);
+      color: var(--white);
+      padding-block: 2rem;
+      margin-top: 4rem;
+    }
+
+    .footer-wrapper {
+      display: grid;
+      gap: 2rem;
+    }
+
+    .footer-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .footer-link {
+      color: var(--white);
+      opacity: 0.8;
+      transition: opacity 0.3s ease;
+    }
+
+    .footer-link:hover {
+      opacity: 1;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    /* Responsive styles */
+    @media (min-width: 768px) {
+      .t3_hamburger {
+        display: none;
+      }
+
+      .t3_nav-menu {
+        position: static;
+        width: auto;
+        height: auto;
+        padding: 0;
+        background: none;
+      }
+
+      .t3_nav-list {
+        flex-direction: row;
+        gap: 2rem;
+      }
+
+      .footer-wrapper {
+        grid-template-columns: repeat(3, 1fr);
+        align-items: center;
+      }
+
+      .footer-nav {
+        flex-direction: row;
+        justify-content: center;
+      }
+    }
+
+    /* Animation classes for hamburger */
+    .t3_hamburger.t3_active .t3_bar:nth-child(2) {
+      opacity: 0;
+    }
+
+    .t3_hamburger.t3_active .t3_bar:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+
+    .t3_hamburger.t3_active .t3_bar:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
   </style>
   <body>
-    <nav class="container nav">
-      <div>
-        <h1>Logo</h1>
-      </div>
+    <nav class="t3_nav">
+      <div class="t3_container t3_nav-container">
+        <div class="t3_logo">
+          <h1>Logo</h1>
+        </div>
 
-      <div class="nav-item">
-        <p>Nav item</p>
-        <p>Nav item</p>
-        <p>Nav item</p>
-      </div>
+        <div class="t3_nav-menu">
+          <ul class="t3_nav-list">
+            <li class="t3_nav-item">
+              <a href="#" class="t3_nav-link">Home</a>
+            </li>
+            <li class="t3_nav-item">
+              <a href="#" class="t3_nav-link">About</a>
+            </li>
+            <li class="t3_nav-item">
+              <a href="#" class="t3_nav-link">Services</a>
+            </li>
+            <li class="t3_nav-item">
+              <a href="#" class="t3_nav-link">Contact</a>
+            </li>
+          </ul>
+        </div>
 
-      <div>
-        <a href="./Feedback.html">
-          <button class="button">CTA Button</button>
+        <a href="#">
+          <button class="t3_button">Get Started</button>
         </a>
+
+        <div class="t3_hamburger">
+          <span class="t3_bar"></span>
+          <span class="t3_bar"></span>
+          <span class="t3_bar"></span>
+        </div>
       </div>
     </nav>
 
     <section class="section-1">
-      <section class="container section-1-wrapper">
+      <section class="t3_container section-1-wrapper">
         <div class="hero-headline">
           <h1>Your Hero Headline Goes Right Here</h1>
           <p>Lorem ipsum dolor sit amet consectetur. Posuere in etiam turpis arcu et neque quis. Eget nisl semper orci pellentesque faucibus praesent id.</p>
 
           <div>
             <a href="">
-              <button class="button hero-btn">CTA Button</button>
+              <button class="t3_button hero-btn">CTA Button</button>
             </a>
           </div>
         </div>
@@ -2333,7 +2957,7 @@ const template3 = `<!DOCTYPE html>
       </section>
     </section>
 
-    <section class="section-2 container">
+    <section class="section-2 t3_container">
       <div class="key-topics text-wrapper">
         <h1>Key Topics</h1>
         <p>Lorem ipsum dolor sit amet consectetur. Posuere in etiam turpis arcu et neque quis. Eget nisl semper orci pellentesque faucibus praesent id.</p>
@@ -2359,7 +2983,7 @@ const template3 = `<!DOCTYPE html>
       </div>
     </section>
 
-    <section class="section-3 container">
+    <section class="section-3 t3_container">
       <div class="speaker text-wrapper">
         <h1>The Speakers</h1>
         <p>Lorem ipsum dolor sit amet consectetur. Posuere in etiam turpis arcu et neque quis. Eget nisl semper orci pellentesque faucibus praesent id.</p>
@@ -2403,7 +3027,7 @@ const template3 = `<!DOCTYPE html>
     </section>
 
     <section class="section-4">
-      <div class="sub-section-4 container">
+      <div class="sub-section-4 t3_container">
         <div class="long-headline text-wrapper">
           <h1>Your Long Headline Goes Right Here</h1>
           <p>Lorem ipsum dolor sit amet consectetur. Posuere in etiam turpis arcu et neque quis. Eget nisl semper orci pellentesque faucibus praesent id.</p>
@@ -2474,7 +3098,7 @@ const template3 = `<!DOCTYPE html>
       </div>
     </section>
 
-    <section class="section-5 container">
+    <section class="section-5 t3_container">
       <div class="your-long-headline text-wrapper">
         <h1>Your Long Headline Goes Right Here</h1>
         <p>
@@ -2483,7 +3107,7 @@ const template3 = `<!DOCTYPE html>
         </p>
         <div>
           <a href="">
-            <button class="button hero-btn">CTA Button</button>
+            <button class="t3_button hero-btn">CTA Button</button>
           </a>
         </div>
       </div>
@@ -2528,7 +3152,7 @@ const template3 = `<!DOCTYPE html>
     </section>
 
     <section class="section-6">
-      <section class="container section-6-wrapper">
+      <section class="t3_container section-6-wrapper">
         <div class="section-6-text">
           <div class="headline-text">
             <h1>Your Headline</h1>
@@ -2573,103 +3197,98 @@ const template3 = `<!DOCTYPE html>
                 <option value="package3">Package 3</option>
               </select>
             </div>
-            <button type="submit" id="submit-button" class="form-button button">Submit</button>
+            <button type="submit" id="submit-button" class="form-button t3_button">Submit</button>
           </form>
         </div>
       </section>
     </section>
 
-    <section class="t3_footer">
-      <section class="container footer-wrapper">
-        <div class="footer-image">
-          <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1733480713/grape.js/jh9cqqkwpesa6aixtjgp.png" alt="" class="footer-img" />
+    <footer class="footer">
+      <div class="t3_container footer-wrapper">
+        <div class="footer-logo">
+          <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1733480713/grape.js/jh9cqqkwpesa6aixtjgp.png" alt="Logo" />
         </div>
 
-        <div class="footer-navitem">
-          <span>Nav item</span>
-          <span>Nav item</span>
-          <span>Nav item</span>
+        <div class="footer-nav">
+          <a href="#" class="footer-link">About</a>
+          <a href="#" class="footer-link">Services</a>
+          <a href="#" class="footer-link">Contact</a>
         </div>
-        <p class="socials">Socials</p>
-      </section>
-    </section>
 
-    <!-- Modal -->
-    <div id="thankyou-modal" class="modal">
-      <div class="modal-content">
-        <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1733566356/grape.js/vjeys6u1ybqilbsusbiq.png" alt="check" />
-        <h1>Thank You for Signing Up</h1>
-        <p>Lorem ipsum dolor sit amet consectetur. Posuere in etiam turpis arcu et neque quis. Eget nisl semper orci pellentesque faucibus praesent id.</p>
-        <button class="close-button" onclick="closeModal()">Close</button>
+        <div class="social-links">
+          <a href="#" class="footer-link">Twitter</a>
+          <a href="#" class="footer-link">LinkedIn</a>
+          <a href="#" class="footer-link">Instagram</a>
+        </div>
       </div>
-    </div>
-  </body>
-  <script>
-    document.getElementById('form').addEventListener('submit', function (e) {
-      e.preventDefault(); // Prevent the default form submission
-      document.getElementById('submit-button').textContent = 'Submitting..';
-      document.getElementById('submit-button').disabled = true;
+    </footer>
 
-      // Collect the form data
-      var formData = new FormData(this);
-      var keyValuePairs = [];
-      for (var pair of formData.entries()) {
-        keyValuePairs.push(pair[0] + '=' + pair[1]);
-      }
+    <script>
+      // Navbar toggle
+      const hamburger = document.querySelector('.t3_hamburger');
+      const navMenu = document.querySelector('.t3_nav-menu');
+      const body = document.querySelector('body');
 
-      var formDataString = keyValuePairs.join('&');
+      hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('t3_active');
+        navMenu.classList.toggle('t3_active');
+        body.style.overflow = navMenu.classList.contains('t3_active') ? 'hidden' : 'auto';
+      });
 
-      // Send a POST request to your Google Apps Script
-      fetch('https://script.google.com/macros/s/AKfycbyWE9sb91qa3MCAps-lfwOqRaevhG5BvGyJ_8ImAElQ9mJMwCu-S5WH_pCgAKE_pkTing/exec', {
-        redirect: 'follow',
-        method: 'POST',
-        body: formDataString,
-        headers: {
-          'Content-Type': 'text/plain;charset=utf-8',
-        },
-      })
-        .then(function (response) {
-          if (response) {
-            return response;
-          } else {
-            throw new Error('Failed to submit the form.');
-          }
-        })
-        .then(function (data) {
-          showModal();
-          console.log('submit successfully');
-          window.location.href = '/feedback';
-          document.getElementById('submit-button').disabled = false;
-          document.getElementById('form').reset();
-
-          setTimeout(function () {
-            document.getElementById('submit-button').textContent = 'Get Package';
-          }, 2600);
-        })
-        .catch(function (error) {
-          console.error(error);
+      document.querySelectorAll('.t3_nav-link').forEach((link) => {
+        link.addEventListener('click', () => {
+          hamburger.classList.remove('t3_active');
+          navMenu.classList.remove('t3_active');
+          body.style.overflow = 'auto';
         });
-    });
-    // Function to show the modal
-    function showModal() {
-      const modal = document.getElementById('thankyou-modal');
-      modal.style.display = 'block'; // Show the modal
-    }
+      });
 
-    // Function to close the modal
-    function closeModal() {
-      const modal = document.getElementById('thankyou-modal');
-      modal.style.display = 'none'; // Hide the modal
-    }
+      document.getElementById('form').addEventListener('submit', function (e) {
+        e.preventDefault(); // Prevent the default form submission
+        document.getElementById('submit-button').textContent = 'Submitting..';
+        document.getElementById('submit-button').disabled = true;
 
-    // Close the modal if the user clicks outside the modal content
-    window.onclick = function (event) {
-      const modal = document.getElementById('thankyou-modal');
-      if (event.target === modal) {
-        closeModal();
-      }
-    };
-  </script>
+        // Collect the form data
+        var formData = new FormData(this);
+        var keyValuePairs = [];
+        for (var pair of formData.entries()) {
+          keyValuePairs.push(pair[0] + '=' + pair[1]);
+        }
+
+        var formDataString = keyValuePairs.join('&');
+
+        // Send a POST request to your Google Apps Script
+        fetch('https://script.google.com/macros/s/AKfycbyWE9sb91qa3MCAps-lfwOqRaevhG5BvGyJ_8ImAElQ9mJMwCu-S5WH_pCgAKE_pkTing/exec', {
+          redirect: 'follow',
+          method: 'POST',
+          body: formDataString,
+          headers: {
+            'Content-Type': 'text/plain;charset=utf-8',
+          },
+        })
+          .then(function (response) {
+            if (response) {
+              return response;
+            } else {
+              throw new Error('Failed to submit the form.');
+            }
+          })
+          .then(function (data) {
+            console.log('submit successfully');
+            window.location.href = './Feedback.html';
+            document.getElementById('submit-button').disabled = false;
+            document.getElementById('form').reset();
+
+            setTimeout(function () {
+              document.getElementById('submit-button').textContent = 'Get Package';
+            }, 2600);
+          })
+          .catch(function (error) {
+            console.error(error);
+          });
+      });
+    </script>
+  </body>
 </html>
 `;
 
@@ -2684,7 +3303,391 @@ export const template_1 = {
     {
       id: 'page-2',
       name: 'Feedback',
-      content: '<div>feedback Page Content</div>',
+      content: `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thank You</title>
+  </head>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      text-decoration: none;
+    }
+
+    .t1_nav {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-inline: 20px;
+      padding-block: 26px;
+      position: relative;
+    }
+
+    .t1_logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .t1_nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .t1_nav-item {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .t1_nav-item p {
+      padding-block: 12px;
+      padding-inline: 24px;
+      font-family: 'Neurial Grotesk';
+      color: #727272;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .t1_button-container {
+      margin-left: auto;
+    }
+
+    .t1_nav-item p:hover {
+      color: #2f40d5;
+    }
+
+    .t1_hamburger {
+      display: none;
+      cursor: pointer;
+      padding: 10px;
+      z-index: 100;
+    }
+
+    .t1_hamburger div {
+      width: 25px;
+      height: 2px;
+      background-color: #333;
+      margin: 6px 0;
+      transition: all 0.3s ease;
+    }
+
+    .t1_button-1 {
+      background-color: #2f40d5;
+      color: #f3f2fb;
+      padding-block: 12px;
+      padding-inline: 28px;
+      border-radius: 4px;
+      border: 1px;
+      font-family: 'Inter';
+      font-weight: 500px;
+    }
+
+    .t1_line {
+      background-color: #0000001c;
+      height: 1px;
+    }
+
+    .t1_section-1 {
+      max-width: 1086px;
+      margin: 0 auto;
+      padding-top: 76.93px;
+      padding-inline: 2rem;
+      padding-bottom: 139.33px;
+    }
+    .t1_sub-section {
+      margin-top: 76.93px;
+      margin-bottom: 139.93px;
+    }
+    .t1_image-1 {
+      display: flex;
+      justify-content: center;
+    }
+
+    .t1_thanks {
+      margin-top: 22px;
+    }
+    .t1_thanks h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+      font-family: 'Schibsted Grotesk';
+      margin-inline: 2rem;
+    }
+    .t1_thanks p {
+      text-align: center;
+      margin-inline: 2rem;
+      margin-block: 22px;
+      line-height: 29.05px;
+      font-size: 16px;
+      color: #3e4144;
+      font-family: 'inter';
+    }
+    .t1_button {
+      display: block;
+      margin: 0 auto;
+      padding-inline: 104px;
+      padding-block: 19px;
+      background-color: #2f40d5;
+      border-radius: 5px;
+      border: 0;
+
+      color: #ffffff;
+    }
+    .t1_section-2 {
+      background-color: #f6f7fd;
+    }
+    .t1_footer {
+      max-width: 1237px;
+      margin: 0 auto;
+      color: #000000;
+      display: flex;
+      align-items: center;
+      padding: 63px 20px 83px;
+      gap: 32px;
+    }
+
+    .t1_footer-navitem {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .t1_footer-navitem p {
+      color: #727272;
+      font-family: 'Neurial Grotesk';
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .t1_footer-navitem p:hover {
+      color: #2f40d5;
+    }
+
+    @media (min-width: 768px) {
+      .t1_section-1 {
+        padding-top: 76.93px;
+        padding-right: 189px;
+        padding-left: 167px;
+        padding-bottom: 139.33px;
+      }
+      .t1_thanks h1 {
+        font-size: 30px;
+      }
+    }
+
+    @media (min-width: 991.98px) {
+      .t1_thanks p {
+        text-align: center;
+        font-size: 20px;
+        margin-inline: 58.13px;
+      }
+
+      .t1_nav {
+        flex-direction: row;
+      }
+
+      .t1_footer {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+      .t1_thanks h1 {
+        font-size: 38px;
+        text-align: center;
+        margin-inline: 105.95px;
+      }
+    }
+
+    @media screen and (max-width: 991.98px) {
+      .t1_hamburger {
+        display: block;
+      }
+
+      .t1_nav-links {
+        position: fixed;
+        left: auto;
+        right: -100%;
+        top: 0;
+        transform: none;
+        height: 100vh;
+        width: 300px;
+        background-color: white;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding-top: 80px;
+        transition: 0.3s ease;
+        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+        gap: 0;
+      }
+
+      .t1_nav-links.active {
+        right: 0;
+      }
+
+      .t1_button-container {
+        margin: 20px 30px;
+      }
+
+      .t1_nav-item {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+      }
+
+      .t1_nav-item p {
+        width: 100%;
+        padding: 15px 30px;
+        border-bottom: 1px solid #f0f0f0;
+      }
+
+      .t1_nav-links .t1_button-1 {
+        margin: 20px 30px;
+      }
+
+      .t1_hamburger.active div:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
+      }
+
+      .t1_hamburger.active div:nth-child(2) {
+        opacity: 0;
+      }
+
+      .t1_hamburger.active div:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
+      }
+    }
+
+    @media screen and (max-width: 991.98px) {
+      .t1_footer {
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 20px;
+      }
+
+      .t1_footer-navitem {
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .t1_footer-image {
+        margin-bottom: 24px;
+      }
+    }
+
+    @media screen and (min-width: 992px) {
+      .t1_footer {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    }
+  </style>
+  <body>
+    <nav class="t1_nav">
+      <div class="t1_logo">
+        <h1>Logo</h1>
+      </div>
+
+      <div class="t1_nav-links">
+        <div class="t1_nav-item">
+          <p>Nav item</p>
+          <p>Nav item</p>
+          <p>Nav item</p>
+        </div>
+      </div>
+
+      <div class="t1_button-container">
+        <a href="">
+          <button class="t1_button-1">Get Package</button>
+        </a>
+      </div>
+      <div class="t1_hamburger">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </nav>
+
+    <div class="t1_line"></div>
+
+    <section class="t1_section-1">
+      <section class="t1_sub-section">
+        <div class="t1_image-div">
+          <div class="t1_image-1">
+            <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1732777197/productize/zmddmfcyfw7ieia4qpup.svg" alt="" class="t1_img-1" />
+          </div>
+        </div>
+
+        <div class="t1_thanks">
+          <h1>Thank you for signing up</h1>
+          <p>Lorem ipsum dolor sit amet consectetur. Posuere in etiam turpis arcu et neque quis. Eget nisl semper orci pellentesque faucibus praesent id.</p>
+        </div>
+        <a
+          href="
+			/"
+        >
+          <button class="t1_button">Button</button></a
+        >
+      </section>
+    </section>
+
+    <section class="t1_section-2">
+      <div class="t1_footer">
+        <div class="t1_footer-image">
+          <h1>Logo</h1>
+        </div>
+
+        <div class="t1_footer-navitem">
+          <p>Nav item</p>
+          <p>Nav item</p>
+          <p>Nav item</p>
+        </div>
+
+        <p>Nav item</p>
+      </div>
+    </section>
+
+    <script>
+      const hamburger = document.querySelector('.t1_hamburger');
+      const navLinks = document.querySelector('.t1_nav-links');
+      const body = document.body;
+
+      hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navLinks.classList.toggle('active');
+        // Prevent scrolling when menu is open
+        body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : 'auto';
+      });
+
+      // Close menu when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!navLinks.contains(e.target) && !hamburger.contains(e.target)) {
+          hamburger.classList.remove('active');
+          navLinks.classList.remove('active');
+          body.style.overflow = 'auto';
+        }
+      });
+
+      // Close menu when clicking a link
+      document.querySelectorAll('.t1_nav-links a, .t1_nav-item p').forEach((link) => {
+        link.addEventListener('click', () => {
+          hamburger.classList.remove('active');
+          navLinks.classList.remove('active');
+          body.style.overflow = 'auto';
+        });
+      });
+    </script>
+  </body>
+</html>
+`,
       styles: '',
     },
   ],
@@ -2700,7 +3703,391 @@ export const template_2 = {
     {
       id: 'page-2',
       name: 'Feedback',
-      content: '<div>feedback Page Content</div>',
+      content: `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thank You</title>
+  </head>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      text-decoration: none;
+    }
+
+    .t2_nav {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-inline: 20px;
+      padding-block: 26px;
+      position: relative;
+    }
+
+    .t2_logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .t2_nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .t2_nav-item {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .t2_nav-item p {
+      padding-block: 12px;
+      padding-inline: 24px;
+      font-family: 'Neurial Grotesk';
+      color: #727272;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .t2_button-container {
+      margin-left: auto;
+    }
+
+    .t2_nav-item p:hover {
+      color: #2f40d5;
+    }
+
+    .t2_hamburger {
+      display: none;
+      cursor: pointer;
+      padding: 10px;
+      z-index: 100;
+    }
+
+    .t2_hamburger div {
+      width: 25px;
+      height: 2px;
+      background-color: #333;
+      margin: 6px 0;
+      transition: all 0.3s ease;
+    }
+
+    .t2_button-1 {
+      background-color: #2f40d5;
+      color: #f3f2fb;
+      padding-block: 12px;
+      padding-inline: 28px;
+      border-radius: 4px;
+      border: 1px;
+      font-family: 'Inter';
+      font-weight: 500px;
+    }
+
+    .t2_line {
+      background-color: #0000001c;
+      height: 1px;
+    }
+
+    .t2_section-1 {
+      max-width: 1086px;
+      margin: 0 auto;
+      padding-top: 76.93px;
+      padding-inline: 2rem;
+      padding-bottom: 139.33px;
+    }
+    .t2_sub-section {
+      margin-top: 76.93px;
+      margin-bottom: 139.93px;
+    }
+    .t2_image-1 {
+      display: flex;
+      justify-content: center;
+    }
+
+    .t2_thanks {
+      margin-top: 22px;
+    }
+    .t2_thanks h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+      font-family: 'Schibsted Grotesk';
+      margin-inline: 2rem;
+    }
+    .t2_thanks p {
+      text-align: center;
+      margin-inline: 2rem;
+      margin-block: 22px;
+      line-height: 29.05px;
+      font-size: 16px;
+      color: #3e4144;
+      font-family: 'inter';
+    }
+    .t2_button {
+      display: block;
+      margin: 0 auto;
+      padding-inline: 104px;
+      padding-block: 19px;
+      background-color: #2f40d5;
+      border-radius: 5px;
+      border: 0;
+
+      color: #ffffff;
+    }
+    .t2_section-2 {
+      background-color: #f6f7fd;
+    }
+    .t2_footer {
+      max-width: 1237px;
+      margin: 0 auto;
+      color: #000000;
+      display: flex;
+      align-items: center;
+      padding: 63px 20px 83px;
+      gap: 32px;
+    }
+
+    .t2_footer-navitem {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .t2_footer-navitem p {
+      color: #727272;
+      font-family: 'Neurial Grotesk';
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .t2_footer-navitem p:hover {
+      color: #2f40d5;
+    }
+
+    @media (min-width: 768px) {
+      .t2_section-1 {
+        padding-top: 76.93px;
+        padding-right: 189px;
+        padding-left: 167px;
+        padding-bottom: 139.33px;
+      }
+      .t2_thanks h1 {
+        font-size: 30px;
+      }
+    }
+
+    @media (min-width: 991.98px) {
+      .t2_thanks p {
+        text-align: center;
+        font-size: 20px;
+        margin-inline: 58.13px;
+      }
+
+      .t2_nav {
+        flex-direction: row;
+      }
+
+      .t2_footer {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+      .t2_thanks h1 {
+        font-size: 38px;
+        text-align: center;
+        margin-inline: 105.95px;
+      }
+    }
+
+    @media screen and (max-width: 991.98px) {
+      .t2_hamburger {
+        display: block;
+      }
+
+      .t2_nav-links {
+        position: fixed;
+        left: auto;
+        right: -100%;
+        top: 0;
+        transform: none;
+        height: 100vh;
+        width: 300px;
+        background-color: white;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding-top: 80px;
+        transition: 0.3s ease;
+        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+        gap: 0;
+      }
+
+      .t2_nav-links.active {
+        right: 0;
+      }
+
+      .t2_button-container {
+        margin: 20px 30px;
+      }
+
+      .t2_nav-item {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+      }
+
+      .t2_nav-item p {
+        width: 100%;
+        padding: 15px 30px;
+        border-bottom: 1px solid #f0f0f0;
+      }
+
+      .t2_nav-links .t2_button-1 {
+        margin: 20px 30px;
+      }
+
+      .t2_hamburger.active div:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
+      }
+
+      .t2_hamburger.active div:nth-child(2) {
+        opacity: 0;
+      }
+
+      .t2_hamburger.active div:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
+      }
+    }
+
+    @media screen and (max-width: 991.98px) {
+      .t2_footer {
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 20px;
+      }
+
+      .t2_footer-navitem {
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .t2_footer-image {
+        margin-bottom: 24px;
+      }
+    }
+
+    @media screen and (min-width: 992px) {
+      .t2_footer {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    }
+  </style>
+  <body>
+    <nav class="t2_nav">
+      <div class="t2_logo">
+        <h1>Logo</h1>
+      </div>
+
+      <div class="t2_nav-links">
+        <div class="t2_nav-item">
+          <p>Nav item</p>
+          <p>Nav item</p>
+          <p>Nav item</p>
+        </div>
+      </div>
+
+      <div class="t2_button-container">
+        <a href="">
+          <button class="t2_button-1">Get Package</button>
+        </a>
+      </div>
+      <div class="t2_hamburger">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </nav>
+
+    <div class="t2_line"></div>
+
+    <section class="t2_section-1">
+      <section class="t2_sub-section">
+        <div class="t2_image-div">
+          <div class="t2_image-1">
+            <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1732777197/productize/zmddmfcyfw7ieia4qpup.svg" alt="" class="t2_img-1" />
+          </div>
+        </div>
+
+        <div class="t2_thanks">
+          <h1>Thank you for signing up</h1>
+          <p>Lorem ipsum dolor sit amet consectetur. Posuere in etiam turpis arcu et neque quis. Eget nisl semper orci pellentesque faucibus praesent id.</p>
+        </div>
+        <a
+          href="
+			/"
+        >
+          <button class="t2_button">Button</button></a
+        >
+      </section>
+    </section>
+
+    <section class="t2_section-2">
+      <div class="t2_footer">
+        <div class="t2_footer-image">
+          <img src="./asset/image 77.png" alt="" class="t2_footer-img" />
+        </div>
+
+        <div class="t2_footer-navitem">
+          <p>Nav item</p>
+          <p>Nav item</p>
+          <p>Nav item</p>
+        </div>
+
+        <p>Nav item</p>
+      </div>
+    </section>
+
+    <script>
+      const hamburger = document.querySelector('.t2_hamburger');
+      const navLinks = document.querySelector('.t2_nav-links');
+      const body = document.body;
+
+      hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navLinks.classList.toggle('active');
+        // Prevent scrolling when menu is open
+        body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : 'auto';
+      });
+
+      // Close menu when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!navLinks.contains(e.target) && !hamburger.contains(e.target)) {
+          hamburger.classList.remove('active');
+          navLinks.classList.remove('active');
+          body.style.overflow = 'auto';
+        }
+      });
+
+      // Close menu when clicking a link
+      document.querySelectorAll('.t2_nav-links a, .t2_nav-item p').forEach((link) => {
+        link.addEventListener('click', () => {
+          hamburger.classList.remove('active');
+          navLinks.classList.remove('active');
+          body.style.overflow = 'auto';
+        });
+      });
+    </script>
+  </body>
+</html>
+`,
       styles: '',
     },
   ],
@@ -2716,7 +4103,323 @@ export const template_3 = {
     {
       id: 'page-2',
       name: 'Feedback',
-      content: '<div>feedback Page Content</div>',
+      content: `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thank You</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Karla:ital,wght@0,200..800;1,200..800&family=Kumbh+Sans:wght@100..900&family=League+Spartan:wght@100..900&family=Lexend+Deca:wght@100..900&display=swap');
+
+      :root {
+        --primary-color: #17b6ba;
+        --text-color: #333;
+        --bg-color: #f9f9f9;
+        --white: #ffffff;
+        --footer-bg: #333;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        text-decoration: none;
+        box-sizing: border-box;
+        font-family: 'Inter', sans-serif;
+      }
+
+      body {
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      .t3_container {
+        max-width: 1230px;
+        margin: 0 auto;
+        padding-inline: 1rem;
+      }
+
+      /* Navbar styles */
+      .t3_nav {
+        background: var(--white);
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .t3_nav-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-block: 1rem;
+      }
+
+      .t3_logo h1 {
+        font-size: 1.5rem;
+        color: var(--primary-color);
+      }
+
+      .t3_nav-menu {
+        position: fixed;
+        top: 60px;
+        left: -100%;
+        background: var(--white);
+        width: 100%;
+        height: calc(100vh - 60px);
+        padding: 2rem;
+        transition: 0.3s ease-in-out;
+      }
+
+      .t3_nav-menu.t3_active {
+        left: 0;
+      }
+
+      .t3_nav-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .t3_nav-item {
+        cursor: pointer;
+      }
+
+      .t3_nav-link {
+        color: var(--text-color);
+        font-weight: 500;
+      }
+
+      .t3_nav-link:hover {
+        color: var(--primary-color);
+      }
+
+      .t3_hamburger {
+        display: block;
+        cursor: pointer;
+        padding: 0.5rem;
+      }
+
+      .t3_bar {
+        display: block;
+        width: 25px;
+        height: 3px;
+        margin: 5px auto;
+        transition: all 0.3s ease-in-out;
+        background-color: var(--text-color);
+      }
+
+      .t3_button {
+        background-color: var(--primary-color);
+        color: var(--white);
+        padding: 12px 28px;
+        border-radius: 4px;
+        border: none;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .t3_button:hover {
+        background-color: #149598;
+      }
+
+      /* Footer styles */
+      .t3_footer {
+        background: var(--footer-bg);
+        color: var(--white);
+        padding-block: 2rem;
+        margin-top: 4rem;
+      }
+
+      .t3_footer-wrapper {
+        display: grid;
+        gap: 2rem;
+      }
+
+      .t3_footer-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .t3_footer-link {
+        color: var(--white);
+        opacity: 0.8;
+        transition: opacity 0.3s ease;
+      }
+
+      .t3_footer-link:hover {
+        opacity: 1;
+      }
+
+      .t3_social-links {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .t3_heading {
+        font-size: 30px;
+      }
+
+      /* Responsive styles */
+      @media (min-width: 768px) {
+        .t3_heading {
+          font-size: 70px;
+        }
+
+        .t3_heading-desc {
+          font-size: 24px;
+        }
+
+        .t3_hamburger {
+          display: none;
+        }
+
+        .t3_nav-menu {
+          position: static;
+          width: auto;
+          height: auto;
+          padding: 0;
+          background: none;
+        }
+
+        .t3_nav-list {
+          flex-direction: row;
+          gap: 2rem;
+        }
+
+        .t3_footer-wrapper {
+          grid-template-columns: repeat(3, 1fr);
+          align-items: center;
+        }
+
+        .t3_footer-nav {
+          flex-direction: row;
+          justify-content: center;
+        }
+      }
+
+      /* Animation classes for hamburger */
+      .t3_hamburger.t3_active .t3_bar:nth-child(2) {
+        opacity: 0;
+      }
+
+      .t3_hamburger.t3_active .t3_bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+      }
+
+      .t3_hamburger.t3_active .t3_bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="t3_nav">
+      <div class="t3_container t3_nav-container">
+        <div class="t3_logo">
+          <h1>Logo</h1>
+        </div>
+
+        <div class="t3_nav-menu">
+          <ul class="t3_nav-list">
+            <li class="t3_nav-item">
+              <a href="#" class="t3_nav-link">Home</a>
+            </li>
+            <li class="t3_nav-item">
+              <a href="#" class="t3_nav-link">About</a>
+            </li>
+            <li class="t3_nav-item">
+              <a href="#" class="t3_nav-link">Services</a>
+            </li>
+            <li class="t3_nav-item">
+              <a href="#" class="t3_nav-link">Contact</a>
+            </li>
+          </ul>
+        </div>
+
+        <a href="#">
+          <button class="t3_button">Get Started</button>
+        </a>
+
+        <div class="t3_hamburger">
+          <span class="t3_bar"></span>
+          <span class="t3_bar"></span>
+          <span class="t3_bar"></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content Section -->
+    <main class="t3_container" style="margin-top: 10rem; text-align: center">
+      <h1 class="t3_heading">Your Headline Goes Right Here</h1>
+      <p class="t3_heading-desc">
+        Lorem ipsum dolor sit amet consectetur. Posuere in etiam turpis arcu et neque quis. Eget nisl semper orci pellentesque faucibus praesent id.
+      </p>
+      <div style="margin-block: 4rem">
+        <img
+          style="width: 100%; height: auto; max-width: 100%; display: block"
+          src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1733566356/grape.js/vjeys6u1ybqilbsusbiq.png"
+          alt="img"
+        />
+      </div>
+      <p class="t3_heading-desc">
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corporis, pariatur asperiores labore dolores nam, inventore rem sed non itaque aperiam saepe
+        reprehenderit ea accusamus quaerat beatae eligendi exercitationem minima eum.
+      </p>
+    </main>
+
+    <!-- Footer -->
+    <footer class="t3_footer">
+      <div class="t3_container t3_footer-wrapper">
+        <div class="t3_footer-logo">
+          <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1733480713/grape.js/jh9cqqkwpesa6aixtjgp.png" alt="Logo" />
+        </div>
+
+        <div class="t3_footer-nav">
+          <a href="#" class="t3_footer-link">About</a>
+          <a href="#" class="t3_footer-link">Services</a>
+          <a href="#" class="t3_footer-link">Contact</a>
+        </div>
+
+        <div class="t3_social-links">
+          <a href="#" class="t3_footer-link">Twitter</a>
+          <a href="#" class="t3_footer-link">LinkedIn</a>
+          <a href="#" class="t3_footer-link">Instagram</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+      // Navbar toggle
+      const hamburger = document.querySelector('.t3_hamburger');
+      const navMenu = document.querySelector('.t3_nav-menu');
+      const body = document.querySelector('body');
+
+      hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('t3_active');
+        navMenu.classList.toggle('t3_active');
+        body.style.overflow = navMenu.classList.contains('t3_active') ? 'hidden' : 'auto';
+      });
+
+      document.querySelectorAll('.t3_nav-link').forEach((link) => {
+        link.addEventListener('click', () => {
+          hamburger.classList.remove('t3_active');
+          navMenu.classList.remove('t3_active');
+          body.style.overflow = 'auto';
+        });
+      });
+    </script>
+  </body>
+</html>
+`,
       styles: '',
     },
   ],

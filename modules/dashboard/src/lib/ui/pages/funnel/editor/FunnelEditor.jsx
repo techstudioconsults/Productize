@@ -17,7 +17,6 @@ export function FunnelEditor() {
   const {
     pathname,
     state: { title, template, thumbnail },
-    // state: { title, thumbnail },
   } = useLocation();
 
   const { isLoading, error, updateFunnel } = useUpdateFunnel();
@@ -26,11 +25,13 @@ export function FunnelEditor() {
     licenseKey: 'a7a12ec76a304d27b4c0efff2a5903c92e618065ff5b469ea95fb4a68896911e',
     theme: 'light',
     pages: [],
+    storageManager: {
+      type: 'none',
+    },
   };
 
   const handleEditorReady = useCallback(
     (editorInstance) => {
-      console.log(template);
       setEditor(editorInstance);
       const TEMPLATE = JSON.parse(template);
 
@@ -104,8 +105,6 @@ export function FunnelEditor() {
 
     const result = { pages: templates.filter(Boolean) }; // Filter out any null values
 
-    console.log(result);
-
     return result; // Return the structured data
   }, [editor]);
 
@@ -169,7 +168,7 @@ export function FunnelEditor() {
         )}
 
         <Box hidden={!!funnelID}>
-          <button onClick={generateTemplateData}>show code</button>
+          {/* <button onClick={generateTemplateData}>show code</button> */}
           <FunnelForm templateData={generateTemplateData} title={title} thumbnail={thumbnail} />
         </Box>
       </Flex>

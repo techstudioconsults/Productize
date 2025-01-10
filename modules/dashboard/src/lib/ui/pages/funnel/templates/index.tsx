@@ -514,62 +514,71 @@ const template1 = `<!DOCTYPE html>
       background-color: #f6f6f6;
     }
 
-    .footer {
+    .t1_footer-container {
       max-width: 1240px;
       margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 36px 20px;
+      flex-direction: row;
     }
 
-    .footer-logo {
+    .t1_footer-logo {
       display: flex;
       align-items: center;
     }
 
-    .footer-navitem {
+    .t1_footer-navitem {
       display: flex;
       align-items: center;
       gap: 24px;
     }
 
-    .footer-navitem p {
+    .t1_footer-navitem p {
       color: #727272;
       cursor: pointer;
       transition: color 0.3s ease;
     }
 
-    .footer-navitem p:hover {
+    .t1_footer-navitem p:hover {
       color: #332b67;
     }
 
     @media screen and (max-width: 768px) {
-      .footer {
+      .t1_footer-container {
         flex-direction: column;
         gap: 24px;
         text-align: center;
         padding: 40px 20px;
       }
 
-      .footer-navitem {
+      .t1_footer-navitem {
         flex-direction: column;
         gap: 16px;
       }
 
-      .footer-logo {
+      .t1_footer-logo {
         margin-bottom: 8px;
       }
     }
 
     @media screen and (min-width: 769px) and (max-width: 991px) {
-      .footer {
+      .t1_footer {
         padding: 30px 40px;
       }
 
-      .footer-navitem {
+      .t1_footer-navitem {
         gap: 16px;
       }
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .smooth-scroll {
+      text-decoration: none;
     }
   </style>
   <body>
@@ -580,20 +589,17 @@ const template1 = `<!DOCTYPE html>
         </div>
 
         <div class="t1_nav-links">
-          <div class="t1_nav-item">
-            <p>Navitem</p>
-            <p>Navitem</p>
-            <p>Navitem</p>
-          </div>
           <div class="t1_button-container">
-            <button class="t1_header-button1">Button</button>
-            <button class="t1_header-button2">Button</button>
+            <a href="#form" class="smooth-scroll">
+              <button class="t1_header-button2">Get Started</button>
+            </a>
           </div>
         </div>
 
         <div class="t1_button-container t1_desktop-buttons">
-          <button class="t1_header-button1">Button</button>
-          <button class="t1_header-button2">Button</button>
+          <a href="#form" class="smooth-scroll">
+            <button class="t1_header-button2">Get Started</button>
+          </a>
         </div>
 
         <div class="t1_hamburger">
@@ -670,12 +676,12 @@ const template1 = `<!DOCTYPE html>
     </section>
 
     <footer class="t1_footer">
-      <div class="footer">
-        <div class="footer-logo">
+      <div class="t1_footer-container">
+        <div class="t1_footer-logo">
           <h1>LOGO</h1>
         </div>
 
-        <div class="footer-navitem">
+        <div class="t1_footer-navitem">
           <p>Terms and Conditions</p>
           <p>Privacy Policy</p>
           <p>Cookies</p>
@@ -753,6 +759,22 @@ const template1 = `<!DOCTYPE html>
         hamburger.classList.remove('active');
         navLinks.classList.remove('active');
         body.style.overflow = 'auto';
+      });
+    });
+
+    // Add smooth scrolling for all links with smooth-scroll class
+    document.querySelectorAll('.smooth-scroll').forEach((anchor) => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+
+        if (targetElement) {
+          targetElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+          });
+        }
       });
     });
   </script>
@@ -1300,6 +1322,14 @@ const template2 = `<!DOCTYPE html>
 
     .t2_footer-end p:hover {
       color: #2f40d5;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .smooth-scroll {
+      text-decoration: none;
     }
 
     @media screen and (max-width: 768px) {
@@ -1967,8 +1997,8 @@ const template2 = `<!DOCTYPE html>
           </div>
         </div>
 
-        <div class="t2_button-container">
-          <a href="https://www.tiktok.com" class="t2_button-1">Get Package</a>
+        <div class="t2_button-container smooth-scroll">
+          <a href="#form" class="t2_button-1">Get Package</a>
         </div>
 
         <div class="t2_hamburger">
@@ -1984,7 +2014,7 @@ const template2 = `<!DOCTYPE html>
         <h1>Your Hero Headline Goes Right Here</h1>
         <p>Lorem ipsum dolor sit amet consectetur. Posuere in etiam turpis arcu et neque quis. Eget nisl semper orci pellentesque faucibus praesent id.</p>
         <div class="t2_button2">
-          <a href="https://www.tiktok.com" class="t2_text2">Get Package</a>
+          <a href="#form" class="t2_text2 smooth-scroll">Get Package</a>
         </div>
       </section>
     </header>
@@ -2268,7 +2298,6 @@ const template2 = `<!DOCTYPE html>
           </div>
 
           <div class="t2_line2"></div>
-
           <button class="t2_pack">Get Package</button>
         </article>
       </section>
@@ -2291,16 +2320,6 @@ const template2 = `<!DOCTYPE html>
         </div>
       </div>
     </section>
-
-    <!-- Modal -->
-    <div id="thankyou-modal" class="t2_modal">
-      <div class="t2_modal-content">
-        <img src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1732777197/productize/zmddmfcyfw7ieia4qpup.svg" alt="check" />
-        <h1>Thank You for Signing Up</h1>
-        <p>Lorem ipsum dolor sit amet consectetur. Posuere in etiam turpis arcu et neque quis. Eget nisl semper orci pellentesque faucibus praesent id.</p>
-        <button class="t2_close-button" onclick="closeModal()">Close</button>
-      </div>
-    </div>
   </body>
   <script>
     document.getElementById('form').addEventListener('submit', function (e) {

@@ -37,5 +37,6 @@ export * from './lib/ui/pages/settings/pages/kycSettings/KycSettings.jsx';
 export * from './lib/ui/utils/DashboardLinks';
 export * from './lib/ui/empty-states/EmptyState';
 export * from './lib/ui/pages/funnel';
+export * from './lib/ui/pages/integration';
 export * from './lib/ui/pages/funnel/editor/FunnelEditor';
 export * from './lib/ui/pages/funnel/setting/FunnelSettings.jsx';

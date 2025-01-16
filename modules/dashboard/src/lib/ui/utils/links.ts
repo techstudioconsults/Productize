@@ -45,6 +45,13 @@ export const useLinks = () => {
       type: `free`,
       icon: compass,
     },
+    {
+      id: 3,
+      name: `Integration`,
+      path: `integration`,
+      type: `free`,
+      icon: compass,
+    },
   ]);
   const [links3] = useState([
     {
@@ -71,7 +78,7 @@ export const useLinks = () => {
   ]);
 
   useEffect(() => {
-    const orderCount = newNotice.filter(( notice ) => notice.type === 'order.created').length;
+    const orderCount = newNotice.filter(( notice: { type: string; } ) => notice.type === 'order.created').length;
 
     setLinks1([
       {

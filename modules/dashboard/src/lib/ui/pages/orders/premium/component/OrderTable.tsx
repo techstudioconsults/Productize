@@ -19,8 +19,6 @@ export const OrderTable = ({ tableData }: tableProps) => {
     const formatTime = useTime();
     const paginate = useSelector(selectOrdersMetaData);
 
-    // console.log(tableData);
-
     const tableHeader = [`Product`, `Price`, `Customer's Email`, `Date`].map((title) => {
         return (
             <Th py={3} key={title}>
@@ -43,7 +41,7 @@ export const OrderTable = ({ tableData }: tableProps) => {
                     </Flex>
                 </Td>
                 <Td>
-                    <Flex>{formatCurrency(order.product?.discount_price ?? order.product?.price)}</Flex>
+                    <Flex>{formatCurrency(order.product?.price)}</Flex>
                 </Td>
                 <Td>
                     {/* if show sale count is true */}

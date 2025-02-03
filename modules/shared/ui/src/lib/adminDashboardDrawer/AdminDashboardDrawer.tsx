@@ -25,7 +25,10 @@ export const AdminDashboardDrawer: React.FC<DashboardDrawerProps> = memo(({ link
                     <DrawerHeader p={0} py={5}>
                         <Flex flexDir="column" justifyContent="center" alignItems="center" gap={2} minH="40px">
                             <Link as={RouterLink} to="/seller">
-                                <Image alt="logo" src="https://res.cloudinary.com/doejcrfso/image/upload/v1725356813/productize/ByteAAlley-Logo_ue2hqr.svg" />
+                                <Image
+                                    alt="logo"
+                                    src="https://res.cloudinary.com/kingsleysolomon/image/upload/v1699951023/productize/Frame_14220_ogchl8_chcxzu.png"
+                                />
                             </Link>
                         </Flex>
                     </DrawerHeader>

@@ -1,8 +1,6 @@
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Box, Flex, Text } from '@chakra-ui/react';
-import { useSelector } from 'react-redux';
-import { selectCurrentUser } from '@productize/redux'; 
 
 const activeStateStyle = {
     borderBottom: `2px solid #6D5DD3`,
@@ -21,12 +19,11 @@ export const AdminSettingsTab = () => {
     const { pathname } = useLocation();
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState('');
-    const user = useSelector(selectCurrentUser); 
 
     useEffect(() => {
         const currentTab = tabNames.find((tab) => pathname.includes(tab));
         setActiveTab(currentTab || 'account');
-        if (activeTab === 'account') {
+        if (activeTab === `account`) {
             navigate(`/Admin/settings/${activeTab}`);
         }
     }, [activeTab, navigate, pathname]);
@@ -44,17 +41,21 @@ export const AdminSettingsTab = () => {
                         Account
                     </Text>
                 </NavLink>
-
-                {/* Conditionally render the "Admin" tab only if the user is not ADMIN or USER */}
-                {user?.role !== 'ADMIN' && user?.role !== 'USER' && (
-                    <NavLink to="/Admin/settings/addnewadmin" onClick={() => handleTabClick('addnewadmin')}>
-                        <Text fontSize={`sm`} py={3} px={3} style={activeTab === 'addnewadmin' ? activeStateStyle : inactiveTabStyle}>
-                            Admin
-                        </Text>
-                    </NavLink>
-                )}
-
-                {/* Other tabs can be added here */}
+                <NavLink to="/Admin/settings/addnewadmin" onClick={() => handleTabClick('addnewadmin')}>
+                    <Text fontSize={`sm`} py={3} px={3} style={activeTab === 'addnewadmin' ? activeStateStyle : inactiveTabStyle}>
+                        Admin
+                    </Text>
+                </NavLink>
+                {/* <NavLink to="/dashboard/settings/kyc" onClick={() => handleTabClick('kyc')}>
+                    <Text fontSize={`sm`} py={3} px={3} style={activeTab === 'kyc' ? activeStateStyle : inactiveTabStyle}>
+                        KYC
+                    </Text>
+                </NavLink>
+                <NavLink to="/dashboard/settings/plans" onClick={() => handleTabClick('plans')}>
+                    <Text fontSize={`sm`} py={3} px={3} style={activeTab === 'plans' ? activeStateStyle : inactiveTabStyle}>
+                        Plans
+                    </Text>
+                </NavLink> */}
             </Flex>
             <Outlet />
         </Box>

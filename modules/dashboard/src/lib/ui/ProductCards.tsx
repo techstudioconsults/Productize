@@ -8,10 +8,31 @@ interface cardProps {
   bgPos?: string | object;
 }
 
-export const ProductCards = ({ img, bgColor, bgImg, padding, bgPos }: cardProps) => {
+export const ProductCards = ({
+  img,
+  bgColor,
+  bgImg,
+  padding,
+  bgPos,
+}: cardProps) => {
   return (
-    <Card variant={`unstyled`} bgRepeat={`no-repeat`} bgImage={bgImg} bgPos={bgPos} bgColor={bgColor} width={`100%`} h={`13.8rem`} p={padding}>
-      <Image objectFit={`contain`} w={`100%`} h={`100%`} src={img} alt={`img`} />
+    <Card
+      variant={`unstyled`}
+      bgRepeat={`no-repeat`}
+      bgImage={bgImg}
+      bgPos={bgPos}
+      bgColor={bgColor}
+      width={`100%`}
+      h={`13.8rem`}
+      p={padding}
+    >
+      <Image
+        objectFit={`contain`}
+        w={`100%`}
+        h={`100%`}
+        src={img}
+        alt={`img`}
+      />
     </Card>
   );
 };

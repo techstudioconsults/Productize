@@ -12,7 +12,6 @@ import { Icon } from '@iconify/react';
 import { DataWidgetCard } from '../../../DataWidgetCard';
 import { useCustomerDetails } from './service';
 import { CopyTextFeedbackProps } from './customers.types';
-import { log } from 'console';
 
 export const CustomersDetails = () => {
     const navigate = useNavigate();
@@ -49,7 +48,6 @@ export const CustomersDetails = () => {
 export const CustomerInfo = ({ singleCustomer, copyTextToClipBoard }: any) => {
     const formatDate = useDate();
     const formatCurrency = useCurrency();
-    // console.log(singleCustomer);
 
     return (
         <Box mb={4} color={`purple.300`}>
@@ -88,11 +86,7 @@ export const CustomerInfo = ({ singleCustomer, copyTextToClipBoard }: any) => {
                 </Box>
 
                 <Box>
-                    <DataWidgetCard
-                        showIcon={false}
-                        title={'Total Transaction'}
-                        value={formatCurrency(singleCustomer.latest_purchase_discount_price ?? singleCustomer.total_transactions)}
-                    />
+                    <DataWidgetCard showIcon={false} title={'Total Transaction'} value={formatCurrency(singleCustomer.total_transactions)} />
                 </Box>
             </SimpleGrid>
         </Box>

@@ -14,17 +14,19 @@ export const RevokeAdminModal = ({ isOpen, onClose, user, onConfirm }) => {
 
 
     const handleRemoveAdmin = async (userId) => {
+      console.log('clicked');
+      console.log(userId);
+      console.log(token);  // Verify token value
+      
       try {
           const res = await revokeAdmin({ userID: userId, token }).unwrap();
-          console.log(res.data);
-          if(res.data.message === "Admin account has been deleted"){
-            window.location.reload();
-          }
+          console.log(res);
           onClose()
       } catch (error) {
           console.log(error);
       }
   };
+  
 
     return (
         <>
@@ -47,6 +49,7 @@ export const RevokeAdminModal = ({ isOpen, onClose, user, onConfirm }) => {
                     <Button onClick={()=> handleRemoveAdmin(user?.id)} colorScheme="red" mr={3} width={`246px`} height={`40px`} isLoading={isLoading}>
                             Remove Admin
                         </Button>
+   
                         <SharedButton
                             btnExtras={{
                                 border: `1px solid #6D5DD3`,

@@ -180,7 +180,7 @@ export const AdminProductDetails = () => {
                     </Stack>
                     <Stack gap={2}>
                         <Text fontWeight={600}>Price</Text>
-                        <Text>{formatCurrency(product?.price)}</Text>
+                        <Text>{formatCurrency(product?.discount_price ?? product?.price)}</Text>
                     </Stack>
                     <Stack gap={2}>
                         <Text fontWeight={600}>Product link</Text>

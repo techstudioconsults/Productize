@@ -77,7 +77,7 @@ export const ReviewModal = ({ handleClose }) => {
                     </Flex>
                     <FormControl>
                         <Text mb={5} textAlign="center" fontSize={{ base: `md`, sm: `2xl` }} fontWeight="bold">
-                            What's your opinion about the product? <span>(Optional)</span>
+                            What's your opinion about the product? 
                         </Text>
                         <Textarea h="15rem" placeholder="Drop a review for the creator..." value={review} onChange={(e) => setReview(e.target.value)} />
                     </FormControl>
@@ -122,7 +122,7 @@ export const ReviewModal = ({ handleClose }) => {
                     <Text fontSize="2xl" fontWeight="bold" mb={2}>
                         Thanks for reviewing product!
                     </Text>
-                    <Text mb={5}>Review has been submitted on erfejdfbmndb. nvhv ejns gvdfv dbhdn brdnbcve dgvej hhbfen msgve.</Text>
+                  
                     <SharedButton
                         text="Continue"
                         height="40px"

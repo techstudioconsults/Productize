@@ -8,8 +8,5 @@
             "import": "./index.mjs",
             "require": "./index.js"
         }
-    },
-    "dependencies": {
-        "@productize/admin-dashboard": "file:"
     }
 }

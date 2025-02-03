@@ -5,30 +5,29 @@ import { ProductTable } from '../../products/AdminProductTable';
 import { useAllProducts } from './AdminService';
 
 const AllproductActive = () => {
-    const { productAdminAnalytics, getProductAdminAnalyticsStatus, formatCurrency } = useAllProducts();
-    // console.log(adminProductsAnalytics);
+    const { adminProductsAnalytics , getAdminProductsAnalyticsStatus, formatCurrency } = useAllProducts();
 
     const containsProductDisplay = (
         <Box my={8}>
             <SimpleGrid gap={4} my={4} columns={{ base: 1, sm: 2, lg: 4 }}>
-                <Skeleton isLoaded={!getProductAdminAnalyticsStatus.isLoading}>
+                <Skeleton isLoaded={!getAdminProductsAnalyticsStatus.isLoading}>
                     <Box>
-                        <DataWidgetCard showIcon={false} title="Total Products" value={productAdminAnalytics?.total_products} />
+                        <DataWidgetCard showIcon={false} title="Total Products" value={adminProductsAnalytics?.total_products} />
                     </Box>
                 </Skeleton>
-                <Skeleton isLoaded={!getProductAdminAnalyticsStatus.isLoading}>
+                <Skeleton isLoaded={!getAdminProductsAnalyticsStatus.isLoading}>
                     <Box>
-                        <DataWidgetCard showIcon={false} title="Total Sales" value={productAdminAnalytics?.total_sales} />
+                        <DataWidgetCard showIcon={false} title="Total Sales" value={adminProductsAnalytics?.total_sales} />
                     </Box>
                 </Skeleton>
-                <Skeleton isLoaded={!getProductAdminAnalyticsStatus.isLoading}>
+                <Skeleton isLoaded={!getAdminProductsAnalyticsStatus.isLoading}>
                     <Box>
-                        <DataWidgetCard showIcon={false} title="Total Customers" value={productAdminAnalytics?.total_customers} />
+                        <DataWidgetCard showIcon={false} title="Total Customers" value={adminProductsAnalytics?.total_customers} />
                     </Box>
                 </Skeleton>
-                <Skeleton isLoaded={!getProductAdminAnalyticsStatus.isLoading}>
+                <Skeleton isLoaded={!getAdminProductsAnalyticsStatus.isLoading}>
                     <Box>
-                        <DataWidgetCard showIcon={false} title="Total Revenue" value={formatCurrency(productAdminAnalytics?.total_revenue)} />
+                        <DataWidgetCard showIcon={false} title="Total Revenue" value={formatCurrency(adminProductsAnalytics?.total_revenue)} />
                     </Box>
                 </Skeleton>
             </SimpleGrid>

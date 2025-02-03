@@ -28,7 +28,6 @@ export const ProductTable = ({ deleted }: tableProps) => {
     const formatTime = useTime();
     const paginate = useSelector(selectPaginationMetaData);
     const { query, isLoading } = useAxiosInstance({ MIME_TYPE: 'applicaton/json' });
-    
 
     const tableHeader = [`Product`, `Price`, `Sales`, `Type`, `Status`, ''].map((title) => {
         if (deleted && title === `Status`) {
@@ -74,7 +73,7 @@ export const ProductTable = ({ deleted }: tableProps) => {
                     </Flex>
                 </Td>
                 <Td>
-                    <Flex>{formatCurrency(product?.discount_price ?? product?.price)}</Flex>
+                    <Flex>{formatCurrency(product?.price)}</Flex>
                 </Td>
                 <Td>
                     {/* if show sale count is true */}

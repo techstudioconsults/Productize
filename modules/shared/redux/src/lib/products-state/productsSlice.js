@@ -6,7 +6,6 @@ const initialState = {
     topAdminProducts: null,
     productsAnalytics: {},
     adminProductsAnalytics: {},
-    productAdminAnalytics: {},
     liveProducts: null,
     draftProducts: null,
     deletedProducts: null,
@@ -96,10 +95,6 @@ const productSlice = createSlice({
         resetProductStore: (state) => {
             Object.assign(state, initialState);
         },
-        setProductAdminAnalytics: (state, action) => {
-            const { productAdminAnalytics } = action.payload;
-            state.productAdminAnalytics = productAdminAnalytics;
-        },
     },
 });
 
@@ -119,7 +114,6 @@ export const {
     setRevenueAnalytics,
     setAllComplaints,
     setSingleComplaints,
-    setProductAdminAnalytics,
 } = productSlice.actions;
 export default productSlice.reducer;
 
@@ -139,4 +133,3 @@ export const selectAdminProductAnalytics = (state) => state.Products.adminProduc
 export const selectRevenueAnalytics = (state) => state.Products.revenueAnalytics;
 export const selectAllComplaints = (state) => state.Products.allComplaints;
 export const selectSingleComplaints = (state) => state.Products.singleComplaints.complaint;
-export const selectProductAdminAnalytics = (state) => state.Products.productAdminAnalytics;

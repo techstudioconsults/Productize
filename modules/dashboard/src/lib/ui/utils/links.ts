@@ -92,7 +92,7 @@ export const useLinks = () => {
         id: 3,
         name: `Funnels`,
         path: `funnels#all-funnels`,
-        type: `free`,
+        type: "free",
         icon: funnel,
         analysis: null,
       },

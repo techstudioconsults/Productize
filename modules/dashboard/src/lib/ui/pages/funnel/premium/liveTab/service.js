@@ -12,7 +12,7 @@ export const useGetPublishedFunnels = () => {
   const fetchData = async () => {
     try {
       setIsLoading(true);
-      const response = await axios.get('https://api-dev.trybytealley.com/api/funnels/me?status=published', {
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/funnels/me?status=published`, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',

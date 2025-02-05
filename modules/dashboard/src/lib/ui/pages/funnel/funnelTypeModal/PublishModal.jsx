@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @nx/enforce-module-boundaries */
-import { Box, Flex, Text, useDisclosure } from '@chakra-ui/react';
+import { Box, Flex, Text } from '@chakra-ui/react';
 import { ModalComp, SharedButton } from '@productize/ui';
 import PublishFeedback from './PublishedFeedback';
 import axios from 'axios';
@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import { selectCurrentToken } from '@productize/redux';
 import { useState } from 'react';
 
-const PublishModal = ({ formData, close }: { close: () => void; formData: any }) => {
+const PublishModal = ({ formData, close }) => {
   const [isOpen, setOpen] = useState(false);
   const token = useSelector(selectCurrentToken);
 
@@ -22,7 +22,7 @@ const PublishModal = ({ formData, close }: { close: () => void; formData: any })
     formattedData.append('template', formData.templateData().content);
 
     try {
-      const response = await axios.post('https://api-dev.trybytealley.com/api/funnels', formattedData, {
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/funnels`, formattedData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',
@@ -44,7 +44,7 @@ const PublishModal = ({ formData, close }: { close: () => void; formData: any })
     formattedData.append('template', formData.templateData().content);
 
     try {
-      const response = await axios.post('https://api-dev.trybytealley.com/api/funnels', formattedData, {
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/funnels`, formattedData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',
@@ -56,7 +56,7 @@ const PublishModal = ({ formData, close }: { close: () => void; formData: any })
     }
   };
 
-  const toggleFormModal = (state: boolean) => {
+  const toggleFormModal = (state) => {
     setOpen(state);
   };
 

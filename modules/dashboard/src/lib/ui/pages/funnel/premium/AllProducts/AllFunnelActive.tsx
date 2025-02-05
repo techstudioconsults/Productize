@@ -15,8 +15,6 @@ const AllFunnelActive = () => {
   const { isLoading, error, fetchData } = useFunnelData(); // Use the hook
   const data = useSelector(selectFunnelData);
 
-  console.log(data);
-
   // Trigger data fetch when the component mounts
   useEffect(() => {
     fetchData(); // Call the fetchData function to load the data

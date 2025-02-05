@@ -12,7 +12,7 @@ export const useGetDeletedFunnels = () => {
   const fetchData = async () => {
     try {
       setIsLoading(true);
-      const response = await axios.get('https://api-dev.trybytealley.com/api/funnels/me?status=deleted', {
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/funnels/me?status=deleted`, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',

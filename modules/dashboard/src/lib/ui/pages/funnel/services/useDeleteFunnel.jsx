@@ -19,7 +19,7 @@ export const useDeleteFunnel = () => {
     setError(null);
 
     try {
-      const response = await axios.delete(`https://api-dev.trybytealley.com/api/funnels/${funnelId}`, {
+      const response = await axios.delete(`${import.meta.env.VITE_BASE_URL}/funnels/${funnelId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',

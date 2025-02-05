@@ -284,7 +284,7 @@ const PublishModal = ({ isOpen, onClose, formData }) => {
     console.log('Formatted Data:', formattedData);
 
     try {
-      const response = await axios.post('https://api-dev.trybytealley.com/api/funnels', formattedData, {
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/funnels`, formattedData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',
@@ -317,7 +317,7 @@ const PublishModal = ({ isOpen, onClose, formData }) => {
       dispatch(setProgressBar(0));
       await simulateProgress(0, 60, 20000);
 
-      const response = await axios.post('https://api-dev.trybytealley.com/api/funnels', formattedData, {
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/funnels`, formattedData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',

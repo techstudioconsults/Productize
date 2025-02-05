@@ -18,14 +18,14 @@ export const useUpdateFunnel = () => {
       formattedData.append('template', template);
     }
     formattedData.append('title', title);
-   if (thumbnail && thumbnail instanceof File) {
-     formattedData.append('thumbnail', thumbnail);
-   }
+    if (thumbnail && thumbnail instanceof File) {
+      formattedData.append('thumbnail', thumbnail);
+    }
     formattedData.append('status', status);
     formattedData.append('_method', `PATCH`);
 
     try {
-      const response = await axios.post(`https://api-dev.trybytealley.com/api/funnels/${funnelID}`, formattedData, {
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/funnels/${funnelID}`, formattedData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',

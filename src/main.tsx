@@ -12,7 +12,7 @@ import ScrollToTop from './utils/ScrollToTop';
 import App from './app/app';
 import './styles.scss';
 import { AppError } from '../modules/shared/ui/src';
-import { ToastProvider } from '@productize/dashboard';
+// import { ToastProvider } from '@productize/dashboard';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(

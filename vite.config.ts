@@ -21,7 +21,6 @@ export default defineConfig({
     plugins: [react(), nxViteTsPaths()],
 
     build: {
-        watch: true,
         outDir: './dist',
         reportCompressedSize: true,
         commonjsOptions: {

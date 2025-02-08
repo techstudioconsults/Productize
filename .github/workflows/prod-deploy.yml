@@ -6,53 +6,30 @@ on:
 
 jobs:
     build:
-        runs-on: [production]  # Your self-hosted runner on DigitalOcean
+        runs-on: [production]
 
         strategy:
             matrix:
-                node-version: [22.x]
+                node-version: [20.x]
 
         steps:
             - name: Checkout code
-              uses: actions/checkout@v4
+              uses: actions/checkout@v3
 
             - name: Use Node.js ${{ matrix.node-version }}
-              uses: actions/setup-node@v4
+              uses: actions/setup-node@v3
               with:
                   node-version: ${{ matrix.node-version }}
                   cache: 'pnpm'
-
-            - name: Install PNPM
-              run: npm install -g pnpm
-
-            - name: Setup PNPM Global Bin
-              run: pnpm setup
-
-            - name: Add PNPM Global Bin to Path
-              run: |
-                  echo "export PATH=$(pnpm bin):$PATH" >> $HOME/.bashrc
-                  source $HOME/.bashrc
-              shell: bash
-
-            - name: Install NX CLI
-              run: pnpm add -g nx
-
-            - name: Check NX Version
-              run: pnpm exec nx --version
-
             - name: Create .env file
-              run: echo "${{ secrets.ENV_FILE_CONTENT }}" > .env
+              run: |
+                  echo "${{ secrets.ENV_FILE_CONTENT }}" > .env
 
-            - name: Install Dependencies
+            - name: Install dependencies
               run: pnpm install
 
-            - name: Debug NX Projects
-              run: pnpm exec nx show projects
-
             - name: Build Application
-              run: |
-                  export NODE_OPTIONS="--max-old-space-size=4096"
-                  pnpm run build --verbose
+              run: pnpm run build
 
-            - name: Reload Server
+            - name: Reload server instances
               run: pm2 reload 0 --update-env --wait-ready

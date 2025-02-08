@@ -6,7 +6,7 @@ on:
 
 jobs:
     build:
-        runs-on: [production]
+        runs-on: [production]  # Use a standard Ubuntu runner
 
         strategy:
             matrix:
@@ -21,15 +21,29 @@ jobs:
               with:
                   node-version: ${{ matrix.node-version }}
                   cache: 'pnpm'
-            - name: Create .env file
-              run: |
-                  echo "${{ secrets.ENV_FILE_CONTENT }}" > .env
 
-            - name: Install dependencies
+            - name: Install PNPM
+              run: npm install -g pnpm
+
+            - name: Install NX CLI
+              run: pnpm add -g nx
+
+            - name: Check NX Version
+              run: nx --version
+
+            - name: Create .env file
+              run: echo "${{ secrets.ENV_FILE_CONTENT }}" > .env
+
+            - name: Install Dependencies
               run: pnpm install
 
-            - name: Build Application
-              run: pnpm run build
+            - name: Debug NX Projects
+              run: pnpm exec nx show projects
 
-            - name: Reload server instances
+            - name: Build Application
+              run: |
+                  export NODE_OPTIONS="--max-old-space-size=4096"
+                  pnpm run build --verbose
+
+            - name: Reload Server
               run: pm2 reload 0 --update-env --wait-ready

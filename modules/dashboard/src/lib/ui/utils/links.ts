@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import download from '@icons/Property_2_Downloads-folder_zb8tdq.svg';
 import compass from '@icons/Property_2_Compass_jfe95t.svg';
+import outlet from '@icons/Property_2_Outlet_gqk6rs.svg';
 import help from '@icons/Property_2_Chat_6_qlrj4q.svg';
 import setting from '@icons/Property_2_Settings_4_tm54pe.svg';
 import profile from '@icons/Property_2_User_iiqfxz.svg';
@@ -25,7 +26,7 @@ interface Link {
 }
 
 export const useLinks = () => {
-  const {pathname} = useLocation();
+  const { pathname } = useLocation();
   const user = useSelector(selectCurrentUser);
   const newNotice = useSelector(selectNotifications);
 
@@ -50,7 +51,7 @@ export const useLinks = () => {
       name: `Integration`,
       path: `integration`,
       type: `free`,
-      icon: compass,
+      icon: outlet,
     },
   ]);
   const [links3] = useState([
@@ -78,7 +79,7 @@ export const useLinks = () => {
   ]);
 
   useEffect(() => {
-    const orderCount = newNotice.filter(( notice: { type: string; } ) => notice.type === 'order.created').length;
+    const orderCount = newNotice.filter((notice: { type: string }) => notice.type === 'order.created').length;
 
     setLinks1([
       {
@@ -88,11 +89,12 @@ export const useLinks = () => {
         type: `free`,
         icon: product,
         analysis: null,
-      }, {
+      },
+      {
         id: 3,
         name: `Funnels`,
         path: `funnels#all-funnels`,
-        type: "free",
+        type: 'free',
         icon: funnel,
         analysis: null,
       },
@@ -131,5 +133,5 @@ export const useLinks = () => {
     ]);
   }, [pathname, newNotice]);
 
-  return {links1, links2, links3};
+  return { links1, links2, links3 };
 };

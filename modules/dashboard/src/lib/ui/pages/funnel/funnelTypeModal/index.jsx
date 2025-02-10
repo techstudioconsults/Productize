@@ -1,5 +1,5 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import { Flex, Text, useDisclosure } from '@chakra-ui/react';
+import { Button, Flex, Image, Text, useDisclosure } from '@chakra-ui/react';
 import { ModalComp, SharedButton } from '@productize/ui';
 import { FunnelCard } from './funnelCard';
 import { template_1, template_2, template_3 } from '../templates';
@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { selectCurrentToken } from '@productize/redux';
+import alert from './asset/alert.png';
 
 const FunnelTypeModal = ({ CTATitle = `Create New Funnel` }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -43,7 +44,7 @@ const FunnelTypeModal = ({ CTATitle = `Create New Funnel` }) => {
         fontSize={{}}
       />
 
-      <ModalComp modalSize="5xl" openModal={isOpen} closeModal={onClose}>
+      <ModalComp modalSize={hasProducts ? '5xl' : '4xl'} openModal={isOpen} closeModal={onClose}>
         {hasProducts ? (
           <>
             <section>
@@ -74,7 +75,24 @@ const FunnelTypeModal = ({ CTATitle = `Create New Funnel` }) => {
             </Flex>
           </>
         ) : (
-          <p>You do not have any product yet</p>
+          <Flex flexDirection={`column`} justifyContent={`center`} alignItems={`center`}>
+            <div>
+              <Image src={alert} alt={`alert`} />
+            </div>
+            <h4>You Haven’t Created any Product yet</h4>
+            <Text marginY={`1rem`}>You must create a product in order to create a funnel</Text>
+            <SharedButton
+              width={`100%`}
+              height={`50px`}
+              bgColor={`transparent`}
+              textColor={`purple.500`}
+              fontSize={`18px`}
+              btnExtras={{
+                border: `1px solid #6D5DD3`,
+              }}
+              text={`Create A Product`}
+            />
+          </Flex>
         )}
       </ModalComp>
     </div>

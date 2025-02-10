@@ -17,7 +17,7 @@ const PublishModal = ({ formData, close }) => {
 
     const formattedData = new FormData();
     formattedData.append('title', formData.data.title);
-    formattedData.append('thumbnail', formData.data.logo); // Assuming logo is a File object
+    formattedData.append('thumbnail', formData.data.logo);
     formattedData.append('status', 'draft');
     formattedData.append('template', formData.templateData().content);
 
@@ -39,7 +39,7 @@ const PublishModal = ({ formData, close }) => {
 
     const formattedData = new FormData();
     formattedData.append('title', formData.data.title);
-    formattedData.append('thumbnail', formData.data.logo); // Assuming logo is a File object
+    formattedData.append('thumbnail', formData.data.logo);
     formattedData.append('status', 'published');
     formattedData.append('template', formData.templateData().content);
 

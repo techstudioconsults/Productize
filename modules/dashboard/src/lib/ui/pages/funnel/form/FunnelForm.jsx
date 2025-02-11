@@ -1,5 +1,13 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import { useRef, useState } from 'react';
+import { Checkbox, FormControl, Stack, Text, Badge } from '@chakra-ui/react';
+import { selectCurrentToken } from '@productize/redux';
+import { Controller } from 'react-hook-form';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { useEffect } from 'react';
+import fileUpload from './asset/fileUpload.svg';
+
 import {
   Modal,
   ModalOverlay,
@@ -7,24 +15,20 @@ import {
   useDisclosure,
   Box,
   SimpleGrid,
-  Text,
-  FormControl,
   FormLabel,
   Input,
   Center,
   Image,
   Flex,
-  Stack,
   Card,
   ModalCloseButton,
   useToast,
   // useToast,
 } from '@chakra-ui/react';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { SharedButton } from '@productize/ui';
-import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectCurrentToken, setProgressBar } from '@productize/redux';
+import { useDispatch } from 'react-redux';
+import { setProgressBar } from '@productize/redux';
 import { Icon } from '@iconify/react';
 import { useNavigate } from 'react-router-dom';
 
@@ -35,6 +39,30 @@ const FunnelForm = ({ CTATitle = `Create New Funnel`, templateData }) => {
   const logoInput = useRef(null);
   const fileInput = useRef(null);
   const imgRef = useRef(null);
+  const [products, setProducts] = useState([]);
+  const token = useSelector(selectCurrentToken);
+  const baseUrl = import.meta.env.VITE_BASE_URL;
+
+  // Fetch products from the API
+  useEffect(() => {
+    const getProducts = async () => {
+      try {
+        const res = await axios.get(`${baseUrl}/products/users?status=published`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        console.log(res.data.data);
+        setProducts(res.data.data);
+      } catch (err) {
+        console.error('Error fetching tags:', err);
+      }
+    };
+    getProducts();
+  }, [baseUrl, token]);
+
+  // Format tags for the multi-select
+  const productOption = products.map((product) => ({ label: product, value: product }));
 
   const {
     register,
@@ -55,6 +83,7 @@ const FunnelForm = ({ CTATitle = `Create New Funnel`, templateData }) => {
 
   const saveContent = async (data) => {
     setFormData({ templateData, data });
+    console.log(formData);
   };
 
   const handleOpenPublish = () => {
@@ -103,7 +132,6 @@ const FunnelForm = ({ CTATitle = `Create New Funnel`, templateData }) => {
                 {errors.title?.message}
               </Text>
             </FormControl>
-
             <FormControl isInvalid={errors.logo}>
               <FormLabel color="purple.300" fontWeight={600}>
                 Thumbnail
@@ -151,6 +179,23 @@ const FunnelForm = ({ CTATitle = `Create New Funnel`, templateData }) => {
                 </Text>
               </Box>
             </FormControl>
+            <FormControl isInvalid={errors.tags}>
+              <FormLabel color="purple.300" fontWeight={600}>
+                Products
+              </FormLabel>
+              <Controller
+                name="products"
+                control={control}
+                defaultValue={[]}
+                rules={{ required: 'At least one product is required' }}
+                render={({ field }) => (
+                  <CustomMultiSelect options={productOption} selectedValues={field.value} onChange={field.onChange} placeholder="Select products..." />
+                )}
+              />
+              <Text color="red.200" fontSize="sm">
+                {errors.tags?.message}
+              </Text>
+            </FormControl>
             <FormControl isInvalid={errors.asset}>
               <FormLabel color="purple.300" fontWeight={600}>
                 File Upload
@@ -162,12 +207,7 @@ const FunnelForm = ({ CTATitle = `Create New Funnel`, templateData }) => {
                 <Center overflow="hidden" borderRadius="8px" bgColor="purple.100" h="100px" pos="relative" flexDirection="column">
                   {formData?.asset && (
                     <Flex align="center" mb={2}>
-                      <Image
-                        src="/file-icon.png" // Replace with the file icon URL
-                        alt="File Icon"
-                        boxSize="20px"
-                        mr={2}
-                      />
+                      <Image src={fileUpload} alt="File Icon" boxSize="20px" mr={2} />
                       <Text fontSize="14px" color="grey.800">
                         {formData.asset.name}
                       </Text>
@@ -216,7 +256,6 @@ const FunnelForm = ({ CTATitle = `Create New Funnel`, templateData }) => {
                 </Text>
               </Box>
             </FormControl>
-
             <Flex gap={10}>
               <SharedButton
                 text="Cancel"
@@ -249,7 +288,7 @@ const PublishModal = ({ isOpen, onClose, formData }) => {
   const [isSuccessOpen, setIsSuccessOpen] = useState(false);
   const [content, setContent] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
-  const [isSavingToDraft, setSavingToDraft] = useState(false);
+  const [isSavingToDraft] = useState(false);
   const token = useSelector(selectCurrentToken);
   const router = useNavigate();
   const dispatch = useDispatch();
@@ -273,15 +312,17 @@ const PublishModal = ({ isOpen, onClose, formData }) => {
   };
 
   const saveContent = async () => {
-    setSavingToDraft(true);
     const formattedData = new FormData();
+
+    // Append other fields
     formattedData.append('title', formData.data.title);
     formattedData.append('thumbnail', formData.data.logo);
     formattedData.append('status', 'draft');
     formattedData.append('template', JSON.stringify(formData.templateData()));
     formattedData.append('asset', formData.data.asset);
-
-    console.log('Formatted Data:', formattedData);
+    formData.data.products.forEach((productId, index) => {
+      formattedData.append(`products[${index}]`, productId);
+    });
 
     try {
       const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/funnels`, formattedData, {
@@ -293,11 +334,9 @@ const PublishModal = ({ isOpen, onClose, formData }) => {
 
       if (response.status === 201) {
         router(`/dashboard/funnels#all-funnels`);
-        setSavingToDraft(false);
       }
     } catch (error) {
       console.error('Error saving content:', error);
-      setSavingToDraft(false);
     }
   };
 
@@ -308,8 +347,9 @@ const PublishModal = ({ isOpen, onClose, formData }) => {
     formattedData.append('status', 'published');
     formattedData.append('template', JSON.stringify(formData.templateData()));
     formattedData.append('asset', formData.data.asset);
-
-    console.log(formattedData);
+    formData.data.products.forEach((productId, index) => {
+      formattedData.append(`products[${index}]`, productId);
+    });
 
     try {
       router(`/dashboard/funnels#all-funnels`);
@@ -462,3 +502,88 @@ const SuccessModal = ({ isOpen, onClose, publishContent }) => {
 };
 
 export default FunnelForm;
+
+const CustomMultiSelect = ({ options, selectedValues, onChange, placeholder = 'Select...' }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const filteredOptions = options.filter((option) => option.label.title.toLowerCase().includes(searchTerm.toLowerCase()));
+
+  const handleSelect = (value) => {
+    const newSelectedValues = selectedValues.includes(value) ? selectedValues.filter((v) => v !== value) : [...selectedValues, value];
+    onChange(newSelectedValues);
+  };
+
+  return (
+    <Box position="relative" ref={dropdownRef}>
+      <Input placeholder={placeholder} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} onFocus={() => setIsOpen(true)} readOnly={!isOpen} />
+
+      {isOpen && (
+        <Box
+          position="absolute"
+          top="100%"
+          left={0}
+          right={0}
+          mt={2}
+          bg="white"
+          border="1px solid"
+          borderColor="gray.200"
+          borderRadius="md"
+          boxShadow="md"
+          zIndex={1000}
+          maxH="300px"
+          overflowY="auto"
+        >
+          <Stack spacing={2} p={2}>
+            {filteredOptions.map((option) => (
+              <Flex key={option.value.id} align="center" p={2} _hover={{ bg: 'gray.50' }} cursor="pointer" onClick={() => handleSelect(option.value.id)}>
+                {/* Thumbnail */}
+                <Image
+                  src={option.value.thumbnail || '/fallback-image.png'}
+                  alt={option.label.title}
+                  boxSize="40px"
+                  objectFit="cover"
+                  borderRadius="md"
+                  mr={3}
+                />
+
+                {/* Title */}
+                <Text flex={1} fontSize="sm" fontWeight="medium">
+                  {option.label.title}
+                </Text>
+
+                {/* Right-aligned Checkbox */}
+                <Box ml="auto">
+                  <Checkbox isChecked={selectedValues.includes(option.value.id)} onChange={() => handleSelect(option.value.id)} colorScheme="purple" />
+                </Box>
+              </Flex>
+            ))}
+          </Stack>
+        </Box>
+      )}
+
+      {/* Selected Items Badges */}
+      <Box mt={2}>
+        {selectedValues.map((value) => {
+          const selectedItem = options.find((option) => option.value.id === value);
+          return (
+            <Badge key={value} colorScheme="purple" mr={2} mb={2}>
+              {selectedItem?.label.title}
+            </Badge>
+          );
+        })}
+      </Box>
+    </Box>
+  );
+};

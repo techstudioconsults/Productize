@@ -35,7 +35,9 @@ jobs:
               run: pnpm install
 
             - name: Build Application
-              run: pnpm run build 
-
+              run: |
+                  export NODE_OPTIONS="--max-old-space-size=8192"
+                  pnpm run build
+            
             - name: Reload server instances
               run: pm2 reload 0 --update-env --wait-ready

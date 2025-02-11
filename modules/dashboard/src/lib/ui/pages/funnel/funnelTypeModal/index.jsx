@@ -1,5 +1,5 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import { Button, Flex, Image, Text, useDisclosure } from '@chakra-ui/react';
+import { Flex, Image, Link, Text, useDisclosure } from '@chakra-ui/react';
 import { ModalComp, SharedButton } from '@productize/ui';
 import { FunnelCard } from './funnelCard';
 import { template_1, template_2, template_3 } from '../templates';
@@ -8,6 +8,7 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { selectCurrentToken } from '@productize/redux';
 import alert from './asset/alert.png';
+import { Link as RouterLink } from 'react-router-dom';
 
 const FunnelTypeModal = ({ CTATitle = `Create New Funnel` }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -81,17 +82,19 @@ const FunnelTypeModal = ({ CTATitle = `Create New Funnel` }) => {
             </div>
             <h4>You Haven’t Created any Product yet</h4>
             <Text marginY={`1rem`}>You must create a product in order to create a funnel</Text>
-            <SharedButton
-              width={`100%`}
-              height={`50px`}
-              bgColor={`transparent`}
-              textColor={`purple.500`}
-              fontSize={`18px`}
-              btnExtras={{
-                border: `1px solid #6D5DD3`,
-              }}
-              text={`Create A Product`}
-            />
+            <Link as={RouterLink} width={`100%`} to={`/dashboard/products/new#product-details`}>
+              <SharedButton
+                width={`100%`}
+                height={`50px`}
+                bgColor={`transparent`}
+                textColor={`purple.500`}
+                fontSize={`18px`}
+                btnExtras={{
+                  border: `1px solid #6D5DD3`,
+                }}
+                text={`Create A Product`}
+              />
+            </Link>
           </Flex>
         )}
       </ModalComp>

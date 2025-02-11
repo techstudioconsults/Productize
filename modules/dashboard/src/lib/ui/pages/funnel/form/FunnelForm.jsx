@@ -1,11 +1,12 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import { useRef, useState } from 'react';
-import { Checkbox, FormControl, Stack, Text } from '@chakra-ui/react';
+import { Checkbox, FormControl, Stack, Text, Badge } from '@chakra-ui/react';
 import { selectCurrentToken } from '@productize/redux';
 import { Controller } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { useEffect } from 'react';
+import fileUpload from './asset/fileUpload.svg';
 
 import {
   Modal,
@@ -206,12 +207,7 @@ const FunnelForm = ({ CTATitle = `Create New Funnel`, templateData }) => {
                 <Center overflow="hidden" borderRadius="8px" bgColor="purple.100" h="100px" pos="relative" flexDirection="column">
                   {formData?.asset && (
                     <Flex align="center" mb={2}>
-                      <Image
-                        src="/file-icon.png" // Replace with the file icon URL
-                        alt="File Icon"
-                        boxSize="20px"
-                        mr={2}
-                      />
+                      <Image src={fileUpload} alt="File Icon" boxSize="20px" mr={2} />
                       <Text fontSize="14px" color="grey.800">
                         {formData.asset.name}
                       </Text>
@@ -292,7 +288,7 @@ const PublishModal = ({ isOpen, onClose, formData }) => {
   const [isSuccessOpen, setIsSuccessOpen] = useState(false);
   const [content, setContent] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
-  const [isSavingToDraft, setSavingToDraft] = useState(false);
+  const [isSavingToDraft] = useState(false);
   const token = useSelector(selectCurrentToken);
   const router = useNavigate();
   const dispatch = useDispatch();
@@ -576,6 +572,18 @@ const CustomMultiSelect = ({ options, selectedValues, onChange, placeholder = 'S
           </Stack>
         </Box>
       )}
+
+      {/* Selected Items Badges */}
+      <Box mt={2}>
+        {selectedValues.map((value) => {
+          const selectedItem = options.find((option) => option.value.id === value);
+          return (
+            <Badge key={value} colorScheme="purple" mr={2} mb={2}>
+              {selectedItem?.label.title}
+            </Badge>
+          );
+        })}
+      </Box>
     </Box>
   );
 };

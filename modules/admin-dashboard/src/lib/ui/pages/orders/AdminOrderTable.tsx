@@ -43,7 +43,7 @@ export const OrderTable = ({ deleted }: tableProps) => {
                           </Flex>
                       </Td>
                       <Td>
-                          <Flex>{formatCurrency(order.product?.price)}</Flex>
+                          <Flex>{formatCurrency(order.product?.discount_price ?? order.product?.price)}</Flex>
                       </Td>
                       <Td>
                           <Flex flexDir={`column`} gap={2} py={2}>

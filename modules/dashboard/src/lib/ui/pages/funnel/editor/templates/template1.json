@@ -1,0 +1,16 @@
+{
+  "pages": [
+    {
+      "id": "home",
+      "name": "Home",
+      "content": "<div>Welcome to the Home Page</div>",
+      "css": "div { color: red; }"
+    },
+    {
+      "id": "about",
+      "name": "About",
+      "content": "<div>About Us Page</div>",
+      "css": "div { color: blue; }"
+    }
+  ]
+}

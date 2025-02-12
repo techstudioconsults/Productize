@@ -1,7 +1,7 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import { useRef, useState } from 'react';
 import { Checkbox, FormControl, Stack, Text, Badge } from '@chakra-ui/react';
-import { selectCurrentToken } from '@productize/redux';
+import { getCsrfToken, selectCurrentToken } from '@productize/redux';
 import { Controller } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
@@ -325,10 +325,12 @@ const PublishModal = ({ isOpen, onClose, formData }) => {
     });
 
     try {
+      const csrfToken = getCsrfToken();
       const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/funnels`, formattedData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',
+          'X-CSRF-Token': csrfToken,
         },
       });
 
@@ -356,11 +358,12 @@ const PublishModal = ({ isOpen, onClose, formData }) => {
       setIsPublishing(true);
       dispatch(setProgressBar(0));
       await simulateProgress(0, 60, 20000);
-
+      const csrfToken = getCsrfToken();
       const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/funnels`, formattedData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',
+          'X-CSRF-Token': csrfToken,
         },
         onUploadProgress: (progressEvent) => {
           // Handle real file upload progress in parallel

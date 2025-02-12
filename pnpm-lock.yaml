@@ -167,7 +167,9 @@ importers:
         version: 18.0.5(@babel/traverse@7.26.8)(@swc-node/register@1.8.0(@swc/core@1.3.107(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.3.3))(@swc/core@1.3.107(@swc/helpers@0.5.15))(@types/node@18.16.9)(js-yaml@4.1.0)(nx@18.0.5(@swc-node/register@1.8.0(@swc/core@1.3.107(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.3.3))(@swc/core@1.3.107(@swc/helpers@0.5.15)))(typescript@5.3.3)
       '@nx/vite':
         specifier: 18.0.5
+
         version: 18.0.5(@babel/traverse@7.26.8)(@swc-node/register@1.8.0(@swc/core@1.3.107(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.3.3))(@swc/core@1.3.107(@swc/helpers@0.5.15))(@types/node@18.16.9)(nx@18.0.5(@swc-node/register@1.8.0(@swc/core@1.3.107(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.3.3))(@swc/core@1.3.107(@swc/helpers@0.5.15)))(typescript@5.3.3)(vite@5.0.13(@types/node@18.16.9)(sass@1.84.0))(vitest@1.6.1)
+
       '@nx/web':
         specifier: 18.0.5
         version: 18.0.5(@babel/traverse@7.26.8)(@swc-node/register@1.8.0(@swc/core@1.3.107(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.3.3))(@swc/core@1.3.107(@swc/helpers@0.5.15))(@types/node@18.16.9)(nx@18.0.5(@swc-node/register@1.8.0(@swc/core@1.3.107(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.3.3))(@swc/core@1.3.107(@swc/helpers@0.5.15)))(typescript@5.3.3)
@@ -9218,8 +9220,10 @@ snapshots:
 
   browserslist@4.24.4:
     dependencies:
+
       caniuse-lite: 1.0.30001699
       electron-to-chromium: 1.5.97
+      
       node-releases: 2.0.19
       update-browserslist-db: 1.1.2(browserslist@4.24.4)
 
@@ -13122,7 +13126,9 @@ snapshots:
   vite@5.0.13(@types/node@18.16.9)(sass@1.84.0):
     dependencies:
       esbuild: 0.19.12
+
       postcss: 8.5.2
+      
       rollup: 4.34.6
     optionalDependencies:
       '@types/node': 18.16.9

@@ -1,4 +1,4 @@
-import {Box, Flex, Image, Text} from '@chakra-ui/react';
+import { Box, Flex, Image, Text } from '@chakra-ui/react';
 
 interface dashboardProps {
   bgImg: string;
@@ -13,20 +13,20 @@ interface dashboardProps {
 }
 
 export const DashboardBanner = ({
-                                  bgImg,
-                                  img,
-                                  title,
-                                  desc,
-                                  padding,
-                                  py,
-                                  px,
-                                  height,
-                                  alignContent,
-                                }: dashboardProps) => {
+  bgImg,
+  img,
+  title,
+  desc,
+  padding,
+  py,
+  px,
+  height,
+  alignContent,
+}: dashboardProps) => {
   return (
     <Flex
-      flexDir={{base: `column`, md: `row`}}
-      alignItems={{base: `center`, md: alignContent || `flex-start`}}
+      flexDir={{ base: `column`, md: `row` }}
+      alignItems={{ base: `center`, md: alignContent || `flex-start` }}
       bgColor={`purple.200`}
       justifyContent={`space-between`}
       gap={4}
@@ -49,7 +49,7 @@ export const DashboardBanner = ({
         </Text>
       </Box>
       <Box w={`263px`}>
-        <Image src={img} alt="img"/>
+        <Image src={img} alt="img" />
       </Box>
     </Flex>
   );

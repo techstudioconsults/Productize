@@ -1,284 +1,283 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap");
 html {
-    box-sizing: border-box;
-    font-style: normal;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-    -webkit-text-stroke-width: 0.1px;
-    -moz-osx-font-smoothing: grayscale;
-    scroll-behavior: smooth;
+  box-sizing: border-box;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -webkit-text-stroke-width: 0.1px;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
 }
 *,
 *::before,
 *::after {
-    box-sizing: inherit;
-    font-optical-sizing: auto;
-    font-family: 'Montserrat', sans-serif;
+  box-sizing: inherit;
+  font-optical-sizing: auto;
+  font-family: "Montserrat", sans-serif;
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    font-style: normal;
-    background-color: #ffffff;
-    color: #1c1d1d;
+  margin: 0;
+  padding: 0;
+  font-style: normal;
+  background-color: #ffffff;
+  color: #1c1d1d;
 }
 
 a,
 button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none !important;
 }
 
 a,
 a:visited,
 a:active {
-    cursor: pointer;
-    letter-spacing: 0.0125rem;
-    text-decoration: none;
+  cursor: pointer;
+  letter-spacing: 0.0125rem;
+  text-decoration: none;
 }
 
 button {
-    outline: none;
-    border: none;
+  height: 2.5rem;
+  outline: none;
+  border: none;
 }
 
 ul,
 ol {
-    list-style: none;
-    color: inherit;
-    padding: 0;
-    margin: 0;
+  list-style: none;
+  color: inherit;
+  padding: 0;
+  margin: 0;
 }
 
 li {
-    letter-spacing: 0.5;
-    list-style: none;
+  letter-spacing: 0.5;
+  list-style: none;
 }
 
 label {
-    font-size: 0.875rem;
+  font-size: 0.875rem;
 }
 
 input,
 textarea,
 select {
-    height: 2.5rem;
-    font-size: 0.875rem !important;
+  height: 2.5rem;
+  font-size: 0.875rem !important;
 }
-input::-moz-placeholder,
-textarea::-moz-placeholder,
-select::-moz-placeholder {
-    font-size: 0.875rem;
+input::-moz-placeholder, textarea::-moz-placeholder, select::-moz-placeholder {
+  font-size: 0.875rem;
 }
 input::placeholder,
 textarea::placeholder,
 select::placeholder {
-    font-size: 0.875rem;
+  font-size: 0.875rem;
 }
 
 .cc-container {
-    width: 100%;
-    max-width: 70rem;
-    margin: 0 auto;
+  width: 100%;
+  max-width: 70rem;
+  margin: 0 auto;
 }
 
 .hide_scrollbar::-webkit-scrollbar {
-    /* Hide scrollbar for Chrome, Safari and Opera */
-    display: none !important;
-    /* Hide scrollbar for IE, Edge and Firefox */
-    -ms-overflow-style: none !important;
-    /* IE and Edge */
-    scrollbar-width: none !important;
-    /* Firefox */
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  display: none !important;
+  /* Hide scrollbar for IE, Edge and Firefox */
+  -ms-overflow-style: none !important;
+  /* IE and Edge */
+  scrollbar-width: none !important;
+  /* Firefox */
 }
 
 h1,
 h2,
 h3 {
-    font-weight: 800;
-    font-family: 'Newsreader', sans-serif;
+  font-weight: 800;
+  font-family: "Newsreader", sans-serif;
 }
 
 h4,
 h5,
 h6 {
-    font-weight: 700;
+  font-weight: 700;
 }
 
 h1 {
-    font-size: 32px;
+  font-size: 32px;
 }
 @media screen and (min-width: 320px) {
-    h1 {
-        font-size: calc(32px + 32 * (100vw - 320px) / 1120);
-    }
+  h1 {
+    font-size: calc(32px + 32 * (100vw - 320px) / 1120);
+  }
 }
 @media screen and (min-width: 1440px) {
-    h1 {
-        font-size: 64px;
-    }
+  h1 {
+    font-size: 64px;
+  }
 }
 
 h2 {
-    font-size: 28px;
+  font-size: 28px;
 }
 @media screen and (min-width: 320px) {
-    h2 {
-        font-size: calc(28px + 20 * (100vw - 320px) / 1120);
-    }
+  h2 {
+    font-size: calc(28px + 20 * (100vw - 320px) / 1120);
+  }
 }
 @media screen and (min-width: 1440px) {
-    h2 {
-        font-size: 48px;
-    }
+  h2 {
+    font-size: 48px;
+  }
 }
 
 h3 {
-    font-size: 20px;
+  font-size: 20px;
 }
 @media screen and (min-width: 320px) {
-    h3 {
-        font-size: calc(20px + 20 * (100vw - 320px) / 1120);
-    }
+  h3 {
+    font-size: calc(20px + 20 * (100vw - 320px) / 1120);
+  }
 }
 @media screen and (min-width: 1440px) {
-    h3 {
-        font-size: 40px;
-    }
+  h3 {
+    font-size: 40px;
+  }
 }
 
 h4 {
-    font-size: 18px;
+  font-size: 18px;
 }
 @media screen and (min-width: 320px) {
-    h4 {
-        font-size: calc(18px + 14 * (100vw - 320px) / 1120);
-    }
+  h4 {
+    font-size: calc(18px + 14 * (100vw - 320px) / 1120);
+  }
 }
 @media screen and (min-width: 1440px) {
-    h4 {
-        font-size: 32px;
-    }
+  h4 {
+    font-size: 32px;
+  }
 }
 
 h5 {
-    font-size: 18px;
+  font-size: 18px;
 }
 @media screen and (min-width: 320px) {
-    h5 {
-        font-size: calc(18px + 6 * (100vw - 320px) / 1120);
-    }
+  h5 {
+    font-size: calc(18px + 6 * (100vw - 320px) / 1120);
+  }
 }
 @media screen and (min-width: 1440px) {
-    h5 {
-        font-size: 24px;
-    }
+  h5 {
+    font-size: 24px;
+  }
 }
 
 h6 {
-    font-size: 16px;
+  font-size: 16px;
 }
 @media screen and (min-width: 320px) {
-    h6 {
-        font-size: calc(16px + 2 * (100vw - 320px) / 1120);
-    }
+  h6 {
+    font-size: calc(16px + 2 * (100vw - 320px) / 1120);
+  }
 }
 @media screen and (min-width: 1440px) {
-    h6 {
-        font-size: 18px;
-    }
+  h6 {
+    font-size: 18px;
+  }
 }
 
 p,
 span {
-    margin-block: 0;
+  margin-block: 0;
 }
 p,
 span {
-    font-size: 14px;
+  font-size: 14px;
 }
 @media screen and (min-width: 320px) {
-    p,
-    span {
-        font-size: calc(14px + 2 * (100vw - 320px) / 1120);
-    }
+  p,
+  span {
+    font-size: calc(14px + 2 * (100vw - 320px) / 1120);
+  }
 }
 @media screen and (min-width: 1440px) {
-    p,
-    span {
-        font-size: 16px;
-    }
+  p,
+  span {
+    font-size: 16px;
+  }
 }
 
 .tiny-text {
-    font-size: 12px;
+  font-size: 12px;
 }
 @media screen and (min-width: 320px) {
-    .tiny-text {
-        font-size: calc(12px + 0 * (100vw - 320px) / 1120);
-    }
+  .tiny-text {
+    font-size: calc(12px + 0 * (100vw - 320px) / 1120);
+  }
 }
 @media screen and (min-width: 1440px) {
-    .tiny-text {
-        font-size: 12px;
-    }
+  .tiny-text {
+    font-size: 12px;
+  }
 }
 
 .small-text {
-    font-size: 14px;
+  font-size: 14px;
 }
 @media screen and (min-width: 320px) {
-    .small-text {
-        font-size: calc(14px + 0 * (100vw - 320px) / 1120);
-    }
+  .small-text {
+    font-size: calc(14px + 0 * (100vw - 320px) / 1120);
+  }
 }
 @media screen and (min-width: 1440px) {
-    .small-text {
-        font-size: 14px;
-    }
+  .small-text {
+    font-size: 14px;
+  }
 }
 
 .medium-text {
-    font-size: 16px;
+  font-size: 16px;
 }
 @media screen and (min-width: 320px) {
-    .medium-text {
-        font-size: calc(16px + 4 * (100vw - 320px) / 1120);
-    }
+  .medium-text {
+    font-size: calc(16px + 4 * (100vw - 320px) / 1120);
+  }
 }
 @media screen and (min-width: 1440px) {
-    .medium-text {
-        font-size: 20px;
-    }
+  .medium-text {
+    font-size: 20px;
+  }
 }
 
 .large-text {
-    font-size: 16px;
+  font-size: 16px;
 }
 @media screen and (min-width: 320px) {
-    .large-text {
-        font-size: calc(16px + 8 * (100vw - 320px) / 1120);
-    }
+  .large-text {
+    font-size: calc(16px + 8 * (100vw - 320px) / 1120);
+  }
 }
 @media screen and (min-width: 1440px) {
-    .large-text {
-        font-size: 24px;
-    }
+  .large-text {
+    font-size: 24px;
+  }
 }
 
 .btn-text {
-    font-size: 14px;
+  font-size: 14px;
 }
 @media screen and (min-width: 320px) {
-    .btn-text {
-        font-size: calc(14px + 2 * (100vw - 320px) / 1120);
-    }
+  .btn-text {
+    font-size: calc(14px + 2 * (100vw - 320px) / 1120);
+  }
 }
 @media screen and (min-width: 1440px) {
-    .btn-text {
-        font-size: 16px;
-    }
-} /*# sourceMappingURL=style.css.map */
+  .btn-text {
+    font-size: 16px;
+  }
+}/*# sourceMappingURL=style.css.map */

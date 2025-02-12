@@ -14,7 +14,6 @@ import {
     setAllComplaints,
     setSingleComplaints,
     setAdminProductsAnalytics,
-    setProductAdminAnalytics,
     // setSearchedProducts,
 } from './productsSlice';
 
@@ -163,6 +162,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
+                    console.log(data);
                     dispatch(
                         setAllProduct({
                             products: data.data,
@@ -253,7 +253,6 @@ export const productsApiSlice = apiSlice.injectEndpoints({
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const res = await queryFulfilled;
-                    console.log(res);
                     dispatch(
                         setProductsAnalytics({
                             productsAnalytics: res.data.data,
@@ -271,29 +270,10 @@ export const productsApiSlice = apiSlice.injectEndpoints({
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
-                    const { data } = await queryFulfilled;
-                    console.log(data);
-                    dispatch(
-                        setAdminProductsAnalytics({
-                            productsAdminAnalytics: data.data,
-                        })
-                    );
-                } catch (error) {
-                    return;
-                }
-            },
-        }),
-        getProductAdminAnalytics: builder.mutation({
-            query: () => ({
-                url: `/products/stats/admin`,
-                method: 'GET',
-            }),
-            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-                try {
                     const res = await queryFulfilled;
                     dispatch(
-                        setProductAdminAnalytics({
-                            productAdminAnalytics: res.data.data,
+                        setAdminProductsAnalytics({
+                            productsAdminAnalytics: res.data.data,
                         })
                     );
                 } catch (error) {
@@ -301,7 +281,6 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                 }
             },
         }),
-
         getSingleProductDetails: builder.mutation({
             query: (credentials) => ({
                 url: `/products/${credentials?.productID}`,
@@ -432,5 +411,4 @@ export const {
     useGetAllComplaintsMutation,
     useGetSingleComplaintsMutation,
     useSingleDownloadedProductMutation,
-    useGetProductAdminAnalyticsMutation,
 } = productsApiSlice;

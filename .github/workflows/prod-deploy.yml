@@ -10,32 +10,27 @@ jobs:
 
         strategy:
             matrix:
-                node-version: [20.x]
+                node-version: [18.x]
 
         steps:
             - name: Checkout code
-              uses: actions/checkout@v4
-
-            - name: Install pnpm
-              uses: pnpm/action-setup@v4
-              with:
-               version: 10
+              uses: actions/checkout@v3
 
             - name: Use Node.js ${{ matrix.node-version }}
-              uses: actions/setup-node@v4
+              uses: actions/setup-node@v3
               with:
-                node-version: ${{ matrix.node-version }}
-                # cache: 'pnpm'
+                  node-version: ${{ matrix.node-version }}
+                  cache: 'npm'
 
             - name: Create .env file
               run: |
                   echo "${{ secrets.ENV_FILE_CONTENT }}" > .env
 
             - name: Install dependencies
-              run: pnpm install
+              run: npm install
 
             - name: Build Application
-              run: pnpm run build 
+              run: npm run build
 
             - name: Reload server instances
               run: pm2 reload 0 --update-env --wait-ready

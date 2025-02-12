@@ -67,7 +67,7 @@ export const DeletedTable = ({ draft, live, deleted, tableData }: tableProps) =>
                     </Flex>
                 </Td>
                 <Td>
-                    <Flex>{formatCurrency(product?.discount_price ?? product?.price)}</Flex>
+                    <Flex>{formatCurrency(product?.price)}</Flex>
                 </Td>
                 <Td>
                     {/* if show sale count is true */}

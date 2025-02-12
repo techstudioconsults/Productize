@@ -74,7 +74,3 @@ const HeadingGroup = ({ errors }) => {
         </Stack>
     );
 };
-
-
-
-

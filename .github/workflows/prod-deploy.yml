@@ -6,7 +6,7 @@ on:
 
 jobs:
     build:
-        runs-on: [production]
+        runs-on: [production]  
 
         strategy:
             matrix:
@@ -19,23 +19,26 @@ jobs:
             - name: Install pnpm
               uses: pnpm/action-setup@v4
               with:
-               version: 10
+                  version: 10
 
             - name: Use Node.js ${{ matrix.node-version }}
               uses: actions/setup-node@v4
               with:
-                node-version: ${{ matrix.node-version }}
-                # cache: 'pnpm'
+                  node-version: ${{ matrix.node-version }}
 
             - name: Create .env file
-              run: |
-                  echo "${{ secrets.ENV_FILE_CONTENT }}" > .env
+              run: echo "${{ secrets.ENV_FILE_CONTENT }}" > .env
 
             - name: Install dependencies
               run: pnpm install
 
+            - name: Check Available Memory
+              run: free -h 
+
             - name: Build Application
-              run: pnpm run build 
+              run: |
+                  export NODE_OPTIONS="--max-old-space-size=8192"
+                  pnpm run build
 
             - name: Reload server instances
               run: pm2 reload 0 --update-env --wait-ready

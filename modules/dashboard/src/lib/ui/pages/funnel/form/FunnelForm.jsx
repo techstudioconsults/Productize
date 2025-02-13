@@ -332,6 +332,7 @@ const PublishModal = ({ isOpen, onClose, formData }) => {
           'Content-Type': 'multipart/form-data',
           'X-CSRF-Token': csrfToken,
         },
+        withCredentials: true,
       });
 
       if (response.status === 201) {
@@ -365,6 +366,7 @@ const PublishModal = ({ isOpen, onClose, formData }) => {
           'Content-Type': 'multipart/form-data',
           'X-CSRF-Token': csrfToken,
         },
+        withCredentials: true,
         onUploadProgress: (progressEvent) => {
           // Handle real file upload progress in parallel
           const percentage = Math.round((progressEvent.loaded * 100) / progressEvent.total);

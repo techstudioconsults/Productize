@@ -325,7 +325,7 @@ const PublishModal = ({ isOpen, onClose, formData }) => {
     });
 
     try {
-      const csrfToken = getCsrfToken();
+      const csrfToken = await getCsrfToken();
       const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/funnels`, formattedData, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -359,7 +359,7 @@ const PublishModal = ({ isOpen, onClose, formData }) => {
       setIsPublishing(true);
       dispatch(setProgressBar(0));
       await simulateProgress(0, 60, 20000);
-      const csrfToken = getCsrfToken();
+      const csrfToken = await getCsrfToken();
       const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/funnels`, formattedData, {
         headers: {
           Authorization: `Bearer ${token}`,

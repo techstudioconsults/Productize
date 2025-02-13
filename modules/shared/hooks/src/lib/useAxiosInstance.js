@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-import { fetchCsrfToken, selectCurrentToken } from '../../../redux/src';
+import { selectCurrentToken } from '../../../redux/src';
 import { getCsrfToken } from '../../../../shared/redux/src/lib/apiSlice';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -14,7 +14,6 @@ export const useAxiosInstance = ({ MIME_TYPE }) => {
   useEffect(() => {
     const setupCsrfToken = async () => {
       try {
-        await fetchCsrfToken();
         const token = await getCsrfToken();
         setCsrfToken(token);
       } catch (error) {

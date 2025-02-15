@@ -31,6 +31,7 @@ import { useDispatch } from 'react-redux';
 import { setProgressBar } from '@productize/redux';
 import { Icon } from '@iconify/react';
 import { useNavigate } from 'react-router-dom';
+import { useAxiosInstance } from '@productize/hooks';
 
 const FunnelForm = ({ CTATitle = `Create New Funnel`, templateData }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -199,9 +200,9 @@ const FunnelForm = ({ CTATitle = `Create New Funnel`, templateData }) => {
             <FormControl isInvalid={errors.asset}>
               <FormLabel color="purple.300" fontWeight={600}>
                 File Upload
-                <Text fontSize="14px" color="grey">
-                  This is optional but recommended if your funnel requires downloadable resources
-                </Text>
+                {/* <Text fontSize="14px" color="grey">
+                  This is a composury but recommended if your funnel requires downloadable resources
+                </Text> */}
               </FormLabel>
               <Box>
                 <Center overflow="hidden" borderRadius="8px" bgColor="purple.100" h="100px" pos="relative" flexDirection="column">
@@ -285,6 +286,7 @@ const FunnelForm = ({ CTATitle = `Create New Funnel`, templateData }) => {
 };
 
 const PublishModal = ({ isOpen, onClose, formData }) => {
+  const { query } = useAxiosInstance({ MIME_TYPE: 'multipart/form-data' });
   const [isSuccessOpen, setIsSuccessOpen] = useState(false);
   const [content, setContent] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
@@ -325,16 +327,17 @@ const PublishModal = ({ isOpen, onClose, formData }) => {
     });
 
     try {
-      const csrfToken = await getCsrfToken();
-      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/funnels`, formattedData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data',
-          'X-CSRF-Token': csrfToken,
-        },
-        withCredentials: true,
-        withXSRFToken: true,
-      });
+      // const csrfToken = await getCsrfToken();
+      // const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/funnels`, formattedData, {
+      //   headers: {
+      //     Authorization: `Bearer ${token}`,
+      //     'Content-Type': 'multipart/form-data',
+      //     'X-CSRF-Token': csrfToken,
+      //   },
+      //   withCredentials: true,
+      //   withXSRFToken: true,
+      // });
+      const response = await query('post', `/funnels`, formattedData);
 
       if (response.status === 201) {
         router(`/dashboard/funnels#all-funnels`);
@@ -360,22 +363,23 @@ const PublishModal = ({ isOpen, onClose, formData }) => {
       setIsPublishing(true);
       dispatch(setProgressBar(0));
       await simulateProgress(0, 60, 20000);
-      const csrfToken = await getCsrfToken();
-      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/funnels`, formattedData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data',
-          'X-CSRF-Token': csrfToken,
-        },
-        withCredentials: true,
-        withXSRFToken: true,
-        onUploadProgress: (progressEvent) => {
-          // Handle real file upload progress in parallel
-          const percentage = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-          dispatch(setProgressBar(Math.min(percentage + 60, 100)));
-        },
-      });
+      // const csrfToken = await getCsrfToken();
+      // const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/funnels`, formattedData, {
+      //   headers: {
+      //     Authorization: `Bearer ${token}`,
+      //     'Content-Type': 'multipart/form-data',
+      //     'X-CSRF-Token': csrfToken,
+      //   },
+      //   withCredentials: true,
+      //   withXSRFToken: true,
+      //   onUploadProgress: (progressEvent) => {
+      //     // Handle real file upload progress in parallel
+      //     const percentage = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+      //     dispatch(setProgressBar(Math.min(percentage + 60, 100)));
+      //   },
+      // });
 
+      const response = await query('post', `/funnels`, formattedData);
       // Simulate post-upload processing (100% after upload)
       if (response.status === 201) {
         await simulateProgress(60, 100, 2000); // Simulate slow processing (60%-100% in 2 seconds)
